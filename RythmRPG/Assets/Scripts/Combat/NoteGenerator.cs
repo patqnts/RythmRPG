@@ -27,6 +27,7 @@ public class NoteGenerator : MonoBehaviour
             {
                 // Set a random noteIdentity between 1 and 5
                 noteScript.noteIdentity = Random.Range(1, 6);
+                noteScript.keyCode = noteScript.GetKeyCodeFromNoteIdentity(noteScript.noteIdentity);
               
             }
 
