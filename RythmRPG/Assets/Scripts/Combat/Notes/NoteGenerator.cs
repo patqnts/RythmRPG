@@ -9,6 +9,7 @@ public class NoteGenerator : MonoBehaviour
     public float generationSpeed = 1f; // Adjust the speed as needed
     public Transform notesParent;
     public KeyCode[] keyCodesAsign;
+    public bool normalAttackState;
     void Start()
     {
         // Start generating notes at the specified speed
@@ -28,12 +29,14 @@ public class NoteGenerator : MonoBehaviour
             if (noteScript != null)
             {
                 // Set a random noteIdentity between 1 and 5
+                //noteScript.noteIdentity = 1;
                 noteScript.noteIdentity = Random.Range(1, 6);
+                noteScript.isSpecial = Random.Range(0, 2) == 0;
                 noteScript.keyCode = GetKeyCodeFromNoteIdentity(noteScript.noteIdentity);
                 noteScript.speed = power;
                 Opponent.transform.position = new Vector2(newNote.gameObject.transform.position.x, Opponent.transform.position.y);
             }
-
+            //noteScript.isSpecial = true;
             noteScript.gameObject.SetActive(true);
         }
     }

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5787300070096218072}
   - component: {fileID: 4303524799691956577}
   m_Layer: 0
-  m_Name: NoteObject
+  m_Name: SpecialNoteObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -101,12 +101,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   noteIdentity: 1
-  speed: 10
+  speed: 500
   keys: []
   canBePressed: 0
   keyCode: 49
   isMoving: 0
-  isSpecial: 0
   animator: {fileID: 4303524799691956577}
 --- !u!61 &3938753330650578465
 BoxCollider2D:
