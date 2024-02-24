@@ -34,10 +34,11 @@
             {
                 if(canBePressed)
                 {
+                    CombatManager.instance.DamageOpponent(1);
                     isMoving = false;
                     animator.SetTrigger("Hit");
                     Destroy(gameObject,.25f);
-                    Debug.Log("Hit");
+                    
                 }
             }
 
@@ -68,7 +69,7 @@
             if(other.gameObject.tag == "Activator")
             {
                 canBePressed = false;
-                Debug.Log("Miss");
+                PlayerData.instance.TakeDamage(1);
             }
         }
     }
