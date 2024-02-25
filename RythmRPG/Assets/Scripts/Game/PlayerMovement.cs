@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -7,12 +8,24 @@ public class PlayerMovement : MonoBehaviour
     public float speed;
     public Rigidbody2D rigidbody;
     public bool isEnabled;
+    private CircleCollider2D circleCollider;
+    private void Start()
+    {
+        CombatManager.instance.ExitCombatEvent += EnableMovement;
+    }
 
+    private void OnDisable()
+    {
+        CombatManager.instance.ExitCombatEvent -= EnableMovement;
+     
+    }
     // Update is called once per frame
     void Update()
     {
         if (isEnabled) 
-        { 
+        {
+            circleCollider.enabled = Input.GetKey(KeyCode.Return);
+
             float inputX = Input.GetAxis("Horizontal");
             float inputY = Input.GetAxis("Vertical");
 
@@ -30,12 +43,22 @@ public class PlayerMovement : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         IEnemy enemy = collision.gameObject.GetComponent<IEnemy>();
+        GameObject enemyObject = collision.gameObject;
         
         if (enemy != null)
         {
-            Debug.Log("Enemy Encountered: " + collision.gameObject.name);
-            CombatManager.instance.InitalizeCombat(this.gameObject, collision.gameObject);
-            isEnabled = false;
+           CombatManager.instance.InitalizeCombat(this.gameObject, enemyObject);
         }
+    }
+
+
+    public void EnableMovement()
+    {
+        isEnabled = true;
+    }
+
+    public void DisableMovement()
+    {
+        isEnabled = false;
     }
 }

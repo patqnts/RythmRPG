@@ -22,7 +22,8 @@
         public bool isSpecial;
         public Animator animator;
         private void Start()
-        {      
+        {
+            CombatManager.instance.StopAttackEvent += DestroyObject;
             keys = FindObjectsOfType<KeyButton>();   
             animator.SetBool("Special", isSpecial);           
             isMoving = true;
@@ -35,10 +36,7 @@
                 if(canBePressed)
                 {
                     CombatManager.instance.DamageOpponent(1);
-                    isMoving = false;
-                    animator.SetTrigger("Hit");
-                    Destroy(gameObject,.25f);
-                    
+                    DestroyObject();
                 }
             }
 
@@ -57,7 +55,19 @@
         
         }
 
-        private void OnTriggerEnter2D(Collider2D other)
+        public void DestroyObject()
+        {
+            isMoving = false;
+            animator.SetTrigger("Hit");
+            Destroy(gameObject, .25f);
+        }
+
+    private void OnDestroy()
+    {
+        CombatManager.instance.StopAttackEvent -= DestroyObject;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
         {
             if(other.gameObject.tag == "Activator")
             {

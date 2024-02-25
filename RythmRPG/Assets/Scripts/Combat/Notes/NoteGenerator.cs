@@ -8,13 +8,30 @@ public class NoteGenerator : MonoBehaviour
     public GameObject noteObjectPrefab; // Drag your NoteObject prefab to this field in the Inspector
     public float generationSpeed = 1f; // Adjust the speed as needed
     public KeyCode[] keyCodesAsign;
-    public bool normalAttackState;
+   
     void Start()
     {
-        StartCoroutine(GenerateNotes(500));
+        keyCodesAsign = FindObjectOfType<CombatManager>().keyCodes;
+        CombatManager.instance.AttackEvent += Attack;
+        CombatManager.instance.StopAttackEvent += StopAttack;
     }
 
-    IEnumerator GenerateNotes(int power)
+    private void OnDisable()
+    {
+        CombatManager.instance.AttackEvent -= Attack;
+        CombatManager.instance.StopAttackEvent -= StopAttack;
+    }
+    public void Attack()
+    {
+        StartCoroutine(GenerateNotes());
+    }
+
+    public void StopAttack()
+    {
+        StopAllCoroutines();
+    }
+
+    IEnumerator GenerateNotes()
     {
         while (true)
         {
@@ -29,7 +46,7 @@ public class NoteGenerator : MonoBehaviour
                 noteScript.noteIdentity = Random.Range(1, 6);
                 noteScript.isSpecial = Random.Range(0, 2) == 0;
                 noteScript.keyCode = GetKeyCodeFromNoteIdentity(noteScript.noteIdentity);
-                noteScript.speed = power;
+              
             }
         
             noteScript.gameObject.SetActive(true);
