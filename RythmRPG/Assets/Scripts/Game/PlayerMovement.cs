@@ -48,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
         
         if (enemy != null)
         {
-           CombatManager.instance.InitalizeCombat(this.gameObject, enemyObject);
+           CombatManager.instance.InitalizeCombatEvent(this.gameObject, enemyObject);
         }
     }
 

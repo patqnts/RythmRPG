@@ -4,17 +4,23 @@ using UnityEngine;
 
 public class EnemyData : MonoBehaviour, IEnemy
 {
-    private int _currentHealth = 100;
-    private int _maxHealth = 100;
+    public int _currentHealth = 100;
+    public int _maxHealth = 100;
+    public NoteGenerator _noteGenerator;
     public int MaxHealth { get { return _maxHealth; } set { _maxHealth = value; } }
     public int CurrentHealth { get { return _currentHealth; } set { _currentHealth = value; } }
-
-    public GameObject generator;
+   
+    public bool isOnBattle;
+    private void Start()
+    {
+        _currentHealth = 100;
+    }
 
     public void TakeDamage(int damage)
     {
         if (CurrentHealth > 0)
         {
+            CombatManager.instance.UpdateUIEventInvoke();
             CurrentHealth -= damage;
             Debug.Log("Enemy Current Healht: " + CurrentHealth);
             if (CurrentHealth <= 0)
@@ -27,6 +33,12 @@ public class EnemyData : MonoBehaviour, IEnemy
 
     public void Death()
     {
-        Debug.Log("Win!");
+        Unsub();
+        CombatManager.instance.FinalizeCombatEvent();      
+    }
+
+    public void Unsub()
+    {
+        _noteGenerator.enabled = isOnBattle;
     }
 }

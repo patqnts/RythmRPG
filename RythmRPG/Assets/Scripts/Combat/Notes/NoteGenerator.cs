@@ -12,10 +12,14 @@ public class NoteGenerator : MonoBehaviour
     void Start()
     {
         keyCodesAsign = FindObjectOfType<CombatManager>().keyCodes;
+       
+    }
+
+    private void OnEnable()
+    {
         CombatManager.instance.AttackEvent += Attack;
         CombatManager.instance.StopAttackEvent += StopAttack;
     }
-
     private void OnDisable()
     {
         CombatManager.instance.AttackEvent -= Attack;

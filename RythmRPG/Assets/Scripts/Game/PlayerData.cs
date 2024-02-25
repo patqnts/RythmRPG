@@ -26,7 +26,7 @@ public class PlayerData : MonoBehaviour
     {
         if (PlayerCurrentHealth > 0)
         {
-            //Debug.Log("Current Healht: " + PlayerCurrentHealth);
+            CombatManager.instance.UpdateUIEventInvoke();
             PlayerCurrentHealth -= damage;
 
             if(PlayerCurrentHealth < 0)

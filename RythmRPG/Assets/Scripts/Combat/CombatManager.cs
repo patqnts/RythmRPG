@@ -20,6 +20,7 @@ public class CombatManager : MonoBehaviour
     public event Action StopAttackEvent;
     public event Action ExitCombatEvent;
     public event Action<GameObject, GameObject> EnterCombatEvent;
+    public event Action UpdateUIEvent;
 
     public EnemyData enemyData;
 
@@ -65,7 +66,7 @@ public class CombatManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            ExitCombatEvent.Invoke();
+            FinalizeCombatEvent();
         }
     }
     private void Awake()
@@ -79,18 +80,36 @@ public class CombatManager : MonoBehaviour
             instance = this;
         }
     }
+    
+    public void UpdateUIEventInvoke()
+    {
+        UpdateUIEvent.Invoke();
+    }
+    public void InitalizeCombatEvent(GameObject player, GameObject enemy) 
+    {
+        EnterCombatEvent?.Invoke(player,enemy);
+    }
     public void InitalizeCombat(GameObject player, GameObject enemy)
     {
+        CombatSystemUI.SetActive(true);
+
         SaveCharacterLastPosition(player, enemy);
         virtualCamera.Follow = null;
         EnemyData data = enemy.gameObject.GetComponent<EnemyData>();
         SetEnemy(data);
 
+        enemyData.isOnBattle = true;
+        enemyData.Unsub();
         StartCoroutine(MoveToPosition(player.transform, playerPos.position, 0.65f)); // You can adjust the duration as needed
         StartCoroutine(MoveToPosition(enemy.transform, enemyPos.position, 0.65f));  // You can adjust the duration as needed
-        CombatSystemUI.SetActive(true);      
-    }
 
+        UpdateUIEvent.Invoke();
+        
+    }
+    public void FinalizeCombatEvent()
+    {
+        ExitCombatEvent.Invoke();
+    }
     public void FinalizeCombat()
     {
         StopAttackEvent?.Invoke();
@@ -99,13 +118,15 @@ public class CombatManager : MonoBehaviour
         {
             player.transform.position = playerLastPos;
             enemyData.transform.position = enemyLastPos;
+
+            enemyData.isOnBattle = false;
+            enemyData.Unsub();
         }
 
         enemyData = null;
         virtualCamera.Follow = player.transform;
         CombatSystemUI.SetActive(false);
     }
-
     private IEnumerator MoveToPosition(Transform transform, Vector2 targetPosition, float duration)
     {
         float elapsedTime = 0;
@@ -122,15 +143,13 @@ public class CombatManager : MonoBehaviour
         transform.position = targetPosition; // Ensure final position is exact
     }
     public void SetEnemy(EnemyData enemy)
-    {
+    {       
         enemyData = enemy;
     }
-
     public void DamageOpponent(int damage)
     {
         enemyData.TakeDamage(damage);
     }
-
     public void SaveCharacterLastPosition(GameObject player, GameObject enemy)
     {
         player.GetComponent<PlayerMovement>().isEnabled = false;
