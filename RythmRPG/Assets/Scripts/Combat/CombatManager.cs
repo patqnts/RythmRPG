@@ -91,8 +91,7 @@ public class CombatManager : MonoBehaviour
     }
     public void InitalizeCombat(GameObject player, GameObject enemy)
     {
-        CombatSystemUI.SetActive(true);
-
+       
         SaveCharacterLastPosition(player, enemy);
         virtualCamera.Follow = null;
         EnemyData data = enemy.gameObject.GetComponent<EnemyData>();
@@ -100,19 +99,29 @@ public class CombatManager : MonoBehaviour
 
         enemyData.isOnBattle = true;
         enemyData.Unsub();
-        StartCoroutine(MoveToPosition(player.transform, playerPos.position, 0.65f)); // You can adjust the duration as needed
-        StartCoroutine(MoveToPosition(enemy.transform, enemyPos.position, 0.65f));  // You can adjust the duration as needed
+        StartCoroutine(MoveToPosition(player.transform, playerPos.position, 0.35f)); // You can adjust the duration as needed
+        StartCoroutine(MoveToPosition(enemy.transform, enemyPos.position, 0.35f));  // You can adjust the duration as needed
 
-        UpdateUIEvent.Invoke();
         
+
+        if (CombatSystemUI != null)
+        {
+            CombatSystemUI.SetActive(true);
+            UpdateUIEvent.Invoke();
+        }
     }
+
     public void FinalizeCombatEvent()
     {
+        StopAttackEvent?.Invoke();
+
+        StartCoroutine(OpponentDeathPlay());
+
         ExitCombatEvent.Invoke();
     }
     public void FinalizeCombat()
     {
-        StopAttackEvent?.Invoke();
+        
         GameObject player = FindObjectOfType<PlayerMovement>().gameObject;
         if (player != null)
         {
@@ -121,6 +130,8 @@ public class CombatManager : MonoBehaviour
 
             enemyData.isOnBattle = false;
             enemyData.Unsub();
+
+            UpdateUIEvent.Invoke();
         }
 
         enemyData = null;
@@ -145,15 +156,25 @@ public class CombatManager : MonoBehaviour
     public void SetEnemy(EnemyData enemy)
     {       
         enemyData = enemy;
+
     }
     public void DamageOpponent(int damage)
     {
-        enemyData.TakeDamage(damage);
+        if(enemyData != null)
+        {
+            enemyData.TakeDamage(damage);
+        }
     }
     public void SaveCharacterLastPosition(GameObject player, GameObject enemy)
     {
         player.GetComponent<PlayerMovement>().isEnabled = false;
         playerLastPos = new Vector2(player.transform.position.x, player.transform.position.y); // Corrected Vector2 assignment
         enemyLastPos = new Vector2(enemy.transform.position.x, enemy.transform.position.y); // Corrected Vector2 assignment
+    }
+
+    public IEnumerator OpponentDeathPlay()
+    {
+        enemyData.DeathPlay();
+        yield return new WaitForSeconds(5f);
     }
 }

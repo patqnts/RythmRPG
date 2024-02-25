@@ -79,7 +79,9 @@
             if(other.gameObject.tag == "Activator" && isMoving)
             {
                 canBePressed = false;
+                
                 PlayerData.instance.TakeDamage(1);
+                DestroyObject();
             }
         }
     }

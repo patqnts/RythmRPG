@@ -7,7 +7,7 @@ public class CombatUI : MonoBehaviour
 {
     public Text PlayerHealth;
     public Text EnemyHealth;
-    void Start()
+    void OnEnable()
     {
         CombatManager.instance.UpdateUIEvent += UpdateUI;
         UpdateUI();
@@ -15,7 +15,17 @@ public class CombatUI : MonoBehaviour
 
     public void UpdateUI()
     {
+        if (PlayerData.instance == null && CombatManager.instance.enemyData == null)
+        {
+            return;
+        }
+
         PlayerHealth.text = $"{PlayerData.instance.PlayerCurrentHealth}/{PlayerData.instance.PlayerMaxHealth}";
         EnemyHealth.text = $"{CombatManager.instance.enemyData.CurrentHealth}/{CombatManager.instance.enemyData.MaxHealth}";
+    }
+
+    private void OnDisable()
+    {
+        CombatManager.instance.UpdateUIEvent -= UpdateUI;
     }
 }
