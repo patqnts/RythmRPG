@@ -93,6 +93,7 @@ public class CombatManager : MonoBehaviour
 
     public void FinalizeCombat()
     {
+        StopAttackEvent?.Invoke();
         GameObject player = FindObjectOfType<PlayerMovement>().gameObject;
         if (player != null)
         {

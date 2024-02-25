@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     public float speed;
     public Rigidbody2D rigidbody;
     public bool isEnabled;
-    private CircleCollider2D circleCollider;
+    public CircleCollider2D circleCollider;
     private void Start()
     {
         CombatManager.instance.ExitCombatEvent += EnableMovement;
@@ -22,9 +22,10 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        circleCollider.enabled = Input.GetKey(KeyCode.Return);
         if (isEnabled) 
         {
-            circleCollider.enabled = Input.GetKey(KeyCode.Return);
+            
 
             float inputX = Input.GetAxis("Horizontal");
             float inputY = Input.GetAxis("Vertical");
