@@ -99,24 +99,28 @@ public class CombatManager : MonoBehaviour
         EnterCombatEvent?.Invoke(player,enemy);
     }
     public void InitalizeCombat(GameObject player, GameObject enemy)
+    {      
+       StartCoroutine(CoroutineInitializeCombat(player, enemy));
+    }
+
+    IEnumerator CoroutineInitializeCombat(GameObject player, GameObject enemy)
     {
-       
         SaveCharacterLastPosition(player, enemy);
         virtualCamera.Follow = null;
 
-        if(enemy != null)
+        if (enemy != null)
         {
             EnemyData data = enemy.gameObject.GetComponent<EnemyData>();
             SetEnemy(data);
             enemyData.isOnBattle = true;
             enemyData.Unsub();
         }
-        
-        if(player != null)
+
+        if (player != null)
         {
             player.GetComponent<SpriteRenderer>().sortingOrder = 51;
         }
-            
+
         StartCoroutine(MoveToPosition(player.transform, playerPos.position, 0.35f)); // You can adjust the duration as needed
         StartCoroutine(MoveToPosition(enemy.transform, enemyPos.position, 0.35f));  // You can adjust the duration as needed
 
@@ -125,6 +129,8 @@ public class CombatManager : MonoBehaviour
             CombatSystemUI.SetActive(true);
             UpdateUIEvent.Invoke();
         }
+        yield return new WaitForSeconds(3f);
+        AttackEvent?.Invoke();
     }
     public void FinalizeCombatEvent()
     {
