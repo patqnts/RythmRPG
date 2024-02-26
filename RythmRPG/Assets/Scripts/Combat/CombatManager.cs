@@ -21,6 +21,7 @@ public class CombatManager : MonoBehaviour
     public event Action ExitCombatEvent;
     public event Action<GameObject, GameObject> EnterCombatEvent;
     public event Action UpdateUIEvent;
+    public event Action WinBattleEvent;
 
     public EnemyData enemyData;
 
@@ -38,8 +39,15 @@ public class CombatManager : MonoBehaviour
 
     private void Start()
     {
+       
         ExitCombatEvent += FinalizeCombat;
         EnterCombatEvent += InitalizeCombat;
+        WinBattleEvent += WinBattle;
+    }
+
+    private void CombatManager_WinBattleEvent()
+    {
+        throw new NotImplementedException();
     }
 
     private void Update()
@@ -81,6 +89,7 @@ public class CombatManager : MonoBehaviour
         }
     }
     
+
     public void UpdateUIEventInvoke()
     {
         UpdateUIEvent.Invoke();
@@ -94,15 +103,22 @@ public class CombatManager : MonoBehaviour
        
         SaveCharacterLastPosition(player, enemy);
         virtualCamera.Follow = null;
-        EnemyData data = enemy.gameObject.GetComponent<EnemyData>();
-        SetEnemy(data);
 
-        enemyData.isOnBattle = true;
-        enemyData.Unsub();
+        if(enemy != null)
+        {
+            EnemyData data = enemy.gameObject.GetComponent<EnemyData>();
+            SetEnemy(data);
+            enemyData.isOnBattle = true;
+            enemyData.Unsub();
+        }
+        
+        if(player != null)
+        {
+            player.GetComponent<SpriteRenderer>().sortingOrder = 51;
+        }
+            
         StartCoroutine(MoveToPosition(player.transform, playerPos.position, 0.35f)); // You can adjust the duration as needed
         StartCoroutine(MoveToPosition(enemy.transform, enemyPos.position, 0.35f));  // You can adjust the duration as needed
-
-        
 
         if (CombatSystemUI != null)
         {
@@ -110,28 +126,30 @@ public class CombatManager : MonoBehaviour
             UpdateUIEvent.Invoke();
         }
     }
-
     public void FinalizeCombatEvent()
     {
         StopAttackEvent?.Invoke();
-
-        StartCoroutine(OpponentDeathPlay());
-
         ExitCombatEvent.Invoke();
     }
     public void FinalizeCombat()
     {
-        
         GameObject player = FindObjectOfType<PlayerMovement>().gameObject;
         if (player != null)
         {
             player.transform.position = playerLastPos;
-            enemyData.transform.position = enemyLastPos;
 
-            enemyData.isOnBattle = false;
-            enemyData.Unsub();
+            if(enemyData!= null) //ENEMY SURVIVED/WIN
+            {
+                enemyData.transform.position = enemyLastPos;
+                enemyData.isOnBattle = false;
+                enemyData.GetComponent<SpriteRenderer>().sortingOrder = 1;
+                enemyData.Unsub();
+            }
 
-            UpdateUIEvent.Invoke();
+            if (player != null)
+            {
+                player.GetComponent<SpriteRenderer>().sortingOrder = 1;
+            }
         }
 
         enemyData = null;
@@ -171,10 +189,19 @@ public class CombatManager : MonoBehaviour
         playerLastPos = new Vector2(player.transform.position.x, player.transform.position.y); // Corrected Vector2 assignment
         enemyLastPos = new Vector2(enemy.transform.position.x, enemy.transform.position.y); // Corrected Vector2 assignment
     }
-
     public IEnumerator OpponentDeathPlay()
     {
         enemyData.DeathPlay();
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(3f);
+        FinalizeCombatEvent();
+    }
+    public void WinBattle()
+    {
+        StopAttackEvent?.Invoke();
+        StartCoroutine(OpponentDeathPlay());       
+    }
+    public void WinBattleEventInvoke()
+    {
+       WinBattleEvent.Invoke();
     }
 }

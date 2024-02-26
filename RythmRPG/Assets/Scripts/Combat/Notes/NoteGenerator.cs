@@ -8,11 +8,11 @@ public class NoteGenerator : MonoBehaviour
     public GameObject noteObjectPrefab; // Drag your NoteObject prefab to this field in the Inspector
     public float generationSpeed = 1f; // Adjust the speed as needed
     public KeyCode[] keyCodesAsign;
-   
+    private bool isAttacking = false;
+
     void Start()
     {
-        keyCodesAsign = FindObjectOfType<CombatManager>().keyCodes;
-       
+        keyCodesAsign = FindObjectOfType<CombatManager>().keyCodes;      
     }
 
     private void OnEnable()
@@ -27,17 +27,57 @@ public class NoteGenerator : MonoBehaviour
     }
     public void Attack()
     {
-        StartCoroutine(GenerateNotes());
+        StartCoroutine(AttackCycle());
     }
 
     public void StopAttack()
     {
         StopAllCoroutines();
+        isAttacking = false;
     }
 
-    IEnumerator GenerateNotes()
+    IEnumerator AttackCycle()
     {
-        while (true)
+        isAttacking = true;
+
+        while (isAttacking)
+        {
+            yield return StartCoroutine(GenerateNormalNotesForDuration(5f));
+            yield return new WaitForSeconds(2f);
+            yield return StartCoroutine(GenerateRandomNotesForDuration(10f));
+            yield return new WaitForSeconds(4f);
+        }
+    }
+
+    IEnumerator GenerateNormalNotesForDuration(float duration)
+    {
+        Debug.Log("Normal");
+        float startTime = Time.time;
+
+        while (Time.time - startTime < duration)
+        {
+            yield return new WaitForSeconds(generationSpeed);
+
+            // Instantiate NoteObject prefab with a random noteIdentity between 1 and 5
+            GameObject newNote = Instantiate(noteObjectPrefab, transform.position, Quaternion.identity);
+            NoteObject noteScript = newNote.GetComponent<NoteObject>();
+
+            if (noteScript != null)
+            {
+                noteScript.noteIdentity = Random.Range(1, 6);
+                noteScript.keyCode = GetKeyCodeFromNoteIdentity(noteScript.noteIdentity);
+            }
+
+            noteScript.gameObject.SetActive(true);
+        }
+    }
+
+    IEnumerator GenerateRandomNotesForDuration(float duration)
+    {
+        Debug.Log("Random");
+        float startTime = Time.time;
+
+        while (Time.time - startTime < duration)
         {
             yield return new WaitForSeconds(generationSpeed);
 
@@ -50,9 +90,8 @@ public class NoteGenerator : MonoBehaviour
                 noteScript.noteIdentity = Random.Range(1, 6);
                 noteScript.isSpecial = Random.Range(0, 2) == 0;
                 noteScript.keyCode = GetKeyCodeFromNoteIdentity(noteScript.noteIdentity);
-              
             }
-        
+
             noteScript.gameObject.SetActive(true);
         }
     }

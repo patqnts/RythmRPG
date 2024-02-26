@@ -25,8 +25,7 @@ public class PlayerData : MonoBehaviour
     public void TakeDamage(int damage)
     {
         if (PlayerCurrentHealth > 0)
-        {
-            CombatManager.instance.UpdateUIEventInvoke();
+        {          
             PlayerCurrentHealth -= damage;
 
             if(PlayerCurrentHealth < 0)
@@ -35,6 +34,7 @@ public class PlayerData : MonoBehaviour
                 Death();
             }
         }
+        CombatManager.instance.UpdateUIEventInvoke();
     }
 
     private void Death()

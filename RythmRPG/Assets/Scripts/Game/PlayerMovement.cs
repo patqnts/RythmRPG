@@ -9,23 +9,27 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody2D rigidbody;
     public bool isEnabled;
     public CircleCollider2D circleCollider;
+    public GameObject noticeObject;
+    public GameObject battleBg;
     private void Start()
     {
         CombatManager.instance.ExitCombatEvent += EnableMovement;
+        CombatManager.instance.ExitCombatEvent += CloseBattleBG;
     }
 
     private void OnDisable()
     {
         CombatManager.instance.ExitCombatEvent -= EnableMovement;
+        CombatManager.instance.ExitCombatEvent -= CloseBattleBG;
      
     }
     // Update is called once per frame
     void Update()
     {
-        circleCollider.enabled = Input.GetKey(KeyCode.Return);
+        
         if (isEnabled) 
         {
-            
+            circleCollider.enabled = Input.GetKey(KeyCode.Return);
 
             float inputX = Input.GetAxis("Horizontal");
             float inputY = Input.GetAxis("Vertical");
@@ -48,11 +52,31 @@ public class PlayerMovement : MonoBehaviour
         
         if (enemy != null)
         {
-           CombatManager.instance.InitalizeCombatEvent(this.gameObject, enemyObject);
+            StartCoroutine(EncounterTransition(enemyObject));
         }
     }
 
+    IEnumerator EncounterTransition(GameObject enemyObject)
+    {
+        battleBg.SetActive(true);
 
+        if (enemyObject != null)
+        {
+            enemyObject.GetComponent<SpriteRenderer>().sortingOrder = 51;            
+        }
+
+        isEnabled = false;
+        circleCollider.enabled = false;
+        GameObject notice = Instantiate(noticeObject, enemyObject.transform);
+        yield return new WaitForSeconds(1.5f);
+        Destroy(notice);
+        CombatManager.instance.InitalizeCombatEvent(this.gameObject, enemyObject);
+    }
+
+    public void CloseBattleBG()
+    {
+        battleBg.SetActive(false);
+    }
     public void EnableMovement()
     {
         isEnabled = true;

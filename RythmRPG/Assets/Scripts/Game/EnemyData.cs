@@ -22,10 +22,10 @@ public class EnemyData : MonoBehaviour, IEnemy
     {
         if (CurrentHealth > 0)
         {
-            CombatManager.instance.UpdateUIEventInvoke();
+            
             CurrentHealth -= damage;
             Debug.Log("Enemy Current Healht: " + CurrentHealth);
-            
+
         }
 
         if (CurrentHealth <= 0)
@@ -33,12 +33,14 @@ public class EnemyData : MonoBehaviour, IEnemy
             CurrentHealth = 0;
             Death();
         }
+        CombatManager.instance.UpdateUIEventInvoke();
     }
 
     public void Death()
     {
         Unsub();
-        CombatManager.instance.FinalizeCombatEvent();      
+        //CombatManager.instance.FinalizeCombatEvent();      
+        CombatManager.instance.WinBattleEventInvoke();  
     }
 
     public void DeathPlay()
