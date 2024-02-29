@@ -65,6 +65,25 @@ public class CombatManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             AttackEvent?.Invoke();
+
+            string folderPath = "Assets/Screenshots/";
+
+            if (!System.IO.Directory.Exists(folderPath))
+                System.IO.Directory.CreateDirectory(folderPath);
+
+            // Set the desired width and height
+            int width = 800;
+            int height = 500;
+
+            var screenshotName =
+                "Screenshot_" +
+                System.DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss") +
+                ".png";
+
+            // Set the resolution parameter to 1 to capture the screenshot at the native resolution
+            ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(folderPath, screenshotName), 1);
+
+            Debug.Log(folderPath + screenshotName);
         }
 
         if (Input.GetKeyDown(KeyCode.Tab))

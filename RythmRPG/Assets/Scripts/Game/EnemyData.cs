@@ -53,7 +53,7 @@ public class EnemyData : MonoBehaviour, IEnemy
     public void Unsub()
     {
         _noteGenerator.enabled = isOnBattle;
-        _animator.SetBool("isOnBattle", isOnBattle);
+        _animator.CrossFade("intro", 3f);
         
     }
 }
