@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (enemyObject != null)
         {
-            enemyObject.GetComponent<SpriteRenderer>().sortingOrder = 51;            
+            enemyObject.GetComponent<SpriteRenderer>().sortingOrder = CombatManager.instance.charactersSortOrder;            
         }
 
         isEnabled = false;

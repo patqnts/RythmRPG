@@ -23,17 +23,15 @@ public class CombatManager : MonoBehaviour
     public event Action UpdateUIEvent;
     public event Action WinBattleEvent;
 
-    public EnemyData enemyData;
-
-    public Transform playerPos;
+    public int charactersSortOrder;
+    private Vector2 enemyLastPos;
     private Vector2 playerLastPos;
 
+    public EnemyData enemyData;
+    public Transform playerPos;
     public Transform enemyPos;
-    private Vector2 enemyLastPos;
-
     public CinemachineVirtualCamera virtualCamera;
     public GameObject CombatSystemUI;
-
     public KeyCode[] keyCodes;
 
 
@@ -66,24 +64,24 @@ public class CombatManager : MonoBehaviour
         {
             AttackEvent?.Invoke();
 
-            string folderPath = "Assets/Screenshots/";
+            //string folderPath = "Assets/Screenshots/";
 
-            if (!System.IO.Directory.Exists(folderPath))
-                System.IO.Directory.CreateDirectory(folderPath);
+            //if (!System.IO.Directory.Exists(folderPath))
+            //    System.IO.Directory.CreateDirectory(folderPath);
 
-            // Set the desired width and height
-            int width = 800;
-            int height = 500;
+            //// Set the desired width and height
+            //int width = 800;
+            //int height = 500;
 
-            var screenshotName =
-                "Screenshot_" +
-                System.DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss") +
-                ".png";
+            //var screenshotName =
+            //    "Screenshot_" +
+            //    System.DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss") +
+            //    ".png";
 
-            // Set the resolution parameter to 1 to capture the screenshot at the native resolution
-            ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(folderPath, screenshotName), 1);
+            //// Set the resolution parameter to 1 to capture the screenshot at the native resolution
+            //ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(folderPath, screenshotName), 1);
 
-            Debug.Log(folderPath + screenshotName);
+            //Debug.Log(folderPath + screenshotName);
         }
 
         if (Input.GetKeyDown(KeyCode.Tab))
@@ -121,7 +119,6 @@ public class CombatManager : MonoBehaviour
     {      
        StartCoroutine(CoroutineInitializeCombat(player, enemy));
     }
-
     IEnumerator CoroutineInitializeCombat(GameObject player, GameObject enemy)
     {
         SaveCharacterLastPosition(player, enemy);
@@ -137,7 +134,7 @@ public class CombatManager : MonoBehaviour
 
         if (player != null)
         {
-            player.GetComponent<SpriteRenderer>().sortingOrder = 51;
+            player.GetComponent<SpriteRenderer>().sortingOrder = charactersSortOrder;
         }
 
         StartCoroutine(MoveToPosition(player.transform, playerPos.position, 0.35f)); // You can adjust the duration as needed
