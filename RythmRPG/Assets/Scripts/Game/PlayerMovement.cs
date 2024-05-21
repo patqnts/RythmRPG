@@ -37,10 +37,20 @@ public class PlayerMovement : MonoBehaviour
             if(Mathf.Abs(inputX) > 0)
             {
                 rigidbody.velocity = new Vector2 (inputX*speed, rigidbody.velocity.y);
+                Debug.Log(inputX);
             }
             if (Mathf.Abs(inputY) > 0)
             {
                 rigidbody.velocity = new Vector2(rigidbody.velocity.x, inputY*speed);
+            }
+
+            if(inputX < 0)
+            {
+                gameObject.GetComponent<SpriteRenderer>().flipX = true;
+            }
+            else
+            {
+                gameObject.GetComponent<SpriteRenderer>().flipX = false;
             }
         }
     }
@@ -64,7 +74,7 @@ public class PlayerMovement : MonoBehaviour
         {
             enemyObject.GetComponent<SpriteRenderer>().sortingOrder = CombatManager.instance.charactersSortOrder;            
         }
-
+        SoundHandler.Instance.PlayEncounterSound();
         isEnabled = false;
         circleCollider.enabled = false;
         GameObject notice = Instantiate(noticeObject, enemyObject.transform);
