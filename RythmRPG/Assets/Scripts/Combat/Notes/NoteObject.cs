@@ -10,13 +10,14 @@
         public int noteIdentity;
     
         [SerializeField] public float speed;
+        [SerializeField] public int damage;
 
         [SerializeField] public KeyButton[] keys;
 
         public bool canBePressed;
 
         public KeyCode keyCode;
-
+        public Moveset moveset;
         bool INote.canBePressed { get => this.canBePressed;}
         public bool isMoving;
         public bool isSpecial;
@@ -25,7 +26,7 @@
         {
             CombatManager.instance.StopAttackEvent += DestroyObject;
             keys = FindObjectsOfType<KeyButton>();   
-            animator.SetBool("Special", isSpecial);           
+            animator.SetBool(moveset.ToString(), true);           
             isMoving = true;
         }
 
@@ -35,11 +36,11 @@
             {
                 if(canBePressed)
                 {
-                    CombatManager.instance.DamageOpponent(1);
+                    CombatManager.instance.DamageOpponent(damage);
                     DestroyObject();
                 }
             }
-
+            keyCode = CombatManager.instance.GetKeyCodeFromNoteIdentity(noteIdentity);
             if (isMoving)
             {
                 float targetX = keys.Where(x => x.keyIdentity == noteIdentity).FirstOrDefault().gameObject.transform.position.x;

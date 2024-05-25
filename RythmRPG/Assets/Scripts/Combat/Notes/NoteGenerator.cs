@@ -88,7 +88,8 @@ public class NoteGenerator : MonoBehaviour
             if (noteScript != null)
             {
                 noteScript.noteIdentity = Random.Range(1, 6);
-                noteScript.isSpecial = Random.Range(0, 2) == 0;
+                //noteScript.isSpecial = Random.Range(0, 2) == 0;//
+                
                 noteScript.keyCode = GetKeyCodeFromNoteIdentity(noteScript.noteIdentity);
             }
 

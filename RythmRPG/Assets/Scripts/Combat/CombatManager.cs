@@ -11,6 +11,13 @@ public enum BattleState
 {
         START, WON, LOST, NONE
 }
+
+public enum Moveset
+{
+    Default,
+    Special,
+    Arrow
+}
 public class CombatManager : MonoBehaviour
 {
     public BattleState state;
@@ -53,6 +60,11 @@ public class CombatManager : MonoBehaviour
         foreach (KeyCode keyCode in keyCodes)
         {
             KeyButton key = FindObjectsOfType<KeyButton>().FirstOrDefault(x => x.keyIdentity == Array.IndexOf(keyCodes, keyCode) + 1);
+           
+            if (Input.GetKeyDown(keyCode))
+            {
+                SoundHandler.Instance.PlayClick();
+            }
 
             if (key != null)
             {
@@ -145,7 +157,8 @@ public class CombatManager : MonoBehaviour
             CombatSystemUI.SetActive(true);
             UpdateUIEvent.Invoke();
         }
-        yield return new WaitForSeconds(3f);
+        
+        yield return new WaitForSeconds(3f);       
         AttackEvent?.Invoke();
     }
     public void FinalizeCombatEvent()
@@ -177,12 +190,13 @@ public class CombatManager : MonoBehaviour
         enemyData = null;
         virtualCamera.Follow = player.transform;
         CombatSystemUI.SetActive(false);
+        SoundHandler.Instance.StopSound();
     }
     private IEnumerator MoveToPosition(Transform transform, Vector2 targetPosition, float duration)
     {
         float elapsedTime = 0;
         Vector2 startingPos = transform.position;
-
+        SoundHandler.Instance.PlaySlideSound();
         while (elapsedTime < duration)
         {
             transform.position = new Vector2(Mathf.Lerp(startingPos.x, targetPosition.x, elapsedTime / duration),
@@ -192,6 +206,9 @@ public class CombatManager : MonoBehaviour
         }
 
         transform.position = targetPosition; // Ensure final position is exact
+        yield return new WaitForSeconds(.25f);
+        SoundHandler.Instance.PlayCombatSound();
+
     }
     public void SetEnemy(EnemyData enemy)
     {       
@@ -225,5 +242,25 @@ public class CombatManager : MonoBehaviour
     public void WinBattleEventInvoke()
     {
        WinBattleEvent.Invoke();
+    }
+
+    public KeyCode GetKeyCodeFromNoteIdentity(int identity)
+    {
+        // Assuming noteIdentity is in the range of 1 to 5
+        switch (identity)
+        {
+            case 1:
+                return keyCodes[0];
+            case 2:
+                return keyCodes[1];
+            case 3:
+                return keyCodes[2];
+            case 4:
+                return keyCodes[3];
+            case 5:
+                return keyCodes[4];
+            default:
+                return KeyCode.None;
+        }
     }
 }
