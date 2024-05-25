@@ -42,10 +42,40 @@ public class NoteGenerator : MonoBehaviour
 
         while (isAttacking)
         {
-            yield return StartCoroutine(GenerateNormalNotesForDuration(5f));
+            yield return StartCoroutine(GenerateWaveNotesForDuration(5f));
             yield return new WaitForSeconds(2f);
-            yield return StartCoroutine(GenerateRandomNotesForDuration(10f));
-            yield return new WaitForSeconds(4f);
+            //yield return StartCoroutine(GenerateRandomNotesForDuration(10f));
+            //yield return new WaitForSeconds(4f);
+        }
+    }
+
+    IEnumerator GenerateWaveNotesForDuration(float duration)
+    {
+        Debug.Log("Wave");
+        float startTime = Time.time;
+        int[] wavePattern = { 1, 2, 3, 4, 5, 4, 3, 2, 1, 2, 3, 4, 5 };
+        int index = 0;
+
+        while (Time.time - startTime < duration)
+        {
+            yield return new WaitForSeconds(.1f);
+
+            // Instantiate NoteObject prefab with the current noteIdentity from the wave pattern
+            GameObject newNote = Instantiate(noteObjectPrefab, transform.position, Quaternion.identity);
+            NoteObject noteScript = newNote.GetComponent<NoteObject>();
+
+            if (noteScript != null)
+            {
+                noteScript.speed = 8f;
+                int noteIdentity = wavePattern[index];
+                Debug.Log("Wave pattern noteIdentity: " + noteIdentity);
+                noteScript.SetNoteIdentity(noteIdentity);
+                Debug.Log("Assigned wave noteIdentity: " + noteScript.GetNoteIdentity());
+                //noteScript.keyCode = GetKeyCodeFromNoteIdentity(noteScript.noteIdentity);
+            }
+
+            newNote.SetActive(true);
+            index = (index + 1) % wavePattern.Length;
         }
     }
 
@@ -64,8 +94,11 @@ public class NoteGenerator : MonoBehaviour
 
             if (noteScript != null)
             {
-                noteScript.noteIdentity = Random.Range(1, 6);
-                noteScript.keyCode = GetKeyCodeFromNoteIdentity(noteScript.noteIdentity);
+                int randomRange = Random.Range(1, 6);
+                Debug.Log("Random range: " + randomRange);
+                noteScript.SetNoteIdentity(randomRange);
+                Debug.Log("Assigned noteIdentity: " + noteScript.GetNoteIdentity());
+                //noteScript.keyCode = GetKeyCodeFromNoteIdentity(noteScript.noteIdentity);
             }
 
             noteScript.gameObject.SetActive(true);
@@ -87,33 +120,33 @@ public class NoteGenerator : MonoBehaviour
 
             if (noteScript != null)
             {
-                noteScript.noteIdentity = Random.Range(1, 6);
+                //noteScript.noteIdentity = Random.Range(1, 6);
                 //noteScript.isSpecial = Random.Range(0, 2) == 0;//
-                
-                noteScript.keyCode = GetKeyCodeFromNoteIdentity(noteScript.noteIdentity);
+                noteScript.moveset = Moveset.Arrow;
+                //noteScript.keyCode = GetKeyCodeFromNoteIdentity(noteScript.noteIdentity);
             }
 
             noteScript.gameObject.SetActive(true);
         }
     }
 
-    public KeyCode GetKeyCodeFromNoteIdentity(int identity)
-    {
-        // Assuming noteIdentity is in the range of 1 to 5
-        switch (identity)
-        {
-            case 1:
-                return keyCodesAsign[0];
-            case 2:
-                return keyCodesAsign[1];
-            case 3:
-                return keyCodesAsign[2];
-            case 4:
-                return keyCodesAsign[3];
-            case 5:
-                return keyCodesAsign[4];
-            default:
-                return KeyCode.None;
-        }
-    }
+    //public KeyCode GetKeyCodeFromNoteIdentity(int identity)
+    //{
+    //    // Assuming noteIdentity is in the range of 1 to 5
+    //    switch (identity)
+    //    {
+    //        case 1:
+    //            return keyCodesAsign[0];
+    //        case 2:
+    //            return keyCodesAsign[1];
+    //        case 3:
+    //            return keyCodesAsign[2];
+    //        case 4:
+    //            return keyCodesAsign[3];
+    //        case 5:
+    //            return keyCodesAsign[4];
+    //        default:
+    //            return KeyCode.None;
+    //    }
+    //}
 }

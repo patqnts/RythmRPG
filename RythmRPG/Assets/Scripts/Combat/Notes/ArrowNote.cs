@@ -49,7 +49,7 @@ public class ArrowNote : NoteObject
                 shuffleTimer -= Time.deltaTime;
                 if (shuffleTimer <= 0)
                 {
-                    noteIdentity = Random.Range(minIdentity, maxIdentity + 1);
+                    SetNoteIdentity(Random.Range(minIdentity, maxIdentity + 1));
                     shuffleTimer = shuffleInterval;
                 }
             }
@@ -63,7 +63,7 @@ public class ArrowNote : NoteObject
                 else
                 {
                     // Move speed for 1000 after the pause
-                    float targetX = keys.Where(x => x.keyIdentity == noteIdentity).FirstOrDefault().gameObject.transform.position.x;
+                    float targetX = keys.Where(x => x.keyIdentity == GetNoteIdentity()).FirstOrDefault().gameObject.transform.position.x;
                     float smoothSpeed = 10f; // Adjust the smoothSpeed as needed
 
                     // Smoothly interpolate between current position and target position

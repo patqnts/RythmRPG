@@ -7,7 +7,7 @@
     public class NoteObject : MonoBehaviour, INote
     {
         [SerializeField]
-        public int noteIdentity;
+        private int noteIdentity;
     
         [SerializeField] public float speed;
         [SerializeField] public int damage;
@@ -26,7 +26,7 @@
         {
             CombatManager.instance.StopAttackEvent += DestroyObject;
             keys = FindObjectsOfType<KeyButton>();   
-            animator.SetBool(moveset.ToString(), true);           
+            //animator.SetBool(moveset.ToString(), true);      
             isMoving = true;
         }
 
@@ -40,9 +40,10 @@
                     DestroyObject();
                 }
             }
-            keyCode = CombatManager.instance.GetKeyCodeFromNoteIdentity(noteIdentity);
+            
             if (isMoving)
             {
+                keyCode = CombatManager.instance.GetKeyCodeFromNoteIdentity(noteIdentity);
                 float targetX = keys.Where(x => x.keyIdentity == noteIdentity).FirstOrDefault().gameObject.transform.position.x;
                 float smoothSpeed = 10f; // Adjust the smoothSpeed as needed
 
@@ -51,9 +52,19 @@
 
                 transform.position -= new Vector3(0, speed * Time.deltaTime, 0f);
 
-                Destroy(gameObject, 5f);
+                //Destroy(gameObject, 5f);
             }
         
+        }
+
+        public void SetNoteIdentity(int i)
+        {
+            noteIdentity = i;
+        }
+
+        public int GetNoteIdentity()
+        {
+            return noteIdentity;
         }
 
         public void DestroyObject()
@@ -63,12 +74,12 @@
             Destroy(gameObject, .25f);
         }
 
-    private void OnDestroy()
-    {
-        CombatManager.instance.StopAttackEvent -= DestroyObject;
-    }
+        private void OnDestroy()
+        {
+            CombatManager.instance.StopAttackEvent -= DestroyObject;
+        }
 
-    private void OnTriggerEnter2D(Collider2D other)
+        private void OnTriggerEnter2D(Collider2D other)
         {
             if(other.gameObject.tag == "Activator")
             {
@@ -81,7 +92,7 @@
             {
                 canBePressed = false;
                 
-                PlayerData.instance.TakeDamage(1);
+                PlayerData.instance.TakeDamage(damage);
                 DestroyObject();
             }
         }
