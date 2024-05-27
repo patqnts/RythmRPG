@@ -44,11 +44,12 @@ public class NoteGenerator : MonoBehaviour
         while (isAttacking)
         {
 
-            //yield return StartCoroutine(GenerateWaveNotesForDuration(5f));
+            yield return StartCoroutine(GenerateWaveNotesForDuration(5f));
+            yield return new WaitForSeconds(2f);
             yield return StartCoroutine(GenerateLaser(5f));
             yield return new WaitForSeconds(2f);
-            //yield return StartCoroutine(GenerateRandomNotesForDuration(10f));
-            //yield return new WaitForSeconds(4f);
+            yield return StartCoroutine(GenerateNormalNotesForDuration(10f));
+            yield return new WaitForSeconds(4f);
         }
     }
 
@@ -123,6 +124,7 @@ public class NoteGenerator : MonoBehaviour
                 int randomRange = Random.Range(1, 6);
                 Debug.Log("Random range: " + randomRange);
                 noteScript.SetNoteIdentity(randomRange);
+                noteScript.speed = 8;
                 Debug.Log("Assigned noteIdentity: " + noteScript.GetNoteIdentity());
                 //noteScript.keyCode = GetKeyCodeFromNoteIdentity(noteScript.noteIdentity);
             }
