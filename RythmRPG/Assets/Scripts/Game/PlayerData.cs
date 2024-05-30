@@ -27,18 +27,18 @@ public class PlayerData : MonoBehaviour
         if (PlayerCurrentHealth > 0)
         {          
             PlayerCurrentHealth -= damage;
-
-            if(PlayerCurrentHealth < 0)
-            {
-                PlayerCurrentHealth = 0;
-                Death();
-            }
+            
+        }
+        if (PlayerCurrentHealth <= 0)
+        {
+            PlayerCurrentHealth = 0;
+            Death();
         }
         CombatManager.instance.UpdateUIEventInvoke();
     }
 
     private void Death()
     {
-        Debug.Log("Win!");
+        CombatManager.instance.WinBattleEventInvoke();
     }
 }

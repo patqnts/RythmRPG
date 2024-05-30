@@ -37,7 +37,6 @@ public class PlayerMovement : MonoBehaviour
             if(Mathf.Abs(inputX) > 0)
             {
                 rigidbody.velocity = new Vector2 (inputX*speed, rigidbody.velocity.y);
-                Debug.Log(inputX);
             }
             if (Mathf.Abs(inputY) > 0)
             {

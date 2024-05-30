@@ -4,7 +4,7 @@
     using System.Security.Principal;
     using UnityEngine;
 
-    public class NoteObject : MonoBehaviour, INote
+    public class NoteObject : Note, INote
     {
         [SerializeField]
         private int noteIdentity;
@@ -26,13 +26,15 @@
         {
             CombatManager.instance.StopAttackEvent += DestroyObject;
             keys = FindObjectsOfType<KeyButton>();   
+            stateHandler = FindObjectOfType<PlayerStateHandler>();
             //animator.SetBool(moveset.ToString(), true);      
             isMoving = true;
         }
 
         public virtual void Update()
         {  
-            if(Input.GetKeyDown(keyCode))
+            KeyButton identityButton = keys.Where(x => x.keyIdentity == noteIdentity).FirstOrDefault();
+            if(Input.GetKeyDown(keyCode) && identityButton.GetInteractable())
             {
                 if(canBePressed)
                 {
@@ -91,7 +93,7 @@
             if(other.gameObject.tag == "Activator" && isMoving)
             {
                 canBePressed = false;
-                
+                SetPlayerState(PlayerState.Freeze, 3f);
                 PlayerData.instance.TakeDamage(damage);
                 DestroyObject();
             }

@@ -9,11 +9,17 @@ public class KeyButton : MonoBehaviour
     public bool isPressed;
     public Sprite[] sprites;
     public SpriteRenderer spriteRenderer;
+    private bool interactable;
 
+
+    private void Start()
+    {
+        interactable = true;
+    }
     private void Update()
     {
-        // Set the sprite based on the isPressed value
-        if (isPressed)
+        // Set the sprite based on the isPressed value    
+        if (isPressed || !interactable)
         {
             spriteRenderer.sprite = sprites[0]; // Assuming 1 is the index for the pressed state in your sprites array
         }
@@ -22,4 +28,11 @@ public class KeyButton : MonoBehaviour
             spriteRenderer.sprite = sprites[1]; // Assuming 0 is the index for the not pressed state in your sprites array
         }
     }
+
+    public void SetInteractable(bool interactable)
+    {
+        this.interactable = interactable;
+    }
+
+    public bool GetInteractable() { return interactable; }
 }

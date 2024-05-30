@@ -44,19 +44,20 @@ public class NoteGenerator : MonoBehaviour
         while (isAttacking)
         {
 
-            yield return StartCoroutine(GenerateWaveNotesForDuration(5f));
+            yield return StartCoroutine(GenerateNormalNotesForDuration(5f));
             yield return new WaitForSeconds(2f);
-            yield return StartCoroutine(GenerateLaser(5f));
+            yield return StartCoroutine(GenerateRandomLaser(5f));
             yield return new WaitForSeconds(2f);
-            yield return StartCoroutine(GenerateNormalNotesForDuration(10f));
+            yield return StartCoroutine(GenerateWaveNotesForDuration(10f));
             yield return new WaitForSeconds(4f);
         }
     }
 
-    IEnumerator GenerateLaser(float duration)
+    IEnumerator GenerateRandomLaser(float duration)
     {
         float startTime = Time.time;
-        int index = 2;
+        int previousNoteIdentity = -1;
+
         while (Time.time - startTime < duration)
         {
             yield return new WaitForSeconds(generationSpeed);
@@ -67,9 +68,16 @@ public class NoteGenerator : MonoBehaviour
 
             if (noteScript != null)
             {
+                int newNoteIdentity;
+                do
+                {
+                    newNoteIdentity = Random.Range(1, 6);
+                } while (newNoteIdentity == previousNoteIdentity);
 
-                noteScript.SetNoteIdentity(Random.Range(1, 6));               
-                //noteScript.keyCode = GetKeyCodeFromNoteIdentity(noteScript.noteIdentity);
+                noteScript.SetNoteIdentity(newNoteIdentity);
+                previousNoteIdentity = newNoteIdentity;
+
+                // noteScript.keyCode = GetKeyCodeFromNoteIdentity(noteScript.noteIdentity);
             }
 
             noteScript.gameObject.SetActive(true);
@@ -95,9 +103,7 @@ public class NoteGenerator : MonoBehaviour
             {
                 noteScript.speed = 8f;
                 int noteIdentity = wavePattern[index];
-                Debug.Log("Wave pattern noteIdentity: " + noteIdentity);
-                noteScript.SetNoteIdentity(noteIdentity);
-                Debug.Log("Assigned wave noteIdentity: " + noteScript.GetNoteIdentity());
+                noteScript.SetNoteIdentity(noteIdentity);             
                 //noteScript.keyCode = GetKeyCodeFromNoteIdentity(noteScript.noteIdentity);
             }
 
@@ -122,10 +128,8 @@ public class NoteGenerator : MonoBehaviour
             if (noteScript != null)
             {
                 int randomRange = Random.Range(1, 6);
-                Debug.Log("Random range: " + randomRange);
                 noteScript.SetNoteIdentity(randomRange);
-                noteScript.speed = 8;
-                Debug.Log("Assigned noteIdentity: " + noteScript.GetNoteIdentity());
+                noteScript.speed = 15;             
                 //noteScript.keyCode = GetKeyCodeFromNoteIdentity(noteScript.noteIdentity);
             }
 
