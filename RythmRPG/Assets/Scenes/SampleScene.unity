@@ -4027,8 +4027,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e4ee415e9e3f7248a52e8acc0ebf0d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentHealth: 1000
-  _maxHealth: 1000
+  _currentHealth: 200
+  _maxHealth: 200
   _noteGenerator: {fileID: 660715135}
   _animator: {fileID: 660715133}
   isOnBattle: 0
