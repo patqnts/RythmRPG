@@ -15,7 +15,7 @@ public class CombatUI : MonoBehaviour
 
     public void UpdateUI()
     {
-        if (PlayerData.instance == null && CombatManager.instance.enemyData == null)
+        if (PlayerData.instance == null || CombatManager.instance.enemyData == null)
         {
             return;
         }

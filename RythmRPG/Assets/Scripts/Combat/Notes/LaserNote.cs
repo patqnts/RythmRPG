@@ -17,6 +17,7 @@ public class LaserNote : MonoBehaviour, INote
 
     public KeyCode keyCode;
     public Moveset moveset;
+    private bool isHit;
     bool INote.canBePressed { get => this.canBePressed; }
     public Animator animator;
     private void Start()
@@ -38,9 +39,10 @@ public class LaserNote : MonoBehaviour, INote
     {
         if (Input.GetKeyDown(keyCode))
         {
-            if (canBePressed)
+            if (canBePressed && !isHit)
             {
                 CombatManager.instance.DamageOpponent(damage);
+                isHit = true;
                 DestroyObject();
             }
         }
@@ -62,16 +64,23 @@ public class LaserNote : MonoBehaviour, INote
         if (other.gameObject.tag == "Activator")
         {
             canBePressed = false;
-
-            PlayerData.instance.TakeDamage(damage);
-            DestroyObject();
+            if (isHit)
+            {                              
+                DestroyObject();
+            }
+            else
+            {
+                PlayerData.instance.TakeDamage(damage);
+                Destroy(gameObject,.5f);
+            }
         }
     }
 
     public void DestroyObject()
     {
-        //animator.SetTrigger("Hit");
-        Destroy(gameObject, .25f);
+        animator.SetTrigger("LaserHit");
+        Destroy(gameObject, 1.5f);
+        
     }
 
     private void OnDestroy()
