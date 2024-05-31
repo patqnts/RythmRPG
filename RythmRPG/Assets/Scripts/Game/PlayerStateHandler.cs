@@ -33,7 +33,7 @@ public class PlayerStateHandler : MonoBehaviour
 
                 if (pressCount >= effectDuration)
                 {
-                    BreakFree();
+                    SetPlayerState(PlayerState.Default, 0);
                 }
             }
         }
@@ -47,6 +47,11 @@ public class PlayerStateHandler : MonoBehaviour
 
     public void SetPlayerState(PlayerState state, float duration)
     {
+        if(state == PlayerState.None)
+        {
+            return;
+        }
+
         if(state != playerState)
         {
             playerState = state;
@@ -60,12 +65,13 @@ public class PlayerStateHandler : MonoBehaviour
         switch (playerState)
         {
             case PlayerState.Default:
+                BreakFree();
                 break;
             case PlayerState.Freeze:
                 FreezeKeysForDuration(duration);
                 break;
             case PlayerState.Nausea:
-                break;            
+                break;
         }  
     }
 
@@ -96,6 +102,7 @@ public enum PlayerState
     Default,
     Freeze,
     Nausea,
+    None,
 }
 
 public enum GameState

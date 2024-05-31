@@ -37,21 +37,56 @@ public class NoteGenerator : MonoBehaviour
         isAttacking = false;
     }
 
+    //IEnumerator AttackCycle()
+    //{
+    //    isAttacking = true;
+
+    //    while (isAttacking)
+    //    {
+
+    //        yield return StartCoroutine(GenerateNormalNotesForDuration(10f));
+    //        yield return new WaitForSeconds(.25f);
+    //        yield return StartCoroutine(GenerateRandomLaser(10f));
+    //        yield return new WaitForSeconds(.25f);
+    //        yield return StartCoroutine(GenerateSimultaneousNotes(10f, 4, true));
+    //        yield return new WaitForSeconds(.25f);
+    //        yield return StartCoroutine(GenerateWaveNotesForDuration(10f));
+    //        yield return new WaitForSeconds(.25f);
+    //    }
+    //}
+
     IEnumerator AttackCycle()
     {
         isAttacking = true;
 
         while (isAttacking)
         {
+            List<IEnumerator> attackPatterns = new List<IEnumerator>
+        {
+            GenerateNormalNotesForDuration(10f),
+            GenerateRandomLaser(10f),
+            GenerateSimultaneousNotes(10f, 4, true),
+            GenerateWaveNotesForDuration(10f)
+        };
 
-            yield return StartCoroutine(GenerateNormalNotesForDuration(5f));
-            yield return new WaitForSeconds(2f);
-            yield return StartCoroutine(GenerateRandomLaser(5f));
-            yield return new WaitForSeconds(2f);
-            yield return StartCoroutine(GenerateWaveNotesForDuration(10f));
-            yield return new WaitForSeconds(4f);
+            // Shuffle the list
+            for (int i = 0; i < attackPatterns.Count; i++)
+            {
+                int randomIndex = Random.Range(0, attackPatterns.Count);
+                IEnumerator temp = attackPatterns[i];
+                attackPatterns[i] = attackPatterns[randomIndex];
+                attackPatterns[randomIndex] = temp;
+            }
+
+            // Execute the coroutines in shuffled order
+            foreach (var attackPattern in attackPatterns)
+            {
+                yield return StartCoroutine(attackPattern);
+                yield return new WaitForSeconds(0.25f);
+            }
         }
     }
+
 
     IEnumerator GenerateRandomLaser(float duration)
     {
@@ -136,6 +171,50 @@ public class NoteGenerator : MonoBehaviour
             noteScript.gameObject.SetActive(true);
         }
     }
+
+    IEnumerator GenerateSimultaneousNotes(float duration, int fixedProjectileCount, bool randomAmount)
+    {
+        float startTime = Time.time;
+
+        while (Time.time - startTime < duration)
+        {
+            yield return new WaitForSeconds(generationSpeed);
+
+            // Determine the number of projectiles to generate
+            int projectileCount = randomAmount ? Random.Range(1, fixedProjectileCount + 1) : fixedProjectileCount;
+
+            // Create a list to store used identities
+            List<int> usedIdentities = new List<int>();
+
+            for (int i = 0; i < projectileCount; i++)
+            {
+                int noteIdentity;
+                // Generate a unique random noteIdentity
+                do
+                {
+                    noteIdentity = Random.Range(1, 6);
+                } while (usedIdentities.Contains(noteIdentity));
+
+                // Add the generated noteIdentity to the list of used identities
+                usedIdentities.Add(noteIdentity);
+
+                // Instantiate NoteObject prefab at the unique random position
+                GameObject newNote = Instantiate(noteObjectPrefab, transform.position, Quaternion.identity);
+                NoteObject noteScript = newNote.GetComponent<NoteObject>();
+
+                if (noteScript != null)
+                {
+                    noteScript.SetNoteIdentity(noteIdentity);
+                    noteScript.speed = 10;                   
+                    // noteScript.keyCode = GetKeyCodeFromNoteIdentity(noteScript.noteIdentity);
+                }
+
+                noteScript.gameObject.SetActive(true);
+            }
+        }
+    }
+
+
 
     IEnumerator GenerateRandomNotesForDuration(float duration)
     {

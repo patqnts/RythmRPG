@@ -101,6 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6df7088af825304d918341f096d061f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stateHandler: {fileID: 0}
   noteIdentity: 3
   speed: 1
   damage: 1
@@ -108,6 +109,7 @@ MonoBehaviour:
   canBePressed: 0
   keyCode: 49
   moveset: 0
+  state: 3
   isMoving: 0
   isSpecial: 0
   animator: {fileID: 4303524799691956577}
