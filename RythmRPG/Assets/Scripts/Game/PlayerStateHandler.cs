@@ -1,13 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerStateHandler : MonoBehaviour
 {
     // Start is called before the first frame update
+    public Text pressMeter;
+    public Text status;
     public KeyButton[] keys;
     private PlayerState playerState;
     public PlayerStateHandler instance;
+    private int pressCount;
+    private float effectDuration;
 
     private void Start()
     {
@@ -15,11 +20,37 @@ public class PlayerStateHandler : MonoBehaviour
         playerState = PlayerState.Default;
     }
 
+    private void Update()
+    {
+        if (playerState == PlayerState.Freeze)
+        {
+            foreach (KeyCode keyCode in CombatManager.instance.keyCodes)
+            {
+                if (Input.GetKeyDown(keyCode))
+                {
+                    UpdatePressCount(1);
+                }
+
+                if (pressCount >= effectDuration)
+                {
+                    BreakFree();
+                }
+            }
+        }
+    }
+
+    public void UpdatePressCount(int value)
+    {
+        pressCount++;
+        pressMeter.text = pressCount.ToString();
+    }
+
     public void SetPlayerState(PlayerState state, float duration)
     {
         if(state != playerState)
         {
             playerState = state;
+            status.text = playerState.ToString();
             StateEffect(duration);
         }    
     }
@@ -31,30 +62,32 @@ public class PlayerStateHandler : MonoBehaviour
             case PlayerState.Default:
                 break;
             case PlayerState.Freeze:
-                StartCoroutine(FreezeKeysForDuration(duration));
+                FreezeKeysForDuration(duration);
                 break;
             case PlayerState.Nausea:
-                break;
-            
-        }
+                break;            
+        }  
     }
 
-    IEnumerator FreezeKeysForDuration(float duration)
+    public void FreezeKeysForDuration(float duration)
     {
+        pressCount = 0;
+        effectDuration = duration;
         foreach (KeyButton key in keys)
         {
             key.SetInteractable(false);
             key.isPressed = true;
-        }
+        } 
+    }
 
-        yield return new WaitForSeconds(duration);
-
+    public void BreakFree()
+    {
         foreach (KeyButton key in keys)
         {
             key.SetInteractable(true);
             key.isPressed = false;
         }
-        SetPlayerState(PlayerState.Default, duration);
+        SetPlayerState(PlayerState.Default, 0);
     }
 }
 
@@ -63,4 +96,11 @@ public enum PlayerState
     Default,
     Freeze,
     Nausea,
+}
+
+public enum GameState
+{
+    Default,
+    Combat,
+    UI
 }

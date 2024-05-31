@@ -18,6 +18,7 @@
 
         public KeyCode keyCode;
         public Moveset moveset;
+        public PlayerState state;
         bool INote.canBePressed { get => this.canBePressed;}
         public bool isMoving;
         public bool isSpecial;
@@ -93,7 +94,7 @@
             if(other.gameObject.tag == "Activator" && isMoving)
             {
                 canBePressed = false;
-                SetPlayerState(PlayerState.Freeze, 3f);
+                SetPlayerState(state, 30);
                 PlayerData.instance.TakeDamage(damage);
                 DestroyObject();
             }

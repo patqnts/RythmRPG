@@ -114,7 +114,6 @@ public class NoteGenerator : MonoBehaviour
 
     IEnumerator GenerateNormalNotesForDuration(float duration)
     {
-        Debug.Log("Normal");
         float startTime = Time.time;
 
         while (Time.time - startTime < duration)
@@ -129,7 +128,8 @@ public class NoteGenerator : MonoBehaviour
             {
                 int randomRange = Random.Range(1, 6);
                 noteScript.SetNoteIdentity(randomRange);
-                noteScript.speed = 15;             
+                noteScript.speed = 10;
+                noteScript.state = PlayerState.Freeze;
                 //noteScript.keyCode = GetKeyCodeFromNoteIdentity(noteScript.noteIdentity);
             }
 

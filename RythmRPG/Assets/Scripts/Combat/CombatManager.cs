@@ -9,7 +9,10 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 public enum BattleState
 {
-        START, WON, LOST, NONE
+    START, 
+    WON, 
+    LOST, 
+    NONE
 }
 
 public enum Moveset

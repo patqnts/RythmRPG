@@ -4,28 +4,19 @@ using UnityEngine;
 
 public class EnemyData : MonoBehaviour, IEnemy
 {
-    public int _currentHealth = 100;
-    public int _maxHealth = 100;
+    [SerializeField]private int _currentHealth;
+    [SerializeField] private int _maxHealth;
     public NoteGenerator _noteGenerator;
     public Animator _animator;
     public int MaxHealth { get { return _maxHealth; } set { _maxHealth = value; } }
     public int CurrentHealth { get { return _currentHealth; } set { _currentHealth = value; } }
    
     public bool isOnBattle;
-    private void Start()
-    {
-       
-        _currentHealth = 100;
-    }
-
     public void TakeDamage(int damage)
     {
         if (CurrentHealth > 0)
-        {
-            
+        {            
             CurrentHealth -= damage;
-            Debug.Log("Enemy Current Healht: " + CurrentHealth);
-
         }
 
         if (CurrentHealth <= 0)
