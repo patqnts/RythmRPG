@@ -40,11 +40,23 @@ public class EnemyData : MonoBehaviour, IEnemy
         {
             _animator.SetTrigger("Death");
         }
+        else
+        {
+            Debug.Log("Enemy has no Animator");
+        }
     }
     public void Unsub()
     {
-        _noteGenerator.enabled = isOnBattle;
-        _animator.CrossFade("intro", 3f);
+        if(_noteGenerator!= null)
+        {
+            _noteGenerator.enabled = isOnBattle;
+            _animator.CrossFade("intro", 3f);
+        }
+        else
+        {
+            Debug.Log("Enemy has no Note Generator");
+        }
+        
         
     }
 }

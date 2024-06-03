@@ -26,7 +26,6 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
         if (isEnabled) 
         {
             circleCollider.enabled = Input.GetKey(KeyCode.Return);

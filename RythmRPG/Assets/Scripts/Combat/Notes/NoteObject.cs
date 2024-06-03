@@ -6,23 +6,22 @@
 
     public class NoteObject : Note, INote
     {
-        [SerializeField]
-        private int noteIdentity;
-    
+        [SerializeField] private int noteIdentity;   
         [SerializeField] public float speed;
         [SerializeField] public int damage;
-
         [SerializeField] public KeyButton[] keys;
 
+        public Animator animator;
         public bool canBePressed;
 
         public KeyCode keyCode;
         public Moveset moveset;
         public PlayerState state;
+        public HitEffect hitEffect;
+
         bool INote.canBePressed { get => this.canBePressed;}
         public bool isMoving;
         public bool isSpecial;
-        public Animator animator;
         private void Start()
         {
             CombatManager.instance.StopAttackEvent += DestroyObject;
@@ -39,8 +38,9 @@
             {
                 if(canBePressed)
                 {
-                    CombatManager.instance.DamageOpponent(damage);
-                    DestroyObject();
+                    
+                //DestroyObject(); //DEFAULT EFFECT
+                    StartHitEffect();
                 }
             }
             
@@ -54,12 +54,37 @@
                 transform.position = new Vector2(Mathf.Lerp(transform.position.x, targetX, Time.deltaTime * smoothSpeed), transform.position.y);
 
                 transform.position -= new Vector3(0, speed * Time.deltaTime, 0f);
-
-                //Destroy(gameObject, 5f);
             }
         
         }
+        
+    public void StartHitEffect()
+    {
+        switch (hitEffect)
+        {
+            case HitEffect.Default:
+                CombatManager.instance.DamageOpponent(damage);
+                DestroyObject();
+                break;
+            case HitEffect.Ghost:
+                PlayerData.instance.TakeDamage(damage);
+                DestroyObject();                
+                break;
+            case HitEffect.DoubleHit:
+                CombatManager.instance.DamageOpponent(damage);
+                DestroyObject();
+                break;
+            case HitEffect.Cluster:
+                CombatManager.instance.DamageOpponent(damage);
+                DestroyObject();
+                break;
+            case HitEffect.Pong:
+                CombatManager.instance.DamageOpponent(damage);
+                DestroyObject();
+                break;
 
+        }
+    }
         public void SetNoteIdentity(int i)
         {
             noteIdentity = i;
@@ -68,6 +93,17 @@
         public int GetNoteIdentity()
         {
             return noteIdentity;
+        }
+
+
+        public void SetSpeed(float i)
+        {
+            speed = i;
+        }
+
+        public float GetSpeed()
+        {
+            return speed;
         }
 
         public void DestroyObject()

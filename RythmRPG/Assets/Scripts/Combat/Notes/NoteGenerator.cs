@@ -111,8 +111,6 @@ public class NoteGenerator : MonoBehaviour
 
                 noteScript.SetNoteIdentity(newNoteIdentity);
                 previousNoteIdentity = newNoteIdentity;
-
-                // noteScript.keyCode = GetKeyCodeFromNoteIdentity(noteScript.noteIdentity);
             }
 
             noteScript.gameObject.SetActive(true);
@@ -138,8 +136,8 @@ public class NoteGenerator : MonoBehaviour
             {
                 noteScript.speed = 8f;
                 int noteIdentity = wavePattern[index];
-                noteScript.SetNoteIdentity(noteIdentity);             
-                //noteScript.keyCode = GetKeyCodeFromNoteIdentity(noteScript.noteIdentity);
+                noteScript.SetNoteIdentity(noteIdentity);
+                noteScript.hitEffect = HitEffect.Default;
             }
 
             newNote.SetActive(true);
@@ -153,7 +151,7 @@ public class NoteGenerator : MonoBehaviour
 
         while (Time.time - startTime < duration)
         {
-            yield return new WaitForSeconds(generationSpeed);
+            yield return new WaitForSeconds(.15f);
 
             // Instantiate NoteObject prefab with a random noteIdentity between 1 and 5
             GameObject newNote = Instantiate(noteObjectPrefab, transform.position, Quaternion.identity);
@@ -164,8 +162,8 @@ public class NoteGenerator : MonoBehaviour
                 int randomRange = Random.Range(1, 6);
                 noteScript.SetNoteIdentity(randomRange);
                 noteScript.speed = 10;
-                noteScript.state = PlayerState.Freeze;
-                //noteScript.keyCode = GetKeyCodeFromNoteIdentity(noteScript.noteIdentity);
+                noteScript.state = PlayerState.Default;
+                noteScript.hitEffect = HitEffect.Default;
             }
 
             noteScript.gameObject.SetActive(true);
@@ -205,8 +203,8 @@ public class NoteGenerator : MonoBehaviour
                 if (noteScript != null)
                 {
                     noteScript.SetNoteIdentity(noteIdentity);
-                    noteScript.speed = 10;                   
-                    // noteScript.keyCode = GetKeyCodeFromNoteIdentity(noteScript.noteIdentity);
+                    noteScript.speed = 10;
+                    noteScript.hitEffect = HitEffect.Default;
                 }
 
                 noteScript.gameObject.SetActive(true);
@@ -214,50 +212,4 @@ public class NoteGenerator : MonoBehaviour
         }
     }
 
-
-
-    IEnumerator GenerateRandomNotesForDuration(float duration)
-    {
-        Debug.Log("Random");
-        float startTime = Time.time;
-
-        while (Time.time - startTime < duration)
-        {
-            yield return new WaitForSeconds(generationSpeed);
-
-            // Instantiate NoteObject prefab with a random noteIdentity between 1 and 5
-            GameObject newNote = Instantiate(noteObjectPrefab, transform.position, Quaternion.identity);
-            NoteObject noteScript = newNote.GetComponent<NoteObject>();
-
-            if (noteScript != null)
-            {
-                //noteScript.noteIdentity = Random.Range(1, 6);
-                //noteScript.isSpecial = Random.Range(0, 2) == 0;//
-                noteScript.moveset = Moveset.Arrow;
-                //noteScript.keyCode = GetKeyCodeFromNoteIdentity(noteScript.noteIdentity);
-            }
-
-            noteScript.gameObject.SetActive(true);
-        }
-    }
-
-    //public KeyCode GetKeyCodeFromNoteIdentity(int identity)
-    //{
-    //    // Assuming noteIdentity is in the range of 1 to 5
-    //    switch (identity)
-    //    {
-    //        case 1:
-    //            return keyCodesAsign[0];
-    //        case 2:
-    //            return keyCodesAsign[1];
-    //        case 3:
-    //            return keyCodesAsign[2];
-    //        case 4:
-    //            return keyCodesAsign[3];
-    //        case 5:
-    //            return keyCodesAsign[4];
-    //        default:
-    //            return KeyCode.None;
-    //    }
-    //}
 }
