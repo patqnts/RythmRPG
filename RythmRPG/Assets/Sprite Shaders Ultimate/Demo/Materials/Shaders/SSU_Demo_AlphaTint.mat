@@ -13,7 +13,7 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - ETC1_EXTERNAL_ALPHA
-  - _ENABLEALPHATINT_ON
+  - _ENABLEADDCOLOR_ON
   - _SHADERFADING_NONE
   - _SHADERSPACE_UV
   - _STRONGTINTCONTRASTTOGGLE_ON
@@ -218,9 +218,9 @@ Material:
     - _DirectionalGlowFadeRotation: 0
     - _DirectionalGlowFadeWidth: 0.1
     - _DstBlend: 0
-    - _EnableAddColor: 0
+    - _EnableAddColor: 1
     - _EnableAddHue: 0
-    - _EnableAlphaTint: 1
+    - _EnableAlphaTint: 0
     - _EnableBlackTint: 0
     - _EnableBrightness: 0
     - _EnableBurn: 0
@@ -524,7 +524,7 @@ Material:
     - _WorldTilingPixelsPerUnit: 100
     - _ZWrite: 1
     m_Colors:
-    - _AddColorColor: {r: 2.996078, g: 0, b: 0, a: 0}
+    - _AddColorColor: {r: 0.002313996, g: 0.490566, b: 0.1404481, a: 0}
     - _AlphaTintColor: {r: 10.039216, g: 41.160786, b: 191.74902, a: 0}
     - _BlackTintColor: {r: 0, g: 0, b: 1, a: 0}
     - _BurnEdgeColor: {r: 11.98431, g: 1.129412, b: 0.1254902, a: 0}

@@ -13,7 +13,11 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - ETC1_EXTERNAL_ALPHA
-  - _ENABLEINNEROUTLINE_ON
+  - PIXELSNAP_ON
+  - _ENABLEOUTEROUTLINE_ON
+  - _ENABLESHINE_ON
+  - _INNEROUTLINEDISTORTIONTOGGLE_ON
+  - _PIXELPERFECTSPACE_ON
   - _SHADERFADING_NONE
   - _SHADERSPACE_UV
   - _STRONGTINTCONTRASTTOGGLE_ON
@@ -152,7 +156,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - PixelSnap: 0
+    - PixelSnap: 1
     - _AddColorContrast: 0.5
     - _AddColorContrastToggle: 0
     - _AddColorFade: 1
@@ -244,10 +248,10 @@ Material:
     - _EnableHologram: 0
     - _EnableHue: 0
     - _EnableInkSpread: 0
-    - _EnableInnerOutline: 1
+    - _EnableInnerOutline: 0
     - _EnableMetal: 0
     - _EnableNegative: 0
-    - _EnableOuterOutline: 0
+    - _EnableOuterOutline: 1
     - _EnablePingPongGlow: 0
     - _EnablePixelOutline: 0
     - _EnablePixelate: 0
@@ -261,7 +265,7 @@ Material:
     - _EnableSharpen: 0
     - _EnableShiftHue: 0
     - _EnableShifting: 0
-    - _EnableShine: 0
+    - _EnableShine: 1
     - _EnableSineGlow: 0
     - _EnableSineMove: 0
     - _EnableSineRotate: 0
@@ -342,7 +346,7 @@ Material:
     - _InkSpreadFade: 1
     - _InkSpreadNoiseFactor: 0.5
     - _InkSpreadWidth: 0.2
-    - _InnerOutlineDistortionToggle: 0
+    - _InnerOutlineDistortionToggle: 1
     - _InnerOutlineFade: 1
     - _InnerOutlineOutlineOnlyToggle: 0
     - _InnerOutlineTextureToggle: 0
@@ -360,16 +364,16 @@ Material:
     - _OuterOutlineFade: 1
     - _OuterOutlineOutlineOnlyToggle: 0
     - _OuterOutlineTextureToggle: 0
-    - _OuterOutlineWidth: 0.04
+    - _OuterOutlineWidth: 0.011
     - _Parallax: 0.02
     - _PingPongGlowContrast: 1
     - _PingPongGlowFade: 1
-    - _PingPongGlowFrequency: 3
+    - _PingPongGlowFrequency: 5.67
     - _PixelOutlineFade: 1
     - _PixelOutlineOutlineOnlyToggle: 0
     - _PixelOutlineTextureToggle: 0
     - _PixelOutlineWidth: 1
-    - _PixelPerfectSpace: 0
+    - _PixelPerfectSpace: 1
     - _PixelPerfectUV: 0
     - _PixelateFade: 1
     - _PixelatePixelDensity: 16
@@ -402,7 +406,7 @@ Material:
     - _SharpenFactor: 4
     - _SharpenFade: 1
     - _SharpenOffset: 2
-    - _ShiftHueSpeed: 0.5
+    - _ShiftHueSpeed: 0.08
     - _ShiftingBrightness: 1
     - _ShiftingContrast: 0.5
     - _ShiftingDensity: 1.5
@@ -420,7 +424,7 @@ Material:
     - _ShineSpeed: 5
     - _ShineWidth: 0.1
     - _SineGlowContrast: 1
-    - _SineGlowFade: 1
+    - _SineGlowFade: 0.31
     - _SineGlowFrequency: 4
     - _SineGlowMaskToggle: 0
     - _SineGlowMax: 1
@@ -587,7 +591,7 @@ Material:
     - _InkSpreadColor: {r: 8.47419, g: 5.013525, b: 0.08873497, a: 0}
     - _InkSpreadNoiseScale: {r: 0.4, g: 0.4, b: 0, a: 0}
     - _InkSpreadPosition: {r: 0.5, g: -1, b: 0, a: 0}
-    - _InnerOutlineColor: {r: 11.98431, g: 1.254902, b: 1.254902, a: 1}
+    - _InnerOutlineColor: {r: 15.999997, g: 15.999997, b: 15.999997, a: 1}
     - _InnerOutlineDistortionIntensity: {r: 0.015, g: 0.015, b: 0, a: 0}
     - _InnerOutlineNoiseScale: {r: 5, g: 5, b: 0, a: 0}
     - _InnerOutlineNoiseSpeed: {r: 0, g: 0.05, b: 0, a: 0}
@@ -599,13 +603,13 @@ Material:
     - _MetalNoiseDistortionSpeed: {r: -0.05, g: -0.05, b: 0, a: 0}
     - _MetalNoiseScale: {r: 0.25, g: 0.25, b: 0, a: 0}
     - _MetalNoiseSpeed: {r: 0.05, g: 0.05, b: 0, a: 0}
-    - _OuterOutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _OuterOutlineColor: {r: 1, g: 1, b: 1, a: 1}
     - _OuterOutlineDistortionIntensity: {r: 0.01, g: 0.01, b: 0, a: 0}
     - _OuterOutlineNoiseScale: {r: 4, g: 4, b: 0, a: 0}
     - _OuterOutlineNoiseSpeed: {r: 0, g: 0.1, b: 0, a: 0}
     - _OuterOutlineTextureSpeed: {r: 0.5, g: 0, b: 0, a: 0}
     - _PingPongGlowFrom: {r: 5.992157, g: 0.1882353, b: 0.1882353, a: 0}
-    - _PingPongGlowTo: {r: 0.1882353, g: 0.1882353, b: 5.992157, a: 0}
+    - _PingPongGlowTo: {r: 8, g: 0, b: 1.5899353, a: 0}
     - _PixelOutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _PixelOutlineTextureSpeed: {r: 0.5, g: 0, b: 0, a: 0}
     - _PoisonColor: {r: 0.3137255, g: 2.996078, b: 0.3137255, a: 0}
@@ -628,7 +632,7 @@ Material:
     - _ShadowOffset: {r: 0.07, g: -0.07, b: 0, a: 0}
     - _ShiftingColorA: {r: 1.498039, g: 0, b: 0, a: 0}
     - _ShiftingColorB: {r: 1.498039, g: 0.7490196, b: 0, a: 0}
-    - _ShineColor: {r: 11.98431, g: 11.98431, b: 11.98431, a: 0}
+    - _ShineColor: {r: 6.8679233, g: 15.999997, b: 7.597239, a: 0}
     - _SineGlowColor: {r: 0, g: 2.007843, b: 2.996078, a: 0}
     - _SineMoveFrequency: {r: 1, g: 1, b: 0, a: 0}
     - _SineMoveOffset: {r: 0, g: 0.5, b: 0, a: 0}

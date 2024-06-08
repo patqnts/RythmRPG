@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1174923500817921273}
   - component: {fileID: 203357881762142560}
   - component: {fileID: 3745459253048717220}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Laser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,7 +56,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c92359e2a135c8248b4556459b521f18, type: 2}
+  - {fileID: 2100000, guid: 551590223c18d484eab9e62bfc462166, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -82,10 +82,10 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.65625, y: 4.03125}
+  m_Size: {x: 5, y: 7.9375}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &8908453324413230476
@@ -164,9 +164,9 @@ BoxCollider2D:
   m_Offset: {x: 0.023127943, y: -3.3474236}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.95}
+    pivot: {x: 0.5, y: 0.85}
     oldSize: {x: 5, y: 7.9375}
-    newSize: {x: 1.65625, y: 4.03125}
+    newSize: {x: 5, y: 7.9375}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0

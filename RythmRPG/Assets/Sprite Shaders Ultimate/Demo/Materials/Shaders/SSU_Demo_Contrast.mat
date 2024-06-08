@@ -8,18 +8,18 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: SSU_Demo_Contrast
-  m_Shader: {fileID: 4800000, guid: 0803c241834332942abfcbd27c498b46, type: 3}
+  m_Shader: {fileID: 4800000, guid: da8efd605fdd20949a21be6242000625, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - ETC1_EXTERNAL_ALPHA
-  - _ENABLECONTRAST_ON
+  - _ENABLEHOLOGRAM_ON
   - _SHADERFADING_NONE
   - _SHADERSPACE_UV
   - _STRONGTINTCONTRASTTOGGLE_ON
   - _TEXTURELAYER1SHEETTOGGLE_ON
   - _TEXTURELAYER2SHEETTOGGLE_ON
-  m_InvalidKeywords: []
+  m_InvalidKeywords:
+  - ETC1_EXTERNAL_ALPHA
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -78,6 +78,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _MaskMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MetalMask:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -86,12 +90,16 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _NormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OuterOutlineTintTexture:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 5af9a397a8643994c829e696a24a7845, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
@@ -99,7 +107,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _PixelOutlineTintTexture:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 5af9a397a8643994c829e696a24a7845, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RecolorRGBTexture:
@@ -131,11 +139,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TextureLayer1Texture:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 9685c3a024e22a946a7e8c2ce3542300, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TextureLayer2Texture:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 9685c3a024e22a946a7e8c2ce3542300, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _UVDistortMask:
@@ -147,6 +155,18 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -163,6 +183,7 @@ Material:
     - _AddHueMaskToggle: 0
     - _AddHueSaturation: 1
     - _AddHueSpeed: 1
+    - _AlphaCutoff: 0.5
     - _AlphaTintFade: 1
     - _AlphaTintMinAlpha: 0.02
     - _BakedMaterial: 0
@@ -227,7 +248,7 @@ Material:
     - _EnableCamouflage: 0
     - _EnableCheckerboard: 0
     - _EnableColorReplace: 0
-    - _EnableContrast: 1
+    - _EnableContrast: 0
     - _EnableCustomFade: 0
     - _EnableDirectionalAlphaFade: 0
     - _EnableDirectionalDistortion: 0
@@ -241,7 +262,7 @@ Material:
     - _EnableGaussianBlur: 0
     - _EnableGlitch: 0
     - _EnableHalftone: 0
-    - _EnableHologram: 0
+    - _EnableHologram: 1
     - _EnableHue: 0
     - _EnableInkSpread: 0
     - _EnableInnerOutline: 0
@@ -307,7 +328,7 @@ Material:
     - _FrozenHighlightContrast: 2
     - _FrozenHighlightDensity: 1
     - _FrozenSnowContrast: 1
-    - _FrozenSnowDensity: 0.25
+    - _FrozenSnowDensity: 0.71
     - _FullAlphaDissolveFade: 0.5
     - _FullAlphaDissolveWidth: 0.5
     - _FullDistortionFade: 1
@@ -355,6 +376,7 @@ Material:
     - _Metallic: 0
     - _Mode: 0
     - _NegativeFade: 1
+    - _NormalIntensity: 1
     - _OcclusionStrength: 1
     - _OuterOutlineDistortionToggle: 0
     - _OuterOutlineFade: 1
@@ -567,7 +589,7 @@ Material:
     - _FrozenHighlightDistortionSpeed: {r: -0.05, g: -0.05, b: 0, a: 0}
     - _FrozenHighlightScale: {r: 0.2, g: 0.2, b: 0, a: 0}
     - _FrozenHighlightSpeed: {r: 0.1, g: 0.1, b: 0, a: 0}
-    - _FrozenSnowColor: {r: 1.123529, g: 1.373203, b: 1.498039, a: 0}
+    - _FrozenSnowColor: {r: 0.41429332, g: 1.3526144, b: 1.7924526, a: 0}
     - _FrozenSnowScale: {r: 0.1, g: 0.1, b: 0, a: 0}
     - _FrozenTint: {r: 1.819608, g: 4.611765, b: 5.992157, a: 0}
     - _FullAlphaDissolveNoiseScale: {r: 0.1, g: 0.1, b: 0, a: 0}

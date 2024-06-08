@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5787300070096218072}
   - component: {fileID: 4303524799691956577}
   - component: {fileID: -8950985985018547782}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: NoteObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,7 +57,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c92359e2a135c8248b4556459b521f18, type: 2}
+  - {fileID: 2100000, guid: a4180fd572b68e64982d017266f9c9f5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 52
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d8e8dc4df2f885c48be073724700409e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -106,13 +106,14 @@ MonoBehaviour:
   speed: 1
   damage: 1
   keys: []
+  animator: {fileID: 4303524799691956577}
   canBePressed: 0
   keyCode: 49
   moveset: 0
   state: 3
+  hitEffect: 0
   isMoving: 0
   isSpecial: 0
-  animator: {fileID: 4303524799691956577}
 --- !u!61 &3938753330650578465
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -149,7 +150,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 0.6666667, y: 0.6666667}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

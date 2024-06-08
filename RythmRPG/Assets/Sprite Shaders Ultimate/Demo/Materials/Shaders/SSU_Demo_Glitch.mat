@@ -13,7 +13,7 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - ETC1_EXTERNAL_ALPHA
-  - _ENABLEGLITCH_ON
+  - _ENABLEFROZEN_ON
   - _SHADERFADING_NONE
   - _SHADERSPACE_UV
   - _TEXTURELAYER1SHEETTOGGLE_ON
@@ -193,12 +193,12 @@ Material:
     - _EnableDirectionalGlowFade: 0
     - _EnableEnchanted: 0
     - _EnableFlame: 0
-    - _EnableFrozen: 0
+    - _EnableFrozen: 1
     - _EnableFullAlphaDissolve: 0
     - _EnableFullDistortion: 0
     - _EnableFullGlowDissolve: 0
     - _EnableGaussianBlur: 0
-    - _EnableGlitch: 1
+    - _EnableGlitch: 0
     - _EnableHalftone: 0
     - _EnableHologram: 0
     - _EnableHue: 0
