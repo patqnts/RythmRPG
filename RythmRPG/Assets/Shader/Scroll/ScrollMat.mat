@@ -12,8 +12,7 @@ Material:
   m_Parent: {fileID: 2100000, guid: 551590223c18d484eab9e62bfc462166, type: 2}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _ENABLEGLITCH_ON
-  - _ENABLETEXTURELAYER2_ON
+  - _ENABLEOUTEROUTLINE_ON
   - _ENABLEUVSCROLL_ON
   - _SHADERFADING_NONE
   - _SHADERSPACE_UV
@@ -56,7 +55,7 @@ Material:
     - _BurnRadius: 4.87
     - _EnableBurn: 0
     - _EnableFrozen: 0
-    - _EnableGlitch: 1
+    - _EnableGlitch: 0
     - _EnableHologram: 0
     - _EnableMetal: 0
     - _EnableRainbow: 0
@@ -64,7 +63,7 @@ Material:
     - _EnableShifting: 0
     - _EnableShine: 0
     - _EnableTextureLayer1: 0
-    - _EnableTextureLayer2: 1
+    - _EnableTextureLayer2: 0
     - _EnableUVScroll: 1
     - _GaussianBlurOffset: 0.5
     - _GlitchFade: 1

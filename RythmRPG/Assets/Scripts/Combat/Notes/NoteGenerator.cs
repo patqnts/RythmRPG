@@ -63,10 +63,11 @@ public class NoteGenerator : MonoBehaviour
         {
             List<IEnumerator> attackPatterns = new List<IEnumerator>
         {
-            GenerateNormalNotesForDuration(10f),
-            GenerateRandomLaser(10f),
-            GenerateSimultaneousNotes(10f, 4, true),
-            GenerateWaveNotesForDuration(10f)
+            //GenerateNormalNotesForDuration(10f),
+            //GenerateRandomLaser(10f),
+            //GenerateSimultaneousNotes(10f, 4, true),
+            //GenerateWaveNotesForDuration(10f),
+            GenerateHoldNotesForDuration(0f)
         };
 
             // Shuffle the list
@@ -130,11 +131,11 @@ public class NoteGenerator : MonoBehaviour
 
             // Instantiate NoteObject prefab with the current noteIdentity from the wave pattern
             GameObject newNote = Instantiate(noteObjectPrefab, transform.position, Quaternion.identity);
-            NoteObject noteScript = newNote.GetComponent<NoteObject>();
+            Note noteScript = newNote.GetComponent<Note>();
 
             if (noteScript != null)
             {
-                noteScript.speed = 8f;
+                noteScript.SetSpeed(8f);
                 int noteIdentity = wavePattern[index];
                 noteScript.SetNoteIdentity(noteIdentity);
                 noteScript.hitEffect = HitEffect.Default;
@@ -155,7 +156,7 @@ public class NoteGenerator : MonoBehaviour
 
             // Instantiate NoteObject prefab with a random noteIdentity between 1 and 5
             GameObject newNote = Instantiate(noteObjectPrefab, transform.position, Quaternion.identity);
-            NoteObject noteScript = newNote.GetComponent<NoteObject>();
+            Note noteScript = newNote.GetComponent<Note>();
 
             if (noteScript != null)
             {
@@ -164,6 +165,32 @@ public class NoteGenerator : MonoBehaviour
                 noteScript.speed = 10;
                 noteScript.state = PlayerState.Default;
                 noteScript.hitEffect = HitEffect.Default;
+            }
+
+            noteScript.gameObject.SetActive(true);
+        }
+    }
+
+    IEnumerator GenerateHoldNotesForDuration(float duration)
+    {
+        float startTime = Time.time;
+
+        while (Time.time - startTime < 1000)
+        {
+            yield return new WaitForSeconds(.5f);
+
+            // Instantiate NoteObject prefab with a random noteIdentity between 1 and 5
+            GameObject newNote = Instantiate(noteObjectPrefab, transform.position, Quaternion.identity);
+            HoldNoteObject noteScript = newNote.GetComponent<HoldNoteObject>();
+
+            if (noteScript != null)
+            {
+                int randomRange = Random.Range(1, 2);
+                noteScript.SetNoteIdentity(randomRange);
+                noteScript.SetSpeed(8);
+                noteScript.state = PlayerState.Default;
+                noteScript.hitEffect = HitEffect.Default;
+                noteScript.length = randomRange;
             }
 
             noteScript.gameObject.SetActive(true);
@@ -198,7 +225,7 @@ public class NoteGenerator : MonoBehaviour
 
                 // Instantiate NoteObject prefab at the unique random position
                 GameObject newNote = Instantiate(noteObjectPrefab, transform.position, Quaternion.identity);
-                NoteObject noteScript = newNote.GetComponent<NoteObject>();
+                Note noteScript = newNote.GetComponent<Note>();
 
                 if (noteScript != null)
                 {

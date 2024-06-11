@@ -5,22 +5,9 @@
     using UnityEngine;
 
     public class NoteObject : Note, INote
-    {
-        [SerializeField] private int noteIdentity;   
-        [SerializeField] public float speed;
-        [SerializeField] public int damage;
-        [SerializeField] public KeyButton[] keys;
-
-        public Animator animator;
-        public bool canBePressed;
-
-        public KeyCode keyCode;
-        public Moveset moveset;
-        public PlayerState state;
-        public HitEffect hitEffect;
-
+    {        
         bool INote.canBePressed { get => this.canBePressed;}
-        public bool isMoving;
+        
         public bool isSpecial;
         private void Start()
         {
@@ -33,21 +20,21 @@
 
         public virtual void Update()
         {  
-            KeyButton identityButton = keys.Where(x => x.keyIdentity == noteIdentity).FirstOrDefault();
+            KeyButton identityButton = keys.Where(x => x.keyIdentity == GetNoteIdentity()).FirstOrDefault();
             if(Input.GetKeyDown(keyCode) && identityButton.GetInteractable())
             {
                 if(canBePressed)
                 {
                     
                 //DestroyObject(); //DEFAULT EFFECT
-                    StartHitEffect();
+                    StartHitEffect(1);
                 }
             }
             
             if (isMoving)
             {
-                keyCode = CombatManager.instance.GetKeyCodeFromNoteIdentity(noteIdentity);
-                float targetX = keys.Where(x => x.keyIdentity == noteIdentity).FirstOrDefault().gameObject.transform.position.x;
+                keyCode = CombatManager.instance.GetKeyCodeFromNoteIdentity(GetNoteIdentity());
+                float targetX = keys.Where(x => x.keyIdentity == GetNoteIdentity()).FirstOrDefault().gameObject.transform.position.x;
                 float smoothSpeed = 10f; // Adjust the smoothSpeed as needed
 
                 // Smoothly interpolate between current position and target position
@@ -58,61 +45,6 @@
         
         }
         
-    public void StartHitEffect()
-    {
-        switch (hitEffect)
-        {
-            case HitEffect.Default:
-                CombatManager.instance.DamageOpponent(damage);
-                DestroyObject();
-                break;
-            case HitEffect.Ghost:
-                PlayerData.instance.TakeDamage(damage);
-                DestroyObject();                
-                break;
-            case HitEffect.DoubleHit:
-                CombatManager.instance.DamageOpponent(damage);
-                DestroyObject();
-                break;
-            case HitEffect.Cluster:
-                CombatManager.instance.DamageOpponent(damage);
-                DestroyObject();
-                break;
-            case HitEffect.Pong:
-                CombatManager.instance.DamageOpponent(damage);
-                DestroyObject();
-                break;
-
-        }
-    }
-        public void SetNoteIdentity(int i)
-        {
-            noteIdentity = i;
-        }
-
-        public int GetNoteIdentity()
-        {
-            return noteIdentity;
-        }
-
-
-        public void SetSpeed(float i)
-        {
-            speed = i;
-        }
-
-        public float GetSpeed()
-        {
-            return speed;
-        }
-
-        public void DestroyObject()
-        {
-            isMoving = false;
-            animator.SetTrigger("Hit");
-            Destroy(gameObject, .25f);
-        }
-
         private void OnDestroy()
         {
             CombatManager.instance.StopAttackEvent -= DestroyObject;
