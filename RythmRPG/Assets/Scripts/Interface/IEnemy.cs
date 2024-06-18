@@ -8,4 +8,8 @@ public interface IEnemy
     public int CurrentHealth { get; set; }
 
     public void TakeDamage(int damage);
+    public void AttackAnimate();
+    public void DeathAnimate();
+    public void PoseAnimate();
+    public void IdleAnimate();
 }

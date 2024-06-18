@@ -38,7 +38,7 @@ public class EnemyData : MonoBehaviour, IEnemy
     {
         if (_animator != null)
         {
-            _animator.SetTrigger("Death");
+            _animator.Play("Death");
         }
         else
         {
@@ -50,6 +50,7 @@ public class EnemyData : MonoBehaviour, IEnemy
         if(_noteGenerator!= null)
         {
             _noteGenerator.enabled = isOnBattle;
+            _animator.SetBool("isOnBattle", true);
             _animator.CrossFade("intro", 3f);
         }
         else
@@ -58,5 +59,34 @@ public class EnemyData : MonoBehaviour, IEnemy
         }
         
         
+    }
+
+    public void AttackAnimate()
+    {
+        _animator.SetTrigger("Attack");
+    }
+
+    public void DeathAnimate()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void PoseAnimate()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void IdleAnimate()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    private void OnEnable()
+    {
+        _noteGenerator.AttackAnimate += AttackAnimate;
+    }
+    private void OnDisable()
+    {
+        _noteGenerator.AttackAnimate -= AttackAnimate;
     }
 }

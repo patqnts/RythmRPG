@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,9 @@ public class NoteGenerator : MonoBehaviour
     public float generationSpeed = 1f; // Adjust the speed as needed
     public KeyCode[] keyCodesAsign;
     private bool isAttacking = false;
+
+    public event Action AttackAnimate;
+    public event Action IdleAnimate;
 
     void Start()
     {
@@ -74,7 +78,7 @@ public class NoteGenerator : MonoBehaviour
             // Shuffle the list
             for (int i = 0; i < attackPatterns.Count; i++)
             {
-                int randomIndex = Random.Range(0, attackPatterns.Count);
+                int randomIndex = UnityEngine.Random.Range(0, attackPatterns.Count);
                 IEnumerator temp = attackPatterns[i];
                 attackPatterns[i] = attackPatterns[randomIndex];
                 attackPatterns[randomIndex] = temp;
@@ -100,6 +104,7 @@ public class NoteGenerator : MonoBehaviour
             yield return new WaitForSeconds(generationSpeed);
 
             // Instantiate NoteObject prefab with a random noteIdentity between 1 and 5
+            AttackAnimate?.Invoke();
             GameObject newNote = Instantiate(lasePrefab, transform.position, Quaternion.identity);
             LaserNote noteScript = newNote.GetComponent<LaserNote>();
 
@@ -108,7 +113,7 @@ public class NoteGenerator : MonoBehaviour
                 int newNoteIdentity;
                 do
                 {
-                    newNoteIdentity = Random.Range(1, 6);
+                    newNoteIdentity = UnityEngine.Random.Range(1, 6);
                 } while (newNoteIdentity == previousNoteIdentity);
 
                 noteScript.SetNoteIdentity(newNoteIdentity);
@@ -131,6 +136,7 @@ public class NoteGenerator : MonoBehaviour
             yield return new WaitForSeconds(.1f);
 
             // Instantiate NoteObject prefab with the current noteIdentity from the wave pattern
+            AttackAnimate?.Invoke();
             GameObject newNote = Instantiate(noteObjectPrefab, transform.position, Quaternion.identity);
             Note noteScript = newNote.GetComponent<Note>();
 
@@ -156,12 +162,13 @@ public class NoteGenerator : MonoBehaviour
             yield return new WaitForSeconds(.15f);
 
             // Instantiate NoteObject prefab with a random noteIdentity between 1 and 5
+            AttackAnimate?.Invoke();
             GameObject newNote = Instantiate(noteObjectPrefab, transform.position, Quaternion.identity);
             Note noteScript = newNote.GetComponent<Note>();
 
             if (noteScript != null)
             {
-                int randomRange = Random.Range(1, 6);
+                int randomRange = UnityEngine.Random.Range(1, 6);
                 noteScript.SetNoteIdentity(randomRange);
                 noteScript.speed = 10;
                 noteScript.state = PlayerState.Default;
@@ -181,17 +188,18 @@ public class NoteGenerator : MonoBehaviour
             yield return new WaitForSeconds(.5f);
 
             // Instantiate NoteObject prefab with a random noteIdentity between 1 and 5
+            AttackAnimate?.Invoke();
             GameObject newNote = Instantiate(longNoteObjectPrefab, transform.position, Quaternion.identity);
             HoldNoteObject noteScript = newNote.GetComponent<HoldNoteObject>();
 
             if (noteScript != null)
             {
-                int randomRange = Random.Range(1, 6);
+                int randomRange = UnityEngine.Random.Range(1, 6);
                 noteScript.SetNoteIdentity(randomRange);
                 noteScript.SetSpeed(8);
                 noteScript.state = PlayerState.Default;
                 noteScript.hitEffect = HitEffect.Default;
-                noteScript.length = Random.Range(1, 3);
+                noteScript.length = UnityEngine.Random.Range(1, 3);
             }
 
             noteScript.gameObject.SetActive(true);
@@ -207,7 +215,7 @@ public class NoteGenerator : MonoBehaviour
             yield return new WaitForSeconds(generationSpeed);
 
             // Determine the number of projectiles to generate
-            int projectileCount = randomAmount ? Random.Range(1, fixedProjectileCount + 1) : fixedProjectileCount;
+            int projectileCount = randomAmount ? UnityEngine.Random.Range(1, fixedProjectileCount + 1) : fixedProjectileCount;
 
             // Create a list to store used identities
             List<int> usedIdentities = new List<int>();
@@ -218,13 +226,14 @@ public class NoteGenerator : MonoBehaviour
                 // Generate a unique random noteIdentity
                 do
                 {
-                    noteIdentity = Random.Range(1, 6);
+                    noteIdentity = UnityEngine.Random.Range(1, 6);
                 } while (usedIdentities.Contains(noteIdentity));
 
                 // Add the generated noteIdentity to the list of used identities
                 usedIdentities.Add(noteIdentity);
 
                 // Instantiate NoteObject prefab at the unique random position
+                AttackAnimate?.Invoke();
                 GameObject newNote = Instantiate(noteObjectPrefab, transform.position, Quaternion.identity);
                 Note noteScript = newNote.GetComponent<Note>();
 
