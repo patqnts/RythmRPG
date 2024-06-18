@@ -4222,6 +4222,7 @@ GameObject:
   - component: {fileID: 1056579799}
   - component: {fileID: 1056579800}
   - component: {fileID: 1056579801}
+  - component: {fileID: 1056579802}
   m_Layer: 3
   m_Name: jon
   m_TagString: Untagged
@@ -4270,7 +4271,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 0c659d16241a2ee4ab3e00eea4a637ef, type: 3}
+  m_Sprite: {fileID: 201081662, guid: 9a564c5275a7e6847bb8d8f691de12ab, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -4335,12 +4336,59 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 377557ce01130bb40b696f8c1a086dfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4
-  rigidbody: {fileID: 1056579799}
+  body: {fileID: 1056579799}
   isEnabled: 1
   circleCollider: {fileID: 1056579801}
   noticeObject: {fileID: 2334334490853633406, guid: 7c110aebfcce39c4eb33b75f700a1771, type: 3}
   battleBg: {fileID: 2134865960}
+  spriteRenderer: {fileID: 1056579797}
+  nSprites:
+  - {fileID: -263216627, guid: 048d279a0f75e0548b1dadf6f4bc6c35, type: 3}
+  - {fileID: 24004390, guid: 048d279a0f75e0548b1dadf6f4bc6c35, type: 3}
+  - {fileID: -2077263071, guid: 048d279a0f75e0548b1dadf6f4bc6c35, type: 3}
+  - {fileID: -975785449, guid: 048d279a0f75e0548b1dadf6f4bc6c35, type: 3}
+  - {fileID: 1489269488, guid: 048d279a0f75e0548b1dadf6f4bc6c35, type: 3}
+  - {fileID: -2050065666, guid: 048d279a0f75e0548b1dadf6f4bc6c35, type: 3}
+  - {fileID: 1331765765, guid: 048d279a0f75e0548b1dadf6f4bc6c35, type: 3}
+  - {fileID: 1968594291, guid: 048d279a0f75e0548b1dadf6f4bc6c35, type: 3}
+  neSprites:
+  - {fileID: -1278275957, guid: 4765e5d0b00160e44af029e30c9deafa, type: 3}
+  - {fileID: 781927924, guid: 4765e5d0b00160e44af029e30c9deafa, type: 3}
+  - {fileID: 219725301, guid: 4765e5d0b00160e44af029e30c9deafa, type: 3}
+  - {fileID: 403089287, guid: 4765e5d0b00160e44af029e30c9deafa, type: 3}
+  - {fileID: -1351027075, guid: 4765e5d0b00160e44af029e30c9deafa, type: 3}
+  - {fileID: 1436480599, guid: 4765e5d0b00160e44af029e30c9deafa, type: 3}
+  - {fileID: 553371225, guid: 4765e5d0b00160e44af029e30c9deafa, type: 3}
+  - {fileID: -1862361523, guid: 4765e5d0b00160e44af029e30c9deafa, type: 3}
+  eSprites:
+  - {fileID: -1176466310, guid: 728218bf8be248047b488b7008892595, type: 3}
+  - {fileID: -1969135757, guid: 728218bf8be248047b488b7008892595, type: 3}
+  - {fileID: 1039931538, guid: 728218bf8be248047b488b7008892595, type: 3}
+  - {fileID: 1442868426, guid: 728218bf8be248047b488b7008892595, type: 3}
+  - {fileID: 720763049, guid: 728218bf8be248047b488b7008892595, type: 3}
+  - {fileID: -873918136, guid: 728218bf8be248047b488b7008892595, type: 3}
+  - {fileID: 478163472, guid: 728218bf8be248047b488b7008892595, type: 3}
+  - {fileID: 291036249, guid: 728218bf8be248047b488b7008892595, type: 3}
+  seSprites:
+  - {fileID: -17926155, guid: aa66689bfa6051a4bb3823c2d19aef57, type: 3}
+  - {fileID: 2004989663, guid: aa66689bfa6051a4bb3823c2d19aef57, type: 3}
+  - {fileID: -1765011708, guid: aa66689bfa6051a4bb3823c2d19aef57, type: 3}
+  - {fileID: 2094725187, guid: aa66689bfa6051a4bb3823c2d19aef57, type: 3}
+  - {fileID: 1718486013, guid: aa66689bfa6051a4bb3823c2d19aef57, type: 3}
+  - {fileID: 1335739326, guid: aa66689bfa6051a4bb3823c2d19aef57, type: 3}
+  - {fileID: -1504559353, guid: aa66689bfa6051a4bb3823c2d19aef57, type: 3}
+  - {fileID: 813837575, guid: aa66689bfa6051a4bb3823c2d19aef57, type: 3}
+  sSprites:
+  - {fileID: 134382219, guid: 2334f847806566c439da7976bc3faa96, type: 3}
+  - {fileID: 1563395580, guid: 2334f847806566c439da7976bc3faa96, type: 3}
+  - {fileID: -540321068, guid: 2334f847806566c439da7976bc3faa96, type: 3}
+  - {fileID: 1472256695, guid: 2334f847806566c439da7976bc3faa96, type: 3}
+  - {fileID: 1644659062, guid: 2334f847806566c439da7976bc3faa96, type: 3}
+  - {fileID: 1442324193, guid: 2334f847806566c439da7976bc3faa96, type: 3}
+  - {fileID: 262465326, guid: 2334f847806566c439da7976bc3faa96, type: 3}
+  - {fileID: 639969306, guid: 2334f847806566c439da7976bc3faa96, type: 3}
+  walkSpeed: 3
+  frameRate: 10
 --- !u!58 &1056579801
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -4376,6 +4424,27 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!95 &1056579802
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056579796}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6e8120d93b2e4a4489be0440788b6708, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1056887964
 GameObject:
   m_ObjectHideFlags: 0
