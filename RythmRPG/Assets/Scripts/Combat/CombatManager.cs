@@ -208,8 +208,7 @@ public class CombatManager : MonoBehaviour
             yield return null;
         }
 
-        transform.position = targetPosition; // Ensure final position is exact
-        yield return new WaitForSeconds(.25f);
+        transform.position = targetPosition; // Ensure final position is exact     
         SoundHandler.Instance.PlayCombatSound();
 
     }

@@ -8,18 +8,17 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: SSU_Demo_Glitch
-  m_Shader: {fileID: 4800000, guid: 0803c241834332942abfcbd27c498b46, type: 3}
+  m_Shader: {fileID: 4800000, guid: da8efd605fdd20949a21be6242000625, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - ETC1_EXTERNAL_ALPHA
-  - _ENABLEFROZEN_ON
   - _ENABLEOUTEROUTLINE_ON
   - _SHADERFADING_NONE
   - _SHADERSPACE_UV
   - _TEXTURELAYER1SHEETTOGGLE_ON
   - _TEXTURELAYER2SHEETTOGGLE_ON
   m_InvalidKeywords:
+  - ETC1_EXTERNAL_ALPHA
   - _TIMESETTINGS_LINEAR_DEFAULT
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -59,16 +58,24 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _MaskMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MetalMask:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _OuterOutlineTintTexture:
+    - _NormalMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _OuterOutlineTintTexture:
+        m_Texture: {fileID: 2800000, guid: 5af9a397a8643994c829e696a24a7845, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _PixelOutlineTintTexture:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 5af9a397a8643994c829e696a24a7845, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RecolorRGBTexture:
@@ -100,11 +107,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TextureLayer1Texture:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 9685c3a024e22a946a7e8c2ce3542300, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TextureLayer2Texture:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 9685c3a024e22a946a7e8c2ce3542300, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _UVDistortMask:
@@ -116,6 +123,18 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -132,6 +151,7 @@ Material:
     - _AddHueMaskToggle: 0
     - _AddHueSaturation: 1
     - _AddHueSpeed: 1
+    - _AlphaCutoff: 0.5
     - _AlphaTintFade: 1
     - _AlphaTintMinAlpha: 0.02
     - _BakedMaterial: 0
@@ -194,7 +214,7 @@ Material:
     - _EnableDirectionalGlowFade: 0
     - _EnableEnchanted: 0
     - _EnableFlame: 0
-    - _EnableFrozen: 1
+    - _EnableFrozen: 0
     - _EnableFullAlphaDissolve: 0
     - _EnableFullDistortion: 0
     - _EnableFullGlowDissolve: 0
@@ -310,6 +330,7 @@ Material:
     - _MetalHighlightDensity: 1
     - _MetalMaskToggle: 0
     - _NegativeFade: 1
+    - _NormalIntensity: 1
     - _OuterOutlineDistortionToggle: 0
     - _OuterOutlineFade: 1
     - _OuterOutlineOutlineOnlyToggle: 0
@@ -500,6 +521,7 @@ Material:
     - _DirectionalDistortionNoiseScale: {r: 0.4, g: 0.4, b: 0, a: 0}
     - _DirectionalGlowFadeEdgeColor: {r: 11.98431, g: 0.6901961, b: 0.6901961, a: 0}
     - _DirectionalGlowFadeNoiseScale: {r: 0.4, g: 0.4, b: 0, a: 0}
+    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _EnchantedHighColor: {r: 0, g: 0.7098798, b: 4.237095, a: 0}
     - _EnchantedLowColor: {r: 2.996078, g: 0, b: 0, a: 0}
     - _EnchantedScale: {r: 0.1, g: 0.1, b: 0, a: 0}
@@ -546,7 +568,7 @@ Material:
     - _MetalNoiseDistortionSpeed: {r: -0.05, g: -0.05, b: 0, a: 0}
     - _MetalNoiseScale: {r: 0.25, g: 0.25, b: 0, a: 0}
     - _MetalNoiseSpeed: {r: 0.05, g: 0.05, b: 0, a: 0}
-    - _OuterOutlineColor: {r: 1, g: 1, b: 1, a: 1}
+    - _OuterOutlineColor: {r: 0.9811321, g: 0.32858673, b: 0.32858673, a: 1}
     - _OuterOutlineDistortionIntensity: {r: 0.01, g: 0.01, b: 0, a: 0}
     - _OuterOutlineNoiseScale: {r: 4, g: 4, b: 0, a: 0}
     - _OuterOutlineNoiseSpeed: {r: 0, g: 0.1, b: 0, a: 0}

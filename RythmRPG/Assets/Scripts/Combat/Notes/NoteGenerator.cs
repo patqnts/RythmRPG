@@ -7,6 +7,7 @@ public class NoteGenerator : MonoBehaviour
   
     public GameObject noteObjectPrefab; // Drag your NoteObject prefab to this field in the Inspector
     public GameObject lasePrefab; 
+    public GameObject longNoteObjectPrefab; 
     public float generationSpeed = 1f; // Adjust the speed as needed
     public KeyCode[] keyCodesAsign;
     private bool isAttacking = false;
@@ -63,11 +64,11 @@ public class NoteGenerator : MonoBehaviour
         {
             List<IEnumerator> attackPatterns = new List<IEnumerator>
         {
-            //GenerateNormalNotesForDuration(10f),
-            //GenerateRandomLaser(10f),
-            //GenerateSimultaneousNotes(10f, 4, true),
-            //GenerateWaveNotesForDuration(10f),
-            GenerateHoldNotesForDuration(0f)
+            GenerateNormalNotesForDuration(10f),
+            GenerateRandomLaser(10f),
+            GenerateSimultaneousNotes(10f, 4, true),
+            GenerateWaveNotesForDuration(10f),
+            GenerateHoldNotesForDuration(10f)
         };
 
             // Shuffle the list
@@ -175,22 +176,22 @@ public class NoteGenerator : MonoBehaviour
     {
         float startTime = Time.time;
 
-        while (Time.time - startTime < 1000)
+        while (Time.time - startTime < duration)
         {
             yield return new WaitForSeconds(.5f);
 
             // Instantiate NoteObject prefab with a random noteIdentity between 1 and 5
-            GameObject newNote = Instantiate(noteObjectPrefab, transform.position, Quaternion.identity);
+            GameObject newNote = Instantiate(longNoteObjectPrefab, transform.position, Quaternion.identity);
             HoldNoteObject noteScript = newNote.GetComponent<HoldNoteObject>();
 
             if (noteScript != null)
             {
-                int randomRange = Random.Range(1, 2);
+                int randomRange = Random.Range(1, 6);
                 noteScript.SetNoteIdentity(randomRange);
                 noteScript.SetSpeed(8);
                 noteScript.state = PlayerState.Default;
                 noteScript.hitEffect = HitEffect.Default;
-                noteScript.length = randomRange;
+                noteScript.length = Random.Range(1, 3);
             }
 
             noteScript.gameObject.SetActive(true);

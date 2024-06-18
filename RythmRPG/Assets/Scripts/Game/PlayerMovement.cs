@@ -66,13 +66,13 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator EncounterTransition(GameObject enemyObject)
     {
+        SoundHandler.Instance.PlayEncounterSound();
         battleBg.SetActive(true);
 
         if (enemyObject != null)
         {
             enemyObject.GetComponent<SpriteRenderer>().sortingOrder = CombatManager.instance.charactersSortOrder;            
-        }
-        SoundHandler.Instance.PlayEncounterSound();
+        }        
         isEnabled = false;
         circleCollider.enabled = false;
         GameObject notice = Instantiate(noticeObject, enemyObject.transform);

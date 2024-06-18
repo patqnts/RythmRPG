@@ -144,10 +144,12 @@ public class HoldNoteObject : Note
     private void CompleteHoldNote()
     {
         completed = true;
+        tailTransform.GetComponent<SpriteRenderer>().sprite = null;
         // Logic for completing the hold note successfully
         SetPlayerState(state, 0); // Example: Setting state to 0 (no damage)
         // You can add more effects or scoring logic here
         StartHitEffect(1);
         DestroyObject();
+        
     }
 }
