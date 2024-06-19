@@ -47,6 +47,22 @@ MonoBehaviour:
   dirtIntensity:
     m_OverrideState: 0
     m_Value: 0
+--- !u!114 &-107009983732192798
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81180773991d8724ab7f2d216912b564, type: 3}
+  m_Name: ChromaticAberration
+  m_EditorClassIdentifier: 
+  active: 1
+  intensity:
+    m_OverrideState: 1
+    m_Value: 0.139
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,3 +77,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   components:
   - {fileID: -4178171094301085945}
+  - {fileID: -107009983732192798}
+  - {fileID: 4401891318306535400}
+--- !u!114 &4401891318306535400
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb60a22f311433c4c962b888d1393f88, type: 3}
+  m_Name: PaniniProjection
+  m_EditorClassIdentifier: 
+  active: 0
+  distance:
+    m_OverrideState: 1
+    m_Value: 0.687
+  cropToFit:
+    m_OverrideState: 0
+    m_Value: 1

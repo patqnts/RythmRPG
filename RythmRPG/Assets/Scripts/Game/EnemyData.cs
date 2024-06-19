@@ -10,8 +10,12 @@ public class EnemyData : MonoBehaviour, IEnemy
     public Animator _animator;
     public int MaxHealth { get { return _maxHealth; } set { _maxHealth = value; } }
     public int CurrentHealth { get { return _currentHealth; } set { _currentHealth = value; } }
-   
+
     public bool isOnBattle;
+    private void Start()
+    {
+        isOnBattle = false;
+    }
     public void TakeDamage(int damage)
     {
         if (CurrentHealth > 0)
@@ -47,10 +51,13 @@ public class EnemyData : MonoBehaviour, IEnemy
     }
     public void Unsub()
     {
+        
         if(_noteGenerator!= null)
         {
+            Debug.Log("IsOnBattle :" + isOnBattle);
+
             _noteGenerator.enabled = isOnBattle;
-            _animator.SetBool("isOnBattle", true);
+            _animator.SetBool("isOnBattle", isOnBattle);
             _animator.CrossFade("intro", 3f);
         }
         else

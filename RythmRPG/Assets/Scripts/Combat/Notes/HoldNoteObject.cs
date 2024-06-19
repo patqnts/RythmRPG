@@ -10,7 +10,6 @@ public class HoldNoteObject : Note
     private bool isHoldingKey = false; // Track if the key is being held
     private float holdTime; // Total time the note should be held
     private float holdTimer; // Timer to track how long the key has been held
-    private KeyCode keyCode; // The key code for this note
     private bool completed = false;
 
     // Start is called before the first frame update

@@ -124,7 +124,7 @@ public class CombatManager : MonoBehaviour
 
     public void UpdateUIEventInvoke()
     {
-        UpdateUIEvent.Invoke();
+        UpdateUIEvent?.Invoke();
     }
     public void InitalizeCombatEvent(GameObject player, GameObject enemy) 
     {
@@ -233,7 +233,8 @@ public class CombatManager : MonoBehaviour
     public IEnumerator OpponentDeathPlay()
     {
         enemyData.DeathPlay();
-        yield return new WaitForSeconds(3f);
+        enemyData._noteGenerator.enabled = false;
+        yield return new WaitForSeconds(5f);
         FinalizeCombatEvent();
     }
     public void WinBattle()
@@ -243,7 +244,7 @@ public class CombatManager : MonoBehaviour
     }
     public void WinBattleEventInvoke()
     {
-       WinBattleEvent.Invoke();
+       WinBattleEvent?.Invoke();
     }
 
     public KeyCode GetKeyCodeFromNoteIdentity(int identity)

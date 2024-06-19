@@ -39,6 +39,6 @@ public class PlayerData : MonoBehaviour
 
     private void Death()
     {
-        CombatManager.instance.WinBattleEventInvoke();
+        CombatManager.instance.FinalizeCombatEvent();
     }
 }
