@@ -13,15 +13,13 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _ENABLESHIFTING_ON
-  - _ENABLESMOKE_ON
   - _ENCHANTEDRAINBOWTOGGLE_ON
   - _SHADERFADING_NONE
   - _SHADERSPACE_UV
   - _STRONGTINTCONTRASTTOGGLE_ON
   - _TEXTURELAYER1SHEETTOGGLE_ON
   - _TEXTURELAYER2SHEETTOGGLE_ON
-  m_InvalidKeywords:
-  - _SMOKEVERTEXSEED_ON
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -268,7 +266,7 @@ Material:
     - _EnableSineMove: 0
     - _EnableSineRotate: 0
     - _EnableSineScale: 0
-    - _EnableSmoke: 1
+    - _EnableSmoke: 0
     - _EnableSmoothPixelArt: 0
     - _EnableSourceAlphaDissolve: 0
     - _EnableSourceGlowDissolve: 0
@@ -433,11 +431,11 @@ Material:
     - _SineRotateFrequency: 1
     - _SineScaleFrequency: 2
     - _SmokeAlpha: 1
-    - _SmokeDarkEdge: 0.7
+    - _SmokeDarkEdge: 0.84
     - _SmokeNoiseFactor: 1
     - _SmokeNoiseScale: 0.5
-    - _SmokeSmoothness: 3
-    - _SmokeVertexSeed: 1
+    - _SmokeSmoothness: 1
+    - _SmokeVertexSeed: 0
     - _SmoothnessTextureChannel: 0
     - _SourceAlphaDissolveFade: 1
     - _SourceAlphaDissolveInvert: 0
