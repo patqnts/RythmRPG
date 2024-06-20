@@ -33,7 +33,7 @@ public class NoteGenerator : MonoBehaviour
     }
     public void Attack()
     {
-        StartCoroutine(AttackCycle()());
+        StartCoroutine(AttackCycle());
     }
 
     public void StopAttack()
@@ -105,7 +105,7 @@ public class NoteGenerator : MonoBehaviour
 
         while(pong != null)
         {
-
+            yield return null;
         }
 
         yield return new WaitForSeconds(0f);
