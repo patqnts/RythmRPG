@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class NoteGenerator : MonoBehaviour
-{
-  
+{ 
     public GameObject noteObjectPrefab; // Drag your NoteObject prefab to this field in the Inspector
     public GameObject lasePrefab; 
     public GameObject longNoteObjectPrefab; 
+    public GameObject pongNoteObjectPrefab; 
     public float generationSpeed = 1f; // Adjust the speed as needed
     public KeyCode[] keyCodesAsign;
     private bool isAttacking = false;
@@ -33,7 +33,7 @@ public class NoteGenerator : MonoBehaviour
     }
     public void Attack()
     {
-        StartCoroutine(AttackCycle());
+        StartCoroutine(AttackCycle()());
     }
 
     public void StopAttack()
@@ -72,7 +72,8 @@ public class NoteGenerator : MonoBehaviour
             GenerateRandomLaser(10f),
             GenerateSimultaneousNotes(10f, 4, true),
             GenerateWaveNotesForDuration(10f),
-            GenerateHoldNotesForDuration(10f)
+            GenerateHoldNotesForDuration(10f),
+            GeneratePongNote()
         };
 
             // Shuffle the list
@@ -93,7 +94,22 @@ public class NoteGenerator : MonoBehaviour
         }
     }
 
+    IEnumerator GeneratePongNote()
+    {
+        yield return new WaitForSeconds(1f);
+        GameObject pong = Instantiate(pongNoteObjectPrefab, transform.position, Quaternion.identity);
+        PongNote noteScript = pong.GetComponent<PongNote>();
+        int randomRange = UnityEngine.Random.Range(1, 6);
+        noteScript.SetNoteIdentity(randomRange);
+        noteScript.SetSpeed(3);
 
+        while(pong != null)
+        {
+
+        }
+
+        yield return new WaitForSeconds(0f);
+    }
     IEnumerator GenerateRandomLaser(float duration)
     {
         float startTime = Time.time;
