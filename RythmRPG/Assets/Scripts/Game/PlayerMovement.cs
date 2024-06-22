@@ -39,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isEnabled) 
         {
-            //circleCollider.enabled = Input.GetKey(KeyCode.Return);
+            circleCollider.enabled = Input.GetKey(KeyCode.Return);
 
             //float inputX = Input.GetAxis("Horizontal");
             //float inputY = Input.GetAxis("Vertical");

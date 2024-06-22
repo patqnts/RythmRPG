@@ -12,7 +12,14 @@ public class NoteGenerator : MonoBehaviour
     public float attackDuration;
     public float generationSpeed = 1f; // Adjust the speed as needed
     public KeyCode[] keyCodesAsign;
+
     private bool isAttacking = false;
+    public bool enableNormalNotes = true;
+    public bool enableRandomLaser = true;
+    public bool enableSimultaneousNotes = true;
+    public bool enableWaveNotes = true;
+    public bool enableHoldNotes = true;
+    public bool enablePongNote = true;
 
     public event Action AttackAnimate;
     public event Action IdleAnimate;
@@ -67,15 +74,20 @@ public class NoteGenerator : MonoBehaviour
 
         while (isAttacking)
         {
-            List<IEnumerator> attackPatterns = new List<IEnumerator>
-        {
-            GenerateNormalNotesForDuration(attackDuration),
-            GenerateRandomLaser(attackDuration),
-            GenerateSimultaneousNotes(attackDuration, 4, true),
-            GenerateWaveNotesForDuration(attackDuration),
-            GenerateHoldNotesForDuration(attackDuration),
-            GeneratePongNote()
-        };
+            List<IEnumerator> attackPatterns = new List<IEnumerator>();
+
+            if (enableNormalNotes)
+                attackPatterns.Add(GenerateNormalNotesForDuration(attackDuration));
+            if (enableRandomLaser)
+                attackPatterns.Add(GenerateRandomLaser(attackDuration));
+            if (enableSimultaneousNotes)
+                attackPatterns.Add(GenerateSimultaneousNotes(attackDuration, 4, true));
+            if (enableWaveNotes)
+                attackPatterns.Add(GenerateWaveNotesForDuration(attackDuration));
+            if (enableHoldNotes)
+                attackPatterns.Add(GenerateHoldNotesForDuration(attackDuration));
+            if (enablePongNote)
+                attackPatterns.Add(GeneratePongNote());
 
             // Shuffle the list
             for (int i = 0; i < attackPatterns.Count; i++)

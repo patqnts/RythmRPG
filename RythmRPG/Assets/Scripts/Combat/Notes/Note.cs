@@ -41,8 +41,7 @@ public class Note : MonoBehaviour
                 DestroyObject();
                 break;
             case HitEffect.Cluster:
-                GameObject cluster = Instantiate(CombatManager.instance.notes.clusterNote, transform.position, Quaternion.identity);
-                cluster.GetComponent<Note>().SetNoteIdentity(GetNoteIdentity());
+                StartCoroutine(ClusterOut(1));
                 DestroyObject();
                 break;
             case HitEffect.Pong:
@@ -54,6 +53,18 @@ public class Note : MonoBehaviour
         Debug.Log($"Damage: {damage}");
     }
 
+    private IEnumerator ClusterOut(int count)
+    {
+        Vector3 pointPos = transform.position;
+        int saveNoteIdentity = noteIdentity;
+        for (int i = 0; i < count; i++)
+        {          
+            GameObject cluster = Instantiate(CombatManager.instance.notes.clusterNote, pointPos, Quaternion.identity);
+            cluster.GetComponent<ClusterNote>().SetNoteIdentity(saveNoteIdentity);
+            yield return new WaitForSeconds(.35f);
+        }
+    }
+ 
     public void SetNoteIdentity(int i)
     {
         noteIdentity = i;
