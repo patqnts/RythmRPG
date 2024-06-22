@@ -8,7 +8,8 @@ public class NoteGenerator : MonoBehaviour
     public GameObject noteObjectPrefab; // Drag your NoteObject prefab to this field in the Inspector
     public GameObject lasePrefab; 
     public GameObject longNoteObjectPrefab; 
-    public GameObject pongNoteObjectPrefab; 
+    public GameObject pongNoteObjectPrefab;
+    public float attackDuration;
     public float generationSpeed = 1f; // Adjust the speed as needed
     public KeyCode[] keyCodesAsign;
     private bool isAttacking = false;
@@ -68,11 +69,11 @@ public class NoteGenerator : MonoBehaviour
         {
             List<IEnumerator> attackPatterns = new List<IEnumerator>
         {
-            GenerateNormalNotesForDuration(10f),
-            GenerateRandomLaser(10f),
-            GenerateSimultaneousNotes(10f, 4, true),
-            GenerateWaveNotesForDuration(10f),
-            GenerateHoldNotesForDuration(10f),
+            GenerateNormalNotesForDuration(attackDuration),
+            GenerateRandomLaser(attackDuration),
+            GenerateSimultaneousNotes(attackDuration, 4, true),
+            GenerateWaveNotesForDuration(attackDuration),
+            GenerateHoldNotesForDuration(attackDuration),
             GeneratePongNote()
         };
 

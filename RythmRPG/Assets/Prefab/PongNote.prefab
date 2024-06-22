@@ -238,8 +238,8 @@ MonoBehaviour:
   isMoving: 0
   keyCode: 0
   moveset: 0
-  state: 0
-  hitEffect: 0
+  state: 3
+  hitEffect: 2
   animator: {fileID: 4303524799691956577}
   canBePressed: 0
   stateHandler: {fileID: 0}

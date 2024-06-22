@@ -24,6 +24,7 @@ public enum Moveset
 public class CombatManager : MonoBehaviour
 {
     public BattleState state;
+    public NoteObjectsManager notes;
     public static CombatManager instance;
 
     public event Action AttackEvent;

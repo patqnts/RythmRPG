@@ -25,6 +25,7 @@ public class PongNote : Note
         {
             if (canBePressed)
             {
+                var cluster = Instantiate(CombatManager.instance.notes.clusterNote, transform.position, Quaternion.identity);
                 DeflectEffect();
             }
         }

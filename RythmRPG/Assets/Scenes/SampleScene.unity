@@ -4434,8 +4434,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57d4087105e8d3c4eafded611eee9340, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerCurrentHealth: 10
-  PlayerMaxHealth: 10
+  PlayerCurrentHealth: 1010
+  PlayerMaxHealth: 1010
 --- !u!114 &234668925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7170,7 +7170,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 391769055}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
@@ -7300,7 +7300,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 391769055}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
@@ -7396,7 +7396,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 391769055}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
@@ -9576,6 +9576,7 @@ MonoBehaviour:
   lasePrefab: {fileID: 7372676137305636529, guid: 8acd64f672a6c9e4aad4bd8c7f2d48e6, type: 3}
   longNoteObjectPrefab: {fileID: 5029094789931625778, guid: 92bd7a486b6b3f64e8abd77da4e1f23f, type: 3}
   pongNoteObjectPrefab: {fileID: 5029094789931625778, guid: 7eb926339b9806747b959a1f11e13393, type: 3}
+  attackDuration: 1
   generationSpeed: 0.5
   keyCodesAsign: 
 --- !u!70 &485168041
@@ -14369,6 +14370,7 @@ MonoBehaviour:
   lasePrefab: {fileID: 7372676137305636529, guid: 8acd64f672a6c9e4aad4bd8c7f2d48e6, type: 3}
   longNoteObjectPrefab: {fileID: 5029094789931625778, guid: 92bd7a486b6b3f64e8abd77da4e1f23f, type: 3}
   pongNoteObjectPrefab: {fileID: 0}
+  attackDuration: 0
   generationSpeed: 1
   keyCodesAsign: 
 --- !u!114 &660715136
@@ -23103,6 +23105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 3
+  notes: {fileID: 11400000, guid: 11f711d398446c34887e684e8576625a, type: 2}
   charactersSortOrder: 52
   enemyData: {fileID: 0}
   playerPos: {fileID: 791144005}
@@ -26619,6 +26622,7 @@ MonoBehaviour:
   lasePrefab: {fileID: 7372676137305636529, guid: 8acd64f672a6c9e4aad4bd8c7f2d48e6, type: 3}
   longNoteObjectPrefab: {fileID: 5029094789931625778, guid: 92bd7a486b6b3f64e8abd77da4e1f23f, type: 3}
   pongNoteObjectPrefab: {fileID: 0}
+  attackDuration: 0
   generationSpeed: 0.5
   keyCodesAsign: 
 --- !u!114 &1189128673

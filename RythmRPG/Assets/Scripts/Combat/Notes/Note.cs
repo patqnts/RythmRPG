@@ -41,7 +41,8 @@ public class Note : MonoBehaviour
                 DestroyObject();
                 break;
             case HitEffect.Cluster:
-                CombatManager.instance.DamageOpponent(damage);
+                GameObject cluster = Instantiate(CombatManager.instance.notes.clusterNote, transform.position, Quaternion.identity);
+                cluster.GetComponent<Note>().SetNoteIdentity(GetNoteIdentity());
                 DestroyObject();
                 break;
             case HitEffect.Pong:
@@ -77,7 +78,10 @@ public class Note : MonoBehaviour
     public void DestroyObject()
     {
         isMoving = false;
-        animator.SetTrigger("Hit");
+        if(animator!= null)
+        {
+            animator.SetTrigger("Hit");
+        }      
         Destroy(gameObject, .25f);
     }
 }

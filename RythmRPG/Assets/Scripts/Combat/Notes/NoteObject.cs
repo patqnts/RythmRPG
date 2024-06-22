@@ -21,9 +21,9 @@
         public virtual void Update()
         {  
             KeyButton identityButton = keys.Where(x => x.keyIdentity == GetNoteIdentity()).FirstOrDefault();
-            if(Input.GetKeyDown(keyCode) && identityButton.GetInteractable())
+            if(canBePressed)
             {
-                if(canBePressed)
+                if(Input.GetKeyDown(keyCode) && identityButton.GetInteractable())
                 {
                     
                 //DestroyObject(); //DEFAULT EFFECT
