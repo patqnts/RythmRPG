@@ -25,7 +25,6 @@ public class PongNote : Note
         {
             if (canBePressed)
             {
-                StartHitEffect(1);
                 DeflectEffect();
             }
         }

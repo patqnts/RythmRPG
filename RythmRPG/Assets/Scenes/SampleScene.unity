@@ -7170,7 +7170,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 391769055}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
@@ -7300,7 +7300,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 391769055}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
@@ -7396,7 +7396,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 391769055}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
@@ -9576,9 +9576,15 @@ MonoBehaviour:
   lasePrefab: {fileID: 7372676137305636529, guid: 8acd64f672a6c9e4aad4bd8c7f2d48e6, type: 3}
   longNoteObjectPrefab: {fileID: 5029094789931625778, guid: 92bd7a486b6b3f64e8abd77da4e1f23f, type: 3}
   pongNoteObjectPrefab: {fileID: 5029094789931625778, guid: 7eb926339b9806747b959a1f11e13393, type: 3}
-  attackDuration: 1
+  attackDuration: 5
   generationSpeed: 0.5
   keyCodesAsign: 
+  enableNormalNotes: 1
+  enableRandomLaser: 1
+  enableSimultaneousNotes: 1
+  enableWaveNotes: 1
+  enableHoldNotes: 1
+  enablePongNote: 1
 --- !u!70 &485168041
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -14373,6 +14379,12 @@ MonoBehaviour:
   attackDuration: 0
   generationSpeed: 1
   keyCodesAsign: 
+  enableNormalNotes: 1
+  enableRandomLaser: 1
+  enableSimultaneousNotes: 1
+  enableWaveNotes: 1
+  enableHoldNotes: 1
+  enablePongNote: 1
 --- !u!114 &660715136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26625,6 +26637,12 @@ MonoBehaviour:
   attackDuration: 0
   generationSpeed: 0.5
   keyCodesAsign: 
+  enableNormalNotes: 1
+  enableRandomLaser: 1
+  enableSimultaneousNotes: 1
+  enableWaveNotes: 1
+  enableHoldNotes: 1
+  enablePongNote: 1
 --- !u!114 &1189128673
 MonoBehaviour:
   m_ObjectHideFlags: 0
