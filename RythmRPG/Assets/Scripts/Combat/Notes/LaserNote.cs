@@ -3,41 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class LaserNote : MonoBehaviour, INote
+public class LaserNote : Note, INote
 {
-    [SerializeField]
-    private int noteIdentity;
-
-    [SerializeField] public float speed;
-    [SerializeField] public int damage;
-
-    [SerializeField] public KeyButton[] keys;
-
-    public bool canBePressed;
-
-    public KeyCode keyCode;
-    public Moveset moveset;
-    private bool isHit;
+ private bool isHit;
     bool INote.canBePressed { get => this.canBePressed; }
-    public Animator animator;
+
     private void Start()
     {
         CombatManager.instance.StopAttackEvent += DestroyObject;
         keys = FindObjectsOfType<KeyButton>();
         //animator.SetBool(moveset.ToString(), true);      
     }
-    public void SetNoteIdentity(int i)
-    {
-        noteIdentity = i;
-    }
-
-    public int GetNoteIdentity()
-    {
-        return noteIdentity;
-    }
     private void Update()
     {
-        if (Input.GetKeyDown(keyCode))
+        KeyButton identityButton = keys.Where(x => x.keyIdentity == GetNoteIdentity()).FirstOrDefault();
+        if (Input.GetKeyDown(keyCode) && identityButton.GetInteractable())
         {
             if (canBePressed && !isHit)
             {
@@ -47,8 +27,8 @@ public class LaserNote : MonoBehaviour, INote
             }
         }
 
-        keyCode = CombatManager.instance.GetKeyCodeFromNoteIdentity(noteIdentity);
-        float targetX = keys.Where(x => x.keyIdentity == noteIdentity).FirstOrDefault().gameObject.transform.position.x;
+        keyCode = CombatManager.instance.GetKeyCodeFromNoteIdentity(GetNoteIdentity());
+        float targetX = keys.Where(x => x.keyIdentity == GetNoteIdentity()).FirstOrDefault().gameObject.transform.position.x;
         transform.position = new Vector2(targetX, transform.position.y);
     }
 

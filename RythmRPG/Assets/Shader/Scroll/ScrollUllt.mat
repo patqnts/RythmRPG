@@ -13,6 +13,8 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - PIXELSNAP_ON
+  - _ENABLESATURATION_ON
+  - _ENABLESPLITTONING_ON
   - _ENABLEUVSCROLL_ON
   - _SHADERFADING_NONE
   - _SHADERSPACE_UV
@@ -171,10 +173,10 @@ Material:
     - _DirectionalDistortionRandomDirection: 0.1
     - _DirectionalDistortionRotation: 0
     - _DirectionalDistortionWidth: 0.5
-    - _DirectionalGlowFadeFade: -10.92
+    - _DirectionalGlowFadeFade: 1.26
     - _DirectionalGlowFadeInvert: 0
     - _DirectionalGlowFadeNoiseFactor: 0.2
-    - _DirectionalGlowFadeRotation: 0
+    - _DirectionalGlowFadeRotation: 112
     - _DirectionalGlowFadeWidth: 0.1
     - _EnableAddColor: 0
     - _EnableAddHue: 0
@@ -214,7 +216,7 @@ Material:
     - _EnableRainbow: 0
     - _EnableRecolorRGB: 0
     - _EnableRecolorRGBYCP: 0
-    - _EnableSaturation: 0
+    - _EnableSaturation: 1
     - _EnableScreenTiling: 0
     - _EnableShadow: 0
     - _EnableSharpen: 0
@@ -229,7 +231,7 @@ Material:
     - _EnableSmoothPixelArt: 0
     - _EnableSourceAlphaDissolve: 0
     - _EnableSourceGlowDissolve: 0
-    - _EnableSplitToning: 0
+    - _EnableSplitToning: 1
     - _EnableSqueeze: 0
     - _EnableSquish: 0
     - _EnableStrongTint: 0
@@ -270,7 +272,7 @@ Material:
     - _FullAlphaDissolveWidth: 0.5
     - _FullDistortionFade: 1
     - _FullGlowDissolveFade: 1
-    - _FullGlowDissolveWidth: 0.5
+    - _FullGlowDissolveWidth: 0.4
     - _GaussianBlurFade: 1
     - _GaussianBlurOffset: 0.5
     - _GlitchBrightness: 4
@@ -286,7 +288,7 @@ Material:
     - _HologramDistortionOffset: 0.5
     - _HologramDistortionScale: 10
     - _HologramDistortionSpeed: 2
-    - _HologramFade: 1
+    - _HologramFade: 0
     - _HologramLineFrequency: 500
     - _HologramLineGap: 3
     - _HologramLineSpeed: 0.01
@@ -344,7 +346,7 @@ Material:
     - _RecolorRGBYCPTextureToggle: 0
     - _RectHeight: 100
     - _RectWidth: 100
-    - _Saturation: 1
+    - _Saturation: 0.37
     - _ScreenTilingPixelsPerUnit: 100
     - _ScreenWidthUnits: 10
     - _ShaderFading: 0
@@ -391,7 +393,7 @@ Material:
     - _SourceAlphaDissolveInvert: 0
     - _SourceAlphaDissolveNoiseFactor: 0.2
     - _SourceAlphaDissolveWidth: 0.2
-    - _SourceGlowDissolveFade: 11.9
+    - _SourceGlowDissolveFade: 11.81
     - _SourceGlowDissolveInvert: 0
     - _SourceGlowDissolveNoiseFactor: 0.2
     - _SourceGlowDissolveWidth: 0.1
@@ -607,7 +609,7 @@ Material:
     - _UVRotatePivot: {r: 0.1, g: 0.1, b: 0, a: 0}
     - _UVScalePivot: {r: 0.5, g: 0.5, b: 0, a: 0}
     - _UVScaleScale: {r: 1, g: 1, b: 0, a: 0}
-    - _UVScrollSpeed: {r: 0, g: 0.2, b: 0, a: 0}
+    - _UVScrollSpeed: {r: 0, g: 3, b: 0, a: 0}
     - _WorldTilingOffset: {r: 0, g: 0, b: 0, a: 0}
     - _WorldTilingScale: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []

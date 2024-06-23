@@ -7,6 +7,7 @@ public class NoteGenerator : MonoBehaviour
 { 
     public GameObject noteObjectPrefab; // Drag your NoteObject prefab to this field in the Inspector
     public GameObject lasePrefab; 
+    public GameObject holdLaserPrefab; 
     public GameObject longNoteObjectPrefab; 
     public GameObject pongNoteObjectPrefab;
     public float attackDuration;
@@ -20,6 +21,7 @@ public class NoteGenerator : MonoBehaviour
     public bool enableWaveNotes = true;
     public bool enableHoldNotes = true;
     public bool enablePongNote = true;
+    public bool enableHoldLaserNote = true;
 
     public event Action AttackAnimate;
     public event Action IdleAnimate;
@@ -88,6 +90,8 @@ public class NoteGenerator : MonoBehaviour
                 attackPatterns.Add(GenerateHoldNotesForDuration(attackDuration));
             if (enablePongNote)
                 attackPatterns.Add(GeneratePongNote());
+            if (enableHoldLaserNote)
+                attackPatterns.Add(GenerateRandomHoldLaser(attackDuration));
 
             // Shuffle the list
             for (int i = 0; i < attackPatterns.Count; i++)
@@ -147,6 +151,33 @@ public class NoteGenerator : MonoBehaviour
 
                 noteScript.SetNoteIdentity(newNoteIdentity);
                 previousNoteIdentity = newNoteIdentity;
+            }
+
+            noteScript.gameObject.SetActive(true);
+        }
+    }
+
+    IEnumerator GenerateRandomHoldLaser(float duration)
+    {
+        float startTime = Time.time;
+
+        while (Time.time - startTime < duration)
+        {
+            yield return new WaitForSeconds(.5f);
+
+            // Instantiate NoteObject prefab with a random noteIdentity between 1 and 5
+            AttackAnimate?.Invoke();
+            GameObject newNote = Instantiate(holdLaserPrefab, transform.position, Quaternion.identity);
+            HoldLaserNote noteScript = newNote.GetComponent<HoldLaserNote>();
+
+            if (noteScript != null)
+            {
+                int randomRange = UnityEngine.Random.Range(1, 6);
+                noteScript.SetNoteIdentity(randomRange);
+                noteScript.SetSpeed(8);
+                noteScript.state = PlayerState.Default;
+                noteScript.hitEffect = HitEffect.Default;
+                noteScript.length = UnityEngine.Random.Range(1, 3);
             }
 
             noteScript.gameObject.SetActive(true);
