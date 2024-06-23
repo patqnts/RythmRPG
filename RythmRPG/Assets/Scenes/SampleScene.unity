@@ -9578,14 +9578,14 @@ MonoBehaviour:
   longNoteObjectPrefab: {fileID: 5029094789931625778, guid: 92bd7a486b6b3f64e8abd77da4e1f23f, type: 3}
   pongNoteObjectPrefab: {fileID: 5029094789931625778, guid: 7eb926339b9806747b959a1f11e13393, type: 3}
   attackDuration: 5
-  generationSpeed: 0.5
+  generationSpeed: 0.25
   keyCodesAsign: 
-  enableNormalNotes: 0
-  enableRandomLaser: 0
-  enableSimultaneousNotes: 0
-  enableWaveNotes: 0
-  enableHoldNotes: 0
-  enablePongNote: 0
+  enableNormalNotes: 1
+  enableRandomLaser: 1
+  enableSimultaneousNotes: 1
+  enableWaveNotes: 1
+  enableHoldNotes: 1
+  enablePongNote: 1
   enableHoldLaserNote: 1
 --- !u!70 &485168041
 CapsuleCollider2D:

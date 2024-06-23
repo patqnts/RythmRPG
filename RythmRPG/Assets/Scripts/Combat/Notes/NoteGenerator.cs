@@ -160,10 +160,10 @@ public class NoteGenerator : MonoBehaviour
     IEnumerator GenerateRandomHoldLaser(float duration)
     {
         float startTime = Time.time;
-
+        int previousNoteIdentity = -1;
         while (Time.time - startTime < duration)
         {
-            yield return new WaitForSeconds(.5f);
+            yield return new WaitForSeconds(generationSpeed);
 
             // Instantiate NoteObject prefab with a random noteIdentity between 1 and 5
             AttackAnimate?.Invoke();
@@ -172,12 +172,19 @@ public class NoteGenerator : MonoBehaviour
 
             if (noteScript != null)
             {
-                int randomRange = UnityEngine.Random.Range(1, 6);
-                noteScript.SetNoteIdentity(randomRange);
-                noteScript.SetSpeed(8);
+                int newNoteIdentity;
+                do
+                {
+                    newNoteIdentity = UnityEngine.Random.Range(1, 6);
+                } while (newNoteIdentity == previousNoteIdentity);
+
+                noteScript.SetNoteIdentity(newNoteIdentity);
+                previousNoteIdentity = newNoteIdentity;
+
+                noteScript.SetSpeed(4);
                 noteScript.state = PlayerState.Default;
                 noteScript.hitEffect = HitEffect.Default;
-                noteScript.length = UnityEngine.Random.Range(1, 3);
+                noteScript.length = UnityEngine.Random.Range(5, 6);
             }
 
             noteScript.gameObject.SetActive(true);

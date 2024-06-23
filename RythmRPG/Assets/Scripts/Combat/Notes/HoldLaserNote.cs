@@ -41,10 +41,6 @@ public class HoldLaserNote : Note
             if (isHoldingKey)
             {
                 DestroyObject();
-                if (!completed)
-                {
-                    PlayerData.instance.TakeDamage(damage);
-                }
             }
 
             isHoldingKey = false;
@@ -65,18 +61,19 @@ public class HoldLaserNote : Note
                     CompleteHoldNote();
                 }
             }
-        }       
+        }
+
+        keyCode = CombatManager.instance.GetKeyCodeFromNoteIdentity(GetNoteIdentity());
+        float targetX = keys.Where(x => x.keyIdentity == GetNoteIdentity()).FirstOrDefault().gameObject.transform.position.x;
+        transform.position = new Vector2(targetX, transform.position.y);
     }
 
     private void CompleteHoldNote()
     {
         completed = true;
-        // Logic for completing the hold note successfully
-        SetPlayerState(state, 0); // Example: Setting state to 0 (no damage)
-        // You can add more effects or scoring logic here
+        isHoldingKey = false;
         StartHitEffect(1);
-        DestroyObject();
-
+        //SetPlayerState(state, 1);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -93,10 +90,18 @@ public class HoldLaserNote : Note
             canBePressed = false;
             
             DestroyObject();
-            
+            if (!completed)
+            {
+                PlayerData.instance.TakeDamage(damage);
+            }
            
             //Destroy(gameObject, .5f);
             
         }
+    }
+
+    private void OnDestroy()
+    {
+        CombatManager.instance.StopAttackEvent -= DestroyObject;
     }
 }

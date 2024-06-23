@@ -86,7 +86,7 @@ public class Note : MonoBehaviour
         return speed;
     }
 
-    public void DestroyObject()
+    public virtual void DestroyObject()
     {
         isMoving = false;
         if(animator!= null)
