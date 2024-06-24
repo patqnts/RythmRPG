@@ -3711,6 +3711,7 @@ MonoBehaviour:
   speedInput: {fileID: 496654066}
   savePatternButton: {fileID: 1474261260}
   promptText: {fileID: 555168192}
+  patternManagerUI: {fileID: 1275605363}
 --- !u!114 &1275605362
 MonoBehaviour:
   m_ObjectHideFlags: 0

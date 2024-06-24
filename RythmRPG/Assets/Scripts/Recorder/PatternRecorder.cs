@@ -32,6 +32,7 @@ public class PatternRecorder : MonoBehaviour
     public InputField speedInput;
     public Button savePatternButton;
     public Text promptText;
+    public PatternManagerUI patternManagerUI;
 
     void Start()
     {
@@ -109,6 +110,7 @@ public class PatternRecorder : MonoBehaviour
         if (!string.IsNullOrEmpty(patternName))
         {
             SavePattern(patternName);
+
             savePatternPanel.SetActive(false);
             recordedPattern.Clear();
         }
@@ -123,6 +125,8 @@ public class PatternRecorder : MonoBehaviour
         string saveFilePath = Path.Combine(saveDirectoryPath, patternName + ".json");
         string json = JsonUtility.ToJson(new Serialization<NoteData>(recordedPattern), true);
         File.WriteAllText(saveFilePath, json);
+
+        patternManagerUI.UpdatePatternDropdown();
     }
 
     public List<string> LoadPatterns()
