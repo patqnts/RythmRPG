@@ -9,6 +9,8 @@ public class PatternPlayer : MonoBehaviour
     public PatternRecorder patternRecorder;
     public Button PlayButton;
     public Button StopButton;
+    public string patternName;
+    public Dropdown patternDropdown;
 
     private Coroutine playPatternCoroutine;
 
@@ -16,10 +18,25 @@ public class PatternPlayer : MonoBehaviour
     {
         PlayButton.onClick.AddListener(OnPlayButtonClicked);
         StopButton.onClick.AddListener(OnStopButtonClicked);
+        PopulateDropdown();
+    }
+
+    void PopulateDropdown()
+    {
+        List<string> patternNames = patternRecorder.GetPatternNames();
+        patternDropdown.ClearOptions();
+        patternDropdown.AddOptions(patternNames);
+        patternDropdown.onValueChanged.AddListener(delegate { OnDropdownValueChanged(); });
+    }
+    void OnDropdownValueChanged()
+    {
+        patternName = patternDropdown.options[patternDropdown.value].text;
     }
 
     void OnPlayButtonClicked()
     {
+        OnStopButtonClicked();
+        StopAllCoroutines();
         if (playPatternCoroutine == null)
         {
             playPatternCoroutine = StartCoroutine(PlayPattern());
@@ -37,7 +54,7 @@ public class PatternPlayer : MonoBehaviour
 
     IEnumerator PlayPattern()
     {
-        patternRecorder.LoadPattern();
+        patternRecorder.LoadPattern(patternName);
         List<NoteData> pattern = patternRecorder.recordedPattern;
 
         float previousTime = 0f;
