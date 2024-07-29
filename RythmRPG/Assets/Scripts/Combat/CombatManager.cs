@@ -67,7 +67,7 @@ public class CombatManager : MonoBehaviour
            
             if (Input.GetKeyDown(keyCode))
             {
-                SoundHandler.Instance.PlayClick();
+                //SoundHandler.Instance.PlayClick();
             }
 
             if (key != null)

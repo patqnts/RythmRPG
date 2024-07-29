@@ -1474,13 +1474,13 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 496654067}
   m_TextComponent: {fileID: 620684058}
   m_Placeholder: {fileID: 2120985699}
-  m_ContentType: 0
+  m_ContentType: 3
   m_InputType: 0
   m_AsteriskChar: 42
-  m_KeyboardType: 0
+  m_KeyboardType: 2
   m_LineType: 0
   m_HideMobileInput: 0
-  m_CharacterValidation: 0
+  m_CharacterValidation: 2
   m_CharacterLimit: 0
   m_OnSubmit:
     m_PersistentCalls:
@@ -6070,9 +6070,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1698476022}
   - {fileID: 402877320}
   - {fileID: 1058704552}
-  - {fileID: 1698476022}
   - {fileID: 1220517724}
   - {fileID: 1730487478}
   - {fileID: 1659132194}

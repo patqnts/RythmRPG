@@ -25,6 +25,7 @@ public class PongNote : Note
         {
             if (canBePressed)
             {
+                FindObjectOfType<HitStop>().Stop(this.gameObject,0.08F);
                 DeflectEffect();
             }
         }

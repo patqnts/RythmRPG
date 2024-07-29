@@ -27,6 +27,7 @@ public class PatternPlayer : MonoBehaviour
         patternDropdown.ClearOptions();
         patternDropdown.AddOptions(patternNames);
         patternDropdown.onValueChanged.AddListener(delegate { OnDropdownValueChanged(); });
+        OnDropdownValueChanged();
     }
     void OnDropdownValueChanged()
     {
@@ -54,6 +55,7 @@ public class PatternPlayer : MonoBehaviour
 
     IEnumerator PlayPattern()
     {
+        OnDropdownValueChanged();
         patternRecorder.LoadPattern(patternName);
         List<NoteData> pattern = patternRecorder.recordedPattern;
 

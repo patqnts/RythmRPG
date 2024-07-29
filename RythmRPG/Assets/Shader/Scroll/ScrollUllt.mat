@@ -13,12 +13,12 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - PIXELSNAP_ON
+  - _ADDHUEMASKTOGGLE_ON
+  - _ENABLEADDHUE_ON
   - _ENABLEBRIGHTNESS_ON
   - _ENABLECONTRAST_ON
   - _ENABLEOUTEROUTLINE_ON
-  - _ENABLEPINGPONGGLOW_ON
   - _ENABLESHADOW_ON
-  - _ENABLEUVSCROLL_ON
   - _SHADERFADING_NONE
   - _SHADERSPACE_UV
   - _TEXTURELAYER1SHEETTOGGLE_ON
@@ -129,12 +129,12 @@ Material:
     - _AddColorContrastToggle: 0
     - _AddColorFade: 1
     - _AddColorMaskToggle: 0
-    - _AddHueBrightness: 2
+    - _AddHueBrightness: 5.08
     - _AddHueContrast: 0.5
     - _AddHueFade: 1
-    - _AddHueMaskToggle: 0
-    - _AddHueSaturation: 1
-    - _AddHueSpeed: 1
+    - _AddHueMaskToggle: 1
+    - _AddHueSaturation: 0
+    - _AddHueSpeed: 4.34
     - _AlphaTintFade: 1
     - _AlphaTintMinAlpha: 0.02
     - _BakedMaterial: 0
@@ -182,15 +182,15 @@ Material:
     - _DirectionalGlowFadeRotation: 112
     - _DirectionalGlowFadeWidth: 0.1
     - _EnableAddColor: 0
-    - _EnableAddHue: 0
+    - _EnableAddHue: 1
     - _EnableAlphaTint: 0
     - _EnableBlackTint: 0
-    - _EnableBrightness: 1
+    - _EnableBrightness: 1.1
     - _EnableBurn: 0
     - _EnableCamouflage: 0
     - _EnableCheckerboard: 0
     - _EnableColorReplace: 0
-    - _EnableContrast: 1
+    - _EnableContrast: 1.1
     - _EnableCustomFade: 0
     - _EnableDirectionalAlphaFade: 0
     - _EnableDirectionalDistortion: 0
@@ -211,8 +211,8 @@ Material:
     - _EnableInnerOutline: 0
     - _EnableMetal: 0
     - _EnableNegative: 0
-    - _EnableOuterOutline: 1
-    - _EnablePingPongGlow: 1
+    - _EnableOuterOutline: 1.1
+    - _EnablePingPongGlow: 0
     - _EnablePixelOutline: 0
     - _EnablePixelate: 0
     - _EnablePoison: 0
@@ -221,7 +221,7 @@ Material:
     - _EnableRecolorRGBYCP: 0
     - _EnableSaturation: 0
     - _EnableScreenTiling: 0
-    - _EnableShadow: 1
+    - _EnableShadow: 1.1
     - _EnableSharpen: 0
     - _EnableShiftHue: 0
     - _EnableShifting: 0
@@ -243,7 +243,7 @@ Material:
     - _EnableUVDistort: 0
     - _EnableUVRotate: 0
     - _EnableUVScale: 0
-    - _EnableUVScroll: 1
+    - _EnableUVScroll: 0
     - _EnableVibrate: 0
     - _EnableWiggle: 0
     - _EnableWind: 0
@@ -358,7 +358,7 @@ Material:
     - _SharpenFactor: 4
     - _SharpenFade: 1
     - _SharpenOffset: 2
-    - _ShiftHueSpeed: 0.47
+    - _ShiftHueSpeed: 1.7
     - _ShiftingBrightness: 1
     - _ShiftingContrast: 0.5
     - _ShiftingDensity: 1.5
@@ -407,10 +407,10 @@ Material:
     - _SpriteSheetFix: 0
     - _SqueezeFade: 1
     - _SqueezePower: 1
-    - _SquishFade: 1
+    - _SquishFade: 0.68
     - _SquishFlip: 0
-    - _SquishSquish: 0.1
-    - _SquishStretch: 0.1
+    - _SquishSquish: 0.22
+    - _SquishStretch: 0.38
     - _StrongTintContrast: 0
     - _StrongTintContrastToggle: 0
     - _StrongTintFade: 1
@@ -477,7 +477,7 @@ Material:
     m_Colors:
     - _AddColorColor: {r: 2.996078, g: 0, b: 0, a: 0}
     - _AlphaTintColor: {r: 95.87451, g: 5.019608, b: 95.87451, a: 0}
-    - _BlackTintColor: {r: 0, g: 0, b: 1, a: 0}
+    - _BlackTintColor: {r: 0.2830189, g: 0.2830189, b: 0.2830189, a: 0}
     - _BurnEdgeColor: {r: 11.98431, g: 1.129412, b: 0.1254902, a: 0}
     - _BurnEdgeNoiseScale: {r: 0.3, g: 0.3, b: 0, a: 0}
     - _BurnInsideColor: {r: 0.75, g: 0.5625, b: 0.525, a: 0}
@@ -609,10 +609,10 @@ Material:
     - _UVDistortNoiseScale: {r: 0.1, g: 0.1, b: 0, a: 0}
     - _UVDistortSpeed: {r: 2, g: 2, b: 0, a: 0}
     - _UVDistortTo: {r: 0.02, g: 0.02, b: 0, a: 0}
-    - _UVRotatePivot: {r: 0.1, g: 0.1, b: 0, a: 0}
+    - _UVRotatePivot: {r: 1, g: 1, b: 0, a: 0}
     - _UVScalePivot: {r: 0.5, g: 0.5, b: 0, a: 0}
-    - _UVScaleScale: {r: 1, g: 1, b: 0, a: 0}
-    - _UVScrollSpeed: {r: 0, g: 0.5, b: 0, a: 0}
+    - _UVScaleScale: {r: 0.95, g: 1, b: 0, a: 0}
+    - _UVScrollSpeed: {r: 0, g: 0, b: 0, a: 0}
     - _WorldTilingOffset: {r: 0, g: 0, b: 0, a: 0}
     - _WorldTilingScale: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []

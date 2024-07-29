@@ -1,0 +1,67 @@
+{
+    "target": [
+        {
+            "noteIdentity": 1,
+            "timeStamp": 0.3906254768371582,
+            "speed": 8.0,
+            "state": 0,
+            "hitEffect": 0
+        },
+        {
+            "noteIdentity": 2,
+            "timeStamp": 0.399172306060791,
+            "speed": 8.0,
+            "state": 0,
+            "hitEffect": 0
+        },
+        {
+            "noteIdentity": 3,
+            "timeStamp": 0.4655623435974121,
+            "speed": 8.0,
+            "state": 0,
+            "hitEffect": 0
+        },
+        {
+            "noteIdentity": 1,
+            "timeStamp": 0.5818862915039063,
+            "speed": 8.0,
+            "state": 0,
+            "hitEffect": 0
+        },
+        {
+            "noteIdentity": 3,
+            "timeStamp": 0.6423287391662598,
+            "speed": 8.0,
+            "state": 0,
+            "hitEffect": 0
+        },
+        {
+            "noteIdentity": 1,
+            "timeStamp": 0.7313494682312012,
+            "speed": 8.0,
+            "state": 0,
+            "hitEffect": 0
+        },
+        {
+            "noteIdentity": 2,
+            "timeStamp": 0.7313494682312012,
+            "speed": 8.0,
+            "state": 0,
+            "hitEffect": 0
+        },
+        {
+            "noteIdentity": 3,
+            "timeStamp": 0.8178820610046387,
+            "speed": 8.0,
+            "state": 0,
+            "hitEffect": 0
+        },
+        {
+            "noteIdentity": 1,
+            "timeStamp": 0.9010710716247559,
+            "speed": 8.0,
+            "state": 0,
+            "hitEffect": 0
+        }
+    ]
+}

@@ -13,7 +13,7 @@ public class PatternManagerUI : MonoBehaviour
 
     void Start()
     {
-        UpdatePatternDropdown();
+        //UpdatePatternDropdown();
     }
 
     public void UpdatePatternDropdown()

@@ -25,9 +25,11 @@
             {
                 if(Input.GetKeyDown(keyCode) && identityButton.GetInteractable())
                 {
-                    
+
                 //DestroyObject(); //DEFAULT EFFECT
-                    StartHitEffect(1);
+                FindObjectOfType<HitStop>().Stop(this.gameObject, 0.02F);
+                FindObjectOfType<ScreenshakeManager>().ShakeLight();
+                StartHitEffect(1);
                 }
             }
             

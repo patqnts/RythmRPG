@@ -50,7 +50,7 @@ public class Note : MonoBehaviour
                 break;
 
         }
-        Debug.Log($"Damage: {damage}");
+        //Debug.Log($"Damage: {damage}");
     }
 
     private IEnumerator ClusterOut(int count)

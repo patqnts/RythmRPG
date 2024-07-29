@@ -10,6 +10,7 @@ public class NoteGenerator : MonoBehaviour
     public GameObject holdLaserPrefab; 
     public GameObject longNoteObjectPrefab; 
     public GameObject pongNoteObjectPrefab;
+    public Transform projectileObjectHolder;
     public float attackDuration;
     public float generationSpeed = 1f; // Adjust the speed as needed
     public KeyCode[] keyCodesAsign;
@@ -114,7 +115,7 @@ public class NoteGenerator : MonoBehaviour
     IEnumerator GeneratePongNote()
     {
         yield return new WaitForSeconds(1f);
-        GameObject pong = Instantiate(pongNoteObjectPrefab, transform.position, Quaternion.identity);
+        GameObject pong = Instantiate(pongNoteObjectPrefab, transform.position, Quaternion.identity, projectileObjectHolder.transform);
         PongNote noteScript = pong.GetComponent<PongNote>();
         int randomRange = UnityEngine.Random.Range(1, 6);
         noteScript.SetNoteIdentity(randomRange);
@@ -204,7 +205,7 @@ public class NoteGenerator : MonoBehaviour
 
             // Instantiate NoteObject prefab with the current noteIdentity from the wave pattern
             AttackAnimate?.Invoke();
-            GameObject newNote = Instantiate(noteObjectPrefab, transform.position, Quaternion.identity);
+            GameObject newNote = Instantiate(noteObjectPrefab, transform.position, Quaternion.identity, projectileObjectHolder.transform);
             Note noteScript = newNote.GetComponent<Note>();
 
             if (noteScript != null)
@@ -230,7 +231,7 @@ public class NoteGenerator : MonoBehaviour
 
             // Instantiate NoteObject prefab with a random noteIdentity between 1 and 5
             AttackAnimate?.Invoke();
-            GameObject newNote = Instantiate(noteObjectPrefab, transform.position, Quaternion.identity);
+            GameObject newNote = Instantiate(noteObjectPrefab, transform.position, Quaternion.identity, projectileObjectHolder.transform);
             Note noteScript = newNote.GetComponent<Note>();
 
             if (noteScript != null)

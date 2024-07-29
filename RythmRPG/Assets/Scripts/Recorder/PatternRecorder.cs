@@ -33,6 +33,7 @@ public class PatternRecorder : MonoBehaviour
     public Button savePatternButton;
     public Text promptText;
     public PatternManagerUI patternManagerUI;
+    public PatternPlayer patternPlayer;
 
     void Start()
     {
@@ -50,7 +51,7 @@ public class PatternRecorder : MonoBehaviour
     {
         recordingIcon.SetActive(isRecording);
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.F1))
         {
             isRecording = !isRecording;
             if (isRecording)
