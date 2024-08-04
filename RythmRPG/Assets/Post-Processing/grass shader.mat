@@ -257,7 +257,7 @@ Material:
     - _EnableUVScroll: 0
     - _EnableVibrate: 0
     - _EnableWiggle: 0
-    - _EnableWind: 1.1
+    - _EnableWind: 1
     - _EnableWorldTiling: 0
     - _EnchantedBrightness: 1
     - _EnchantedContrast: 0.5
@@ -475,14 +475,14 @@ Material:
     - _WindHighQualityNoise: 0
     - _WindIsParallax: 0
     - _WindLocalWind: 1
-    - _WindMaxIntensity: 0.2
+    - _WindMaxIntensity: 0.5
     - _WindMaxRotation: 1
     - _WindMinIntensity: -0.2
     - _WindNoiseScale: 0.1
     - _WindNoiseSpeed: 1
     - _WindRotation: 0
     - _WindRotationWindFactor: 0.2
-    - _WindSquishFactor: 0.1
+    - _WindSquishFactor: 1
     - _WindSquishWindFactor: 0.05
     - _WindXPosition: 0
     - _WorldTilingPixelsPerUnit: 100
