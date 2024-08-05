@@ -123,15 +123,15 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: character template
     originalName: 
-    pivot: {x: 0.49082568, y: 0}
+    pivot: {x: 0.48847926, y: -0.004048583}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 218
-      height: 56
+      width: 217
+      height: 247
     spriteID: 5aaa2e7266d84a94d98e3324084e446a
     spriteBone: []
     spriteOutline: []
@@ -153,10 +153,10 @@ ScriptedImporter:
     - name: character template
       frameIndex: 0
       cellRect:
-        x: 5
-        y: 0
-        width: 218
-        height: 56
+        x: 6
+        y: 1
+        width: 217
+        height: 247
       spriteId: 5aaa2e7266d84a94d98e3324084e446a
     linkedCells: []
     parentIndex: -1
@@ -164,4 +164,4 @@ ScriptedImporter:
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 224, y: 64}
+  canvasSize: {x: 224, y: 256}
