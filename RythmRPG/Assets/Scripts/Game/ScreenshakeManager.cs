@@ -16,17 +16,17 @@ public class ScreenshakeManager : MonoBehaviour
 
     private void Update()
     {
-        if (shakeDuration > 0)
-        {
-            cameraTransform.localPosition = originalPosition + Random.insideUnitSphere * shakeMagnitude;
+        //if (shakeDuration > 0)
+        //{
+        //    cameraTransform.localPosition = originalPosition + Random.insideUnitSphere * shakeMagnitude;
 
-            shakeDuration -= Time.deltaTime * dampingSpeed;
-        }
-        else
-        {
-            shakeDuration = 0f;
-            cameraTransform.localPosition = originalPosition;
-        }
+        //    shakeDuration -= Time.deltaTime * dampingSpeed;
+        //}
+        //else
+        //{
+        //    shakeDuration = 0f;
+        //    cameraTransform.localPosition = originalPosition;
+        //}
     }
 
     public void ShakeLight()

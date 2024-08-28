@@ -10,7 +10,7 @@ public class KeyLayoutManager : MonoBehaviour
     void Start()
     {
          DefaultLayout();
-        SmileLayout();
+         //SmileLayout();
     }
 
     // Update is called once per frame
