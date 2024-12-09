@@ -23,7 +23,8 @@ public class LaserNote : Note, INote
             {
                 CombatManager.instance.DamageOpponent(damage);
                 isHit = true;
-                DestroyObject();
+                StartHitEffect(1, identityButton.keyType);
+                ///DestroyObject();
             }
         }
 

@@ -1,4 +1,5 @@
-    using System.Collections;
+using DG.Tweening;
+using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Security.Principal;
@@ -26,10 +27,10 @@
                 if(Input.GetKeyDown(keyCode) && identityButton.GetInteractable())
                 {
 
-                //DestroyObject(); //DEFAULT EFFECT
-                FindObjectOfType<HitStop>().Stop(this.gameObject, 0.02F);
-                FindObjectOfType<ScreenshakeManager>().ShakeLight();
-                StartHitEffect(1);
+                    //DestroyObject(); //DEFAULT EFFECT
+                    //FindObjectOfType<HitStop>().Stop(this.gameObject, 0.02F);
+                    FindObjectOfType<ScreenshakeManager>().ShakeLight();
+                    StartHitEffect(1,identityButton.keyType);
                 }
             }
             
@@ -37,12 +38,15 @@
             {
                 keyCode = CombatManager.instance.GetKeyCodeFromNoteIdentity(GetNoteIdentity());
                 float targetX = keys.Where(x => x.keyIdentity == GetNoteIdentity()).FirstOrDefault().gameObject.transform.position.x;
+                float targetY = keys.Where(x => x.keyIdentity == GetNoteIdentity()).FirstOrDefault().gameObject.transform.position.y -3;
                 float smoothSpeed = 10f; // Adjust the smoothSpeed as needed
 
-                // Smoothly interpolate between current position and target position
-                transform.position = new Vector2(Mathf.Lerp(transform.position.x, targetX, Time.deltaTime * smoothSpeed), transform.position.y);
+            // Smoothly interpolate between current position and target position
+            //transform.position = new Vector2(Mathf.Lerp(transform.position.x, targetX, Time.deltaTime * smoothSpeed), transform.position.y);
 
-                transform.position -= new Vector3(0, speed * Time.deltaTime, 0f);
+            //transform.position -= new Vector3(0, speed * Time.deltaTime, 0f);
+                transform.DOMoveX(targetX, 0.25F).SetEase(Ease.OutSine);
+                transform.DOMoveY(targetY, 2.5f).SetEase(Ease.Linear);
             }
         
         }
@@ -65,6 +69,7 @@
             {
                 canBePressed = false;
                 SetPlayerState(state, 30);
+                transform.DOKill();
                 PlayerData.instance.TakeDamage(damage);
                 DestroyObject();
             }

@@ -27,7 +27,7 @@ public class ClusterNote : Note
             if (Input.GetKeyDown(keyCode) && identityButton.GetInteractable())
             {           
                 body.bodyType = RigidbodyType2D.Static;
-                StartHitEffect(damage);
+                StartHitEffect(damage,identityButton.keyType);
             }
         }
     }

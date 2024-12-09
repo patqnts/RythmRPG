@@ -58,7 +58,7 @@ public class HoldLaserNote : Note
                 if (!completed)
                 {
                     // Complete the hold successfully
-                    CompleteHoldNote();
+                    CompleteHoldNote(identityButton.keyType);
                 }
             }
         }
@@ -68,11 +68,11 @@ public class HoldLaserNote : Note
         transform.position = new Vector2(targetX, transform.position.y);
     }
 
-    private void CompleteHoldNote()
+    private void CompleteHoldNote(KeyType keyType)
     {
         completed = true;
         isHoldingKey = false;
-        StartHitEffect(1);
+        StartHitEffect(1,keyType);
         //SetPlayerState(state, 1);
     }
 

@@ -2,10 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum KeyType
+{
+    DEFAULT,
+    FREEZE,
+    LIGHTNING,
+    LANE_CLEAR,
+    XXX
+}
 public class KeyButton : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField] public int keyIdentity;
+    public KeyType keyType;
     public bool isPressed;
     public Sprite[] sprites;
     public SpriteRenderer spriteRenderer;
@@ -28,7 +38,7 @@ public class KeyButton : MonoBehaviour
             spriteRenderer.sprite = sprites[1]; // Assuming 0 is the index for the not pressed state in your sprites array
         }
     }
-
+    
     public void SetInteractable(bool interactable)
     {
         this.interactable = interactable;

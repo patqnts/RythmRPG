@@ -1,5 +1,7 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Note : MonoBehaviour
@@ -24,7 +26,7 @@ public class Note : MonoBehaviour
         stateHandler.SetPlayerState(state, duration);
     }
 
-    public void StartHitEffect(int damage)
+    public void StartHitEffect(int damage, KeyType keyType)
     {
         switch (hitEffect)
         {
@@ -51,6 +53,26 @@ public class Note : MonoBehaviour
 
         }
         //Debug.Log($"Damage: {damage}");
+
+        if (keyType != KeyType.DEFAULT)
+        {
+            switch (keyType)
+            {
+                case KeyType.LIGHTNING:
+                    for(int i = 0; i < 3; i++)
+                    {
+                        FindObjectOfType<Note>().DestroyObject();
+                    }
+                    break;
+                case KeyType.LANE_CLEAR:
+                    foreach (Note note in FindObjectsOfType<Note>().Where(x => x.GetNoteIdentity() == this.noteIdentity))
+                    {
+                        note.DestroyObject();
+                    }
+                    break;
+            }
+
+        }
     }
 
     private IEnumerator ClusterOut(int count)
@@ -92,7 +114,9 @@ public class Note : MonoBehaviour
         if(animator!= null)
         {
             animator.SetTrigger("Hit");
-        }      
+        }
+        transform.DOKill();
         Destroy(gameObject, .25f);
+
     }
 }
