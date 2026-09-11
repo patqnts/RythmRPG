@@ -131,7 +131,7 @@ public class HoldNoteObject : Note
         // Logic for completing the hold note successfully
         SetPlayerState(state, 0); // Example: Setting state to 0 (no damage)
         // You can add more effects or scoring logic here
-        StartHitEffect(GetJudgedDamage(1, pressJudgement),keyType);
+        StartHitEffect(GetJudgedDamage(1, pressJudgement), keyType, activeKeyButton);
         DestroyObject();
         
     }

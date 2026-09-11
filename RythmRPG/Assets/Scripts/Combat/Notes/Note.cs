@@ -110,7 +110,7 @@ public class Note : MonoBehaviour
 
     protected virtual void OnHit(KeyButton keyButton, RhythmJudgementResult result)
     {
-        StartHitEffect(GetJudgedDamage(GetBaseHitDamage(), result), keyButton.keyType);
+        StartHitEffect(GetJudgedDamage(GetBaseHitDamage(), result), keyButton.keyType, keyButton);
     }
 
     protected KeyButton GetIdentityButton()
@@ -205,7 +205,7 @@ public class Note : MonoBehaviour
         stateHandler.SetPlayerState(state, duration);
     }
 
-    public void StartHitEffect(int damage, KeyType keyType)
+    public void StartHitEffect(int damage, KeyType keyType, KeyButton sourceKeyButton = null)
     {
         switch (hitEffect)
         {
@@ -238,13 +238,17 @@ public class Note : MonoBehaviour
             switch (keyType)
             {
                 case KeyType.LIGHTNING:
-                    for(int i = 0; i < 3; i++)
+                    foreach (Note note in FindObjectsOfType<Note>()
+                        .Where(note => !CombatManager.instance.IsProtectedFromBonusClear(note, this))
+                        .Take(3))
                     {
-                        FindObjectOfType<Note>().DestroyObject();
+                        note.DestroyObject();
                     }
                     break;
                 case KeyType.LANE_CLEAR:
-                    foreach (Note note in FindObjectsOfType<Note>().Where(x => x.GetNoteIdentity() == this.noteIdentity))
+                    foreach (Note note in FindObjectsOfType<Note>()
+                        .Where(note => note.GetNoteIdentity() == noteIdentity)
+                        .Where(note => !CombatManager.instance.IsProtectedFromBonusClear(note, this)))
                     {
                         note.DestroyObject();
                     }

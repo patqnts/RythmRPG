@@ -68,7 +68,7 @@ public class HoldLaserNote : Note
     {
         completed = true;
         isHoldingKey = false;
-        StartHitEffect(GetJudgedDamage(1, pressJudgement),keyType);
+        StartHitEffect(GetJudgedDamage(1, pressJudgement), keyType, activeKeyButton);
         //SetPlayerState(state, 1);
     }
 

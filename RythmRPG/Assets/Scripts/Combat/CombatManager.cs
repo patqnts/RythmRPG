@@ -58,6 +58,7 @@ public class CombatManager : MonoBehaviour
     public CinemachineVirtualCamera virtualCamera;
     public GameObject CombatSystemUI;
     public KeyCode[] keyCodes;
+    private readonly Dictionary<KeyCode, int> consumedKeyPressFrames = new Dictionary<KeyCode, int>();
 
 
     private void Start()
@@ -117,10 +118,18 @@ public class CombatManager : MonoBehaviour
             return;
         }
 
-        Note note = FindBestNoteForKey(keyButton);
-        if (note != null)
+        KeyCode keyCode = GetKeyCodeFromNoteIdentity(keyButton.keyIdentity);
+        if (keyCode != KeyCode.None
+            && consumedKeyPressFrames.TryGetValue(keyCode, out int consumedFrame)
+            && consumedFrame == Time.frameCount)
         {
-            note.TryHitFromKey(keyButton);
+            return;
+        }
+
+        Note note = FindBestNoteForKey(keyButton);
+        if (note != null && note.TryHitFromKey(keyButton) && keyCode != KeyCode.None)
+        {
+            consumedKeyPressFrames[keyCode] = Time.frameCount;
         }
     }
 
@@ -157,6 +166,24 @@ public class CombatManager : MonoBehaviour
         }
 
         return note.GetTimingError(keyButton);
+    }
+
+    public bool IsProtectedFromBonusClear(Note note, Note sourceNote)
+    {
+        if (note == null || note == sourceNote)
+        {
+            return true;
+        }
+
+        foreach (KeyButton keyButton in FindObjectsOfType<KeyButton>())
+        {
+            if (note.CanReceiveHit(keyButton) && GetTimingError(note, keyButton) <= badWindow)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
     private void Awake()
     {
