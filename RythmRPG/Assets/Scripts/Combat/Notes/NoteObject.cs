@@ -20,20 +20,7 @@ using System.Collections;
         }
 
         public virtual void Update()
-        {  
-            KeyButton identityButton = keys.Where(x => x.keyIdentity == GetNoteIdentity()).FirstOrDefault();
-            if(canBePressed)
-            {
-                if(Input.GetKeyDown(keyCode) && identityButton.GetInteractable())
-                {
-
-                    //DestroyObject(); //DEFAULT EFFECT
-                    //FindObjectOfType<HitStop>().Stop(this.gameObject, 0.02F);
-                    FindObjectOfType<ScreenshakeManager>().ShakeLight();
-                    StartHitEffect(1,identityButton.keyType);
-                }
-            }
-            
+        {
             if (isMoving)
             {
                 keyCode = CombatManager.instance.GetKeyCodeFromNoteIdentity(GetNoteIdentity());
@@ -63,15 +50,20 @@ using System.Collections;
                 canBePressed = true;            
             }
         }
-        private void OnTriggerExit2D(Collider2D other)
+	        private void OnTriggerExit2D(Collider2D other)
+	        {
+	            if(other.gameObject.tag == "Activator" && isMoving)
+	            {
+	                canBePressed = false;
+	                ReportMissAndDamage(GetIdentityButton());
+	                transform.DOKill();
+	                DestroyObject();
+	            }
+	        }
+
+        protected override void OnHit(KeyButton keyButton, RhythmJudgementResult result)
         {
-            if(other.gameObject.tag == "Activator" && isMoving)
-            {
-                canBePressed = false;
-                SetPlayerState(state, 30);
-                transform.DOKill();
-                PlayerData.instance.TakeDamage(damage);
-                DestroyObject();
-            }
+            FindObjectOfType<ScreenshakeManager>().ShakeLight();
+            base.OnHit(keyButton, result);
         }
-    }
+	    }

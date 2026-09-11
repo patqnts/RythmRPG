@@ -13,6 +13,8 @@ public class NoteGenerator : MonoBehaviour
     public Transform projectileObjectHolder;
     public float attackDuration;
     public float generationSpeed = 1f; // Adjust the speed as needed
+    public float laserGenerationSpeed = 1.75f;
+    public float holdLaserGenerationSpeed = 1.75f;
     public KeyCode[] keyCodesAsign;
 
     private bool isAttacking = false;
@@ -128,6 +130,7 @@ public class NoteGenerator : MonoBehaviour
 
         yield return new WaitForSeconds(0f);
     }
+
     IEnumerator GenerateRandomLaser(float duration)
     {
         float startTime = Time.time;
@@ -135,7 +138,7 @@ public class NoteGenerator : MonoBehaviour
 
         while (Time.time - startTime < duration)
         {
-            yield return new WaitForSeconds(generationSpeed);
+            yield return new WaitForSeconds(Mathf.Max(0.05f, laserGenerationSpeed));
 
             // Instantiate NoteObject prefab with a random noteIdentity between 1 and 5
             AttackAnimate?.Invoke();
@@ -164,7 +167,7 @@ public class NoteGenerator : MonoBehaviour
         int previousNoteIdentity = -1;
         while (Time.time - startTime < duration)
         {
-            yield return new WaitForSeconds(generationSpeed);
+            yield return new WaitForSeconds(Mathf.Max(0.05f, holdLaserGenerationSpeed));
 
             // Instantiate NoteObject prefab with a random noteIdentity between 1 and 5
             AttackAnimate?.Invoke();

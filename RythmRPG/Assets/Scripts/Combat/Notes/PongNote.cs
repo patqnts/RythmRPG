@@ -6,7 +6,7 @@ using UnityEngine;
 public class PongNote : Note
 {
     // Start is called before the first frame update
-    private bool isDeflect;
+    [SerializeField] private bool isDeflect;
     void Start()
     {
         isDeflect = false;
@@ -19,16 +19,6 @@ public class PongNote : Note
     // Update is called once per frame
     void Update()
     {
-        KeyButton identityButton = keys.Where(x => x.keyIdentity == GetNoteIdentity()).FirstOrDefault();
-
-        if (Input.GetKeyDown(keyCode) && identityButton.GetInteractable() && !isDeflect)
-        {
-            if (canBePressed)
-            {
-                FindObjectOfType<HitStop>().Stop(this.gameObject,0.08F);
-                DeflectEffect();
-            }
-        }
         if (isMoving)
         {
             keyCode = CombatManager.instance.GetKeyCodeFromNoteIdentity(GetNoteIdentity());
@@ -51,12 +41,12 @@ public class PongNote : Note
         }
     }
 
-    public void DeflectEffect()
+    public void DeflectEffect(bool shouldDeflect)
     {
+        isDeflect = shouldDeflect;
         SoundHandler.Instance.PlaySlideSound();
         SetNoteIdentity(UnityEngine.Random.Range(1, 6));
-        isDeflect = !isDeflect;
-        GetComponent<SpriteRenderer>().flipX = isDeflect;
+        GetComponent<SpriteRenderer>().flipX = shouldDeflect;
         float newSpeed = GetSpeed() + .25f;
         SetSpeed(newSpeed);
     }
@@ -75,19 +65,40 @@ public class PongNote : Note
         else if(other.gameObject.tag == "Enemy" && isDeflect)
         {
             //Logic handle
-            DeflectEffect();
+            DeflectEffect(false);
+            hitAccepted = false;
             other.GetComponentInParent<EnemyData>().AttackAnimate();
         }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        canBePressed = false;
-        if (other.gameObject.tag == "Activator" && isMoving && !isDeflect)
+        if (other.gameObject.tag != "Activator")
         {
-            SetPlayerState(state, 30);
-            PlayerData.instance.TakeDamage(damage);
+            return;
+        }
+
+        canBePressed = false;
+
+        if (!isDeflect)
+        {
+            ReportMissAndDamage(GetIdentityButton());
             DestroyObject();
+        }
+    }
+
+    public override bool CanReceiveHit(KeyButton keyButton)
+    {
+        return !isDeflect && base.CanReceiveHit(keyButton);
+    }
+
+    protected override void OnHit(KeyButton keyButton, RhythmJudgementResult result)
+    {
+        DeflectEffect(true);
+        HitStop hitStop = FindObjectOfType<HitStop>();
+        if (hitStop != null)
+        {
+            hitStop.Stop(gameObject, 0.08F);
         }
     }
 }

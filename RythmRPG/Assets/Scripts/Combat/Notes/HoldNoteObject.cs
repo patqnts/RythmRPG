@@ -11,6 +11,7 @@ public class HoldNoteObject : Note
     private float holdTime; // Total time the note should be held
     private float holdTimer; // Timer to track how long the key has been held
     private bool completed = false;
+    private RhythmJudgementResult pressJudgement;
 
     // Start is called before the first frame update
     void Start()
@@ -28,36 +29,8 @@ public class HoldNoteObject : Note
     // Update is called once per frame
     void Update()
     {
-        KeyButton identityButton = keys.Where(x => x.keyIdentity == GetNoteIdentity()).FirstOrDefault();
-
-        // Check for key down event
-        if (Input.GetKeyDown(keyCode) && identityButton.GetInteractable())
-        {
-            if (canBePressed)
-            {
-                isHoldingKey = true;
-                holdTimer = 0; // Reset the hold timer
-               
-            }
-        }
-
-        // Check for key up event to stop holding
-        if (Input.GetKeyUp(keyCode))
-        {
-            if (isHoldingKey)
-            {
-                DestroyObject();
-                if (!completed)
-                {
-                    PlayerData.instance.TakeDamage(damage);
-                }               
-            }
-
-            isHoldingKey = false;
-        }
-
         // Check for key hold event
-        if (isHoldingKey && identityButton.GetInteractable())
+        if (isHoldingKey && activeKeyButton != null && activeKeyButton.GetInteractable())
         {
             isMoving = false;
             holdTimer += Time.deltaTime;
@@ -68,7 +41,7 @@ public class HoldNoteObject : Note
                 if (!completed)
                 {
                     // Complete the hold successfully
-                    CompleteHoldNote(identityButton.keyType);               
+                    CompleteHoldNote(activeKeyButton.keyType);
                 }
             }
         }
@@ -106,8 +79,7 @@ public class HoldNoteObject : Note
             canBePressed = false;
             if (!isHoldingKey)
             {
-                SetPlayerState(state, 30);
-                PlayerData.instance.TakeDamage(damage);
+                ReportMissAndDamage(GetIdentityButton());
                 DestroyObject();
             }
         }
@@ -147,8 +119,36 @@ public class HoldNoteObject : Note
         // Logic for completing the hold note successfully
         SetPlayerState(state, 0); // Example: Setting state to 0 (no damage)
         // You can add more effects or scoring logic here
-        StartHitEffect(1,keyType);
+        StartHitEffect(GetJudgedDamage(1, pressJudgement),keyType);
         DestroyObject();
         
+    }
+
+    protected override void OnHit(KeyButton keyButton, RhythmJudgementResult result)
+    {
+        pressJudgement = result;
+        isHoldingKey = true;
+        holdTimer = 0;
+    }
+
+    public override bool IsUsingKey(KeyButton keyButton)
+    {
+        return isHoldingKey && base.IsUsingKey(keyButton);
+    }
+
+    public override void OnKeyReleased(KeyButton keyButton)
+    {
+        if (!isHoldingKey)
+        {
+            return;
+        }
+
+        DestroyObject();
+        if (!completed)
+        {
+            ReportMissAndDamage(keyButton, false);
+        }
+
+        isHoldingKey = false;
     }
 }

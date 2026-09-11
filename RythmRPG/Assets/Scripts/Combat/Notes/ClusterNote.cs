@@ -20,16 +20,7 @@ public class ClusterNote : Note
     private void Update()
     {
         isMovingUp = body.linearVelocity.y > 0;
-        KeyButton identityButton = keys.Where(x => x.keyIdentity == GetNoteIdentity()).FirstOrDefault();
         keyCode = CombatManager.instance.GetKeyCodeFromNoteIdentity(GetNoteIdentity());
-        if (canBePressed)
-        {
-            if (Input.GetKeyDown(keyCode) && identityButton.GetInteractable())
-            {           
-                body.bodyType = RigidbodyType2D.Static;
-                StartHitEffect(damage,identityButton.keyType);
-            }
-        }
     }
 
     private void OnDestroy()
@@ -45,12 +36,27 @@ public class ClusterNote : Note
     }
     private void OnTriggerExit2D(Collider2D other)
     {
+        if (other.gameObject.tag != "Activator")
+        {
+            return;
+        }
+
         canBePressed = false;
-        if (other.gameObject.tag == "Activator" && !isMovingUp && body.bodyType != RigidbodyType2D.Static)
-        {            
-            SetPlayerState(state, 30);
-            PlayerData.instance.TakeDamage(damage);
+        if (!isMovingUp && body.bodyType != RigidbodyType2D.Static)
+        {
+            ReportMissAndDamage(GetIdentityButton());
             DestroyObject();
         }
+    }
+
+    protected override int GetBaseHitDamage()
+    {
+        return damage;
+    }
+
+    protected override void OnHit(KeyButton keyButton, RhythmJudgementResult result)
+    {
+        body.bodyType = RigidbodyType2D.Static;
+        base.OnHit(keyButton, result);
     }
 }

@@ -12,6 +12,7 @@ public class HoldLaserNote : Note
     public bool isHoldingKey = false;
     private bool completed = false;
     private bool isHit;
+    private RhythmJudgementResult pressJudgement;
 
 
     void Start()
@@ -24,30 +25,8 @@ public class HoldLaserNote : Note
     // Update is called once per frame
     void Update()
     {
-        
-        KeyButton identityButton = keys.Where(x => x.keyIdentity == GetNoteIdentity()).FirstOrDefault();
-
-        if (Input.GetKeyDown(keyCode) && identityButton.GetInteractable())
-        {
-            if (canBePressed && !isHit)
-            {
-                isHoldingKey = true;
-                holdTimer = 0; // Reset the hold timer
-            }
-        }
-
-        if (Input.GetKeyUp(keyCode))
-        {
-            if (isHoldingKey)
-            {
-                DestroyObject();
-            }
-
-            isHoldingKey = false;
-        }
-
         // Check for key hold event
-        if (isHoldingKey && identityButton.GetInteractable())
+        if (isHoldingKey && activeKeyButton != null && activeKeyButton.GetInteractable())
         {
             animator.SetBool("Hold", isHoldingKey);
             isMoving = false;
@@ -58,7 +37,7 @@ public class HoldLaserNote : Note
                 if (!completed)
                 {
                     // Complete the hold successfully
-                    CompleteHoldNote(identityButton.keyType);
+                    CompleteHoldNote(activeKeyButton.keyType);
                 }
             }
         }
@@ -72,7 +51,7 @@ public class HoldLaserNote : Note
     {
         completed = true;
         isHoldingKey = false;
-        StartHitEffect(1,keyType);
+        StartHitEffect(GetJudgedDamage(1, pressJudgement),keyType);
         //SetPlayerState(state, 1);
     }
 
@@ -92,7 +71,7 @@ public class HoldLaserNote : Note
             DestroyObject();
             if (!completed)
             {
-                PlayerData.instance.TakeDamage(damage);
+                ReportMissAndDamage(GetIdentityButton(), false);
             }
            
             //Destroy(gameObject, .5f);
@@ -103,5 +82,76 @@ public class HoldLaserNote : Note
     private void OnDestroy()
     {
         CombatManager.instance.StopAttackEvent -= DestroyObject;
+    }
+
+    public override Vector3 GetJudgementWorldPosition()
+    {
+        Collider2D noteCollider = GetComponent<Collider2D>();
+        if (noteCollider == null)
+        {
+            return base.GetJudgementWorldPosition();
+        }
+
+        Vector3 position = transform.position;
+        position.y = noteCollider.bounds.min.y;
+        return position;
+    }
+
+    public override float GetTimingError(KeyButton keyButton)
+    {
+        if (keyButton == null)
+        {
+            return float.MaxValue;
+        }
+
+        Collider2D noteCollider = GetComponent<Collider2D>();
+        if (noteCollider == null)
+        {
+            return base.GetTimingError(keyButton);
+        }
+
+        float keyY = keyButton.transform.position.y;
+        if (keyY >= noteCollider.bounds.min.y && keyY <= noteCollider.bounds.max.y)
+        {
+            return 0f;
+        }
+
+        return Mathf.Min(
+            Mathf.Abs(keyY - noteCollider.bounds.min.y),
+            Mathf.Abs(keyY - noteCollider.bounds.max.y));
+    }
+
+    public override bool CanReceiveHit(KeyButton keyButton)
+    {
+        return !isHit && base.CanReceiveHit(keyButton);
+    }
+
+    protected override void OnHit(KeyButton keyButton, RhythmJudgementResult result)
+    {
+        pressJudgement = result;
+        isHoldingKey = true;
+        isHit = true;
+        holdTimer = 0;
+    }
+
+    public override bool IsUsingKey(KeyButton keyButton)
+    {
+        return isHoldingKey && base.IsUsingKey(keyButton);
+    }
+
+    public override void OnKeyReleased(KeyButton keyButton)
+    {
+        if (!isHoldingKey)
+        {
+            return;
+        }
+
+        if (!completed)
+        {
+            ReportMissAndDamage(keyButton, false);
+        }
+
+        DestroyObject();
+        isHoldingKey = false;
     }
 }

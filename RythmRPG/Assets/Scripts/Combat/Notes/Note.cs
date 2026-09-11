@@ -21,6 +21,119 @@ public class Note : MonoBehaviour
     public bool canBePressed;
 
     public PlayerStateHandler stateHandler;
+    protected KeyButton activeKeyButton;
+    protected bool hitAccepted;
+    private bool missReported;
+
+    public virtual Vector3 GetJudgementWorldPosition()
+    {
+        return transform.position;
+    }
+
+    public virtual float GetTimingError(KeyButton keyButton)
+    {
+        if (keyButton == null)
+        {
+            return float.MaxValue;
+        }
+
+        return Mathf.Abs(GetJudgementWorldPosition().y - keyButton.transform.position.y);
+    }
+
+    protected bool TryJudgeHit(KeyButton keyButton, out RhythmJudgementResult result)
+    {
+        return CombatManager.instance.TryJudgeHit(this, keyButton, out result);
+    }
+
+    protected void JudgeMiss(KeyButton keyButton)
+    {
+        if (missReported)
+        {
+            return;
+        }
+
+        missReported = true;
+        CombatManager.instance.JudgeMiss(this, keyButton);
+    }
+
+    protected int GetJudgedDamage(int baseDamage, RhythmJudgementResult result)
+    {
+        if (hitEffect == HitEffect.Ghost)
+        {
+            return baseDamage;
+        }
+
+        return CombatManager.instance.GetDamageForJudgement(baseDamage, result.judgement);
+    }
+
+    public virtual bool CanReceiveHit(KeyButton keyButton)
+    {
+        return isActiveAndEnabled
+            && !hitAccepted
+            && canBePressed
+            && keyButton != null
+            && keyButton.GetInteractable()
+            && keyButton.keyIdentity == GetNoteIdentity();
+    }
+
+    public bool TryHitFromKey(KeyButton keyButton)
+    {
+        if (!CanReceiveHit(keyButton))
+        {
+            return false;
+        }
+
+        if (!TryJudgeHit(keyButton, out RhythmJudgementResult result))
+        {
+            return false;
+        }
+
+        hitAccepted = true;
+        activeKeyButton = keyButton;
+        OnHit(keyButton, result);
+        return true;
+    }
+
+    public virtual bool IsUsingKey(KeyButton keyButton)
+    {
+        return keyButton != null && activeKeyButton == keyButton;
+    }
+
+    public virtual void OnKeyReleased(KeyButton keyButton)
+    {
+    }
+
+    protected virtual int GetBaseHitDamage()
+    {
+        return 1;
+    }
+
+    protected virtual void OnHit(KeyButton keyButton, RhythmJudgementResult result)
+    {
+        StartHitEffect(GetJudgedDamage(GetBaseHitDamage(), result), keyButton.keyType);
+    }
+
+    protected KeyButton GetIdentityButton()
+    {
+        if (keys == null || keys.Length == 0)
+        {
+            keys = FindObjectsOfType<KeyButton>();
+        }
+
+        return keys.FirstOrDefault(x => x.keyIdentity == GetNoteIdentity());
+    }
+
+    protected void ReportMissAndDamage(KeyButton keyButton, bool applyPlayerState = true)
+    {
+        JudgeMiss(keyButton);
+        if (applyPlayerState)
+        {
+            SetPlayerState(state, 30);
+        }
+
+        PlayerData.instance.TakeDamage(damage);
+    }
+
     public void SetPlayerState(PlayerState state, float duration)
     {
         stateHandler.SetPlayerState(state, duration);
@@ -110,6 +223,7 @@ public class Note : MonoBehaviour
 
     public virtual void DestroyObject()
     {
+        canBePressed = false;
         isMoving = false;
         if(animator!= null)
         {

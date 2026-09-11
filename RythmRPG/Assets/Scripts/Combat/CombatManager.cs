@@ -33,6 +33,20 @@ public class CombatManager : MonoBehaviour
     public event Action<GameObject, GameObject> EnterCombatEvent;
     public event Action UpdateUIEvent;
     public event Action WinBattleEvent;
+    public event Action<RhythmJudgementResult> HitJudgedEvent;
+
+    [Header("Rhythm Judgement (world units from key center)")]
+    [SerializeField, Min(0.01f)] private float perfectWindow = 0.15f;
+    [SerializeField, Min(0.01f)] private float goodWindow = 0.45f;
+    [SerializeField, Min(0.01f)] private float badWindow = 0.9f;
+    [SerializeField, Min(1)] private int badDamageMultiplier = 1;
+    [SerializeField, Min(1)] private int goodDamageMultiplier = 2;
+    [SerializeField, Min(1)] private int perfectDamageMultiplier = 3;
+
+    public int CurrentCombo { get; private set; }
+    public int BestCombo { get; private set; }
+    public int MissCount { get; private set; }
+    public HitJudgement LastJudgement { get; private set; }
 
     public int charactersSortOrder;
     private Vector2 enemyLastPos;
@@ -61,21 +75,6 @@ public class CombatManager : MonoBehaviour
 
     private void Update()
     {
-        foreach (KeyCode keyCode in keyCodes)
-        {
-            KeyButton key = FindObjectsOfType<KeyButton>().FirstOrDefault(x => x.keyIdentity == Array.IndexOf(keyCodes, keyCode) + 1);
-           
-            if (Input.GetKeyDown(keyCode))
-            {
-                //SoundHandler.Instance.PlayClick();
-            }
-
-            if (key != null)
-            {
-                key.isPressed = Input.GetKey(keyCode);                
-            }
-        }
-
         if (Input.GetKeyDown(KeyCode.Space))
         {
             AttackEvent?.Invoke();
@@ -110,16 +109,78 @@ public class CombatManager : MonoBehaviour
             FinalizeCombatEvent();
         }
     }
+
+    public void HandleKeyPressed(KeyButton keyButton)
+    {
+        if (keyButton == null || !keyButton.GetInteractable())
+        {
+            return;
+        }
+
+        Note note = FindBestNoteForKey(keyButton);
+        if (note != null)
+        {
+            note.TryHitFromKey(keyButton);
+        }
+    }
+
+    public void HandleKeyReleased(KeyButton keyButton)
+    {
+        if (keyButton == null)
+        {
+            return;
+        }
+
+        foreach (Note note in FindObjectsOfType<Note>())
+        {
+            if (note.IsUsingKey(keyButton))
+            {
+                note.OnKeyReleased(keyButton);
+            }
+        }
+    }
+
+    private Note FindBestNoteForKey(KeyButton keyButton)
+    {
+        return FindObjectsOfType<Note>()
+            .Where(note => note.CanReceiveHit(keyButton))
+            .Where(note => GetTimingError(note, keyButton) <= badWindow)
+            .OrderBy(note => GetTimingError(note, keyButton))
+            .FirstOrDefault();
+    }
+
+    public float GetTimingError(Note note, KeyButton keyButton)
+    {
+        if (note == null || keyButton == null)
+        {
+            return float.MaxValue;
+        }
+
+        return note.GetTimingError(keyButton);
+    }
     private void Awake()
     {
         if (instance != null && instance != this)
         {
             Destroy(this);
+            return;
         }
         else
         {
             instance = this;
         }
+
+        if (GetComponent<HitFeedbackVFX>() == null)
+        {
+            gameObject.AddComponent<HitFeedbackVFX>();
+        }
+    }
+
+    private void OnValidate()
+    {
+        perfectWindow = Mathf.Max(0.01f, perfectWindow);
+        goodWindow = Mathf.Max(perfectWindow, goodWindow);
+        badWindow = Mathf.Max(goodWindow, badWindow);
     }
     
 
@@ -132,8 +193,101 @@ public class CombatManager : MonoBehaviour
         EnterCombatEvent?.Invoke(player,enemy);
     }
     public void InitalizeCombat(GameObject player, GameObject enemy)
-    {      
+    {
+       ResetJudgementStats();
        StartCoroutine(CoroutineInitializeCombat(player, enemy));
+    }
+
+    public bool TryJudgeHit(Note note, KeyButton keyButton, out RhythmJudgementResult result)
+    {
+        result = default;
+        if (note == null || keyButton == null)
+        {
+            return false;
+        }
+
+        float timingError = GetTimingError(note, keyButton);
+        if (timingError > badWindow)
+        {
+            return false;
+        }
+
+        HitJudgement judgement = EvaluateJudgement(timingError);
+
+        CurrentCombo++;
+        BestCombo = Mathf.Max(BestCombo, CurrentCombo);
+        LastJudgement = judgement;
+
+        result = new RhythmJudgementResult(
+            judgement,
+            timingError,
+            CurrentCombo,
+            keyButton.transform.position,
+            keyButton);
+        HitJudgedEvent?.Invoke(result);
+        return true;
+    }
+
+    public void JudgeMiss(Note note, KeyButton keyButton)
+    {
+        CurrentCombo = 0;
+        MissCount++;
+        LastJudgement = HitJudgement.Miss;
+
+        Vector3 feedbackPosition = keyButton != null
+            ? keyButton.transform.position
+            : note != null ? note.transform.position : transform.position;
+        HitJudgedEvent?.Invoke(new RhythmJudgementResult(
+            HitJudgement.Miss,
+            badWindow,
+            0,
+            feedbackPosition,
+            keyButton));
+    }
+
+    public HitJudgement EvaluateJudgement(float timingError)
+    {
+        float absoluteError = Mathf.Abs(timingError);
+        if (absoluteError <= perfectWindow)
+        {
+            return HitJudgement.Perfect;
+        }
+
+        if (absoluteError <= goodWindow)
+        {
+            return HitJudgement.Good;
+        }
+
+        return HitJudgement.Bad;
+    }
+
+    public int GetDamageForJudgement(int baseDamage, HitJudgement judgement)
+    {
+        int multiplier;
+        switch (judgement)
+        {
+            case HitJudgement.Perfect:
+                multiplier = perfectDamageMultiplier;
+                break;
+            case HitJudgement.Good:
+                multiplier = goodDamageMultiplier;
+                break;
+            case HitJudgement.Bad:
+                multiplier = badDamageMultiplier;
+                break;
+            default:
+                return 0;
+        }
+
+        return Mathf.Max(1, baseDamage) * multiplier;
+    }
+
+    private void ResetJudgementStats()
+    {
+        CurrentCombo = 0;
+        BestCombo = 0;
+        MissCount = 0;
+        LastJudgement = HitJudgement.Miss;
     }
     IEnumerator CoroutineInitializeCombat(GameObject player, GameObject enemy)
     {
