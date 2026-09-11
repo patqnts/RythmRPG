@@ -10,13 +10,22 @@ public class ArrowNote : NoteObject
     private float shuffleInterval = 0.5f;
     private int minIdentity = 1;
     private int maxIdentity = 5;
+    private bool specialLaunchStarted;
 
     void Start()
     {
+        keys = FindObjectsOfType<KeyButton>();
+        stateHandler = FindObjectOfType<PlayerStateHandler>();
+        CombatManager.instance.StopAttackEvent += DestroyObject;
         isMoving = false;
         isSpecialMovement = true;
         specialMovementTimer = 5f;
         shuffleTimer = 5f;
+    }
+
+    private void OnDestroy()
+    {
+        CombatManager.instance.StopAttackEvent -= DestroyObject;
     }
 
     public override void Update()
@@ -62,19 +71,26 @@ public class ArrowNote : NoteObject
                 }
                 else
                 {
-                    // Move speed for 1000 after the pause
-                    float targetX = keys.Where(x => x.keyIdentity == GetNoteIdentity()).FirstOrDefault().gameObject.transform.position.x;
-                    float smoothSpeed = 10f; // Adjust the smoothSpeed as needed
-
-                    // Smoothly interpolate between current position and target position
-                    transform.position = new Vector2(Mathf.Lerp(transform.position.x, targetX, Time.deltaTime * smoothSpeed), transform.position.y);
-
-                    transform.position -= new Vector3(0, 1000 * Time.deltaTime, 0f);
-
-                    Destroy(gameObject, 5f);
-                    isMoving = false;
+                    StartSpecialLaunch();
                 }
             }
         }
+    }
+
+    private void StartSpecialLaunch()
+    {
+        if (specialLaunchStarted)
+        {
+            return;
+        }
+
+        specialLaunchStarted = true;
+        isMoving = false;
+        keyCode = CombatManager.instance.GetKeyCodeFromNoteIdentity(GetNoteIdentity());
+
+        StopMovementTweens();
+        TweenLaneX(GetNoteIdentity());
+        TweenYTo(transform.position.y - 5000f, 1000f);
+        Destroy(gameObject, 5f);
     }
 }

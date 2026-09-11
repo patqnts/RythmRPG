@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using PrimeTween;
 using UnityEngine;
 
 public class ClusterNote : Note
@@ -12,15 +13,42 @@ public class ClusterNote : Note
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
-        body.AddForce(new Vector2(0, force), ForceMode2D.Impulse);
         keys = FindObjectsOfType<KeyButton>();
         stateHandler = FindObjectOfType<PlayerStateHandler>();
         CombatManager.instance.StopAttackEvent += DestroyObject;
+        StartMovementArc();
     }
     private void Update()
     {
-        isMovingUp = body.linearVelocity.y > 0;
         keyCode = CombatManager.instance.GetKeyCodeFromNoteIdentity(GetNoteIdentity());
+    }
+
+    private void StartMovementArc()
+    {
+        isMovingUp = true;
+
+        float mass = body != null ? Mathf.Max(0.01f, body.mass) : 1f;
+        float gravityScale = body != null ? body.gravityScale : 1f;
+        float gravity = Mathf.Abs(Physics2D.gravity.y * gravityScale);
+        float initialVelocity = force / mass;
+        float riseDuration = Mathf.Max(0.01f, initialVelocity / Mathf.Max(0.01f, gravity));
+        float riseHeight = initialVelocity * riseDuration - 0.5f * gravity * riseDuration * riseDuration;
+
+        if (body != null)
+        {
+            body.linearVelocity = Vector2.zero;
+            body.gravityScale = 0f;
+            body.bodyType = RigidbodyType2D.Kinematic;
+        }
+
+        Tween.PositionY(transform, transform.position.y + riseHeight, riseDuration, Ease.OutSine)
+            .OnComplete(this, note => note.StartFalling());
+    }
+
+    private void StartFalling()
+    {
+        isMovingUp = false;
+        TweenLaneFall(GetNoteIdentity(), -3f, Mathf.Max(1f, force / Mathf.Max(0.01f, body != null ? body.mass : 1f)));
     }
 
     private void OnDestroy()
@@ -57,6 +85,7 @@ public class ClusterNote : Note
     protected override void OnHit(KeyButton keyButton, RhythmJudgementResult result)
     {
         body.bodyType = RigidbodyType2D.Static;
+        StopMovementTweens();
         base.OnHit(keyButton, result);
     }
 }

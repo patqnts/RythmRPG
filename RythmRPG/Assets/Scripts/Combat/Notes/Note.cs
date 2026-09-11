@@ -1,4 +1,4 @@
-using DG.Tweening;
+using PrimeTween;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -123,6 +123,72 @@ public class Note : MonoBehaviour
         return keys.FirstOrDefault(x => x.keyIdentity == GetNoteIdentity());
     }
 
+    protected KeyButton GetKeyButton(int keyIdentity)
+    {
+        if (keys == null || keys.Length == 0)
+        {
+            keys = FindObjectsOfType<KeyButton>();
+        }
+
+        return keys.FirstOrDefault(x => x.keyIdentity == keyIdentity);
+    }
+
+    protected void StopMovementTweens()
+    {
+        Tween.StopAll(transform);
+    }
+
+    protected bool TryGetLaneX(int keyIdentity, out float targetX)
+    {
+        KeyButton keyButton = GetKeyButton(keyIdentity);
+        if (keyButton == null)
+        {
+            targetX = transform.position.x;
+            return false;
+        }
+
+        targetX = keyButton.transform.position.x;
+        return true;
+    }
+
+    protected bool TryGetMissTargetY(int keyIdentity, float offset, out float targetY)
+    {
+        KeyButton keyButton = GetKeyButton(keyIdentity);
+        if (keyButton == null)
+        {
+            targetY = transform.position.y;
+            return false;
+        }
+
+        targetY = keyButton.transform.position.y + offset;
+        return true;
+    }
+
+    protected void TweenLaneX(int keyIdentity, float duration = 0.25f)
+    {
+        if (TryGetLaneX(keyIdentity, out float targetX))
+        {
+            Tween.PositionX(transform, targetX, Mathf.Max(0.01f, duration), Ease.OutSine);
+        }
+    }
+
+    protected void TweenYTo(float targetY, float moveSpeed)
+    {
+        float duration = Mathf.Max(0.01f, Mathf.Abs(transform.position.y - targetY) / Mathf.Max(0.01f, moveSpeed));
+        Tween.PositionY(transform, targetY, duration, Ease.Linear);
+    }
+
+    protected void TweenLaneFall(int keyIdentity, float targetYOffset, float moveSpeed, float laneDuration = 0.25f)
+    {
+        if (!TryGetMissTargetY(keyIdentity, targetYOffset, out float targetY))
+        {
+            return;
+        }
+
+        TweenLaneX(keyIdentity, laneDuration);
+        TweenYTo(targetY, moveSpeed);
+    }
+
     protected void ReportMissAndDamage(KeyButton keyButton, bool applyPlayerState = true)
     {
         JudgeMiss(keyButton);
@@ -229,7 +295,7 @@ public class Note : MonoBehaviour
         {
             animator.SetTrigger("Hit");
         }
-        transform.DOKill();
+        StopMovementTweens();
         Destroy(gameObject, .25f);
 
     }

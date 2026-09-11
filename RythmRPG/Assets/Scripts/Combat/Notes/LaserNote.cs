@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class LaserNote : Note, INote
 {
- private bool isHit;
+    private bool isHit;
+    private bool laneTweenStarted;
+    private int laneTweenIdentity;
     bool INote.canBePressed { get => this.canBePressed; }
 
     private void Start()
@@ -16,9 +18,24 @@ public class LaserNote : Note, INote
     }
     private void Update()
     {
-        keyCode = CombatManager.instance.GetKeyCodeFromNoteIdentity(GetNoteIdentity());
-        float targetX = keys.Where(x => x.keyIdentity == GetNoteIdentity()).FirstOrDefault().gameObject.transform.position.x;
-        transform.position = new Vector2(targetX, transform.position.y);
+        EnsureLaneTween();
+    }
+
+    private void EnsureLaneTween()
+    {
+        int currentIdentity = GetNoteIdentity();
+        keyCode = CombatManager.instance.GetKeyCodeFromNoteIdentity(currentIdentity);
+
+        if (laneTweenStarted && laneTweenIdentity == currentIdentity)
+        {
+            return;
+        }
+
+        laneTweenStarted = true;
+        laneTweenIdentity = currentIdentity;
+
+        StopMovementTweens();
+        TweenLaneX(currentIdentity, 0.1f);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -40,6 +57,7 @@ public class LaserNote : Note, INote
             else
             {
                 ReportMissAndDamage(GetIdentityButton(), false);
+                StopMovementTweens();
                 Destroy(gameObject,.5f);
             }
         }
@@ -49,6 +67,7 @@ public class LaserNote : Note, INote
     {
         canBePressed = false;
         animator.SetTrigger("LaserHit");
+        StopMovementTweens();
         Destroy(gameObject, 1.5f);
         
     }

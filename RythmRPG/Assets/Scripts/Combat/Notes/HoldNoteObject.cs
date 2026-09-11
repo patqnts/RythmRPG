@@ -12,6 +12,8 @@ public class HoldNoteObject : Note
     private float holdTimer; // Timer to track how long the key has been held
     private bool completed = false;
     private RhythmJudgementResult pressJudgement;
+    private bool movementTweenStarted;
+    private int movementTweenIdentity;
 
     // Start is called before the first frame update
     void Start()
@@ -48,15 +50,25 @@ public class HoldNoteObject : Note
 
         if (isMoving)
         {
-            keyCode = CombatManager.instance.GetKeyCodeFromNoteIdentity(GetNoteIdentity());
-            float targetX = keys.Where(x => x.keyIdentity == GetNoteIdentity()).FirstOrDefault().gameObject.transform.position.x;
-            float smoothSpeed = 10f; // Adjust the smoothSpeed as needed
-
-            // Smoothly interpolate between current position and target position
-            transform.position = new Vector2(Mathf.Lerp(transform.position.x, targetX, Time.deltaTime * smoothSpeed), transform.position.y);
-
-            transform.position -= new Vector3(0, speed * Time.deltaTime, 0f);
+            EnsureMovementTween();
         }
+    }
+
+    private void EnsureMovementTween()
+    {
+        int currentIdentity = GetNoteIdentity();
+        keyCode = CombatManager.instance.GetKeyCodeFromNoteIdentity(currentIdentity);
+
+        if (movementTweenStarted && movementTweenIdentity == currentIdentity)
+        {
+            return;
+        }
+
+        movementTweenStarted = true;
+        movementTweenIdentity = currentIdentity;
+
+        StopMovementTweens();
+        TweenLaneFall(currentIdentity, -3f, speed);
     }
 
     private void OnDestroy()
@@ -129,6 +141,8 @@ public class HoldNoteObject : Note
         pressJudgement = result;
         isHoldingKey = true;
         holdTimer = 0;
+        isMoving = false;
+        StopMovementTweens();
     }
 
     public override bool IsUsingKey(KeyButton keyButton)

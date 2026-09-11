@@ -13,6 +13,8 @@ public class HoldLaserNote : Note
     private bool completed = false;
     private bool isHit;
     private RhythmJudgementResult pressJudgement;
+    private bool laneTweenStarted;
+    private int laneTweenIdentity;
 
 
     void Start()
@@ -42,9 +44,24 @@ public class HoldLaserNote : Note
             }
         }
 
-        keyCode = CombatManager.instance.GetKeyCodeFromNoteIdentity(GetNoteIdentity());
-        float targetX = keys.Where(x => x.keyIdentity == GetNoteIdentity()).FirstOrDefault().gameObject.transform.position.x;
-        transform.position = new Vector2(targetX, transform.position.y);
+        EnsureLaneTween();
+    }
+
+    private void EnsureLaneTween()
+    {
+        int currentIdentity = GetNoteIdentity();
+        keyCode = CombatManager.instance.GetKeyCodeFromNoteIdentity(currentIdentity);
+
+        if (laneTweenStarted && laneTweenIdentity == currentIdentity)
+        {
+            return;
+        }
+
+        laneTweenStarted = true;
+        laneTweenIdentity = currentIdentity;
+
+        StopMovementTweens();
+        TweenLaneX(currentIdentity, 0.1f);
     }
 
     private void CompleteHoldNote(KeyType keyType)
@@ -77,6 +94,12 @@ public class HoldLaserNote : Note
             //Destroy(gameObject, .5f);
             
         }
+    }
+
+    public override void DestroyObject()
+    {
+        StopMovementTweens();
+        base.DestroyObject();
     }
 
     private void OnDestroy()

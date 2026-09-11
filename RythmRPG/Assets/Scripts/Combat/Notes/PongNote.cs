@@ -7,6 +7,10 @@ public class PongNote : Note
 {
     // Start is called before the first frame update
     [SerializeField] private bool isDeflect;
+    private bool movementTweenStarted;
+    private int movementTweenIdentity;
+    private bool movementTweenDeflect;
+
     void Start()
     {
         isDeflect = false;
@@ -21,24 +25,52 @@ public class PongNote : Note
     {
         if (isMoving)
         {
-            keyCode = CombatManager.instance.GetKeyCodeFromNoteIdentity(GetNoteIdentity());
-            float targetX = keys.Where(x => x.keyIdentity == GetNoteIdentity()).FirstOrDefault().gameObject.transform.position.x;
-            float smoothSpeed = 10f; // Adjust the smoothSpeed as needed
-
-            if (!isDeflect)
-            {
-                // Smoothly interpolate between current position and target position
-                transform.position = new Vector2(Mathf.Lerp(transform.position.x, targetX, Time.deltaTime * smoothSpeed), transform.position.y);
-                transform.position -= new Vector3(0, speed * Time.deltaTime, 0f);
-            }
-            else 
-            {
-                float enemyX = keys.Where(x => x.keyIdentity == 3).FirstOrDefault().gameObject.transform.position.x;
-
-                transform.position = new Vector2(Mathf.Lerp(transform.position.x, enemyX, Time.deltaTime * speed/2), transform.position.y);
-                transform.position += new Vector3(0, speed * Time.deltaTime, 0f);
-            }
+            EnsureMovementTween();
         }
+    }
+
+    private void EnsureMovementTween()
+    {
+        int currentIdentity = GetNoteIdentity();
+        keyCode = CombatManager.instance.GetKeyCodeFromNoteIdentity(currentIdentity);
+
+        if (movementTweenStarted && movementTweenIdentity == currentIdentity && movementTweenDeflect == isDeflect)
+        {
+            return;
+        }
+
+        movementTweenStarted = true;
+        movementTweenIdentity = currentIdentity;
+        movementTweenDeflect = isDeflect;
+
+        StopMovementTweens();
+
+        if (isDeflect)
+        {
+            int enemyLaneIdentity = 3;
+            float targetY = GetEnemyPassThroughY();
+            if (TryGetLaneX(enemyLaneIdentity, out float enemyX))
+            {
+                float horizontalDuration = Mathf.Abs(transform.position.x - enemyX) / Mathf.Max(0.01f, speed * 0.5f);
+                TweenLaneX(enemyLaneIdentity, horizontalDuration);
+            }
+
+            TweenYTo(targetY, speed);
+            return;
+        }
+
+        TweenLaneFall(currentIdentity, -3f, speed);
+    }
+
+    private float GetEnemyPassThroughY()
+    {
+        EnemyData enemy = FindObjectOfType<EnemyData>();
+        if (enemy != null)
+        {
+            return Mathf.Max(enemy.transform.position.y + 3f, transform.position.y + 30f);
+        }
+
+        return transform.position.y + 30f;
     }
 
     public void DeflectEffect(bool shouldDeflect)
@@ -49,6 +81,9 @@ public class PongNote : Note
         GetComponent<SpriteRenderer>().flipX = shouldDeflect;
         float newSpeed = GetSpeed() + .25f;
         SetSpeed(newSpeed);
+        movementTweenStarted = false;
+        isMoving = true;
+        StopMovementTweens();
     }
 
     private void OnDestroy()
