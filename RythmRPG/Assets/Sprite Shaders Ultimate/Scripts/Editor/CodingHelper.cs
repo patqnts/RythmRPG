@@ -47,17 +47,17 @@ namespace SpriteShadersUltimate
 
             string codeText = default;
             string propertyText = default;
-            if (prop.type == MaterialProperty.PropType.Color)
+            if (prop.propertyType == UnityEngine.Rendering.ShaderPropertyType.Color)
             {
                 propertyText = "public Color colorValue;";
                 codeText = "material.SetColor(<b>\"" + prop.name + "\"</b>, colorValue);";
             }
-            else if (prop.type == MaterialProperty.PropType.Vector)
+            else if (prop.propertyType == UnityEngine.Rendering.ShaderPropertyType.Vector)
             {
                 propertyText = "public Vector2 vectorValue;";
                 codeText = "material.SetVector(<b>\"" + prop.name + "\"</b>, vectorValue);";
             }
-            else if (prop.type == MaterialProperty.PropType.Texture)
+            else if (prop.propertyType == UnityEngine.Rendering.ShaderPropertyType.Texture)
             {
                 propertyText = "public Texture textureValue;";
                 codeText = "material.SetTexture(<b>\"" + prop.name + "\"</b>, textureValue);";

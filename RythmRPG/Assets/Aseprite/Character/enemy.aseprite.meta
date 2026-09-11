@@ -8,6 +8,7 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  importerVersion: 2
   textureImporterSettings:
     alphaSource: 1
     mipMapMode: 0
@@ -83,6 +84,8 @@ ScriptedImporter:
     generateAnimationClips: 1
     addSortingGroup: 1
     addShadowCasters: 0
+    generateIndividualEvents: 1
+    generateSpriteAtlas: 1
   asepriteImporterSettings:
     fileImportMode: 1
     importHiddenLayers: 0
@@ -96,6 +99,8 @@ ScriptedImporter:
     generateAnimationClips: 1
     addSortingGroup: 1
     addShadowCasters: 0
+    generateIndividualEvents: 1
+    generateSpriteAtlas: 1
   importFileNodeState: 1
   platformSettingsDirtyTick: 638448248345852108
   textureAssetName: 
@@ -105,6 +110,7 @@ ScriptedImporter:
     pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 0
@@ -123,9 +129,10 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: enemy_Frame_0
     originalName: 
-    pivot: {x: 0.45161292, y: 0.4871795}
+    pivot: {x: 0.48387095, y: 0.4761905}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -143,9 +150,10 @@ ScriptedImporter:
     uvTransform: {x: 4, y: 4}
   - name: enemy_Frame_1
     originalName: 
-    pivot: {x: 0.4193548, y: 0.4871795}
+    pivot: {x: 0.45161292, y: 0.50000006}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -163,9 +171,10 @@ ScriptedImporter:
     uvTransform: {x: 4, y: 204}
   - name: enemy_Frame_2
     originalName: 
-    pivot: {x: 0.45161292, y: 0.4871795}
+    pivot: {x: 0.48387095, y: 0.51282054}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 43
@@ -183,9 +192,10 @@ ScriptedImporter:
     uvTransform: {x: 43, y: 196}
   - name: enemy_Frame_3
     originalName: 
-    pivot: {x: 0.4193548, y: 0.475}
+    pivot: {x: 0.45161292, y: 0.50000006}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 43
@@ -203,9 +213,10 @@ ScriptedImporter:
     uvTransform: {x: 43, y: 4}
   - name: enemy_Frame_4
     originalName: 
-    pivot: {x: 0.45161292, y: 0.4871795}
+    pivot: {x: 0.48387095, y: 0.4761905}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -223,9 +234,10 @@ ScriptedImporter:
     uvTransform: {x: 4, y: 54}
   - name: enemy_Frame_5
     originalName: 
-    pivot: {x: 0.38461536, y: 0.4871795}
+    pivot: {x: 0.42307696, y: 0.51282054}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 122
@@ -243,9 +255,10 @@ ScriptedImporter:
     uvTransform: {x: 122, y: 104}
   - name: enemy_Frame_6
     originalName: 
-    pivot: {x: 0.40740743, y: 0.5428571}
+    pivot: {x: 0.44444445, y: 0.5714286}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 156
@@ -263,9 +276,10 @@ ScriptedImporter:
     uvTransform: {x: 156, y: 4}
   - name: enemy_Frame_7
     originalName: 
-    pivot: {x: 0.40740743, y: 0.57575756}
+    pivot: {x: 0.44444445, y: 0.6060606}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 156
@@ -283,9 +297,10 @@ ScriptedImporter:
     uvTransform: {x: 156, y: 47}
   - name: enemy_Frame_8
     originalName: 
-    pivot: {x: 0.38461536, y: 0.4871795}
+    pivot: {x: 0.42307696, y: 0.51282054}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 122
@@ -303,9 +318,10 @@ ScriptedImporter:
     uvTransform: {x: 122, y: 151}
   - name: enemy_Frame_9
     originalName: 
-    pivot: {x: 0.5625, y: 0.51351345}
+    pivot: {x: 0.59375, y: 0.5405405}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 82
@@ -323,9 +339,10 @@ ScriptedImporter:
     uvTransform: {x: 82, y: 4}
   - name: enemy_Frame_10
     originalName: 
-    pivot: {x: 0.5625, y: 0.5428571}
+    pivot: {x: 0.59375, y: 0.5714286}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 82
@@ -343,9 +360,10 @@ ScriptedImporter:
     uvTransform: {x: 82, y: 139}
   - name: enemy_Frame_11
     originalName: 
-    pivot: {x: 0.5625, y: 0.51351345}
+    pivot: {x: 0.59375, y: 0.5405405}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 82
@@ -363,9 +381,10 @@ ScriptedImporter:
     uvTransform: {x: 82, y: 49}
   - name: enemy_Frame_12
     originalName: 
-    pivot: {x: 0.5625, y: 0.5428571}
+    pivot: {x: 0.59375, y: 0.5714286}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 82
@@ -383,9 +402,10 @@ ScriptedImporter:
     uvTransform: {x: 82, y: 182}
   - name: enemy_Frame_13
     originalName: 
-    pivot: {x: 0.5625, y: 0.51351345}
+    pivot: {x: 0.59375, y: 0.5405405}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 82
@@ -403,9 +423,10 @@ ScriptedImporter:
     uvTransform: {x: 82, y: 94}
   - name: enemy_Frame_14
     originalName: 
-    pivot: {x: 0.45161292, y: 0.4871795}
+    pivot: {x: 0.48387095, y: 0.4761905}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -423,9 +444,10 @@ ScriptedImporter:
     uvTransform: {x: 4, y: 104}
   - name: enemy_Frame_15
     originalName: 
-    pivot: {x: 0.4193548, y: 0.475}
+    pivot: {x: 0.45161292, y: 0.50000006}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 43
@@ -443,9 +465,10 @@ ScriptedImporter:
     uvTransform: {x: 43, y: 52}
   - name: enemy_Frame_16
     originalName: 
-    pivot: {x: 0.41666663, y: 0.475}
+    pivot: {x: 0.45833337, y: 0.50000006}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 122
@@ -463,9 +486,10 @@ ScriptedImporter:
     uvTransform: {x: 122, y: 198}
   - name: enemy_Frame_17
     originalName: 
-    pivot: {x: 0.46153846, y: 0.45238096}
+    pivot: {x: 0.49999997, y: 0.4761905}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 122
@@ -483,9 +507,10 @@ ScriptedImporter:
     uvTransform: {x: 122, y: 4}
   - name: enemy_Frame_18
     originalName: 
-    pivot: {x: 0.46153846, y: 0.45238096}
+    pivot: {x: 0.49999997, y: 0.4761905}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 122
@@ -503,9 +528,10 @@ ScriptedImporter:
     uvTransform: {x: 122, y: 54}
   - name: enemy_Frame_19
     originalName: 
-    pivot: {x: 0.4193548, y: 0.475}
+    pivot: {x: 0.45161292, y: 0.50000006}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 43
@@ -523,9 +549,10 @@ ScriptedImporter:
     uvTransform: {x: 43, y: 100}
   - name: enemy_Frame_20
     originalName: 
-    pivot: {x: 0.4193548, y: 0.475}
+    pivot: {x: 0.45161292, y: 0.50000006}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 43
@@ -543,9 +570,10 @@ ScriptedImporter:
     uvTransform: {x: 43, y: 148}
   - name: enemy_Frame_21
     originalName: 
-    pivot: {x: 0.4334432, y: 0.4871795}
+    pivot: {x: 0.48387095, y: 0.4761905}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -562,184 +590,212 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 4, y: 154}
   spriteSheetImportData: []
+  tileSetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: -262155246
+    uuid:
+      value0: 1816857306
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: 1816857306
     name: enemy
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: enemy_Frame_0
+    - name: Frame_0
       frameIndex: 0
+      additiveSortOrder: 0
       cellRect:
         x: 34
         y: 29
         width: 29
         height: 40
       spriteId: 9b2f4cb77aa5a554ba44182283528ea8
-    - name: enemy_Frame_1
+    - name: Frame_1
       frameIndex: 1
+      additiveSortOrder: 0
       cellRect:
         x: 35
         y: 29
         width: 29
         height: 38
       spriteId: 5e5c3445ee7bc0e4bb385ec7b92302a9
-    - name: enemy_Frame_2
+    - name: Frame_2
       frameIndex: 2
+      additiveSortOrder: 0
       cellRect:
         x: 34
         y: 29
         width: 29
         height: 37
       spriteId: f61182f5363fce94991ac32f74711bc0
-    - name: enemy_Frame_3
+    - name: Frame_3
       frameIndex: 3
+      additiveSortOrder: 0
       cellRect:
         x: 35
         y: 29
         width: 29
         height: 38
       spriteId: a6ef7d985276dd149bfdacf5dc84f367
-    - name: enemy_Frame_4
+    - name: Frame_4
       frameIndex: 4
+      additiveSortOrder: 0
       cellRect:
         x: 34
         y: 29
         width: 29
         height: 40
       spriteId: 36350975ea4e9b142bae6e179f969668
-    - name: enemy_Frame_5
+    - name: Frame_5
       frameIndex: 5
+      additiveSortOrder: 0
       cellRect:
         x: 38
         y: 29
         width: 24
         height: 37
       spriteId: 9936ac3c20be8954ab282e0e23f3ded4
-    - name: enemy_Frame_6
+    - name: Frame_6
       frameIndex: 6
+      additiveSortOrder: 0
       cellRect:
         x: 37
         y: 29
         width: 25
         height: 33
       spriteId: 228c95be3c2b85140aaeba870496ec4a
-    - name: enemy_Frame_7
+    - name: Frame_7
       frameIndex: 7
+      additiveSortOrder: 0
       cellRect:
         x: 37
         y: 29
         width: 25
         height: 31
       spriteId: f2d90df58b1fb0a47a55213cb6139fba
-    - name: enemy_Frame_8
+    - name: Frame_8
       frameIndex: 8
+      additiveSortOrder: 0
       cellRect:
         x: 38
         y: 29
         width: 24
         height: 37
       spriteId: 8d322316df0715e4ea6e05a74bfb9e6a
-    - name: enemy_Frame_9
+    - name: Frame_9
       frameIndex: 9
+      additiveSortOrder: 0
       cellRect:
         x: 30
         y: 29
         width: 30
         height: 35
       spriteId: f7352d72724b77a45806c4cbab496218
-    - name: enemy_Frame_10
+    - name: Frame_10
       frameIndex: 10
+      additiveSortOrder: 0
       cellRect:
         x: 30
         y: 29
         width: 30
         height: 33
       spriteId: 80d1cfe2d874223458803aba9403f166
-    - name: enemy_Frame_11
+    - name: Frame_11
       frameIndex: 11
+      additiveSortOrder: 0
       cellRect:
         x: 30
         y: 29
         width: 30
         height: 35
       spriteId: 3d25e9ad92a1be345aceed4a68bcf0c0
-    - name: enemy_Frame_12
+    - name: Frame_12
       frameIndex: 12
+      additiveSortOrder: 0
       cellRect:
         x: 30
         y: 29
         width: 30
         height: 33
       spriteId: bb154b5f53122d14fa5a64090b3af7f0
-    - name: enemy_Frame_13
+    - name: Frame_13
       frameIndex: 13
+      additiveSortOrder: 0
       cellRect:
         x: 30
         y: 29
         width: 30
         height: 35
       spriteId: ae8d6662a609a16479067a9934ac9375
-    - name: enemy_Frame_14
+    - name: Frame_14
       frameIndex: 14
+      additiveSortOrder: 0
       cellRect:
         x: 34
         y: 29
         width: 29
         height: 40
       spriteId: dd249feb87e00564b93d9a0a42fcd4b4
-    - name: enemy_Frame_15
+    - name: Frame_15
       frameIndex: 15
+      additiveSortOrder: 0
       cellRect:
         x: 35
         y: 29
         width: 29
         height: 38
       spriteId: 37fdd4efc3b12ed4aa73497fbd184a12
-    - name: enemy_Frame_16
+    - name: Frame_16
       frameIndex: 16
+      additiveSortOrder: 0
       cellRect:
         x: 38
         y: 29
         width: 22
         height: 38
       spriteId: 974cb8c48b327314bbbd2c85b355e5f0
-    - name: enemy_Frame_17
+    - name: Frame_17
       frameIndex: 17
+      additiveSortOrder: 0
       cellRect:
         x: 36
         y: 29
         width: 24
         height: 40
       spriteId: 3c2f82829aed92946b9dd4c7f5f0cc23
-    - name: enemy_Frame_18
+    - name: Frame_18
       frameIndex: 18
+      additiveSortOrder: 0
       cellRect:
         x: 36
         y: 29
         width: 24
         height: 40
       spriteId: 0d023e82050d74b4b8dbc651a4b3e975
-    - name: enemy_Frame_19
+    - name: Frame_19
       frameIndex: 19
+      additiveSortOrder: 0
       cellRect:
         x: 35
         y: 29
         width: 29
         height: 38
       spriteId: 8a10989434616324bb317e3df01c5197
-    - name: enemy_Frame_20
+    - name: Frame_20
       frameIndex: 20
+      additiveSortOrder: 0
       cellRect:
         x: 35
         y: 29
         width: 29
         height: 38
       spriteId: f35806857547efe4b947c798107ad56c
-    - name: enemy_Frame_21
+    - name: Frame_21
       frameIndex: 21
+      additiveSortOrder: 0
       cellRect:
         x: 34
         y: 29
@@ -747,7 +803,10 @@ ScriptedImporter:
         height: 40
       spriteId: 6769be02025c4d54db1461ece4d1a4e8
     linkedCells: []
+    tileCells: []
+    tileSetIndex: 0
     parentIndex: -1
+  tileSets: []
   platformSettings:
   - name: DefaultTexturePlatform
     overridden: 0
@@ -789,3 +848,4 @@ ScriptedImporter:
   secondarySpriteTextures: []
   spritePackingTag: 
   canvasSize: {x: 96, y: 96}
+  previousTextureSize: {x: 256, y: 256}

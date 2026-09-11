@@ -8,6 +8,7 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  importerVersion: 2
   textureImporterSettings:
     alphaSource: 1
     mipMapMode: 0
@@ -83,6 +84,8 @@ ScriptedImporter:
     generateAnimationClips: 1
     addSortingGroup: 1
     addShadowCasters: 0
+    generateIndividualEvents: 1
+    generateSpriteAtlas: 1
   asepriteImporterSettings:
     fileImportMode: 1
     importHiddenLayers: 0
@@ -96,6 +99,8 @@ ScriptedImporter:
     generateAnimationClips: 1
     addSortingGroup: 1
     addShadowCasters: 0
+    generateIndividualEvents: 1
+    generateSpriteAtlas: 1
   importFileNodeState: 1
   platformSettingsDirtyTick: 0
   textureAssetName: 
@@ -105,6 +110,7 @@ ScriptedImporter:
     pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 0
@@ -126,6 +132,7 @@ ScriptedImporter:
     pivot: {x: 3.8666663, y: -15.466665}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 163
@@ -146,6 +153,7 @@ ScriptedImporter:
     pivot: {x: 3.4705882, y: -13.588235}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 163
@@ -166,6 +174,7 @@ ScriptedImporter:
     pivot: {x: 3.1578948, y: -12.105263}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 163
@@ -186,6 +195,7 @@ ScriptedImporter:
     pivot: {x: 2.9047623, y: -10.904761}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 163
@@ -206,6 +216,7 @@ ScriptedImporter:
     pivot: {x: 2.6956525, y: -0.03292181}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 230
@@ -226,6 +237,7 @@ ScriptedImporter:
     pivot: {x: 2.6956525, y: -0.03292181}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 230
@@ -246,6 +258,7 @@ ScriptedImporter:
     pivot: {x: 1.2372881, y: 0.011811024}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 163
@@ -266,6 +279,7 @@ ScriptedImporter:
     pivot: {x: 0.969697, y: 0.015686274}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 163
@@ -286,6 +300,7 @@ ScriptedImporter:
     pivot: {x: 0.93650794, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -306,6 +321,7 @@ ScriptedImporter:
     pivot: {x: 0.89261746, y: 0.015686274}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -326,6 +342,7 @@ ScriptedImporter:
     pivot: {x: 0.8741722, y: 0.007905139}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 4
@@ -346,6 +363,7 @@ ScriptedImporter:
     pivot: {x: 0.7457627, y: -0.03292181}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 163
@@ -366,6 +384,7 @@ ScriptedImporter:
     pivot: {x: 2.6956525, y: -0.03292181}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 289
@@ -386,6 +405,7 @@ ScriptedImporter:
     pivot: {x: 3.4705882, y: -0.03292181}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 138
@@ -406,6 +426,7 @@ ScriptedImporter:
     pivot: {x: 3.1052632, y: -0.03292181}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 261
@@ -426,6 +447,7 @@ ScriptedImporter:
     pivot: {x: 3.277778, y: -0.03292181}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 261
@@ -446,6 +468,7 @@ ScriptedImporter:
     pivot: {x: 3.7999997, y: -0.03292181}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 289
@@ -466,6 +489,7 @@ ScriptedImporter:
     pivot: {x: 17.333334, y: -0.03292181}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
     rect:
       serializedVersion: 2
       x: 270
@@ -482,152 +506,176 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 270, y: 255}
   spriteSheetImportData: []
+  tileSetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: 845809572
+    uuid:
+      value0: 3301790516
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: -993176780
     name: hold laser
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: hold laser_Frame_3
+    - name: Frame_3
       frameIndex: 3
+      additiveSortOrder: 0
       cellRect:
         x: 192
         y: 232
         width: 15
         height: 15
       spriteId: 04fb8a22f9e303143bd3bf645cd1f5ae
-    - name: hold laser_Frame_4
+    - name: Frame_4
       frameIndex: 4
+      additiveSortOrder: 0
       cellRect:
         x: 191
         y: 231
         width: 17
         height: 17
       spriteId: 59df741b9d56cf34387ef3811b2da234
-    - name: hold laser_Frame_5
+    - name: Frame_5
       frameIndex: 5
+      additiveSortOrder: 0
       cellRect:
         x: 190
         y: 230
         width: 19
         height: 19
       spriteId: 2c4760350cc78d84eab8efb47cf81966
-    - name: hold laser_Frame_6
+    - name: Frame_6
       frameIndex: 6
+      additiveSortOrder: 0
       cellRect:
         x: 189
         y: 229
         width: 21
         height: 21
       spriteId: a176ae793770b25479d17354059a765b
-    - name: hold laser_Frame_7
+    - name: Frame_7
       frameIndex: 7
+      additiveSortOrder: 0
       cellRect:
         x: 188
         y: 8
         width: 23
         height: 243
       spriteId: e4be7f4dd2f06254e88ba39ef8cccb3b
-    - name: hold laser_Frame_8
+    - name: Frame_8
       frameIndex: 8
+      additiveSortOrder: 0
       cellRect:
         x: 188
         y: 8
         width: 23
         height: 243
       spriteId: bb2e3c20fc4736f46a19093284aa525b
-    - name: hold laser_Frame_9
+    - name: Frame_9
       frameIndex: 9
+      additiveSortOrder: 0
       cellRect:
         x: 177
         y: -3
         width: 59
         height: 254
       spriteId: da4547e6582c1fc4fb70e937ee3cb6ee
-    - name: hold laser_Frame_10
+    - name: Frame_10
       frameIndex: 10
+      additiveSortOrder: 0
       cellRect:
         x: 154
         y: -4
         width: 99
         height: 255
       spriteId: dcc6569e646e24f4bacd03b2cd26ba90
-    - name: hold laser_Frame_11
+    - name: Frame_11
       frameIndex: 11
+      additiveSortOrder: 0
       cellRect:
         x: 132
         y: 0
         width: 126
         height: 251
       spriteId: e7b424122ae6f294297e58dbc1aee907
-    - name: hold laser_Frame_12
+    - name: Frame_12
       frameIndex: 12
+      additiveSortOrder: 0
       cellRect:
         x: 117
         y: -4
         width: 149
         height: 255
       spriteId: 001e6e26a6c6543449f3e6787ed34085
-    - name: hold laser_Frame_13
+    - name: Frame_13
       frameIndex: 13
+      additiveSortOrder: 0
       cellRect:
         x: 118
         y: -2
         width: 151
         height: 253
       spriteId: 7881c41ca1e97ed4d8c4ee152d3b934d
-    - name: hold laser_Frame_14
+    - name: Frame_14
       frameIndex: 14
+      additiveSortOrder: 0
       cellRect:
         x: 162
         y: 8
         width: 118
         height: 243
       spriteId: 707840d56e1688144b8515b7959dabd1
-    - name: hold laser_Frame_15
+    - name: Frame_15
       frameIndex: 15
+      additiveSortOrder: 0
       cellRect:
         x: 188
         y: 8
         width: 23
         height: 243
       spriteId: 85ed8f0bf830cef4f98b7980d6bb6a87
-    - name: hold laser_Frame_16
+    - name: Frame_16
       frameIndex: 16
+      additiveSortOrder: 0
       cellRect:
         x: 191
         y: 8
         width: 17
         height: 243
       spriteId: c238661e6b8364448964bf99f1ac3dde
-    - name: hold laser_Frame_17
+    - name: Frame_17
       frameIndex: 17
+      additiveSortOrder: 0
       cellRect:
         x: 191
         y: 8
         width: 19
         height: 243
       spriteId: 216ca593e9dc2a64ea8cf573950c1006
-    - name: hold laser_Frame_18
+    - name: Frame_18
       frameIndex: 18
+      additiveSortOrder: 0
       cellRect:
         x: 191
         y: 8
         width: 18
         height: 243
       spriteId: 3c7a503943e0a954cb37350c68f35c23
-    - name: hold laser_Frame_19
+    - name: Frame_19
       frameIndex: 19
+      additiveSortOrder: 0
       cellRect:
         x: 193
         y: 8
         width: 15
         height: 243
       spriteId: ccc539bb999750f4082b96693da29572
-    - name: hold laser_Frame_20
+    - name: Frame_20
       frameIndex: 20
+      additiveSortOrder: 0
       cellRect:
         x: 198
         y: 8
@@ -635,9 +683,13 @@ ScriptedImporter:
         height: 243
       spriteId: ffd8f6851adf8ec42a6e89dd73ee048c
     linkedCells: []
+    tileCells: []
+    tileSetIndex: 0
     parentIndex: -1
+  tileSets: []
   platformSettings: []
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
   canvasSize: {x: 500, y: 254}
+  previousTextureSize: {x: 512, y: 1024}

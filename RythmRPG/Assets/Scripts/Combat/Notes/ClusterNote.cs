@@ -19,7 +19,7 @@ public class ClusterNote : Note
     }
     private void Update()
     {
-        isMovingUp = body.velocity.y > 0;
+        isMovingUp = body.linearVelocity.y > 0;
         KeyButton identityButton = keys.Where(x => x.keyIdentity == GetNoteIdentity()).FirstOrDefault();
         keyCode = CombatManager.instance.GetKeyCodeFromNoteIdentity(GetNoteIdentity());
         if (canBePressed)

@@ -65,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
 
             direction = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
             //set walk based on direction
-            body.velocity = direction * walkSpeed;
+            body.linearVelocity = direction * walkSpeed;
             HandleSpriteFlip();
             SetSprite();
 
