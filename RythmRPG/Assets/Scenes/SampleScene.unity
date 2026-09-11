@@ -29221,13 +29221,15 @@ MonoBehaviour:
   projectileObjectHolder: {fileID: 148263335}
   attackDuration: 5
   generationSpeed: 0.25
+  laserGenerationSpeed: 1.75
+  holdLaserGenerationSpeed: 1.75
   keyCodesAsign: 
-  enableNormalNotes: 0
+  enableNormalNotes: 1
   enableRandomLaser: 0
   enableSimultaneousNotes: 0
   enableWaveNotes: 0
   enableHoldNotes: 0
-  enablePongNote: 1
+  enablePongNote: 0
   enableHoldLaserNote: 0
 --- !u!70 &485168041
 CapsuleCollider2D:
@@ -40621,6 +40623,8 @@ MonoBehaviour:
   projectileObjectHolder: {fileID: 0}
   attackDuration: 0
   generationSpeed: 1
+  laserGenerationSpeed: 1.75
+  holdLaserGenerationSpeed: 1.75
   keyCodesAsign: 
   enableNormalNotes: 1
   enableRandomLaser: 1
@@ -75134,6 +75138,8 @@ MonoBehaviour:
   projectileObjectHolder: {fileID: 0}
   attackDuration: 0
   generationSpeed: 0.5
+  laserGenerationSpeed: 1.75
+  holdLaserGenerationSpeed: 1.75
   keyCodesAsign: 
   enableNormalNotes: 1
   enableRandomLaser: 1
@@ -134255,7 +134261,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyIdentity: 5
-  keyType: 3
+  keyType: 0
   isPressed: 0
   sprites:
   - {fileID: -1960483087, guid: f9f578db5a70632409b1db0ac0a6b6b2, type: 3}
