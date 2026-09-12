@@ -5,8 +5,12 @@ using UnityEngine;
 
 public class HoldNoteObject : Note
 {
-    public Transform tailTransform; // Assign this in the Inspector
+    [Header("Hold Tail")]
+    [SerializeField] private HoldNoteTailMode tailMode = HoldNoteTailMode.Sprite;
+    [SerializeField] private HoldNoteTailVisual[] tailVisuals;
+    public Transform tailTransform; // Legacy fallback. Prefer assigning HoldNoteTailVisual components.
     public float length; // Length of the tail in units
+
     private bool isHoldingKey = false; // Track if the key is being held
     private float holdTime; // Total time the note should be held
     private float holdTimer; // Timer to track how long the key has been held
@@ -14,6 +18,9 @@ public class HoldNoteObject : Note
     private RhythmJudgementResult pressJudgement;
     private bool movementTweenStarted;
     private int movementTweenIdentity;
+    private HoldNoteTailVisual activeTailVisual;
+    private float revealedTailLength;
+    private float holdStartTailLength;
 
     // Start is called before the first frame update
     void Start()
@@ -24,28 +31,35 @@ public class HoldNoteObject : Note
         isMoving = true;
 
         // Calculate hold time based on the length of the tail
-        holdTime = length / speed;
-        ScaleTailTransform();
+        holdTime = GetHoldDuration();
+        InitializeTailVisual();
     }
 
     // Update is called once per frame
     void Update()
     {
         // Check for key hold event
-        if (isHoldingKey && activeKeyButton != null && activeKeyButton.GetInteractable())
+        if (isHoldingKey)
         {
-            isMoving = false;
-            holdTimer += Time.deltaTime;
-            ScaleTailBasedOnHoldTime();
-
-            if (holdTimer >= holdTime)
+            if (activeKeyButton != null && activeKeyButton.GetInteractable())
             {
-                if (!completed)
+                isMoving = false;
+                holdTimer += Time.deltaTime;
+                UpdateTailVisual();
+
+                if (holdTimer >= holdTime)
                 {
-                    // Complete the hold successfully
-                    CompleteHoldNote(activeKeyButton.keyType);
+                    if (!completed)
+                    {
+                        // Complete the hold successfully
+                        CompleteHoldNote(activeKeyButton.keyType);
+                    }
                 }
             }
+        }
+        else
+        {
+            RevealTailVisual(Time.deltaTime);
         }
 
         if (isMoving)
@@ -56,6 +70,14 @@ public class HoldNoteObject : Note
             }
 
             EnsureMovementTween();
+        }
+    }
+
+    private void LateUpdate()
+    {
+        if (!isHoldingKey && activeTailVisual != null)
+        {
+            SetTailLength(revealedTailLength);
         }
     }
 
@@ -102,43 +124,133 @@ public class HoldNoteObject : Note
         }
     }
 
-    private void ScaleTailTransform()
+    private void InitializeTailVisual()
     {
-        if (tailTransform != null)
-        {
-            // Scale the tail transform horizontally based on the length of the note
-            tailTransform.localScale = new Vector3(length, tailTransform.localScale.y, tailTransform.localScale.z);
+        activeTailVisual = ResolveTailVisual();
 
-            // Adjust the tail position so that it scales to the left
-            tailTransform.localPosition = new Vector3(-length / 2, tailTransform.localPosition.y, tailTransform.localPosition.z);
+        if (activeTailVisual == null)
+        {
+            return;
+        }
+
+        SetOnlyActiveTailVisual(activeTailVisual);
+        activeTailVisual.Initialize(length, speed);
+        SetTailLength(0f);
+    }
+
+    private void UpdateTailVisual()
+    {
+        if (activeTailVisual == null)
+        {
+            return;
+        }
+
+        float normalizedRemaining = holdTime <= 0f ? 0f : Mathf.Clamp01(1f - holdTimer / holdTime);
+        float remainingLength = Mathf.Max(0f, holdStartTailLength * normalizedRemaining);
+        activeTailVisual.SetRemainingLength(remainingLength, normalizedRemaining);
+    }
+
+    private void RevealTailVisual(float deltaTime)
+    {
+        if (activeTailVisual == null || length <= 0f)
+        {
+            return;
+        }
+
+        revealedTailLength = Mathf.Min(length, revealedTailLength + Mathf.Max(0f, speed) * Mathf.Max(0f, deltaTime));
+        SetTailLength(revealedTailLength);
+    }
+
+    private void SetTailLength(float tailLength)
+    {
+        float normalizedTailLength = length <= 0f ? 0f : Mathf.Clamp01(tailLength / length);
+        activeTailVisual.SetRemainingLength(tailLength, normalizedTailLength);
+    }
+
+    private HoldNoteTailVisual ResolveTailVisual()
+    {
+        if (tailVisuals == null || tailVisuals.Length == 0)
+        {
+            tailVisuals = GetComponentsInChildren<HoldNoteTailVisual>(true);
+        }
+
+        HoldNoteTailVisual selectedTail = tailVisuals.FirstOrDefault(tail => tail != null && tail.TailMode == tailMode);
+        if (selectedTail != null)
+        {
+            return selectedTail;
+        }
+
+        HoldNoteTailVisual[] childTailVisuals = GetComponentsInChildren<HoldNoteTailVisual>(true);
+        selectedTail = childTailVisuals.FirstOrDefault(tail => tail != null && tail.TailMode == tailMode);
+        if (selectedTail != null)
+        {
+            tailVisuals = childTailVisuals;
+            return selectedTail;
+        }
+
+        selectedTail = tailVisuals.FirstOrDefault(tail => tail != null);
+        if (selectedTail != null)
+        {
+            return selectedTail;
+        }
+
+        selectedTail = childTailVisuals.FirstOrDefault(tail => tail != null);
+        if (selectedTail != null)
+        {
+            tailVisuals = childTailVisuals;
+            return selectedTail;
+        }
+
+        if (tailTransform == null)
+        {
+            return null;
+        }
+
+        selectedTail = tailTransform.GetComponent<HoldNoteTailVisual>();
+        if (selectedTail != null)
+        {
+            return selectedTail;
+        }
+
+        HoldNoteSpriteTailVisual spriteTail = tailTransform.gameObject.AddComponent<HoldNoteSpriteTailVisual>();
+        tailVisuals = new HoldNoteTailVisual[] { spriteTail };
+        return spriteTail;
+    }
+
+    private void SetOnlyActiveTailVisual(HoldNoteTailVisual activeTail)
+    {
+        foreach (HoldNoteTailVisual tailVisual in tailVisuals)
+        {
+            if (tailVisual == null)
+            {
+                continue;
+            }
+
+            if (tailVisual == activeTail)
+            {
+                tailVisual.gameObject.SetActive(true);
+                continue;
+            }
+
+            tailVisual.Hide();
+            tailVisual.gameObject.SetActive(false);
         }
     }
 
-    private void ScaleTailBasedOnHoldTime()
+    private float GetHoldDuration()
     {
-        if (tailTransform != null)
-        {
-            // Calculate the remaining length based on the speed and hold timer
-            float remainingLength = Mathf.Max(0, length - (holdTimer * speed));
-
-            // Scale the tail transform horizontally based on the remaining length
-            tailTransform.localScale = new Vector3(remainingLength, tailTransform.localScale.y, tailTransform.localScale.z);
-
-            // Adjust the tail position so that it scales to the left
-            tailTransform.localPosition = new Vector3(-remainingLength / 2, tailTransform.localPosition.y, tailTransform.localPosition.z);
-        }
+        return Mathf.Max(0.01f, length / Mathf.Max(0.01f, speed));
     }
 
     private void CompleteHoldNote(KeyType keyType)
     {
         completed = true;
-        tailTransform.GetComponent<SpriteRenderer>().sprite = null;
+        HideTailVisual();
         // Logic for completing the hold note successfully
         SetPlayerState(state, 0); // Example: Setting state to 0 (no damage)
         // You can add more effects or scoring logic here
         StartHitEffect(GetJudgedDamage(1, pressJudgement), keyType, activeKeyButton);
         DestroyObject();
-        
     }
 
     protected override void OnHit(KeyButton keyButton, RhythmJudgementResult result)
@@ -147,6 +259,7 @@ public class HoldNoteObject : Note
         isHoldingKey = true;
         holdTimer = 0;
         isMoving = false;
+        holdStartTailLength = Mathf.Max(0f, revealedTailLength);
         StopMovementTweens();
     }
 
@@ -169,5 +282,19 @@ public class HoldNoteObject : Note
         }
 
         isHoldingKey = false;
+    }
+
+    public override void DestroyObject()
+    {
+        HideTailVisual();
+        base.DestroyObject();
+    }
+
+    private void HideTailVisual()
+    {
+        if (activeTailVisual != null)
+        {
+            activeTailVisual.Hide();
+        }
     }
 }

@@ -16,6 +16,10 @@ public class NoteGenerator : MonoBehaviour
     public float normalNoteGenerationSpeed = 0.3f;
     public float laserGenerationSpeed = 1.75f;
     public float holdLaserGenerationSpeed = 1.75f;
+    [Header("Hold Notes")]
+    public float holdNoteGenerationSpeed = 0.75f;
+    public float holdNoteSpeed = 8f;
+    public Vector2 holdNoteDurationRange = new Vector2(0.75f, 1.25f);
     [Header("Initialize Movement")]
     public bool enableMissileInitializeMovement = true;
     [Range(0f, 1f)] public float missileInitializeChance = 0.25f;
@@ -161,7 +165,7 @@ public class NoteGenerator : MonoBehaviour
                 previousNoteIdentity = newNoteIdentity;
             }
 
-            noteScript.gameObject.SetActive(true);
+            newNote.SetActive(true);
         }
     }
 
@@ -252,7 +256,7 @@ public class NoteGenerator : MonoBehaviour
                 ApplyMissileInitializeMovement(noteScript);
             }
 
-            noteScript.gameObject.SetActive(true);
+            newNote.SetActive(true);
         }
     }
 
@@ -262,7 +266,7 @@ public class NoteGenerator : MonoBehaviour
 
         while (Time.time - startTime < duration)
         {
-            yield return new WaitForSeconds(.5f);
+            yield return new WaitForSeconds(Mathf.Max(0.05f, holdNoteGenerationSpeed));
 
             // Instantiate NoteObject prefab with a random noteIdentity between 1 and 5
             AttackAnimate?.Invoke();
@@ -273,13 +277,18 @@ public class NoteGenerator : MonoBehaviour
             {
                 int randomRange = UnityEngine.Random.Range(1, 6);
                 noteScript.SetNoteIdentity(randomRange);
-                noteScript.SetSpeed(8);
+                float holdSpeed = Mathf.Max(0.01f, holdNoteSpeed);
+                float minHoldDuration = Mathf.Min(holdNoteDurationRange.x, holdNoteDurationRange.y);
+                float maxHoldDuration = Mathf.Max(holdNoteDurationRange.x, holdNoteDurationRange.y);
+                float holdDuration = UnityEngine.Random.Range(Mathf.Max(0.05f, minHoldDuration), Mathf.Max(0.05f, maxHoldDuration));
+
+                noteScript.SetSpeed(holdSpeed);
                 noteScript.state = PlayerState.Default;
                 noteScript.hitEffect = HitEffect.Default;
-                noteScript.length = UnityEngine.Random.Range(1, 3);
+                noteScript.length = holdDuration * holdSpeed;
             }
 
-            noteScript.gameObject.SetActive(true);
+            newNote.SetActive(true);
         }
     }
 
