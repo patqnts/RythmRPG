@@ -18,6 +18,11 @@ public class LaserNote : Note, INote
     }
     private void Update()
     {
+        if (ShouldWaitForInitializeMovement())
+        {
+            return;
+        }
+
         EnsureLaneTween();
     }
 

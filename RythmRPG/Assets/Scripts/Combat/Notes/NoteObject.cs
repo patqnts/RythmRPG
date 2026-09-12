@@ -22,6 +22,11 @@ public class NoteObject : Note, INote
     {
         if (isMoving)
         {
+            if (ShouldWaitForInitializeMovement())
+            {
+                return;
+            }
+
             EnsureMovementTween();
         }
     }
@@ -53,6 +58,15 @@ public class NoteObject : Note, INote
 
         TweenLaneX(currentIdentity);
         Tween.PositionY(transform, targetY, 2.5f, Ease.Linear);
+    }
+
+    protected override void OnInitializeMovementComplete()
+    {
+        ResetMovementTween();
+        if (isMoving)
+        {
+            EnsureMovementTween();
+        }
     }
 
     private void OnDestroy()

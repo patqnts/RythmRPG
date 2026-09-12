@@ -50,6 +50,11 @@ public class HoldNoteObject : Note
 
         if (isMoving)
         {
+            if (ShouldWaitForInitializeMovement())
+            {
+                return;
+            }
+
             EnsureMovementTween();
         }
     }

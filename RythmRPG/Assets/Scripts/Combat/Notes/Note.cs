@@ -1,4 +1,5 @@
 using PrimeTween;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,9 @@ public class Note : MonoBehaviour
     protected KeyButton activeKeyButton;
     protected bool hitAccepted;
     private bool missReported;
+    private NoteInitializeMovement initializeMovement;
+    private bool initializeMovementStarted;
+    private bool initializeMovementPlaying;
 
     public virtual Vector3 GetJudgementWorldPosition()
     {
@@ -70,6 +74,7 @@ public class Note : MonoBehaviour
     {
         return isActiveAndEnabled
             && !hitAccepted
+            && !initializeMovementPlaying
             && canBePressed
             && keyButton != null
             && keyButton.GetInteractable()
@@ -136,6 +141,53 @@ public class Note : MonoBehaviour
     protected void StopMovementTweens()
     {
         Tween.StopAll(transform);
+    }
+
+    protected bool ShouldWaitForInitializeMovement()
+    {
+        return TryStartInitializeMovement();
+    }
+
+    protected bool TryStartInitializeMovement(Action onComplete = null)
+    {
+        if (initializeMovementPlaying)
+        {
+            return true;
+        }
+
+        if (initializeMovementStarted)
+        {
+            return false;
+        }
+
+        initializeMovement = GetComponent<NoteInitializeMovement>();
+        if (initializeMovement == null || !initializeMovement.ShouldRun)
+        {
+            initializeMovementStarted = true;
+            return false;
+        }
+
+        KeyButton targetKey = GetIdentityButton();
+        if (targetKey == null)
+        {
+            return false;
+        }
+
+        initializeMovementStarted = true;
+        initializeMovementPlaying = true;
+        StopMovementTweens();
+        initializeMovement.Play(this, targetKey, () =>
+        {
+            initializeMovementPlaying = false;
+            onComplete?.Invoke();
+            OnInitializeMovementComplete();
+        });
+
+        return true;
+    }
+
+    protected virtual void OnInitializeMovementComplete()
+    {
     }
 
     protected bool TryGetLaneX(int keyIdentity, out float targetX)
@@ -295,6 +347,12 @@ public class Note : MonoBehaviour
     {
         canBePressed = false;
         isMoving = false;
+        initializeMovementPlaying = false;
+        if (initializeMovement != null)
+        {
+            initializeMovement.Stop();
+        }
+
         if(animator!= null)
         {
             animator.SetTrigger("Hit");

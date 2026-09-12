@@ -16,7 +16,10 @@ public class ClusterNote : Note
         keys = FindObjectsOfType<KeyButton>();
         stateHandler = FindObjectOfType<PlayerStateHandler>();
         CombatManager.instance.StopAttackEvent += DestroyObject;
-        StartMovementArc();
+        if (!TryStartInitializeMovement(StartMovementArc))
+        {
+            StartMovementArc();
+        }
     }
     private void Update()
     {

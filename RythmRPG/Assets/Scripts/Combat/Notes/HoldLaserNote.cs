@@ -44,7 +44,10 @@ public class HoldLaserNote : Note
             }
         }
 
-        EnsureLaneTween();
+        if (!ShouldWaitForInitializeMovement())
+        {
+            EnsureLaneTween();
+        }
     }
 
     private void EnsureLaneTween()

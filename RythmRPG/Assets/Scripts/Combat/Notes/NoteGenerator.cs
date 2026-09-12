@@ -13,8 +13,12 @@ public class NoteGenerator : MonoBehaviour
     public Transform projectileObjectHolder;
     public float attackDuration;
     public float generationSpeed = 1f; // Adjust the speed as needed
+    public float normalNoteGenerationSpeed = 0.3f;
     public float laserGenerationSpeed = 1.75f;
     public float holdLaserGenerationSpeed = 1.75f;
+    [Header("Initialize Movement")]
+    public bool enableMissileInitializeMovement = true;
+    [Range(0f, 1f)] public float missileInitializeChance = 0.25f;
     public KeyCode[] keyCodesAsign;
 
     private bool isAttacking = false;
@@ -217,6 +221,7 @@ public class NoteGenerator : MonoBehaviour
                 int noteIdentity = wavePattern[index];
                 noteScript.SetNoteIdentity(noteIdentity);
                 noteScript.hitEffect = HitEffect.Default;
+                ApplyMissileInitializeMovement(noteScript);
             }
 
             newNote.SetActive(true);
@@ -230,7 +235,7 @@ public class NoteGenerator : MonoBehaviour
 
         while (Time.time - startTime < duration)
         {
-            yield return new WaitForSeconds(.15f);
+            yield return new WaitForSeconds(Mathf.Max(0.05f, normalNoteGenerationSpeed));
 
             // Instantiate NoteObject prefab with a random noteIdentity between 1 and 5
             AttackAnimate?.Invoke();
@@ -244,6 +249,7 @@ public class NoteGenerator : MonoBehaviour
                 noteScript.speed = 10;
                 noteScript.state = PlayerState.Default;
                 noteScript.hitEffect = HitEffect.Default;
+                ApplyMissileInitializeMovement(noteScript);
             }
 
             noteScript.gameObject.SetActive(true);
@@ -313,11 +319,30 @@ public class NoteGenerator : MonoBehaviour
                     noteScript.SetNoteIdentity(noteIdentity);
                     noteScript.speed = 10;
                     noteScript.hitEffect = HitEffect.Default;
+                    ApplyMissileInitializeMovement(noteScript);
                 }
 
                 noteScript.gameObject.SetActive(true);
             }
         }
+    }
+
+    private void ApplyMissileInitializeMovement(Note noteScript)
+    {
+        if (!enableMissileInitializeMovement
+            || noteScript == null
+            || UnityEngine.Random.value > missileInitializeChance)
+        {
+            return;
+        }
+
+        NoteInitializeMovement initializeMovement = noteScript.GetComponent<NoteInitializeMovement>();
+        if (initializeMovement == null)
+        {
+            initializeMovement = noteScript.gameObject.AddComponent<NoteInitializeMovement>();
+        }
+
+        initializeMovement.SetMovementType(NoteInitializeMovementType.MissileSCurve);
     }
 
 }

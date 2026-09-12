@@ -25,6 +25,11 @@ public class PongNote : Note
     {
         if (isMoving)
         {
+            if (!isDeflect && ShouldWaitForInitializeMovement())
+            {
+                return;
+            }
+
             EnsureMovementTween();
         }
     }
