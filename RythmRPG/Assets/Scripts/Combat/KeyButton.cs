@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using RythmRPG.Combat;
 using UnityEngine;
 
 public class KeyButton : MonoBehaviour
@@ -28,48 +29,14 @@ public class KeyButton : MonoBehaviour
     }
     private void Update()
     {
-        UpdateInput();
         UpdateVisual();
-    }
-
-    private void UpdateInput()
-    {
-        if (CombatManager.instance == null)
-        {
-            return;
-        }
-
-        KeyCode keyCode = CombatManager.instance.GetKeyCodeFromNoteIdentity(keyIdentity);
-        if (keyCode == KeyCode.None)
-        {
-            isPressed = false;
-            return;
-        }
-
-        isPressed = Input.GetKey(keyCode);
-
-        if (Input.GetKeyDown(keyCode))
-        {
-            CombatManager.instance.HandleKeyPressed(this);
-        }
-
-        if (Input.GetKeyUp(keyCode))
-        {
-            CombatManager.instance.HandleKeyReleased(this);
-        }
     }
 
     private void UpdateVisual()
     {
-        // Set the sprite based on the isPressed value    
-        if (isPressed || !interactable)
-        {
-            spriteRenderer.sprite = sprites[0]; // Assuming 1 is the index for the pressed state in your sprites array
-        }
-        else
-        {
-            spriteRenderer.sprite = sprites[1]; // Assuming 0 is the index for the not pressed state in your sprites array
-        }
+        if (spriteRenderer == null || sprites == null || sprites.Length == 0) return;
+        int desiredIndex = isPressed || !interactable ? 0 : 1;
+        spriteRenderer.sprite = sprites[Mathf.Min(desiredIndex, sprites.Length - 1)];
     }
     
     public void SetInteractable(bool interactable)
@@ -78,6 +45,11 @@ public class KeyButton : MonoBehaviour
     }
 
     public bool GetInteractable() { return interactable; }
+
+    public void SetPressed(bool pressed)
+    {
+        isPressed = pressed;
+    }
 
     public void PlayJudgementFeedback(HitJudgement judgement, Color color)
     {

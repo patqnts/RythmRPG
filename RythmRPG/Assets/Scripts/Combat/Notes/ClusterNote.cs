@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using PrimeTween;
+using RythmRPG.Combat;
 using UnityEngine;
 
 public class ClusterNote : Note
@@ -13,9 +14,7 @@ public class ClusterNote : Note
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
-        keys = FindObjectsOfType<KeyButton>();
-        stateHandler = FindObjectOfType<PlayerStateHandler>();
-        CombatManager.instance.StopAttackEvent += DestroyObject;
+        keys = FindObjectsByType<KeyButton>(FindObjectsSortMode.None);
         if (!TryStartInitializeMovement(StartMovementArc))
         {
             StartMovementArc();
@@ -23,7 +22,6 @@ public class ClusterNote : Note
     }
     private void Update()
     {
-        keyCode = CombatManager.instance.GetKeyCodeFromNoteIdentity(GetNoteIdentity());
     }
 
     private void StartMovementArc()
@@ -56,7 +54,6 @@ public class ClusterNote : Note
 
     private void OnDestroy()
     {
-        CombatManager.instance.StopAttackEvent -= DestroyObject;
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -73,21 +70,16 @@ public class ClusterNote : Note
         }
 
         canBePressed = false;
-        if (!isMovingUp && body.bodyType != RigidbodyType2D.Static)
+        if (!isMovingUp && (body == null || body.bodyType != RigidbodyType2D.Static))
         {
-            ReportMissAndDamage(GetIdentityButton());
+            ReportMiss(GetIdentityButton());
             DestroyObject();
         }
     }
 
-    protected override int GetBaseHitDamage()
-    {
-        return damage;
-    }
-
     protected override void OnHit(KeyButton keyButton, RhythmJudgementResult result)
     {
-        body.bodyType = RigidbodyType2D.Static;
+        if (body != null) body.bodyType = RigidbodyType2D.Static;
         StopMovementTweens();
         base.OnHit(keyButton, result);
     }

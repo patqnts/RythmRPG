@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using RythmRPG.Combat;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private CombatController combatController;
     
     public Rigidbody2D body;
     public bool isEnabled;
@@ -24,14 +26,13 @@ public class PlayerMovement : MonoBehaviour
     float idleTime;
     private void Start()
     {
-        CombatManager.instance.ExitCombatEvent += EnableMovement;
-        CombatManager.instance.ExitCombatEvent += CloseBattleBG;
+        combatController = FindFirstObjectByType<CombatController>();
+        if (combatController != null) combatController.BattleEnded += OnBattleEnded;
     }
 
     private void OnDisable()
     {
-        CombatManager.instance.ExitCombatEvent -= EnableMovement;
-        CombatManager.instance.ExitCombatEvent -= CloseBattleBG;
+        if (combatController != null) combatController.BattleEnded -= OnBattleEnded;
      
     }
     // Update is called once per frame
@@ -141,7 +142,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        IEnemy enemy = collision.gameObject.GetComponent<IEnemy>();
+        EnemyCombatant enemy = collision.gameObject.GetComponent<EnemyCombatant>();
         GameObject enemyObject = collision.gameObject;
         
         if (enemy != null)
@@ -157,14 +158,18 @@ public class PlayerMovement : MonoBehaviour
 
         if (enemyObject != null)
         {
-            enemyObject.GetComponent<SpriteRenderer>().sortingOrder = CombatManager.instance.charactersSortOrder;            
+            enemyObject.GetComponent<SpriteRenderer>().sortingOrder = 52;
         }        
         isEnabled = false;
         circleCollider.enabled = false;
         GameObject notice = Instantiate(noticeObject, enemyObject.transform);
         yield return new WaitForSeconds(1.5f);
         Destroy(notice);
-        CombatManager.instance.InitalizeCombatEvent(this.gameObject, enemyObject);
+        combatController ??= FindFirstObjectByType<CombatController>();
+        PlayerCombatant player = GetComponent<PlayerCombatant>() ?? gameObject.AddComponent<PlayerCombatant>();
+        EnemyCombatant enemy = enemyObject.GetComponent<EnemyCombatant>();
+        if (combatController != null && enemy != null)
+            combatController.BeginBattle(new CombatEncounterContext(player, enemy));
     }
 
     public void CloseBattleBG()
@@ -179,5 +184,11 @@ public class PlayerMovement : MonoBehaviour
     public void DisableMovement()
     {
         isEnabled = false;
+    }
+
+    private void OnBattleEnded(CombatState state)
+    {
+        EnableMovement();
+        CloseBattleBG();
     }
 }

@@ -1,19 +1,16 @@
 using PrimeTween;
+using RythmRPG.Combat;
 using UnityEngine;
 
-public class NoteObject : Note, INote
+public class NoteObject : Note
 {
-    bool INote.canBePressed { get => this.canBePressed; }
-
     public bool isSpecial;
     private bool movementTweenStarted;
     private int movementTweenIdentity;
 
     private void Start()
     {
-        CombatManager.instance.StopAttackEvent += DestroyObject;
-        keys = FindObjectsOfType<KeyButton>();
-        stateHandler = FindObjectOfType<PlayerStateHandler>();
+        keys = FindObjectsByType<KeyButton>(FindObjectsSortMode.None);
         //animator.SetBool(moveset.ToString(), true);
         isMoving = true;
     }
@@ -40,7 +37,6 @@ public class NoteObject : Note, INote
     protected void EnsureMovementTween()
     {
         int currentIdentity = GetNoteIdentity();
-        keyCode = CombatManager.instance.GetKeyCodeFromNoteIdentity(currentIdentity);
 
         if (movementTweenStarted && movementTweenIdentity == currentIdentity)
         {
@@ -52,12 +48,19 @@ public class NoteObject : Note, INote
             return;
         }
 
+        KeyButton targetKey = GetIdentityButton();
+        if (targetKey == null) return;
+
         StopMovementTweens();
         movementTweenIdentity = currentIdentity;
         movementTweenStarted = true;
 
         TweenLaneX(currentIdentity);
-        Tween.PositionY(transform, targetY, 2.5f, Ease.Linear);
+        float travelTime = Mathf.Max(0.01f, (float)(Data?.TravelTime ?? 2.5d));
+        float distanceToKey = Mathf.Abs(transform.position.y - targetKey.transform.position.y);
+        float worldSpeed = distanceToKey > 0.01f ? distanceToKey / travelTime : Mathf.Max(0.01f, speed);
+        float totalDuration = Mathf.Abs(transform.position.y - targetY) / worldSpeed;
+        Tween.PositionY(transform, targetY, Mathf.Max(0.01f, totalDuration), Ease.Linear);
     }
 
     protected override void OnInitializeMovementComplete()
@@ -67,11 +70,6 @@ public class NoteObject : Note, INote
         {
             EnsureMovementTween();
         }
-    }
-
-    private void OnDestroy()
-    {
-        CombatManager.instance.StopAttackEvent -= DestroyObject;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -87,14 +85,13 @@ public class NoteObject : Note, INote
         if (other.gameObject.tag == "Activator" && isMoving)
         {
             canBePressed = false;
-            ReportMissAndDamage(GetIdentityButton());
+            ReportMiss(GetIdentityButton());
             DestroyObject();
         }
     }
 
     protected override void OnHit(KeyButton keyButton, RhythmJudgementResult result)
     {
-        FindObjectOfType<ScreenshakeManager>().ShakeLight();
         base.OnHit(keyButton, result);
     }
 }

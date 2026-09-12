@@ -1,19 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using RythmRPG.Combat;
 using UnityEngine;
 
-public class LaserNote : Note, INote
+public class LaserNote : Note
 {
     private bool isHit;
     private bool laneTweenStarted;
     private int laneTweenIdentity;
-    bool INote.canBePressed { get => this.canBePressed; }
-
     private void Start()
     {
-        CombatManager.instance.StopAttackEvent += DestroyObject;
-        keys = FindObjectsOfType<KeyButton>();
+        keys = FindObjectsByType<KeyButton>(FindObjectsSortMode.None);
         //animator.SetBool(moveset.ToString(), true);      
     }
     private void Update()
@@ -29,7 +27,6 @@ public class LaserNote : Note, INote
     private void EnsureLaneTween()
     {
         int currentIdentity = GetNoteIdentity();
-        keyCode = CombatManager.instance.GetKeyCodeFromNoteIdentity(currentIdentity);
 
         if (laneTweenStarted && laneTweenIdentity == currentIdentity)
         {
@@ -61,7 +58,7 @@ public class LaserNote : Note, INote
             }
             else
             {
-                ReportMissAndDamage(GetIdentityButton(), false);
+                ReportMiss(GetIdentityButton());
                 StopMovementTweens();
                 Destroy(gameObject,.5f);
             }
@@ -71,7 +68,7 @@ public class LaserNote : Note, INote
     public override void DestroyObject()
     {
         canBePressed = false;
-        animator.SetTrigger("LaserHit");
+        if (animator != null) animator.SetTrigger("LaserHit");
         StopMovementTweens();
         Destroy(gameObject, 1.5f);
         
@@ -127,6 +124,5 @@ public class LaserNote : Note, INote
 
     private void OnDestroy()
     {
-        CombatManager.instance.StopAttackEvent -= DestroyObject;
     }
 }

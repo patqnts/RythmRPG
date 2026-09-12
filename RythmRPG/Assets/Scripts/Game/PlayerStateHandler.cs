@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using RythmRPG.Combat;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +14,7 @@ public class PlayerStateHandler : MonoBehaviour
     public PlayerStateHandler instance;
     private int pressCount;
     private float effectDuration;
+    [SerializeField] private LaneInputRouter inputRouter;
 
     private void Start()
     {
@@ -24,9 +26,11 @@ public class PlayerStateHandler : MonoBehaviour
     {
         if (playerState == PlayerState.Freeze)
         {
-            foreach (KeyCode keyCode in CombatManager.instance.keyCodes)
+            inputRouter ??= FindFirstObjectByType<LaneInputRouter>();
+            if (inputRouter == null) return;
+            foreach (LaneKeyBinding binding in inputRouter.Bindings)
             {
-                if (Input.GetKeyDown(keyCode))
+                if (Input.GetKeyDown(binding.KeyCode))
                 {
                     UpdatePressCount(1);
                 }

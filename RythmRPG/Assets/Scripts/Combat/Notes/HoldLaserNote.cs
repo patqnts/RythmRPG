@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using RythmRPG.Combat;
 using UnityEngine;
 
 public class HoldLaserNote : Note
@@ -12,15 +13,13 @@ public class HoldLaserNote : Note
     public bool isHoldingKey = false;
     private bool completed = false;
     private bool isHit;
-    private RhythmJudgementResult pressJudgement;
     private bool laneTweenStarted;
     private int laneTweenIdentity;
 
 
     void Start()
     {
-        CombatManager.instance.StopAttackEvent += DestroyObject;
-        keys = FindObjectsOfType<KeyButton>();
+        keys = FindObjectsByType<KeyButton>(FindObjectsSortMode.None);
         holdTime = length / speed;
     }
 
@@ -39,7 +38,7 @@ public class HoldLaserNote : Note
                 if (!completed)
                 {
                     // Complete the hold successfully
-                    CompleteHoldNote(activeKeyButton.keyType);
+                    CompleteHoldNote();
                 }
             }
         }
@@ -53,7 +52,6 @@ public class HoldLaserNote : Note
     private void EnsureLaneTween()
     {
         int currentIdentity = GetNoteIdentity();
-        keyCode = CombatManager.instance.GetKeyCodeFromNoteIdentity(currentIdentity);
 
         if (laneTweenStarted && laneTweenIdentity == currentIdentity)
         {
@@ -67,12 +65,11 @@ public class HoldLaserNote : Note
         TweenLaneX(currentIdentity, 0.1f);
     }
 
-    private void CompleteHoldNote(KeyType keyType)
+    private void CompleteHoldNote()
     {
         completed = true;
         isHoldingKey = false;
-        StartHitEffect(GetJudgedDamage(1, pressJudgement), keyType, activeKeyButton);
-        //SetPlayerState(state, 1);
+        CompleteHeldHit();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -91,7 +88,7 @@ public class HoldLaserNote : Note
             DestroyObject();
             if (!completed)
             {
-                ReportMissAndDamage(GetIdentityButton(), false);
+                ReportMiss(GetIdentityButton());
             }
            
             //Destroy(gameObject, .5f);
@@ -107,7 +104,6 @@ public class HoldLaserNote : Note
 
     private void OnDestroy()
     {
-        CombatManager.instance.StopAttackEvent -= DestroyObject;
     }
 
     public override Vector3 GetJudgementWorldPosition()
@@ -154,7 +150,6 @@ public class HoldLaserNote : Note
 
     protected override void OnHit(KeyButton keyButton, RhythmJudgementResult result)
     {
-        pressJudgement = result;
         isHoldingKey = true;
         isHit = true;
         holdTimer = 0;
@@ -174,7 +169,7 @@ public class HoldLaserNote : Note
 
         if (!completed)
         {
-            ReportMissAndDamage(keyButton, false);
+            ReportMiss(keyButton);
         }
 
         DestroyObject();

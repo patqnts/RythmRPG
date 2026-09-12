@@ -393,7 +393,7 @@ public class NoteInitializeMovement : MonoBehaviour
             return null;
         }
 
-        KeyButton[] sceneKeys = FindObjectsOfType<KeyButton>();
+        KeyButton[] sceneKeys = FindObjectsByType<KeyButton>(FindObjectsSortMode.None);
         foreach (KeyButton keyButton in sceneKeys)
         {
             if (keyButton != null && keyButton.keyIdentity == keyIdentity)

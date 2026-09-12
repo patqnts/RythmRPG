@@ -1,178 +1,144 @@
-using PrimeTween;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
+using PrimeTween;
+using RythmRPG.Combat;
+using RythmRPG.Rhythm;
 using UnityEngine;
+
+public enum Moveset { Default, Special, Arrow }
 
 public class Note : MonoBehaviour
 {
     [SerializeField] private int noteIdentity;
-    [SerializeField] public float speed;
-    [SerializeField] public int damage;
+    [SerializeField] public float speed = 8f;
+    [SerializeField] public int damage = 1;
     [SerializeField] public KeyButton[] keys;
+    [SerializeField] public Animator animator;
+
     public bool isMoving;
+    public bool canBePressed;
     public KeyCode keyCode;
     public Moveset moveset;
     public PlayerState state;
     public HitEffect hitEffect;
 
-
-    public Animator animator;
-    public bool canBePressed;
-
-    public PlayerStateHandler stateHandler;
     protected KeyButton activeKeyButton;
     protected bool hitAccepted;
-    private bool missReported;
+    private bool resolved;
+    private RhythmJudgementResult pressJudgement;
     private NoteInitializeMovement initializeMovement;
     private bool initializeMovementStarted;
     private bool initializeMovementPlaying;
+    private RhythmPatternRunner runner;
+    private string runtimeNoteId;
 
-    public virtual Vector3 GetJudgementWorldPosition()
+    public string RuntimeNoteId => runtimeNoteId;
+    public bool IsResolved => resolved;
+    public RhythmNoteData Data { get; private set; }
+
+    public virtual void Initialize(RhythmNoteSpawnContext context)
     {
-        return transform.position;
+        runner = context.Runner;
+        Data = context.NoteData;
+        runtimeNoteId = string.IsNullOrEmpty(context.NoteId) ? Guid.NewGuid().ToString("N") : context.NoteId;
+        noteIdentity = context.LaneId;
+        speed = Mathf.Max(0.01f, context.Speed);
+        damage = Mathf.Max(0, context.Damage);
+        keys = context.Keys;
+        activeKeyButton = null;
+        hitAccepted = false;
+        resolved = false;
+        canBePressed = false;
     }
+
+    public virtual Vector3 GetJudgementWorldPosition() => transform.position;
 
     public virtual float GetTimingError(KeyButton keyButton)
     {
-        if (keyButton == null)
-        {
-            return float.MaxValue;
-        }
-
-        return Mathf.Abs(GetJudgementWorldPosition().y - keyButton.transform.position.y);
-    }
-
-    protected bool TryJudgeHit(KeyButton keyButton, out RhythmJudgementResult result)
-    {
-        return CombatManager.instance.TryJudgeHit(this, keyButton, out result);
-    }
-
-    protected void JudgeMiss(KeyButton keyButton)
-    {
-        if (missReported)
-        {
-            return;
-        }
-
-        missReported = true;
-        CombatManager.instance.JudgeMiss(this, keyButton);
-    }
-
-    protected int GetJudgedDamage(int baseDamage, RhythmJudgementResult result)
-    {
-        if (hitEffect == HitEffect.Ghost)
-        {
-            return baseDamage;
-        }
-
-        return CombatManager.instance.GetDamageForJudgement(baseDamage, result.judgement);
+        return keyButton == null ? float.MaxValue : Mathf.Abs(GetJudgementWorldPosition().y - keyButton.transform.position.y);
     }
 
     public virtual bool CanReceiveHit(KeyButton keyButton)
     {
-        return isActiveAndEnabled
-            && !hitAccepted
-            && !initializeMovementPlaying
-            && canBePressed
-            && keyButton != null
-            && keyButton.GetInteractable()
-            && keyButton.keyIdentity == GetNoteIdentity();
+        return isActiveAndEnabled && !resolved && !hitAccepted && !initializeMovementPlaying && canBePressed
+            && keyButton != null && keyButton.GetInteractable() && keyButton.keyIdentity == noteIdentity;
     }
 
-    public bool TryHitFromKey(KeyButton keyButton)
+    public bool TryHitFromKey(KeyButton keyButton, RhythmJudgementResult judgement)
     {
-        if (!CanReceiveHit(keyButton))
-        {
-            return false;
-        }
-
-        if (!TryJudgeHit(keyButton, out RhythmJudgementResult result))
-        {
-            return false;
-        }
-
+        if (!CanReceiveHit(keyButton)) return false;
         hitAccepted = true;
         activeKeyButton = keyButton;
-        OnHit(keyButton, result);
+        pressJudgement = judgement;
+        OnHit(keyButton, judgement);
         return true;
     }
 
-    public virtual bool IsUsingKey(KeyButton keyButton)
-    {
-        return keyButton != null && activeKeyButton == keyButton;
-    }
-
-    public virtual void OnKeyReleased(KeyButton keyButton)
-    {
-    }
-
-    protected virtual int GetBaseHitDamage()
-    {
-        return 1;
-    }
+    public virtual bool IsUsingKey(KeyButton keyButton) => keyButton != null && activeKeyButton == keyButton;
+    public virtual void OnKeyReleased(KeyButton keyButton) { }
+    protected virtual bool ResolveImmediatelyOnPress => true;
 
     protected virtual void OnHit(KeyButton keyButton, RhythmJudgementResult result)
     {
-        StartHitEffect(GetJudgedDamage(GetBaseHitDamage(), result), keyButton.keyType, keyButton);
+        if (ResolveImmediatelyOnPress) Resolve(result);
     }
+
+    protected RhythmJudgementResult GetPressJudgement() => pressJudgement;
+
+    protected void Resolve(RhythmJudgementResult result)
+    {
+        if (resolved) return;
+        resolved = true;
+        canBePressed = false;
+        runner?.ResolveNote(this, result);
+        DestroyObject();
+    }
+
+    protected void ResolveMiss(KeyButton keyButton, NoteResolutionSource source = NoteResolutionSource.Timeout)
+    {
+        if (resolved) return;
+        Vector3 position = keyButton != null ? keyButton.transform.position : GetJudgementWorldPosition();
+        Resolve(new RhythmJudgementResult(runtimeNoteId, noteIdentity, HitJudgement.Miss,
+            runner != null ? runner.BadWindow : 0.9f, position, source));
+    }
+
+    public void ForceMiss(KeyButton keyButton, NoteResolutionSource source = NoteResolutionSource.Timeout) => ResolveMiss(keyButton, source);
+
+    public void ForceResolve(RhythmJudgementResult result) => Resolve(result);
 
     protected KeyButton GetIdentityButton()
     {
-        if (keys == null || keys.Length == 0)
-        {
-            keys = FindObjectsOfType<KeyButton>();
-        }
-
-        return keys.FirstOrDefault(x => x.keyIdentity == GetNoteIdentity());
+        EnsureKeys();
+        return keys.FirstOrDefault(key => key != null && key.keyIdentity == noteIdentity);
     }
 
     protected KeyButton GetKeyButton(int keyIdentity)
     {
+        EnsureKeys();
+        return keys.FirstOrDefault(key => key != null && key.keyIdentity == keyIdentity);
+    }
+
+    private void EnsureKeys()
+    {
         if (keys == null || keys.Length == 0)
-        {
-            keys = FindObjectsOfType<KeyButton>();
-        }
-
-        return keys.FirstOrDefault(x => x.keyIdentity == keyIdentity);
+            keys = FindObjectsByType<KeyButton>(FindObjectsInactive.Include, FindObjectsSortMode.None);
     }
 
-    protected void StopMovementTweens()
-    {
-        Tween.StopAll(transform);
-    }
-
-    protected bool ShouldWaitForInitializeMovement()
-    {
-        return TryStartInitializeMovement();
-    }
+    protected void StopMovementTweens() => Tween.StopAll(transform);
+    protected bool ShouldWaitForInitializeMovement() => TryStartInitializeMovement();
 
     protected bool TryStartInitializeMovement(Action onComplete = null)
     {
-        if (initializeMovementPlaying)
-        {
-            return true;
-        }
-
-        if (initializeMovementStarted)
-        {
-            return false;
-        }
-
+        if (initializeMovementPlaying) return true;
+        if (initializeMovementStarted) return false;
         initializeMovement = GetComponent<NoteInitializeMovement>();
         if (initializeMovement == null || !initializeMovement.ShouldRun)
         {
             initializeMovementStarted = true;
             return false;
         }
-
         KeyButton targetKey = GetIdentityButton();
-        if (targetKey == null)
-        {
-            return false;
-        }
-
+        if (targetKey == null) return false;
         initializeMovementStarted = true;
         initializeMovementPlaying = true;
         StopMovementTweens();
@@ -182,46 +148,29 @@ public class Note : MonoBehaviour
             onComplete?.Invoke();
             OnInitializeMovementComplete();
         });
-
         return true;
     }
 
-    protected virtual void OnInitializeMovementComplete()
-    {
-    }
+    protected virtual void OnInitializeMovementComplete() { }
 
     protected bool TryGetLaneX(int keyIdentity, out float targetX)
     {
-        KeyButton keyButton = GetKeyButton(keyIdentity);
-        if (keyButton == null)
-        {
-            targetX = transform.position.x;
-            return false;
-        }
-
-        targetX = keyButton.transform.position.x;
-        return true;
+        KeyButton key = GetKeyButton(keyIdentity);
+        targetX = key != null ? key.transform.position.x : transform.position.x;
+        return key != null;
     }
 
     protected bool TryGetMissTargetY(int keyIdentity, float offset, out float targetY)
     {
-        KeyButton keyButton = GetKeyButton(keyIdentity);
-        if (keyButton == null)
-        {
-            targetY = transform.position.y;
-            return false;
-        }
-
-        targetY = keyButton.transform.position.y + offset;
-        return true;
+        KeyButton key = GetKeyButton(keyIdentity);
+        targetY = key != null ? key.transform.position.y + offset : transform.position.y;
+        return key != null;
     }
 
     protected void TweenLaneX(int keyIdentity, float duration = 0.25f)
     {
-        if (TryGetLaneX(keyIdentity, out float targetX))
-        {
-            Tween.PositionX(transform, targetX, Mathf.Max(0.01f, duration), Ease.OutSine);
-        }
+        if (TryGetLaneX(keyIdentity, out float x))
+            Tween.PositionX(transform, x, Mathf.Max(0.01f, duration), Ease.OutSine);
     }
 
     protected void TweenYTo(float targetY, float moveSpeed)
@@ -232,133 +181,61 @@ public class Note : MonoBehaviour
 
     protected void TweenLaneFall(int keyIdentity, float targetYOffset, float moveSpeed, float laneDuration = 0.25f)
     {
-        if (!TryGetMissTargetY(keyIdentity, targetYOffset, out float targetY))
-        {
-            return;
-        }
-
+        if (!TryGetMissTargetY(keyIdentity, targetYOffset, out float targetY)) return;
         TweenLaneX(keyIdentity, laneDuration);
         TweenYTo(targetY, moveSpeed);
     }
 
-    protected void ReportMissAndDamage(KeyButton keyButton, bool applyPlayerState = true)
-    {
-        JudgeMiss(keyButton);
-        if (applyPlayerState)
-        {
-            SetPlayerState(state, 30);
-        }
+    protected void ReportMiss(KeyButton keyButton) => ResolveMiss(keyButton);
+    protected void CompleteHeldHit() => Resolve(GetPressJudgement());
 
-        PlayerData.instance.TakeDamage(damage);
-    }
-
-    public void SetPlayerState(PlayerState state, float duration)
-    {
-        stateHandler.SetPlayerState(state, duration);
-    }
-
-    public void StartHitEffect(int damage, KeyType keyType, KeyButton sourceKeyButton = null)
-    {
-        switch (hitEffect)
-        {
-            case HitEffect.Default:
-                CombatManager.instance.DamageOpponent(damage);
-                DestroyObject();
-                break;
-            case HitEffect.Ghost:
-                PlayerData.instance.TakeDamage(damage);
-                DestroyObject();
-                break;
-            case HitEffect.DoubleHit:
-                CombatManager.instance.DamageOpponent(damage);
-                DestroyObject();
-                break;
-            case HitEffect.Cluster:
-                StartCoroutine(ClusterOut(1));
-                DestroyObject();
-                break;
-            case HitEffect.Pong:
-                CombatManager.instance.DamageOpponent(damage);
-                DestroyObject();
-                break;
-
-        }
-        //Debug.Log($"Damage: {damage}");
-
-        if (keyType != KeyType.DEFAULT)
-        {
-            switch (keyType)
-            {
-                case KeyType.LIGHTNING:
-                    foreach (Note note in FindObjectsOfType<Note>()
-                        .Where(note => !CombatManager.instance.IsProtectedFromBonusClear(note, this))
-                        .Take(3))
-                    {
-                        note.DestroyObject();
-                    }
-                    break;
-                case KeyType.LANE_CLEAR:
-                    foreach (Note note in FindObjectsOfType<Note>()
-                        .Where(note => note.GetNoteIdentity() == noteIdentity)
-                        .Where(note => !CombatManager.instance.IsProtectedFromBonusClear(note, this)))
-                    {
-                        note.DestroyObject();
-                    }
-                    break;
-            }
-
-        }
-    }
-
-    private IEnumerator ClusterOut(int count)
-    {
-        Vector3 pointPos = transform.position;
-        int saveNoteIdentity = noteIdentity;
-        for (int i = 0; i < count; i++)
-        {          
-            GameObject cluster = Instantiate(CombatManager.instance.notes.clusterNote, pointPos, Quaternion.identity);
-            cluster.GetComponent<ClusterNote>().SetNoteIdentity(saveNoteIdentity);
-            yield return new WaitForSeconds(.35f);
-        }
-    }
- 
-    public void SetNoteIdentity(int i)
-    {
-        noteIdentity = i;
-    }
-
-    public int GetNoteIdentity()
-    {
-        return noteIdentity;
-    }
-
-
-    public void SetSpeed(float i)
-    {
-        speed = i;
-    }
-
-    public float GetSpeed()
-    {
-        return speed;
-    }
+    public void SetNoteIdentity(int value) => noteIdentity = value;
+    public int GetNoteIdentity() => noteIdentity;
+    public void SetSpeed(float value) => speed = value;
+    public float GetSpeed() => speed;
 
     public virtual void DestroyObject()
     {
         canBePressed = false;
         isMoving = false;
         initializeMovementPlaying = false;
-        if (initializeMovement != null)
-        {
-            initializeMovement.Stop();
-        }
-
-        if(animator!= null)
-        {
-            animator.SetTrigger("Hit");
-        }
+        initializeMovement?.Stop();
+        if (animator != null) animator.SetTrigger("Hit");
         StopMovementTweens();
-        Destroy(gameObject, .25f);
+        Destroy(gameObject, 0.25f);
+    }
 
+    public void ClearWithoutResult()
+    {
+        if (resolved) return;
+        resolved = true;
+        canBePressed = false;
+        DestroyObject();
+    }
+}
+
+namespace RythmRPG.Combat
+{
+    public readonly struct RhythmNoteSpawnContext
+    {
+        public readonly RhythmPatternRunner Runner;
+        public readonly RhythmNoteData NoteData;
+        public readonly string NoteId;
+        public readonly int LaneId;
+        public readonly float Speed;
+        public readonly int Damage;
+        public readonly KeyButton[] Keys;
+
+        public RhythmNoteSpawnContext(RhythmPatternRunner runner, RhythmNoteData noteData, string noteId,
+            int laneId, float speed, int damage, KeyButton[] keys)
+        {
+            Runner = runner;
+            NoteData = noteData;
+            NoteId = noteId;
+            LaneId = laneId;
+            Speed = speed;
+            Damage = damage;
+            Keys = keys;
+        }
     }
 }

@@ -1,0 +1,19 @@
+{
+  "name": "RythmRPG.Combat.Runtime",
+  "rootNamespace": "RythmRPG.Combat",
+  "references": [
+    "RythmRPG.Rhythm.Runtime",
+    "PrimeTween.Runtime",
+    "Cinemachine",
+    "Unity.ugui"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

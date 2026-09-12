@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class KeyLayoutManager : MonoBehaviour
@@ -7,6 +5,8 @@ public class KeyLayoutManager : MonoBehaviour
     public GameObject[] Keys;
     public Transform faceTarget;
     public float curveIntensity = 0.75f;
+    [Min(0f)] public float horizontalSpacing = 1.25f;
+    public float verticalPosition = -3.5f;
     void Start()
     {
          DefaultLayout();
@@ -20,28 +20,36 @@ public class KeyLayoutManager : MonoBehaviour
     }
     public void DefaultLayout()
     {
-        Keys[0].gameObject.transform.localPosition = new Vector2(-2.5f, -3.5f);
-        Keys[1].gameObject.transform.localPosition = new Vector2(-1.25f, -3.5f);
-        Keys[2].gameObject.transform.localPosition = new Vector2(0, -3.5f);
-        Keys[3].gameObject.transform.localPosition = new Vector2(1.25f, -3.5f);
-        Keys[4].gameObject.transform.localPosition = new Vector2(2.5f, -3.5f);
+        if (Keys == null) return;
+        float center = (Keys.Length - 1) * 0.5f;
+        for (int index = 0; index < Keys.Length; index++)
+        {
+            if (Keys[index] == null) continue;
+            Keys[index].transform.localPosition = new Vector2((index - center) * horizontalSpacing, verticalPosition);
+        }
     }
 
 
     public void SmileLayout()
     {
-        float width = 1.5f; // Horizontal spacing factor
+        if (Keys == null) return;
+        float width = Mathf.Max(0.01f, horizontalSpacing);
+        float center = (Keys.Length - 1) * 0.5f;
 
         for (int i = 0; i < Keys.Length; i++)
         {
-            float x = -2 * width + i * width;
-            float y = -3.5f + Mathf.Pow(x / width, 2) * curveIntensity;
+            if (Keys[i] == null) continue;
+            float x = (i - center) * width;
+            float y = verticalPosition + Mathf.Pow(x / width, 2) * curveIntensity;
             Keys[i].transform.localPosition = new Vector2(x, y);
 
             // Rotate to face the target on the 2D plane
-            Vector3 direction = faceTarget.position - Keys[i].transform.position;
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90; // Adjust for correct rotation
-            Keys[i].transform.rotation = Quaternion.Euler(0, 0, angle);
+            if (faceTarget != null)
+            {
+                Vector3 direction = faceTarget.position - Keys[i].transform.position;
+                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90;
+                Keys[i].transform.rotation = Quaternion.Euler(0, 0, angle);
+            }
         }
     }
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using RythmRPG.Combat;
 using UnityEngine;
 
 public class HoldNoteObject : Note
@@ -15,7 +16,6 @@ public class HoldNoteObject : Note
     private float holdTime; // Total time the note should be held
     private float holdTimer; // Timer to track how long the key has been held
     private bool completed = false;
-    private RhythmJudgementResult pressJudgement;
     private bool movementTweenStarted;
     private int movementTweenIdentity;
     private HoldNoteTailVisual activeTailVisual;
@@ -25,9 +25,7 @@ public class HoldNoteObject : Note
     // Start is called before the first frame update
     void Start()
     {
-        CombatManager.instance.StopAttackEvent += DestroyObject;
-        keys = FindObjectsOfType<KeyButton>();
-        stateHandler = FindObjectOfType<PlayerStateHandler>();
+        keys = FindObjectsByType<KeyButton>(FindObjectsSortMode.None);
         isMoving = true;
 
         // Calculate hold time based on the length of the tail
@@ -52,7 +50,7 @@ public class HoldNoteObject : Note
                     if (!completed)
                     {
                         // Complete the hold successfully
-                        CompleteHoldNote(activeKeyButton.keyType);
+                        CompleteHoldNote();
                     }
                 }
             }
@@ -84,7 +82,6 @@ public class HoldNoteObject : Note
     private void EnsureMovementTween()
     {
         int currentIdentity = GetNoteIdentity();
-        keyCode = CombatManager.instance.GetKeyCodeFromNoteIdentity(currentIdentity);
 
         if (movementTweenStarted && movementTweenIdentity == currentIdentity)
         {
@@ -100,7 +97,6 @@ public class HoldNoteObject : Note
 
     private void OnDestroy()
     {
-        CombatManager.instance.StopAttackEvent -= DestroyObject;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -118,7 +114,7 @@ public class HoldNoteObject : Note
             canBePressed = false;
             if (!isHoldingKey)
             {
-                ReportMissAndDamage(GetIdentityButton());
+                ReportMiss(GetIdentityButton());
                 DestroyObject();
             }
         }
@@ -242,20 +238,16 @@ public class HoldNoteObject : Note
         return Mathf.Max(0.01f, length / Mathf.Max(0.01f, speed));
     }
 
-    private void CompleteHoldNote(KeyType keyType)
+    private void CompleteHoldNote()
     {
         completed = true;
         HideTailVisual();
-        // Logic for completing the hold note successfully
-        SetPlayerState(state, 0); // Example: Setting state to 0 (no damage)
-        // You can add more effects or scoring logic here
-        StartHitEffect(GetJudgedDamage(1, pressJudgement), keyType, activeKeyButton);
+        CompleteHeldHit();
         DestroyObject();
     }
 
     protected override void OnHit(KeyButton keyButton, RhythmJudgementResult result)
     {
-        pressJudgement = result;
         isHoldingKey = true;
         holdTimer = 0;
         isMoving = false;
@@ -278,7 +270,7 @@ public class HoldNoteObject : Note
         DestroyObject();
         if (!completed)
         {
-            ReportMissAndDamage(keyButton, false);
+            ReportMiss(keyButton);
         }
 
         isHoldingKey = false;

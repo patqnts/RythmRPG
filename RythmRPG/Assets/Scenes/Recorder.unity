@@ -3309,7 +3309,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1145959603}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f241619d3a74e04793ee91b2b3a7725, type: 3}
+  m_Script: {fileID: 11500000, guid: e44798393a7017a13a975780e2186c4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerHealth: {fileID: 2127589985}
@@ -3901,7 +3901,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1409880386}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57d4087105e8d3c4eafded611eee9340, type: 3}
+  m_Script: {fileID: 11500000, guid: dec303cdd78199177a29669ccc735730, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerCurrentHealth: 1010
@@ -4026,7 +4026,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1422548777}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ec6f4ffe9611624b9d3fe0f0aedcaca, type: 3}
+  m_Script: {fileID: 11500000, guid: 0631ad58d720ec894a629d368d628d54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   state: 3

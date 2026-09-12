@@ -1,6 +1,4 @@
-using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class ArrowNote : NoteObject
 {
@@ -8,24 +6,15 @@ public class ArrowNote : NoteObject
     private float specialMovementTimer;
     private float shuffleTimer;
     private float shuffleInterval = 0.5f;
-    private int minIdentity = 1;
-    private int maxIdentity = 5;
     private bool specialLaunchStarted;
 
     void Start()
     {
-        keys = FindObjectsOfType<KeyButton>();
-        stateHandler = FindObjectOfType<PlayerStateHandler>();
-        CombatManager.instance.StopAttackEvent += DestroyObject;
+        keys = FindObjectsByType<KeyButton>(FindObjectsSortMode.None);
         isMoving = false;
         isSpecialMovement = true;
         specialMovementTimer = 5f;
         shuffleTimer = 5f;
-    }
-
-    private void OnDestroy()
-    {
-        CombatManager.instance.StopAttackEvent -= DestroyObject;
     }
 
     public override void Update()
@@ -58,7 +47,9 @@ public class ArrowNote : NoteObject
                 shuffleTimer -= Time.deltaTime;
                 if (shuffleTimer <= 0)
                 {
-                    SetNoteIdentity(Random.Range(minIdentity, maxIdentity + 1));
+                    KeyButton[] availableKeys = keys != null ? System.Array.FindAll(keys, key => key != null) : null;
+                    if (availableKeys is { Length: > 0 })
+                        SetNoteIdentity(availableKeys[Random.Range(0, availableKeys.Length)].keyIdentity);
                     shuffleTimer = shuffleInterval;
                 }
             }
@@ -86,7 +77,6 @@ public class ArrowNote : NoteObject
 
         specialLaunchStarted = true;
         isMoving = false;
-        keyCode = CombatManager.instance.GetKeyCodeFromNoteIdentity(GetNoteIdentity());
 
         StopMovementTweens();
         TweenLaneX(GetNoteIdentity());

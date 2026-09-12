@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1ac14be5a7c40d992243cd40ecaea3b, type: 3}
+  m_Name: BasicAttackPattern
+  m_EditorClassIdentifier: RythmRPG.Rhythm.Runtime::RythmRPG.Rhythm.RhythmChart
+  schemaVersion: 1
+  bpm: 120
+  beatsPerMeasure: 4
+  compositionDuration: 4
+  audioClip: {fileID: 0}
+  snapEnabled: 1
+  snapDivision: 4
+  lanes:
+  - id: basic_lane_1
+    displayName: Lane 1
+    color: {r: 0.2, g: 0.62, b: 0.95, a: 1}
+    keyIdentity: 1
+    keyType: 0
+  - id: basic_lane_2
+    displayName: Lane 2
+    color: {r: 0.35, g: 0.8, b: 0.52, a: 1}
+    keyIdentity: 2
+    keyType: 0
+  - id: basic_lane_3
+    displayName: Lane 3
+    color: {r: 0.95, g: 0.7, b: 0.22, a: 1}
+    keyIdentity: 3
+    keyType: 0
+  - id: basic_lane_4
+    displayName: Lane 4
+    color: {r: 0.88, g: 0.38, b: 0.55, a: 1}
+    keyIdentity: 4
+    keyType: 0
+  - id: basic_lane_5
+    displayName: Lane 5
+    color: {r: 0.62, g: 0.45, b: 0.92, a: 1}
+    keyIdentity: 5
+    keyType: 0
+  noteDefinitions:
+  - noteType: 0
+    defaultPrefab: {fileID: 5029094789931625778, guid: fff99d626b5218741bf0c888080b7065, type: 3}
+    displayColor: {r: 0.2, g: 0.68, b: 1, a: 1}
+    defaultSpeed: 8
+    defaultDamage: 0
+    defaultTravelTime: 2.5
+  notes:
+  - id: basic_note_1
+    laneId: basic_lane_1
+    hitTime: 1
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 1
+    hitEffect: 0
+    playerState: 0
+    damage: 0
+    speed: 8
+    travelTime: 2.5
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: basic_note_2
+    laneId: basic_lane_3
+    hitTime: 1
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 1
+    hitEffect: 0
+    playerState: 0
+    damage: 0
+    speed: 8
+    travelTime: 2.5
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: basic_note_3
+    laneId: basic_lane_5
+    hitTime: 1
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 1
+    hitEffect: 0
+    playerState: 0
+    damage: 0
+    speed: 8
+    travelTime: 2.5
+    prefabOverride: {fileID: 0}
+    metadata: []
