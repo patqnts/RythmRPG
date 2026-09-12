@@ -87,7 +87,7 @@ public class HitFeedbackVFX : MonoBehaviour
         textMesh.text = GetLabel(result);
         textMesh.anchor = TextAnchor.MiddleCenter;
         textMesh.alignment = TextAlignment.Center;
-        textMesh.fontSize = 72;
+        textMesh.fontSize = 36;
         textMesh.characterSize = 0.075f;
         textMesh.fontStyle = FontStyle.Bold;
         textMesh.color = color;
@@ -104,7 +104,7 @@ public class HitFeedbackVFX : MonoBehaviour
             return result.judgement.ToString().ToUpperInvariant();
         }
 
-        return $"{result.judgement.ToString().ToUpperInvariant()}\n{result.combo} COMBO";
+        return $"{result.judgement.ToString().ToUpperInvariant()}"; //\n{result.combo} COMBO
     }
 
     public static Color GetJudgementColor(HitJudgement judgement)
