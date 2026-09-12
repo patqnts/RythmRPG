@@ -2,15 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public enum KeyType
-{
-    DEFAULT,
-    FREEZE,
-    LIGHTNING,
-    LANE_CLEAR,
-    XXX
-}
 public class KeyButton : MonoBehaviour
 {
     // Start is called before the first frame update

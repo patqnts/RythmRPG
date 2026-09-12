@@ -4,13 +4,6 @@ using PrimeTween;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public enum NoteInitializeMovementType
-{
-    None,
-    SlowThenBurst,
-    MissileSCurve
-}
-
 [DisallowMultipleComponent]
 public class NoteInitializeMovement : MonoBehaviour
 {

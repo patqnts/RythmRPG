@@ -1,0 +1,14 @@
+{
+  "name": "RythmRPG.Rhythm.Runtime",
+  "rootNamespace": "RythmRPG.Rhythm",
+  "references": [],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

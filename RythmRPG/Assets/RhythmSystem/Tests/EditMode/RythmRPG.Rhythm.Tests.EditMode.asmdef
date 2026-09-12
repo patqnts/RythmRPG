@@ -1,0 +1,24 @@
+{
+  "name": "RythmRPG.Rhythm.Tests.EditMode",
+  "rootNamespace": "RythmRPG.Rhythm.Tests",
+  "references": [
+    "RythmRPG.Rhythm.Runtime",
+    "RythmRPG.Rhythm.Editor"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": false,
+  "defineConstraints": [
+    "UNITY_INCLUDE_TESTS"
+  ],
+  "versionDefines": [],
+  "noEngineReferences": false,
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ]
+}

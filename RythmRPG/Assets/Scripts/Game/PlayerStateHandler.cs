@@ -97,14 +97,6 @@ public class PlayerStateHandler : MonoBehaviour
     }
 }
 
-public enum PlayerState
-{
-    Default,
-    Freeze,
-    Nausea,
-    None,
-}
-
 public enum GameState
 {
     Default,

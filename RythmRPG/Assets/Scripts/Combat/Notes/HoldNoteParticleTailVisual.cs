@@ -143,6 +143,10 @@ public class HoldNoteParticleTailVisual : HoldNoteTailVisual
         velocity.space = ParticleSystemSimulationSpace.Local;
         velocity.x = new ParticleSystem.MinMaxCurve(-0.12f, 0.12f);
         velocity.y = new ParticleSystem.MinMaxCurve(-0.18f, 0.18f);
+        // Unity requires all three Velocity over Lifetime axes to use the same
+        // MinMaxCurve mode. Keep Z as a zero-valued TwoConstants curve rather
+        // than a Constant curve so it matches the randomized X and Y axes.
+        velocity.z = new ParticleSystem.MinMaxCurve(0f, 0f);
 
         ParticleSystem.ColorOverLifetimeModule colorOverLifetime = tailParticles.colorOverLifetime;
         colorOverLifetime.enabled = true;

@@ -4,6 +4,9 @@
   <Project Path="Assembly-CSharp-Editor.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
   <Project Path="PrimeTween.Demo.csproj" />
+  <Project Path="RythmRPG.Rhythm.Runtime.csproj" />
+  <Project Path="RythmRPG.Rhythm.Editor.csproj" />
   <Project Path="PrimeTween.Debug.csproj" />
+  <Project Path="RythmRPG.Rhythm.Tests.EditMode.csproj" />
   <Project Path="PrimeTween.Installer.csproj" />
 </Solution>
