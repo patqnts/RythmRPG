@@ -20,3 +20,8 @@ MonoBehaviour:
     durationOverride: 0
     endPolicy: 0
     modifiers: []
+  - animationName: Laser
+    rhythmPattern: {fileID: 11400000, guid: af571823326c972ddad5e5675f15eb48, type: 2}
+    durationOverride: 0
+    endPolicy: 0
+    modifiers: []

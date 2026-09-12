@@ -75182,9 +75182,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cdca412e3635d38a8fe5fd768c3c2f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fallbackChart: {fileID: 0}
+  fallbackChart: {fileID: 11400000, guid: b100000000000000000000000000010e, type: 2}
   projectileObjectHolder: {fileID: 0}
-  chartAudioSource: {fileID: 0}
+  chartAudioSource: {fileID: 391769056}
   playChartAudio: 0
   judgementConfig: {fileID: 0}
 --- !u!114 &1189128673
@@ -102925,7 +102925,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!156049354 &1627380572
 Grid:
   m_ObjectHideFlags: 0
