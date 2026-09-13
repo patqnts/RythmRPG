@@ -32,6 +32,7 @@ namespace RythmRPG.Rhythm.Editor
         public float VerticalScroll { get; set; }
         public string SelectedNoteId { get; set; }
         public Action<double> SeekRequested { get; set; }
+        public Action<string> SelectionChanged { get; set; }
 
         public bool Handle(Event current, RhythmChart chart, RhythmTimelineLayout layout, RhythmNoteType drawingType)
         {
@@ -85,7 +86,7 @@ namespace RythmRPG.Rhythm.Editor
             {
                 if (TryHitNote(chart, layout, current.mousePosition, out RhythmNoteData note, out DragMode hitMode))
                 {
-                    SelectedNoteId = note.Id;
+                    SetSelectedNote(note.Id);
                     BeginNoteDrag(controlId, current, chart, note, hitMode, layout);
                 }
                 else if (chart.Lanes.Count > 0)
@@ -93,7 +94,7 @@ namespace RythmRPG.Rhythm.Editor
                     int laneIndex = RhythmTimelineGeometry.YToLane(current.mousePosition.y, layout.LanesRect, VerticalScroll, chart.Lanes.Count);
                     double time = RhythmComposerMutationService.Snap(chart, RhythmTimelineGeometry.XToTime(current.mousePosition.x, layout.LanesRect, PixelsPerSecond, ScrollTime));
                     RhythmNoteData created = RhythmComposerMutationService.AddNote(chart, chart.Lanes[laneIndex], time, drawingType);
-                    SelectedNoteId = created?.Id;
+                    SetSelectedNote(created?.Id);
                 }
 
                 current.Use();
@@ -286,6 +287,17 @@ namespace RythmRPG.Rhythm.Editor
             hotControl = 0;
             undoGroup = -1;
             draggedNote = null;
+        }
+
+        public void SetSelectedNote(string noteId)
+        {
+            if (SelectedNoteId == noteId)
+            {
+                return;
+            }
+
+            SelectedNoteId = noteId;
+            SelectionChanged?.Invoke(SelectedNoteId);
         }
     }
 }

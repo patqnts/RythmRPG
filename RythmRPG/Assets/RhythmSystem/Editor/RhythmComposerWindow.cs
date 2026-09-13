@@ -54,6 +54,7 @@ namespace RythmRPG.Rhythm.Editor
             noteInspector = new RhythmNoteInspector();
             preview = new RhythmPreviewController(Repaint);
             input.SeekRequested = preview.Seek;
+            input.SelectionChanged = SelectNoteInUnityInspector;
             Undo.undoRedoPerformed += OnUndoRedo;
             SetChart(chart);
         }
@@ -273,7 +274,7 @@ namespace RythmRPG.Rhythm.Editor
 
             if (input != null)
             {
-                input.SelectedNoteId = null;
+                input.SetSelectedNote(null);
                 input.ScrollTime = 0d;
                 input.VerticalScroll = 0f;
             }
@@ -310,7 +311,8 @@ namespace RythmRPG.Rhythm.Editor
         {
             if (chart != null && RhythmComposerMutationService.DeleteNote(chart, input.SelectedNoteId))
             {
-                input.SelectedNoteId = null;
+                input.SetSelectedNote(null);
+                RhythmNoteSelectionProxy.ClearIfSelected(chart);
                 Repaint();
             }
         }
@@ -324,10 +326,20 @@ namespace RythmRPG.Rhythm.Editor
         {
             if (chart != null && RhythmComposerMutationService.FindNote(chart, input.SelectedNoteId) == null)
             {
-                input.SelectedNoteId = null;
+                input.SetSelectedNote(null);
             }
             serializedChart?.UpdateIfRequiredOrScript();
             Repaint();
+        }
+
+        private void SelectNoteInUnityInspector(string noteId)
+        {
+            if (chart == null || string.IsNullOrEmpty(noteId))
+            {
+                return;
+            }
+
+            RhythmNoteSelectionProxy.Select(chart, noteId, Repaint);
         }
 
         private static string FormatTime(double time)
