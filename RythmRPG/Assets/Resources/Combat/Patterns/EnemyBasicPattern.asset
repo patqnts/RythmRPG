@@ -64,6 +64,9 @@ MonoBehaviour:
     damage: 10
     speed: 8
     travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
     prefabOverride: {fileID: 0}
     metadata: []
   - id: enemy_note_2
@@ -77,6 +80,9 @@ MonoBehaviour:
     damage: 10
     speed: 8
     travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
     prefabOverride: {fileID: 0}
     metadata: []
   - id: enemy_note_3
@@ -90,6 +96,9 @@ MonoBehaviour:
     damage: 10
     speed: 8
     travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
     prefabOverride: {fileID: 0}
     metadata: []
   - id: enemy_note_4
@@ -103,6 +112,9 @@ MonoBehaviour:
     damage: 10
     speed: 8
     travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
     prefabOverride: {fileID: 0}
     metadata: []
   - id: enemy_note_5
@@ -116,5 +128,8 @@ MonoBehaviour:
     damage: 10
     speed: 8
     travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
     prefabOverride: {fileID: 0}
     metadata: []

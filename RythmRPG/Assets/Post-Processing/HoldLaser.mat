@@ -12,6 +12,7 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
+  - _ENABLEDIRECTIONALGLOWFADE_ON
   - _ENABLEINNEROUTLINE_ON
   - _ENABLERAINBOW_ON
   - _ENABLEVIBRATE_ON
@@ -177,22 +178,22 @@ Material:
     - _CustomFadeAlpha: 1
     - _CustomFadeNoiseFactor: 0
     - _CustomFadeSmoothness: 2
-    - _DirectionalAlphaFadeFade: 0
+    - _DirectionalAlphaFadeFade: 1
     - _DirectionalAlphaFadeInvert: 0
     - _DirectionalAlphaFadeNoiseFactor: 0.2
     - _DirectionalAlphaFadeRotation: 0
-    - _DirectionalAlphaFadeWidth: 0.2
-    - _DirectionalDistortionFade: 2.04
+    - _DirectionalAlphaFadeWidth: -4.79
+    - _DirectionalDistortionFade: 1
     - _DirectionalDistortionInvert: 0
     - _DirectionalDistortionNoiseFactor: 0.2
     - _DirectionalDistortionRandomDirection: 0.1
     - _DirectionalDistortionRotation: 0
-    - _DirectionalDistortionWidth: 0.5
-    - _DirectionalGlowFadeFade: 4
+    - _DirectionalDistortionWidth: 0
+    - _DirectionalGlowFadeFade: 12.93
     - _DirectionalGlowFadeInvert: 0
     - _DirectionalGlowFadeNoiseFactor: 0.2
-    - _DirectionalGlowFadeRotation: 180
-    - _DirectionalGlowFadeWidth: 0.1
+    - _DirectionalGlowFadeRotation: 0
+    - _DirectionalGlowFadeWidth: 1.68
     - _EnableAddColor: 0
     - _EnableAddHue: 0
     - _EnableAlphaTint: 0
@@ -206,7 +207,7 @@ Material:
     - _EnableCustomFade: 0
     - _EnableDirectionalAlphaFade: 0
     - _EnableDirectionalDistortion: 0
-    - _EnableDirectionalGlowFade: 0
+    - _EnableDirectionalGlowFade: 1
     - _EnableEnchanted: 0
     - _EnableExternalAlpha: 0
     - _EnableFlame: 0
@@ -283,8 +284,8 @@ Material:
     - _FrozenHighlightDensity: 1
     - _FrozenSnowContrast: 1
     - _FrozenSnowDensity: 0.25
-    - _FullAlphaDissolveFade: 0.5
-    - _FullAlphaDissolveWidth: 0.5
+    - _FullAlphaDissolveFade: 0
+    - _FullAlphaDissolveWidth: 0.4
     - _FullDistortionFade: 1
     - _FullGlowDissolveFade: 0.5
     - _FullGlowDissolveWidth: 0.5

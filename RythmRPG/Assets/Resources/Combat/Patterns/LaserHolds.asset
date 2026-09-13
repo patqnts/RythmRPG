@@ -10,37 +10,37 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b1ac14be5a7c40d992243cd40ecaea3b, type: 3}
-  m_Name: LaserSample
+  m_Name: LaserHolds
   m_EditorClassIdentifier: RythmRPG.Rhythm.Runtime::RythmRPG.Rhythm.RhythmChart
   schemaVersion: 1
   bpm: 120
   beatsPerMeasure: 4
-  compositionDuration: 16.25
+  compositionDuration: 30
   audioClip: {fileID: 0}
   snapEnabled: 1
   snapDivision: 4
   lanes:
-  - id: 18da989c9f5f4f07ae870d679a1d8dd1
+  - id: 2e6bbaa24ef94343ac532f43aa1daea6
     displayName: Lane 1
     color: {r: 0.2, g: 0.62, b: 0.95, a: 1}
     keyIdentity: 1
     keyType: 0
-  - id: 2a029117b72641939d57fe4488a05ce1
+  - id: 112828802d0c49f18509ed71a3ce9fa4
     displayName: Lane 2
     color: {r: 0.35, g: 0.8, b: 0.52, a: 1}
     keyIdentity: 2
     keyType: 0
-  - id: efc9cb4f11c34a2698473f892f478648
+  - id: 1029bee4e54e4ecd9a5f0fa346e3a501
     displayName: Lane 3
     color: {r: 0.95, g: 0.7, b: 0.22, a: 1}
     keyIdentity: 3
     keyType: 0
-  - id: 0f9d6d04758e4477951024bd73d25a07
+  - id: d2b53c08b1d04358acca2b2613f39ee6
     displayName: Lane 4
     color: {r: 0.88, g: 0.38, b: 0.55, a: 1}
     keyIdentity: 4
     keyType: 0
-  - id: bf3f841d9bf74a79bf1a551dc17de2b4
+  - id: d97666cee177405798f681ce3ecff058
     displayName: Lane 5
     color: {r: 0.62, g: 0.45, b: 0.92, a: 1}
     keyIdentity: 5
@@ -89,75 +89,11 @@ MonoBehaviour:
     defaultDamage: 1
     defaultTravelTime: 2.5
   notes:
-  - id: 957bf8ee9c9943d19b581fdf0e437275
-    laneId: bf3f841d9bf74a79bf1a551dc17de2b4
-    hitTime: 1
-    noteType: 2
-    holdDuration: 0
-    initializeMovementType: 0
-    hitEffect: 0
-    playerState: 0
-    damage: 1
-    speed: 2
-    travelTime: 1
-    stationaryBadWindow: 0.5
-    stationaryGoodWindow: 0.3
-    stationaryPerfectWindow: 0.2
-    prefabOverride: {fileID: 0}
-    metadata: []
-  - id: 524f53a8ec6e4d078e32b6307e9411af
-    laneId: 18da989c9f5f4f07ae870d679a1d8dd1
-    hitTime: 1
-    noteType: 2
-    holdDuration: 0
-    initializeMovementType: 0
-    hitEffect: 0
-    playerState: 0
-    damage: 1
-    speed: 1
-    travelTime: 1
-    stationaryBadWindow: 0.5
-    stationaryGoodWindow: 0.3
-    stationaryPerfectWindow: 0.2
-    prefabOverride: {fileID: 0}
-    metadata: []
-  - id: fa9a6503a49a4ff194290aba1342c4d9
-    laneId: 0f9d6d04758e4477951024bd73d25a07
-    hitTime: 5
-    noteType: 2
-    holdDuration: 0
-    initializeMovementType: 0
-    hitEffect: 0
-    playerState: 0
-    damage: 1
-    speed: 8
-    travelTime: 1
-    stationaryBadWindow: 0.9
-    stationaryGoodWindow: 0.45
-    stationaryPerfectWindow: 0.15
-    prefabOverride: {fileID: 0}
-    metadata: []
-  - id: 58ba7c5f5e7047e4abaa8ecc6ef70a03
-    laneId: 2a029117b72641939d57fe4488a05ce1
-    hitTime: 5.125
-    noteType: 2
-    holdDuration: 0
-    initializeMovementType: 0
-    hitEffect: 0
-    playerState: 0
-    damage: 1
-    speed: 8
-    travelTime: 1
-    stationaryBadWindow: 0.9
-    stationaryGoodWindow: 0.45
-    stationaryPerfectWindow: 0.15
-    prefabOverride: {fileID: 0}
-    metadata: []
-  - id: c75d73b59354453987e4e3266984b5ed
-    laneId: bf3f841d9bf74a79bf1a551dc17de2b4
-    hitTime: 7.625
-    noteType: 2
-    holdDuration: 0
+  - id: 5ac51a83143b4f45ba573fd6f47f9e9f
+    laneId: 2e6bbaa24ef94343ac532f43aa1daea6
+    hitTime: 2.375
+    noteType: 3
+    holdDuration: 5.5
     initializeMovementType: 0
     hitEffect: 0
     playerState: 0
@@ -169,11 +105,59 @@ MonoBehaviour:
     stationaryPerfectWindow: 0.15
     prefabOverride: {fileID: 0}
     metadata: []
-  - id: 6f30d7ab5cab49e78de2f36938046056
-    laneId: 18da989c9f5f4f07ae870d679a1d8dd1
+  - id: 6f2e0d74d1494ff6aced3d8af26362c3
+    laneId: d97666cee177405798f681ce3ecff058
+    hitTime: 6.125
+    noteType: 3
+    holdDuration: 5.625
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 03003ede23894460901d7006149e9268
+    laneId: d2b53c08b1d04358acca2b2613f39ee6
     hitTime: 10.25
-    noteType: 2
-    holdDuration: 0
+    noteType: 3
+    holdDuration: 2.5
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: b62a2568673a4c90b3c56655edf64e03
+    laneId: 2e6bbaa24ef94343ac532f43aa1daea6
+    hitTime: 14.25
+    noteType: 3
+    holdDuration: 3.5
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 832a1c2d12ee4fe381aabef1ef75fbaf
+    laneId: 1029bee4e54e4ecd9a5f0fa346e3a501
+    hitTime: 12.25
+    noteType: 3
+    holdDuration: 2.5
     initializeMovementType: 0
     hitEffect: 0
     playerState: 0

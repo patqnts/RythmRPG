@@ -63,7 +63,10 @@ MonoBehaviour:
     playerState: 0
     damage: 0
     speed: 8
-    travelTime: 2.5
+    travelTime: 1
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
     prefabOverride: {fileID: 0}
     metadata: []
   - id: basic_note_2
@@ -76,7 +79,10 @@ MonoBehaviour:
     playerState: 0
     damage: 0
     speed: 8
-    travelTime: 2.5
+    travelTime: 1
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
     prefabOverride: {fileID: 0}
     metadata: []
   - id: basic_note_3
@@ -89,6 +95,25 @@ MonoBehaviour:
     playerState: 0
     damage: 0
     speed: 8
-    travelTime: 2.5
+    travelTime: 1
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 658f465623bb449fbce72b3b6439cb20
+    laneId: basic_lane_2
+    hitTime: 1.75
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 2
+    hitEffect: 0
+    playerState: 0
+    damage: 0
+    speed: 8
+    travelTime: 1.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
     prefabOverride: {fileID: 0}
     metadata: []
