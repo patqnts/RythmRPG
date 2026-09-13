@@ -124,7 +124,10 @@ public class StationaryNote : Note
     {
         canBePressed = false;
         isMoving = false;
-        PlayEndPhase(!hitAccepted);
+        if (!ending)
+        {
+            PlayEndPhase(!hitAccepted);
+        }
         StopMovementTweens();
         Destroy(gameObject, Mathf.Max(0f, destroyDelay));
     }

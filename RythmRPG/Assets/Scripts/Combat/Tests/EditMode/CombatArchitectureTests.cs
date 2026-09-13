@@ -1,7 +1,10 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
 using RythmRPG.Rhythm;
+using UnityEditor;
+using UnityEditor.Animations;
 using UnityEngine;
 
 namespace RythmRPG.Combat.Tests
@@ -268,6 +271,16 @@ namespace RythmRPG.Combat.Tests
                 Object.DestroyImmediate(laserObject);
                 Object.DestroyImmediate(keyObject);
             }
+        }
+
+        [Test]
+        public void HoldLaserAnimator_HasPlayableEndState()
+        {
+            AnimatorController controller = AssetDatabase.LoadAssetAtPath<AnimatorController>(
+                "Assets/Animation/Hold Laser/hold laser_0.controller");
+
+            Assert.That(controller, Is.Not.Null);
+            Assert.That(controller.layers[0].stateMachine.states.Any(state => state.state.name == "End"), Is.True);
         }
 
         private static CombatTurnStateMachine CreateStartedStateMachine()
