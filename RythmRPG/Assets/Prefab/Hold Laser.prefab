@@ -179,14 +179,17 @@ MonoBehaviour:
   speed: 0
   damage: 1
   keys: []
+  animator: {fileID: 4297869726973467274}
   isMoving: 0
+  canBePressed: 0
   keyCode: 0
   moveset: 0
   state: 0
   hitEffect: 0
-  animator: {fileID: 4297869726973467274}
-  canBePressed: 0
-  stateHandler: {fileID: 0}
+  laneTweenDuration: 0.15
+  hitGraceDistance: 1.25
+  allowGraceHitOutsideActivator: 1
+  enableColliderOnSpawn: 1
   length: 0
   isHoldingKey: 0
 --- !u!50 &676395023004352220

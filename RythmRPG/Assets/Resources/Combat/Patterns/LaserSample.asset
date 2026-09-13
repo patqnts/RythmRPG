@@ -15,7 +15,7 @@ MonoBehaviour:
   schemaVersion: 1
   bpm: 120
   beatsPerMeasure: 4
-  compositionDuration: 30
+  compositionDuration: 10
   audioClip: {fileID: 0}
   snapEnabled: 1
   snapDivision: 4
@@ -99,7 +99,7 @@ MonoBehaviour:
     playerState: 0
     damage: 1
     speed: 2
-    travelTime: 2.5
+    travelTime: 3.5
     prefabOverride: {fileID: 0}
     metadata: []
   - id: 57cb9b2687b84d13832ba0c979761821
@@ -112,7 +112,7 @@ MonoBehaviour:
     playerState: 0
     damage: 1
     speed: 2
-    travelTime: 2.5
+    travelTime: 3.5
     prefabOverride: {fileID: 0}
     metadata: []
   - id: 524f53a8ec6e4d078e32b6307e9411af
@@ -124,8 +124,8 @@ MonoBehaviour:
     hitEffect: 0
     playerState: 0
     damage: 1
-    speed: 2
-    travelTime: 2.5
+    speed: 1
+    travelTime: 3.5
     prefabOverride: {fileID: 0}
     metadata: []
   - id: 16a14f78af8f45f595e43ad5c2385c3f
@@ -138,7 +138,7 @@ MonoBehaviour:
     playerState: 0
     damage: 1
     speed: 2
-    travelTime: 2.5
+    travelTime: 3.5
     prefabOverride: {fileID: 0}
     metadata: []
   - id: a070119ed0bc4bea8c999611e37d4009

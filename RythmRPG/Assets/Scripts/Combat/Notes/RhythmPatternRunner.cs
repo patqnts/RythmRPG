@@ -94,8 +94,12 @@ namespace RythmRPG.Combat
                     continue;
                 }
                 KeyButton key = note.keys?.FirstOrDefault(candidate => candidate != null && candidate.keyIdentity == note.GetNoteIdentity());
-                if (key != null && note.GetJudgementWorldPosition().y < key.transform.position.y - BadWindow)
+                if (key != null
+                    && note.GetJudgementWorldPosition().y < key.transform.position.y - BadWindow
+                    && note.GetTimingError(key) > BadWindow)
+                {
                     note.ForceMiss(key);
+                }
             }
         }
 
@@ -118,6 +122,7 @@ namespace RythmRPG.Combat
             if (best == null) return;
             float distance = best.GetTimingError(key);
             HitJudgement judgement = Evaluate(distance);
+            judgement = best.AdjustJudgement(judgement, distance);
             if (judgement == HitJudgement.Miss) return;
             RhythmJudgementResult result = new(best.RuntimeNoteId, laneId, judgement, distance,
                 key.transform.position, NoteResolutionSource.PlayerInput);

@@ -58,11 +58,15 @@ public class Note : MonoBehaviour
         return keyButton == null ? float.MaxValue : Mathf.Abs(GetJudgementWorldPosition().y - keyButton.transform.position.y);
     }
 
+    public virtual HitJudgement AdjustJudgement(HitJudgement judgement, float timingError) => judgement;
+
     public virtual bool CanReceiveHit(KeyButton keyButton)
     {
-        return isActiveAndEnabled && !resolved && !hitAccepted && !initializeMovementPlaying && canBePressed
+        return isActiveAndEnabled && !resolved && !hitAccepted && !initializeMovementPlaying && IsWithinPressWindow(keyButton)
             && keyButton != null && keyButton.GetInteractable() && keyButton.keyIdentity == noteIdentity;
     }
+
+    protected virtual bool IsWithinPressWindow(KeyButton keyButton) => canBePressed;
 
     public bool TryHitFromKey(KeyButton keyButton, RhythmJudgementResult judgement)
     {

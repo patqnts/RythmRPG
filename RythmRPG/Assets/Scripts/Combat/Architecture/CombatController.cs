@@ -154,22 +154,25 @@ namespace RythmRPG.Combat
             {
                 RhythmChart fallback = runner.FallbackChart ?? defaultEnemyPattern
                     ?? Resources.Load<RhythmChart>("Combat/Patterns/EnemyBasicPattern");
-                yield return RunEnemyStep(fallback, string.Empty, 0f, AttackStepEndPolicy.WaitForResolvedNotes);
+                yield return RunEnemyStep(fallback, string.Empty, 0f, 0f, AttackStepEndPolicy.WaitForResolvedNotes);
             }
             else
             {
                 foreach (EnemyAttackStepDefinition step in steps.Where(step => step != null))
                 {
-                    yield return RunEnemyStep(step.RhythmPattern, step.AnimationName, step.DurationOverride, step.EndPolicy);
+                    yield return RunEnemyStep(step.RhythmPattern, step.AnimationName,
+                        step.AnticipationDuration, step.DurationOverride, step.EndPolicy);
                     if (encounter.Player.IsDefeated) break;
                 }
             }
             Transition(CombatState.EnemyTurnEnd);
         }
 
-        private IEnumerator RunEnemyStep(RhythmChart chart, string animationName, float duration, AttackStepEndPolicy policy)
+        private IEnumerator RunEnemyStep(RhythmChart chart, string animationName, float anticipationDuration,
+            float duration, AttackStepEndPolicy policy)
         {
             encounter.Enemy.PlayAnimation(animationName);
+            if (anticipationDuration > 0f) yield return new WaitForSeconds(anticipationDuration);
             bool completed = false;
             void OnCompleted(PatternRunResult result)
             {

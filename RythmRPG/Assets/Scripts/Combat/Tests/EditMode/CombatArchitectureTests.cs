@@ -128,6 +128,34 @@ namespace RythmRPG.Combat.Tests
             }
         }
 
+        [Test]
+        public void LaserNote_AllowsGraceHitOutsideActivator()
+        {
+            GameObject laserObject = new("Laser Test");
+            GameObject keyObject = new("Key Test");
+            try
+            {
+                LaserNote laser = laserObject.AddComponent<LaserNote>();
+                laserObject.AddComponent<BoxCollider2D>();
+                laser.SetNoteIdentity(1);
+                laser.canBePressed = false;
+
+                KeyButton key = keyObject.AddComponent<KeyButton>();
+                key.keyIdentity = 1;
+                key.SetInteractable(true);
+                keyObject.transform.position = new Vector3(0f, -1.65f, 0f);
+
+                Assert.That(laser.CanReceiveHit(key), Is.True);
+                Assert.That(laser.GetTimingError(key), Is.GreaterThan(0.9f));
+                Assert.That(laser.AdjustJudgement(HitJudgement.Miss, laser.GetTimingError(key)), Is.EqualTo(HitJudgement.Bad));
+            }
+            finally
+            {
+                Object.DestroyImmediate(laserObject);
+                Object.DestroyImmediate(keyObject);
+            }
+        }
+
         private static CombatTurnStateMachine CreateStartedStateMachine()
         {
             CombatTurnStateMachine machine = new();

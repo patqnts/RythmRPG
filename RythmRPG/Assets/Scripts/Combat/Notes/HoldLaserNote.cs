@@ -6,6 +6,12 @@ using UnityEngine;
 
 public class HoldLaserNote : Note
 {
+    [Header("Laser Timing")]
+    [SerializeField, Min(0.01f)] private float laneTweenDuration = 0.35f;
+    [SerializeField, Min(0f)] private float hitGraceDistance = 1.25f;
+    [SerializeField] private bool allowGraceHitOutsideActivator = true;
+    [SerializeField] private bool enableColliderOnSpawn = true;
+
     // Start is called before the first frame update
     public float length;
     private float holdTime; // Total time the note should be held
@@ -20,7 +26,9 @@ public class HoldLaserNote : Note
     void Start()
     {
         keys = FindObjectsByType<KeyButton>(FindObjectsSortMode.None);
-        holdTime = length / speed;
+        if (enableColliderOnSpawn && TryGetComponent(out Collider2D noteCollider))
+            noteCollider.enabled = true;
+        holdTime = length / Mathf.Max(0.01f, speed);
     }
 
     // Update is called once per frame
@@ -29,7 +37,7 @@ public class HoldLaserNote : Note
         // Check for key hold event
         if (isHoldingKey && activeKeyButton != null && activeKeyButton.GetInteractable())
         {
-            animator.SetBool("Hold", isHoldingKey);
+            if (animator != null) animator.SetBool("Hold", isHoldingKey);
             isMoving = false;
             holdTimer += Time.deltaTime;
             
@@ -62,7 +70,7 @@ public class HoldLaserNote : Note
         laneTweenIdentity = currentIdentity;
 
         StopMovementTweens();
-        TweenLaneX(currentIdentity, 0.1f);
+        TweenLaneX(currentIdentity, laneTweenDuration);
     }
 
     private void CompleteHoldNote()
@@ -84,12 +92,15 @@ public class HoldLaserNote : Note
         if (other.gameObject.tag == "Activator")
         {
             canBePressed = false;
-            
-            DestroyObject();
+
             if (!completed)
             {
+                DestroyObject();
                 ReportMiss(GetIdentityButton());
+                return;
             }
+
+            DestroyObject();
            
             //Destroy(gameObject, .5f);
             
@@ -148,6 +159,16 @@ public class HoldLaserNote : Note
         return !isHit && base.CanReceiveHit(keyButton);
     }
 
+    public override HitJudgement AdjustJudgement(HitJudgement judgement, float timingError)
+    {
+        return judgement == HitJudgement.Miss && timingError <= hitGraceDistance ? HitJudgement.Bad : judgement;
+    }
+
+    protected override bool IsWithinPressWindow(KeyButton keyButton)
+    {
+        return canBePressed || IsInGraceWindow(keyButton);
+    }
+
     protected override void OnHit(KeyButton keyButton, RhythmJudgementResult result)
     {
         isHoldingKey = true;
@@ -174,5 +195,10 @@ public class HoldLaserNote : Note
 
         DestroyObject();
         isHoldingKey = false;
+    }
+
+    private bool IsInGraceWindow(KeyButton keyButton)
+    {
+        return allowGraceHitOutsideActivator && keyButton != null && GetTimingError(keyButton) <= hitGraceDistance;
     }
 }

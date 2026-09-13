@@ -9,12 +9,14 @@ namespace RythmRPG.Combat
     public sealed class EnemyAttackStepDefinition
     {
         [SerializeField] private string animationName = string.Empty;
+        [SerializeField, Min(0f)] private float anticipationDuration = 0.45f;
         [SerializeField] private RhythmChart rhythmPattern;
         [SerializeField, Min(0f)] private float durationOverride;
         [SerializeField] private AttackStepEndPolicy endPolicy = AttackStepEndPolicy.WaitForResolvedNotes;
         [SerializeField] private List<CombatModifierDefinition> modifiers = new();
 
         public string AnimationName => animationName;
+        public float AnticipationDuration => anticipationDuration;
         public RhythmChart RhythmPattern => rhythmPattern;
         public float DurationOverride => durationOverride;
         public AttackStepEndPolicy EndPolicy => endPolicy;

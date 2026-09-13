@@ -6,12 +6,21 @@ using UnityEngine;
 
 public class LaserNote : Note
 {
+    [Header("Laser Timing")]
+    [SerializeField, Min(0.01f)] private float laneTweenDuration = 0.35f;
+    [SerializeField, Min(0f)] private float hitGraceDistance = 1.25f;
+    [SerializeField] private bool allowGraceHitOutsideActivator = true;
+    [SerializeField] private bool enableColliderOnSpawn = true;
+
     private bool isHit;
     private bool laneTweenStarted;
     private int laneTweenIdentity;
+
     private void Start()
     {
         keys = FindObjectsByType<KeyButton>(FindObjectsSortMode.None);
+        if (enableColliderOnSpawn && TryGetComponent(out Collider2D noteCollider))
+            noteCollider.enabled = true;
         //animator.SetBool(moveset.ToString(), true);      
     }
     private void Update()
@@ -37,7 +46,7 @@ public class LaserNote : Note
         laneTweenIdentity = currentIdentity;
 
         StopMovementTweens();
-        TweenLaneX(currentIdentity, 0.1f);
+        TweenLaneX(currentIdentity, laneTweenDuration);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -77,6 +86,16 @@ public class LaserNote : Note
     public override bool CanReceiveHit(KeyButton keyButton)
     {
         return !isHit && base.CanReceiveHit(keyButton);
+    }
+
+    public override HitJudgement AdjustJudgement(HitJudgement judgement, float timingError)
+    {
+        return judgement == HitJudgement.Miss && timingError <= hitGraceDistance ? HitJudgement.Bad : judgement;
+    }
+
+    protected override bool IsWithinPressWindow(KeyButton keyButton)
+    {
+        return canBePressed || IsInGraceWindow(keyButton);
     }
 
     protected override void OnHit(KeyButton keyButton, RhythmJudgementResult result)
@@ -120,6 +139,11 @@ public class LaserNote : Note
         return Mathf.Min(
             Mathf.Abs(keyY - noteCollider.bounds.min.y),
             Mathf.Abs(keyY - noteCollider.bounds.max.y));
+    }
+
+    private bool IsInGraceWindow(KeyButton keyButton)
+    {
+        return allowGraceHitOutsideActivator && keyButton != null && GetTimingError(keyButton) <= hitGraceDistance;
     }
 
     private void OnDestroy()
