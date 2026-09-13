@@ -17,6 +17,9 @@ MonoBehaviour:
   maxHealth: 1000
   phases:
   - {fileID: 11400000, guid: b1000000000000000000000000000108, type: 2}
+  introAnimationName: 
+  introAnimationFallbackDuration: 0
+  battleAnimatorBoolParameter: 
   hitAnimationName: 
   deathAnimationName: Death
   deathAnimationFallbackDuration: 1

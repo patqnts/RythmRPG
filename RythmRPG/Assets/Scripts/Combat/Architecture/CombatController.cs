@@ -135,6 +135,7 @@ namespace RythmRPG.Combat
         private IEnumerator BattleStartRoutine()
         {
             yield return encounterCoordinator.Prepare(encounter);
+            yield return PlayEnemyBattleIntro();
             Transition(CombatState.EnemyTurnStart);
         }
 
@@ -263,6 +264,28 @@ namespace RythmRPG.Combat
             encounter.Enemy.HideAfterDefeat();
         }
 
+        private IEnumerator PlayEnemyBattleIntro()
+        {
+            EnemyDefinition definition = encounter.Enemy.Definition;
+            Animator animator = encounter.Enemy.Animator;
+            if (definition == null || animator == null) yield break;
+
+            SetAnimatorBoolIfPresent(animator, definition.BattleAnimatorBoolParameter, true);
+
+            string stateName = definition.IntroAnimationName;
+            float duration = definition.IntroAnimationFallbackDuration;
+            int hash = Animator.StringToHash(stateName);
+            if (!string.IsNullOrWhiteSpace(stateName) && animator.HasState(0, hash))
+            {
+                animator.Play(hash, 0, 0f);
+                yield return null;
+                AnimatorStateInfo info = animator.GetCurrentAnimatorStateInfo(0);
+                duration = Mathf.Max(duration, info.length);
+            }
+
+            if (duration > 0f) yield return new WaitForSeconds(duration);
+        }
+
         private IEnumerator TerminalRoutine(CombatState terminalState)
         {
             runner?.CancelCurrentPattern(false);
@@ -293,6 +316,17 @@ namespace RythmRPG.Combat
             if (stateRoutine == null) return;
             StopCoroutine(stateRoutine);
             stateRoutine = null;
+        }
+
+        private static void SetAnimatorBoolIfPresent(Animator animator, string parameterName, bool value)
+        {
+            if (animator == null || string.IsNullOrWhiteSpace(parameterName)) return;
+            foreach (AnimatorControllerParameter parameter in animator.parameters)
+            {
+                if (parameter.type != AnimatorControllerParameterType.Bool || parameter.name != parameterName) continue;
+                animator.SetBool(parameterName, value);
+                return;
+            }
         }
 
         private sealed class CallbackCombatState : ICombatState
