@@ -35,6 +35,7 @@ namespace RythmRPG.Rhythm.Editor
 
             SerializedProperty hitTime = note.FindPropertyRelative("hitTime");
             hitTime.doubleValue = Math.Max(0d, EditorGUILayout.DoubleField("Hit Time (s)", hitTime.doubleValue));
+            EditorGUILayout.LabelField("Selected", $"{type} @ {hitTime.doubleValue:0.###}s", EditorStyles.miniBoldLabel);
 
             if (RhythmTimingUtility.IsHoldType(type))
             {
@@ -52,7 +53,15 @@ namespace RythmRPG.Rhythm.Editor
             SerializedProperty speed = note.FindPropertyRelative("speed");
             speed.floatValue = Mathf.Max(0.01f, EditorGUILayout.FloatField("Speed", speed.floatValue));
             SerializedProperty travelTime = note.FindPropertyRelative("travelTime");
-            travelTime.doubleValue = Math.Max(0d, EditorGUILayout.DoubleField("Travel Time (s)", travelTime.doubleValue));
+
+            if (IsLaserType(type))
+            {
+                DrawStationaryTimingFields(note, travelTime);
+            }
+            else
+            {
+                travelTime.doubleValue = Math.Max(0d, EditorGUILayout.DoubleField("Travel Time (s)", travelTime.doubleValue));
+            }
 
             EditorGUILayout.Space(4f);
             EditorGUILayout.PropertyField(note.FindPropertyRelative("prefabOverride"), new GUIContent("Prefab Override"));
@@ -85,6 +94,33 @@ namespace RythmRPG.Rhythm.Editor
             DrawChartValidation(chart, selected.Id);
             EditorGUILayout.EndScrollView();
             return delete;
+        }
+
+        private static void DrawStationaryTimingFields(SerializedProperty note, SerializedProperty travelTime)
+        {
+            EditorGUILayout.Space(4f);
+            EditorGUILayout.LabelField("Stationary Note Timing", EditorStyles.boldLabel);
+            EditorGUILayout.HelpBox("The note is hittable during anticipation. Judgement improves as the charge gets closer to completion.", MessageType.Info);
+
+            travelTime.doubleValue = Math.Max(0d,
+                EditorGUILayout.DoubleField("Anticipation Time (s)", travelTime.doubleValue));
+
+            SerializedProperty badWindow = note.FindPropertyRelative("stationaryBadWindow");
+            badWindow.floatValue = Mathf.Max(0f,
+                EditorGUILayout.FloatField("Bad Threshold (s before end)", badWindow.floatValue));
+
+            SerializedProperty goodWindow = note.FindPropertyRelative("stationaryGoodWindow");
+            goodWindow.floatValue = Mathf.Clamp(
+                EditorGUILayout.FloatField("Good Threshold (s before end)", goodWindow.floatValue), 0f, badWindow.floatValue);
+
+            SerializedProperty perfectWindow = note.FindPropertyRelative("stationaryPerfectWindow");
+            perfectWindow.floatValue = Mathf.Clamp(
+                EditorGUILayout.FloatField("Perfect Threshold (s before end)", perfectWindow.floatValue), 0f, goodWindow.floatValue);
+        }
+
+        private static bool IsLaserType(RhythmNoteType type)
+        {
+            return type == RhythmNoteType.Laser || type == RhythmNoteType.HoldLaser;
         }
 
         private static void DrawLanePopup(RhythmChart chart, SerializedProperty laneId)

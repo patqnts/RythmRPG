@@ -94,7 +94,8 @@ namespace RythmRPG.Combat
                     continue;
                 }
                 KeyButton key = note.keys?.FirstOrDefault(candidate => candidate != null && candidate.keyIdentity == note.GetNoteIdentity());
-                if (key != null
+                if (note.ShouldAutoMissByPosition
+                    && key != null
                     && note.GetJudgementWorldPosition().y < key.transform.position.y - BadWindow
                     && note.GetTimingError(key) > BadWindow)
                 {
@@ -123,9 +124,13 @@ namespace RythmRPG.Combat
             float distance = best.GetTimingError(key);
             HitJudgement judgement = Evaluate(distance);
             judgement = best.AdjustJudgement(judgement, distance);
-            if (judgement == HitJudgement.Miss) return;
             RhythmJudgementResult result = new(best.RuntimeNoteId, laneId, judgement, distance,
                 key.transform.position, NoteResolutionSource.PlayerInput);
+            if (judgement == HitJudgement.Miss)
+            {
+                if (best.ShouldResolveMissOnPlayerInput) best.ForceResolve(result);
+                return;
+            }
             best.TryHitFromKey(key, result);
         }
 
@@ -143,7 +148,7 @@ namespace RythmRPG.Combat
             results.Add(result);
             NoteResolved?.Invoke(result);
             if (currentContext.Mode == PatternRunMode.EnemyDefense
-                && result.Judgement == HitJudgement.Miss
+                && note.ShouldDamagePlayerOnResolve(result)
                 && currentContext.Player != null)
             {
                 currentContext.Player.ApplyDamage(note.damage);

@@ -121,6 +121,9 @@ namespace RythmRPG.Rhythm
         [SerializeField] private int damage = 1;
         [SerializeField] private float speed = 8f;
         [SerializeField] private double travelTime = 2.5d;
+        [SerializeField] private float stationaryBadWindow = 0.9f;
+        [SerializeField] private float stationaryGoodWindow = 0.45f;
+        [SerializeField] private float stationaryPerfectWindow = 0.15f;
         [SerializeField] private GameObject prefabOverride;
         [SerializeField] private List<RhythmMetadataEntry> metadata = new List<RhythmMetadataEntry>();
 
@@ -135,6 +138,9 @@ namespace RythmRPG.Rhythm
         public int Damage { get => damage; set => damage = value; }
         public float Speed { get => speed; set => speed = value; }
         public double TravelTime { get => travelTime; set => travelTime = value; }
+        public float StationaryBadWindow { get => stationaryBadWindow; set => stationaryBadWindow = value; }
+        public float StationaryGoodWindow { get => stationaryGoodWindow; set => stationaryGoodWindow = value; }
+        public float StationaryPerfectWindow { get => stationaryPerfectWindow; set => stationaryPerfectWindow = value; }
         public GameObject PrefabOverride { get => prefabOverride; set => prefabOverride = value; }
         public List<RhythmMetadataEntry> Metadata => metadata;
         public bool IsHold => RhythmTimingUtility.IsHoldType(noteType);

@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Reflection;
 using NUnit.Framework;
+using RythmRPG.Rhythm;
 using UnityEngine;
 
 namespace RythmRPG.Combat.Tests
@@ -129,25 +131,137 @@ namespace RythmRPG.Combat.Tests
         }
 
         [Test]
-        public void LaserNote_AllowsGraceHitOutsideActivator()
+        public void StationaryLaser_AlignsLaneXAndPreservesSpawnY()
         {
             GameObject laserObject = new("Laser Test");
             GameObject keyObject = new("Key Test");
             try
             {
                 LaserNote laser = laserObject.AddComponent<LaserNote>();
-                laserObject.AddComponent<BoxCollider2D>();
-                laser.SetNoteIdentity(1);
-                laser.canBePressed = false;
+
+                KeyButton key = keyObject.AddComponent<KeyButton>();
+                key.keyIdentity = 1;
+                key.SetInteractable(true);
+                keyObject.transform.position = new Vector3(2f, -1.65f, 0f);
+                laserObject.transform.position = new Vector3(-4f, 4.5f, 0f);
+
+                RhythmNoteData data = new("lane", 1d, RhythmNoteType.Laser)
+                {
+                    TravelTime = 0.01d
+                };
+
+                laser.Initialize(new RhythmNoteSpawnContext(null, data, data.Id, 1, 8f, 1, new[] { key }));
+
+                Assert.That(laser.transform.position.x, Is.EqualTo(key.transform.position.x));
+                Assert.That(laser.transform.position.y, Is.EqualTo(4.5f));
+                Assert.That(laser.ShouldAutoMissByPosition, Is.False);
+                Assert.That(laser.CanReceiveHit(key), Is.True);
+            }
+            finally
+            {
+                Object.DestroyImmediate(laserObject);
+                Object.DestroyImmediate(keyObject);
+            }
+        }
+
+        [Test]
+        public void StationaryLaser_UsesPerNoteTimingWindows()
+        {
+            GameObject laserObject = new("Laser Override Test");
+            GameObject keyObject = new("Key Override Test");
+            try
+            {
+                LaserNote laser = laserObject.AddComponent<LaserNote>();
 
                 KeyButton key = keyObject.AddComponent<KeyButton>();
                 key.keyIdentity = 1;
                 key.SetInteractable(true);
                 keyObject.transform.position = new Vector3(0f, -1.65f, 0f);
 
+                RhythmNoteData data = new("lane", 1d, RhythmNoteType.Laser)
+                {
+                    TravelTime = 0.01d,
+                    StationaryBadWindow = 0.25f,
+                    StationaryGoodWindow = 0.1f,
+                    StationaryPerfectWindow = 0.02f
+                };
+
+                laser.Initialize(new RhythmNoteSpawnContext(null, data, data.Id, 1, 8f, 1, new[] { key }));
+
+                SetStationarySecondsUntilAnticipationEnd(laser, 0.03f);
+                Assert.That(laser.AdjustJudgement(HitJudgement.Miss, 0.03f), Is.EqualTo(HitJudgement.Good));
+                SetStationarySecondsUntilAnticipationEnd(laser, 0.2f);
+                Assert.That(laser.AdjustJudgement(HitJudgement.Miss, 0.2f), Is.EqualTo(HitJudgement.Bad));
+                SetStationarySecondsUntilAnticipationEnd(laser, 0.3f);
+                Assert.That(laser.AdjustJudgement(HitJudgement.Bad, 0.3f), Is.EqualTo(HitJudgement.Miss));
+            }
+            finally
+            {
+                Object.DestroyImmediate(laserObject);
+                Object.DestroyImmediate(keyObject);
+            }
+        }
+
+        [Test]
+        public void StationaryLaser_VeryEarlyInputDuringChargeIsMiss()
+        {
+            GameObject laserObject = new("Laser Charge Test");
+            GameObject keyObject = new("Key Charge Test");
+            try
+            {
+                LaserNote laser = laserObject.AddComponent<LaserNote>();
+
+                KeyButton key = keyObject.AddComponent<KeyButton>();
+                key.keyIdentity = 1;
+                key.SetInteractable(true);
+
+                RhythmNoteData data = new("lane", 1d, RhythmNoteType.Laser)
+                {
+                    TravelTime = 10d,
+                    StationaryBadWindow = 0.25f,
+                    StationaryGoodWindow = 0.1f,
+                    StationaryPerfectWindow = 0.02f
+                };
+
+                laser.Initialize(new RhythmNoteSpawnContext(null, data, data.Id, 1, 8f, 1, new[] { key }));
+
                 Assert.That(laser.CanReceiveHit(key), Is.True);
-                Assert.That(laser.GetTimingError(key), Is.GreaterThan(0.9f));
-                Assert.That(laser.AdjustJudgement(HitJudgement.Miss, laser.GetTimingError(key)), Is.EqualTo(HitJudgement.Bad));
+                Assert.That(laser.AdjustJudgement(HitJudgement.Perfect, laser.GetTimingError(key)), Is.EqualTo(HitJudgement.Miss));
+            }
+            finally
+            {
+                Object.DestroyImmediate(laserObject);
+                Object.DestroyImmediate(keyObject);
+            }
+        }
+
+        [Test]
+        public void StationaryLaser_BindsExistingChargeVisualNames()
+        {
+            GameObject laserObject = new("Laser Visual Test");
+            GameObject anticipator = new("Anticipator");
+            GameObject fill = new("FIll");
+            GameObject keyObject = new("Key Visual Test");
+            try
+            {
+                anticipator.transform.SetParent(laserObject.transform, false);
+                fill.transform.SetParent(anticipator.transform, false);
+
+                LaserNote laser = laserObject.AddComponent<LaserNote>();
+                KeyButton key = keyObject.AddComponent<KeyButton>();
+                key.keyIdentity = 1;
+                key.SetInteractable(true);
+
+                RhythmNoteData data = new("lane", 1d, RhythmNoteType.Laser)
+                {
+                    TravelTime = 10d
+                };
+
+                laser.Initialize(new RhythmNoteSpawnContext(null, data, data.Id, 1, 8f, 1, new[] { key }));
+
+                Assert.That(anticipator.activeSelf, Is.True);
+                Assert.That(fill.activeSelf, Is.True);
+                Assert.That(fill.transform.localScale.x, Is.LessThan(0.3f));
             }
             finally
             {
@@ -167,6 +281,15 @@ namespace RythmRPG.Combat.Tests
 
         private static RhythmJudgementResult Result(HitJudgement judgement) =>
             new("note", 1, judgement, 0f, Vector3.zero, NoteResolutionSource.PlayerInput);
+
+        private static void SetStationarySecondsUntilAnticipationEnd(StationaryNote note, float secondsUntilEnd)
+        {
+            const float anticipationDuration = 1f;
+            typeof(StationaryNote).GetField("anticipationDuration", BindingFlags.Instance | BindingFlags.NonPublic)
+                ?.SetValue(note, anticipationDuration);
+            typeof(StationaryNote).GetField("spawnedAtTime", BindingFlags.Instance | BindingFlags.NonPublic)
+                ?.SetValue(note, Time.time - anticipationDuration + secondsUntilEnd);
+        }
 
         private sealed class TestState : ICombatState
         {

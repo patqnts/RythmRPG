@@ -35,6 +35,8 @@ public class Note : MonoBehaviour
     public string RuntimeNoteId => runtimeNoteId;
     public bool IsResolved => resolved;
     public RhythmNoteData Data { get; private set; }
+    public virtual bool ShouldAutoMissByPosition => true;
+    public virtual bool ShouldResolveMissOnPlayerInput => false;
 
     public virtual void Initialize(RhythmNoteSpawnContext context)
     {
@@ -98,7 +100,7 @@ public class Note : MonoBehaviour
         DestroyObject();
     }
 
-    protected void ResolveMiss(KeyButton keyButton, NoteResolutionSource source = NoteResolutionSource.Timeout)
+    protected virtual void ResolveMiss(KeyButton keyButton, NoteResolutionSource source = NoteResolutionSource.Timeout)
     {
         if (resolved) return;
         Vector3 position = keyButton != null ? keyButton.transform.position : GetJudgementWorldPosition();
@@ -106,9 +108,10 @@ public class Note : MonoBehaviour
             runner != null ? runner.BadWindow : 0.9f, position, source));
     }
 
-    public void ForceMiss(KeyButton keyButton, NoteResolutionSource source = NoteResolutionSource.Timeout) => ResolveMiss(keyButton, source);
+    public virtual void ForceMiss(KeyButton keyButton, NoteResolutionSource source = NoteResolutionSource.Timeout) => ResolveMiss(keyButton, source);
 
     public void ForceResolve(RhythmJudgementResult result) => Resolve(result);
+    public virtual bool ShouldDamagePlayerOnResolve(RhythmJudgementResult result) => result.Judgement == HitJudgement.Miss;
 
     protected KeyButton GetIdentityButton()
     {
