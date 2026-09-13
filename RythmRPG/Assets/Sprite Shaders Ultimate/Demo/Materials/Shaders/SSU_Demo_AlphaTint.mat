@@ -14,6 +14,7 @@ Material:
   m_ValidKeywords:
   - _ENABLEFROZEN_ON
   - _ENABLEPIXELOUTLINE_ON
+  - _ENABLEVIBRATE_ON
   - _SHADERFADING_NONE
   - _SHADERSPACE_UV
   - _STRONGTINTCONTRASTTOGGLE_ON
@@ -55,3 +56,4 @@ Material:
     - _OuterOutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _PixelOutlineColor: {r: 1, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1

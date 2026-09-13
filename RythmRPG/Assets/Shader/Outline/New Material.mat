@@ -26,6 +26,7 @@ Material:
   m_ModifiedSerializedProperties: 2
   m_ValidKeywords:
   - _ENABLEFULLGLOWDISSOLVE_ON
+  - _ENABLEVIBRATE_ON
   - _SHADERFADING_NONE
   - _SHADERSPACE_UV
   - _TEXTURELAYER1SHEETTOGGLE_ON
@@ -65,3 +66,4 @@ Material:
     - _OuterOutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _PixelOutlineColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1
