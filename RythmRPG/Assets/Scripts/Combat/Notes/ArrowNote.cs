@@ -79,8 +79,7 @@ public class ArrowNote : NoteObject
         isMoving = false;
 
         StopMovementTweens();
-        TweenLaneX(GetNoteIdentity());
-        TweenYTo(transform.position.y - 5000f, 1000f);
+        TweenLaneFall(GetNoteIdentity(), 5000f, 1000f);
         Destroy(gameObject, 5f);
     }
 }

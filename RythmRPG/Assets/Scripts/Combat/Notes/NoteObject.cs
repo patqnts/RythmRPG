@@ -43,7 +43,8 @@ public class NoteObject : Note
             return;
         }
 
-        if (!TryGetMissTargetY(currentIdentity, -3f, out float targetY))
+        if (!TryGetLaneTravelPositions(currentIdentity, 3f, out Transform movementSpace,
+                out Vector3 startLocal, out Vector3 keyLocal, out Vector3 targetLocal))
         {
             return;
         }
@@ -55,12 +56,11 @@ public class NoteObject : Note
         movementTweenIdentity = currentIdentity;
         movementTweenStarted = true;
 
-        TweenLaneX(currentIdentity);
         float travelTime = Mathf.Max(0.01f, (float)(Data?.TravelTime ?? 2.5d));
-        float distanceToKey = Mathf.Abs(transform.position.y - targetKey.transform.position.y);
+        float distanceToKey = Vector3.Distance(transform.position, targetKey.transform.position);
         float worldSpeed = distanceToKey > 0.01f ? distanceToKey / travelTime : Mathf.Max(0.01f, speed);
-        float totalDuration = Mathf.Abs(transform.position.y - targetY) / worldSpeed;
-        Tween.PositionY(transform, targetY, Mathf.Max(0.01f, totalDuration), Ease.Linear);
+        float totalDuration = Vector3.Distance(transform.position, FromMovementLocal(targetLocal, movementSpace)) / worldSpeed;
+        TweenLaneTravel(movementSpace, startLocal, keyLocal, targetLocal, totalDuration);
     }
 
     protected override void OnInitializeMovementComplete()

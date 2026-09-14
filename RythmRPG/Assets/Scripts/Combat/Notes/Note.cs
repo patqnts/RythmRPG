@@ -31,6 +31,7 @@ public class Note : MonoBehaviour
     private bool initializeMovementPlaying;
     private RhythmPatternRunner runner;
     private string runtimeNoteId;
+    private float closestTimingError = float.MaxValue;
 
     public string RuntimeNoteId => runtimeNoteId;
     public bool IsResolved => resolved;
@@ -51,16 +52,25 @@ public class Note : MonoBehaviour
         hitAccepted = false;
         resolved = false;
         canBePressed = false;
+        closestTimingError = float.MaxValue;
     }
 
     public virtual Vector3 GetJudgementWorldPosition() => transform.position;
 
     public virtual float GetTimingError(KeyButton keyButton)
     {
-        return keyButton == null ? float.MaxValue : Mathf.Abs(GetJudgementWorldPosition().y - keyButton.transform.position.y);
+        return keyButton == null ? float.MaxValue : Vector3.Distance(GetJudgementWorldPosition(), keyButton.transform.position);
     }
 
     public virtual HitJudgement AdjustJudgement(HitJudgement judgement, float timingError) => judgement;
+
+    public virtual bool HasPassedMissWindow(KeyButton keyButton, float badWindow)
+    {
+        if (keyButton == null) return false;
+        float timingError = GetTimingError(keyButton);
+        closestTimingError = Mathf.Min(closestTimingError, timingError);
+        return closestTimingError <= badWindow && timingError > badWindow;
+    }
 
     public virtual bool CanReceiveHit(KeyButton keyButton)
     {
@@ -174,6 +184,41 @@ public class Note : MonoBehaviour
         return key != null;
     }
 
+    protected bool TryGetMissTargetPosition(int keyIdentity, float missDistancePastKey, out Vector3 targetPosition)
+    {
+        KeyButton key = GetKeyButton(keyIdentity);
+        if (key == null)
+        {
+            targetPosition = transform.position;
+            return false;
+        }
+
+        Vector3 toKey = key.transform.position - transform.position;
+        Vector3 travelDirection = toKey.sqrMagnitude > 0.0001f ? toKey.normalized : -transform.up;
+        targetPosition = key.transform.position + travelDirection * Mathf.Abs(missDistancePastKey);
+        return true;
+    }
+
+    protected bool TryGetLaneTravelPositions(int keyIdentity, float missDistancePastKey,
+        out Transform movementSpace, out Vector3 startLocal, out Vector3 keyLocal, out Vector3 targetLocal)
+    {
+        KeyButton key = GetKeyButton(keyIdentity);
+        movementSpace = transform.parent;
+        startLocal = ToMovementLocal(transform.position, movementSpace);
+        keyLocal = key != null ? ToMovementLocal(key.transform.position, movementSpace) : startLocal;
+        targetLocal = startLocal;
+        if (key == null) return false;
+
+        Vector3 laneStartLocal = startLocal;
+        laneStartLocal.x = keyLocal.x;
+        Vector3 travelDirection = keyLocal - laneStartLocal;
+        if (travelDirection.sqrMagnitude <= 0.0001f) travelDirection = keyLocal - startLocal;
+        if (travelDirection.sqrMagnitude <= 0.0001f) travelDirection = Vector3.down;
+
+        targetLocal = keyLocal + travelDirection.normalized * Mathf.Abs(missDistancePastKey);
+        return true;
+    }
+
     protected void TweenLaneX(int keyIdentity, float duration = 0.25f)
     {
         if (TryGetLaneX(keyIdentity, out float x))
@@ -188,9 +233,35 @@ public class Note : MonoBehaviour
 
     protected void TweenLaneFall(int keyIdentity, float targetYOffset, float moveSpeed, float laneDuration = 0.25f)
     {
-        if (!TryGetMissTargetY(keyIdentity, targetYOffset, out float targetY)) return;
-        TweenLaneX(keyIdentity, laneDuration);
-        TweenYTo(targetY, moveSpeed);
+        if (!TryGetLaneTravelPositions(keyIdentity, Mathf.Abs(targetYOffset), out Transform movementSpace,
+                out Vector3 startLocal, out Vector3 keyLocal, out Vector3 targetLocal)) return;
+        float duration = Mathf.Max(0.01f,
+            Vector3.Distance(transform.position, FromMovementLocal(targetLocal, movementSpace)) / Mathf.Max(0.01f, moveSpeed));
+        TweenLaneTravel(movementSpace, startLocal, keyLocal, targetLocal, duration, laneDuration);
+    }
+
+    protected void TweenLaneTravel(Transform movementSpace, Vector3 startLocal, Vector3 keyLocal, Vector3 targetLocal,
+        float duration, float laneDuration = 0.25f)
+    {
+        float safeDuration = Mathf.Max(0.01f, duration);
+        float safeLaneDuration = Mathf.Max(0.01f, laneDuration);
+        Tween.Custom(transform, 0f, 1f, safeDuration, (target, progress) =>
+        {
+            Vector3 localPosition = Vector3.LerpUnclamped(startLocal, targetLocal, progress);
+            float laneProgress = Mathf.Sin(Mathf.Clamp01(progress * safeDuration / safeLaneDuration) * Mathf.PI * 0.5f);
+            localPosition.x = Mathf.LerpUnclamped(startLocal.x, keyLocal.x, laneProgress);
+            target.position = FromMovementLocal(localPosition, movementSpace);
+        }, Ease.Linear);
+    }
+
+    protected static Vector3 ToMovementLocal(Vector3 worldPosition, Transform movementSpace)
+    {
+        return movementSpace != null ? movementSpace.InverseTransformPoint(worldPosition) : worldPosition;
+    }
+
+    protected static Vector3 FromMovementLocal(Vector3 localPosition, Transform movementSpace)
+    {
+        return movementSpace != null ? movementSpace.TransformPoint(localPosition) : localPosition;
     }
 
     protected void ReportMiss(KeyButton keyButton) => ResolveMiss(keyButton);

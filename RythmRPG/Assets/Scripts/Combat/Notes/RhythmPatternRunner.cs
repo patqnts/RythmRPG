@@ -96,8 +96,7 @@ namespace RythmRPG.Combat
                 KeyButton key = note.keys?.FirstOrDefault(candidate => candidate != null && candidate.keyIdentity == note.GetNoteIdentity());
                 if (note.ShouldAutoMissByPosition
                     && key != null
-                    && note.GetJudgementWorldPosition().y < key.transform.position.y - BadWindow
-                    && note.GetTimingError(key) > BadWindow)
+                    && note.HasPassedMissWindow(key, BadWindow))
                 {
                     note.ForceMiss(key);
                 }
@@ -245,7 +244,8 @@ namespace RythmRPG.Combat
             GameObject prefab = chart.ResolvePrefab(data);
             if (lane == null || prefab == null) return;
             Transform origin = currentContext.SpawnOrigin != null ? currentContext.SpawnOrigin : transform;
-            GameObject instance = Instantiate(prefab, origin.position, Quaternion.identity, projectileObjectHolder);
+            Quaternion rotation = projectileObjectHolder != null ? projectileObjectHolder.rotation : Quaternion.identity;
+            GameObject instance = Instantiate(prefab, origin.position, rotation, projectileObjectHolder);
             Note note = instance.GetComponent<Note>();
             if (note == null)
             {
