@@ -15,7 +15,7 @@ MonoBehaviour:
   schemaVersion: 1
   bpm: 120
   beatsPerMeasure: 4
-  compositionDuration: 30
+  compositionDuration: 20
   audioClip: {fileID: 0}
   snapEnabled: 1
   snapDivision: 4

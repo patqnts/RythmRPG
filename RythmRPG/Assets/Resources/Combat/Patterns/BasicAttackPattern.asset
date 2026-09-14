@@ -110,8 +110,8 @@ MonoBehaviour:
     hitEffect: 0
     playerState: 0
     damage: 0
-    speed: 8
-    travelTime: 1.5
+    speed: 10
+    travelTime: 1.2
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15

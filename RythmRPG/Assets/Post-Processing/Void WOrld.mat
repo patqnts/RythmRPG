@@ -12,8 +12,9 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _ENABLEOUTEROUTLINE_ON
+  - _ENABLEENCHANTED_ON
   - _ENABLEVIBRATE_ON
+  - _ENCHANTEDRAINBOWTOGGLE_ON
   - _SHADERFADING_NONE
   - _SHADERSPACE_UV
   - _TEXTURELAYER1SHEETTOGGLE_ON
@@ -108,7 +109,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TextureLayer1Texture:
-        m_Texture: {fileID: 2800000, guid: 9685c3a024e22a946a7e8c2ce3542300, type: 3}
+        m_Texture: {fileID: 2800000, guid: a6031cf05af9b4bea8d67125e8027bdf, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TextureLayer2Texture:
@@ -213,7 +214,7 @@ Material:
     - _EnableDirectionalAlphaFade: 0
     - _EnableDirectionalDistortion: 0
     - _EnableDirectionalGlowFade: 0
-    - _EnableEnchanted: 0
+    - _EnableEnchanted: 1
     - _EnableFlame: 0
     - _EnableFrozen: 0
     - _EnableFullAlphaDissolve: 0
@@ -228,7 +229,7 @@ Material:
     - _EnableInnerOutline: 0
     - _EnableMetal: 0
     - _EnableNegative: 0
-    - _EnableOuterOutline: 1
+    - _EnableOuterOutline: 0
     - _EnablePingPongGlow: 0
     - _EnablePixelOutline: 0
     - _EnablePixelate: 0
@@ -265,15 +266,15 @@ Material:
     - _EnableWiggle: 0
     - _EnableWind: 0
     - _EnableWorldTiling: 0
-    - _EnchantedBrightness: 1
-    - _EnchantedContrast: 0.5
+    - _EnchantedBrightness: 0.13
+    - _EnchantedContrast: 5.12
     - _EnchantedFade: 1
     - _EnchantedLerpToggle: 0
     - _EnchantedRainbowDensity: 0.5
     - _EnchantedRainbowSaturation: 0.8
     - _EnchantedRainbowSpeed: 0.5
-    - _EnchantedRainbowToggle: 0
-    - _EnchantedReduce: 0
+    - _EnchantedRainbowToggle: 1
+    - _EnchantedReduce: 0.06
     - _FadingFade: 1
     - _FadingNoiseFactor: 0.2
     - _FadingWidth: 0.3
@@ -617,7 +618,7 @@ Material:
     - _StrongTintTint: {r: 1, g: 1, b: 1, a: 1}
     - _TextureLayer1Color: {r: 0.4494117, g: 1.298301, b: 2.996079, a: 1}
     - _TextureLayer1Offset: {r: 0, g: 0, b: 0, a: 0}
-    - _TextureLayer1Scale: {r: 1, g: 1, b: 0, a: 0}
+    - _TextureLayer1Scale: {r: 2, g: 2, b: 0, a: 0}
     - _TextureLayer1ScrollSpeed: {r: 0, g: 1, b: 0, a: 0}
     - _TextureLayer2Color: {r: 0.4494117, g: 1.298301, b: 2.996079, a: 1}
     - _TextureLayer2Offset: {r: 0, g: 0, b: 0, a: 0}
