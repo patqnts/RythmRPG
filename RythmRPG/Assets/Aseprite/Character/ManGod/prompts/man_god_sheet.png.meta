@@ -1,0 +1,2054 @@
+fileFormatVersion: 2
+guid: ed255c11fac1969febf9a36bc6e145c5
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3107959938886795409
+    second: man_god_sheet_0
+  - first:
+      213: -4048497429393103615
+    second: man_god_sheet_1
+  - first:
+      213: 7860239235351109147
+    second: man_god_sheet_2
+  - first:
+      213: 6783674412306288306
+    second: man_god_sheet_3
+  - first:
+      213: 1047679984067990171
+    second: man_god_sheet_4
+  - first:
+      213: 4947282431412821999
+    second: man_god_sheet_5
+  - first:
+      213: 4602588507723267062
+    second: man_god_sheet_6
+  - first:
+      213: -1530772687138300333
+    second: man_god_sheet_7
+  - first:
+      213: 6597732765612374279
+    second: man_god_sheet_8
+  - first:
+      213: -4772480327810883461
+    second: man_god_sheet_9
+  - first:
+      213: -2907642529247296419
+    second: man_god_sheet_10
+  - first:
+      213: -15105509655302150
+    second: man_god_sheet_11
+  - first:
+      213: -6703713980921639888
+    second: man_god_sheet_12
+  - first:
+      213: 8137435922424942632
+    second: man_god_sheet_13
+  - first:
+      213: 2934660028170867146
+    second: man_god_sheet_14
+  - first:
+      213: -9166456397706940857
+    second: man_god_sheet_15
+  - first:
+      213: -2633222994896619823
+    second: man_god_sheet_16
+  - first:
+      213: 8137346725459953579
+    second: man_god_sheet_17
+  - first:
+      213: 8250414660840736714
+    second: man_god_sheet_18
+  - first:
+      213: 5791465689842917405
+    second: man_god_sheet_19
+  - first:
+      213: 6083779793529166479
+    second: man_god_sheet_20
+  - first:
+      213: 1392281527736117338
+    second: man_god_sheet_21
+  - first:
+      213: 7629953920343078482
+    second: man_god_sheet_22
+  - first:
+      213: -384692335657645520
+    second: man_god_sheet_23
+  - first:
+      213: 1060774850865976598
+    second: man_god_sheet_24
+  - first:
+      213: 6440740045631677975
+    second: man_god_sheet_25
+  - first:
+      213: -6725807601620631167
+    second: man_god_sheet_26
+  - first:
+      213: 8007106316784428080
+    second: man_god_sheet_27
+  - first:
+      213: 4052275381524970103
+    second: man_god_sheet_28
+  - first:
+      213: -2009311587324741493
+    second: man_god_sheet_29
+  - first:
+      213: 372143111497327373
+    second: man_god_sheet_30
+  - first:
+      213: -2875554648337964409
+    second: man_god_sheet_31
+  - first:
+      213: 563042597941106382
+    second: man_god_sheet_32
+  - first:
+      213: 890193956267453874
+    second: man_god_sheet_33
+  - first:
+      213: -3339833970631441757
+    second: man_god_sheet_34
+  - first:
+      213: -5419111356851113169
+    second: man_god_sheet_35
+  - first:
+      213: 6897234651890808827
+    second: man_god_sheet_36
+  - first:
+      213: -2252338919407358563
+    second: man_god_sheet_37
+  - first:
+      213: 8422888593032074992
+    second: man_god_sheet_38
+  - first:
+      213: -6077066044323038885
+    second: man_god_sheet_39
+  - first:
+      213: -1685748210487912532
+    second: man_god_sheet_40
+  - first:
+      213: 8430393323929822816
+    second: man_god_sheet_41
+  - first:
+      213: 8444412820737994218
+    second: man_god_sheet_42
+  - first:
+      213: -2408445665936510363
+    second: man_god_sheet_43
+  - first:
+      213: 3269670464387452297
+    second: man_god_sheet_44
+  - first:
+      213: 8914306285948707217
+    second: man_god_sheet_45
+  - first:
+      213: 575469653637149587
+    second: man_god_sheet_46
+  - first:
+      213: -4894226218299907766
+    second: man_god_sheet_47
+  - first:
+      213: 7412794986352709855
+    second: man_god_sheet_48
+  - first:
+      213: -8736756245139221946
+    second: man_god_sheet_49
+  - first:
+      213: 751279257966010223
+    second: man_god_sheet_50
+  - first:
+      213: 6136491285659626580
+    second: man_god_sheet_51
+  - first:
+      213: -1576144793333467514
+    second: man_god_sheet_52
+  - first:
+      213: -7574472898814101167
+    second: man_god_sheet_53
+  - first:
+      213: 322266300167058149
+    second: man_god_sheet_54
+  - first:
+      213: -8542010032828151890
+    second: man_god_sheet_55
+  - first:
+      213: -6172052831550864937
+    second: man_god_sheet_56
+  - first:
+      213: -8317203801012474127
+    second: man_god_sheet_57
+  - first:
+      213: -6301698233985658761
+    second: man_god_sheet_58
+  - first:
+      213: -6475902089392442440
+    second: man_god_sheet_59
+  - first:
+      213: 5912721405886428329
+    second: man_god_sheet_60
+  - first:
+      213: 8467064190086083266
+    second: man_god_sheet_61
+  - first:
+      213: -3513758407140594351
+    second: man_god_sheet_62
+  - first:
+      213: 6805207662559344502
+    second: man_god_sheet_63
+  - first:
+      213: 2034717632291604680
+    second: man_god_sheet_64
+  - first:
+      213: 2750775697077216831
+    second: man_god_sheet_65
+  - first:
+      213: -9060808509065020079
+    second: man_god_sheet_66
+  - first:
+      213: 7531521370438873138
+    second: man_god_sheet_67
+  - first:
+      213: 2909815379964255339
+    second: man_god_sheet_68
+  - first:
+      213: -2719976229553722914
+    second: man_god_sheet_69
+  - first:
+      213: -8643459746772113501
+    second: man_god_sheet_70
+  - first:
+      213: -5603173012689147117
+    second: man_god_sheet_71
+  - first:
+      213: -5165305635662275680
+    second: man_god_sheet_72
+  - first:
+      213: 6408789314879724099
+    second: man_god_sheet_73
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: man_god_sheet_0
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 322
+        width: 27
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6ff18af6ee4ed4d0800000000000000
+      internalID: -3107959938886795409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_1
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 326
+        width: 27
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10521fea909d0d7c0800000000000000
+      internalID: -4048497429393103615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_2
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 326
+        width: 28
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1ed0b070fd251d60800000000000000
+      internalID: 7860239235351109147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_3
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 326
+        width: 28
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2be4c61cfe3742e50800000000000000
+      internalID: 6783674412306288306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_4
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 326
+        width: 28
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b92d8a8056b1a8e00800000000000000
+      internalID: 1047679984067990171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_5
+      rect:
+        serializedVersion: 2
+        x: 338
+        y: 326
+        width: 27
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fef54e7d82748a440800000000000000
+      internalID: 4947282431412821999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_6
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 205
+        width: 49
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6fbf32abcddafdf30800000000000000
+      internalID: 4602588507723267062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_7
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 265
+        width: 28
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35e5047f95a91cae0800000000000000
+      internalID: -1530772687138300333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_8
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 265
+        width: 32
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 709f7497efadf8b50800000000000000
+      internalID: 6597732765612374279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_9
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 265
+        width: 36
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b70ea437d6eb4cdb0800000000000000
+      internalID: -4772480327810883461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_10
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 265
+        width: 38
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d548566668af5a7d0800000000000000
+      internalID: -2907642529247296419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_11
+      rect:
+        serializedVersion: 2
+        x: 268
+        y: 265
+        width: 34
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aff28d67e955acff0800000000000000
+      internalID: -15105509655302150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_12
+      rect:
+        serializedVersion: 2
+        x: 333
+        y: 265
+        width: 33
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03c8853f6af97f2a0800000000000000
+      internalID: -6703713980921639888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_13
+      rect:
+        serializedVersion: 2
+        x: 395
+        y: 257
+        width: 34
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 82054a28bdafde070800000000000000
+      internalID: 8137435922424942632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_14
+      rect:
+        serializedVersion: 2
+        x: 464
+        y: 257
+        width: 29
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac199a34fb10ab820800000000000000
+      internalID: 2934660028170867146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_15
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 205
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74e2295e8743ac080800000000000000
+      internalID: -9166456397706940857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_16
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 203
+        width: 45
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d6fbc633a9e47bd0800000000000000
+      internalID: -2633222994896619823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_17
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 193
+        width: 44
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba78a39bbb9ade070800000000000000
+      internalID: 8137346725459953579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_18
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 249
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac74615eb6c5f7270800000000000000
+      internalID: 8250414660840736714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_19
+      rect:
+        serializedVersion: 2
+        x: 328
+        y: 249
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1023f34c5b6f5050800000000000000
+      internalID: 5791465689842917405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_20
+      rect:
+        serializedVersion: 2
+        x: 329
+        y: 193
+        width: 40
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f8a510d2d7ded6450800000000000000
+      internalID: 6083779793529166479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_21
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 204
+        width: 42
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a58ac004ca0625310800000000000000
+      internalID: 1392281527736117338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_22
+      rect:
+        serializedVersion: 2
+        x: 463
+        y: 205
+        width: 32
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 256f5a25aaa03e960800000000000000
+      internalID: 7629953920343078482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_23
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 207
+        width: 29
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03a8f41eb5c49aaf0800000000000000
+      internalID: -384692335657645520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_24
+      rect:
+        serializedVersion: 2
+        x: 591
+        y: 207
+        width: 34
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 615d88c4b11a8be00800000000000000
+      internalID: 1060774850865976598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_25
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 205
+        width: 43
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 716628e62fa126950800000000000000
+      internalID: 6440740045631677975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_26
+      rect:
+        serializedVersion: 2
+        x: 365
+        y: 235
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 181c7c50f9129a2a0800000000000000
+      internalID: -6725807601620631167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_27
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 216
+        width: 8
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 034e8ba85c4fe1f60800000000000000
+      internalID: 8007106316784428080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_28
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 216
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77a3bd75df29c3830800000000000000
+      internalID: 4052275381524970103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_29
+      rect:
+        serializedVersion: 2
+        x: 369
+        y: 216
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b88be62d1cd7d14e0800000000000000
+      internalID: -2009311587324741493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_30
+      rect:
+        serializedVersion: 2
+        x: 428
+        y: 222
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d03286e203e1a2500800000000000000
+      internalID: 372143111497327373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_31
+      rect:
+        serializedVersion: 2
+        x: 459
+        y: 219
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 782a79d584af718d0800000000000000
+      internalID: -2875554648337964409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_32
+      rect:
+        serializedVersion: 2
+        x: 364
+        y: 210
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec651bb724450d700800000000000000
+      internalID: 563042597941106382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_33
+      rect:
+        serializedVersion: 2
+        x: 402
+        y: 201
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2bd6580dfaa9a5c00800000000000000
+      internalID: 890193956267453874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_34
+      rect:
+        serializedVersion: 2
+        x: 365
+        y: 196
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a20bbbe2b686a1d0800000000000000
+      internalID: -3339833970631441757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_35
+      rect:
+        serializedVersion: 2
+        x: 410
+        y: 193
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f23ba90cee27bc4b0800000000000000
+      internalID: -5419111356851113169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_36
+      rect:
+        serializedVersion: 2
+        x: 421
+        y: 199
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf7777e6f56e7bf50800000000000000
+      internalID: 6897234651890808827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_37
+      rect:
+        serializedVersion: 2
+        x: 472
+        y: 202
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9defeaafa51eb0e0800000000000000
+      internalID: -2252338919407358563
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_38
+      rect:
+        serializedVersion: 2
+        x: 481
+        y: 201
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f6dd5a8c8c14e470800000000000000
+      internalID: 8422888593032074992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_39
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 137
+        width: 57
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b59798f51ace9aba0800000000000000
+      internalID: -6077066044323038885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_40
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 135
+        width: 55
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca71e1d1fe40b98e0800000000000000
+      internalID: -1685748210487912532
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_41
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 135
+        width: 56
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06669addf06cef470800000000000000
+      internalID: 8430393323929822816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_42
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 135
+        width: 55
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aeda7d458b4903570800000000000000
+      internalID: 8444412820737994218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_43
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 135
+        width: 56
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56276056d6b739ed0800000000000000
+      internalID: -2408445665936510363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_44
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 135
+        width: 56
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98d8662c6f3306d20800000000000000
+      internalID: 3269670464387452297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_45
+      rect:
+        serializedVersion: 2
+        x: 386
+        y: 136
+        width: 58
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1912109465af5bb70800000000000000
+      internalID: 8914306285948707217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_46
+      rect:
+        serializedVersion: 2
+        x: 451
+        y: 138
+        width: 58
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3933f0cd99a7cf700800000000000000
+      internalID: 575469653637149587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_47
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 69
+        width: 29
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a41a4d76f27341cb0800000000000000
+      internalID: -4894226218299907766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_48
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 67
+        width: 35
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd09952f3c98fd660800000000000000
+      internalID: 7412794986352709855
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_49
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 67
+        width: 36
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6421d4ffb7ec0c680800000000000000
+      internalID: -8736756245139221946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_50
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 68
+        width: 30
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6fde2231841d6a00800000000000000
+      internalID: 751279257966010223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_51
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 2
+        width: 28
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45ca501df42392550800000000000000
+      internalID: 6136491285659626580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_52
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 10
+        width: 28
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 686f6c649a8602ae0800000000000000
+      internalID: -1576144793333467514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_53
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 11
+        width: 30
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 159bc51a70112e690800000000000000
+      internalID: -7574472898814101167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_54
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 10
+        width: 31
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e279881e7be87400800000000000000
+      internalID: 322266300167058149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_55
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 11
+        width: 31
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea78475f12fa47980800000000000000
+      internalID: -8542010032828151890
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_56
+      rect:
+        serializedVersion: 2
+        x: 338
+        y: 11
+        width: 27
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d1877096a6785aa0800000000000000
+      internalID: -6172052831550864937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_57
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 11
+        width: 30
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1fe6f1c953b539c80800000000000000
+      internalID: -8317203801012474127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_58
+      rect:
+        serializedVersion: 2
+        x: 466
+        y: 15
+        width: 31
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 770149118dedb88a0800000000000000
+      internalID: -6301698233985658761
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_59
+      rect:
+        serializedVersion: 2
+        x: 479
+        y: 52
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b3bd894c59f026a0800000000000000
+      internalID: -6475902089392442440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_60
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 18
+        width: 27
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a475bdaac43e0250800000000000000
+      internalID: 5912721405886428329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_61
+      rect:
+        serializedVersion: 2
+        x: 601
+        y: 45
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c2f28c350e018570800000000000000
+      internalID: 8467064190086083266
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_62
+      rect:
+        serializedVersion: 2
+        x: 606
+        y: 52
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15da7db685f9c3fc0800000000000000
+      internalID: -3513758407140594351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_63
+      rect:
+        serializedVersion: 2
+        x: 617
+        y: 32
+        width: 58
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 677bd954054f07e50800000000000000
+      internalID: 6805207662559344502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_64
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 40
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c807faf7e4cc3c10800000000000000
+      internalID: 2034717632291604680
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_65
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 43
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f36a0191ce7bc2620800000000000000
+      internalID: 2750775697077216831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_66
+      rect:
+        serializedVersion: 2
+        x: 602
+        y: 32
+        width: 13
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15db75fcaaa814280800000000000000
+      internalID: -9060808509065020079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_67
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 34
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 230b54f58c6558860800000000000000
+      internalID: 7531521370438873138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_68
+      rect:
+        serializedVersion: 2
+        x: 362
+        y: 27
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6cdcb4dbadb16820800000000000000
+      internalID: 2909815379964255339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_69
+      rect:
+        serializedVersion: 2
+        x: 547
+        y: 29
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed9a1ffb704b04ad0800000000000000
+      internalID: -2719976229553722914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_70
+      rect:
+        serializedVersion: 2
+        x: 551
+        y: 22
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a7a243c7234c0880800000000000000
+      internalID: -8643459746772113501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_71
+      rect:
+        serializedVersion: 2
+        x: 602
+        y: 23
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 31bab93f4d78d32b0800000000000000
+      internalID: -5603173012689147117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_72
+      rect:
+        serializedVersion: 2
+        x: 612
+        y: 23
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0abd60e24e52158b0800000000000000
+      internalID: -5165305635662275680
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: man_god_sheet_73
+      rect:
+        serializedVersion: 2
+        x: 544
+        y: 11
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 34a99b93de790f850800000000000000
+      internalID: 6408789314879724099
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      man_god_sheet_0: -3107959938886795409
+      man_god_sheet_1: -4048497429393103615
+      man_god_sheet_10: -2907642529247296419
+      man_god_sheet_11: -15105509655302150
+      man_god_sheet_12: -6703713980921639888
+      man_god_sheet_13: 8137435922424942632
+      man_god_sheet_14: 2934660028170867146
+      man_god_sheet_15: -9166456397706940857
+      man_god_sheet_16: -2633222994896619823
+      man_god_sheet_17: 8137346725459953579
+      man_god_sheet_18: 8250414660840736714
+      man_god_sheet_19: 5791465689842917405
+      man_god_sheet_2: 7860239235351109147
+      man_god_sheet_20: 6083779793529166479
+      man_god_sheet_21: 1392281527736117338
+      man_god_sheet_22: 7629953920343078482
+      man_god_sheet_23: -384692335657645520
+      man_god_sheet_24: 1060774850865976598
+      man_god_sheet_25: 6440740045631677975
+      man_god_sheet_26: -6725807601620631167
+      man_god_sheet_27: 8007106316784428080
+      man_god_sheet_28: 4052275381524970103
+      man_god_sheet_29: -2009311587324741493
+      man_god_sheet_3: 6783674412306288306
+      man_god_sheet_30: 372143111497327373
+      man_god_sheet_31: -2875554648337964409
+      man_god_sheet_32: 563042597941106382
+      man_god_sheet_33: 890193956267453874
+      man_god_sheet_34: -3339833970631441757
+      man_god_sheet_35: -5419111356851113169
+      man_god_sheet_36: 6897234651890808827
+      man_god_sheet_37: -2252338919407358563
+      man_god_sheet_38: 8422888593032074992
+      man_god_sheet_39: -6077066044323038885
+      man_god_sheet_4: 1047679984067990171
+      man_god_sheet_40: -1685748210487912532
+      man_god_sheet_41: 8430393323929822816
+      man_god_sheet_42: 8444412820737994218
+      man_god_sheet_43: -2408445665936510363
+      man_god_sheet_44: 3269670464387452297
+      man_god_sheet_45: 8914306285948707217
+      man_god_sheet_46: 575469653637149587
+      man_god_sheet_47: -4894226218299907766
+      man_god_sheet_48: 7412794986352709855
+      man_god_sheet_49: -8736756245139221946
+      man_god_sheet_5: 4947282431412821999
+      man_god_sheet_50: 751279257966010223
+      man_god_sheet_51: 6136491285659626580
+      man_god_sheet_52: -1576144793333467514
+      man_god_sheet_53: -7574472898814101167
+      man_god_sheet_54: 322266300167058149
+      man_god_sheet_55: -8542010032828151890
+      man_god_sheet_56: -6172052831550864937
+      man_god_sheet_57: -8317203801012474127
+      man_god_sheet_58: -6301698233985658761
+      man_god_sheet_59: -6475902089392442440
+      man_god_sheet_6: 4602588507723267062
+      man_god_sheet_60: 5912721405886428329
+      man_god_sheet_61: 8467064190086083266
+      man_god_sheet_62: -3513758407140594351
+      man_god_sheet_63: 6805207662559344502
+      man_god_sheet_64: 2034717632291604680
+      man_god_sheet_65: 2750775697077216831
+      man_god_sheet_66: -9060808509065020079
+      man_god_sheet_67: 7531521370438873138
+      man_god_sheet_68: 2909815379964255339
+      man_god_sheet_69: -2719976229553722914
+      man_god_sheet_7: -1530772687138300333
+      man_god_sheet_70: -8643459746772113501
+      man_god_sheet_71: -5603173012689147117
+      man_god_sheet_72: -5165305635662275680
+      man_god_sheet_73: 6408789314879724099
+      man_god_sheet_8: 6597732765612374279
+      man_god_sheet_9: -4772480327810883461
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

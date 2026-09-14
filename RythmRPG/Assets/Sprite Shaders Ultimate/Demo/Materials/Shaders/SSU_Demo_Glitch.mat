@@ -193,7 +193,7 @@ Material:
     - _DirectionalDistortionNoiseFactor: 0.2
     - _DirectionalDistortionRandomDirection: 0.1
     - _DirectionalDistortionRotation: 1.69
-    - _DirectionalDistortionWidth: 0.5
+    - _DirectionalDistortionWidth: 0.59
     - _DirectionalGlowFadeFade: 0
     - _DirectionalGlowFadeInvert: 0
     - _DirectionalGlowFadeNoiseFactor: 0.2
@@ -228,7 +228,7 @@ Material:
     - _EnableInnerOutline: 0
     - _EnableMetal: 0
     - _EnableNegative: 0
-    - _EnableOuterOutline: 1
+    - _EnableOuterOutline: 1.1
     - _EnablePingPongGlow: 0
     - _EnablePixelOutline: 0
     - _EnablePixelate: 0
@@ -297,7 +297,7 @@ Material:
     - _GaussianBlurFade: 1
     - _GaussianBlurOffset: 1
     - _GlitchBrightness: 4
-    - _GlitchFade: 1
+    - _GlitchFade: 0.11
     - _GlitchHueSpeed: 1
     - _GlitchMaskMin: 0.4
     - _HalftoneFade: 1

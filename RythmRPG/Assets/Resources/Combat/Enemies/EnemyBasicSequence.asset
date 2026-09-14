@@ -15,6 +15,12 @@ MonoBehaviour:
   id: basic-sequence
   selectionWeight: 1
   steps:
+  - animationName: Laser
+    anticipationDuration: 1
+    rhythmPattern: {fileID: 11400000, guid: b100000000000000000000000000010e, type: 2}
+    durationOverride: 0
+    endPolicy: 0
+    modifiers: []
   - animationName: Attack
     anticipationDuration: 1
     rhythmPattern: {fileID: 11400000, guid: af571823326c972ddad5e5675f15eb48, type: 2}
