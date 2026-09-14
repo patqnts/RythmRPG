@@ -224,7 +224,7 @@ namespace RythmRPG.Combat
             void OnCompleted(AbilityRuntimeInstance _, RhythmPerformanceResult __) => completed = true;
             abilitySystem.ExecutionCompleted += OnCompleted;
             abilitySystem.Execute(selectedAbility, encounter.Player, encounter.Enemy, runner,
-                vfxController.AbilitySpawnOrigin, vfxController.GetCenterLaneViewTransform());
+                vfxController.AbilityPatternSpawnOrigin, vfxController.GetCenterLaneViewTransform());
             while (!completed) yield return null;
             abilitySystem.ExecutionCompleted -= OnCompleted;
             Transition(CombatState.PlayerTurnEnd);

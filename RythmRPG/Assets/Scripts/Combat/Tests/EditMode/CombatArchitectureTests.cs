@@ -283,6 +283,72 @@ namespace RythmRPG.Combat.Tests
             Assert.That(controller.layers[0].stateMachine.states.Any(state => state.state.name == "End"), Is.True);
         }
 
+        [Test]
+        public void AbilityPatternSpawnOrigin_ClampsAboveLaneButtons()
+        {
+            GameObject vfxObject = new("Combat VFX Test");
+            GameObject inputObject = new("Input Test");
+            GameObject keyObject = new("Center Key Test");
+            try
+            {
+                CombatVFXController vfx = vfxObject.AddComponent<CombatVFXController>();
+                LaneInputRouter input = inputObject.AddComponent<LaneInputRouter>();
+                KeyButton key = keyObject.AddComponent<KeyButton>();
+                key.keyIdentity = 3;
+                keyObject.transform.position = new Vector3(0f, 5f, 0f);
+                input.ConfigureForTests(new[] { new LaneKeyBinding(3, KeyCode.D, key) });
+
+                vfx.Bind(null, input, null, null);
+
+                Assert.That(vfx.AbilityPatternSpawnOrigin.position.y, Is.GreaterThan(keyObject.transform.position.y));
+            }
+            finally
+            {
+                Object.DestroyImmediate(vfxObject);
+                Object.DestroyImmediate(inputObject);
+                Object.DestroyImmediate(keyObject);
+            }
+        }
+
+        [Test]
+        public void AbilitySelectionCenter_UsesScreenCenterEvenWhenAbilityOriginIsLow()
+        {
+            GameObject vfxObject = new("Combat VFX Selection Test");
+            GameObject lowOrigin = new("Low Ability Origin Test");
+            GameObject cameraObject = new("Selection Camera Test");
+            GameObject inputObject = new("Selection Input Test");
+            GameObject keyObject = new("Selection Center Key Test");
+            try
+            {
+                Camera camera = cameraObject.AddComponent<Camera>();
+                cameraObject.tag = "MainCamera";
+                camera.orthographic = true;
+                camera.orthographicSize = 5f;
+                cameraObject.transform.position = new Vector3(0f, 0f, -10f);
+
+                lowOrigin.transform.position = new Vector3(0f, -20f, 0f);
+                CombatVFXController vfx = vfxObject.AddComponent<CombatVFXController>();
+                typeof(CombatVFXController).GetField("abilityCenter", BindingFlags.Instance | BindingFlags.NonPublic)
+                    ?.SetValue(vfx, lowOrigin.transform);
+                LaneInputRouter input = inputObject.AddComponent<LaneInputRouter>();
+                KeyButton key = keyObject.AddComponent<KeyButton>();
+                key.keyIdentity = 3;
+                keyObject.transform.position = new Vector3(0f, 5f, 0f);
+                input.ConfigureForTests(new[] { new LaneKeyBinding(3, KeyCode.D, key) });
+                vfx.Bind(null, input, null, null);
+
+                Assert.That(vfx.AbilitySelectionCenter.position.y, Is.GreaterThan(keyObject.transform.position.y));
+            }
+            finally
+            {
+                Object.DestroyImmediate(vfxObject);
+                Object.DestroyImmediate(lowOrigin);
+                Object.DestroyImmediate(cameraObject);
+                Object.DestroyImmediate(inputObject);
+                Object.DestroyImmediate(keyObject);
+            }
+        }
+
         private static CombatTurnStateMachine CreateStartedStateMachine()
         {
             CombatTurnStateMachine machine = new();

@@ -12,6 +12,7 @@ namespace RythmRPG.Combat
         [SerializeField] private CombatVFXTheme vfxTheme;
         [SerializeField] private Transform abilityCenter;
         [SerializeField] private Transform cameraTransform;
+        [SerializeField, Min(0f)] private float minimumAbilityPatternSpawnHeightAboveLanes = 2.5f;
 
         private readonly Dictionary<int, AbilitySlotView> slotViews = new();
         private AbilitySlotController slots;
@@ -19,11 +20,15 @@ namespace RythmRPG.Combat
         private EnemyCombatant enemy;
         private EnemyHitReactionView hitReaction;
         private Transform runtimeAbilityCenter;
+        private Transform runtimeAbilitySelectionCenter;
+        private Transform runtimeAbilityPatternSpawnOrigin;
         private bool abilitySlotsVisible;
 
         public float TerminalDelay => vfxTheme != null ? vfxTheme.TerminalStateDelay : 1f;
         public float SelectionHoldDuration => vfxTheme != null ? vfxTheme.SelectionHoldDuration : 0.75f;
         public Transform AbilitySpawnOrigin => abilityCenter != null ? abilityCenter : runtimeAbilityCenter;
+        public Transform AbilitySelectionCenter => ResolveAbilitySelectionCenter();
+        public Transform AbilityPatternSpawnOrigin => ResolveAbilityPatternSpawnOrigin();
 
         private void Awake()
         {
@@ -72,7 +77,7 @@ namespace RythmRPG.Combat
             SpriteRenderer renderer = iconObject.AddComponent<SpriteRenderer>();
             renderer.sprite = ability.Definition.Icon;
             renderer.sortingOrder = 500;
-            Vector3 destination = AbilitySpawnOrigin != null ? AbilitySpawnOrigin.position : Vector3.zero;
+            Vector3 destination = ResolveAbilitySelectionCenter().position;
             float duration = ability.Definition.VFXProfile != null ? ability.Definition.VFXProfile.IconTravelDuration : 0.35f;
             yield return Tween.Position(iconObject.transform, destination, Mathf.Max(0.01f, duration), Ease.InOutSine).ToYieldInstruction();
             GameObject burstPrefab = ability.Definition.VFXProfile?.BurstPrefab;
@@ -236,6 +241,82 @@ namespace RythmRPG.Combat
                 Mathf.Abs(activeCamera.transform.position.z)));
             worldCenter.z = 0f;
             runtimeAbilityCenter.position = worldCenter;
+        }
+
+        private Transform ResolveAbilitySelectionCenter()
+        {
+            Camera activeCamera = ResolveActiveCamera();
+            if (cameraTransform == null && activeCamera != null) cameraTransform = activeCamera.transform;
+            if (runtimeAbilitySelectionCenter == null)
+            {
+                GameObject center = new("Runtime Ability Selection Center");
+                center.transform.SetParent(transform, false);
+                runtimeAbilitySelectionCenter = center.transform;
+            }
+
+            Vector3 position = Vector3.zero;
+            if (activeCamera != null)
+            {
+                position = activeCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.55f,
+                    Mathf.Abs(activeCamera.transform.position.z)));
+            }
+
+            position = ClampPresentationPointAboveLanes(position);
+            runtimeAbilitySelectionCenter.position = position;
+            return runtimeAbilitySelectionCenter;
+        }
+
+        private Transform ResolveAbilityPatternSpawnOrigin()
+        {
+            ResolvePresentationReferences();
+            if (runtimeAbilityPatternSpawnOrigin == null)
+            {
+                GameObject origin = new("Runtime Ability Pattern Spawn Origin");
+                origin.transform.SetParent(transform, false);
+                runtimeAbilityPatternSpawnOrigin = origin.transform;
+            }
+
+            Vector3 position = AbilitySpawnOrigin != null ? AbilitySpawnOrigin.position : Vector3.zero;
+            position = ClampPresentationPointAboveLanes(position);
+
+            runtimeAbilityPatternSpawnOrigin.position = position;
+            return runtimeAbilityPatternSpawnOrigin;
+        }
+
+        private Vector3 ClampPresentationPointAboveLanes(Vector3 position)
+        {
+            if (slotViews.Count > 0)
+            {
+                List<AbilitySlotView> orderedSlots = slotViews.Values
+                    .Where(view => view != null)
+                    .OrderBy(view => view.transform.position.x)
+                    .ToList();
+                if (orderedSlots.Count > 0)
+                {
+                    float highestLaneY = orderedSlots.Select(view => view.transform.position.y).Max();
+                    position.x = orderedSlots[orderedSlots.Count / 2].transform.position.x;
+                    position.y = Mathf.Max(position.y, highestLaneY + minimumAbilityPatternSpawnHeightAboveLanes);
+                }
+            }
+
+            position.z = 0f;
+            return position;
+        }
+
+        private Camera ResolveActiveCamera()
+        {
+            if (cameraTransform != null && cameraTransform.TryGetComponent(out Camera assignedCamera))
+            {
+                return assignedCamera;
+            }
+
+            Camera mainCamera = Camera.main;
+            if (mainCamera != null) return mainCamera;
+
+            return FindObjectsByType<Camera>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)
+                .Where(camera => camera != null && camera.enabled)
+                .OrderByDescending(camera => camera.depth)
+                .FirstOrDefault();
         }
 
         private void OnDisable() => Unbind();
