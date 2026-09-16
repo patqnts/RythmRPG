@@ -25,7 +25,7 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _COLORMODE_GRADIENT_TEXTURE
+  - _COLORMODE_LINEAR
   - _FOAMMODE_GRADIENT_NOISE
   - _NOISESOURCE_WORLD_SPACE
   - _WAVEMODE_GRID
@@ -89,7 +89,7 @@ Material:
     - _BumpScale: 1
     - _CameraDistanceFadeClose: 0
     - _CameraDistanceFadeFar: 10
-    - _ColorMode: 1
+    - _ColorMode: 0
     - _CrestSharpness: 0
     - _CrestSize: 0
     - _Cull: 2
@@ -120,7 +120,7 @@ Material:
     - _InteractionRippleAmplitude: 0.024
     - _InteractionRippleFrequency: 1.8
     - _InteractionRippleLifetime: 0.99
-    - _InteractionRippleSpeed: 1.28
+    - _InteractionRippleSpeed: 1.35
     - _InteractionRippleWidth: 0.01
     - _LightContribution: 0.541
     - _Metallic: 0
@@ -130,10 +130,10 @@ Material:
     - _ProceduralFoam: 1
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _RefractionAmplitude: 0.0053
-    - _RefractionFrequency: 16.53
-    - _RefractionScale: 6.94
-    - _RefractionSpeed: 10.42
+    - _RefractionAmplitude: 0.003
+    - _RefractionFrequency: 5.68
+    - _RefractionScale: 1.25
+    - _RefractionSpeed: 0.56
     - _RefractionStrength: 0.01
     - _ShadowStrength: 0.275
     - _Smoothness: 0.5
@@ -159,8 +159,8 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 0, g: 1, b: 0.7287984, a: 1}
-    - _ColorDeep: {r: 0.062477753, g: 0.2821962, b: 0.33962262, a: 0.4745098}
-    - _ColorShallow: {r: 0.054334287, g: 0.20699954, b: 0.31132078, a: 0.5254902}
+    - _ColorDeep: {r: 0.497775, g: 0.6855767, b: 0.8867924, a: 1}
+    - _ColorShallow: {r: 0.21226418, g: 0.68323857, b: 1, a: 0.5254902}
     - _ColorTop: {r: 1, g: 1, b: 1, a: 0}
     - _CrestColor: {r: 1, g: 1, b: 1, a: 0.9}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
