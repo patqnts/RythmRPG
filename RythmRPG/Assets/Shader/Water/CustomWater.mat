@@ -25,10 +25,10 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _COLORMODE_LINEAR
+  - _COLORMODE_GRADIENT_TEXTURE
   - _FOAMMODE_GRADIENT_NOISE
   - _NOISESOURCE_WORLD_SPACE
-  - _WAVEMODE_ROUND
+  - _WAVEMODE_GRID
   m_InvalidKeywords:
   - _ALLOWALPHAOVERFLOW_OFF
   - _OPAQUE_OFF
@@ -89,23 +89,23 @@ Material:
     - _BumpScale: 1
     - _CameraDistanceFadeClose: 0
     - _CameraDistanceFadeFar: 10
-    - _ColorMode: 0
-    - _CrestSharpness: 0.1
+    - _ColorMode: 1
+    - _CrestSharpness: 0
     - _CrestSize: 0
     - _Cull: 2
     - _Cutoff: 0.5
     - _Depth: 100
     - _DstBlend: 0
     - _EnvironmentReflections: 1
-    - _FadeDistance: 0.2
-    - _FoamAmount: 0.3
+    - _FadeDistance: 0.04
+    - _FoamAmount: 0.12
     - _FoamDepth: 0.02
     - _FoamDirection: 0
     - _FoamFromTexture: 1
     - _FoamMode: 1
-    - _FoamNoiseAmount: 1
+    - _FoamNoiseAmount: 0.729
     - _FoamProcedural: 1
-    - _FoamScale: 0.06
+    - _FoamScale: 0.27
     - _FoamSharpness: 0.89
     - _FoamSpeed: 1.63
     - _FoamStretchX: 1
@@ -115,7 +115,14 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _LightContribution: 0
+    - _InteractionFoamStrength: 0.83
+    - _InteractionFoamWidth: 0.057
+    - _InteractionRippleAmplitude: 0.024
+    - _InteractionRippleFrequency: 1.8
+    - _InteractionRippleLifetime: 0.99
+    - _InteractionRippleSpeed: 1.28
+    - _InteractionRippleWidth: 0.01
+    - _LightContribution: 0.541
     - _Metallic: 0
     - _NoiseSource: 1
     - _OcclusionStrength: 1
@@ -123,12 +130,12 @@ Material:
     - _ProceduralFoam: 1
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _RefractionAmplitude: 0.01
-    - _RefractionFrequency: 10.8
-    - _RefractionScale: 3
-    - _RefractionSpeed: 0
+    - _RefractionAmplitude: 0.0053
+    - _RefractionFrequency: 16.53
+    - _RefractionScale: 6.94
+    - _RefractionSpeed: 10.42
     - _RefractionStrength: 0.01
-    - _ShadowStrength: 0.25
+    - _ShadowStrength: 0.275
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -139,21 +146,21 @@ Material:
     - _Surface: 0
     - _UvFadeX: 0.1
     - _UvFadeY: 0.1
-    - _WaterClearness: 0.569
-    - _WaterDepth: 4.2
-    - _WaveAmplitude: 0.27
+    - _WaterClearness: 0.965
+    - _WaterDepth: 0.12
+    - _WaveAmplitude: 0.16
     - _WaveDirection: 0
-    - _WaveFrequency: 1
-    - _WaveMode: 1
+    - _WaveFrequency: 0.54
+    - _WaveMode: 2
     - _WaveNoise: 0.25
-    - _WaveSpeed: 1
+    - _WaveSpeed: 0.74
     - _WorkflowMode: 1
     - _ZWrite: 0
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 0, g: 1, b: 0.7287984, a: 1}
-    - _ColorDeep: {r: 0.6367924, g: 0.8860948, b: 1, a: 1}
-    - _ColorShallow: {r: 0, g: 0.6945765, b: 1, a: 0.8156863}
+    - _ColorDeep: {r: 0.062477753, g: 0.2821962, b: 0.33962262, a: 0.4745098}
+    - _ColorShallow: {r: 0.054334287, g: 0.20699954, b: 0.31132078, a: 0.5254902}
     - _ColorTop: {r: 1, g: 1, b: 1, a: 0}
     - _CrestColor: {r: 1, g: 1, b: 1, a: 0.9}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

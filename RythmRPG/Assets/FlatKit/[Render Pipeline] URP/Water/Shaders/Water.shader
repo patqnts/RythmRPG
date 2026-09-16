@@ -52,6 +52,14 @@
         [HDR] _SpecularColor("Color{Specular}", Color) = (1, 1, 1, 1)
         */
 
+        _InteractionRippleAmplitude("Ripple Height", Range(0, 0.5)) = 0.025
+        _InteractionRippleSpeed("Ripple Speed", Range(0.1, 10)) = 1.25
+        _InteractionRippleWidth("Ripple Width", Range(0.01, 2)) = 0.20
+        _InteractionRippleFrequency("Ripple Frequency", Range(1, 30)) = 10.0
+        _InteractionRippleLifetime("Ripple Lifetime", Range(0.1, 10)) = 1.5
+        _InteractionFoamStrength("Ripple Foam Strength", Range(0, 3)) = 1.0
+        _InteractionFoamWidth("Ripple Foam Width", Range(0.01, 1)) = 0.08
+
         [HideInInspector] [ToggleOff] _Opaque("Opaque", Float) = 0.0
         [HideInInspector] _QueueOffset("Queue offset", Float) = 0.0
     }
@@ -170,6 +178,18 @@
             // _COLORMODE_GRADIENT_TEXTURE:
             float4 _ColorGradient_ST;
             CBUFFER_END
+
+            #define MAX_WATER_RIPPLES 32
+            float4 _WaterRipples[MAX_WATER_RIPPLES];
+            int _WaterRippleCount;
+
+            float _InteractionRippleAmplitude;
+            float _InteractionRippleSpeed;
+            float _InteractionRippleWidth;
+            float _InteractionRippleFrequency;
+            float _InteractionRippleLifetime;
+            float _InteractionFoamStrength;
+            float _InteractionFoamWidth;
 
             struct VertexInput
             {
@@ -312,6 +332,68 @@
                 #endif
             }
 
+            float GetInteractionRippleHeight(float3 worldPosition)
+            {
+                float totalHeight = 0.0;
+
+                [loop]
+                for (int r = 0; r < _WaterRippleCount; r++)
+                {
+                    float4 ripple = _WaterRipples[r];
+                    float age = _Time.y - ripple.z;
+
+                    if (age < 0.0 || age > _InteractionRippleLifetime)
+                        continue;
+
+                    float distanceToCenter = length(worldPosition.xz - ripple.xy);
+                    float radius = age * _InteractionRippleSpeed;
+                    float distanceFromRing = abs(distanceToCenter - radius);
+
+                    float envelope =
+                        1.0 - smoothstep(0.0, _InteractionRippleWidth, distanceFromRing);
+
+                    float lifetimeFade =
+                        saturate(1.0 - age / _InteractionRippleLifetime);
+
+                    float oscillation =
+                        sin((distanceToCenter - radius) * _InteractionRippleFrequency);
+
+                    totalHeight += oscillation * envelope * lifetimeFade *
+                                ripple.w * _InteractionRippleAmplitude;
+                }
+
+                return totalHeight;
+            }
+
+            float GetInteractionRippleFoam(float3 worldPosition)
+            {
+                float totalFoam = 0.0;
+
+                [loop]
+                for (int r = 0; r < _WaterRippleCount; r++)
+                {
+                    float4 ripple = _WaterRipples[r];
+                    float age = _Time.y - ripple.z;
+
+                    if (age < 0.0 || age > _InteractionRippleLifetime)
+                        continue;
+
+                    float distanceToCenter = distance(worldPosition.xz, ripple.xy);
+                    float radius = age * _InteractionRippleSpeed;
+                    float distanceFromRing = abs(distanceToCenter - radius);
+
+                    float ring =
+                        1.0 - smoothstep(0.0, _InteractionFoamWidth, distanceFromRing);
+
+                    float lifetimeFade =
+                        saturate(1.0 - age / _InteractionRippleLifetime);
+
+                    totalFoam += ring * lifetimeFade * ripple.w;
+                }
+
+                return saturate(totalFoam * _InteractionFoamStrength);
+            }
+
             VertexOutput vert(VertexInput i)
             {
                 #if defined(CURVEDWORLD_IS_INSTALLED) && !defined(CURVEDWORLD_DISABLED_ON)
@@ -331,9 +413,11 @@
                 // Vertex animation.
                 const float3 originalPositionWS = TransformObjectToWorld(i.positionOS.xyz);
                 const float s = WaveHeight(i.texcoord, originalPositionWS);
+                const float interactionRipple = GetInteractionRippleHeight(originalPositionWS);
+
                 o.waveHeight = s;
                 o.positionWS = originalPositionWS;
-                o.positionWS.y += s * _WaveAmplitude;
+                o.positionWS.y += s * _WaveAmplitude + interactionRipple;
 
                 o.positionHCS = TransformWorldToHClip(o.positionWS);
                 o.screenPosition = ComputeScreenPos(o.positionHCS);
@@ -348,11 +432,19 @@
 
                     const float sample_distance = 0.01;
 
-                    float3 pos_tangent = originalPositionWS + normalInput.tangentWS * sample_distance;
-                    pos_tangent.y += WaveHeight(i.texcoord, pos_tangent) * _WaveAmplitude;
+                    float3 pos_tangent =
+                        originalPositionWS + normalInput.tangentWS * sample_distance;
 
-                    float3 pos_bitangent = originalPositionWS + normalInput.bitangentWS * sample_distance;
-                    pos_bitangent.y += WaveHeight(i.texcoord, pos_bitangent) * _WaveAmplitude;
+                    pos_tangent.y +=
+                        WaveHeight(i.texcoord, pos_tangent) * _WaveAmplitude +
+                        GetInteractionRippleHeight(pos_tangent);
+
+                    float3 pos_bitangent =
+                        originalPositionWS + normalInput.bitangentWS * sample_distance;
+
+                    pos_bitangent.y +=
+                        WaveHeight(i.texcoord, pos_bitangent) * _WaveAmplitude +
+                        GetInteractionRippleHeight(pos_bitangent);
 
                     const float3 modified_tangent = pos_tangent - o.positionWS;
                     const float3 modified_bitangent = pos_bitangent - o.positionWS;
@@ -448,7 +540,8 @@
                     float foam_surface = smoothstep(noise_foam_base, noise_foam_base + foam_blur, _FoamAmount);
                     foam_surface = smoothstep(0.5 - foam_blur * 0.5, 0.5 + foam_blur * 0.5, foam_surface);
 
-                    float foam = saturate(foam_shore + foam_surface);
+                    float interactionFoam = GetInteractionRippleFoam(i.positionWS);
+                float foam = saturate(foam_shore + foam_surface + interactionFoam);
                     c = lerp(c, _FoamColor.rgb, foam * _FoamColor.a);
                 #endif
 
