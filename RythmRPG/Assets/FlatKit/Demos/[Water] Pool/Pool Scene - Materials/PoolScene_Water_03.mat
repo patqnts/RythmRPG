@@ -128,7 +128,7 @@ Material:
     - _RefractionScale: 0.23
     - _RefractionSpeed: 0.5
     - _RefractionStrength: 0.01
-    - _ShadowStrength: 0.25
+    - _ShadowStrength: 0.507
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -139,7 +139,7 @@ Material:
     - _Surface: 0
     - _UvFadeX: 0.1
     - _UvFadeY: 0.1
-    - _WaterClearness: 0
+    - _WaterClearness: 0.716
     - _WaterDepth: 11.3
     - _WaveAmplitude: 0.07
     - _WaveDirection: 0

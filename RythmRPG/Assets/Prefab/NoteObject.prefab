@@ -59,7 +59,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a4180fd572b68e64982d017266f9c9f5, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -109,7 +109,7 @@ Animator:
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0
-  m_WarningMessage:
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
@@ -161,20 +161,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d6df7088af825304d918341f096d061f, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   noteIdentity: 3
   speed: 1
   damage: 1
   keys: []
+  animator: {fileID: 2303414089548726931}
   isMoving: 0
+  canBePressed: 0
   keyCode: 49
   moveset: 0
   state: 3
   hitEffect: 0
-  animator: {fileID: 2303414089548726931}
-  canBePressed: 0
-  stateHandler: {fileID: 0}
   isSpecial: 0
 --- !u!61 &3938753330650578465
 BoxCollider2D:

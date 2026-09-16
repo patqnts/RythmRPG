@@ -21,18 +21,18 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: New Material
-  m_Shader: {fileID: 4800000, guid: da8efd605fdd20949a21be6242000625, type: 3}
-  m_Parent: {fileID: 2100000, guid: 551590223c18d484eab9e62bfc462166, type: 2}
+  m_Shader: {fileID: 4800000, guid: a9e01a7c385f47d3a70fd249e9955bb0, type: 3}
+  m_Parent: {fileID: 2100000, guid: fac8312ebc92b1b3d84a85bc2dde7fb3, type: 2}
   m_ModifiedSerializedProperties: 2
-  m_ValidKeywords:
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - ETC1_EXTERNAL_ALPHA
   - _ENABLEFULLGLOWDISSOLVE_ON
   - _ENABLEVIBRATE_ON
   - _SHADERFADING_NONE
   - _SHADERSPACE_UV
   - _TEXTURELAYER1SHEETTOGGLE_ON
   - _TEXTURELAYER2SHEETTOGGLE_ON
-  m_InvalidKeywords:
-  - ETC1_EXTERNAL_ALPHA
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
