@@ -28,7 +28,7 @@ public class MagicBeamStatic : MonoBehaviour
 	[Header("Width Pulse Options")]
 	public float widthMultiplier = 1.5f;
 	private float customWidth;
-	private float originalWidth;
+	public float originalWidth;
 	private float lerpValue = 0.0f;
 	public float pulseSpeed = 1.0f;
 	private bool pulseExpanding = true;
@@ -36,7 +36,7 @@ public class MagicBeamStatic : MonoBehaviour
     void Start()
     {
 		SpawnBeam();
-		originalWidth = line.startWidth;
+		//originalWidth = line.startWidth;
 		customWidth = originalWidth * widthMultiplier;
     }
 

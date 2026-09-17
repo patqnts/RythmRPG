@@ -56,8 +56,10 @@ MonoBehaviour:
   - {fileID: -1344586528338988631}
   - {fileID: -2401278517541482506}
   - {fileID: 6464573951977128653}
-  m_RendererFeatureMap: a9319428ad1157edf6cf292be9f1acdel
-  xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
+  - {fileID: 1180298753195411159}
+  m_RendererFeatureMap: a9319428ad1157edf6cf292be9f1acdecd02d72fc2c7b659d7860c6976436110
+  m_UseNativeRenderPass: 0
+  xrSystemData: {fileID: 0}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   m_AssetVersion: 3
   m_PrepassLayerMask:
@@ -84,7 +86,55 @@ MonoBehaviour:
   m_DepthTextureFormat: 0
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 1
-  m_TileOnlyMode: 0
+--- !u!114 &586638120657581272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53854f6c18b0f7a65b1c33a2fe743317, type: 3}
+  m_Name: PixelParticleOutlineRendererFeature
+  m_EditorClassIdentifier: Assembly-CSharp::PixelParticleOutlineRendererFeature
+  m_Active: 1
+  settings:
+    particleLayer:
+      m_Bits: 512
+    maskMaterial: {fileID: 2100000, guid: c92359e2a135c8248b4556459b521f18, type: 2}
+    compositeMaterial: {fileID: 2100000, guid: bc55f86d00123ab0c824ffbe2278000c, type: 2}
+    outlineWidth: 1
+    outlineColor:
+      r: 0.03
+      g: 0.025
+      b: 0.05
+      a: 1
+    renderPassEvent: 500
+--- !u!114 &1180298753195411159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 635390e9244d2e98f874be3fd7fce646, type: 3}
+  m_Name: MergedParticleOutlineRendererFeature
+  m_EditorClassIdentifier: Assembly-CSharp::PixelParticles.MergedParticleOutlineRendererFeature
+  m_Active: 1
+  settings:
+    particleLayers:
+      serializedVersion: 2
+      m_Bits: 512
+    outlineColor: {r: 0.41509432, g: 0.025453908, b: 0.4088765, a: 1}
+    outlinePixels: 1
+    metaballThreshold: 0.31
+    respectSceneDepth: 1
+    showInSceneView: 1
+    debugView: 0
+    injectionPoint: 500
 --- !u!114 &6464573951977128653
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -128,6 +178,5 @@ MonoBehaviour:
       restoreCamera: 1
       offset: {x: 0, y: 0, z: 0, w: 0}
       cameraFieldOfView: 60
-    depthInputAttachment: 0
   materials: []
   autoReferenceMaterials: 0
