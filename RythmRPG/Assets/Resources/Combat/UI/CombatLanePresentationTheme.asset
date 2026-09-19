@@ -11,14 +11,15 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 70e41e82d04f4050932dcbbcbfeeb503, type: 3}
   m_Name: CombatLanePresentationTheme
-  m_EditorClassIdentifier:
-  ButtonSprite: {fileID: 0}
-  ButtonImageType: 1
-  ButtonColor: {r: 0.06, g: 0.07, b: 0.09, a: 0.94}
-  ButtonSize: {x: 72, y: 58}
-  ButtonSpacing: 24
-  BottomOffset: 36
-  ButtonFont: {fileID: 0}
+  m_EditorClassIdentifier: 
+  ButtonUnpressedSprite: {fileID: -1960483087, guid: f9f578db5a70632409b1db0ac0a6b6b2, type: 3}
+  ButtonPressedSprite: {fileID: 324652989, guid: f9f578db5a70632409b1db0ac0a6b6b2, type: 3}
+  ButtonImageType: 0
+  ButtonColor: {r: 1, g: 1, b: 1, a: 0.94}
+  ButtonSize: {x: 90, y: 90}
+  ButtonSpacing: 2
+  BottomOffset: 2
+  ButtonFont: {fileID: 12800000, guid: 3c2172383277d46b697de74b6df875e5, type: 3}
   ButtonFontSize: 28
   ButtonFontStyle: 1
   ButtonTextColor: {r: 1, g: 1, b: 1, a: 1}

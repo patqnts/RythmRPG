@@ -128,8 +128,9 @@ MonoBehaviour:
     particleLayers:
       serializedVersion: 2
       m_Bits: 512
-    outlineColor: {r: 0.41509432, g: 0.025453908, b: 0.4088765, a: 1}
-    outlinePixels: 1
+    outlineColor: {r: 0.98101234, g: 0, b: 1, a: 1}
+    outlinePixels: 0.51
+    outlineSoftness: 0.05
     metaballThreshold: 0.31
     respectSceneDepth: 1
     showInSceneView: 1
