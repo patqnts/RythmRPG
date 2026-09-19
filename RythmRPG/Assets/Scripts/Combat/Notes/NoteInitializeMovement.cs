@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using PrimeTween;
+using RythmRPG.Combat;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -68,17 +69,17 @@ public class NoteInitializeMovement : MonoBehaviour
         movementType = type;
     }
 
-    public void Play(Note note, KeyButton targetKey, Action onComplete)
+    public void Play(Note note, Transform target, Action onComplete)
     {
         Stop();
 
-        if (!ShouldRun || note == null || targetKey == null)
+        if (!ShouldRun || note == null || target == null)
         {
             onComplete?.Invoke();
             return;
         }
 
-        movementRoutine = StartCoroutine(PlayRoutine(targetKey, onComplete));
+        movementRoutine = StartCoroutine(PlayRoutine(target, onComplete));
     }
 
     public void Stop()
@@ -94,17 +95,17 @@ public class NoteInitializeMovement : MonoBehaviour
         hasActiveMissileTrajectory = false;
     }
 
-    private IEnumerator PlayRoutine(KeyButton targetKey, Action onComplete)
+    private IEnumerator PlayRoutine(Transform target, Action onComplete)
     {
         IsPlaying = true;
 
         switch (movementType)
         {
             case NoteInitializeMovementType.SlowThenBurst:
-                yield return SlowThenBurst(targetKey);
+                yield return SlowThenBurst(target);
                 break;
             case NoteInitializeMovementType.MissileSCurve:
-                yield return MissileSCurve(targetKey);
+                yield return MissileSCurve(target);
                 break;
         }
 
@@ -114,10 +115,10 @@ public class NoteInitializeMovement : MonoBehaviour
         onComplete?.Invoke();
     }
 
-    private IEnumerator SlowThenBurst(KeyButton targetKey)
+    private IEnumerator SlowThenBurst(Transform target)
     {
         Vector3 start = transform.position;
-        Vector3 laneSpawnPosition = GetLaneSpawnPosition(targetKey, start);
+        Vector3 laneSpawnPosition = GetLaneSpawnPosition(target, start);
         Vector3 slowEnd = Vector3.Lerp(start, laneSpawnPosition, Mathf.Clamp01(slowStartLaneProgress));
 
         if (slowStartDuration > 0f && slowStartLaneProgress > 0f)
@@ -131,13 +132,13 @@ public class NoteInitializeMovement : MonoBehaviour
         yield return new WaitForSeconds(duration);
     }
 
-    private IEnumerator MissileSCurve(KeyButton targetKey)
+    private IEnumerator MissileSCurve(Transform target)
     {
         Vector3 start = transform.position;
         Quaternion startRotation = transform.rotation;
         Vector3 previousPosition = start;
         MissileTrajectory trajectory = CreateMissileTrajectory();
-        Vector3 laneSpawnPosition = GetLaneSpawnPosition(targetKey, start);
+        Vector3 laneSpawnPosition = GetLaneSpawnPosition(target, start);
 
         activeMissileStartPosition = start;
         activeMissileLaneSpawnPosition = laneSpawnPosition;
@@ -205,12 +206,6 @@ public class NoteInitializeMovement : MonoBehaviour
         }
 
         transform.position = nextPosition;
-    }
-
-    private Vector3 GetLaneSpawnPosition(KeyButton targetKey, Vector3 spawnPosition)
-    {
-        spawnPosition.x = targetKey.transform.position.x;
-        return spawnPosition;
     }
 
     private float EaseOutSine(float time)
@@ -376,29 +371,29 @@ public class NoteInitializeMovement : MonoBehaviour
         }
 
         Note note = GetComponent<Note>();
-        KeyButton targetKey = note != null ? FindGizmoTargetKey(note.GetNoteIdentity()) : null;
-        if (targetKey != null)
+        RhythmLaneTarget target = note != null ? FindGizmoTarget(note.GetNoteIdentity()) : null;
+        if (target != null)
         {
-            return GetLaneSpawnPosition(targetKey, start);
+            return GetLaneSpawnPosition(target.transform, start);
         }
 
         start.x += missileGizmoFallbackLaneXOffset;
         return start;
     }
 
-    private KeyButton FindGizmoTargetKey(int keyIdentity)
+    private RhythmLaneTarget FindGizmoTarget(int keyIdentity)
     {
         if (keyIdentity <= 0)
         {
             return null;
         }
 
-        KeyButton[] sceneKeys = FindObjectsByType<KeyButton>(FindObjectsSortMode.None);
-        foreach (KeyButton keyButton in sceneKeys)
+        RhythmLaneTarget[] sceneTargets = FindObjectsByType<RhythmLaneTarget>(FindObjectsSortMode.None);
+        foreach (RhythmLaneTarget target in sceneTargets)
         {
-            if (keyButton != null && keyButton.keyIdentity == keyIdentity)
+            if (target != null && target.LaneId == keyIdentity)
             {
-                return keyButton;
+                return target;
             }
         }
 

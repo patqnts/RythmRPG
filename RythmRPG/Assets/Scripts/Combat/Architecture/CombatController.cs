@@ -18,6 +18,7 @@ namespace RythmRPG.Combat
         [SerializeField] private CombatModifierSystem modifierSystem;
         [SerializeField] private CombatVFXController vfxController;
         [SerializeField] private CombatUIController uiController;
+        [SerializeField] private CombatLanePresentation3D lanePresentation;
         [SerializeField] private RhythmChart defaultEnemyPattern;
 
         private CombatTurnStateMachine stateMachine;
@@ -41,6 +42,7 @@ namespace RythmRPG.Combat
         {
             if (IsBattleActive || context.Player == null || context.Enemy == null) return;
             EnsureServices();
+            lanePresentation.EnsurePresentation(inputRouter);
             encounter = context;
             encounter.Player.CaptureBattleStart();
             encounter.Enemy.CaptureBattleStart();
@@ -65,6 +67,7 @@ namespace RythmRPG.Combat
             vfxController.SetAbilitySlotsVisible(false, false);
             encounterCoordinator.Restore(encounter, false);
             IsBattleActive = false;
+            BattleEnded?.Invoke(CurrentState);
         }
 
         private void EnsureServices()
@@ -78,6 +81,7 @@ namespace RythmRPG.Combat
             abilityExecutor ??= GetComponent<AbilityExecutor>() ?? gameObject.AddComponent<AbilityExecutor>();
             abilitySystem ??= GetComponent<RhythmAbilitySystem>() ?? gameObject.AddComponent<RhythmAbilitySystem>();
             vfxController ??= GetComponent<CombatVFXController>() ?? gameObject.AddComponent<CombatVFXController>();
+            lanePresentation ??= GetComponent<CombatLanePresentation3D>() ?? gameObject.AddComponent<CombatLanePresentation3D>();
             uiController ??= FindFirstObjectByType<CombatUIController>(FindObjectsInactive.Include);
             if (uiController == null)
             {

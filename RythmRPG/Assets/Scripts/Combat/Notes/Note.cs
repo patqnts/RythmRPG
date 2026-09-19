@@ -32,6 +32,7 @@ public class Note : MonoBehaviour
     private RhythmPatternRunner runner;
     private string runtimeNoteId;
     private float closestTimingError = float.MaxValue;
+    private RhythmLaneTarget laneTarget;
 
     public string RuntimeNoteId => runtimeNoteId;
     public bool IsResolved => resolved;
@@ -59,17 +60,22 @@ public class Note : MonoBehaviour
 
     public virtual float GetTimingError(KeyButton keyButton)
     {
-        return keyButton == null ? float.MaxValue : Vector3.Distance(GetJudgementWorldPosition(), keyButton.transform.position);
+        RhythmLaneTarget target = GetLaneTarget();
+        return target != null
+            ? target.GetTimingDistance(GetJudgementWorldPosition())
+            : keyButton != null ? Vector3.Distance(GetJudgementWorldPosition(), keyButton.transform.position) : float.MaxValue;
     }
 
     public virtual HitJudgement AdjustJudgement(HitJudgement judgement, float timingError) => judgement;
 
     public virtual bool HasPassedMissWindow(KeyButton keyButton, float badWindow)
     {
-        if (keyButton == null) return false;
+        RhythmLaneTarget target = GetLaneTarget();
+        if (target == null) return false;
         float timingError = GetTimingError(keyButton);
         closestTimingError = Mathf.Min(closestTimingError, timingError);
-        return closestTimingError <= badWindow && timingError > badWindow;
+        return closestTimingError <= badWindow
+            && target.GetSignedProgressPastLine(GetJudgementWorldPosition()) > badWindow;
     }
 
     public virtual bool CanReceiveHit(KeyButton keyButton)
@@ -78,7 +84,8 @@ public class Note : MonoBehaviour
             && keyButton != null && keyButton.GetInteractable() && keyButton.keyIdentity == noteIdentity;
     }
 
-    protected virtual bool IsWithinPressWindow(KeyButton keyButton) => canBePressed;
+    protected virtual bool IsWithinPressWindow(KeyButton keyButton) =>
+        GetTimingError(keyButton) <= (runner != null ? runner.BadWindow : 0.9f);
 
     public bool TryHitFromKey(KeyButton keyButton, RhythmJudgementResult judgement)
     {
@@ -113,7 +120,9 @@ public class Note : MonoBehaviour
     protected virtual void ResolveMiss(KeyButton keyButton, NoteResolutionSource source = NoteResolutionSource.Timeout)
     {
         if (resolved) return;
-        Vector3 position = keyButton != null ? keyButton.transform.position : GetJudgementWorldPosition();
+        RhythmLaneTarget target = GetLaneTarget();
+        Vector3 position = target != null ? target.transform.position
+            : keyButton != null ? keyButton.transform.position : GetJudgementWorldPosition();
         Resolve(new RhythmJudgementResult(runtimeNoteId, noteIdentity, HitJudgement.Miss,
             runner != null ? runner.BadWindow : 0.9f, position, source));
     }
@@ -135,6 +144,14 @@ public class Note : MonoBehaviour
         return keys.FirstOrDefault(key => key != null && key.keyIdentity == keyIdentity);
     }
 
+    protected RhythmLaneTarget GetLaneTarget()
+    {
+        if (laneTarget != null && laneTarget.LaneId == noteIdentity) return laneTarget;
+        laneTarget = FindObjectsByType<RhythmLaneTarget>(FindObjectsInactive.Include, FindObjectsSortMode.None)
+            .FirstOrDefault(target => target != null && target.LaneId == noteIdentity);
+        return laneTarget;
+    }
+
     private void EnsureKeys()
     {
         if (keys == null || keys.Length == 0)
@@ -154,12 +171,12 @@ public class Note : MonoBehaviour
             initializeMovementStarted = true;
             return false;
         }
-        KeyButton targetKey = GetIdentityButton();
-        if (targetKey == null) return false;
+        RhythmLaneTarget target = GetLaneTarget();
+        if (target == null) return false;
         initializeMovementStarted = true;
         initializeMovementPlaying = true;
         StopMovementTweens();
-        initializeMovement.Play(this, targetKey, () =>
+        initializeMovement.Play(this, target.transform, () =>
         {
             initializeMovementPlaying = false;
             onComplete?.Invoke();
@@ -172,42 +189,42 @@ public class Note : MonoBehaviour
 
     protected bool TryGetLaneX(int keyIdentity, out float targetX)
     {
-        KeyButton key = GetKeyButton(keyIdentity);
-        targetX = key != null ? key.transform.position.x : transform.position.x;
-        return key != null;
+        RhythmLaneTarget target = GetLaneTarget();
+        targetX = target != null ? target.transform.position.x : transform.position.x;
+        return target != null;
     }
 
     protected bool TryGetMissTargetY(int keyIdentity, float offset, out float targetY)
     {
-        KeyButton key = GetKeyButton(keyIdentity);
-        targetY = key != null ? key.transform.position.y + offset : transform.position.y;
-        return key != null;
+        RhythmLaneTarget target = GetLaneTarget();
+        targetY = target != null ? target.transform.position.y + offset : transform.position.y;
+        return target != null;
     }
 
     protected bool TryGetMissTargetPosition(int keyIdentity, float missDistancePastKey, out Vector3 targetPosition)
     {
-        KeyButton key = GetKeyButton(keyIdentity);
-        if (key == null)
+        RhythmLaneTarget target = GetLaneTarget();
+        if (target == null)
         {
             targetPosition = transform.position;
             return false;
         }
 
-        Vector3 toKey = key.transform.position - transform.position;
+        Vector3 toKey = target.transform.position - transform.position;
         Vector3 travelDirection = toKey.sqrMagnitude > 0.0001f ? toKey.normalized : -transform.up;
-        targetPosition = key.transform.position + travelDirection * Mathf.Abs(missDistancePastKey);
+        targetPosition = target.transform.position + travelDirection * Mathf.Abs(missDistancePastKey);
         return true;
     }
 
     protected bool TryGetLaneTravelPositions(int keyIdentity, float missDistancePastKey,
         out Transform movementSpace, out Vector3 startLocal, out Vector3 keyLocal, out Vector3 targetLocal)
     {
-        KeyButton key = GetKeyButton(keyIdentity);
+        RhythmLaneTarget target = GetLaneTarget();
         movementSpace = transform.parent;
         startLocal = ToMovementLocal(transform.position, movementSpace);
-        keyLocal = key != null ? ToMovementLocal(key.transform.position, movementSpace) : startLocal;
+        keyLocal = target != null ? ToMovementLocal(target.transform.position, movementSpace) : startLocal;
         targetLocal = startLocal;
-        if (key == null) return false;
+        if (target == null) return false;
 
         Vector3 laneStartLocal = startLocal;
         laneStartLocal.x = keyLocal.x;

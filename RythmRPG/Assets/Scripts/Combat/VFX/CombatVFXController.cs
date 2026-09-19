@@ -73,7 +73,11 @@ namespace RythmRPG.Combat
         {
             if (!slotViews.TryGetValue(laneId, out AbilitySlotView slot) || ability?.Definition?.Icon == null) yield break;
             GameObject iconObject = new("Selected Ability Icon");
-            iconObject.transform.position = slot.transform.position + Vector3.up;
+            RhythmLaneTarget laneTarget = FindObjectsByType<RhythmLaneTarget>(FindObjectsInactive.Include,
+                FindObjectsSortMode.None).FirstOrDefault(target => target.LaneId == laneId);
+            iconObject.transform.position = laneTarget != null
+                ? laneTarget.transform.position + Vector3.up
+                : AbilitySelectionCenter.position;
             SpriteRenderer renderer = iconObject.AddComponent<SpriteRenderer>();
             renderer.sprite = ability.Definition.Icon;
             renderer.sortingOrder = 500;
@@ -130,11 +134,11 @@ namespace RythmRPG.Combat
 
         public Transform GetCenterLaneViewTransform()
         {
-            if (slotViews.Count == 0) return null;
+            List<RhythmLaneTarget> lanes = FindObjectsByType<RhythmLaneTarget>(FindObjectsInactive.Include,
+                FindObjectsSortMode.None).Where(target => target != null).OrderBy(target => target.LaneId).ToList();
+            if (lanes.Count > 0) return lanes[lanes.Count / 2].transform;
             List<KeyValuePair<int, AbilitySlotView>> ordered = slotViews
-                .Where(pair => pair.Value != null)
-                .OrderBy(pair => pair.Key)
-                .ToList();
+                .Where(pair => pair.Value != null).OrderBy(pair => pair.Key).ToList();
             return ordered.Count == 0 ? null : ordered[ordered.Count / 2].Value.transform;
         }
 
@@ -285,12 +289,18 @@ namespace RythmRPG.Combat
 
         private Vector3 ClampPresentationPointAboveLanes(Vector3 position)
         {
-            if (slotViews.Count > 0)
+            List<RhythmLaneTarget> lanes = FindObjectsByType<RhythmLaneTarget>(FindObjectsInactive.Include,
+                FindObjectsSortMode.None).Where(target => target != null).OrderBy(target => target.LaneId).ToList();
+            if (lanes.Count > 0)
             {
-                List<AbilitySlotView> orderedSlots = slotViews.Values
-                    .Where(view => view != null)
-                    .OrderBy(view => view.transform.position.x)
-                    .ToList();
+                float highestLaneY = lanes.Select(target => target.transform.position.y).Max();
+                position.x = lanes[lanes.Count / 2].transform.position.x;
+                position.y = Mathf.Max(position.y, highestLaneY + minimumAbilityPatternSpawnHeightAboveLanes);
+            }
+            else if (slotViews.Count > 0)
+            {
+                List<AbilitySlotView> orderedSlots = slotViews.Values.Where(view => view != null)
+                    .OrderBy(view => view.transform.position.x).ToList();
                 if (orderedSlots.Count > 0)
                 {
                     float highestLaneY = orderedSlots.Select(view => view.transform.position.y).Max();

@@ -105,6 +105,8 @@ public class StationaryNote : Note
 
     public override Vector3 GetJudgementWorldPosition()
     {
+        RhythmLaneTarget target = GetLaneTarget();
+        if (target != null) return target.transform.position;
         KeyButton key = GetIdentityButton();
         return key != null ? key.transform.position : transform.position;
     }
@@ -158,11 +160,12 @@ public class StationaryNote : Note
     private void AlignToKey()
     {
         if (!alignToLaneX) return;
-        KeyButton key = GetIdentityButton();
-        if (key == null) return;
+        RhythmLaneTarget target = GetLaneTarget();
+        Transform laneTransform = target != null ? target.transform : GetIdentityButton()?.transform;
+        if (laneTransform == null) return;
 
         Vector3 position = transform.position;
-        position.x = key.transform.position.x;
+        position.x = laneTransform.position.x;
         position += lanePositionOffset;
         transform.position = position;
     }

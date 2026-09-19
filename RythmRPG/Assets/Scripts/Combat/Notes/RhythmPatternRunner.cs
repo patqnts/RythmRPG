@@ -124,7 +124,7 @@ namespace RythmRPG.Combat
             HitJudgement judgement = Evaluate(distance);
             judgement = best.AdjustJudgement(judgement, distance);
             RhythmJudgementResult result = new(best.RuntimeNoteId, laneId, judgement, distance,
-                key.transform.position, NoteResolutionSource.PlayerInput);
+                best.GetJudgementWorldPosition(), NoteResolutionSource.PlayerInput);
             if (judgement == HitJudgement.Miss)
             {
                 if (best.ShouldResolveMissOnPlayerInput) best.ForceResolve(result);
@@ -246,6 +246,9 @@ namespace RythmRPG.Combat
             Transform origin = currentContext.SpawnOrigin != null ? currentContext.SpawnOrigin : transform;
             Quaternion rotation = projectileObjectHolder != null ? projectileObjectHolder.rotation : Quaternion.identity;
             GameObject instance = Instantiate(prefab, origin.position, rotation, projectileObjectHolder);
+            RhythmNoteVisualLayer visualLayer = instance.GetComponent<RhythmNoteVisualLayer>();
+            if (visualLayer == null) visualLayer = instance.AddComponent<RhythmNoteVisualLayer>();
+            visualLayer.Configure();
             Note note = instance.GetComponent<Note>();
             if (note == null)
             {

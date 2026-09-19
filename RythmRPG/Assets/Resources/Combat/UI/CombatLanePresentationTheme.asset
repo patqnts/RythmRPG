@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70e41e82d04f4050932dcbbcbfeeb503, type: 3}
+  m_Name: CombatLanePresentationTheme
+  m_EditorClassIdentifier:
+  ButtonSprite: {fileID: 0}
+  ButtonImageType: 1
+  ButtonColor: {r: 0.06, g: 0.07, b: 0.09, a: 0.94}
+  ButtonSize: {x: 72, y: 58}
+  ButtonSpacing: 24
+  BottomOffset: 36
+  ButtonFont: {fileID: 0}
+  ButtonFontSize: 28
+  ButtonFontStyle: 1
+  ButtonTextColor: {r: 1, g: 1, b: 1, a: 1}
+  LineSprite: {fileID: 0}
+  LineMaterial: {fileID: 2100000, guid: 03bcabf8287c4daebc85e66d0092d1ed, type: 2}
+  LineColor: {r: 1, g: 1, b: 1, a: 1}
+  LineThickness: 2
+  LineGapAboveButtons: 8
+  LineHorizontalPadding: 8
+  SnapToRenderTexturePixels: 1

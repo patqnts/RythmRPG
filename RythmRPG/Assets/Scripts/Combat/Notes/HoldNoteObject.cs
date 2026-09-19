@@ -95,31 +95,6 @@ public class HoldNoteObject : Note
         TweenLaneFall(currentIdentity, -3f, speed);
     }
 
-    private void OnDestroy()
-    {
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.tag == "Activator")
-        {
-            canBePressed = true;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject.tag == "Activator" && isMoving)
-        {
-            canBePressed = false;
-            if (!isHoldingKey)
-            {
-                ReportMiss(GetIdentityButton());
-                DestroyObject();
-            }
-        }
-    }
-
     private void InitializeTailVisual()
     {
         activeTailVisual = ResolveTailVisual();

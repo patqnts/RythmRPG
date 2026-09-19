@@ -8,6 +8,8 @@ namespace RythmRPG.Combat
     {
         private const int Segments = 40;
         private SpriteRenderer iconRenderer;
+        private UnityEngine.UI.Image uiIcon;
+        private UnityEngine.UI.Image uiRadialFill;
         private Transform iconTransform;
         private LineRenderer radialFill;
         private Material radialMaterial;
@@ -25,9 +27,20 @@ namespace RythmRPG.Combat
         public void Configure(AbilityRuntimeInstance ability)
         {
             EnsureVisuals();
+            Sprite icon = ability?.Definition?.Icon;
+            if (uiIcon != null)
+            {
+                uiIcon.sprite = icon;
+                uiIcon.enabled = visible && icon != null;
+                Color uiColor = uiIcon.color;
+                uiColor.a = ability == null ? 0.25f : 1f;
+                uiIcon.color = uiColor;
+                SetProgress(0f);
+                return;
+            }
             if (iconRenderer == null) return;
-            iconRenderer.sprite = ability?.Definition?.Icon;
-            iconRenderer.enabled = visible && iconRenderer.sprite != null;
+            iconRenderer.sprite = icon;
+            iconRenderer.enabled = visible && icon != null;
             Color color = iconRenderer.color;
             color.a = ability == null ? 0.25f : 1f;
             iconRenderer.color = color;
@@ -51,6 +64,18 @@ namespace RythmRPG.Combat
                 color.a = visible ? Mathf.Max(color.a, 0.85f) : 0f;
                 iconRenderer.color = color;
             }
+            if (uiIcon != null)
+            {
+                uiIcon.enabled = visible && uiIcon.sprite != null;
+                Color color = uiIcon.color;
+                color.a = visible ? Mathf.Max(color.a, 0.85f) : 0f;
+                uiIcon.color = color;
+            }
+            if (uiRadialFill != null)
+            {
+                uiRadialFill.enabled = visible;
+                if (!visible) uiRadialFill.fillAmount = 0f;
+            }
             if (radialFill != null)
             {
                 radialFill.enabled = visible;
@@ -70,6 +95,11 @@ namespace RythmRPG.Combat
         public void SetProgress(float progress)
         {
             EnsureVisuals();
+            if (uiRadialFill != null)
+            {
+                uiRadialFill.fillAmount = visible ? Mathf.Clamp01(progress) : 0f;
+                return;
+            }
             if (radialFill == null || !visible) return;
             float clamped = Mathf.Clamp01(progress);
             int count = Mathf.Max(0, Mathf.RoundToInt(Segments * clamped));
@@ -91,6 +121,11 @@ namespace RythmRPG.Combat
 
         private void EnsureVisuals()
         {
+            if (transform is RectTransform)
+            {
+                EnsureUIVisuals();
+                return;
+            }
             if (iconRenderer == null)
             {
                 Transform icon = transform.Find("Ability Icon");
@@ -134,6 +169,56 @@ namespace RythmRPG.Combat
                 }
                 radialFill.startColor = radialFill.endColor = Color.white;
                 radialFill.sortingOrder = iconRenderer != null ? iconRenderer.sortingOrder + 1 : 1;
+            }
+        }
+
+        private void EnsureUIVisuals()
+        {
+            if (uiIcon == null)
+            {
+                Transform icon = transform.Find("Ability Icon");
+                if (icon == null)
+                {
+                    GameObject iconObject = new("Ability Icon", typeof(RectTransform), typeof(CanvasRenderer), typeof(UnityEngine.UI.Image));
+                    icon = iconObject.transform;
+                    icon.SetParent(transform, false);
+                }
+                RectTransform rect = icon as RectTransform;
+                rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 1f);
+                rect.pivot = new Vector2(0.5f, 0f);
+                rect.anchoredPosition = new Vector2(0f, 10f);
+                rect.sizeDelta = new Vector2(54f, 54f);
+                iconTransform = icon;
+                iconRestingLocalPosition = icon.localPosition;
+                uiIcon = icon.GetComponent<UnityEngine.UI.Image>();
+                if (uiIcon == null)
+                    uiIcon = icon.gameObject.AddComponent<UnityEngine.UI.Image>();
+                uiIcon.preserveAspect = true;
+                uiIcon.raycastTarget = false;
+            }
+            if (uiRadialFill == null)
+            {
+                Transform radial = transform.Find("Selection Radial Fill");
+                if (radial == null)
+                {
+                    GameObject radialObject = new("Selection Radial Fill", typeof(RectTransform), typeof(CanvasRenderer), typeof(UnityEngine.UI.Image));
+                    radial = radialObject.transform;
+                    radial.SetParent(transform, false);
+                }
+                RectTransform rect = radial as RectTransform;
+                rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 1f);
+                rect.pivot = new Vector2(0.5f, 0f);
+                rect.anchoredPosition = new Vector2(0f, 6f);
+                rect.sizeDelta = new Vector2(62f, 62f);
+                uiRadialFill = radial.GetComponent<UnityEngine.UI.Image>();
+                if (uiRadialFill == null)
+                    uiRadialFill = radial.gameObject.AddComponent<UnityEngine.UI.Image>();
+                uiRadialFill.type = UnityEngine.UI.Image.Type.Filled;
+                uiRadialFill.fillMethod = UnityEngine.UI.Image.FillMethod.Radial360;
+                uiRadialFill.fillOrigin = 2;
+                uiRadialFill.fillClockwise = true;
+                uiRadialFill.color = new Color(1f, 1f, 1f, 0.45f);
+                uiRadialFill.raycastTarget = false;
             }
         }
 

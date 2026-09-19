@@ -22,6 +22,8 @@ namespace RythmRPG.Combat
             this.keyCode = keyCode;
             this.view = view;
         }
+
+        public void SetView(KeyButton laneView) => view = laneView;
     }
 
     public sealed class LaneInputRouter : MonoBehaviour
@@ -64,6 +66,11 @@ namespace RythmRPG.Combat
         }
 
         public void RequireRelease(int laneId) => requireRelease.Add(laneId);
+        public void SetView(int laneId, KeyButton view)
+        {
+            LaneKeyBinding binding = bindings.FirstOrDefault(candidate => candidate != null && candidate.LaneId == laneId);
+            binding?.SetView(view);
+        }
         public KeyButton GetView(int laneId) => bindings.FirstOrDefault(binding => binding != null && binding.LaneId == laneId)?.View;
         public KeyButton[] GetViews() => bindings.Where(binding => binding?.View != null).Select(binding => binding.View).ToArray();
 

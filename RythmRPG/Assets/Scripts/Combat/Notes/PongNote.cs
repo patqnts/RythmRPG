@@ -44,27 +44,6 @@ public class PongNote : Note
         TweenLaneFall(currentIdentity, -3f, speed);
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.tag == "Activator")
-        {
-            canBePressed = true;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject.tag != "Activator")
-        {
-            return;
-        }
-
-        canBePressed = false;
-
-        ReportMiss(GetIdentityButton());
-        DestroyObject();
-    }
-
     public override bool CanReceiveHit(KeyButton keyButton)
     {
         return base.CanReceiveHit(keyButton);

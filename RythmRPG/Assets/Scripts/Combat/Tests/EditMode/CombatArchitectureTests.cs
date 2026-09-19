@@ -54,6 +54,28 @@ namespace RythmRPG.Combat.Tests
         }
 
         [Test]
+        public void LaneTarget_MeasuresTimingAlongThe3DTravelAxis()
+        {
+            GameObject targetObject = new("Lane Target Test");
+            try
+            {
+                RhythmLaneTarget target = targetObject.AddComponent<RhythmLaneTarget>();
+                target.Configure(3, new Vector3(0f, -1f, -1f));
+                Vector3 travel = target.WorldTravelDirection;
+                Vector3 lateral = Vector3.Cross(travel, Vector3.right).normalized;
+
+                Assert.That(target.LaneId, Is.EqualTo(3));
+                Assert.That(target.GetTimingDistance(target.transform.position + lateral * 10f), Is.EqualTo(0f).Within(0.0001f));
+                Assert.That(target.GetTimingDistance(target.transform.position + travel * 0.25f), Is.EqualTo(0.25f).Within(0.0001f));
+                Assert.That(target.GetSignedProgressPastLine(target.transform.position + travel), Is.GreaterThan(0f));
+            }
+            finally
+            {
+                Object.DestroyImmediate(targetObject);
+            }
+        }
+
+        [Test]
         public void Combatants_ClampDamageAndRestoreDefeatSnapshot()
         {
             GameObject playerObject = new("Player Test");

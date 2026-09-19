@@ -49,15 +49,15 @@ public class NoteObject : Note
             return;
         }
 
-        KeyButton targetKey = GetIdentityButton();
-        if (targetKey == null) return;
+        RhythmLaneTarget target = GetLaneTarget();
+        if (target == null) return;
 
         StopMovementTweens();
         movementTweenIdentity = currentIdentity;
         movementTweenStarted = true;
 
         float travelTime = Mathf.Max(0.01f, (float)(Data?.TravelTime ?? 2.5d));
-        float distanceToKey = Vector3.Distance(transform.position, targetKey.transform.position);
+        float distanceToKey = Vector3.Distance(transform.position, target.transform.position);
         float worldSpeed = distanceToKey > 0.01f ? distanceToKey / travelTime : Mathf.Max(0.01f, speed);
         float totalDuration = Vector3.Distance(transform.position, FromMovementLocal(targetLocal, movementSpace)) / worldSpeed;
         TweenLaneTravel(movementSpace, startLocal, keyLocal, targetLocal, totalDuration);
@@ -69,24 +69,6 @@ public class NoteObject : Note
         if (isMoving)
         {
             EnsureMovementTween();
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.tag == "Activator")
-        {
-            canBePressed = true;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject.tag == "Activator" && isMoving)
-        {
-            canBePressed = false;
-            ReportMiss(GetIdentityButton());
-            DestroyObject();
         }
     }
 
