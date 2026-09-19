@@ -19,6 +19,7 @@ public class MagicBeamStatic : MonoBehaviour
     private LineRenderer line;
 
     [Header("Beam Options")]
+    public Transform beamTarget; // Optional explicit beam target. When assigned, beam points here instead of using beamLength.
     public bool beamCollides = true; //Beam stops at colliders
     public float beamLength = 100; //Ingame beam length
     public float beamEndOffset = 0f; //How far from the raycast hit point the end effect is positioned
@@ -33,6 +34,23 @@ public class MagicBeamStatic : MonoBehaviour
 	public float pulseSpeed = 1.0f;
 	private bool pulseExpanding = true;
 
+    public void SetBeamTarget(Transform target)
+    {
+        beamTarget = target;
+        if (target != null) transform.LookAt(target.position);
+    }
+
+    public void SetBeamPositionAndTarget(Vector3 startPosition, Transform target)
+    {
+        transform.position = startPosition;
+        SetBeamTarget(target);
+    }
+
+    public void ClearBeamTarget()
+    {
+        beamTarget = null;
+    }
+
     void Start()
     {
 		SpawnBeam();
@@ -42,13 +60,13 @@ public class MagicBeamStatic : MonoBehaviour
 
     void FixedUpdate()
 	{
-		if (beam) 
+		if (beam && line != null)
 		{
 			line.SetPosition(0, transform.position);
-			Vector3 end = transform.position + (transform.forward * beamLength);
+			Vector3 end = beamTarget != null ? beamTarget.position : transform.position + (transform.forward * beamLength);
 			RaycastHit hit;
 			
-			if (beamCollides && Physics.Raycast(transform.position, transform.forward, out hit))
+			if (beamTarget == null && beamCollides && Physics.Raycast(transform.position, transform.forward, out hit))
 			{
 				end = hit.point - (transform.forward * beamEndOffset);
 				end = Vector3.Distance(transform.position, end) > beamLength 
@@ -57,14 +75,20 @@ public class MagicBeamStatic : MonoBehaviour
 			}
 			else
 			{
-				end = transform.position + (transform.forward * beamLength);
+				if (beamTarget == null) end = transform.position + (transform.forward * beamLength);
 			}
 				
 			line.SetPosition(1, end);
-			beamStart.transform.position = transform.position;
-			beamStart.transform.LookAt(end);
-			beamEnd.transform.position = end;
-			beamEnd.transform.LookAt(beamStart.transform.position);
+			if (beamStart != null)
+			{
+				beamStart.transform.position = transform.position;
+				beamStart.transform.LookAt(end);
+			}
+			if (beamEnd != null)
+			{
+				beamEnd.transform.position = end;
+				beamEnd.transform.LookAt(beamStart != null ? beamStart.transform.position : transform.position);
+			}
 			float distance = Vector3.Distance(transform.position, end);
 			line.material.mainTextureScale = new Vector2(distance / textureLengthScale, 1); //This sets the scale of the texture so it doesn't look stretched
 			line.material.mainTextureOffset -= new Vector2(Time.deltaTime * textureScrollSpeed, 0); //This scrolls the texture along the beam if not set to 0
@@ -93,6 +117,7 @@ public class MagicBeamStatic : MonoBehaviour
 
 		float currentWidth = Mathf.Lerp(originalWidth, customWidth, Mathf.Sin(lerpValue * Mathf.PI));
 		
+		if (line == null) return;
 		line.startWidth = currentWidth;
 		line.endWidth = currentWidth;
 	}

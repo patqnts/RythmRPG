@@ -27,15 +27,31 @@ namespace RythmRPG.Combat
         [SerializeField] private RectTransform buttonRow;
 
         private readonly List<RhythmLaneTarget> targets = new();
+        private LaneInputRouter activeInput;
+        private bool presentationVisible;
         public IReadOnlyList<RhythmLaneTarget> Targets => targets;
+
+        private void LateUpdate()
+        {
+            if (presentationVisible && activeInput != null) AlignWorldTargetsAndLine(activeInput);
+        }
 
         public void EnsurePresentation(LaneInputRouter input)
         {
             if (input == null || input.Bindings.Count == 0) return;
+            activeInput = input;
             theme ??= Resources.Load<CombatLanePresentationTheme>(DefaultThemePath);
             EnsureWorldTargets(input);
             EnsureButtonRow(input);
             AlignWorldTargetsAndLine(input);
+        }
+
+        public void SetPresentationVisible(bool visible)
+        {
+            presentationVisible = visible;
+            if (worldRoot != null) worldRoot.gameObject.SetActive(visible);
+            if (buttonRow != null) buttonRow.gameObject.SetActive(visible);
+            if (judgementLine != null) judgementLine.gameObject.SetActive(visible);
         }
 
         private void EnsureWorldTargets(LaneInputRouter input)
@@ -48,10 +64,7 @@ namespace RythmRPG.Combat
             {
                 GameObject root = new("Rhythm World Lanes");
                 worldRoot = root.transform;
-                Transform presentationParent = input.Bindings
-                    .Select(binding => binding.View != null ? binding.View.transform.parent : null)
-                    .FirstOrDefault(parent => parent != null);
-                worldRoot.SetParent(presentationParent != null ? presentationParent : transform, false);
+                worldRoot.SetParent(transform, false);
             }
 
             foreach (LaneKeyBinding binding in input.Bindings)
@@ -147,7 +160,7 @@ namespace RythmRPG.Combat
             rect.anchoredPosition = new Vector2(size.x * 0.5f + index * (size.x + spacing), 0f);
 
             Image image = buttonObject.GetComponent<Image>();
-            image.sprite = theme != null ? theme.ButtonSprite : null;
+            image.sprite = theme != null ? theme.ButtonUnpressedSprite : null;
             image.type = image.sprite != null && theme != null ? theme.ButtonImageType : Image.Type.Simple;
             image.color = theme != null ? theme.ButtonColor : new Color(0.06f, 0.07f, 0.09f, 0.94f);
             buttonObject.GetComponent<Button>().interactable = false;
@@ -174,7 +187,9 @@ namespace RythmRPG.Combat
             label.color = theme != null ? theme.ButtonTextColor : Color.white;
             label.text = binding.KeyCode == KeyCode.None ? binding.LaneId.ToString() : binding.KeyCode.ToString();
             KeyButton view = buttonObject.GetComponent<KeyButton>();
-            view.ConfigureUI(binding.LaneId, image, label);
+            view.ConfigureUI(binding.LaneId, image, label,
+                theme != null ? theme.ButtonUnpressedSprite : null,
+                theme != null ? theme.ButtonPressedSprite : null);
             return view;
         }
 
@@ -238,7 +253,9 @@ namespace RythmRPG.Combat
             Vector3 point = targets.Count > 0
                 ? targets.Aggregate(Vector3.zero, (sum, target) => sum + target.transform.position) / targets.Count
                 : worldRoot.position;
-            Vector3 normal = worldRoot != null ? worldRoot.forward : Vector3.forward;
+            Vector3 normal = worldCamera != null
+                ? worldCamera.transform.forward
+                : worldRoot != null ? worldRoot.forward : Vector3.forward;
             return new Plane(normal.sqrMagnitude > 0.0001f ? normal.normalized : Vector3.forward, point);
         }
 

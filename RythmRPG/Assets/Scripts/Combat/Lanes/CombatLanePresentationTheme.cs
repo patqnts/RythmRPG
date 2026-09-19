@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace RythmRPG.Combat
@@ -11,12 +12,14 @@ namespace RythmRPG.Combat
     public sealed class CombatLanePresentationTheme : ScriptableObject
     {
         [Header("Button UI")]
-        public Sprite ButtonSprite;
+        [FormerlySerializedAs("ButtonSprite")]
+        public Sprite ButtonUnpressedSprite;
+        public Sprite ButtonPressedSprite;
         public Image.Type ButtonImageType = Image.Type.Sliced;
         public Color ButtonColor = new(0.06f, 0.07f, 0.09f, 0.94f);
         public Vector2 ButtonSize = new(72f, 58f);
         [Min(0f)] public float ButtonSpacing = 24f;
-        public float BottomOffset = 36f;
+        [Min(0f)] public float BottomOffset = 8f;
         public Font ButtonFont;
         [Min(1)] public int ButtonFontSize = 28;
         public FontStyle ButtonFontStyle = FontStyle.Bold;

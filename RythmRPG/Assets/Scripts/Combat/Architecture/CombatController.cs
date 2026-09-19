@@ -34,7 +34,11 @@ namespace RythmRPG.Combat
         public event Action<CombatEncounterContext> BattleStarted;
         public event Action<CombatState> BattleEnded;
 
-        private void Awake() => EnsureServices();
+        private void Awake()
+        {
+            EnsureServices();
+            lanePresentation.SetPresentationVisible(false);
+        }
 
         private void Update() => stateMachine?.Tick();
 
@@ -43,6 +47,7 @@ namespace RythmRPG.Combat
             if (IsBattleActive || context.Player == null || context.Enemy == null) return;
             EnsureServices();
             lanePresentation.EnsurePresentation(inputRouter);
+            lanePresentation.SetPresentationVisible(true);
             encounter = context;
             encounter.Player.CaptureBattleStart();
             encounter.Enemy.CaptureBattleStart();
@@ -66,6 +71,7 @@ namespace RythmRPG.Combat
             abilitySlots.EndSelection();
             vfxController.SetAbilitySlotsVisible(false, false);
             encounterCoordinator.Restore(encounter, false);
+            lanePresentation?.SetPresentationVisible(false);
             IsBattleActive = false;
             BattleEnded?.Invoke(CurrentState);
         }
@@ -302,6 +308,7 @@ namespace RythmRPG.Combat
                 encounter.Enemy.RestoreBattleStart();
             }
             encounterCoordinator.Restore(encounter, victory);
+            lanePresentation?.SetPresentationVisible(false);
             IsBattleActive = false;
             BattleEnded?.Invoke(terminalState);
         }

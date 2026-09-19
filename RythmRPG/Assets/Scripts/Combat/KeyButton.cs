@@ -14,6 +14,8 @@ public class KeyButton : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     [SerializeField] private UnityEngine.UI.Image uiImage;
     [SerializeField] private UnityEngine.UI.Text uiLabel;
+    [SerializeField] private Sprite uiUnpressedSprite;
+    [SerializeField] private Sprite uiPressedSprite;
     private bool interactable;
     private Vector3 restingScale;
     private Color restingColor = Color.white;
@@ -48,6 +50,11 @@ public class KeyButton : MonoBehaviour
         }
         if (uiImage != null)
         {
+            if (uiPressedSprite != null || uiUnpressedSprite != null)
+            {
+                uiImage.sprite = isPressed && uiPressedSprite != null ? uiPressedSprite : uiUnpressedSprite;
+            }
+
             float brightness = isPressed ? 1.65f : interactable ? 1f : 0.55f;
             uiImage.color = new Color(
                 Mathf.Clamp01(uiRestingColor.r * brightness),
@@ -56,11 +63,14 @@ public class KeyButton : MonoBehaviour
         }
     }
 
-    public void ConfigureUI(int laneId, UnityEngine.UI.Image image, UnityEngine.UI.Text label)
+    public void ConfigureUI(int laneId, UnityEngine.UI.Image image, UnityEngine.UI.Text label,
+        Sprite unpressedSprite = null, Sprite pressedSprite = null)
     {
         keyIdentity = laneId;
         uiImage = image;
         uiLabel = label;
+        uiUnpressedSprite = unpressedSprite != null ? unpressedSprite : image != null ? image.sprite : null;
+        uiPressedSprite = pressedSprite;
         spriteRenderer = null;
         interactable = true;
         restingScale = transform.localScale;
