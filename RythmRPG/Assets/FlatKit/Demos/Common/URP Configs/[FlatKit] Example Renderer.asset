@@ -125,13 +125,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PixelParticles.MergedParticleOutlineRendererFeature
   m_Active: 1
   settings:
-    particleLayers:
-      serializedVersion: 2
-      m_Bits: 512
-    outlineColor: {r: 0.98101234, g: 0, b: 1, a: 1}
-    outlinePixels: 0.51
-    outlineSoftness: 0.05
-    metaballThreshold: 0.31
+    outlineGroups:
+    - name: Pixel Particles
+      enabled: 1
+      particleLayers:
+        serializedVersion: 2
+        m_Bits: 512
+      outlineColor: {r: 1, g: 1, b: 1, a: 1}
+      outlinePixels: 0.8
+      outlineSoftness: 0.05
+      metaballThreshold: 0.35
+    - name: Dark
+      enabled: 1
+      particleLayers:
+        serializedVersion: 2
+        m_Bits: 1024
+      outlineColor: {r: 1, g: 1, b: 1, a: 1}
+      outlinePixels: 0.8
+      outlineSoftness: 0.05
+      metaballThreshold: 0.35
     respectSceneDepth: 1
     showInSceneView: 1
     debugView: 0

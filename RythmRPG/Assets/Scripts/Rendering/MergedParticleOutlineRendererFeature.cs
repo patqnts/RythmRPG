@@ -9,14 +9,16 @@ namespace PixelMetaballParticles
     /// Unity 6000.3.x / URP RenderGraph-only particle outline.
     ///
     /// Pipeline:
-    ///   Particle material
+    ///   Particle material group
     ///       -> custom "MergedParticleMask" shader pass
-    ///       -> ONE additive alpha field
-    ///       -> threshold into one metaball/merged silhouette
+    ///       -> one additive alpha field per configured group
+    ///       -> threshold into one metaball/merged silhouette per group
     ///       -> screen-space pixel dilation
-    ///       -> one external outline
+    ///       -> one external outline per group
     ///
-    /// Overlapping particles therefore do NOT receive outlines between each other.
+    /// Overlapping particles inside the same group therefore do NOT receive outlines
+    /// between each other. Different groups are composited separately so they can
+    /// have different outline ownership/settings.
     /// </summary>
     public sealed class MergedParticleOutlineRendererFeature : ScriptableRendererFeature
     {
@@ -29,13 +31,15 @@ namespace PixelMetaballParticles
         }
 
         [System.Serializable]
-        public sealed class Settings
+        public sealed class OutlineGroup
         {
-            [Header("Filtering")]
-            [Tooltip("Only objects on these layers can contribute. Everything is a safe default because only shaders with the MergedParticleMask pass are drawn.")]
+            public string name = "Default";
+
+            public bool enabled = true;
+
+            [Tooltip("Only objects on these layers contribute to this outline group. Assign particle prefabs/material families to separate layers when they need separate outline ownership.")]
             public LayerMask particleLayers = ~0;
 
-            [Header("Merged Outline")]
             public Color outlineColor = new Color(0.035f, 0.025f, 0.06f, 1f);
 
             [Range(0.25f, 4f)]
@@ -49,6 +53,21 @@ namespace PixelMetaballParticles
             [Range(0.01f, 2.0f)]
             [Tooltip("Threshold applied to the additive particle field. Lower values merge soft particles more aggressively.")]
             public float metaballThreshold = 0.35f;
+        }
+
+        [System.Serializable]
+        public sealed class Settings
+        {
+            [Header("Outline Groups")]
+            [Tooltip("Each group renders its own metaball mask and outline. Use layers to give different particle/material families independent outline settings.")]
+            public OutlineGroup[] outlineGroups =
+            {
+                new OutlineGroup
+                {
+                    name = "Pixel Particles",
+                    particleLayers = 1 << 9
+                }
+            };
 
             [Header("Depth / Cameras")]
             [Tooltip("Depth-test the mask against the scene. Recommended for a 2D-in-3D orthographic world.")]
@@ -66,30 +85,64 @@ namespace PixelMetaballParticles
 
         public Settings settings = new Settings();
 
-        private Material _compositeMaterial;
+        private Material[] _compositeMaterials;
         private MergedParticleOutlinePass _pass;
 
         public override void Create()
         {
-            CoreUtils.Destroy(_compositeMaterial);
+            RebuildCompositeMaterials();
+        }
+
+        private void RebuildCompositeMaterials()
+        {
+            DestroyCompositeMaterials();
+
+            int groupCount =
+                settings?.outlineGroups != null
+                    ? Mathf.Max(1, settings.outlineGroups.Length)
+                    : 1;
+
+            _compositeMaterials = new Material[groupCount];
 
             Shader compositeShader =
                 Shader.Find("Hidden/PixelMetaballParticles/MergedOutlineComposite");
 
             if (compositeShader != null)
-                _compositeMaterial = CoreUtils.CreateEngineMaterial(compositeShader);
+            {
+                for (int i = 0; i < _compositeMaterials.Length; i++)
+                    _compositeMaterials[i] = CoreUtils.CreateEngineMaterial(compositeShader);
+            }
 
-            _pass = new MergedParticleOutlinePass(settings, _compositeMaterial)
+            _pass = new MergedParticleOutlinePass(settings, _compositeMaterials)
             {
                 renderPassEvent = settings.injectionPoint
             };
+        }
+
+        private void EnsureCompositeMaterials()
+        {
+            int groupCount =
+                settings?.outlineGroups != null
+                    ? Mathf.Max(1, settings.outlineGroups.Length)
+                    : 1;
+
+            if (_pass != null &&
+                _compositeMaterials != null &&
+                _compositeMaterials.Length == groupCount)
+            {
+                return;
+            }
+
+            RebuildCompositeMaterials();
         }
 
         public override void AddRenderPasses(
             ScriptableRenderer renderer,
             ref RenderingData renderingData)
         {
-            if (_pass == null || _compositeMaterial == null)
+            EnsureCompositeMaterials();
+
+            if (_pass == null || _compositeMaterials == null)
                 return;
 
             CameraType cameraType = renderingData.cameraData.cameraType;
@@ -117,8 +170,18 @@ namespace PixelMetaballParticles
 
         protected override void Dispose(bool disposing)
         {
-            CoreUtils.Destroy(_compositeMaterial);
-            _compositeMaterial = null;
+            DestroyCompositeMaterials();
+        }
+
+        private void DestroyCompositeMaterials()
+        {
+            if (_compositeMaterials == null)
+                return;
+
+            foreach (Material material in _compositeMaterials)
+                CoreUtils.Destroy(material);
+
+            _compositeMaterials = null;
         }
 
         private sealed class MergedParticleOutlinePass : ScriptableRenderPass
@@ -148,7 +211,7 @@ namespace PixelMetaballParticles
                 Shader.PropertyToID("_DebugMode");
 
             private readonly Settings _settings;
-            private readonly Material _compositeMaterial;
+            private readonly Material[] _compositeMaterials;
 
             private sealed class MaskPassData
             {
@@ -163,17 +226,17 @@ namespace PixelMetaballParticles
 
             public MergedParticleOutlinePass(
                 Settings settings,
-                Material compositeMaterial)
+                Material[] compositeMaterials)
             {
                 _settings = settings;
-                _compositeMaterial = compositeMaterial;
+                _compositeMaterials = compositeMaterials;
             }
 
             public override void RecordRenderGraph(
                 RenderGraph renderGraph,
                 ContextContainer frameData)
             {
-                if (_compositeMaterial == null)
+                if (_compositeMaterials == null)
                     return;
 
                 UniversalResourceData resourceData =
@@ -193,10 +256,6 @@ namespace PixelMetaballParticles
                 if (resourceData.isActiveTargetBackBuffer)
                     return;
 
-                // ------------------------------------------------------------
-                // 1. CREATE THE SHARED PARTICLE FIELD
-                // ------------------------------------------------------------
-
                 RenderTextureDescriptor maskDescriptor =
                     cameraData.cameraTargetDescriptor;
 
@@ -204,13 +263,6 @@ namespace PixelMetaballParticles
                 maskDescriptor.msaaSamples = 1;
                 maskDescriptor.graphicsFormat =
                     UnityEngine.Experimental.Rendering.GraphicsFormat.R8_UNorm;
-
-                TextureHandle maskTexture =
-                    UniversalRenderer.CreateRenderGraphTexture(
-                        renderGraph,
-                        maskDescriptor,
-                        "_MergedParticleMask",
-                        true);
 
                 DrawingSettings drawingSettings =
                     RenderingUtils.CreateDrawingSettings(
@@ -220,161 +272,182 @@ namespace PixelMetaballParticles
                         lightData,
                         SortingCriteria.CommonTransparent);
 
-                // IMPORTANT:
-                // No override material is used here.
-                //
-                // The RendererList explicitly selects the MergedParticleMask
-                // pass that lives INSIDE the particle's own material shader.
-                // Therefore _BaseMap, _BaseColor, particle vertex color, and
-                // metaball field settings are preserved.
-                FilteringSettings filteringSettings =
-                    new FilteringSettings(
-                        RenderQueueRange.transparent,
-                        _settings.particleLayers);
-
-                RendererListParams rendererListParams =
-                    new RendererListParams(
-                        renderingData.cullResults,
-                        drawingSettings,
-                        filteringSettings);
-
-                RendererListHandle rendererList =
-                    renderGraph.CreateRendererList(rendererListParams);
-
-                using (var builder =
-                    renderGraph.AddRasterRenderPass<MaskPassData>(
-                        "Pixel Metaball Particle Mask",
-                        out var passData))
-                {
-                    passData.rendererList = rendererList;
-
-                    builder.UseRendererList(rendererList);
-
-                    builder.SetRenderAttachment(
-                        maskTexture,
-                        0,
-                        AccessFlags.Write);
-
-                    if (_settings.respectSceneDepth &&
-                        resourceData.activeDepthTexture.IsValid())
-                    {
-                        builder.SetRenderAttachmentDepth(
-                            resourceData.activeDepthTexture,
-                            AccessFlags.Read);
-                    }
-
-                    // Unity 6 RenderGraph API: this method belongs to the pass
-                    // builder, NOT the RenderGraph object.
-                    builder.SetGlobalTextureAfterPass(
-                        maskTexture,
-                        MaskTextureId);
-
-                    builder.SetRenderFunc(
-                        static (MaskPassData data, RasterGraphContext context) =>
-                        {
-                            // Keep depth; clear only our R8 color field.
-                            context.cmd.ClearRenderTarget(
-                                false,
-                                true,
-                                Color.clear);
-
-                            context.cmd.DrawRendererList(data.rendererList);
-                        });
-                }
-
-                // ------------------------------------------------------------
-                // 2. COMPOSITE ONE OUTLINE AROUND THE THRESHOLDED UNION
-                // ------------------------------------------------------------
-
-                TextureHandle source = resourceData.activeColorTexture;
-
-                if (!source.IsValid())
-                    return;
-
                 int width = Mathf.Max(1, maskDescriptor.width);
                 int height = Mathf.Max(1, maskDescriptor.height);
+                TextureHandle currentColor = resourceData.activeColorTexture;
+                bool wroteAnyGroup = false;
 
-                _compositeMaterial.SetColor(
-                    OutlineColorId,
-                    _settings.outlineColor);
+                OutlineGroup[] groups = _settings.outlineGroups;
 
-                _compositeMaterial.SetFloat(
-                    OutlinePixelsId,
-                    _settings.outlinePixels);
+                if (groups == null || groups.Length == 0)
+                    return;
 
-                _compositeMaterial.SetFloat(
-                    ThresholdId,
-                    _settings.metaballThreshold);
-
-                _compositeMaterial.SetFloat(
-                    OutlineSoftnessId,
-                    _settings.outlineSoftness);
-
-                _compositeMaterial.SetVector(
-                    MaskTexelSizeId,
-                    new Vector4(
-                        1f / width,
-                        1f / height,
-                        width,
-                        height));
-
-                _compositeMaterial.SetFloat(
-                    DebugModeId,
-                    (float)_settings.debugView);
-
-                RenderTextureDescriptor resultDescriptor =
-                    cameraData.cameraTargetDescriptor;
-
-                resultDescriptor.depthBufferBits = 0;
-                resultDescriptor.msaaSamples = 1;
-
-                TextureHandle destination =
-                    UniversalRenderer.CreateRenderGraphTexture(
-                        renderGraph,
-                        resultDescriptor,
-                        "_PixelMetaballOutlineResult",
-                        false);
-
-                using (var builder =
-                    renderGraph.AddRasterRenderPass<CompositePassData>(
-                        "Pixel Metaball Particle Outline",
-                        out var passData))
+                for (int groupIndex = 0; groupIndex < groups.Length; groupIndex++)
                 {
-                    passData.source = source;
-                    passData.material = _compositeMaterial;
+                    OutlineGroup group = groups[groupIndex];
 
-                    builder.UseTexture(
-                        source,
-                        AccessFlags.Read);
+                    if (group == null ||
+                        !group.enabled ||
+                        groupIndex >= _compositeMaterials.Length)
+                    {
+                        continue;
+                    }
 
-                    // Declares the dependency on the texture published by the
-                    // preceding mask pass.
-                    builder.UseGlobalTexture(
-                        MaskTextureId,
-                        AccessFlags.Read);
+                    Material compositeMaterial = _compositeMaterials[groupIndex];
 
-                    builder.SetRenderAttachment(
-                        destination,
-                        0,
-                        AccessFlags.Write);
+                    if (compositeMaterial == null || !currentColor.IsValid())
+                        continue;
 
-                    builder.SetRenderFunc(
-                        static (
-                            CompositePassData data,
-                            RasterGraphContext context) =>
+                    // IMPORTANT:
+                    // No override material is used here. The RendererList selects
+                    // the MergedParticleMask pass that lives inside the particle's
+                    // own material shader, preserving texture/tint/field settings.
+                    FilteringSettings filteringSettings =
+                        new FilteringSettings(
+                            RenderQueueRange.transparent,
+                            group.particleLayers);
+
+                    RendererListParams rendererListParams =
+                        new RendererListParams(
+                            renderingData.cullResults,
+                            drawingSettings,
+                            filteringSettings);
+
+                    RendererListHandle rendererList =
+                        renderGraph.CreateRendererList(rendererListParams);
+
+                    TextureHandle maskTexture =
+                        UniversalRenderer.CreateRenderGraphTexture(
+                            renderGraph,
+                            maskDescriptor,
+                            "_MergedParticleMask",
+                            true);
+
+                    using (var builder =
+                        renderGraph.AddRasterRenderPass<MaskPassData>(
+                            "Pixel Metaball Particle Mask",
+                            out var passData))
+                    {
+                        passData.rendererList = rendererList;
+
+                        builder.UseRendererList(rendererList);
+
+                        builder.SetRenderAttachment(
+                            maskTexture,
+                            0,
+                            AccessFlags.Write);
+
+                        if (_settings.respectSceneDepth &&
+                            resourceData.activeDepthTexture.IsValid())
                         {
-                            Blitter.BlitTexture(
-                                context.cmd,
-                                data.source,
-                                new Vector4(1f, 1f, 0f, 0f),
-                                data.material,
-                                0);
-                        });
+                            builder.SetRenderAttachmentDepth(
+                                resourceData.activeDepthTexture,
+                                AccessFlags.Read);
+                        }
+
+                        builder.SetGlobalTextureAfterPass(
+                            maskTexture,
+                            MaskTextureId);
+
+                        builder.SetRenderFunc(
+                            static (MaskPassData data, RasterGraphContext context) =>
+                            {
+                                // Keep depth; clear only our R8 color field.
+                                context.cmd.ClearRenderTarget(
+                                    false,
+                                    true,
+                                    Color.clear);
+
+                                context.cmd.DrawRendererList(data.rendererList);
+                            });
+                    }
+
+                    compositeMaterial.SetColor(
+                        OutlineColorId,
+                        group.outlineColor);
+
+                    compositeMaterial.SetFloat(
+                        OutlinePixelsId,
+                        group.outlinePixels);
+
+                    compositeMaterial.SetFloat(
+                        ThresholdId,
+                        group.metaballThreshold);
+
+                    compositeMaterial.SetFloat(
+                        OutlineSoftnessId,
+                        group.outlineSoftness);
+
+                    compositeMaterial.SetVector(
+                        MaskTexelSizeId,
+                        new Vector4(
+                            1f / width,
+                            1f / height,
+                            width,
+                            height));
+
+                    compositeMaterial.SetFloat(
+                        DebugModeId,
+                        (float)_settings.debugView);
+
+                    RenderTextureDescriptor resultDescriptor =
+                        cameraData.cameraTargetDescriptor;
+
+                    resultDescriptor.depthBufferBits = 0;
+                    resultDescriptor.msaaSamples = 1;
+
+                    TextureHandle destination =
+                        UniversalRenderer.CreateRenderGraphTexture(
+                            renderGraph,
+                            resultDescriptor,
+                            "_PixelMetaballOutlineResult",
+                            false);
+
+                    using (var builder =
+                        renderGraph.AddRasterRenderPass<CompositePassData>(
+                            "Pixel Metaball Particle Outline",
+                            out var passData))
+                    {
+                        passData.source = currentColor;
+                        passData.material = compositeMaterial;
+
+                        builder.UseTexture(
+                            currentColor,
+                            AccessFlags.Read);
+
+                        // Declares the dependency on the texture published by the
+                        // preceding mask pass.
+                        builder.UseGlobalTexture(
+                            MaskTextureId,
+                            AccessFlags.Read);
+
+                        builder.SetRenderAttachment(
+                            destination,
+                            0,
+                            AccessFlags.Write);
+
+                        builder.SetRenderFunc(
+                            static (
+                                CompositePassData data,
+                                RasterGraphContext context) =>
+                            {
+                                Blitter.BlitTexture(
+                                    context.cmd,
+                                    data.source,
+                                    new Vector4(1f, 1f, 0f, 0f),
+                                    data.material,
+                                    0);
+                            });
+                    }
+
+                    currentColor = destination;
+                    wroteAnyGroup = true;
                 }
 
                 // RenderGraph best practice: point camera color at the result
                 // instead of doing a second blit back to the previous texture.
-                resourceData.cameraColor = destination;
+                if (wroteAnyGroup)
+                    resourceData.cameraColor = currentColor;
             }
         }
     }
