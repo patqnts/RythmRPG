@@ -4,7 +4,7 @@
   "references": [
     "RythmRPG.Rhythm.Runtime",
     "PrimeTween.Runtime",
-    "Cinemachine",
+    "Unity.Cinemachine",
     "Unity.ugui"
   ],
   "includePlatforms": [],

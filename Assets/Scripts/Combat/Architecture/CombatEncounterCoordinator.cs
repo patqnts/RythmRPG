@@ -1,5 +1,6 @@
 using System.Collections;
-using Cinemachine;
+using Unity.Cinemachine;
+using Unity.Cinemachine.TargetTracking;
 using PrimeTween;
 using UnityEngine;
 
@@ -124,7 +125,7 @@ namespace RythmRPG.Combat
             }
             if (transposer == null) return;
 
-            transposer.m_BindingMode = CinemachineTransposer.BindingMode.WorldSpace;
+            transposer.m_BindingMode = BindingMode.WorldSpace;
             transposer.m_XDamping = cameraDamping;
             transposer.m_YDamping = cameraDamping;
             transposer.m_ZDamping = cameraDamping;

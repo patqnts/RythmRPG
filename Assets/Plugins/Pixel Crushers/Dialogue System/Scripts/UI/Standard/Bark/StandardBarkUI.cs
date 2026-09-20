@@ -63,7 +63,7 @@ namespace PixelCrushers.DialogueSystem
         [Tooltip("The duration in seconds to show the bark text before fading it out. If zero, use the Dialogue Manager's Bark Settings.")]
         public float duration = 4f;
 
-        [Tooltip("Keep bark canvas anchor point always in camera view.")]
+        [Tooltip("Keep bark canvas always in camera view by adding a KeepRectTransformOnscreen component if not already present.\nTip: Since this keeps the whole canvas in view, size the canvas to the maximum size you want to allow bark UIs to expand to but no larger.")]
         public bool keepInView = false;
 
         /// <summary>
@@ -82,6 +82,12 @@ namespace PixelCrushers.DialogueSystem
         public bool waitForContinueButton = false;
 
         /// <summary>
+        /// If visible, hide this bark UI when any conversation starts.
+        /// </summary>
+        [Tooltip("If visible, hide this bark UI when any conversation starts.")]
+        public bool hideOnConversationStart = false;
+
+        /// <summary>
         /// The text display setting. Defaults to use the same subtitle setting as the Dialogue
         /// Manager, but you can also set it to always show or always hide the text.
         /// </summary>
@@ -94,6 +100,8 @@ namespace PixelCrushers.DialogueSystem
         protected AbstractTypewriterEffect typewriter { get; set; }
 
         protected Vector3 originalCanvasLocalPosition { get; set; }
+
+        protected KeepRectTransformOnscreen keepOnscreen { get; set; } = null;
 
         protected int numSequencesActive = 0;
 
@@ -131,6 +139,30 @@ namespace PixelCrushers.DialogueSystem
             }
             if (nameText != null) nameText.SetActive(includeName);
             Tools.SetGameObjectActive(portraitImage, false);
+            if (hideOnConversationStart && DialogueManager.instance != null)
+            {
+                DialogueManager.instance.conversationStarted += OnConversationStarted;
+            }
+
+            if (keepInView)
+            {
+                // Use KeepRectTransformOnscreen to keep in view:
+                keepOnscreen = canvas.GetComponent<KeepRectTransformOnscreen>() ?? canvas.gameObject.AddComponent<KeepRectTransformOnscreen>();
+                keepOnscreen.enabled = isPlaying;
+            }
+        }
+
+        protected virtual void OnDestroy()
+        {
+            if (DialogueManager.instance != null)
+            {
+                DialogueManager.instance.conversationStarted -= OnConversationStarted;
+            }
+        }
+
+        private void OnConversationStarted(Transform actor)
+        {
+            if (hideOnConversationStart && isPlaying) Hide();
         }
 
         protected virtual void Update()
@@ -139,15 +171,6 @@ namespace PixelCrushers.DialogueSystem
             if (!waitUntilSequenceEnds && doneTime > 0 && DialogueTime.time >= doneTime)
             {
                 Hide();
-            }
-            else if (keepInView && isPlaying)
-            {
-                var mainCamera = Camera.main;
-                if (mainCamera == null) return;
-                var pos = mainCamera.WorldToViewportPoint(canvas.transform.position);
-                pos.x = Mathf.Clamp01(pos.x);
-                pos.y = Mathf.Clamp01(pos.y);
-                canvas.transform.position = mainCamera.ViewportToWorldPoint(pos);
             }
         }
 
@@ -198,7 +221,7 @@ namespace PixelCrushers.DialogueSystem
                 if (showPortraitImage && subtitle.speakerInfo.portrait != null)
                 {
                     Tools.SetGameObjectActive(portraitImage, true);
-                    portraitImage.sprite = subtitle.speakerInfo.portrait;
+                    portraitImage.sprite = subtitle.GetSpeakerPortrait();
                 }
                 else
                 {
@@ -220,6 +243,7 @@ namespace PixelCrushers.DialogueSystem
                 var barkDuration = Mathf.Approximately(0, duration) ? DialogueManager.GetBarkDuration(subtitleText) : duration;
                 if (waitUntilSequenceEnds) numSequencesActive++;
                 doneTime = waitForContinueButton ? Mathf.Infinity : (DialogueTime.time + barkDuration);
+                if (keepOnscreen != null) keepOnscreen.enabled = true;
             }
         }
 
@@ -231,12 +255,16 @@ namespace PixelCrushers.DialogueSystem
             if (value == true && canvas != null) canvas.enabled = true;
         }
 
-        public virtual void OnBarkEnd(Transform actor)
+        public virtual void OnBarkEndSpeaker(Transform barker)
         {
-            if (waitUntilSequenceEnds && !waitForContinueButton && IsActorMe(actor))
+            if (waitUntilSequenceEnds && !waitForContinueButton && IsActorMe(barker))
             {
                 numSequencesActive--;
-                if (numSequencesActive <= 0) Hide();
+                if (numSequencesActive <= 0)
+                {
+                    numSequencesActive = 0;
+                    Hide();
+                }
             }
         }
 
@@ -277,6 +305,7 @@ namespace PixelCrushers.DialogueSystem
                 canvas.enabled = false;
             }
             if (canvas != null) canvas.GetComponent<RectTransform>().localPosition = originalCanvasLocalPosition;
+            if (keepOnscreen != null) keepOnscreen.enabled = false;
             doneTime = 0;
         }
 

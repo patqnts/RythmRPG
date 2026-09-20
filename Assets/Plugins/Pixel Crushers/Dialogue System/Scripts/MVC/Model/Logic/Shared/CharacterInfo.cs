@@ -205,15 +205,52 @@ namespace PixelCrushers.DialogueSystem
 
         #region Static Transform to Actor Mapping Code
 
+        /// <summary>
+        /// This dictionary maps actor names to GameObject transforms. These are 
+        /// the GameObjects that are confirmed to map to actors.
+        /// </summary>
         private static Dictionary<string, Transform> registeredActorTransforms = new Dictionary<string, Transform>();
+
+        /// <summary>
+        /// This dictionary holds GameObject transforms that have tentatively registered
+        /// themselves with actors in OnEnable. It's possible that the GameObject may be 
+        /// destroyed in its parent's Awake method after OnEnable in the frame, so we 
+        /// don't confirm these GameObjects until the end of the frame.
+        /// </summary>
+        private static Dictionary<string, Transform> candidateActorTransforms = new Dictionary<string, Transform>();
 
 #if UNITY_2019_3_OR_NEWER && UNITY_EDITOR
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         static void InitStaticVariables()
         {
             registeredActorTransforms = new Dictionary<string, Transform>();
+            candidateActorTransforms = new Dictionary<string, Transform>();
         }
 #endif
+
+        /// <summary>
+        /// Tentatively associates a transform with an actor name. Called by DialogueActor.OnEnable.
+        /// If the GameObject is still alive at the end of the frame, the DialogueActor will
+        /// confirm the registration.
+        /// </summary>
+        public static void RegisterCandidateActorTransform(string actorName, Transform actorTransform)
+        {
+            if (string.IsNullOrEmpty(actorName) || (actorTransform == null)) return;
+            candidateActorTransforms[actorName] = actorTransform;
+        }
+
+        /// <summary>
+        /// Unregisters a tentative association between a transform and an actor.
+        /// </summary>
+        public static void UnregisterCandidateActorTransform(string actorName, Transform actorTransform)
+        {
+            if (string.IsNullOrEmpty(actorName) || (actorTransform == null)) return;
+            if (candidateActorTransforms.TryGetValue(actorName, out var currentValue) &&
+                currentValue == actorTransform)
+            {
+                candidateActorTransforms.Remove(actorName);
+            }
+        }
 
         /// <summary>
         /// Associates a transform with an actor name. Typically called automatically by DialogueActor.
@@ -221,15 +258,33 @@ namespace PixelCrushers.DialogueSystem
         public static void RegisterActorTransform(string actorName, Transform actorTransform)
         {
             if (string.IsNullOrEmpty(actorName) || (actorTransform == null)) return;
+            UnregisterCandidateActorTransform(actorName, actorTransform);
             if (registeredActorTransforms.ContainsKey(actorName))
             {
-                if (DialogueDebug.logInfo) Debug.LogWarning("Dialogue System: Registering transform " + actorTransform.name + " as actor '" + actorName + "' but another transform is already registered. Overwriting with new transform.", actorTransform);
+                if (DialogueDebug.logInfo) Debug.LogWarning($"Dialogue System: Registering transform {actorTransform.name} as actor '{actorName}' but another transform is already registered. Overwriting with new transform.", actorTransform);
                 registeredActorTransforms[actorName] = actorTransform;
             }
             else
             {
-                if (DialogueDebug.logInfo) Debug.Log("Dialogue System: Registering transform " + actorTransform.name + " as actor '" + actorName + "'.", actorTransform);
+                if (DialogueDebug.logInfo) Debug.Log($"Dialogue System: Registering transform {actorTransform.name} as actor '{actorName}'.", actorTransform);
                 registeredActorTransforms.Add(actorName, actorTransform);
+            }
+
+            if (!DialogueManager.hasInstance)
+            {
+                if (DialogueDebug.logWarnings) Debug.LogWarning($"Dialogue System: CharacterInfo.RegisterActorTransform({actorName}) can't update active conversations' caches because no Dialogue Manager is present.");
+            }
+            else
+            {
+                // Also update active conversations' caches:
+                var actor = DialogueManager.hasInstance ? DialogueManager.masterDatabase.GetActor(actorName) : null;
+                if (actor != null)
+                {
+                    foreach (var activeConversations in DialogueManager.instance.activeConversations)
+                    {
+                        activeConversations.conversationModel.OverrideCharacterInfo(actor.id, actorTransform);
+                    }
+                }
             }
         }
 
@@ -239,19 +294,35 @@ namespace PixelCrushers.DialogueSystem
         public static void UnregisterActorTransform(string actorName, Transform actorTransform)
         {
             if (string.IsNullOrEmpty(actorName) || (actorTransform == null)) return;
-            if (registeredActorTransforms.ContainsKey(actorName))
+            if (registeredActorTransforms.TryGetValue(actorName, out var registeredTransform))
             {
-                if (DialogueDebug.logInfo) Debug.Log("Dialogue System: Unregistering transform " + actorTransform.name + " from actor '" + actorName + "'.", actorTransform);
-                registeredActorTransforms.Remove(actorName);
+                if (actorTransform == registeredTransform)
+                {
+                    if (DialogueDebug.logInfo) Debug.Log($"Dialogue System: Unregistering transform {actorTransform.name} from actor '{actorName}'.", actorTransform);
+                    registeredActorTransforms.Remove(actorName);
+                }
             }
         }
 
         /// <summary>
-        /// Gets the transform associated with an actor name, if any.
+        /// Gets the transform associated with an actor name, if any. 
+        /// Prioritizes candidates if registered.
         /// </summary>
         public static Transform GetRegisteredActorTransform(string actorName)
         {
-            return registeredActorTransforms.ContainsKey(actorName) ? registeredActorTransforms[actorName] : null;
+            if (string.IsNullOrEmpty(actorName)) return null;
+            if (candidateActorTransforms.TryGetValue(actorName, out var candidate))
+            {
+                return candidate;
+            }
+            if (registeredActorTransforms.TryGetValue(actorName, out var actorTransform))
+            {
+                return actorTransform;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>

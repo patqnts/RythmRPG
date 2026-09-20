@@ -59,6 +59,11 @@ namespace PixelCrushers.DialogueSystem.Yarn
         /// </summary>
         public List<string> localizedStringFiles = new List<string>();
 
+        /// <summary>
+        /// Location of portrait images.
+        /// </summary>
+        public string portraitFolder = "Assets";
+
         public string prefsPath;
 
         // /// <summary>
@@ -68,15 +73,18 @@ namespace PixelCrushers.DialogueSystem.Yarn
         // public string customCommandsSourceFile = DefaultCustomCommandsSourceFile;
 
         /// <summary>
-        /// The name of the player's actor.
+        /// If dialogue text starts with text in [square brackets], extract the
+        /// text in [square brackets] and assign it to the menu text.
         /// </summary>
+        public bool importMenuText = false;
+
         public bool debug = false;
     }
 
     public class Yarn2ImporterWindow : AbstractConverterWindow<YarnImporterPrefs>
     {
 
-        [MenuItem("Tools/Pixel Crushers/Dialogue System/Import/Yarn 2...", false, 1)]
+        [MenuItem("Tools/Pixel Crushers/Dialogue System/Import/Yarn/Yarn 2...", false, 1)]
         public static void Init()
         {
             var window = EditorWindow.GetWindow(typeof(Yarn2ImporterWindow), false, "Yarn 2 Importer");
@@ -241,6 +249,7 @@ namespace PixelCrushers.DialogueSystem.Yarn
         protected static GUIContent ActorRegexLabel = new GUIContent("Actor Regex", "How to extract actors names from Yarn dialogue lines. Defaults to 'NAME: Dialogue text'.");
         protected static GUIContent LinePrefixRegexLabel = new GUIContent("Line Prefix Regex", "How to extract dialogue text from Yarn dialogue lines. Defaults to 'Ignore-this: Dialogue text'.");
         protected static GUIContent CustomCommandsFileLabel = new GUIContent("Custom Commands File", "Filename to use when auto-generating script containing custom commands referenced in your Yarn stories.");
+        protected static GUIContent PortraitFolderLabel = new GUIContent("Portrait Folder", "The importer will look here for actor entities' portrait textures.");
         protected static GUIContent DebugLabel = new GUIContent("Debug", "Log detailed debug info to the Console.");
         protected static GUIContent YarnSourceFilesLabel = new GUIContent("Yarn Source Files", "Yarn files to import.");
         protected static GUIContent LocalizedStringFilesLabel = new GUIContent("Localized String Files", "Yarn localization files.");
@@ -254,7 +263,21 @@ namespace PixelCrushers.DialogueSystem.Yarn
             // prefs.customCommandsSourceFile = EditorGUILayout.TextField(CustomCommandsFileLabel, prefs.customCommandsSourceFile)?.Trim();
             uiYarnSourceFileList.DoLayoutList();
             uiLocalizedFileList.DoLayoutList();
+            DrawPortraitFolderField();
             prefs.debug = EditorGUILayout.Toggle(DebugLabel, prefs.debug);
+        }
+
+        private void DrawPortraitFolderField()
+        {
+            EditorGUILayout.BeginHorizontal();
+            prefs.portraitFolder = EditorGUILayout.TextField(PortraitFolderLabel, prefs.portraitFolder);
+            if (GUILayout.Button("...", EditorStyles.miniButtonRight, GUILayout.Width(22)))
+            {
+                prefs.portraitFolder = EditorUtility.OpenFolderPanel("Location of Portrait Textures", prefs.portraitFolder, "");
+                prefs.portraitFolder = "Assets" + prefs.portraitFolder.Replace(Application.dataPath, string.Empty);
+                GUIUtility.keyboardControl = 0;
+            }
+            EditorGUILayout.EndHorizontal();
         }
 
         void DrawYarnSourceFileListHeader(Rect rect)
@@ -327,13 +350,15 @@ namespace PixelCrushers.DialogueSystem.Yarn
 
         protected override void DrawOverwriteCheckbox()
         {
+            // Also show import menu text checkbox and debug checkbox:
+            prefs.importMenuText = EditorGUILayout.Toggle(new GUIContent("Import Menu Text", "If a line has the form '[menutext] dialoguetext', set the dialogue entry's Menu Text to 'menutext' and Dialogue Text to 'dialoguetext'"),
+                                                     prefs.importMenuText);
+
             prefs.overwrite = EditorGUILayout.Toggle(new GUIContent("Overwrite", "Overwrite database if it already exists"),
                                                      prefs.overwrite);
-            // if (prefs.overwrite)
-            // {
-            //     prefs.merge = EditorGUILayout.Toggle(new GUIContent("Merge Variables", "Merge variables into existing database instead of overwriting"),
-            //                                          prefs.merge);
-            // }
+
+            prefs.debug = EditorGUILayout.Toggle(new GUIContent("Debug", "Log debug info to the console when importing"),
+                                                     prefs.debug);
         }
 
         protected override void DrawConversionButtons()
@@ -448,7 +473,7 @@ namespace PixelCrushers.DialogueSystem.Yarn
             var yarnWriter = new YarnImporterProjectWriter();
             yarnWriter.Write(prefs, yarnProject, dialogueDb);
             WriteDialogueSystemChanges(dialogueDb);
-            Debug.Log($"Yarn project import complete - database written to: {AssetDatabase.GetAssetPath(dialogueDb)}");
+            Debug.Log($"Yarn project import complete - database written to: {AssetDatabase.GetAssetPath(dialogueDb)}", dialogueDb);
         }
     }
 }

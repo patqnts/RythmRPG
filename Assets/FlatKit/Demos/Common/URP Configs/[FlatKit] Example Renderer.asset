@@ -57,8 +57,7 @@ MonoBehaviour:
   - {fileID: -2401278517541482506}
   - {fileID: 6464573951977128653}
   - {fileID: 1180298753195411159}
-  m_RendererFeatureMap: a9319428ad1157edf6cf292be9f1acdecd02d72fc2c7b659d7860c6976436110
-  m_UseNativeRenderPass: 0
+  m_RendererFeatureMap: a9319428ad1157edf6cf292be9f1acdecd02d72fc2c7b659d7860c6976436110l
   xrSystemData: {fileID: 0}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   m_AssetVersion: 3
@@ -86,6 +85,7 @@ MonoBehaviour:
   m_DepthTextureFormat: 0
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 1
+  m_TileOnlyMode: 0
 --- !u!114 &586638120657581272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -113,7 +113,7 @@ MonoBehaviour:
     renderPassEvent: 500
 --- !u!114 &1180298753195411159
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -191,5 +191,6 @@ MonoBehaviour:
       restoreCamera: 1
       offset: {x: 0, y: 0, z: 0, w: 0}
       cameraFieldOfView: 60
+    depthInputAttachment: 0
   materials: []
   autoReferenceMaterials: 0

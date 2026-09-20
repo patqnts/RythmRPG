@@ -112,7 +112,7 @@ namespace PixelCrushers
             }
             else
             {
-                m_data.scene = currentScene;
+                m_data.scene = saveAcrossSceneChanges ? -1 : currentScene;
                 m_data.position = target.transform.position;
                 m_data.rotation = target.transform.rotation;
                 return SaveSystem.Serialize(m_data);
@@ -158,16 +158,41 @@ namespace PixelCrushers
         protected virtual void SetPosition(Vector3 position, Quaternion rotation)
         {
 #if USE_NAVMESH
+            // If we have a NavMeshAgent, use its Warp() method:
             if (m_navMeshAgent != null)
             {
                 m_navMeshAgent.Warp(position);
+                target.transform.rotation = rotation;
+                return;
             }
-            else
 #endif
+            // Otherwise if we have a Rigidbody, set the Rigidbody's position:
+            var rb = GetComponent<Rigidbody>();
+            if (rb != null)
             {
-                target.transform.position = position;
+                var wasKinematic = rb.isKinematic;
+                rb.isKinematic = true;
+                rb.position = position;
+                rb.rotation = rotation;
+                rb.isKinematic = wasKinematic;
             }
-            target.transform.rotation = rotation;
+#if USE_PHYSICS2D
+            // If we have a Rigidbody2D, set the Rigidbody2D's position:
+            var rb2d = GetComponent<Rigidbody2D>();
+            if (rb2d != null)
+            {
+                var bodyType = rb2d.bodyType;
+                rb2d.bodyType = RigidbodyType2D.Kinematic;
+                rb2d.position = position;
+                rb2d.bodyType = bodyType;
+            }
+#endif
+            // Set the plain old transform's position:
+            // (If a CharacterController is present, must disable it when moving the transform.)
+            var cc = target.GetComponent<CharacterController>();
+            if (cc != null) cc.enabled = false;
+            target.transform.SetPositionAndRotation(position, rotation);
+            if (cc != null) cc.enabled = true;
         }
 
     }

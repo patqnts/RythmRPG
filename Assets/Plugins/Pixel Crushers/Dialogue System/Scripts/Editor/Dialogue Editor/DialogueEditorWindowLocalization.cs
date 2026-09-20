@@ -22,8 +22,6 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
 
         #region Database Tab > Localization Foldout Variables
 
-        private enum EntrySortMethod { No, DepthFirst, BreadthFirst }
-
         [Serializable]
         private class LocalizationLanguages
         {
@@ -57,15 +55,19 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
         private bool exportLocalizationCreateNewFields = false;
 
         [SerializeField]
+        private bool exportIncludeEntriesWithoutText = false;
+
+        [SerializeField]
         private string localizationKeyField = "Articy Id";
 
         [SerializeField]
-        private EntrySortMethod localizationEntrySortMethod = EntrySortMethod.No;
+        private DialogueEntrySortMethod localizationEntrySortMethod = DialogueEntrySortMethod.No;
 
         private GUIContent exportLocalizationConversationTitleLabel = new GUIContent("Export Conversation Title Instead Of ID", "Export conversation title instead of ID. Titles should be unique.");
         private GUIContent exportLocalizationKeyFieldLabel = new GUIContent("Use Key Field", "Tie each dialogue entry row to a key field (e.g., 'Articy Id' or 'Celtx ID') instead of conversation & entry IDs.");
         private GUIContent exportAssignFieldValuesLabel = new GUIContent("Assign Values", "If key field is blank for dialogue entry, assign a unique value to it.");
         private GUIContent exportLocalizationCreateNewFieldsLabel = new GUIContent("Create New Fields", "If Extra Dialogue Entry field doesn't exist in an entry or if Extra Quest Field doesn't exist for a quest, create field when importing.");
+        private GUIContent exportIncludeEntriesWithoutTextLabel = new GUIContent("Include Blank Entries", "Include entries without Dialogue Text or Menu Text in dialogue export.");
         private GUIContent exportLocalizationSortModeLabel = new GUIContent("Sort Entries?", "Export dialogue entries in a sorted order.");
         private GUIContent exportExtraEntryFieldsLabel = new GUIContent("Extra Dialogue Entry Fields", "(Optional) Extra dialogue entry fields to localize.");
         private GUIContent exportExtraQuestFieldsLabel = new GUIContent("Extra Quest Fields", "(Optional) Extra quest fields to localize.");
@@ -147,10 +149,11 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             EditorGUILayout.EndHorizontal();
 
             exportLocalizationCreateNewFields = EditorGUILayout.ToggleLeft(exportLocalizationCreateNewFieldsLabel, exportLocalizationCreateNewFields, GUILayout.Width(160));
+            exportIncludeEntriesWithoutText = EditorGUILayout.ToggleLeft(exportIncludeEntriesWithoutTextLabel, exportIncludeEntriesWithoutText, GUILayout.Width(160));
 
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField(exportLocalizationSortModeLabel, GUILayout.Width(80));
-            localizationEntrySortMethod = (EntrySortMethod)EditorGUILayout.EnumPopup(GUIContent.none, localizationEntrySortMethod, GUILayout.Width(100));
+            localizationEntrySortMethod = (DialogueEntrySortMethod)EditorGUILayout.EnumPopup(GUIContent.none, localizationEntrySortMethod, GUILayout.Width(100));
             EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.BeginHorizontal();
@@ -267,6 +270,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             try
             {
                 database.conversations.ForEach(conversation => conversation.dialogueEntries.ForEach(entry => FindLanguagesInFields(entry.fields, false)));
+                if (template != null) FindLanguagesInFields(template.dialogueEntryFields, false);
             }
             finally
             {
@@ -395,15 +399,19 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                             switch (localizationEntrySortMethod)
                             {
                                 default:
-                                case EntrySortMethod.No:
+                                case DialogueEntrySortMethod.No:
                                     sortedEntries.AddRange(c.dialogueEntries);
                                     break;
-                                case EntrySortMethod.DepthFirst:
+                                case DialogueEntrySortMethod.DepthFirst:
                                     sortedEntries = DepthFirstSortEntries(c.dialogueEntries);
                                     break;
-                                case EntrySortMethod.BreadthFirst:
+                                case DialogueEntrySortMethod.BreadthFirst:
                                     sortedEntries = BreadthFirstSortEntries(c.dialogueEntries);
                                     break;
+                            }
+                            if (exportIncludeEntriesWithoutText)
+                            {
+                                sortedEntries.RemoveAll(x => string.IsNullOrEmpty(x.DialogueText) && string.IsNullOrEmpty(x.MenuText));
                             }
                             foreach (var de in sortedEntries)
                             {
@@ -602,19 +610,29 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             var start = entries.Find(x => x.id == 0);
             if (start == null) return unprocessed;
             SortDepthFirstRecursive(start, sorted, unprocessed);
-            sorted.AddRange(unprocessed);
+            DepthFirstSortOrphans(entries, sorted, unprocessed);
             return sorted;
+        }
+
+        private void DepthFirstSortOrphans(List<DialogueEntry> allEntries, List<DialogueEntry> sorted, List<DialogueEntry> unprocessed)
+        {
+            var orphanRootNodes = GetOrphanRootNodes(allEntries, unprocessed);
+            foreach (var orphanRootNode in orphanRootNodes)
+            {
+                SortDepthFirstRecursive(orphanRootNode, sorted, unprocessed);
+            }
+            sorted.AddRange(unprocessed);
         }
 
         private void SortDepthFirstRecursive(DialogueEntry entry, List<DialogueEntry> sorted, List<DialogueEntry> unprocessed)
         {
             if (entry == null) return;
             unprocessed.Remove(entry);
-            sorted.Add(entry);
+            if (!sorted.Contains(entry)) sorted.Add(entry);
             foreach (var link in entry.outgoingLinks)
             {
                 if (link.destinationConversationID != entry.conversationID) continue;
-                var child = unprocessed.Find(x => x.id == link.destinationDialogueID); 
+                var child = unprocessed.Find(x => x.id == link.destinationDialogueID);
                 if (child == null) continue;
                 SortDepthFirstRecursive(child, sorted, unprocessed);
             }
@@ -622,17 +640,34 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
 
         private List<DialogueEntry> BreadthFirstSortEntries(List<DialogueEntry> entries)
         {
-            var sorted= new List<DialogueEntry>();
+            var sorted = new List<DialogueEntry>();
             var unprocessed = new List<DialogueEntry>(entries);
-            var queued = new Queue<DialogueEntry>();
             var start = entries.Find(x => x.id == 0);
             if (start == null) return unprocessed;
+            BreadthFirstSortTree(start, sorted, unprocessed);
+            BreadthFirstSortOrphans(entries, sorted, unprocessed);
+            return sorted;
+        }
+
+        private void BreadthFirstSortOrphans(List<DialogueEntry> allEntries, List<DialogueEntry> sorted, List<DialogueEntry> unprocessed)
+        {
+            var orphanRootNodes = GetOrphanRootNodes(allEntries, unprocessed);
+            foreach (var orphanRootNode in orphanRootNodes)
+            {
+                BreadthFirstSortTree(orphanRootNode, sorted, unprocessed);
+            }
+            sorted.AddRange(unprocessed);
+        }
+
+        private void BreadthFirstSortTree(DialogueEntry start, List<DialogueEntry> sorted, List<DialogueEntry> unprocessed)
+        {
+            var queued = new Queue<DialogueEntry>();
             queued.Enqueue(start);
             while (queued.Count > 0)
             {
                 var entry = queued.Dequeue();
                 unprocessed.Remove(entry);
-                sorted.Add(entry);
+                if (!sorted.Contains(entry)) sorted.Add(entry);
                 foreach (var link in entry.outgoingLinks)
                 {
                     if (link.destinationConversationID != entry.conversationID) continue;
@@ -641,8 +676,39 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                     queued.Enqueue(child);
                 }
             }
-            sorted.AddRange(unprocessed);
-            return sorted;
+        }
+
+        // Find unprocessed nodes that aren't in the <START> node's conversation tree but
+        // are at the root of their own "orphan" tree. Return a list of these nodes sorted
+        // by their horizontal canvas position.
+        private List<DialogueEntry> GetOrphanRootNodes(List<DialogueEntry> allEntries, List<DialogueEntry> unprocessed)
+        {
+            var orphanRootNodes = new List<DialogueEntry>();
+            foreach (var entry in unprocessed)
+            {
+                if (!DoesAnythingLinkToThisEntry(entry, allEntries))
+                {
+                    orphanRootNodes.Add(entry);
+                }
+            }
+            orphanRootNodes.Sort((a, b) => a.canvasRect.x.CompareTo(b.canvasRect.x));
+            return orphanRootNodes;
+        }
+
+        private bool DoesAnythingLinkToThisEntry(DialogueEntry entry, List<DialogueEntry> allEntries)
+        {
+            foreach (var potentialParent in allEntries)
+            {
+                foreach (var link in potentialParent.outgoingLinks)
+                {
+                    if (link.destinationConversationID == entry.conversationID &&
+                        link.destinationDialogueID == entry.id)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         private string GetNewKeyFieldValue()
@@ -741,7 +807,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                                 Debug.LogError(filename + ": No actor in database is named '" + actorName + "'.");
                                 continue;
                             }
-                            Field.SetValue(actor.fields, "Display Name " + language, translatedName);
+                            Field.SetValue(actor.fields, "Display Name " + language, translatedName, FieldType.Localization);
                             if (alsoImportMainText && !string.IsNullOrEmpty(actorDisplayName))
                             {
                                 Field.SetValue(actor.fields, "Display Name", actorDisplayName);
@@ -841,7 +907,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                                         continue;
                                     }
 
-                                    Field.SetValue(entry.fields, field + " " + language, columns[columnIndex]);
+                                    Field.SetValue(entry.fields, field + " " + language, columns[columnIndex], FieldType.Localization);
 
                                     if (alsoImportMainText)
                                     {
@@ -990,7 +1056,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                                             continue;
                                         }
 
-                                        Field.SetValue(item.fields, field + " " + language, columns[columnIndex]);
+                                        Field.SetValue(item.fields, field + " " + language, columns[columnIndex], FieldType.Localization);
 
                                         if (alsoImportMainText)
                                         {
@@ -1008,6 +1074,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                 EditorUtility.ClearProgressBar();
             }
             EditorUtility.DisplayDialog("Imported Localization CSV", "The CSV files have been imported back into your dialogue database.", "OK");
+            Reset();
         }
 
         private List<string> GetCSVColumnsFromLine(string line)

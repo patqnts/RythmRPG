@@ -77,14 +77,11 @@ namespace PixelCrushers.DialogueSystem.Articy
             DrawDropdownsPopup();
             DrawSlotsPopup();
             DrawRecursionMode();
+            DrawInstructionsPopup();
             DrawFlowFragmentMode();
             DrawOtherScriptsField();
             DrawUseTechnicalNamesToggle();
-            DrawDirectConversationLinksToEntry1Toggle();
-            DrawConversationsForLooseFlow();
-            DrawDefaultActorsToggle();
-            DrawConvertMarkupToggle();
-            DrawSplitPipesToggle();
+            DrawExtraOptions();
             DrawDocumentsSubmenu();
             DrawVoiceOverOptions();
             DrawPortraitFolderField();
@@ -195,6 +192,16 @@ namespace PixelCrushers.DialogueSystem.Articy
         }
 
         /// <summary>
+        /// Draws the recursion mode dropdown.
+        /// </summary>
+        private void DrawInstructionsPopup()
+        {
+            EditorGUI.BeginChangeCheck();
+            prefs.ConvertInstructionsAs = (ConverterPrefs.CodeNodeMode)EditorGUILayout.EnumPopup(new GUIContent("Instructions as", "Specify whether instructions are group nodes or regular nodes. If instruction links to input pin that checks value set by instruction, set to Regular Node."), prefs.ConvertInstructionsAs, GUILayout.Width(300));
+            if (EditorGUI.EndChangeCheck()) ConverterPrefsTools.Save(prefs);
+        }
+
+        /// <summary>
         /// Draws the flow fragments dropdown.
         /// </summary>
         private void DrawFlowFragmentMode()
@@ -255,40 +262,30 @@ namespace PixelCrushers.DialogueSystem.Articy
                     "Instead of using entity's name as Display Name, use a custom field named 'DisplayName'."),
                     prefs.CustomDisplayName);
             }
+            prefs.AddDialogueEntryTechnicalNames = EditorGUILayout.Toggle(new GUIContent("Add Entry Technical Names",
+                "Add Technical Name field to dialogue entries. If unticked, omits Technical Name fields for dialogue entries to keep database smaller."),
+                prefs.AddDialogueEntryTechnicalNames);
             prefs.IncludeFeatureNameInFields = EditorGUILayout.Toggle(new GUIContent("Include Feature Names",
                 "Add containing feature name to property name when importing properties as fields."), prefs.IncludeFeatureNameInFields);
         }
 
-        private void DrawDirectConversationLinksToEntry1Toggle()
-        {
-            prefs.DirectConversationLinksToEntry1 = EditorGUILayout.Toggle(new GUIContent("Conv. Links to Entry 1",
-                "When a link points to a conversation's START node, redirect it to entry 1 instead."),
-                prefs.DirectConversationLinksToEntry1);
-        }
-
-        private void DrawConversationsForLooseFlow()
-        {
-            prefs.CreateConversationsForLooseFlow = EditorGUILayout.Toggle(new GUIContent("Conv. Loose Flow Frags",
-                "Make conversations for flow fragments that aren't inside dialogues."),
-                prefs.CreateConversationsForLooseFlow);
-        }
-
-        private void DrawDefaultActorsToggle()
+        private void DrawExtraOptions()
         {
             prefs.UseDefaultActorsIfNoneAssignedToDialogue = EditorGUILayout.Toggle(new GUIContent("Use Default Actors If None",
                 "If no actors are assigned to a dialogue, assign default 'Player' and 'NPC' actors. If unticked, leave conversation unassigned."),
                 prefs.UseDefaultActorsIfNoneAssignedToDialogue);
-        }
-
-        private void DrawConvertMarkupToggle()
-        {
+            prefs.OutputPinsSeparateEntries = EditorGUILayout.Toggle(new GUIContent("Output Pins Sep. Entries",
+                "Create separate dialogue entries for code in output pins. If unticked, output pin code will be added to dialogue entry's Script field, which runs before entry's Sequence field."),
+                prefs.OutputPinsSeparateEntries);
+            prefs.DirectConversationLinksToEntry1 = EditorGUILayout.Toggle(new GUIContent("Conv. Links to Entry 1",
+                "When a link points to a conversation's START node, redirect it to entry 1 instead."),
+                prefs.DirectConversationLinksToEntry1);
+            prefs.CreateConversationsForLooseFlow = EditorGUILayout.Toggle(new GUIContent("Conv. Loose Flow Frags",
+                "Make conversations for flow fragments that aren't inside dialogues."),
+                prefs.CreateConversationsForLooseFlow);
             prefs.ConvertMarkupToRichText = EditorGUILayout.Toggle(new GUIContent("Convert Markup",
                 "Convert articy markup to rich text codes that Unity can display."),
                 prefs.ConvertMarkupToRichText);
-        }
-
-        private void DrawSplitPipesToggle()
-        {
             prefs.SplitTextOnPipes = EditorGUILayout.Toggle(new GUIContent("Split Text On Pipes",
                 "When dialogue text contains pipe characters ( | ), split into separate dialogue entry nodes."),
                 prefs.SplitTextOnPipes);
@@ -298,6 +295,15 @@ namespace PixelCrushers.DialogueSystem.Articy
                 "Trim whitespace around pipes."),
                 prefs.TrimWhitespace);
             }
+            prefs.DelayEvaluation = EditorGUILayout.Toggle(new GUIContent("Delay Evaluation",
+                "If Dialogue Manager's Other Settings > Reevaluate Links After Subtitle ticked, you can generally untick this unless you're using SimStatus. If ticked, it will add <Delay Evaluation> nodes between nodes with Scripts and nodes with Conditions."),
+                prefs.DelayEvaluation);
+            prefs.ReorderIDs = EditorGUILayout.Toggle(new GUIContent("Reorder IDs",
+                "Reorder internal dialogue entry IDs depth-first after importing."), 
+                prefs.ReorderIDs);
+            prefs.AutoArrangeNodes = EditorGUILayout.Toggle(new GUIContent("Auto-arrange Nodes",
+                "Arrange dialogue entries as a vertical conversation tree on canvas."),
+                prefs.AutoArrangeNodes);
         }
 
         /// <summary>
@@ -746,7 +752,7 @@ namespace PixelCrushers.DialogueSystem.Articy
                     projectVersion = articyData.ProjectVersion;
                     projectAuthor = articyData.ProjectAuthor;
                     prefs.ReviewSpecialProperties(articyData);
-                    Debug.Log(string.Format("{0}: Loaded {1}", DialogueDebug.Prefix, prefs.ProjectFilename));
+                    Debug.Log(string.Format("{0}: Loaded {1}. Review content, then click Save Database to save to dialogue database.", DialogueDebug.Prefix, prefs.ProjectFilename));
                 }
                 else
                 {
@@ -786,7 +792,10 @@ namespace PixelCrushers.DialogueSystem.Articy
                     {
                         ArticyConverter.ConvertArticyDataToDatabase(articyData, prefs, template, database);
                         ArticyEditorTools.FindPortraitTexturesInAssetDatabase(articyData, prefs.PortraitFolder, database);
+                        if (prefs.ReorderIDs) ReorderIDs(database);
+                        if (prefs.AutoArrangeNodes) AutoArrangeNodes(database);
                         EditorUtility.SetDirty(database);
+                        PrefabUtility.RecordPrefabInstancePropertyModifications(database);
                         ConvertTextTable(assetName);
                         AssetDatabase.SaveAssets();
                         Debug.Log(string.Format("{0}: Created database '{1}' containing {2} actors, {3} conversations, {4} items/quests, {5} variables, and {6} locations.",
@@ -804,6 +813,22 @@ namespace PixelCrushers.DialogueSystem.Articy
         private void OnProgressCallback(string info, float progress)
         {
             EditorUtility.DisplayProgressBar("Importing articy:draft project", info, progress);
+        }
+
+        private void ReorderIDs(DialogueDatabase database)
+        {
+            DialogueDatabaseEditorTools.ReorderIDsInConversationsDepthFirst(database);
+        }
+
+        private void AutoArrangeNodes(DialogueDatabase database)
+        {
+            var wasOpen = DialogueEditor.DialogueEditorWindow.instance != null;
+            foreach (var conversation in database.conversations)
+            {
+                DialogueEditor.DialogueEditorWindow.OpenDialogueEntry(database, conversation.id, 0);
+                DialogueEditor.DialogueEditorWindow.instance.AutoArrangeNodes(true);
+            }
+            if (!wasOpen) DialogueEditor.DialogueEditorWindow.instance.Close();
         }
 
         /// <summary>

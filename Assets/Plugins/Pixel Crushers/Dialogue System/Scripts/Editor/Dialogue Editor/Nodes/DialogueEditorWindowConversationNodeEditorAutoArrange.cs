@@ -118,6 +118,37 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
 
         private void ArrangeTree(List<List<DialogueEntry>> tree, AutoArrangeStyle style)
         {
+            // If arranging a subset of nodes, determine an offset:
+            var isSubset = multinodeSelection.nodes.Count > 1;
+            float midX = 0;
+            float minY = float.MaxValue;
+            if (isSubset)
+            {
+                int numEmptyLevels = 0;
+                for (int level = 0; level < tree.Count; level++)
+                {
+                    if (tree[level].Count == 0)
+                    {
+                        numEmptyLevels++;
+                    }
+                    else
+                    {
+                        float minX = float.MaxValue;
+                        float maxX = 0;
+                        foreach (var node in tree[level])
+                        {
+                            minX = Mathf.Min(minX, node.canvasRect.x);
+                            maxX = Mathf.Max(maxX, node.canvasRect.x + node.canvasRect.width);
+                            minY = Mathf.Min(minY, node.canvasRect.y);
+                        }
+                        midX = (minX + maxX) / 2;
+                        minY -= numEmptyLevels * (canvasRectHeight + AutoHeightBetweenNodes);
+                        break; // Stop at the first tree level that has nodes.
+                    }
+                }
+            }
+
+
             if (style == AutoArrangeStyle.Horizontally)
             {
                 float treeHeight = GetTreeHeight(tree);
@@ -137,9 +168,9 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                 {
                     // Use old algorithm if specified or for subsections of conversation tree:
                     float treeWidth = GetTreeWidth(tree);
-                    float x = AutoStartX;
+                    float x = isSubset ? (midX - (treeWidth / 2)) : AutoStartX;
                     if (orphans.Count > 0) x += canvasRectWidth + AutoWidthBetweenNodes;
-                    float y = AutoStartY;
+                    float y = isSubset ? minY : AutoStartY;
                     for (int level = 0; level < tree.Count; level++)
                     {
                         ArrangeLevel(tree[level], x, y, treeWidth, 0, true);

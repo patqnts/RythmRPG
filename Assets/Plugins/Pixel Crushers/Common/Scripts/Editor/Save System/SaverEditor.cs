@@ -6,8 +6,12 @@ using UnityEditor;
 namespace PixelCrushers
 {
 
+    /// <summary>
+    /// Displays a warning if a GameObject has more than one saver but
+    /// not all savers' key values are set.
+    /// </summary>
     [CustomEditor(typeof(Saver), true)]
-    public class SaverEditor : Editor
+    public class SaverEditor : UnityEditor.Editor
     {
 
         protected Saver[] m_saversOnGameObject;

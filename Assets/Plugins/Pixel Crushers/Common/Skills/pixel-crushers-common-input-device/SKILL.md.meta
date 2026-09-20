@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 477e8106d87b560448fe08f72a342286
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 11672
+  packageName: Dialogue System for Unity
+  packageVersion: 2.2.74
+  assetPath: Assets/Plugins/Pixel Crushers/Common/Skills/pixel-crushers-common-input-device/SKILL.md
+  uploadId: 994926

@@ -74,6 +74,11 @@ namespace PixelCrushers.DialogueSystem
                 for (int i = 0; i < ui.conversationUIElements.subtitlePanels.Length; i++)
                 {
                     var subtitlePanel = ui.conversationUIElements.subtitlePanels[i];
+                    if (subtitlePanel == null)
+                    {
+                        data.panelOpenOnActorName[i] = null;
+                        continue;
+                    }
                     if (!subtitlePanel.isOpen && 0 <= i && i < data.panelOpenOnActorName.Count)
                     {
                         data.panelOpenOnActorName[i] = null;
@@ -93,21 +98,9 @@ namespace PixelCrushers.DialogueSystem
             if (!enabled || string.IsNullOrEmpty(s)) return;
             var data = SaveSystem.Deserialize<Data>(s);
             if (data == null) return;
-            StartCoroutine(StartSavedConversation(data));
-        }
-
-        protected System.Collections.IEnumerator StartSavedConversation(Data data)
-        {
             var dialogueUI = DialogueManager.dialogueUI as StandardDialogueUI;
+            if (dialogueUI != null) dialogueUI.CloseImmediately();
             DialogueManager.StopConversation();
-            if (dialogueUI != null)
-            {
-                float safeguardTimeout = Time.realtimeSinceStartup + 5f;
-                while (dialogueUI.isOpen && Time.realtimeSinceStartup < safeguardTimeout)
-                {
-                    yield return null;
-                }
-            }
             var conversationID = data.conversationID;
             var entryID = data.entryID;
             var conversation = DialogueManager.masterDatabase.GetConversation(conversationID);
@@ -134,27 +127,72 @@ namespace PixelCrushers.DialogueSystem
                         var panelActorTransform = CharacterInfo.GetRegisteredActorTransform(data.panelOpenOnActorName[i]);
                         var dialogueActor = (panelActorTransform != null) ? panelActorTransform.GetComponent<DialogueActor>() : null;
                         var panelActor = DialogueManager.masterDatabase.GetActor(data.panelOpenOnActorName[i]);
-                        Sprite portraitSprite = panelActor.GetPortraitSprite();
-                        string portraitName = data.panelOpenOnActorName[i];
+                        Sprite portraitSprite = (panelActor != null) ? panelActor.GetPortraitSprite() : null;
+                        string portraitActorName = data.panelOpenOnActorName[i];
+                        string displayName = portraitActorName;
                         if (dialogueActor != null)
                         {
                             var dialogueActorSprite = dialogueActor.GetPortraitSprite();
                             if (dialogueActorSprite != null) portraitSprite = dialogueActorSprite;
-                            portraitName = dialogueActor.GetActorName();
+                            portraitActorName = dialogueActor.actor;
+                            displayName = dialogueActor.GetActorName();
                         }
                         else if (panelActor != null)
                         {
                             portraitSprite = panelActor.GetPortraitSprite();
-                            portraitName = CharacterInfo.GetLocalizedDisplayNameInDatabase(portraitName);
+                            portraitActorName = panelActor.Name;
+                            displayName = CharacterInfo.GetLocalizedDisplayNameInDatabase(portraitActorName);
                         }
-                        subtitlePanel.OpenOnStartConversation(portraitSprite, portraitName, dialogueActor);
+                        if (!subtitlePanel.isOpen)
+                        {
+                            subtitlePanel.OpenOnStartConversation(portraitSprite, portraitActorName, displayName, dialogueActor);
+                        }
                     }
                     if (subtitlePanel.accumulateText)
                     {
                         subtitlePanel.accumulatedText = data.accumulatedText;
                     }
                 }
+
+                // Restore continue button state:
+                // Note: Doesn't account for SetContinueMode() since we haven't been saving that info
+                // in RecordData() and we don't want to break older saves.
+                if (ShouldShouldContinueButton(DialogueManager.currentConversationState))
+                {
+                    DialogueActor currentDialogueActor;
+                    var currentPanel = ui.conversationUIElements.standardSubtitleControls.GetPanel(DialogueManager.currentConversationState.subtitle, out currentDialogueActor);
+                    currentPanel.ShowContinueButton();
+                }
             }
         }
+
+        private bool ShouldShouldContinueButton(ConversationState state)
+        {
+            switch (DialogueManager.displaySettings.subtitleSettings.continueButton)
+            {
+                default:
+                case DisplaySettings.SubtitleSettings.ContinueButtonMode.Always:
+                case DisplaySettings.SubtitleSettings.ContinueButtonMode.Optional:
+                case DisplaySettings.SubtitleSettings.ContinueButtonMode.OptionalBeforeResponseMenu:
+                case DisplaySettings.SubtitleSettings.ContinueButtonMode.OptionalBeforePCAutoresponseOrMenu:
+                case DisplaySettings.SubtitleSettings.ContinueButtonMode.OptionalForPC:
+                case DisplaySettings.SubtitleSettings.ContinueButtonMode.OptionalForPCOrBeforeResponseMenu:
+                case DisplaySettings.SubtitleSettings.ContinueButtonMode.OptionalForPCOrBeforePCAutoresponseOrMenu:
+                    return true;
+                case DisplaySettings.SubtitleSettings.ContinueButtonMode.Never:
+                    return false;
+                case DisplaySettings.SubtitleSettings.ContinueButtonMode.NotBeforeResponseMenu:
+                    return state.hasPCResponses && !state.hasPCAutoResponse;
+                case DisplaySettings.SubtitleSettings.ContinueButtonMode.NotBeforePCAutoresponseOrMenu:
+                    return state.hasPCResponses;
+                case DisplaySettings.SubtitleSettings.ContinueButtonMode.NotForPC:
+                case DisplaySettings.SubtitleSettings.ContinueButtonMode.NotForPCOrBeforeResponseMenu:
+                case DisplaySettings.SubtitleSettings.ContinueButtonMode.NotForPCOrBeforePCAutoresponseOrMenu:
+                    return !state.hasPCResponses;
+                case DisplaySettings.SubtitleSettings.ContinueButtonMode.OnlyForPC:
+                    return !state.HasNPCResponse;
+            }
+        }
+
     }
 }

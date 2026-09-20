@@ -47,6 +47,8 @@ namespace PixelCrushers.DialogueSystem
         public bool showDetailsOnSelect = false;
         [Tooltip("Keep all groups expanded.")]
         public bool keepGroupsExpanded = false;
+        [Tooltip("Show ungrouped quests before groups.")]
+        public bool showUngroupedQuestsFirst = false;
 
         [Header("Details Panel")]
 
@@ -114,7 +116,7 @@ namespace PixelCrushers.DialogueSystem
         {
             m_isAwake = true;
             base.Awake();
-            if (addEventSystemIfNeeded) UITools.RequireEventSystem();
+            if (addEventSystemIfNeeded) UITools.RequireEventSystem(gameObject);
             InitializeTemplates();
         }
 
@@ -233,7 +235,46 @@ namespace PixelCrushers.DialogueSystem
             showingCompletedQuestHeading.SetActive(!isShowingActiveQuests);
             selectionPanelContentManager.Clear();
 
-            // Get group names, and draw selected quest in its panel while we're at it:
+            if (showUngroupedQuestsFirst)
+            {
+                AddUngroupedQuestsToUI(ref elementToSelect);
+                AddGroupedQuestsToUI(ref elementToSelect);
+            }
+            else
+            {
+                AddGroupedQuestsToUI(ref elementToSelect);
+                AddUngroupedQuestsToUI(ref elementToSelect);
+            }
+
+            // If no quests, add no quests text:
+            if (quests.Length == 0 && showNoQuestsText)
+            {
+                AddNoQuestsTextToUI();
+            }
+
+            // If no quest selected and Select First Quest On Open is ticked, select it:
+            if (string.IsNullOrEmpty(selectedQuest) && selectFirstQuestOnOpen && quests.Length > 0)
+            {
+                selectedQuest = quests[0].Title;
+                RepaintSelectedQuest(quests[0]);
+                QuestLog.MarkQuestViewed(selectedQuest);
+            }
+
+            SetStateToggleButtons();
+            mainPanel.RefreshSelectablesList();
+            if (mainPanel != null) UnityEngine.UI.LayoutRebuilder.MarkLayoutForRebuild(mainPanel.GetComponent<RectTransform>());
+            if (elementToSelect != null)
+            {
+                StartCoroutine(SelectElement(elementToSelect));
+            }
+            else if (eventSystem.currentSelectedGameObject == null && mainPanel != null && mainPanel.firstSelected != null && InputDeviceManager.autoFocus)
+            {
+                UITools.Select(mainPanel.firstSelected.GetComponent<UnityEngine.UI.Selectable>(), true, eventSystem);
+            }
+        }
+
+        protected virtual void AddGroupedQuestsToUI(ref UnityEngine.UI.Selectable elementToSelect)
+        {             // Get group names, and draw selected quest in its panel while we're at it:
             var groupNames = new List<string>();
             var groupDisplayNames = new Dictionary<string, string>();
             int numGroupless = 0;
@@ -256,6 +297,8 @@ namespace PixelCrushers.DialogueSystem
                 }
             }
             if (!repaintedQuestDetails) RepaintSelectedQuest(null);
+
+            SortGroupNames(groupNames);
 
             // Add quests by group:
             foreach (var groupName in groupNames)
@@ -295,8 +338,14 @@ namespace PixelCrushers.DialogueSystem
                     }
                 }
             }
+        }
 
-            // Add groupless quests:
+        protected virtual void SortGroupNames(List<string> groupNames)
+        { 
+        }
+
+        protected virtual void AddUngroupedQuestsToUI(ref UnityEngine.UI.Selectable elementToSelect)
+        {             
             foreach (var quest in quests)
             {
                 if (!string.IsNullOrEmpty(quest.Group)) continue;
@@ -315,35 +364,15 @@ namespace PixelCrushers.DialogueSystem
                     questTitleToSelect = null;
                 }
             }
+        }
 
-            // If no quests, add no quests text:
-            if (quests.Length == 0 && showNoQuestsText)
-            {
-                var questTitle = selectionPanelContentManager.Instantiate<StandardUIQuestTitleButtonTemplate>(completedQuestHeadingTemplate);
-                var dummyText = noQuestsMessage;
-                questTitle.Assign(dummyText, dummyText, null);
-                selectionPanelContentManager.Add(questTitle, questSelectionContentContainer);
-            }
-
-            // If no quest selected and Select First Quest On Open is ticked, select it:
-            if (string.IsNullOrEmpty(selectedQuest) && selectFirstQuestOnOpen && quests.Length > 0)
-            {
-                selectedQuest = quests[0].Title;
-                RepaintSelectedQuest(quests[0]);
-                QuestLog.MarkQuestViewed(selectedQuest);
-            }
-
-            SetStateToggleButtons();
-            mainPanel.RefreshSelectablesList();
-            if (mainPanel != null) UnityEngine.UI.LayoutRebuilder.MarkLayoutForRebuild(mainPanel.GetComponent<RectTransform>());
-            if (elementToSelect != null)
-            {
-                StartCoroutine(SelectElement(elementToSelect));
-            }
-            else if (eventSystem.currentSelectedGameObject == null && mainPanel != null && mainPanel.firstSelected != null && InputDeviceManager.autoFocus)
-            {
-                UITools.Select(mainPanel.firstSelected.GetComponent<UnityEngine.UI.Selectable>(), true, eventSystem);
-            }
+        protected virtual void AddNoQuestsTextToUI()
+        {
+            var questTitle = selectionPanelContentManager.Instantiate<StandardUIQuestTitleButtonTemplate>(completedQuestHeadingTemplate);
+            var dummyText = noQuestsMessage;
+            questTitle.Assign(dummyText, dummyText, null);
+            Destroy(questTitle.GetComponent<UnityEngine.UI.Button>());
+            selectionPanelContentManager.Add(questTitle, questSelectionContentContainer);
         }
 
         protected virtual StandardUIQuestTitleButtonTemplate GetQuestTitleTemplate(QuestInfo quest)
@@ -433,7 +462,7 @@ namespace PixelCrushers.DialogueSystem
                 }
 
                 // Abandon button:
-                if (currentQuestStateMask == QuestState.Active && QuestLog.IsQuestAbandonable(quest.Title))
+                if (isShowingActiveQuests && QuestLog.IsQuestAbandonable(quest.Title))
                 {
                     var abandonButtonInstance = detailsPanelContentManager.Instantiate<StandardUIButtonTemplate>(abandonButtonTemplate);
                     detailsPanelContentManager.Add(abandonButtonInstance, questDetailsContentContainer);
@@ -500,13 +529,11 @@ namespace PixelCrushers.DialogueSystem
                 // Record most recent selected quest in category for when we return to category:
                 if (currentQuestStateMask == ActiveQuestStateMask)
                 {
-                    Debug.Log($"Changing to completed. save active={selectedQuest}, restore {mostRecentSelectedCompletedQuest}");
                     mostRecentSelectedActiveQuest = selectedQuest;
                     selectedQuest = mostRecentSelectedCompletedQuest;
                 }
                 else
                 {
-                    Debug.Log($"Changing to active. save completed={selectedQuest}, restore {mostRecentSelectedActiveQuest}");
                     mostRecentSelectedCompletedQuest = selectedQuest;
                     selectedQuest = mostRecentSelectedActiveQuest;
                 }

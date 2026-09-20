@@ -16,7 +16,9 @@ namespace PixelCrushers
 
         public static T FindFirstObjectByType<T>() where T : UnityEngine.Object
         {
-#if UNITY_2023_1_OR_NEWER
+#if UNITY_6000_3_OR_NEWER
+            return UnityEngine.Object.FindAnyObjectByType<T>();
+#elif UNITY_2023_1_OR_NEWER
             return UnityEngine.Object.FindFirstObjectByType<T>();
 #else
             return UnityEngine.Object.FindObjectOfType<T>();
@@ -25,7 +27,9 @@ namespace PixelCrushers
 
         public static UnityEngine.Object FindFirstObjectByType(System.Type type)
         {
-#if UNITY_2023_1_OR_NEWER
+#if UNITY_6000_3_OR_NEWER
+            return UnityEngine.Object.FindAnyObjectByType(type);
+#elif UNITY_2023_1_OR_NEWER
             return UnityEngine.Object.FindFirstObjectByType(type);
 #else
             return UnityEngine.Object.FindObjectOfType(type);
@@ -34,7 +38,9 @@ namespace PixelCrushers
 
         public static T[] FindObjectsByType<T>() where T : UnityEngine.Object
         {
-#if UNITY_2023_1_OR_NEWER
+#if UNITY_6000_4_OR_NEWER
+            return UnityEngine.Object.FindObjectsByType<T>();
+#elif UNITY_2023_1_OR_NEWER
             return UnityEngine.Object.FindObjectsByType<T>(FindObjectsSortMode.None);
 #else
             return UnityEngine.Object.FindObjectsOfType<T>();
@@ -43,7 +49,9 @@ namespace PixelCrushers
 
         public static UnityEngine.Object[] FindObjectsByType(System.Type type)
         {
-#if UNITY_2023_1_OR_NEWER
+#if UNITY_6000_4_OR_NEWER
+            return UnityEngine.Object.FindObjectsByType(type);
+#elif UNITY_2023_1_OR_NEWER
             return UnityEngine.Object.FindObjectsByType(type, FindObjectsSortMode.None);
 #else
             return UnityEngine.Object.FindObjectsOfType(type);
@@ -204,7 +212,9 @@ namespace PixelCrushers
         /// </summary>
         public static T[] FindObjectsOfTypeAlsoInactive<T>(bool checkAllScenes = true) where T : Component
         {
-#if UNITY_2022_3_OR_NEWER || UNITY_2023_1_OR_NEWER
+#if UNITY_6000_4_OR_NEWER
+            return UnityEngine.Object.FindObjectsByType<T>(FindObjectsInactive.Include);
+#elif UNITY_2022_3_OR_NEWER || UNITY_2023_1_OR_NEWER
             return UnityEngine.Object.FindObjectsByType<T>(FindObjectsInactive.Include, FindObjectsSortMode.None);
 #else
             var list = new List<T>();
@@ -243,22 +253,29 @@ namespace PixelCrushers
         }
 
         /// <summary>
-        /// Like GetComponentInChildren(), but also searches parents.
+        /// Looks for a component on self, children, or parents.
         /// </summary>
-        /// <returns>The component, or <c>null</c> if not found.</returns>
-        /// <param name="gameObject">Game object to search.</param>
-        /// <typeparam name="T">The component type.</typeparam>
-        public static T GetComponentAnywhere<T>(GameObject gameObject) where T : Component
+        public static T GetComponentInChildrenOrParent<T>(this GameObject @this) where T : Component
         {
-            if (!gameObject) return null;
-            T component = gameObject.GetComponentInChildren<T>();
-            if (component) return component;
-            Transform ancestor = gameObject.transform.parent;
+            if (@this == null) return null;
+            return @this.GetComponent<T>() ??
+                @this.GetComponentInChildren<T>() ??
+                @this.GetComponentInParent<T>();
+        }
+
+        /// <summary>
+        /// Looks for a component on self, children, or parents' children (siblings).
+        /// </summary>
+        public static T GetComponentAnywhere<T>(this GameObject @this) where T : Component
+        {
+            if (@this == null) return null;
+            T component = null;
+            Transform t = @this.transform;
             int safeguard = 0;
-            while (!component && ancestor && safeguard < 256)
+            while (!component && t && safeguard < 256)
             {
-                component = ancestor.GetComponentInChildren<T>();
-                ancestor = ancestor.parent;
+                component = t.GetComponentInChildren<T>();
+                t = t.parent;
             }
             return component;
         }

@@ -241,7 +241,7 @@ namespace PixelCrushers.DialogueSystem
 
         private static void SetupCanvas(CanvasDialogueUI ui, DialogueSystemController dialogueManager)
         {
-            if (GameObjectUtility.FindFirstObjectByType<UnityEngine.EventSystems.EventSystem>() == null)
+            if (PixelCrushers.GameObjectUtility.FindFirstObjectByType<UnityEngine.EventSystems.EventSystem>() == null)
             {
                 new GameObject("EventSystem", typeof(UnityEngine.EventSystems.EventSystem),
                     typeof(UnityEngine.EventSystems.StandaloneInputModule));
@@ -339,20 +339,29 @@ namespace PixelCrushers.DialogueSystem
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.BeginHorizontal();
             DialogueManager.instance.displaySettings.subtitleSettings.minSubtitleSeconds = EditorGUILayout.FloatField("Min Seconds", DialogueManager.instance.displaySettings.subtitleSettings.minSubtitleSeconds);
-            EditorGUILayout.HelpBox("Min Seconds below is the guaranteed minimum amount of time that a subtitle will be displayed (if its corresponding checkbox is ticked).", MessageType.None);
+            EditorGUILayout.HelpBox("Min Seconds is the guaranteed minimum amount of time that a subtitle will be displayed (if its corresponding checkbox is ticked).", MessageType.None);
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.BeginHorizontal();
             DialogueManager.instance.displaySettings.subtitleSettings.continueButton = (DisplaySettings.SubtitleSettings.ContinueButtonMode)EditorGUILayout.EnumPopup("Continue Button", DialogueManager.instance.displaySettings.subtitleSettings.continueButton);
-            //.waitForContinueButton = EditorGUILayout.Toggle("Use Continue Button", DialogueManager.Instance.displaySettings.subtitleSettings.waitForContinueButton);
+            EditorGUILayout.BeginVertical();
             EditorGUILayout.HelpBox("- Never: Conversation automatically moves to next stage when subtitle is done." +
                                     "\n- Always: Requires player to click a continue button to progress past each subtitle." +
                                     "\n- Optional Before Response Menu: If player response menu is next, shows but doesn't require clicking." +
                                     "\n- Never Before Response Menu: If player response menu is next, doesn't show." +
                                     "\nFor any setting other than Never, your UI must contain continue button(s).", MessageType.None);
+            if (GUILayout.Button("Continue button modes"))
+            {
+                Application.OpenURL("https://pixelcrushers.com/dialogue_system/manual2x/html/class_pixel_crushers_1_1_dialogue_system_1_1_display_settings_1_1_subtitle_settings.html#ab9739c17b45aca7244295889504e0c1e");
+            }
+            EditorGUILayout.EndVertical();
             EditorGUILayout.EndHorizontal();
+            //EditorGUILayout.BeginHorizontal();
+            //DialogueManager.instance.displaySettings.subtitleSettings.richTextEmphases = EditorGUILayout.Toggle("Rich Text", DialogueManager.instance.displaySettings.subtitleSettings.richTextEmphases);
+            //EditorGUILayout.HelpBox("By default, emphasis tags embedded in dialogue text are applied to the entire subtitle. To convert them to rich text tags instead, tick this checkbox. This allows emphases to affect only parts of the text, but your GUI system must support rich text.", MessageType.None);
+            //EditorGUILayout.EndHorizontal();
             EditorGUILayout.BeginHorizontal();
-            DialogueManager.instance.displaySettings.subtitleSettings.richTextEmphases = EditorGUILayout.Toggle("Rich Text", DialogueManager.instance.displaySettings.subtitleSettings.richTextEmphases);
-            EditorGUILayout.HelpBox("By default, emphasis tags embedded in dialogue text are applied to the entire subtitle. To convert them to rich text tags instead, tick this checkbox. This allows emphases to affect only parts of the text, but your GUI system must support rich text.", MessageType.None);
+            DialogueManager.instance.displaySettings.subtitleSettings.convertPipesToLineBreaks = EditorGUILayout.Toggle("Pipes Are Line Breaks", DialogueManager.instance.displaySettings.subtitleSettings.convertPipesToLineBreaks);
+            EditorGUILayout.HelpBox("Treat '|' characters in text as line breaks.", MessageType.None);
             EditorGUILayout.EndHorizontal();
             EditorWindowTools.EndIndentedSection();
             DrawNavigationButtons(true, true, false);
@@ -386,11 +395,11 @@ namespace PixelCrushers.DialogueSystem
             {
                 if (HasMainCamera())
                 {
-                    EditorGUILayout.HelpBox("Will use existing camera that is tagged Main Camera.", MessageType.None);
+                    EditorGUILayout.HelpBox("Will use existing camera that is tagged MainCamera.", MessageType.None);
                 }
                 else
                 {
-                    EditorGUILayout.HelpBox("Will use existing camera that is tagged Main Camera. Remember to add a camera that's tagged Main Camera.", MessageType.Warning);
+                    EditorGUILayout.HelpBox("Will use existing camera that is tagged MainCamera. Remember to add a camera that's tagged MainCamera.", MessageType.Warning);
                 }
             }
             else
@@ -434,6 +443,10 @@ namespace PixelCrushers.DialogueSystem
                 EditorGUILayout.HelpBox("Will use Default Sequence for players and NPCs.", MessageType.None);
             }
             EditorGUILayout.HelpBox("In default sequences, you can use '{{end}}' to refer to the duration of the subtitle as determined by Chars/Second and Min Seconds.", MessageType.None);
+            EditorGUILayout.BeginHorizontal();
+            DialogueManager.instance.displaySettings.cameraSettings.reportMissingAudioFiles = EditorGUILayout.Toggle("Report Missing Audio", DialogueManager.instance.displaySettings.cameraSettings.reportMissingAudioFiles);
+            EditorGUILayout.HelpBox("By default, Audio() and AudioWait() sequencer commands don't report missing audio files to reduce Console spam during development.", MessageType.None);
+            EditorGUILayout.EndHorizontal();
             EditorWindowTools.EndIndentedSection();
             DrawNavigationButtons(true, true, false);
         }
@@ -498,6 +511,22 @@ namespace PixelCrushers.DialogueSystem
             DialogueManager.instance.displaySettings.inputSettings.includeInvalidEntries = EditorGUILayout.Toggle("Include Invalid Entries", DialogueManager.instance.displaySettings.inputSettings.includeInvalidEntries);
             EditorGUILayout.HelpBox("Tick to include entries whose conditions are false in the menu. Their buttons will be visible but non-interactable.", MessageType.None);
             EditorGUILayout.EndHorizontal();
+
+            if (DialogueManager.instance.displaySettings.inputSettings.includeInvalidEntries)
+            {
+                EditorGUILayout.BeginHorizontal();
+                DialogueManager.instance.displaySettings.inputSettings.emTagForInvalidResponses =
+                    (EmTag)EditorGUILayout.EnumPopup("[em#] For Invalid Entries", DialogueManager.instance.displaySettings.inputSettings.emTagForInvalidResponses);
+                EditorGUILayout.HelpBox("The [em#] tag to wrap around invalid responses. These responses are only shown if Include Invalid Entries is ticked.", MessageType.None);
+                EditorGUILayout.EndHorizontal();
+            }
+
+            EditorGUILayout.BeginHorizontal();
+            DialogueManager.instance.displaySettings.inputSettings.emTagForOldResponses =
+                (EmTag)EditorGUILayout.EnumPopup("[em#] For Old Entries", DialogueManager.instance.displaySettings.inputSettings.emTagForOldResponses);
+            EditorGUILayout.HelpBox("The [em#] tag to wrap around responses that have been previously chosen.", MessageType.None);
+            EditorGUILayout.EndHorizontal();
+
             EditorGUILayout.BeginHorizontal();
             bool useTimeout = EditorGUILayout.Toggle("Timer", (DialogueManager.instance.displaySettings.inputSettings.responseTimeout > 0));
             EditorGUILayout.HelpBox("Tick to make the response menu timed. If unticked, players can take as long as they want to make their selection.", MessageType.None);
@@ -539,6 +568,7 @@ namespace PixelCrushers.DialogueSystem
             DialogueManager.instance.displaySettings.inputSettings.cancelConversation.buttonName = EditorGUILayout.TextField("Button Name", DialogueManager.instance.displaySettings.inputSettings.cancel.buttonName);
             EditorGUILayout.HelpBox("Pressing this button cancels the conversation if in the response menu.", MessageType.None);
             EditorGUILayout.EndHorizontal();
+            EditorGUILayout.HelpBox("Note that the Cancel inputs above are different from your dialogue UI's Continue Button. Typically you can leave the Cancel inputs set to None (unused).", MessageType.None);
 
             EditorWindowTools.EndIndentedSection();
             EditorWindowTools.EndIndentedSection();
@@ -611,6 +641,7 @@ namespace PixelCrushers.DialogueSystem
                 {
                     dsSaver = DialogueManager.instance.gameObject.AddComponent(TypeUtility.GetWrapperType(typeof(PixelCrushers.DialogueSystem.DialogueSystemSaver))) as PixelCrushers.DialogueSystem.DialogueSystemSaver;
                     dsSaver.saveAcrossSceneChanges = true;
+                    dsSaver.key = "ds";
                 }
 
                 var transitionManager = DialogueManager.instance.GetComponent<PixelCrushers.SceneTransitionManager>();

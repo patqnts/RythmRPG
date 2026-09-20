@@ -3,7 +3,6 @@
 using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
-using System;
 using System.Text.RegularExpressions;
 
 namespace PixelCrushers.DialogueSystem
@@ -152,7 +151,7 @@ namespace PixelCrushers.DialogueSystem
         private int m_lastActorID = -1;
         protected int lastActorID { get { return m_lastActorID; } set { m_lastActorID = value; } }
         protected int frameLastSetContent = -1; // Frame when we last set this panel's content.
-        protected bool shouldShowContinueButton = false;
+        public bool shouldShowContinueButton { get; private set; } = false;
         protected const float WaitForCloseTimeoutDuration = 8f;
         private StandardDialogueUI m_dialogueUI = null;
         public StandardDialogueUI dialogueUI
@@ -160,7 +159,7 @@ namespace PixelCrushers.DialogueSystem
             get
             {
                 if (m_dialogueUI == null)
-                { 
+                {
                     m_dialogueUI = GetComponentInParent<StandardDialogueUI>();
                     if (m_dialogueUI == null) m_dialogueUI = DialogueManager.dialogueUI as StandardDialogueUI;
                 }
@@ -173,8 +172,9 @@ namespace PixelCrushers.DialogueSystem
         }
 
         protected Coroutine m_focusWhenOpenCoroutine = null;
-        protected Coroutine m_showAfterClosingCoroutine = null;
+        protected Coroutine m_showAfterClosingOtherPanelsCoroutine = null;
         protected Coroutine m_setAnimatorCoroutine = null;
+        protected WaitForEndOfFrame endOfFrame = new WaitForEndOfFrame();
 
         #endregion
 
@@ -187,6 +187,13 @@ namespace PixelCrushers.DialogueSystem
                 addSpeakerNameFormat = addSpeakerNameFormat.Replace("\\n", "\n").Replace("\\t", "\t");
             }
             m_panelAnimator = GetComponent<Animator>();
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+            var typewriter = GetTypewriter();
+            if (typewriter != null) typewriter.playOnEnable = false;
         }
 
         #endregion
@@ -229,27 +236,42 @@ namespace PixelCrushers.DialogueSystem
 
         #region Show & Hide
 
+        protected virtual void ResetAnimationTrigger(string triggerName)
+        {
+            if (m_panelAnimator != null && !string.IsNullOrEmpty(triggerName)) m_panelAnimator.ResetTrigger(triggerName);
+        }
+
         /// <summary>
         /// Shows the panel at the start of the conversation; called if it's configured to be visible at the start.
         /// </summary>
         /// <param name="portraitSprite">The image of the first actor who will use this panel.</param>
-        /// <param name="portraitName">The name of the first actor who will use this panel.</param>
+        /// <param name="portraitActorName">The (non-display) Name of the first actor who will use this panel.</param>
+        /// <param name="displayName">The actor's display name.</param>
         /// <param name="dialogueActor">The actor's DialogueActor component, or null if none.</param>
-        public virtual void OpenOnStartConversation(Sprite portraitSprite, string portraitName, DialogueActor dialogueActor)
+        public virtual void OpenOnStartConversation(Sprite portraitSprite, string portraitActorName, string displayName,
+            DialogueActor dialogueActor)
         {
+            if (isOpen) return;
             Open();
             SetUIElementsActive(true);
             SetPortraitImage(portraitSprite);
-            portraitActorName = (dialogueActor != null) ? dialogueActor.GetActorName() : portraitName;
-            if (this.portraitName != null) this.portraitName.text = portraitActorName;
+            this.portraitActorName = (dialogueActor != null) ? dialogueActor.actor : portraitActorName;
+            if (this.portraitName != null) this.portraitName.text = displayName;
             if (subtitleText.text != null) subtitleText.text = string.Empty;
             CheckDialogueActorAnimator(dialogueActor);
+        }
+
+        public virtual void OpenOnStartConversation(Sprite portraitSprite, string portraitActorName, string displayName,
+            DialogueActor dialogueActor, StandardDialogueUI dialogueUI)
+        {
+            m_dialogueUI = dialogueUI;
+            OpenOnStartConversation(portraitSprite, portraitActorName, displayName, dialogueActor);
         }
 
         [System.Obsolete("Use OpenOnStartConversation(Sprite,string,DialogueActor) instead.")]
         public virtual void OpenOnStartConversation(Texture2D portraitTexture, string portraitName, DialogueActor dialogueActor)
         {
-            OpenOnStartConversation(UITools.CreateSprite(portraitTexture), portraitName, dialogueActor);
+            OpenOnStartConversation(UITools.CreateSprite(portraitTexture), portraitName, portraitName, dialogueActor);
         }
 
         public virtual void OnConversationStart(Transform actor)
@@ -271,7 +293,7 @@ namespace PixelCrushers.DialogueSystem
             {
                 if (supercedeOnActorChange) Close();
                 StopShowAfterClosingCoroutine();
-                m_showAfterClosingCoroutine = DialogueManager.instance.StartCoroutine(ShowSubtitleAfterClosing(subtitle));
+                m_showAfterClosingOtherPanelsCoroutine = DialogueManager.instance.StartCoroutine(ShowSubtitleAfterClosingOtherPanels(subtitle));
             }
             else
             {
@@ -293,7 +315,7 @@ namespace PixelCrushers.DialogueSystem
             actorOverridingPanel = null;
         }
 
-        protected virtual IEnumerator ShowSubtitleAfterClosing(Subtitle subtitle)
+        protected virtual IEnumerator ShowSubtitleAfterClosingOtherPanels(Subtitle subtitle)
         {
             shouldShowContinueButton = false;
             float safeguardTime = Time.realtimeSinceStartup + WaitForCloseTimeoutDuration;
@@ -303,16 +325,32 @@ namespace PixelCrushers.DialogueSystem
             }
             ShowSubtitleNow(subtitle);
             if (shouldShowContinueButton) ShowContinueButton();
-            m_showAfterClosingCoroutine = null;
+            m_showAfterClosingOtherPanelsCoroutine = null;
         }
 
         protected virtual void StopShowAfterClosingCoroutine()
         {
-            if (m_showAfterClosingCoroutine != null)
+            if (m_showAfterClosingOtherPanelsCoroutine != null)
             {
-                DialogueManager.instance.StopCoroutine(m_showAfterClosingCoroutine);
-                m_showAfterClosingCoroutine = null;
+                DialogueManager.instance.StopCoroutine(m_showAfterClosingOtherPanelsCoroutine);
+                m_showAfterClosingOtherPanelsCoroutine = null;
             }
+        }
+
+        protected virtual void StopFocusWhenOpenCoroutine()
+        {
+            if (m_focusWhenOpenCoroutine != null)
+            {
+                StopCoroutine(m_focusWhenOpenCoroutine);
+                m_focusWhenOpenCoroutine = null;
+            }
+        }
+
+        public virtual void StopShowSubtitleCoroutines()
+        {
+            StopShowAfterClosingCoroutine();
+            StopFocusWhenOpenCoroutine();
+
         }
 
         /// <summary>
@@ -340,6 +378,12 @@ namespace PixelCrushers.DialogueSystem
             currentSubtitle = null;
         }
 
+        public virtual void Open(StandardDialogueUI dialogueUI)
+        {
+            m_dialogueUI = dialogueUI;
+            Open();
+        }
+
         /// <summary>
         /// Opens the panel.
         /// </summary>
@@ -353,7 +397,14 @@ namespace PixelCrushers.DialogueSystem
         /// </summary>
         public override void Close()
         {
-            StopShowAfterClosingCoroutine();
+            ResetAnimationTrigger(focusAnimationTrigger);
+            ResetAnimationTrigger(unfocusAnimationTrigger);
+            if (m_focusWhenOpenCoroutine != null) StopCoroutine(m_focusWhenOpenCoroutine);
+            if (m_showAfterClosingOtherPanelsCoroutine != null) StopCoroutine(m_showAfterClosingOtherPanelsCoroutine);
+            if (m_setAnimatorCoroutine != null) StopCoroutine(m_setAnimatorCoroutine);
+            m_focusWhenOpenCoroutine = null;
+            m_showAfterClosingOtherPanelsCoroutine = null;
+            m_setAnimatorCoroutine = null;
             if (isOpen) base.Close();
             if (clearTextOnClose && !waitForClose) ClearText();
             hasFocus = false;
@@ -367,7 +418,7 @@ namespace PixelCrushers.DialogueSystem
         {
             if (panelState == PanelState.Opening && enabled && gameObject.activeInHierarchy)
             {
-                if (m_focusWhenOpenCoroutine != null) StopCoroutine(m_focusWhenOpenCoroutine);
+                StopFocusWhenOpenCoroutine();
                 m_focusWhenOpenCoroutine = StartCoroutine(FocusWhenOpen());
             }
             else
@@ -392,7 +443,7 @@ namespace PixelCrushers.DialogueSystem
             panelState = PanelState.Open;
             if (hasFocus) return;
             isFocusing = true;
-            if (m_panelAnimator != null && !string.IsNullOrEmpty(unfocusAnimationTrigger)) m_panelAnimator.ResetTrigger(unfocusAnimationTrigger);
+            ResetAnimationTrigger(unfocusAnimationTrigger);
             if (string.IsNullOrEmpty(focusAnimationTrigger))
             {
                 OnFocused();
@@ -415,12 +466,8 @@ namespace PixelCrushers.DialogueSystem
         /// </summary>
         public virtual void Unfocus()
         {
-            if (m_panelAnimator != null && !string.IsNullOrEmpty(focusAnimationTrigger)) m_panelAnimator.ResetTrigger(focusAnimationTrigger);
-            if (m_focusWhenOpenCoroutine != null)
-            {
-                StopCoroutine(m_focusWhenOpenCoroutine);
-                m_focusWhenOpenCoroutine = null;
-            }
+            ResetAnimationTrigger(focusAnimationTrigger);
+            StopShowSubtitleCoroutines();
             if (!string.IsNullOrEmpty(focusAnimationTrigger) && animatorMonitor.currentTrigger == focusAnimationTrigger)
             {
                 animatorMonitor.CancelCurrentAnimation();
@@ -467,16 +514,33 @@ namespace PixelCrushers.DialogueSystem
             numAccumulatedLines = 0;
         }
 
+        private Coroutine m_ShowContinueButtonCoroutine;
+
         public virtual void ShowContinueButton()
         {
+            if (m_ShowContinueButtonCoroutine != null)
+            {
+                DialogueManager.instance.StopCoroutine(m_ShowContinueButtonCoroutine);
+            }
             if (blockInputDuration > 0)
             {
-                DialogueManager.instance.StartCoroutine(ShowContinueButtonAfterBlockDuration());
+                m_ShowContinueButtonCoroutine = DialogueManager.instance.StartCoroutine(ShowContinueButtonAfterBlockDuration());
             }
             else
             {
-                ShowContinueButtonNow();
+                m_ShowContinueButtonCoroutine = DialogueManager.instance.StartCoroutine(ShowContinueButtonAtEndOfFrame());
             }
+        }
+
+        public virtual void HideContinueButton()
+        {
+            if (m_ShowContinueButtonCoroutine != null)
+            {
+                DialogueManager.instance.StopCoroutine(m_ShowContinueButtonCoroutine);
+                m_ShowContinueButtonCoroutine = null;
+            }
+            Tools.SetGameObjectActive(continueButton, false);
+            shouldShowContinueButton = false;
         }
 
         protected virtual IEnumerator ShowContinueButtonAfterBlockDuration()
@@ -494,12 +558,21 @@ namespace PixelCrushers.DialogueSystem
             yield return DialogueManager.instance.StartCoroutine(DialogueTime.WaitForSeconds(blockInputDuration));
             continueButton.interactable = true;
             ShowContinueButtonNow();
+            m_ShowContinueButtonCoroutine = null;
+        }
+
+        protected virtual IEnumerator ShowContinueButtonAtEndOfFrame()
+        {
+            // We wait until the end of the frame in case another subtitle panel shares the
+            // same continue button and decides to deactivate it.
+            yield return endOfFrame;
+            ShowContinueButtonNow();
         }
 
         protected virtual void ShowContinueButtonNow()
-        { 
+        {
             Tools.SetGameObjectActive(continueButton, true);
-            if (InputDeviceManager.autoFocus) Select(); 
+            if (InputDeviceManager.autoFocus) Select();
             if (continueButton != null && continueButton.onClick.GetPersistentEventCount() == 0)
             {
                 continueButton.onClick.RemoveAllListeners();
@@ -514,11 +587,7 @@ namespace PixelCrushers.DialogueSystem
                 }
             }
             shouldShowContinueButton = true;
-        }
-
-        public virtual void HideContinueButton()
-        {
-            Tools.SetGameObjectActive(continueButton, false);
+            if (panel != null) panel.ForceUpdateRectTransforms();
         }
 
         /// <summary>
@@ -559,7 +628,7 @@ namespace PixelCrushers.DialogueSystem
             lastActorID = subtitle.speakerInfo.id;
             CheckSubtitleAnimator(subtitle);
             if (!onlyShowNPCPortraits || subtitle.speakerInfo.isNPC)
-            {                
+            {
                 if (portraitImage != null)
                 {
                     var sprite = subtitle.GetSpeakerPortrait();
@@ -596,6 +665,11 @@ namespace PixelCrushers.DialogueSystem
 
         protected virtual void SetSubtitleTextContent(Subtitle subtitle)
         {
+            if (addSpeakerName && !string.IsNullOrEmpty(subtitle.speakerInfo.Name))
+            {
+                subtitle.formattedText.text = FormattedText.Parse(string.Format(addSpeakerNameFormat, new object[] { subtitle.speakerInfo.Name, subtitle.formattedText.text })).text;
+            }
+
             TypewriterUtility.StopTyping(subtitleText);
             var previousText = accumulateText ? m_accumulatedText : string.Empty;
             if (accumulateText && !string.IsNullOrEmpty(subtitle.formattedText.text))
@@ -669,6 +743,7 @@ namespace PixelCrushers.DialogueSystem
             {
                 yield return null;
             }
+            if (panelState != PanelState.Open) yield break;
             subtitleText.text = text;
             TypewriterUtility.StartTyping(subtitleText, text, fromIndex);
         }
@@ -676,11 +751,6 @@ namespace PixelCrushers.DialogueSystem
         protected virtual void SetFormattedText(UITextField textField, string previousText, Subtitle subtitle)
         {
             var currentText = UITools.GetUIFormattedText(subtitle.formattedText);
-            if (addSpeakerName && !string.IsNullOrEmpty(subtitle.speakerInfo.Name))
-            {
-                currentText = FormattedText.Parse(string.Format(addSpeakerNameFormat, new object[] { subtitle.speakerInfo.Name, currentText })).text;
-            }
-
             textField.text = previousText + currentText;
             UITools.SendTextChangeMessage(textField);
             if (!haveSavedOriginalColor)

@@ -50,12 +50,11 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
         {
             if (database == null) return;
             var eventType = Event.current.type;
-            if (eventType == EventType.Repaint ||
+            if (eventType == EventType.Repaint || eventType == EventType.Layout ||
                 eventType == EventType.MouseEnterWindow || eventType == EventType.MouseLeaveWindow ||
+                eventType == EventType.MouseUp || eventType == EventType.MouseDown ||
+                eventType == EventType.MouseMove || eventType == EventType.MouseDrag ||
                 eventType == EventType.ContextClick) return;
-            //--- Changed: More event types need to register undo.
-            //if (eventType == EventType.MouseUp || eventType == EventType.MouseDrag ||
-            //    eventType == EventType.KeyUp || eventType == EventType.ContextClick)
             {
                 if (registerCompleteObjectUndo)
                 {
@@ -95,7 +94,11 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                     }
                 }
             }
-            if (database != null) EditorUtility.SetDirty(database);
+            if (database != null)
+            {
+                EditorUtility.SetDirty(database);
+                PrefabUtility.RecordPrefabInstancePropertyModifications(database);
+            }
         }
 
         private void MakeAutoBackup()
@@ -120,10 +123,11 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                 AssetDatabase.CopyAsset(path, backupPath);
                 AssetDatabase.Refresh();
 #if !(UNITY_4_6 || UNITY_4_7 || UNITY_4_8 || UNITY_4_9)
-                if (!string.IsNullOrEmpty(AssetImporter.GetAtPath(backupPath).assetBundleName))
+                var importer = AssetImporter.GetAtPath(backupPath);
+                if (importer != null && !string.IsNullOrEmpty(importer.assetBundleName))
                 {
-                    AssetImporter.GetAtPath(backupPath).assetBundleVariant = string.Empty;
-                    AssetImporter.GetAtPath(backupPath).assetBundleName = string.Empty;
+                    importer.assetBundleVariant = string.Empty;
+                    importer.assetBundleName = string.Empty;
                 }
 #endif
             }

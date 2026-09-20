@@ -8,3 +8,10 @@ MonoImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 11672
+  packageName: Dialogue System for Unity
+  packageVersion: 2.2.74
+  assetPath: Assets/Plugins/Pixel Crushers/Dialogue System/Scripts/Editor/Tools/Importers/Articy/Schemas/Articy 4.0/Articy_4_0_EditorTools.cs
+  uploadId: 994926

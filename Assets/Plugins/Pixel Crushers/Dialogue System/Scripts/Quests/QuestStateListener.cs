@@ -60,6 +60,17 @@ namespace PixelCrushers.DialogueSystem
         [Tooltip("When starting component, do not invoke any OnEnterState() events.")]
         public bool suppressOnEnterStateEventsOnStart = false;
 
+        [Tooltip("If assigned, use this Quest State Indicator component. Otherwise will automatically find Quest State Indicator on this GameObject or its parents or children.")]
+        [SerializeField] protected QuestStateIndicator m_questStateIndicator;
+        protected QuestStateIndicator questStateIndicator
+        {
+            get
+            {
+                if (m_questStateIndicator == null) m_questStateIndicator = GetComponentInParent<QuestStateIndicator>() ?? GetComponentInChildren<QuestStateIndicator>();
+                return m_questStateIndicator;
+            }
+        }
+
         protected QuestStateDispatcher m_questStateDispatcher;
         protected QuestStateDispatcher questStateDispatcher
         {
@@ -72,7 +83,7 @@ namespace PixelCrushers.DialogueSystem
                         m_questStateDispatcher = DialogueManager.instance.GetComponent<QuestStateDispatcher>();
                         if (m_questStateDispatcher == null)
                         {
-                            m_questStateDispatcher = GameObjectUtility.FindFirstObjectByType<QuestStateDispatcher>();
+                            m_questStateDispatcher = PixelCrushers.GameObjectUtility.FindFirstObjectByType<QuestStateDispatcher>();
                             if (m_questStateDispatcher == null)
                             {
                                 m_questStateDispatcher = DialogueManager.instance.gameObject.AddComponent<QuestStateDispatcher>();
@@ -81,7 +92,7 @@ namespace PixelCrushers.DialogueSystem
                     }
                     else
                     {
-                        m_questStateDispatcher = GameObjectUtility.FindFirstObjectByType<QuestStateDispatcher>();
+                        m_questStateDispatcher = PixelCrushers.GameObjectUtility.FindFirstObjectByType<QuestStateDispatcher>();
                         if (m_questStateDispatcher == null)
                         {
                             var go = new GameObject("QuestStateDispatcher");
@@ -91,15 +102,6 @@ namespace PixelCrushers.DialogueSystem
                     }
                 }
                 return m_questStateDispatcher;
-            }
-        }
-        protected QuestStateIndicator m_questStateIndicator;
-        protected QuestStateIndicator questStateIndicator
-        {
-            get
-            {
-                if (m_questStateIndicator == null) m_questStateIndicator = GetComponent<QuestStateIndicator>();
-                return m_questStateIndicator;
             }
         }
         private bool m_started = false;
@@ -139,7 +141,11 @@ namespace PixelCrushers.DialogueSystem
 
         protected virtual void OnEnable()
         {
-            if (started) questStateDispatcher.AddListener(this);
+            if (started)
+            {
+                questStateDispatcher.AddListener(this);
+                UpdateIndicator();
+            }
         }
 
         protected virtual void OnDisable()

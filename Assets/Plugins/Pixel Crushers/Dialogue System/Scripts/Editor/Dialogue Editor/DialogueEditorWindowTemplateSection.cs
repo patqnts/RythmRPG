@@ -69,15 +69,20 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             EditorWindowTools.StartIndentedSection();
             DrawTemplate("Actors", template.actorFields, template.actorPrimaryFieldTitles, ref templateFoldouts.actors);
             DrawActorTemplateAIButton();
-            DrawTemplate("Items", template.itemFields, null, ref templateFoldouts.items);
+            DrawTemplate("Items", template.itemFields, template.itemPrimaryFieldTitles, ref templateFoldouts.items);
             DrawTemplate("Quests", template.questFields, template.questPrimaryFieldTitles, ref templateFoldouts.quests);
-            DrawTemplate("Locations", template.locationFields, null, ref templateFoldouts.locations);
+            DrawTemplate("Locations", template.locationFields, template.locationPrimaryFieldTitles, ref templateFoldouts.locations);
             DrawTemplate("Variables", template.variableFields, null, ref templateFoldouts.variables);
             DrawTemplate("Conversations", template.conversationFields, template.conversationPrimaryFieldTitles, ref templateFoldouts.conversations);
             DrawTemplate("Dialogue Entries", template.dialogueEntryFields, template.dialogueEntryPrimaryFieldTitles, ref templateFoldouts.dialogueEntries);
+            DrawDialogueEntryTemplateAIButton();
             DrawDialogueLineColors();
             EditorWindowTools.EndIndentedSection();
-            if (EditorGUI.EndChangeCheck()) SaveTemplate();
+            if (EditorGUI.EndChangeCheck())
+            {
+                SaveTemplate();
+                ResetLastFieldsChecked();
+            }
         }
 
         private void DrawActorTemplateAIButton()
@@ -116,12 +121,48 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
 #endif
         }
 
+        private void DrawDialogueEntryTemplateAIButton()
+        {
+
+#if USE_OPENAI
+            if (templateFoldouts.dialogueEntries)
+            {
+                var hasAudioTagField = template.dialogueEntryFields.Find(f => f.title == DialogueSystemFields.AudioTag) != null;
+                if (!hasAudioTagField)
+                {
+                    if (GUILayout.Button(new GUIContent("Add Audio Tag for ElevenLabs AI", "Add Audio Tag field that Addon for OpenAI's ElevenLabs integration can use to guide voice acting.")))
+                    {
+                        template.dialogueEntryFields.Add(new Field(DialogueSystemFields.AudioTag, "", FieldType.Text));
+                        template.dialogueEntryPrimaryFieldTitles.Add(DialogueSystemFields.AudioTag);
+                        if (database != null)
+                        {
+                            foreach (var conversation in database.conversations)
+                            { 
+                            foreach (var entry in conversation.dialogueEntries)
+                            {
+                                if (!Field.FieldExists(entry.fields, DialogueSystemFields.AudioTag))
+                                {
+                                    entry.fields.Add(new Field(DialogueSystemFields.AudioTag, "", FieldType.Text));
+                                }
+                            }
+                            }
+                        }
+                    }
+                }
+            }
+#endif
+        }
+
         private void DrawTemplate(string foldoutName, List<Field> fields, List<string> primaryFieldTitles, ref bool foldout)
         {
             currentTemplateFoldout = foldoutName;
             EditorGUILayout.BeginHorizontal();
             foldout = EditorGUILayout.Foldout(foldout, foldoutName);
-            if (GUILayout.Button(new GUIContent(" ", "Add new field to template."), "OL Plus", GUILayout.Width(16))) fields.Add(new Field());
+            if (GUILayout.Button(new GUIContent(" ", "Add new field to template."), "OL Plus", GUILayout.Width(16)))
+            {
+                foldout = true;
+                fields.Add(new Field());
+            }
             EditorGUILayout.EndHorizontal();
             if (foldout)
             {
@@ -165,7 +206,8 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                     template = newTemplate;
                     SaveTemplate();
                 }
-                else {
+                else
+                {
                     EditorUtility.DisplayDialog("Import Error", "Unable to import template data from the XML file.", "OK");
                 }
             }

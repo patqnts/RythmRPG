@@ -247,6 +247,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                     menu.AddItem(new GUIContent("Arrange Nodes/Horizontally"), false, ArrangeNodesCallback, AutoArrangeStyle.Horizontally);
                     menu.AddItem(new GUIContent("Split Pipes Into Nodes/Process Conversation"), false, SplitPipesIntoEntries, null);
                     menu.AddItem(new GUIContent("Split Pipes Into Nodes/Trim Whitespace Around Pipes"), trimWhitespaceAroundPipes, ToggleTrimWhitespaceAroundPipes);
+                    menu.AddItem(new GUIContent("Split Pipes Into Nodes/Alternate Actors At Pipes"), prefs.alternateActorsAtPipes, () => prefs.alternateActorsAtPipes = !prefs.alternateActorsAtPipes);
                 }
                 else
                 {
@@ -261,6 +262,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                 menu.AddItem(new GUIContent("Sort/Reorder IDs/This Conversation"), false, ConfirmReorderIDsThisConversation);
                 menu.AddItem(new GUIContent("Sort/Reorder IDs/All Conversations"), false, ConfirmReorderIDsAllConversations);
                 menu.AddItem(new GUIContent("Sort/Reorder IDs/Depth First Reordering"), reorderIDsDepthFirst, () => { reorderIDsDepthFirst = !reorderIDsDepthFirst; });
+                menu.AddItem(new GUIContent("Sort/Reorder IDs/Rebaseline All IDs"), false, ConfirmRebaselineAllIDs);
                 menu.AddItem(new GUIContent("Show/Show Conversation IDs"), prefs.showConversationIDs, ToggleShowConversationIDs);
                 menu.AddItem(new GUIContent("Show/Show Node IDs"), prefs.showNodeIDs, ToggleShowNodeIDs);
                 menu.AddItem(new GUIContent("Show/Show All Actor Names"), prefs.showAllActorNames, ToggleShowAllActorNames);
@@ -532,14 +534,15 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             RecordConversationTitles();
         }
 
-        private void GotoStartNodePosition()
+        public void GotoStartNodePosition()
         {
+            if (currentConversation == null) return;
             var startEntry = currentConversation.GetFirstDialogueEntry();
             if (startEntry == null) return;
             canvasScrollPosition = new Vector2(Mathf.Max(0, startEntry.canvasRect.x - ((position.width - startEntry.canvasRect.width) / 2)), Mathf.Max(0, startEntry.canvasRect.y - 8));
         }
 
-        private void GotoCurrentRuntimeEntry()
+        public void GotoCurrentRuntimeEntry()
         {
             if (!(Application.isPlaying && DialogueManager.isConversationActive)) return;
             var activeConversationID = DialogueManager.currentConversationState.subtitle.dialogueEntry.conversationID;
@@ -550,6 +553,11 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             if (currentConversation == null) return;
             var currentEntry = currentConversation.GetDialogueEntry(DialogueManager.currentConversationState.subtitle.dialogueEntry.id);
             if (currentEntry == null) return;
+            GotoDialogueEntryPosition(currentEntry);
+        }
+
+        public void GotoDialogueEntryPosition(DialogueEntry currentEntry)
+        { 
             canvasScrollPosition = new Vector2(Mathf.Max(0, currentEntry.canvasRect.x - ((position.width - currentEntry.canvasRect.width) / 2)), Mathf.Max(0, currentEntry.canvasRect.y - 8));
         }
 

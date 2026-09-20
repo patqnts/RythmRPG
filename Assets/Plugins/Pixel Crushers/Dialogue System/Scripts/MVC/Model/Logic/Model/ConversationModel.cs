@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 namespace PixelCrushers.DialogueSystem
 {
@@ -85,13 +86,19 @@ namespace PixelCrushers.DialogueSystem
         private bool m_includeInvalidEntries = false;
         private string pcPortraitName = null;
         private Sprite pcPortraitSprite = null;
+        private bool stopAtFirstValid = false;
+        private bool useLinearGroupMode = false;
         private DialogueEntry forceLinkEntry = null;
+        private Conversation conversation = null;
 
         /// <summary>
         /// The current conversation ID. When this changes (in GotoState), the Lua environment
         /// needs to set the Dialog[] table to the new conversation's table.
         /// </summary>
         private int m_currentDialogTableConversationID = -1;
+
+        public ConversationOverrideDisplaySettings conversationOverrideDisplaySettings =>
+            (conversation != null) ? conversation.overrideSettings : null;
 
         /// <summary>
         /// Initializes a new ConversationModel.
@@ -105,15 +112,21 @@ namespace PixelCrushers.DialogueSystem
         /// <param name="initialDialogueEntryID">Initial dialogue entry ID (-1 to start at beginning).</param>
         /// <param name="stopAtFirstValid">If set to <c>true</c> stop at first valid link from the initial entry.</param>
         /// <param name="skipExecution">IF set to <c>true</c>, doesn't run the Lua Script or OnExecute event on the initial entry.</param>
+        /// <param name="useLinearGroupMode">Use linear group mode which stops link evaluation upon first group that has a valid link.</param>
+        /// <param name="actorOverrides">List of other actors to replace roles of actors in conversation.</param>
         public ConversationModel(DialogueDatabase database, string title, Transform actor, Transform conversant,
                                  bool allowLuaExceptions, IsDialogueEntryValidDelegate isDialogueEntryValid,
-                                 int initialDialogueEntryID = -1, bool stopAtFirstValid = false, bool skipExecution = false)
+                                 int initialDialogueEntryID = -1, bool stopAtFirstValid = false,
+                                 bool skipExecution = false, bool useLinearGroupMode = false,
+                                 List<ActorOverride> actorOverrides = null)
         {
             this.m_allowLuaExceptions = allowLuaExceptions;
             this.m_database = database;
             this.conversationTitle = title;
             this.isDialogueEntryValid = isDialogueEntryValid;
-            Conversation conversation = database.GetConversation(title);
+            this.stopAtFirstValid = stopAtFirstValid;
+            this.useLinearGroupMode = useLinearGroupMode;
+            this.conversation = database.GetConversation(title);
             if (conversation != null)
             {
                 DisplaySettings displaySettings = DialogueManager.displaySettings;
@@ -141,6 +154,7 @@ namespace PixelCrushers.DialogueSystem
                 }
 
                 SetParticipants(conversation, actor, conversant);
+                SetActorOverrides(actorOverrides);
                 if (initialDialogueEntryID == -1)
                 {
                     firstState = GetState(conversation.GetFirstDialogueEntry(), true, stopAtFirstValid, skipExecution);
@@ -230,6 +244,11 @@ namespace PixelCrushers.DialogueSystem
             }
         }
 
+        public void SetLuaParticipants()
+        {
+            DialogueLua.SetParticipants(m_actorInfo.Name, m_conversantInfo.Name, m_actorInfo.nameInDatabase, m_conversantInfo.nameInDatabase);
+        }
+
         /// <summary>
         /// "Follows" a dialogue entry and returns its full conversation state. This method updates 
         /// the Lua environment (marking the entry as visited). If includeLinks is <c>true</c>, 
@@ -247,46 +266,29 @@ namespace PixelCrushers.DialogueSystem
                 if (DialogueManager.instance.activeConversations.Count > 1)
                 {
                     // If multiple conversations are active, set the right participants in Lua:
-                    DialogueLua.SetParticipants(m_actorInfo.Name, m_conversantInfo.Name, m_actorInfo.nameInDatabase, m_conversantInfo.nameInDatabase);
+                    SetLuaParticipants();
                 }
                 DialogueManager.instance.SendMessage(DialogueSystemMessages.OnPrepareConversationLine, entry, SendMessageOptions.DontRequireReceiver);
-                DialogueLua.MarkDialogueEntryDisplayed(entry);
                 Lua.Run("thisID = " + entry.id);
                 SetDialogTable(entry.conversationID);
-                if (!skipExecution)
+                // Set primary participants in Lua:
+                if (this.actorInfo != null && this.conversantInfo != null)
                 {
-                    Lua.Run(entry.userScript, DialogueDebug.logInfo, m_allowLuaExceptions);
-                    try
-                    {
-                        entry.onExecute.Invoke();
-                    }
-                    catch (System.Exception e)
-                    {
-                        if (DialogueDebug.logWarnings) Debug.LogWarning("Non-scene OnExecute() event failed on dialogue entry " + entry.conversationID + ":" + entry.id + ": " + e.Message);
-                    }
+                    DialogueLua.SetParticipants(this.actorInfo.Name, this.conversantInfo.Name);
                 }
                 CharacterInfo actorInfo = GetCharacterInfo(entry.ActorID);
                 CharacterInfo listenerInfo = GetCharacterInfo(entry.ConversantID);
+                // Set speaker in Lua:
+                if (actorInfo != null) DialogueLua.SetSpeaker(actorInfo.Name);
                 if (!skipExecution)
                 {
-                    var sceneEvent = DialogueSystemSceneEvents.GetDialogueEntrySceneEvent(entry.sceneEventGuid);
-                    var eventGameObject = (actorInfo.transform != null) ? actorInfo.transform.gameObject : DialogueManager.instance.gameObject;
-                    if (sceneEvent != null)
-                    {
-                        try
-                        {
-                            sceneEvent.onExecute.Invoke(eventGameObject);
-                        }
-                        catch (System.Exception e)
-                        {
-                            if (DialogueDebug.logWarnings) Debug.LogWarning("Scene OnExecute() event failed on dialogue entry " + entry.conversationID + ":" + entry.id + ": " + e.Message);
-                        }
-                    }
+                    ExecuteEntry(entry, actorInfo);
                 }
                 FormattedText formattedText = FormattedText.Parse(entry.subtitleText, m_database.emphasisSettings);
                 CheckSequenceField(entry);
                 string entrytag = m_database.GetEntrytag(entry.conversationID, entry.id, m_entrytagFormat);
                 Subtitle subtitle = new Subtitle(actorInfo, listenerInfo, formattedText, entry.currentSequence, entry.currentResponseMenuSequence, entry, entrytag);
+                DialogueLua.MarkDialogueEntryDisplayed(entry);
                 List<Response> npcResponses = new List<Response>();
                 List<Response> pcResponses = new List<Response>();
                 if (includeLinks)
@@ -295,9 +297,10 @@ namespace PixelCrushers.DialogueSystem
                     {
                         AddForcedLink(npcResponses, pcResponses);
                     }
-                    else
+                    else if (!useLinearGroupMode) // In linear group mode, links are evaluated after subtitle finishes.
                     {
-                        EvaluateLinks(entry, npcResponses, pcResponses, new List<DialogueEntry>(), stopAtFirstValid, skipExecution);
+                        EvaluateLinks(entry, npcResponses, pcResponses, 0, new List<DialogueEntry>(), null, stopAtFirstValid, skipExecution);
+                        SetDialogTable(entry.conversationID); // Child links may have set a different table, so ensure correct one is set.
                     }
                 }
                 return new ConversationState(subtitle, npcResponses.ToArray(), pcResponses.ToArray(), entry.isGroup);
@@ -305,6 +308,33 @@ namespace PixelCrushers.DialogueSystem
             else
             {
                 return null;
+            }
+        }
+
+        private void ExecuteEntry(DialogueEntry entry, CharacterInfo actorInfo)
+        {
+            // Run Lua Script and OnExecute UnityEvents:
+            Lua.Run(entry.userScript, DialogueDebug.logInfo, m_allowLuaExceptions);
+            try
+            {
+                entry.onExecute.Invoke();
+            }
+            catch (System.Exception e)
+            {
+                if (DialogueDebug.logWarnings) Debug.LogWarning("Non-scene OnExecute() event failed on dialogue entry " + entry.conversationID + ":" + entry.id + ": " + e.Message);
+            }
+            var sceneEvent = DialogueSystemSceneEvents.GetDialogueEntrySceneEvent(entry.sceneEventGuid);
+            var eventGameObject = (actorInfo.transform != null) ? actorInfo.transform.gameObject : DialogueManager.instance.gameObject;
+            if (sceneEvent != null)
+            {
+                try
+                {
+                    sceneEvent.onExecute.Invoke(eventGameObject);
+                }
+                catch (System.Exception e)
+                {
+                    if (DialogueDebug.logWarnings) Debug.LogWarning("Scene OnExecute() event failed on dialogue entry " + entry.conversationID + ":" + entry.id + ": " + e.Message);
+                }
             }
         }
 
@@ -342,7 +372,7 @@ namespace PixelCrushers.DialogueSystem
         /// </param>
         public ConversationState GetState(DialogueEntry entry)
         {
-            return GetState(entry, true);
+            return GetState(entry, true, stopAtFirstValid);
         }
 
         /// <summary>
@@ -353,7 +383,7 @@ namespace PixelCrushers.DialogueSystem
         {
             List<Response> npcResponses = new List<Response>();
             List<Response> pcResponses = new List<Response>();
-            EvaluateLinks(state.subtitle.dialogueEntry, npcResponses, pcResponses, new List<DialogueEntry>());
+            EvaluateLinks(state.subtitle.dialogueEntry, npcResponses, pcResponses, 0, new List<DialogueEntry>());
             state.npcResponses = npcResponses.ToArray();
             state.pcResponses = pcResponses.ToArray();
         }
@@ -374,6 +404,8 @@ namespace PixelCrushers.DialogueSystem
                 if (DialogueDebug.logWarnings) Debug.LogWarning(string.Format("{0}: Dialogue entry '{1}' Video File field is assigned but Sequence is blank. Cutscenes now use Sequence field.", new System.Object[] { DialogueDebug.Prefix, entry.currentDialogueText }));
             }
         }
+
+        private const int MaxEvaluateLinksDepth = 128;
 
         /// <summary>
         /// Evaluates a dialogue entry's links. Evaluation follows the same rules as Chat Mapper:
@@ -396,32 +428,43 @@ namespace PixelCrushers.DialogueSystem
         /// and get frozen in an infinite loop.
         /// </param>
         private void EvaluateLinks(DialogueEntry entry, List<Response> npcResponses, List<Response> pcResponses,
-                                   List<DialogueEntry> visited, bool stopAtFirstValid = false, bool skipExecution = false)
+                                   int depth, List<DialogueEntry> visited, List<DialogueEntry> groupsToDisallow = null,
+                                   bool stopAtFirstValid = false, bool skipExecution = false)
         {
+            if (depth > MaxEvaluateLinksDepth) return;
             if ((entry != null) && !visited.Contains(entry))
             {
                 visited.Add(entry);
+                if (groupsToDisallow == null) groupsToDisallow = new List<DialogueEntry>();
                 for (int i = (int)ConditionPriority.High; i >= 0; i--)
                 {
-                    EvaluateLinksAtPriority((ConditionPriority)i, entry, npcResponses, pcResponses, visited, stopAtFirstValid, skipExecution);
+                    EvaluateLinksAtPriority((ConditionPriority)i, entry, npcResponses, pcResponses, depth, visited, groupsToDisallow, stopAtFirstValid, skipExecution);
                     if ((npcResponses.Count > 0) || (pcResponses.Count > 0)) return;
                 }
             }
         }
 
         private void EvaluateLinksAtPriority(ConditionPriority priority, DialogueEntry entry, List<Response> npcResponses,
-                                             List<Response> pcResponses, List<DialogueEntry> visited,
+                                             List<Response> pcResponses, int depth, List<DialogueEntry> visited,
+                                             List<DialogueEntry> groupsToDisallow,
                                              bool stopAtFirstValid = false, bool skipExecution = false)
         {
+            if (depth > MaxEvaluateLinksDepth) return;
             if (entry != null)
             {
                 for (int ol = 0; ol < entry.outgoingLinks.Count; ol++)
                 {
                     var link = entry.outgoingLinks[ol];
                     DialogueEntry destinationEntry = m_database.GetDialogueEntry(link);
-                    if ((destinationEntry != null) && (/*(destinationEntry.conditionPriority == priority) ||*/ (link.priority == priority))) // Note: Only observe link priority. Why does Chat Mapper even have conditionPriority?
+
+                    if (destinationEntry == null) continue;
+
+                    if (groupsToDisallow.Contains(destinationEntry)) continue;
+
+                    if (link.priority == priority) // Note: Only observe link priority. Why does Chat Mapper even have conditionPriority?
                     {
                         CharacterType characterType = m_database.GetCharacterType(destinationEntry.ActorID);
+                        SetDialogTable(destinationEntry.conversationID);
                         Lua.Run("thisID = " + destinationEntry.id);
                         bool isValid = Lua.IsTrue(destinationEntry.conditionsString, DialogueDebug.logInfo, m_allowLuaExceptions) &&
                             ((isDialogueEntryValid == null) || isDialogueEntryValid(destinationEntry));
@@ -429,25 +472,41 @@ namespace PixelCrushers.DialogueSystem
                         {
 
                             // Condition is true (or blank), so add this link:
-                            if (destinationEntry.isGroup)
+                            if (destinationEntry.isGroup || destinationEntry.id == 0) // Treat <START> as group
                             {
-
                                 // For groups, evaluate their links (after running the group node's Lua code and OnExecute() event):
                                 if (DialogueDebug.logInfo) Debug.Log(string.Format("{0}: Evaluate Group ({1}): ID={2}:{3} '{4}' ({5})", new System.Object[] { DialogueDebug.Prefix, GetActorName(m_database.GetActor(destinationEntry.ActorID)), link.destinationConversationID, link.destinationDialogueID, destinationEntry.Title, isValid }));
                                 if (!skipExecution)
                                 {
-                                    Lua.Run(destinationEntry.userScript, DialogueDebug.logInfo, m_allowLuaExceptions);
-                                    destinationEntry.onExecute.Invoke();
+                                    ExecuteEntry(destinationEntry, actorInfo);
                                 }
                                 isValid = false; // Assume invalid until at least one group's child is true.
                                 for (int i = (int)ConditionPriority.High; i >= 0; i--)
                                 {
                                     int originalResponseCount = npcResponses.Count + pcResponses.Count;
-                                    EvaluateLinksAtPriority((ConditionPriority)i, destinationEntry, npcResponses, pcResponses, visited, stopAtFirstValid, skipExecution);
+                                    EvaluateLinksAtPriority((ConditionPriority)i, destinationEntry, npcResponses, pcResponses, depth + 1, visited, groupsToDisallow, stopAtFirstValid, skipExecution);
                                     if ((npcResponses.Count + pcResponses.Count) > originalResponseCount)
                                     {
                                         isValid = true;
+                                        if (stopAtFirstValid && npcResponses.Count > 0) return;
                                         break;
+                                    }
+                                }
+
+                                // Then, if linear mode, disallow lower priority sibling group nodes and later sibling group nodes:
+                                if (useLinearGroupMode)
+                                {
+                                    for (int i = 0; i < entry.outgoingLinks.Count; i++)
+                                    {
+                                        if (i == ol) continue;
+                                        var siblingLink = entry.outgoingLinks[i];
+                                        var disallowThis = (i > ol) || ((int)siblingLink.priority < (int)priority);
+                                        if (!disallowThis) continue;
+                                        DialogueEntry aDestinationEntry = m_database.GetDialogueEntry(siblingLink);
+                                        if (aDestinationEntry != null && aDestinationEntry.isGroup)
+                                        {
+                                            groupsToDisallow.Add(aDestinationEntry);
+                                        }
                                     }
                                 }
                             }
@@ -461,6 +520,8 @@ namespace PixelCrushers.DialogueSystem
 
                                     // Add NPC response:
                                     npcResponses.Add(new Response(FormattedText.Parse(destinationEntry.subtitleText, m_database.emphasisSettings), destinationEntry, isValid));
+
+                                    if (stopAtFirstValid && !DoesEntryRandomizeNextEntry(entry)) return;
                                 }
                                 else
                                 {
@@ -495,8 +556,7 @@ namespace PixelCrushers.DialogueSystem
                                     DialogueLua.MarkDialogueEntryOffered(destinationEntry);
                                 }
                             }
-                            if (isValid && stopAtFirstValid) return;
-
+                            //--- Moved to NPC section above: if (isValid && stopAtFirstValid) return;
                         }
                         else
                         {
@@ -507,7 +567,7 @@ namespace PixelCrushers.DialogueSystem
                                 if (DialogueDebug.logInfo) Debug.Log(string.Format("{0}: Passthrough on False Link ({1}): ID={2}:{3} '{4}' Condition='{5}'", new System.Object[] { DialogueDebug.Prefix, GetActorName(m_database.GetActor(destinationEntry.ActorID)), link.destinationConversationID, link.destinationDialogueID, GetLinkText(characterType, destinationEntry), destinationEntry.conditionsString }));
                                 List<Response> linkNpcResponses = new List<Response>();
                                 List<Response> linkPcResponses = new List<Response>();
-                                EvaluateLinks(destinationEntry, linkNpcResponses, linkPcResponses, visited);
+                                EvaluateLinks(destinationEntry, linkNpcResponses, linkPcResponses, depth + 1, visited, groupsToDisallow);
                                 npcResponses.AddRange(linkNpcResponses);
                                 pcResponses.AddRange(linkPcResponses);
                             }
@@ -521,6 +581,13 @@ namespace PixelCrushers.DialogueSystem
             }
         }
 
+        private bool DoesEntryRandomizeNextEntry(DialogueEntry entry)
+        {
+            return entry != null &&
+                ((!string.IsNullOrEmpty(entry.userScript) && entry.userScript.Contains("RandomizeNextEntry()")) ||
+                 (!string.IsNullOrEmpty(entry.Sequence) && entry.Sequence.Contains("RandomizeNextEntry()")));
+        }
+
         private string GetActorName(Actor actor)
         {
             return (actor != null) ? actor.Name : "null";
@@ -532,7 +599,7 @@ namespace PixelCrushers.DialogueSystem
         }
 
         /// <summary>
-        /// 
+        /// Sets the character info for the primary participants in the conversation.
         /// </summary>
         /// <param name="conversation"></param>
         /// <param name="actor"></param>
@@ -546,6 +613,21 @@ namespace PixelCrushers.DialogueSystem
             if (m_conversantInfo != null) m_characterInfoCache[m_conversantInfo.id] = m_conversantInfo;
             DialogueLua.SetParticipants(m_actorInfo.Name, m_conversantInfo.Name, m_actorInfo.nameInDatabase, m_conversantInfo.nameInDatabase);
             IdentifyPCPortrait(conversation);
+        }
+
+        /// <summary>
+        /// Sets optional list of actors to replace roles of actors assigned in conversation.
+        /// </summary>
+        public void SetActorOverrides(List<ActorOverride> actorOverrides)
+        {
+            if (actorOverrides == null) return;
+            foreach (var actorOverride in actorOverrides)
+            {
+                if (actorOverride == null) continue;
+                var actor = DialogueManager.masterDatabase.GetActor(actorOverride.actor);
+                if (actor == null) continue;
+                OverrideCharacterInfo(actor.id, actorOverride.replaceWith);
+            }
         }
 
         /// <summary>
@@ -611,6 +693,25 @@ namespace PixelCrushers.DialogueSystem
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Clears the entire character info cache for this conversation.
+        /// </summary>
+        public void ClearAllCharacterInfo()
+        {
+            m_characterInfoCache.Clear();
+        }
+
+        /// <summary>
+        /// Removes a character's cached info from the conversation model.
+        /// Used by DialogueActor to clear info when DialogueActor's
+        /// GameObject is destroyed mid-conversation.
+        /// </summary>
+        /// <param name="id"></param>
+        public void ClearCharacterInfo(int id)
+        {
+            m_characterInfoCache.Remove(id);
         }
 
         /// <summary>
@@ -764,11 +865,15 @@ namespace PixelCrushers.DialogueSystem
         /// <returns>The PC name, or <c>null</c> if both are NPCs.</returns>
         public string GetPCName()
         {
-            if (m_database.IsPlayerID(m_actorInfo.id))
+            if (m_database == null)
+            {
+                return pcPortraitName;
+            }
+            else if (m_actorInfo != null && m_database.IsPlayerID(m_actorInfo.id))
             {
                 return m_actorInfo.Name;
             }
-            else if (m_database.IsPlayerID(m_conversantInfo.id))
+            else if (m_conversantInfo != null && m_database.IsPlayerID(m_conversantInfo.id))
             {
                 return m_conversantInfo.Name;
             }

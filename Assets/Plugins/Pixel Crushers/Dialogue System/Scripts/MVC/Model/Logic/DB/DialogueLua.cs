@@ -17,6 +17,9 @@ namespace PixelCrushers.DialogueSystem
     /// For speed, this class occasionally bypasses the Lua wrapper class and works directly
     /// with the underlying Lua implementation, Lua Interpreter.
     /// </summary>
+#if VISUAL_SCRIPTING
+    [Unity.VisualScripting.IncludeInSettings(true)]
+#endif
     public static class DialogueLua
     {
 
@@ -64,13 +67,16 @@ namespace PixelCrushers.DialogueSystem
         private static string cachedConversantName;
         private static string cachedActorIndex;
         private static string cachedConversantIndex;
+        private static string currentActorVariableName;
+        private static string currentConversantVariableName;
+        private static string currentSpeakerVariableName;
 
 #if UNITY_2019_3_OR_NEWER && UNITY_EDITOR
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         static void InitStaticVariables()
         {
             isRegistering = false;
-            hasCachedParticipants = false;
+            ResetParticipantCache();
             includeSimStatus = true;
             statusTable = new Dictionary<string, string>();
             relationshipTable = new Dictionary<string, float>();
@@ -120,6 +126,7 @@ namespace PixelCrushers.DialogueSystem
             Lua.Run("unassigned='unassigned'; active='active'; success='success'; failure='failure'; abandoned='abandoned'", DialogueDebug.LogInfo);
             statusTable.Clear();
             relationshipTable.Clear();
+            ResetParticipantCache();
         }
 
         /// <summary>
@@ -166,6 +173,14 @@ namespace PixelCrushers.DialogueSystem
             }
         }
 
+        static void ResetParticipantCache()
+        {
+            hasCachedParticipants = false;
+            currentActorVariableName = string.Empty;
+            currentConversantVariableName = string.Empty;
+            currentSpeakerVariableName = string.Empty;
+        }
+
         /// <summary>
         /// Sets the conversation participant name variables (Variable['Actor'] and
         /// Variable['Conversant']) and, optionally, participant indices in Actor table.
@@ -177,10 +192,18 @@ namespace PixelCrushers.DialogueSystem
         public static void SetParticipants(string actorName, string conversantName, string actorIndex = null, string conversantIndex = null)
         {
             //---Was: Lua.Run(string.Format("Variable[\"Actor\"] = \"{0}\"; Variable[\"Conversant\"] = \"{1}\"", new System.Object[] { DoubleQuotesToSingle(actorName), DoubleQuotesToSingle(conversantName) }), DialogueDebug.LogInfo);
-            SetVariable("Actor", actorName);
-            SetVariable("Conversant", conversantName);
-            SetVariable("ActorIndex", StringToTableIndex(string.IsNullOrEmpty(actorIndex) ? actorName : actorIndex));
-            SetVariable("ConversantIndex", StringToTableIndex(string.IsNullOrEmpty(conversantIndex) ? actorName : conversantIndex));
+            if (actorName != currentActorVariableName)
+            {
+                currentActorVariableName = actorName;
+                SetVariable("Actor", actorName);
+                SetVariable("ActorIndex", StringToTableIndex(string.IsNullOrEmpty(actorIndex) ? actorName : actorIndex));
+            }
+            if (conversantName != currentConversantVariableName)
+            {
+                currentConversantVariableName = conversantName;
+                SetVariable("Conversant", conversantName);
+                SetVariable("ConversantIndex", StringToTableIndex(string.IsNullOrEmpty(conversantIndex) ? conversantName : conversantIndex));
+            }
             if (isRegistering) // Cache participants to set after Lua funcs are registered.
             {
                 hasCachedParticipants = true;
@@ -188,6 +211,15 @@ namespace PixelCrushers.DialogueSystem
                 cachedConversantName = conversantName;
                 cachedActorIndex = actorIndex;
                 cachedConversantIndex = conversantIndex;
+            }
+        }
+
+        public static void SetSpeaker(string speakerName)
+        {
+            if (speakerName != currentSpeakerVariableName)
+            {
+                currentSpeakerVariableName = speakerName;
+                SetVariable("Speaker", speakerName);
             }
         }
 
@@ -1200,7 +1232,9 @@ namespace PixelCrushers.DialogueSystem
             Lua.WasInvoked = true;
             LuaTable luaTable = Lua.Environment.GetValue("Variable") as LuaTable;
             if (luaTable == null) return;
-            luaTable.SetNameValue(StringToTableIndex(variable), LuaInterpreterExtensions.ObjectToLuaValue(value));
+            var tableIndex = StringToTableIndex(variable);
+            luaTable.SetNameValue(tableIndex, LuaInterpreterExtensions.ObjectToLuaValue(value));
+            if (Assignment.MonitoredVariables.Contains(tableIndex)) Assignment.InvokeVariableChanged(tableIndex, value);
         }
 
         /// <summary>
@@ -1345,9 +1379,13 @@ namespace PixelCrushers.DialogueSystem
         /// <param name="value">Value to set.</param>
         public static void SetConversationField(int conversationID, string field, object value)
         {
-            var safeValue = (value == null) ? "nil"
-                : (value.GetType() == typeof(string)) ? $"\"{DoubleQuotesToSingle(value.ToString())}\""
-                : value.ToString();
+            var safeValue = (value == null) 
+                ? "nil"
+                : (value.GetType() == typeof(string)) 
+                    ? $"\"{DoubleQuotesToSingle(value.ToString())}\""
+                    : value.GetType() == typeof(bool)
+                        ? value.ToString().ToLower()
+                        : value.ToString();
             Lua.Run(string.Format("Conversation[{0}].{1} = {2}", new System.Object[] { conversationID, StringToTableIndex(field), safeValue }), false, true);
         }
 

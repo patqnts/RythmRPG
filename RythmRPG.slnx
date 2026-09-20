@@ -1,8 +1,8 @@
 ﻿<Solution>
   <Project Path="Assembly-CSharp-firstpass.csproj" />
   <Project Path="Assembly-CSharp-Editor-firstpass.csproj" />
-  <Project Path="RythmRPG.Combat.Runtime.csproj" />
   <Project Path="Unity.RenderPipelines.Universal.Runtime.csproj" />
+  <Project Path="RythmRPG.Combat.Runtime.csproj" />
   <Project Path="FlatKit.Utils.Editor.csproj" />
   <Project Path="ExternAttributes.Editor.csproj" />
   <Project Path="Assembly-CSharp.csproj" />

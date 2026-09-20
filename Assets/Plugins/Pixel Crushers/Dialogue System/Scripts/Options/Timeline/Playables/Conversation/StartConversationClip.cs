@@ -15,14 +15,7 @@ namespace PixelCrushers.DialogueSystem
     {
         public StartConversationBehaviour template = new StartConversationBehaviour();
         public ExposedReference<Transform> conversant;
-
-        public float m_duration = 1;
-        public override double duration { get { return m_duration; } }
-
-        public void SetDuration(float newDuration)
-        {
-            m_duration = newDuration;
-        }
+        public ExposedReference<AbstractDialogueUI> overrideDialogueUI;
 
         public ClipCaps clipCaps
         {
@@ -34,6 +27,7 @@ namespace PixelCrushers.DialogueSystem
             var playable = ScriptPlayable<StartConversationBehaviour>.Create(graph, template);
             StartConversationBehaviour clone = playable.GetBehaviour();
             clone.conversant = conversant.Resolve(graph.GetResolver());
+            clone.overrideDialogueUI = overrideDialogueUI.Resolve(graph.GetResolver());
             return playable;
         }
     }

@@ -31,6 +31,9 @@ namespace PixelCrushers.DialogueSystem
         /// </summary>
         public static event SetupGenericMenuDelegate customSequenceMenuSetup = null;
 
+        private static GUIContent CheckButtonLabel = new GUIContent("Check", "Check sequence for errors.");
+        private static GUIContent DefaultButtonLabel = new GUIContent("{{default}}", "Add the {{default}} keyword, which tells the Sequence to include the Dialogue Manager's Default Sequence (or Default Player Sequence for player entries if it's not blank).");
+
         /// <summary>
         /// Add text to the currently-edited sequence. Typically called from a
         /// customSequenceMenuSetup handler.
@@ -48,7 +51,7 @@ namespace PixelCrushers.DialogueSystem
 
         private enum MenuResult
         {
-            Unselected, DefaultSequence, Delay, DefaultCameraAngle, UpdateTracker, RandomizeNextEntry, None, Continue, ContinueTrue, ContinueFalse, OtherCommand
+            Unselected, DefaultSequence, Delay, DefaultCameraAngle, UpdateTracker, RandomizeNextEntry, RandomizeNextEntryNoDuplicate, None, Continue, ContinueTrue, ContinueFalse, OtherCommand
         }
 
         private static MenuResult menuResult = MenuResult.Unselected;
@@ -103,7 +106,11 @@ namespace PixelCrushers.DialogueSystem
             return DrawLayout(guiContent, sequence, ref rect, ref syntaxState, entry, field);
         }
 
-        public static string DrawLayout(GUIContent guiContent, string sequence, ref Rect rect, ref SequenceSyntaxState syntaxState, DialogueEntry entry = null, Field field = null)
+        private static bool needToCheckSyntax = false;
+
+        public static string DrawLayout(GUIContent guiContent, string sequence, ref Rect rect,
+            ref SequenceSyntaxState syntaxState, DialogueEntry entry = null, Field field = null,
+            bool showDefaultShortcutButton = false)
         {
             if (!string.IsNullOrEmpty(queuedText))
             {
@@ -116,19 +123,28 @@ namespace PixelCrushers.DialogueSystem
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField(guiContent);
 
-            if (entry != null && field != null && DialogueEditor.DialogueEditorWindow.instance != null)
-            {
+            if (DialogueEditor.DialogueEditorWindow.instance != null)
+            { // Note: We no longer check (entry != null && field != null) so we can handle multinode selections.
                 DialogueEditor.DialogueEditorWindow.instance.DrawAISequence(entry, field);
             }
 
             EditorGUI.BeginDisabledGroup(string.IsNullOrEmpty(sequence));
-            if (GUILayout.Button(new GUIContent("Check", "Check sequence for errors."), EditorStyles.miniButton, GUILayout.Width(52)))
+            if (GUILayout.Button(CheckButtonLabel, EditorStyles.miniButton, GUILayout.Width(52))
+                || needToCheckSyntax)
             {
+                needToCheckSyntax = false;
                 syntaxState = CheckSyntax(sequence);
             }
             EditorGUI.EndDisabledGroup();
 
             EditorGUI.BeginChangeCheck();
+
+            if (GUILayout.Button(DefaultButtonLabel, EditorStyles.miniButton, GUILayout.Width(68)))
+            {
+                GUIUtility.keyboardControl = 0;
+                needToCheckSyntax = true;
+                return "{{default}};\n" + sequence;
+            }
 
             if (GUILayout.Button("+", EditorStyles.miniButton, GUILayout.Width(26)))
             {
@@ -263,7 +279,8 @@ namespace PixelCrushers.DialogueSystem
             menu.AddItem(new GUIContent("Delay for subtitle length"), false, SetMenuResult, MenuResult.Delay);
             menu.AddItem(new GUIContent("Cut to speaker's default camera angle"), false, SetMenuResult, MenuResult.DefaultCameraAngle);
             menu.AddItem(new GUIContent("Update quest tracker"), false, SetMenuResult, MenuResult.UpdateTracker);
-            menu.AddItem(new GUIContent("Randomize next entry"), false, SetMenuResult, MenuResult.RandomizeNextEntry);
+            menu.AddItem(new GUIContent("Randomize next entry/Any"), false, SetMenuResult, MenuResult.RandomizeNextEntry);
+            menu.AddItem(new GUIContent("Randomize next entry/Don't repeat previous random choice"), false, SetMenuResult, MenuResult.RandomizeNextEntryNoDuplicate);
             menu.AddItem(new GUIContent("None (null command with zero duration)"), false, SetMenuResult, MenuResult.None);
             menu.AddItem(new GUIContent("Continue/Simulate continue button click"), false, SetMenuResult, MenuResult.Continue);
             menu.AddItem(new GUIContent("Continue/Enable continue button"), false, SetMenuResult, MenuResult.ContinueTrue);
@@ -421,6 +438,8 @@ namespace PixelCrushers.DialogueSystem
                     return "UpdateTracker()";
                 case MenuResult.RandomizeNextEntry:
                     return "RandomizeNextEntry()";
+                case MenuResult.RandomizeNextEntryNoDuplicate:
+                    return "RandomizeNextEntry(true)";
                 case MenuResult.None:
                     return "None()";
                 case MenuResult.Continue:
@@ -438,6 +457,8 @@ namespace PixelCrushers.DialogueSystem
 
         private static string AddCommandToSequence(string sequence, string newCommand)
         {
+            GUIUtility.keyboardControl = 0;
+            needToCheckSyntax = true;
             var s = sequence;
             if (!string.IsNullOrEmpty(sequence) && !sequence.TrimEnd().EndsWith(";"))
             {
@@ -471,23 +492,29 @@ namespace PixelCrushers.DialogueSystem
             "AnimatorTrigger",
             "AnimatorPlay",
             "Audio",
+            "AudioStop",
             "ClearSubtitleText",
             "Continue",
+            "GotoEntry",
+            "NavMeshAgent",
             "SendMessage",
+            "SendMessageUpwards",
             "SetActive",
             "SetEnabled",
+            "HidePanel",
             "SetPanel",
             "SetMenuPanel",
             "SetDialoguePanel",
             "SetPortrait",
             "SetTimeout",
             "SetContinueMode",
+            "StopConversation",
             "Continue",
             "SetVariable",
             "ShowAlert",
             "UpdateTracker",
             "RandomizeNextEntry",
-                    };
+        };
 
         private static void AddAllSequencerCommands(GenericMenu menu)
         {
@@ -534,8 +561,6 @@ namespace PixelCrushers.DialogueSystem
             {
                 foreach (var shortcut in sequencerShortcuts.shortcuts)
                 {
-                    //list.Add(@"{{" + shortcut.shortcut + @"}}");
-
                     // Check if the shortcut has a submenu specified
                     if (!string.IsNullOrEmpty(shortcut.subMenu))
                     {
@@ -554,7 +579,7 @@ namespace PixelCrushers.DialogueSystem
                         {
                             submenuDict["General"] = new List<string>();
                         }
-                        submenuDict["General"].Add(shortcut.shortcut);
+                        submenuDict["General"].Add(@"{{" + shortcut.shortcut + @"}}");
                     }
                 }
             }
@@ -565,7 +590,7 @@ namespace PixelCrushers.DialogueSystem
                 submenuDict[submenu].Sort(); // Sort the shortcuts
                 foreach (var shortcut in submenuDict[submenu])
                 {
-                    string menuPath = string.IsNullOrEmpty(submenu) ? shortcut : $"{submenu}/{shortcut}";
+                    string menuPath = string.IsNullOrEmpty(submenu) ? shortcut : $"{submenu}/{shortcut.Replace('/', '\u2215')}";
                     menu.AddItem(new GUIContent("Shortcuts/" + menuPath), false, StartOtherCommand, shortcut);
                 }
             }

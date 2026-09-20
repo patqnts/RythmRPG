@@ -1,7 +1,8 @@
 // Copyright (c) Pixel Crushers. All rights reserved.
 
-using UnityEngine;
 using System;
+using System.Collections;
+using UnityEngine;
 
 namespace PixelCrushers.DialogueSystem
 {
@@ -28,7 +29,7 @@ namespace PixelCrushers.DialogueSystem
         /// If blank, uses the override name.
         /// </summary>
         [Tooltip("Name used when saving persistent data. If blank, use actor name.")]
-        [UnityEngine.Serialization.FormerlySerializedAs("internalName")]        
+        [UnityEngine.Serialization.FormerlySerializedAs("internalName")]
         public string persistentDataName;
 
         [Tooltip("Optional portrait. If unassigned, will use portrait of actor in database. This field allows you to assign a Texture.")]
@@ -36,6 +37,12 @@ namespace PixelCrushers.DialogueSystem
 
         [Tooltip("Optional portrait. If unassigned, will use portrait of actor in database. This field allows you to assign a Sprite.")]
         public Sprite spritePortrait;
+
+        [Tooltip("Custom camera angles for this actor. If assigned, overrides Dialogue Manager's Camera & Cutscene Settings > Camera Angles.")]
+        public GameObject cameraAngles;
+
+        [Tooltip("Optional. Specifies which Audio Source to use with sequencer commands such as Audio() and AudioWait().")]
+        public AudioSource audioSource;
 
         [Serializable]
         public class BarkUISettings
@@ -149,13 +156,45 @@ namespace PixelCrushers.DialogueSystem
         protected virtual void OnEnable()
         {
             if (string.IsNullOrEmpty(actor)) return;
+            StartCoroutine(RegisterAtEndOfFrame());
+        }
+
+        /// <summary>
+        /// Immediately registers as a candidate for the actor.
+        /// Then waits for end of frame in case DialogueActor's parent is destroyed on 
+        /// same frame but after OnEnable(). Must do this because OnEnable() can run 
+        /// before another GameObject's Awake() method. If it survives to the end
+        /// of frame, registers it as the actual actor.
+        /// </summary>
+        protected IEnumerator RegisterAtEndOfFrame()
+        {
+            CharacterInfo.RegisterCandidateActorTransform(actor, transform);
+            yield return new WaitForEndOfFrame();
             CharacterInfo.RegisterActorTransform(actor, transform);
         }
 
         protected virtual void OnDisable()
         {
             if (string.IsNullOrEmpty(actor)) return;
-            CharacterInfo.UnregisterActorTransform(actor, transform);
+            CharacterInfo.UnregisterCandidateActorTransform(actor, transform);
+            var registeredTransform = CharacterInfo.GetRegisteredActorTransform(actor);
+            if (transform == registeredTransform)
+            {
+                CharacterInfo.UnregisterActorTransform(actor, transform);
+
+                // If a conversation is active, remove this actor from its model's character cache:
+                if (DialogueManager.isConversationActive)
+                {
+                    var actorAsset = DialogueManager.masterDatabase.GetActor(actor);
+                    if (actorAsset != null)
+                    {
+                        foreach (var activeConversation in DialogueManager.instance.activeConversations)
+                        {
+                            activeConversation.conversationModel.ClearCharacterInfo(actorAsset.id);
+                        }
+                    }
+                }
+            }
         }
 
         /// <summary>

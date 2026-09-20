@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Pixel Crushers. All rights reserved.
 
 using UnityEngine;
-using System;
 using System.Collections.Generic;
 
 namespace PixelCrushers.DialogueSystem
@@ -30,7 +29,7 @@ namespace PixelCrushers.DialogueSystem
 
         public virtual void AddListener(QuestStateListener listener)
         {
-            if (listener == null) return;
+            if (listener == null || m_listeners.Contains(listener)) return;
             m_listeners.Add(listener);
         }
 
@@ -39,7 +38,7 @@ namespace PixelCrushers.DialogueSystem
             m_listeners.Remove(listener);
         }
 
-        private void UpdateListeners()
+        public virtual void UpdateListeners()
         {
             for (int i = 0; i < m_listeners.Count; i++)
             {

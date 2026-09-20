@@ -27,11 +27,68 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
 
         private static GUIContent displayNameLabel = new GUIContent("Display Name", "The name to show in UIs.");
 
+        private List<Field> lastFieldsChecked = null;
+        private string duplicateFieldsReport = null;
+
+        private void ResetLastFieldsChecked()
+        {
+            lastFieldsChecked = null;
+            duplicateFieldsReport = null;
+        }
+
+        // Prevents unnecessary GUI begin/end error after finding duplicates.
+        private bool waitFrameAfterFindingDuplicateField = true;
+
+        private void CheckFields(List<Field> fields)
+        {
+            if (!string.IsNullOrEmpty(duplicateFieldsReport))
+            {
+                if (waitFrameAfterFindingDuplicateField)
+                {
+                    waitFrameAfterFindingDuplicateField = false;
+                }
+                else
+                {
+                    EditorGUILayout.HelpBox(duplicateFieldsReport, MessageType.Warning);
+                }
+            }
+            if (fields == null || fields == lastFieldsChecked) return;
+            lastFieldsChecked = fields;
+            var fieldTitles = new HashSet<string>();
+            var duplicates = new HashSet<string>();
+            foreach (var field in fields)
+            {
+                if (fieldTitles.Contains(field.title)) duplicates.Add(field.title);
+                fieldTitles.Add(field.title);
+            }
+            if (duplicates.Count == 0)
+            {
+                duplicateFieldsReport = null;
+            }
+            else
+            {
+                bool first = true;
+                duplicateFieldsReport = "Duplicate Fields: ";
+                foreach (var fieldTitle in duplicates)
+                {
+                    if (!first) duplicateFieldsReport += ", ";
+                    first = false;
+                    duplicateFieldsReport += fieldTitle;
+                }
+                waitFrameAfterFindingDuplicateField = true;
+                GUI.FocusControl("");
+            }
+            Repaint();
+        }
+
         private void DrawFieldsSection(List<Field> fields, List<string> primaryFieldTitles = null)
         {
+            CheckFields(fields);
             EditorWindowTools.StartIndentedSection();
             DrawFieldsHeading(primaryFieldTitles != null);
+            EditorGUI.BeginChangeCheck();
             DrawFieldsContent(fields, primaryFieldTitles);
+            if (EditorGUI.EndChangeCheck()) ResetLastFieldsChecked();
             EditorWindowTools.EndIndentedSection();
         }
 
@@ -83,13 +140,15 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                 var isTemplateTab = (toolbar.Current == Toolbar.Tab.Templates);
                 var isLocalizationTemplate = (toolbar.Current == Toolbar.Tab.Templates) && (fields[fieldToRemove].type == FieldType.Localization);
                 var fieldTitle = fields[fieldToRemove].title;
-                if (isLocalizationTemplate)
+                //if (isLocalizationTemplate)
+                //{
+                //    confirmRemove = EditorUtility.DisplayDialog("Delete Localization '" + fieldTitle + "'?", "This will also remove instances of this field from all assets in the database. Are you sure?", "OK", "Cancel");
+                //}
+                //else 
+                if (isTemplateTab)
                 {
-                    confirmRemove = EditorUtility.DisplayDialog("Delete Localization '" + fieldTitle + "'?", "This will also remove instances of this field from all assets in the database. Are you sure?", "OK", "Cancel");
-                }
-                else if (isTemplateTab)
-                {
-                    var result = EditorUtility.DisplayDialogComplex("Delete '" + fieldTitle + "'", "Delete this field from all assets in the database, or only from the template?", "Remove All", "Template Only", "Cancel");
+                    var result = EditorUtility.DisplayDialogComplex("Delete '" + fieldTitle + "'", 
+                        $"Delete {currentTemplateFoldout} from all assets in the database, or only from the template?", "Remove All", "Template Only", "Cancel");
                     confirmRemove = result != 2;
                     scrubFromDatabase = result == 0;
                 }
@@ -99,14 +158,17 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                 }
                 if (confirmRemove)
                 {
+                    languages.Remove(fields[fieldToRemove].title);
                     fields.RemoveAt(fieldToRemove);
-                    if (isLocalizationTemplate)
-                    {
-                        ScrubFieldFromDatabase(fieldTitle);
-                        languages.Remove(fieldTitle);
-                        SetDatabaseDirty("Remove Localization Template Field and all instances in database");
-                    }
-                    else if (isTemplateTab && scrubFromDatabase)
+                    //--- Never remove from all types of assets in database. Only from current type.
+                    //if (isLocalizationTemplate)
+                    //{
+                    //    ScrubFieldFromDatabase(fieldTitle);
+                    //    languages.Remove(fieldTitle);
+                    //    SetDatabaseDirty("Remove Localization Template Field and all instances in database");
+                    //}
+                    //else 
+                    if (isTemplateTab && scrubFromDatabase)
                     {
                         ScrubFieldFromCurrentDatabaseCategory(fieldTitle);
                         SetDatabaseDirty("Remove Field and all instances in database");

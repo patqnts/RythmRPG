@@ -2,7 +2,6 @@
 
 using UnityEngine;
 using UnityEditor;
-using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
@@ -20,12 +19,34 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
 
         private readonly string[] LanguageFieldPrefixes = new string[] {
             "Dialogue Text ", "Menu Text ", "Sequence ", "Response Menu Sequence ",
-            "Description ", "Success Description ", "Failure Description "
+            "Description ", "Success Description ", "Failure Description ", "Title "
         };
 
         private void ResetLanguageList()
         {
             languages.Clear();
+        }
+
+        private void RebuildLanguageListFromDatabase()
+        {
+            ResetLanguageList();
+            if (database == null) return;
+            foreach (var actor in database.actors)
+            {
+                BuildLanguageListFromFields(actor.fields);
+            }
+            foreach (var item in database.items)
+            {
+                BuildLanguageListFromFields(item.fields);
+            }
+            foreach (var conversation in database.conversations)
+            {
+                BuildLanguageListFromFields(conversation.fields);
+                foreach (var entry in conversation.dialogueEntries)
+                {
+                    BuildLanguageListFromFields(entry.fields);
+                }
+            }
         }
 
         private void BuildLanguageListFromFields(List<Field> fields)
@@ -36,33 +57,46 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                 if (field.type == FieldType.Localization && !string.IsNullOrEmpty(field.title))
                 {
                     // Don't add Dialogue Text:
-                    if (field.title.Equals("Dialogue Text")) break;
+                    if (field.title.Equals("Dialogue Text")) continue;
 
-                    // Assume it's Chat Mapper-style localized dialogue text, in which case
-                    // the language is the entire field title:
-                    string language = field.title;
+                    var language = GetLanguageFromFieldTitle(field.title);
 
-                    // If it's a different type of field, remove the prefix:
-                    for (int j = 0; j < LanguageFieldPrefixes.Length; j++)
+                    if (!(string.IsNullOrWhiteSpace(language) || languages.Contains(language)))
                     {
-                        var prefix = LanguageFieldPrefixes[j];
-                        if (field.title.StartsWith(prefix))
-                        {
-                            language = field.title.Substring(prefix.Length);
-                        }
-                        else {
-                            // Handle "Entry X Language":
-                            Match match = Regex.Match(field.title, @"Entry [0-9]+ .*");
-                            if (match.Success)
-                            {
-                                string[] entryParts = field.title.Split(new char[] { ' ' });
-                                language = (entryParts.Length >= 3) ? entryParts[2] : string.Empty;
-                            }
-                        }
+                        languages.Add(language);
                     }
-                    if (!string.IsNullOrEmpty(language)) languages.Add(language);
                 }
             }
+        }
+
+        private string GetLanguageFromFieldTitle(string fieldTitle)
+        {
+
+            // Assume it's Chat Mapper-style localized dialogue text, in which case
+            // the language is the entire field title:
+            string language = fieldTitle;
+
+            // If it's a different type of field, remove the prefix:
+            for (int j = 0; j < LanguageFieldPrefixes.Length; j++)
+            {
+                var prefix = LanguageFieldPrefixes[j];
+                if (fieldTitle.StartsWith(prefix))
+                {
+                    language = fieldTitle.Substring(prefix.Length);
+                }
+                else
+                {
+                    // Handle "Entry X Language":
+                    Match match = Regex.Match(fieldTitle, @"Entry [0-9]+ .*");
+                    if (match.Success)
+                    {
+                        string[] entryParts = fieldTitle.Split(new char[] { ' ' });
+                        language = (entryParts.Length >= 3) ? entryParts[2] : string.Empty;
+                    }
+                }
+            }
+
+            return language;
         }
 
         private void DrawLocalizedVersions(Asset asset, List<Field> fields, string titleFormat, bool alwaysAdd, FieldType fieldType, bool useSequenceEditor = false)

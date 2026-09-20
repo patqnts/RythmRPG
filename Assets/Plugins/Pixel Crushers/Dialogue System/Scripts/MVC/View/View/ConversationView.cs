@@ -57,13 +57,13 @@ namespace PixelCrushers.DialogueSystem
 
         public Sequencer sequencer { get { return m_sequencer; } }
 
-        public IDialogueUI dialogueUI 
-        { 
-            get 
-            { 
-                return ui; 
-            } 
-            set 
+        public IDialogueUI dialogueUI
+        {
+            get
+            {
+                return ui;
+            }
+            set
             {
                 if (ui != value)
                 {
@@ -73,7 +73,13 @@ namespace PixelCrushers.DialogueSystem
                     ui.Open();
                     ui.SelectedResponseHandler += OnSelectedResponse;
                 }
-            } 
+            }
+        }
+
+        public void Initialize(IDialogueUI ui, Sequencer sequencer, DisplaySettings displaySettings,
+            DialogueEntrySpokenDelegate dialogueEntrySpokenHandler)
+        {
+            Initialize(ui, sequencer, displaySettings, null, dialogueEntrySpokenHandler);
         }
 
         /// <summary>
@@ -88,13 +94,16 @@ namespace PixelCrushers.DialogueSystem
         /// <param name='displaySettings'>
         /// Display settings to initiate the UI and sequencer with.
         /// </param>
-        public void Initialize(IDialogueUI ui, Sequencer sequencer, DisplaySettings displaySettings, DialogueEntrySpokenDelegate dialogueEntrySpokenHandler)
+        public void Initialize(IDialogueUI ui, Sequencer sequencer, DisplaySettings displaySettings,
+            ConversationOverrideDisplaySettings conversationOverrideDisplaySettings,
+            DialogueEntrySpokenDelegate dialogueEntrySpokenHandler)
         {
             this.ui = ui;
             this.m_sequencer = sequencer;
             this.settings = DialogueManager.allowSimultaneousConversations ? new DisplaySettings(displaySettings) : displaySettings;
             this.dialogueEntrySpokenHandler = dialogueEntrySpokenHandler;
             this.initialFrameCount = Time.frameCount;
+            ApplyActorPanelOverrides(conversationOverrideDisplaySettings);
             ui.Open();
             sequencer.Open();
             ui.SelectedResponseHandler += OnSelectedResponse;
@@ -151,7 +160,7 @@ namespace PixelCrushers.DialogueSystem
         public void StartSubtitle(Subtitle subtitle, bool isPCResponseMenuNext, bool isPCAutoResponseNext)
         {
             notifyOnFinishSubtitle = true;
-            if (subtitle != null)
+            if (subtitle != null && !IsBlankStartNode(subtitle))
             {
                 if (DialogueDebug.logInfo) Debug.Log(string.Format("{0}: {1} says '{2}'", new System.Object[] { DialogueDebug.Prefix, Tools.GetGameObjectName(subtitle.speakerInfo.transform), subtitle.formattedText.text }));
 
@@ -212,6 +221,18 @@ namespace PixelCrushers.DialogueSystem
         private bool _isPCResponseMenuNext = false;
         private bool _isPCAutoResponseNext = false;
         private bool _lastModeWasResponseMenu = false;
+        public bool LastModeWasResponseMenu // ConversationControl needs to be able to reset this.
+        {
+            get => _lastModeWasResponseMenu;
+            set => _lastModeWasResponseMenu = value;
+        }
+
+        private bool IsBlankStartNode(Subtitle subtitle)
+        {
+            if (subtitle == null || subtitle.dialogueEntry == null) return false;
+            return subtitle.dialogueEntry.id == 0 &&
+                (subtitle.sequence == "None()" || subtitle.sequence == "Continue()");
+        }
 
         /// <summary>
         /// Determines whether the continue button should be shown, and shows or hides it.
@@ -360,9 +381,12 @@ namespace PixelCrushers.DialogueSystem
         {
             if ((subtitle != null) && (settings != null) && (settings.subtitleSettings != null))
             {
-                if (subtitle.formattedText.noSubtitle || 
-                    string.Equals(subtitle.sequence, "None()") || string.Equals(subtitle.sequence, "None();") ||
-                    string.Equals(subtitle.sequence, "Continue()") || string.Equals(subtitle.sequence, "Continue();"))
+                if (subtitle.formattedText.noSubtitle ||
+                    string.Equals(subtitle.sequence, "None()") ||
+                    string.Equals(subtitle.sequence, "None();") ||
+                    (!settings.cameraSettings.showSubtitleOnEmptyContinue &&
+                        (string.Equals(subtitle.sequence, "Continue()") ||
+                        string.Equals(subtitle.sequence, "Continue();"))))
                 {
                     return false;
                 }
@@ -401,7 +425,14 @@ namespace PixelCrushers.DialogueSystem
         public void HandleContinueButtonClick()
         {
             // If we just started and another conversation just ended, ignore the continue:
-            if (Time.frameCount == initialFrameCount && initialFrameCount == ConversationController.frameLastConversationEnded) return;
+            if (Time.frameCount == initialFrameCount && 
+                initialFrameCount == ConversationController.frameLastConversationEnded &&
+                !DialogueManager.allowSimultaneousConversations &&
+                DialogueManager.ignoreContinueWhenConversationsStartAndEndSameFrame)
+            {
+                if (DialogueDebug.logInfo) Debug.Log($"Dialogue System: At frame {Time.frameCount}, just started a conversation but another just ended, so ignoring continue button.");
+                return;
+            }
             waitForContinue = false;
             FinishSubtitle();
         }
@@ -485,8 +516,8 @@ namespace PixelCrushers.DialogueSystem
             if (isPlayingResponseMenuSequence)
             {
                 isPlayingResponseMenuSequence = false;
-                m_sequencer.Stop();
                 m_sequencer.StopAllCoroutines();
+                m_sequencer.Stop(); // This starts a cleanup coroutine.
                 m_sequencer.FinishedSequenceHandler += OnFinishedSubtitle;
             }
         }
@@ -599,6 +630,7 @@ namespace PixelCrushers.DialogueSystem
 
         private void NotifyParticipantsOnConversationLine(Subtitle subtitle)
         {
+            NotifyParticipants(DialogueSystemMessages.OnConversationLineEarly, subtitle);
             NotifyParticipants(DialogueSystemMessages.OnConversationLine, subtitle);
         }
 
@@ -633,6 +665,7 @@ namespace PixelCrushers.DialogueSystem
                     if (validListenerTransform && !speakerIsListener) lastSubtitle.listenerInfo.transform.BroadcastMessage(DialogueSystemMessages.OnConversationResponseMenu, responses, SendMessageOptions.DontRequireReceiver);
                 }
                 DialogueManager.instance.BroadcastMessage(DialogueSystemMessages.OnConversationResponseMenu, responses, SendMessageOptions.DontRequireReceiver);
+                DialogueManager.instance.InvokeConversationResponseMenuPrepared(responses);
             }
         }
 
@@ -652,6 +685,20 @@ namespace PixelCrushers.DialogueSystem
         private bool CharacterInfoHasValidTransform(CharacterInfo characterInfo)
         {
             return (characterInfo != null) && (characterInfo.transform != null);
+        }
+
+        private void ApplyActorPanelOverrides(ConversationOverrideDisplaySettings conversationOverrideDisplaySettings)
+        {
+            if (conversationOverrideDisplaySettings == null) return;
+            if (ui is StandardDialogueUI stdUI)
+            {
+                foreach (var ovr in conversationOverrideDisplaySettings.actorSubtitlePanelOverrides)
+                {
+                    var actor = DialogueManager.masterDatabase.GetActor(ovr.actorID);
+                    if (actor == null) continue;
+                    stdUI.OverrideActorPanel(actor, ovr.subtitlePanel);
+                }
+            }
         }
 
         /// <summary>

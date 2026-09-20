@@ -52,6 +52,8 @@ namespace PixelCrushers.DialogueSystem
 
         public ActiveConversationRecord activeConversationRecord { get; set; }
 
+        public bool reevaluateLinksAfterSubtitle { get; set; }
+
         /// <summary>
         /// Gets or sets the IsDialogueEntryValid delegate.
         /// </summary>
@@ -66,6 +68,12 @@ namespace PixelCrushers.DialogueSystem
         /// using the first one in the list.
         /// </summary>
         public bool randomizeNextEntry { get; set; }
+
+        /// <summary>
+        /// If randomizeNextEntry is set, it checks this property. If it's
+        /// also set, tries to avoid choosing the same entry it did last time.
+        /// </summary>
+        public bool randomizeNextEntryNoDuplicate { get; set; }
 
         /// <summary>
         /// Gets the conversant info for this conversation.
@@ -93,7 +101,7 @@ namespace PixelCrushers.DialogueSystem
         // Records time when last conversation ended in case a new conversation starts on the same
         // frame and needs to know.
         private static int _frameLastConversationEnded = -1;
-        public static int frameLastConversationEnded { get { return _frameLastConversationEnded; } }
+        public static int frameLastConversationEnded { get { return _frameLastConversationEnded; } set { _frameLastConversationEnded = value; } }
 
         public ConversationController()
         {
@@ -101,7 +109,9 @@ namespace PixelCrushers.DialogueSystem
 
         /// <summary>
         /// Initializes a new ConversationController and starts the conversation in the model.
-        /// Also sends OnConversationStart messages to the participants.
+        /// CHANGED: No longer sends OnConversationStart messages to the participants nor
+        /// calls GotoState(firstState). You must call them manually, just as 
+        /// DialogueSystemController.StartConversation() does.
         /// </summary>
         /// <param name='model'>
         /// Data model of the conversation.
@@ -109,28 +119,33 @@ namespace PixelCrushers.DialogueSystem
         /// <param name='view'>
         /// View to use to provide a user interface for the conversation.
         /// </param>
+        /// <param name="reevaluateLinksAfterSubtitle">Reevaluate links after subtitle in case sequence or OnConversationLine changed link conditions.</param>
+        /// <param name="alwaysForceResponseMenu">Always force response menu if only one PC node.</param>
         /// <param name='endConversationHandler'>
         /// Handler to call to inform when the conversation is done.
         /// </param>
-        public ConversationController(ConversationModel model, ConversationView view, bool alwaysForceResponseMenu, EndConversationDelegate endConversationHandler)
+        public ConversationController(ConversationModel model, ConversationView view, 
+            bool reevaluateLinksAfterSubtitle, bool alwaysForceResponseMenu, 
+            EndConversationDelegate endConversationHandler)
         {
             isActive = true;
             this.m_model = model;
             this.m_view = view;
             this.m_endConversationHandler = endConversationHandler;
             this.randomizeNextEntry = false;
+            this.reevaluateLinksAfterSubtitle = reevaluateLinksAfterSubtitle;
             DialogueManager.instance.currentConversationState = model.firstState;
-            model.InformParticipants(DialogueSystemMessages.OnConversationStart);
             view.FinishedSubtitleHandler += OnFinishedSubtitle;
             view.SelectedResponseHandler += OnSelectedResponse;
             m_currentConversationID = model.GetConversationID(model.firstState);
             SetConversationOverride(model.firstState);
-            GotoState(model.firstState);
         }
 
         /// <summary>
         /// Initializes a ConversationController and starts the conversation in the model.
-        /// Also sends OnConversationStart messages to the participants.
+        /// CHANGED: No longer sends OnConversationStart messages to the participants nor
+        /// calls GotoState(firstState). You must call them manually, just as 
+        /// DialogueSystemController.StartConversation() does.
         /// </summary>
         /// <param name='model'>
         /// Data model of the conversation.
@@ -141,20 +156,43 @@ namespace PixelCrushers.DialogueSystem
         /// <param name='endConversationHandler'>
         /// Handler to call to inform when the conversation is done.
         /// </param>
-        public void Initialize(ConversationModel model, ConversationView view, bool alwaysForceResponseMenu, EndConversationDelegate endConversationHandler)
+        public void Initialize(ConversationModel model, ConversationView view, 
+            bool reevaluateLinksAfterSubtitle, bool alwaysForceResponseMenu, 
+            EndConversationDelegate endConversationHandler)
         {
             isActive = true;
             this.m_model = model;
             this.m_view = view;
             this.m_endConversationHandler = endConversationHandler;
             this.randomizeNextEntry = false;
+            this.reevaluateLinksAfterSubtitle = reevaluateLinksAfterSubtitle;
             DialogueManager.instance.currentConversationState = model.firstState;
-            model.InformParticipants(DialogueSystemMessages.OnConversationStart);
             view.FinishedSubtitleHandler += OnFinishedSubtitle;
             view.SelectedResponseHandler += OnSelectedResponse;
             m_currentConversationID = model.GetConversationID(model.firstState);
             SetConversationOverride(model.firstState);
-            GotoState(model.firstState);
+        }
+
+        /// <summary>
+        /// Initializes a ConversationController and starts the conversation in the model.
+        /// CHANGED: No longer sends OnConversationStart messages to the participants nor
+        /// calls GotoState(firstState). You must call them manually, just as 
+        /// DialogueSystemController.StartConversation() does.
+        /// </summary>
+        public void Initialize(ConversationModel model, ConversationView view, bool alwaysForceResponseMenu,
+            EndConversationDelegate endConversationHandler)
+        {
+            isActive = true;
+            this.m_model = model;
+            this.m_view = view;
+            this.m_endConversationHandler = endConversationHandler;
+            this.randomizeNextEntry = false;
+            this.reevaluateLinksAfterSubtitle = false;
+            DialogueManager.instance.currentConversationState = model.firstState;
+            view.FinishedSubtitleHandler += OnFinishedSubtitle;
+            view.SelectedResponseHandler += OnSelectedResponse;
+            m_currentConversationID = model.GetConversationID(model.firstState);
+            SetConversationOverride(model.firstState);
         }
 
         /// <summary>
@@ -173,9 +211,16 @@ namespace PixelCrushers.DialogueSystem
                 m_view.SelectedResponseHandler -= OnSelectedResponse;
                 m_view.Close();
                 DialogueManager.instance.lastConversationEnded = m_model.conversationTitle;
+                // Record the final conversation state but don't null it yet so it's valid for OnConversationEnd handlers:
+                var finalConversationState = m_state;
                 m_model.InformParticipants(DialogueSystemMessages.OnConversationEnd, true);
                 if (m_endConversationHandler != null) m_endConversationHandler(this);
-                DialogueManager.instance.currentConversationState = null;
+                // After OnConversationEnd, if the current conversation state is still this conversation's
+                // final conversation state (i.e., a new conversation hasn't started), null it:
+                if (DialogueManager.instance.currentConversationState == finalConversationState)
+                {
+                    DialogueManager.instance.currentConversationState = null;
+                }
             }
         }
 
@@ -249,7 +294,7 @@ namespace PixelCrushers.DialogueSystem
         private void SetConversationOverride(ConversationState state)
         {
             m_view.displaySettings.conversationOverrideSettings = m_model.GetConversationOverrideSettings(state);
-            DialogueManager.displaySettings.conversationOverrideSettings = m_view.displaySettings.conversationOverrideSettings;
+            //--- Not needed: DialogueManager.displaySettings.conversationOverrideSettings = m_view.displaySettings.conversationOverrideSettings;
         }
 
         /// <summary>
@@ -259,28 +304,65 @@ namespace PixelCrushers.DialogueSystem
         /// auto-response, the conversation proceeds directly to that response). If there are no
         /// responses, the conversation ends.
         /// </summary>
-        /// <param name='sender'>
-        /// Sender.
-        /// </param>
-        /// <param name='e'>
-        /// Event args.
-        /// </param>
+        /// <param name='sender'>Sender.</param>
+        /// <param name='e'>Event args.</param>
         public void OnFinishedSubtitle(object sender, EventArgs e)
         {
+            // Record state that just finished first. To advance the conversation, this method
+            // calls GetState() to get the next state. GetState() will run new state's Script.
+            // It's possible that a custom function in Script will move the conversation to a
+            // completely different state, in which case we don't want this method to then
+            // also move the conversation, which would undo what the Script field just did.
+            var stateThatJustFinished = m_state;
+            if (reevaluateLinksAfterSubtitle && !DialogueManager.useLinearGroupMode)
+            {
+                m_model.UpdateResponses(m_state);
+            }
             DialogueManager.instance.activeConversation = activeConversationRecord;
             var randomize = randomizeNextEntry;
             randomizeNextEntry = false;
-            if (m_state.hasNPCResponse)
+            if (DialogueManager.useLinearGroupMode) // In linear group mode, check responses once subtitle & its sequence are finished.
             {
-                GotoState(m_model.GetState(randomize ? m_state.GetRandomNPCEntry() : m_state.firstNPCResponse.destinationEntry));
+                m_model.UpdateResponses(m_state);
             }
-            else if (m_state.hasPCResponses)
+            if (m_state.HasValidNPCResponse())
+            {
+                var nextState = m_model.GetState(randomize ? m_state.GetRandomNPCEntry(randomizeNextEntryNoDuplicate) : m_state.firstNPCResponse.destinationEntry);
+                if (m_state == stateThatJustFinished)
+                {
+                    GotoState(nextState);
+                }
+            }
+            else if (m_state.HasValidPCResponses())
             {
                 bool isPCResponseMenuNext, isPCAutoResponseNext;
                 AnalyzePCResponses(m_state, out isPCResponseMenuNext, out isPCAutoResponseNext);
                 if (isPCAutoResponseNext)
                 {
-                    GotoState(m_model.GetState(m_state.pcAutoResponse.destinationEntry));
+                    var destinationEntry = m_state.pcAutoResponse.destinationEntry;
+                    if (randomize)
+                    {
+                        // If previous node specified RandomizeNextEntry() and all responses are [auto],
+                        // choose random entry:
+                        var allAuto = true;
+                        foreach (var response in m_state.pcResponses)
+                        {
+                            if (response.formattedText.forceMenu || !response.formattedText.forceAuto)
+                            {
+                                allAuto = false;
+                                break;
+                            }
+                        }
+                        if (allAuto)
+                        {
+                            destinationEntry = m_state.pcResponses[UnityEngine.Random.Range(0, m_state.pcResponses.Length)].destinationEntry;
+                        }
+                    }
+                    var nextState = m_model.GetState(destinationEntry);
+                    if (m_state == stateThatJustFinished)
+                    {
+                        GotoState(nextState);
+                    }
                 }
                 else
                 {

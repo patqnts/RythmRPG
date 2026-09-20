@@ -1,10 +1,12 @@
 ﻿// Copyright (c) Pixel Crushers. All rights reserved.
 
 using UnityEngine;
+#if !UNITY_6000_5_OR_NEWER
 using System;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+#endif
 
 namespace PixelCrushers
 {
@@ -18,6 +20,23 @@ namespace PixelCrushers
     [AddComponentMenu("")] // Use wrapper instead.
     public class BinaryDataSerializer : DataSerializer
     {
+
+#if UNITY_6000_5_OR_NEWER
+
+        [HelpBox("BinaryDataSerializer is no longer supported in this Unity version. Use JsonDataSerializer or your own subclass of DataSerializer instead.", HelpBoxMessageType.Warning)]
+        public bool notice;
+
+        public override T Deserialize<T>(string s, T data = default)
+        {
+            throw new System.NotImplementedException("BinaryDataSerializer is no longer supported in this Unity version.");
+        }
+
+        public override string Serialize(object data)
+        {
+            throw new System.NotImplementedException("BinaryDataSerializer is no longer supported in this Unity version.");
+        }
+
+#else
 
         protected virtual void AddSurrogateSelectors(SurrogateSelector surrogateSelector)
         {
@@ -56,6 +75,8 @@ namespace PixelCrushers
                 return data;
             }
         }
+
+#endif
 
     }
 

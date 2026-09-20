@@ -7,3 +7,10 @@ TextScriptImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 11672
+  packageName: Dialogue System for Unity
+  packageVersion: 2.2.74
+  assetPath: Assets/Plugins/Pixel Crushers/Dialogue System/Demo/Scenes/New Input System/_New_Input_System_Setup.txt
+  uploadId: 994926

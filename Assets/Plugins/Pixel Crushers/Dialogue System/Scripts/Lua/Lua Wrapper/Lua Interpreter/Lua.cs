@@ -96,9 +96,7 @@ namespace PixelCrushers.DialogueSystem
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         static void InitStaticVariables()
         {
-            m_environment = Language.Lua.LuaInterpreter.CreateGlobalEnviroment();
-            m_noResult = new Result(null);
-            Assignment.InitializeVariableMonitoring();
+            ResetLuaEnvironment();
         }
 #endif
 
@@ -107,6 +105,18 @@ namespace PixelCrushers.DialogueSystem
         public static bool MuteExceptions { get { return muteExceptions; } set { muteExceptions = value; } }
         public static bool WarnRegisteringExistingFunction { get { return warnRegisteringExistingFunction; } set { warnRegisteringExistingFunction = value; } }
         /// @endcond
+
+        /// <summary>
+        /// Clears and resets the Lua environment, including all data, variable monitoring, 
+        /// and registered functions.
+        /// </summary>
+        public static void ResetLuaEnvironment()
+        {
+            Language.Lua.LuaInterpreter.Interpreter(string.Empty, new Language.Lua.LuaTable()); // Clear static variables
+            m_environment = Language.Lua.LuaInterpreter.CreateGlobalEnviroment();
+            m_noResult = new Result(null);
+            Assignment.InitializeVariableMonitoring();
+        }
 
         /// <summary>
         /// Runs the specified luaCode.

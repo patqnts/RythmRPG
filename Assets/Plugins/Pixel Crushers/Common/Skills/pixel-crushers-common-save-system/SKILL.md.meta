@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 8ff6d1f7c82d61f46a45a55055745860
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 11672
+  packageName: Dialogue System for Unity
+  packageVersion: 2.2.74
+  assetPath: Assets/Plugins/Pixel Crushers/Common/Skills/pixel-crushers-common-save-system/SKILL.md
+  uploadId: 994926

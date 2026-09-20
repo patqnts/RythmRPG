@@ -89,6 +89,7 @@ namespace PixelCrushers.DialogueSystem
                 this.continueButton = source.continueButton;
                 this.requireContinueOnLastLine = source.requireContinueOnLastLine;
                 this.richTextEmphases = source.richTextEmphases;
+                this.convertPipesToLineBreaks = source.convertPipesToLineBreaks;
                 this.informSequenceStartAndEnd = source.informSequenceStartAndEnd;
             }
 
@@ -231,6 +232,12 @@ namespace PixelCrushers.DialogueSystem
             public bool richTextEmphases = true;
 
             /// <summary>
+            /// Treat '|' characters in text as line breaks.
+            /// </summary>
+            [Tooltip("Treat '|' characters in text as line breaks.")]
+            public bool convertPipesToLineBreaks = true;
+
+            /// <summary>
             /// Set <c>true</c> to send OnSequenceStart and OnSequenceEnd messages with 
             /// every dialogue entry's sequence.
             /// </summary>
@@ -254,10 +261,13 @@ namespace PixelCrushers.DialogueSystem
                 this.alternateCameraObject = source.alternateCameraObject;
                 this.cameraAngles = source.cameraAngles;
                 this.keepCameraPositionAtConversationEnd = source.keepCameraPositionAtConversationEnd;
+                this.cameraEasing = Tweener.Easing.Linear;
+                this.showSubtitleOnEmptyContinue = source.showSubtitleOnEmptyContinue;
                 this.defaultSequence = source.defaultSequence;
                 this.defaultPlayerSequence = source.defaultPlayerSequence;
                 this.defaultResponseMenuSequence = source.defaultResponseMenuSequence;
                 this.entrytagFormat = source.entrytagFormat;
+                this.treatAllCommandsAsRequired = source.treatAllCommandsAsRequired;
                 this.reportMissingAudioFiles = source.reportMissingAudioFiles;
                 this.disableInternalSequencerCommands = source.disableInternalSequencerCommands;
             }
@@ -286,10 +296,22 @@ namespace PixelCrushers.DialogueSystem
             public GameObject cameraAngles = null;
 
             /// <summary>
+            /// Specifies how Camera() commands should move the camera.
+            /// </summary>
+            [Tooltip("Specifies how Camera() commands should move the camera.")]
+            public Tweener.Easing cameraEasing = Tweener.Easing.Linear;
+
+            /// <summary>
             /// If conversation's sequences use Main Camera, leave camera in current position at end of conversation instead of restoring pre-conversation position.
             /// </summary>
             [Tooltip("If conversation's sequences use Main Camera, leave camera in current position at end of conversation instead of restoring pre-conversation position.")]
             public bool keepCameraPositionAtConversationEnd = false;
+
+            /// <summary>
+            /// Show subtitle if sequence is only 'Continue()'. Typically only useful in UIs that accumulate text.
+            /// </summary>
+            [Tooltip("Show subtitle if sequence is only 'Continue()'. Typically only useful in UIs that accumulate text.")]
+            public bool showSubtitleOnEmptyContinue = false;
 
             /// <summary>
             /// The default sequence to use if the dialogue entry doesn't have a sequence defined 
@@ -301,10 +323,16 @@ namespace PixelCrushers.DialogueSystem
             [TextArea]
             public string defaultSequence = "Delay({{end}})";
 
+            /// <summary>
+            /// If defined, overrides Default Sequence for player (PC) lines only.
+            /// </summary>
             [Tooltip("If defined, overrides Default Sequence for player (PC) lines only.")]
             [TextArea]
             public string defaultPlayerSequence = string.Empty;
 
+            /// <summary>
+            /// Used when a dialogue entry doesn't define its own Response Menu Sequence.
+            /// </summary>
             [Tooltip("Used when a dialogue entry doesn't define its own Response Menu Sequence.")]
             [TextArea]
             public string defaultResponseMenuSequence = string.Empty;
@@ -314,6 +342,12 @@ namespace PixelCrushers.DialogueSystem
             /// </summary>
             [Tooltip("Format to use for the 'entrytag' keyword.")]
             public EntrytagFormat entrytagFormat = EntrytagFormat.ActorName_ConversationID_EntryID;
+
+            /// <summary>
+            /// Treat all sequencer commands as if they have the 'required' keyword.
+            /// </summary>
+            [Tooltip("Treat all sequencer commands as if they have the 'required' keyword.")]
+            public bool treatAllCommandsAsRequired = false;
 
             /// <summary>
             /// By default, Audio() and AudioWait() sequencer commands don't report 

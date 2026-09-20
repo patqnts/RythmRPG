@@ -235,7 +235,14 @@ namespace PixelCrushers.DialogueSystem
             {
                 DisableInput();
                 if (InputDeviceManager.autoFocus) SetFocus(firstSelected);
-                Invoke(nameof(EnableInput), blockInputDuration);
+                if (Mathf.Approximately(0, Time.timeScale))
+                { 
+                    StartCoroutine(EnableInputAfterDuration(blockInputDuration));
+                }
+                else
+                {
+                    Invoke(nameof(EnableInput), blockInputDuration);
+                }
             }
             else
             {
@@ -245,6 +252,12 @@ namespace PixelCrushers.DialogueSystem
 #if TMP_PRESENT
             DialogueManager.instance.StartCoroutine(CheckTMProAutoScroll());
 #endif
+        }
+
+        private IEnumerator EnableInputAfterDuration(float duration)
+        {
+            yield return new WaitForSecondsRealtime(duration);
+            EnableInput();
         }
 
 #if TMP_PRESENT
@@ -539,7 +552,7 @@ namespace PixelCrushers.DialogueSystem
                 if (autonumber.enabled)
                 {
                     button.text = string.Format(m_processedAutonumberFormat, buttonNumber + 1, button.text);
-                    // Add UIButtonKeyTrigger(s) if needed:
+                    // Add UIButtonKeyTrigger(s) for autonumbering if needed:
                     var numKeyTriggersNeeded = 0;
                     if (autonumber.regularNumberHotkeys) numKeyTriggersNeeded++;
                     if (autonumber.numpadHotkeys) numKeyTriggersNeeded++;
@@ -555,7 +568,10 @@ namespace PixelCrushers.DialogueSystem
                     int index = 0;
                     if (autonumber.regularNumberHotkeys)
                     {
-                        keyTriggers[index++].key = (KeyCode)((int)KeyCode.Alpha1 + buttonNumber);
+                        // Autonumber using 1-9 then A-Z.
+                        var baseKeyCode = buttonNumber <= 9 ? KeyCode.Alpha1 : KeyCode.A;
+                        var keyCode = (KeyCode)((int)baseKeyCode + buttonNumber);
+                        keyTriggers[index++].key = keyCode;
                     }
                     if (autonumber.numpadHotkeys)
                     {
