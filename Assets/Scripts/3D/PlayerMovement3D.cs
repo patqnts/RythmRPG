@@ -15,6 +15,7 @@ public class PlayerMovement3D : MonoBehaviour
 
     private void Update()
     {
+        if (!controller.enabled) return;
         if (!movementEnabled)
         {
             controller.SimpleMove(Vector3.zero);
@@ -34,7 +35,7 @@ public class PlayerMovement3D : MonoBehaviour
     public void DisableMovement()
     {
         movementEnabled = false;
-        controller.SimpleMove(Vector3.zero);
+        if (controller.enabled) controller.SimpleMove(Vector3.zero);
     }
 
     public void EnableMovement()

@@ -24,7 +24,6 @@ public sealed class PlayerEnemyInteractor3D : MonoBehaviour
     [SerializeField] private GameObject noticePrefab;
     [SerializeField] private GameObject battleBackground;
     [SerializeField, Min(0f)] private float encounterDelay = 1.5f;
-    [SerializeField] private int combatSortingOrder = 52;
 
     [Header("Movement Control")]
     [SerializeField] private bool sendMovementMessages = true;
@@ -113,7 +112,6 @@ public sealed class PlayerEnemyInteractor3D : MonoBehaviour
         }
 
         if (battleBackground != null) battleBackground.SetActive(true);
-        SetEnemySortingOrder(enemy, combatSortingOrder);
         SendMovementMessage(disableMovementMessage);
 
         GameObject notice = null;
@@ -152,15 +150,6 @@ public sealed class PlayerEnemyInteractor3D : MonoBehaviour
     {
         if (!sendMovementMessages || string.IsNullOrWhiteSpace(message)) return;
         SendMessage(message, SendMessageOptions.DontRequireReceiver);
-    }
-
-    private static void SetEnemySortingOrder(EnemyCombatant enemy, int sortingOrder)
-    {
-        if (enemy == null) return;
-        SpriteRenderer renderer = enemy.SpriteRenderer != null
-            ? enemy.SpriteRenderer
-            : enemy.GetComponentInChildren<SpriteRenderer>();
-        if (renderer != null) renderer.sortingOrder = sortingOrder;
     }
 
     private void OnDrawGizmosSelected()

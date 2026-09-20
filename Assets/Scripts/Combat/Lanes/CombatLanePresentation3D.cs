@@ -25,6 +25,7 @@ namespace RythmRPG.Combat
         [Header("Screen UI")]
         [SerializeField] private Canvas canvas;
         [SerializeField] private RectTransform buttonRow;
+        private RawImage cameraOutput;
 
         private readonly List<RhythmLaneTarget> targets = new();
         private LaneInputRouter activeInput;
@@ -86,16 +87,17 @@ namespace RythmRPG.Combat
         {
             ResolveCanvas();
             if (canvas == null) return;
+            Transform rowParent = cameraOutput != null ? cameraOutput.transform : canvas.transform;
 
             if (buttonRow == null)
             {
-                Transform existing = canvas.transform.Find("Rhythm Button Row");
+                Transform existing = rowParent.Find("Rhythm Button Row");
                 GameObject rowObject = existing != null
                     ? existing.gameObject
                     : new GameObject("Rhythm Button Row", typeof(RectTransform));
                 buttonRow = rowObject.GetComponent<RectTransform>();
-                buttonRow.SetParent(canvas.transform, false);
             }
+            buttonRow.SetParent(rowParent, false);
 
             Vector2 size = theme != null ? theme.ButtonSize : new Vector2(72f, 58f);
             float spacing = theme != null ? theme.ButtonSpacing : 24f;
@@ -123,6 +125,13 @@ namespace RythmRPG.Combat
 
         private void ResolveCanvas()
         {
+            if (ResolveWorldCamera() && worldCamera.targetTexture != null)
+            {
+                cameraOutput = FindObjectsByType<RawImage>(FindObjectsInactive.Include, FindObjectsSortMode.None)
+                    .FirstOrDefault(candidate => candidate.texture == worldCamera.targetTexture
+                        && candidate.gameObject.activeInHierarchy);
+                if (cameraOutput != null) canvas = cameraOutput.GetComponentInParent<Canvas>();
+            }
             if (canvas == null)
             {
                 canvas = FindObjectsByType<Canvas>(FindObjectsInactive.Include, FindObjectsSortMode.None)

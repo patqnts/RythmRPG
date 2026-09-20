@@ -21,7 +21,7 @@ namespace RythmRPG.Combat
     public sealed class CombatEncounterCoordinator : MonoBehaviour
     {
         [Header("Cinemachine")]
-        [SerializeField] private CinemachineVirtualCamera virtualCamera;
+        [SerializeField] private CinemachineCamera virtualCamera;
         [SerializeField, Min(0f)] private float cameraDamping = 0.35f;
 
         [Header("Combat Composition")]
@@ -42,7 +42,8 @@ namespace RythmRPG.Combat
         private Transform previousCameraLookAt;
         private Transform combatCameraTarget;
         private Transform combatEnemy;
-        private CinemachineTransposer transposer;
+        private CinemachineFollow followRig;
+        private CharacterController transitioningController;
 
         private void Awake()
         {
@@ -80,21 +81,30 @@ namespace RythmRPG.Combat
             Vector3 playerTargetPosition = ResolvePlayerCombatPosition(context);
             CharacterController playerController = context.Player.GetComponent<CharacterController>();
             bool playerControllerWasEnabled = playerController != null && playerController.enabled;
-            if (playerControllerWasEnabled) playerController.enabled = false;
+            if (playerControllerWasEnabled)
+            {
+                transitioningController = playerController;
+                playerController.enabled = false;
+            }
 
             Tween playerMove = playerTargetPosition != context.Player.transform.position
                 ? Tween.Position(context.Player.transform, playerTargetPosition, moveDuration, Ease.InOutSine)
                 : default;
             if (playerMove.isAlive) yield return new WaitForSeconds(moveDuration);
 
-            if (playerControllerWasEnabled && playerController != null) playerController.enabled = true;
+            RestorePlayerController();
         }
 
         public void Restore(CombatEncounterContext context, bool victory)
         {
             Tween.StopAll(context.Player.transform);
             Tween.StopAll(context.Enemy.transform);
+            CharacterController controller = context.Player.GetComponent<CharacterController>();
+            bool wasEnabled = controller != null && controller.enabled;
+            if (wasEnabled) controller.enabled = false;
             context.Player.transform.position = playerWorldPosition;
+            if (wasEnabled) controller.enabled = true;
+            RestorePlayerController();
             SpriteRenderer playerRenderer = context.Player.GetComponentInChildren<SpriteRenderer>();
             if (playerRenderer != null) playerRenderer.sortingOrder = playerSortingOrder;
             if (context.Enemy.SpriteRenderer != null) context.Enemy.SpriteRenderer.sortingOrder = enemySortingOrder;
@@ -117,18 +127,21 @@ namespace RythmRPG.Combat
             if (follow != null && virtualCamera.transform.IsChildOf(follow.root))
                 virtualCamera.transform.SetParent(null, true);
 
-            transposer = virtualCamera.GetCinemachineComponent<CinemachineTransposer>();
-            if (transposer == null)
+            followRig = virtualCamera.GetComponent<CinemachineFollow>();
+            if (followRig == null)
             {
-                transposer = virtualCamera.AddCinemachineComponent<CinemachineTransposer>();
-                if (transposer != null) transposer.m_FollowOffset = currentOffset;
+                followRig = virtualCamera.gameObject.AddComponent<CinemachineFollow>();
+                followRig.FollowOffset = currentOffset;
             }
-            if (transposer == null) return;
 
-            transposer.m_BindingMode = BindingMode.WorldSpace;
-            transposer.m_XDamping = cameraDamping;
-            transposer.m_YDamping = cameraDamping;
-            transposer.m_ZDamping = cameraDamping;
+            followRig.TrackerSettings.BindingMode = BindingMode.WorldSpace;
+            followRig.TrackerSettings.PositionDamping = Vector3.one * cameraDamping;
+        }
+
+        private void RestorePlayerController()
+        {
+            if (transitioningController != null) transitioningController.enabled = true;
+            transitioningController = null;
         }
 
         private Vector3 ResolvePlayerCombatPosition(CombatEncounterContext context)
@@ -225,7 +238,7 @@ namespace RythmRPG.Combat
 
         private Vector3 ResolveFollowOffset()
         {
-            if (transposer != null) return transposer.m_FollowOffset;
+            if (followRig != null) return followRig.FollowOffset;
             if (virtualCamera != null && virtualCamera.Follow != null)
                 return virtualCamera.transform.position - virtualCamera.Follow.position;
             return new Vector3(0f, 7f, -9f);
@@ -243,7 +256,7 @@ namespace RythmRPG.Combat
             Camera outputCamera = Camera.main;
             if (outputCamera != null && outputCamera.orthographic)
                 return Mathf.Max(0.01f, outputCamera.orthographicSize);
-            return Mathf.Max(0.01f, virtualCamera.m_Lens.OrthographicSize);
+            return Mathf.Max(0.01f, virtualCamera.Lens.OrthographicSize);
         }
 
         private void RestoreExplorationCamera(Transform player)
@@ -265,7 +278,7 @@ namespace RythmRPG.Combat
         private void ResolveReferences()
         {
             combatUIRoot ??= FindNamedTransform("CombatSystemUI")?.gameObject;
-            virtualCamera ??= FindFirstObjectByType<CinemachineVirtualCamera>(FindObjectsInactive.Include);
+            virtualCamera ??= FindFirstObjectByType<CinemachineCamera>(FindObjectsInactive.Include);
         }
 
         private static Transform FindNamedTransform(string objectName)

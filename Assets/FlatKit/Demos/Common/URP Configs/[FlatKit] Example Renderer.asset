@@ -140,7 +140,7 @@ MonoBehaviour:
       particleLayers:
         serializedVersion: 2
         m_Bits: 1024
-      outlineColor: {r: 1, g: 1, b: 1, a: 1}
+      outlineColor: {r: 0.09251513, g: 0.3917927, b: 0.9339623, a: 1}
       outlinePixels: 0.8
       outlineSoftness: 0.05
       metaballThreshold: 0.35
