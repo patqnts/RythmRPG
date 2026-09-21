@@ -51,6 +51,8 @@ namespace RythmRPG.Combat
             lanePresentation.ConfigureEncounter(context, runner.ProjectileObjectHolder);
             lanePresentation.EnsurePresentation(inputRouter);
             lanePresentation.SetPresentationVisible(true);
+            // Sequence: the player walks to its combat spot first; the coordinator reveals the hit line afterwards.
+            lanePresentation.HideHitLine();
             encounter = context;
             encounter.Player.CaptureBattleStart();
             encounter.Enemy.CaptureBattleStart();

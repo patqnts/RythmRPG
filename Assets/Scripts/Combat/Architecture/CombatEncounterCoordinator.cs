@@ -121,6 +121,7 @@ namespace RythmRPG.Combat
                 float settleDeadline = Time.time + maxCameraSettleSeconds;
                 while (Time.time < settleDeadline && !IsCameraSettled()) yield return null;
                 RestorePlayerController();
+                yield return RevealHitLine();
                 yield break;
             }
 
@@ -131,6 +132,16 @@ namespace RythmRPG.Combat
             if (playerMove.isAlive) yield return new WaitForSeconds(moveDuration);
 
             RestorePlayerController();
+            yield return RevealHitLine();
+        }
+
+        // Second step of the encounter intro: the player is in place, now show the hit line.
+        private IEnumerator RevealHitLine()
+        {
+            if (lanePresentation == null) yield break;
+            lanePresentation.RevealHitLine();
+            if (lanePresentation.HitLineRevealSeconds > 0f)
+                yield return new WaitForSeconds(lanePresentation.HitLineRevealSeconds);
         }
 
         public void Restore(CombatEncounterContext context, bool victory)
