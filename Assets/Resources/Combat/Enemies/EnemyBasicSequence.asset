@@ -17,19 +17,7 @@ MonoBehaviour:
   steps:
   - animationName: Laser
     anticipationDuration: 1
-    rhythmPattern: {fileID: 11400000, guid: a3d38435867340dd890d94143782ee84, type: 2}
-    durationOverride: 0
-    endPolicy: 0
-    modifiers: []
-  - animationName: Laser
-    anticipationDuration: 1
     rhythmPattern: {fileID: 11400000, guid: b100000000000000000000000000010e, type: 2}
-    durationOverride: 0
-    endPolicy: 0
-    modifiers: []
-  - animationName: Laser
-    anticipationDuration: 1
-    rhythmPattern: {fileID: 11400000, guid: e92d3a7922062162fa6bd9c376bbf2fb, type: 2}
     durationOverride: 0
     endPolicy: 0
     modifiers: []

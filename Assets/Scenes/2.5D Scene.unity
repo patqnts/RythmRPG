@@ -1333,6 +1333,8 @@ MonoBehaviour:
   playerViewportPosition: {x: 0.5, y: 0.2}
   enemyViewportPosition: {x: 0.5, y: 0.8}
   minimumPlayerEnemySeparation: 7
+  cameraSettleTolerance: 0.02
+  maxCameraSettleSeconds: 2
   playerDistanceBehindHitLine: 0.45
   preservePlayerHeight: 1
   moveDuration: 0.35
@@ -8417,7 +8419,7 @@ Transform:
   m_GameObject: {fileID: 1409756759}
   serializedVersion: 2
   m_LocalRotation: {x: 0.30070576, y: -0, z: -0, w: 0.953717}
-  m_LocalPosition: {x: -2.03, y: 8.8, z: -4.21}
+  m_LocalPosition: {x: -2.03, y: 13.26, z: -9.71}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8441,7 +8443,7 @@ MonoBehaviour:
     AngularDampingMode: 0
     RotationDamping: {x: 0, y: 0, z: 0}
     QuaternionDamping: 0
-  FollowOffset: {x: 0, y: 5, z: -4.5}
+  FollowOffset: {x: 0, y: 9.46, z: -10}
 --- !u!114 &1409756764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12124,7 +12126,7 @@ Transform:
   m_GameObject: {fileID: 1907834171}
   serializedVersion: 2
   m_LocalRotation: {x: 0.30070576, y: 0, z: 0, w: 0.953717}
-  m_LocalPosition: {x: -2.03, y: 8.8, z: -4.21}
+  m_LocalPosition: {x: -2.03, y: 13.26, z: -9.71}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -44,6 +44,10 @@ namespace RythmRPG.Rhythm.Editor.Composer
         private PlaybackTransport transport;
         private WaveformPeaks waveform;
         private AudioClip audioClip;
+        private AudioClip turnClip;
+        private ComposerAudio.Listen listen = ComposerAudio.Listen.Main;
+        private ObjectField turnClipField;
+        private EnumField listenField;
         private bool metronomeOn;
         private bool refreshingTransport;
         private string audioMessage = "";
@@ -72,7 +76,8 @@ namespace RythmRPG.Rhythm.Editor.Composer
             root.style.flexDirection = FlexDirection.Column;
 
             audio = new ComposerAudio();
-            transport = new PlaybackTransport(() => EditorApplication.timeSinceStartup);
+            // The playhead follows the audio (dsp) clock, so it stays on the music and the metronome.
+            transport = new PlaybackTransport(() => audio != null ? audio.Clock() : EditorApplication.timeSinceStartup);
             EditorApplication.update -= OnEditorUpdate;
             EditorApplication.update += OnEditorUpdate;
             EditorApplication.playModeStateChanged -= OnPlayModeChanged;
@@ -206,6 +211,9 @@ namespace RythmRPG.Rhythm.Editor.Composer
 
         private VisualElement BuildTransportBar()
         {
+            var column = new VisualElement();
+
+            // Row 1: playback and the two music layers.
             var bar = new Toolbar();
             playButton = new ToolbarButton(TogglePlay) { text = "Play" };
             playButton.style.minWidth = 48f;
@@ -217,35 +225,99 @@ namespace RythmRPG.Rhythm.Editor.Composer
             metronome.RegisterValueChangedCallback(e =>
             {
                 metronomeOn = e.newValue;
-                if (transport != null && transport.IsPlaying) StartAudio();
+                if (audio != null) audio.SetMetronome(metronomeOn);
             });
             bar.Add(metronome);
+
+            listenField = new EnumField("Hear", listen);
+            listenField.style.width = 120f;
+            listenField.labelElement.style.minWidth = 32f;
+            listenField.tooltip = "Which music layer you hear. Both layers always play in sync; this only changes their volume.";
+            listenField.RegisterValueChangedCallback(e =>
+            {
+                listen = (ComposerAudio.Listen)e.newValue;
+                if (audio != null) audio.SetListen(listen);
+            });
+            bar.Add(listenField);
             bar.Add(new ToolbarSpacer());
 
-            clipField = new ObjectField("Audio");
+            clipField = new ObjectField("Main audio");
             clipField.objectType = typeof(AudioClip);
             clipField.allowSceneObjects = false;
-            clipField.style.minWidth = 220f;
-            clipField.labelElement.style.minWidth = 40f;
+            clipField.style.minWidth = 240f;
+            clipField.labelElement.style.minWidth = 70f;
+            clipField.tooltip = "Music heard on the enemy turn. The waveform and beat grid follow this clip.";
             clipField.RegisterValueChangedCallback(e => OnAudioClipPicked(e.newValue as AudioClip));
             bar.Add(clipField);
 
-            bpmField = MakeTempoField("BPM", 90f);
+            turnClipField = new ObjectField("Turn audio");
+            turnClipField.objectType = typeof(AudioClip);
+            turnClipField.allowSceneObjects = false;
+            turnClipField.style.minWidth = 240f;
+            turnClipField.labelElement.style.minWidth = 70f;
+            turnClipField.tooltip = "Music layer for the player turn. Plays sample-locked with Main audio; use the same length, sample rate and BPM.";
+            turnClipField.RegisterValueChangedCallback(e => OnTurnClipPicked(e.newValue as AudioClip));
+            bar.Add(turnClipField);
+            column.Add(bar);
+
+            // Row 2: grid alignment. Everything here can be changed while playing; the music keeps going.
+            var align = new Toolbar();
+            bpmField = MakeTempoField("BPM", 100f);
+            align.Add(bpmField);
+            align.Add(NudgeButton("-0.1", "BPM -0.1", () => NudgeBpm(-0.1d)));
+            align.Add(NudgeButton("+0.1", "BPM +0.1", () => NudgeBpm(0.1d)));
             meterField = new IntegerField("Beats/bar");
             meterField.style.width = 100f;
             meterField.labelElement.style.minWidth = 52f;
             meterField.RegisterValueChangedCallback(e => OnTempoFieldsChanged());
-            offsetField = MakeTempoField("Offset (s)", 130f);
-            bar.Add(bpmField);
-            bar.Add(meterField);
-            bar.Add(offsetField);
-            bar.Add(new ToolbarButton(SetBeatZeroAtPlayhead) { text = "Beat 0 = playhead" });
+            align.Add(meterField);
+            align.Add(new ToolbarSpacer());
+            offsetField = MakeTempoField("Offset (s)", 140f);
+            offsetField.tooltip = "Audio seconds at which beat 0 falls. Nudge while playing with the metronome on until the clicks sit on the music.";
+            align.Add(offsetField);
+            align.Add(NudgeButton("-10ms", "Offset -10 ms (grid earlier)", () => NudgeOffset(-0.010d)));
+            align.Add(NudgeButton("-1ms", "Offset -1 ms", () => NudgeOffset(-0.001d)));
+            align.Add(NudgeButton("+1ms", "Offset +1 ms", () => NudgeOffset(0.001d)));
+            align.Add(NudgeButton("+10ms", "Offset +10 ms (grid later)", () => NudgeOffset(0.010d)));
+            align.Add(new ToolbarButton(SetBeatZeroAtPlayhead) { text = "Beat 0 = playhead" });
 
-            var hint = new Label("  Space = play/pause | click ruler to seek");
+            var hint = new Label("  Space = play/pause | click ruler to seek | tune BPM/offset while playing");
             hint.style.color = new Color(0.65f, 0.65f, 0.65f);
             hint.style.unityTextAlign = TextAnchor.MiddleLeft;
-            bar.Add(hint);
-            return bar;
+            align.Add(hint);
+            column.Add(align);
+            return column;
+        }
+
+        private static ToolbarButton NudgeButton(string text, string tooltip, Action onClick)
+        {
+            var button = new ToolbarButton(onClick) { text = text, tooltip = tooltip };
+            button.style.minWidth = 34f;
+            return button;
+        }
+
+        private void NudgeOffset(double delta)
+        {
+            if (session == null) return;
+            offsetField.SetValueWithoutNotify(Math.Max(0d, Math.Round((offsetField.value + delta) * 1000d) / 1000d));
+            OnTempoFieldsChanged();
+        }
+
+        private void NudgeBpm(double delta)
+        {
+            if (session == null) return;
+            bpmField.SetValueWithoutNotify(Math.Max(1d, Math.Round((bpmField.value + delta) * 100d) / 100d));
+            OnTempoFieldsChanged();
+        }
+
+        private void OnTurnClipPicked(AudioClip clip)
+        {
+            if (refreshingTransport || session == null) return;
+            turnClip = clip;
+            session.Dirty = true;
+            RebuildWaveform();
+            if (transport.IsPlaying) StartAudio();
+            UpdateStatus();
         }
 
         private DoubleField MakeTempoField(string label, float width)
@@ -267,6 +339,7 @@ namespace RythmRPG.Rhythm.Editor.Composer
                 meterField.SetValueWithoutNotify(session != null ? session.Tempo.BeatsPerMeasure : 4);
                 offsetField.SetValueWithoutNotify(session != null ? session.Tempo.AudioOffsetSeconds : 0d);
                 clipField.SetValueWithoutNotify(audioClip);
+                if (turnClipField != null) turnClipField.SetValueWithoutNotify(turnClip);
             }
             finally
             {
@@ -284,7 +357,8 @@ namespace RythmRPG.Rhythm.Editor.Composer
             session.NotifyTempoChanged();
             RefreshTransportFields();
             SyncPlayhead(false);
-            if (transport.IsPlaying) StartAudio();
+            // The music is not restarted: only the grid (and the metronome ticks on it) moves.
+            if (audio != null) audio.Retime(session.Tempo);
         }
 
         private void SetBeatZeroAtPlayhead()
@@ -311,10 +385,8 @@ namespace RythmRPG.Rhythm.Editor.Composer
             string error;
             waveform = ComposerAudio.BuildPeaks(audioClip, out error);
             audioMessage = error ?? "";
-            if (audioClip != null && waveform != null && !audio.PlaybackAvailable)
-            {
-                audioMessage = "Editor audio preview unavailable in this Unity version; playhead still runs silently.";
-            }
+            string layerWarning = ComposerAudio.CheckLayers(audioClip, turnClip);
+            if (layerWarning != null) audioMessage = string.IsNullOrEmpty(audioMessage) ? layerWarning : audioMessage + " | " + layerWarning;
 
             if (timeline != null) timeline.Waveform = waveform;
         }
@@ -323,6 +395,7 @@ namespace RythmRPG.Rhythm.Editor.Composer
         {
             double d = chart != null ? chart.EffectiveDuration : 30d;
             if (audioClip != null) d = Math.Max(d, audioClip.length);
+            if (turnClip != null) d = Math.Max(d, turnClip.length);
             if (session != null)
             {
                 IList<NoteInstance> notes = session.Notes;
@@ -348,6 +421,9 @@ namespace RythmRPG.Rhythm.Editor.Composer
                 transport.Duration = ComputeDuration();
                 transport.Play();
                 StartAudio();
+                if (EditorUtility.audioMasterMute)
+                    audioMessage = "Editor audio is muted (Game view 'Mute Audio'): unmute to hear music and clicks.";
+                UpdateStatus();
             }
 
             UpdatePlayButton();
@@ -365,7 +441,9 @@ namespace RythmRPG.Rhythm.Editor.Composer
         private void StartAudio()
         {
             transport.Duration = ComputeDuration();
-            audio.PlayFrom(transport.Position, audioClip, session.Tempo, transport.Duration, metronomeOn);
+            double position = transport.Position;
+            double startsAt = audio.Play(position, audioClip, turnClip, session.Tempo, metronomeOn, listen);
+            transport.SyncTo(position, startsAt);
         }
 
         private void OnPlayheadScrubbed(double beat)
@@ -387,6 +465,7 @@ namespace RythmRPG.Rhythm.Editor.Composer
         private void OnEditorUpdate()
         {
             if (transport == null || session == null || !transport.IsPlaying) return;
+            audio?.Update();
             bool ended = transport.Update();
             SyncPlayhead(true);
             if (ended)
@@ -754,6 +833,7 @@ namespace RythmRPG.Rhythm.Editor.Composer
             {
                 session = null;
                 audioClip = null;
+                turnClip = null;
                 waveform = null;
                 timeline.Waveform = null;
                 RefreshTransportFields();
@@ -768,6 +848,7 @@ namespace RythmRPG.Rhythm.Editor.Composer
             session.Changed += OnSessionChanged;
             timeline.PlayheadBeat = 0d;
             audioClip = target.AudioClip;
+            turnClip = target.TurnAudioClip;
             RebuildWaveform();
             RefreshTransportFields();
             timeline.Bind(session, entries);
@@ -783,6 +864,7 @@ namespace RythmRPG.Rhythm.Editor.Composer
             BackupAsset(chart);
             Undo.RecordObject(chart, "Rhythm Composer Save");
             chart.AudioClip = audioClip;
+            chart.TurnAudioClip = turnClip;
             chart.Bpm = (float)session.Tempo.Segments[0].Bpm;
             chart.BeatsPerMeasure = session.Tempo.BeatsPerMeasure;
             chart.AudioOffsetSeconds = session.Tempo.AudioOffsetSeconds;

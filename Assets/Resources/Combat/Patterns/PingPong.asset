@@ -10,38 +10,38 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b1ac14be5a7c40d992243cd40ecaea3b, type: 3}
-  m_Name: LaserHolds
+  m_Name: PingPong
   m_EditorClassIdentifier: RythmRPG.Rhythm.Runtime::RythmRPG.Rhythm.RhythmChart
   schemaVersion: 1
   bpm: 120
   beatsPerMeasure: 4
-  compositionDuration: 1
-  audioClip: {fileID: 0}
-  audioOffsetSeconds: 0
+  compositionDuration: 10
+  audioClip: {fileID: 8300000, guid: 78cb0fef327344e4ca877c293083380c, type: 3}
+  audioOffsetSeconds: 0.41
   snapEnabled: 1
   snapDivision: 4
   lanes:
-  - id: 2e6bbaa24ef94343ac532f43aa1daea6
+  - id: 18da989c9f5f4f07ae870d679a1d8dd1
     displayName: Lane 1
     color: {r: 0.2, g: 0.62, b: 0.95, a: 1}
     keyIdentity: 1
     keyType: 0
-  - id: 112828802d0c49f18509ed71a3ce9fa4
+  - id: 2a029117b72641939d57fe4488a05ce1
     displayName: Lane 2
     color: {r: 0.35, g: 0.8, b: 0.52, a: 1}
     keyIdentity: 2
     keyType: 0
-  - id: 1029bee4e54e4ecd9a5f0fa346e3a501
+  - id: efc9cb4f11c34a2698473f892f478648
     displayName: Lane 3
     color: {r: 0.95, g: 0.7, b: 0.22, a: 1}
     keyIdentity: 3
     keyType: 0
-  - id: d2b53c08b1d04358acca2b2613f39ee6
+  - id: 0f9d6d04758e4477951024bd73d25a07
     displayName: Lane 4
     color: {r: 0.88, g: 0.38, b: 0.55, a: 1}
     keyIdentity: 4
     keyType: 0
-  - id: d97666cee177405798f681ce3ecff058
+  - id: bf3f841d9bf74a79bf1a551dc17de2b4
     displayName: Lane 5
     color: {r: 0.62, g: 0.45, b: 0.92, a: 1}
     keyIdentity: 5
@@ -89,24 +89,18 @@ MonoBehaviour:
     defaultSpeed: 8
     defaultDamage: 1
     defaultTravelTime: 2.5
-  - noteType: 7
-    defaultPrefab: {fileID: 5029094789931625778, guid: 7a1e4b9c2d5f4e8a9c3b6d0f1e2a4b5c, type: 3}
-    displayColor: {r: 1, g: 0.85, b: 0.2, a: 1}
-    defaultSpeed: 8
-    defaultDamage: 1
-    defaultTravelTime: 2.5
   notes:
-  - id: 78f801a242544be2bab8f3adc19f15ce
-    laneId: 112828802d0c49f18509ed71a3ce9fa4
-    hitTime: 8.125
-    noteType: 3
-    holdDuration: 7.875
+  - id: ab067c907d414eb8a258868d9f542561
+    laneId: efc9cb4f11c34a2698473f892f478648
+    hitTime: 3.66
+    noteType: 4
+    holdDuration: 0
     initializeMovementType: 0
     hitEffect: 0
     playerState: 0
     damage: 1
     speed: 8
-    travelTime: 9.375
+    travelTime: 2.375
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15

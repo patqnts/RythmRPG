@@ -26,7 +26,7 @@ namespace RythmRPG.Rhythm.Audio
         {
             get
             {
-                double p = IsPlaying ? basePosition + (timeSource() - startedAt) : basePosition;
+                double p = IsPlaying ? basePosition + Math.Max(0d, timeSource() - startedAt) : basePosition;
                 return Math.Max(0d, Math.Min(Duration, p));
             }
         }
@@ -51,6 +51,16 @@ namespace RythmRPG.Rhythm.Audio
         {
             IsPlaying = false;
             basePosition = Math.Max(0d, Math.Min(Duration, returnTo));
+        }
+
+        /// <summary>
+        /// Re-anchors the playhead: it reads <paramref name="position"/> until the time source reaches
+        /// <paramref name="startAt"/> (e.g. the dsp time scheduled audio begins), then advances from there.
+        /// </summary>
+        public void SyncTo(double position, double startAt)
+        {
+            basePosition = Math.Max(0d, Math.Min(Duration, position));
+            startedAt = startAt;
         }
 
         public void Seek(double seconds)

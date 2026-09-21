@@ -20,6 +20,7 @@ namespace RythmRPG.Combat
         [SerializeField] private CombatUIController uiController;
         [SerializeField] private CombatLanePresentation3D lanePresentation;
         [SerializeField] private RhythmChart defaultEnemyPattern;
+        [SerializeField] private CombatMusicDirector musicDirector;
 
         private CombatTurnStateMachine stateMachine;
         private CombatEncounterContext encounter;
@@ -57,6 +58,7 @@ namespace RythmRPG.Combat
             encounter.Player.CaptureBattleStart();
             encounter.Enemy.CaptureBattleStart();
             runner.ConfigurePresentation(lanePresentation);
+            runner.ConfigureMusic(musicDirector);
             BindRuntime();
             ConfigureStateMachine();
             IsBattleActive = true;
@@ -72,6 +74,7 @@ namespace RythmRPG.Combat
             if (!IsBattleActive) return;
             StopStateRoutine();
             runner?.CancelCurrentPattern(false);
+            musicDirector?.Stop();
             abilitySlots.EndSelection();
             vfxController.SetAbilitySlotsVisible(false, false);
             encounterCoordinator.Restore(encounter, false);
@@ -92,6 +95,7 @@ namespace RythmRPG.Combat
             abilitySystem ??= GetComponent<RhythmAbilitySystem>() ?? gameObject.AddComponent<RhythmAbilitySystem>();
             vfxController ??= GetComponent<CombatVFXController>() ?? gameObject.AddComponent<CombatVFXController>();
             lanePresentation ??= GetComponent<CombatLanePresentation3D>() ?? gameObject.AddComponent<CombatLanePresentation3D>();
+            musicDirector ??= GetComponent<CombatMusicDirector>() ?? gameObject.AddComponent<CombatMusicDirector>();
             uiController ??= FindFirstObjectByType<CombatUIController>(FindObjectsInactive.Include);
             if (uiController == null)
             {
@@ -156,6 +160,7 @@ namespace RythmRPG.Combat
         private IEnumerator EnemyTurnStartRoutine()
         {
             vfxController.SetAbilitySlotsVisible(false, true);
+            musicDirector?.SetPlayerTurn(false);
             modifierSystem.OnEnemyTurnStarted();
             yield return null;
             Transition(CombatState.EnemyTurnExecuting);
@@ -210,6 +215,7 @@ namespace RythmRPG.Combat
         private IEnumerator PlayerTurnStartRoutine()
         {
             abilitySlots.TickCooldowns();
+            musicDirector?.SetPlayerTurn(true);
             vfxController.SetAbilitySlotsVisible(true, true);
             yield return null;
             Transition(CombatState.PlayerAbilitySelection);
@@ -303,6 +309,7 @@ namespace RythmRPG.Combat
         private IEnumerator TerminalRoutine(CombatState terminalState)
         {
             runner?.CancelCurrentPattern(false);
+            musicDirector?.Stop();
             vfxController.SetAbilitySlotsVisible(false, true);
             yield return new WaitForSecondsRealtime(vfxController.TerminalDelay);
             bool victory = terminalState == CombatState.Victory;

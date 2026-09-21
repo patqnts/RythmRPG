@@ -193,8 +193,11 @@ namespace RythmRPG.Rhythm
         [SerializeField, HideInInspector] private int schemaVersion = CurrentSchemaVersion;
         [SerializeField, Min(0.01f)] private float bpm = 120f;
         [SerializeField, Min(1)] private int beatsPerMeasure = 4;
-        [SerializeField] private double compositionDuration = 30d;
+        // Editor-only minimum timeline length. Combat ignores it: a chart ends once its last note is resolved.
+        [SerializeField, HideInInspector] private double compositionDuration = 30d;
         [SerializeField] private AudioClip audioClip;
+        [Tooltip("Optional second music layer that plays in sync with Audio Clip. In combat, Audio Clip is heard on the enemy turn and this on the player turn (cross-faded). Same length, sample rate and BPM as Audio Clip.")]
+        [SerializeField] private AudioClip turnAudioClip;
         [SerializeField] private double audioOffsetSeconds;
         [SerializeField] private bool snapEnabled = true;
         [SerializeField] private RhythmSnapDivision snapDivision = RhythmSnapDivision.QuarterBeat;
@@ -209,6 +212,8 @@ namespace RythmRPG.Rhythm
         public int BeatsPerMeasure { get => beatsPerMeasure; set => beatsPerMeasure = value; }
         public double CompositionDuration { get => compositionDuration; set => compositionDuration = value; }
         public AudioClip AudioClip { get => audioClip; set => audioClip = value; }
+        /// <summary>Second music layer (player-turn arrangement) that plays sample-locked with <see cref="AudioClip"/>.</summary>
+        public AudioClip TurnAudioClip { get => turnAudioClip; set => turnAudioClip = value; }
         /// <summary>Seconds into the audio at which beat 0 falls (aligns the beat grid to the music).</summary>
         public double AudioOffsetSeconds { get => audioOffsetSeconds; set => audioOffsetSeconds = value; }
         public bool SnapEnabled { get => snapEnabled; set => snapEnabled = value; }
@@ -225,6 +230,26 @@ namespace RythmRPG.Rhythm
         /// <summary>Beat/seconds map for this chart (constant tempo for schema v1).</summary>
         public TempoMap CreateTempoMap() => new TempoMap(bpm, beatsPerMeasure, audioOffsetSeconds);
 
+        /// <summary>
+        /// Chart time at which the authored content ends: the last note's end (hit, or hold end) or the last sequence
+        /// start. Combat finishes the chart when this has passed and every note is resolved. Audio length and
+        /// Composition Duration do not count.
+        /// </summary>
+        public double ContentEndTime
+        {
+            get
+            {
+                double result = 0d;
+                foreach (RhythmNoteData note in notes)
+                    if (note != null) result = Math.Max(result, note.EndTime);
+                if (sequences != null)
+                    foreach (SequenceActivationData sequence in sequences)
+                        if (sequence != null) result = Math.Max(result, sequence.StartTime);
+                return result;
+            }
+        }
+
+        /// <summary>Editor timeline length (content, audio clip and Composition Duration). Not used by combat.</summary>
         public double EffectiveDuration
         {
             get
