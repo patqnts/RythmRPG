@@ -48,6 +48,31 @@ namespace RythmRPG.Rhythm.Editor.Composer
         private double patternPreviewDuration;
 
         public double PlayheadBeat { get; set; }
+
+        /// <summary>First visible beat (left edge of the lanes). Setting it scrolls the view.</summary>
+        public double ScrollBeat
+        {
+            get { return geo.ScrollBeat; }
+            set
+            {
+                double v = Math.Max(0d, value);
+                if (Math.Abs(v - geo.ScrollBeat) < 1e-9) return;
+                geo.ScrollBeat = v;
+                Refresh();
+            }
+        }
+
+        /// <summary>Number of beats that fit in the visible lane area at the current zoom.</summary>
+        public double VisibleBeatSpan
+        {
+            get { return Math.Max(0.01d, (Math.Max(1f, contentRect.width) - geo.Gutter) / geo.PixelsPerBeat); }
+        }
+
+        /// <summary>Raised (after the repaint) when scroll or zoom changed, e.g. to update a scrollbar.</summary>
+        public event Action ViewChanged;
+        private double lastReportedScroll = -1d;
+        private double lastReportedZoom = -1d;
+        private float lastReportedWidth = -1f;
         public string ArmedDefinitionId { get; set; }
 
         /// <summary>Optional waveform drawn behind the lanes, positioned through the session tempo (beat grid + audio offset).</summary>
@@ -409,6 +434,14 @@ namespace RythmRPG.Rhythm.Editor.Composer
 
         private void OnGenerate(MeshGenerationContext mgc)
         {
+            if (geo.ScrollBeat != lastReportedScroll || geo.PixelsPerBeat != lastReportedZoom || contentRect.width != lastReportedWidth)
+            {
+                lastReportedScroll = geo.ScrollBeat;
+                lastReportedZoom = geo.PixelsPerBeat;
+                lastReportedWidth = contentRect.width;
+                schedule.Execute(() => ViewChanged?.Invoke());
+            }
+
             Painter2D p = mgc.painter2D;
             float w = contentRect.width;
             float h = contentRect.height;

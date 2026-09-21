@@ -17,6 +17,8 @@ MonoBehaviour:
   beatsPerMeasure: 4
   compositionDuration: 25
   audioClip: {fileID: 8300000, guid: 78cb0fef327344e4ca877c293083380c, type: 3}
+  song: {fileID: 11400000, guid: be022a97543154341b52e0cfff67c396, type: 2}
+  songPreviewBar: 0
   audioOffsetSeconds: 0.283
   snapEnabled: 1
   snapDivision: 2

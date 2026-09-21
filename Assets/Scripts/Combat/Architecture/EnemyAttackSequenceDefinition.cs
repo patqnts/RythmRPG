@@ -28,10 +28,13 @@ namespace RythmRPG.Combat
     {
         [SerializeField] private string id = string.Empty;
         [SerializeField, Min(0.01f)] private float selectionWeight = 1f;
+        [Tooltip("Music for this sequence. It loops for as long as combat lasts; every step's chart starts on the song's next bar line and should be authored at the song's BPM.")]
+        [SerializeField] private CombatSong song;
         [SerializeField] private List<EnemyAttackStepDefinition> steps = new();
 
         public string Id => id;
         public float SelectionWeight => Mathf.Max(0.01f, selectionWeight);
+        public CombatSong Song => song;
         public IReadOnlyList<EnemyAttackStepDefinition> Steps => steps;
     }
 }

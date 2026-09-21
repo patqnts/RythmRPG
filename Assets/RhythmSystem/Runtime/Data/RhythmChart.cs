@@ -196,6 +196,10 @@ namespace RythmRPG.Rhythm
         // Editor-only minimum timeline length. Combat ignores it: a chart ends once its last note is resolved.
         [SerializeField, HideInInspector] private double compositionDuration = 30d;
         [SerializeField] private AudioClip audioClip;
+        [Tooltip("Song whose beat rules this chart follows (BPM, beats per bar). In combat the sequence's song plays and this chart starts on its next bar line. In the composer the song is used for preview and to lock the grid.")]
+        [SerializeField] private CombatSong song;
+        [Tooltip("Composer preview only: which bar of the song the chart's beat 0 is heard against.")]
+        [SerializeField, Min(0)] private int songPreviewBar;
         [SerializeField] private double audioOffsetSeconds;
         [SerializeField] private bool snapEnabled = true;
         [SerializeField] private RhythmSnapDivision snapDivision = RhythmSnapDivision.QuarterBeat;
@@ -210,6 +214,8 @@ namespace RythmRPG.Rhythm
         public int BeatsPerMeasure { get => beatsPerMeasure; set => beatsPerMeasure = value; }
         public double CompositionDuration { get => compositionDuration; set => compositionDuration = value; }
         public AudioClip AudioClip { get => audioClip; set => audioClip = value; }
+        public CombatSong Song { get => song; set => song = value; }
+        public int SongPreviewBar { get => songPreviewBar; set => songPreviewBar = Math.Max(0, value); }
         /// <summary>Seconds into the audio at which beat 0 falls (aligns the beat grid to the music).</summary>
         public double AudioOffsetSeconds { get => audioOffsetSeconds; set => audioOffsetSeconds = value; }
         public bool SnapEnabled { get => snapEnabled; set => snapEnabled = value; }

@@ -23,6 +23,7 @@ namespace RythmRPG.Combat
         [SerializeField] private CombatMusicDirector musicDirector;
 
         private CombatTurnStateMachine stateMachine;
+        private EnemyAttackSequenceDefinition nextSequence;
         private CombatEncounterContext encounter;
         private RhythmPatternRunner runner;
         private AbilityRuntimeInstance selectedAbility;
@@ -152,6 +153,9 @@ namespace RythmRPG.Combat
 
         private IEnumerator BattleStartRoutine()
         {
+            // Pick the first attack now so its song already plays during the intro.
+            nextSequence = encounter.Enemy.SelectAttackSequence(UnityEngine.Random.value);
+            if (nextSequence != null) musicDirector?.PlaySong(nextSequence.Song);
             yield return encounterCoordinator.Prepare(encounter);
             yield return PlayEnemyBattleIntro();
             Transition(CombatState.EnemyTurnStart);
@@ -168,7 +172,10 @@ namespace RythmRPG.Combat
 
         private IEnumerator EnemyTurnRoutine()
         {
-            EnemyAttackSequenceDefinition sequence = encounter.Enemy.SelectAttackSequence(UnityEngine.Random.value);
+            EnemyAttackSequenceDefinition sequence = nextSequence ?? encounter.Enemy.SelectAttackSequence(UnityEngine.Random.value);
+            nextSequence = null;
+            // The sequence's song keeps looping across steps and turns; only a different song cross-fades in.
+            if (sequence != null) musicDirector?.PlaySong(sequence.Song);
             IReadOnlyList<EnemyAttackStepDefinition> steps = sequence?.Steps;
             if (steps == null || steps.Count == 0)
             {

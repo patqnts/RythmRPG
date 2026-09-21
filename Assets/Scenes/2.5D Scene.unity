@@ -1271,6 +1271,7 @@ GameObject:
   - component: {fileID: 218053027}
   - component: {fileID: 218053029}
   - component: {fileID: 218053030}
+  - component: {fileID: 218053031}
   m_Layer: 0
   m_Name: CombatManager
   m_TagString: Untagged
@@ -1316,6 +1317,7 @@ MonoBehaviour:
   uiController: {fileID: 0}
   lanePresentation: {fileID: 0}
   defaultEnemyPattern: {fileID: 0}
+  musicDirector: {fileID: 0}
 --- !u!114 &218053030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1340,6 +1342,28 @@ MonoBehaviour:
   moveDuration: 0.35
   combatUIRoot: {fileID: 1284303156}
   combatSortingOrder: 52
+--- !u!114 &218053031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 218053026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a523216c09542eb4dafc0265bba36554, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.CombatMusicDirector
+  volume: 1
+  leadInSeconds: 0.15
+  songChangeFadeSeconds: 1
+  stopFadeSeconds: 0.8
+  playerTurnFilter: 0
+  lowPassCutoff: 381
+  lowPassResonance: 1.63
+  highPassCutoff: 778
+  playerTurnVolume: 0.846
+  filterFadeSeconds: 1
 --- !u!4 &226629866 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6191650215760293972, guid: d58b34d5ed044984296458a1502db568, type: 3}

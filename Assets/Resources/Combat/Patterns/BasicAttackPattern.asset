@@ -17,6 +17,9 @@ MonoBehaviour:
   beatsPerMeasure: 4
   compositionDuration: 4
   audioClip: {fileID: 0}
+  song: {fileID: 0}
+  songPreviewBar: 0
+  audioOffsetSeconds: 0
   snapEnabled: 1
   snapDivision: 4
   lanes:
@@ -67,6 +70,7 @@ MonoBehaviour:
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
     prefabOverride: {fileID: 0}
     metadata: []
   - id: basic_note_2
@@ -83,6 +87,7 @@ MonoBehaviour:
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
     prefabOverride: {fileID: 0}
     metadata: []
   - id: basic_note_3
@@ -99,6 +104,7 @@ MonoBehaviour:
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
     prefabOverride: {fileID: 0}
     metadata: []
   - id: 658f465623bb449fbce72b3b6439cb20
@@ -115,6 +121,7 @@ MonoBehaviour:
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
     prefabOverride: {fileID: 0}
     metadata: []
   - id: 6dabe583b0314f0f9e73fe944ec09e55
@@ -131,6 +138,7 @@ MonoBehaviour:
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
     prefabOverride: {fileID: 0}
     metadata: []
   - id: bade59a322804e838d93617c5bab339f
@@ -147,6 +155,7 @@ MonoBehaviour:
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
     prefabOverride: {fileID: 0}
     metadata: []
   - id: 47f7ef5e26b2475c8c2d57f185ae2b83
@@ -163,5 +172,8 @@ MonoBehaviour:
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
     prefabOverride: {fileID: 0}
     metadata: []
+  patterns: []
+  sequences: []

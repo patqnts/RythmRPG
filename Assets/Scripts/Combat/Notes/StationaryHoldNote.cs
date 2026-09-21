@@ -21,8 +21,11 @@ public class StationaryHoldNote : StationaryNote
             return;
         }
 
-        holdTimer += Time.deltaTime;
-        if (holdTimer >= GetHoldDuration())
+        // While a chart runs the hold ends at the authored EndTime (song seconds), as placed in the composer.
+        bool done = UsesChartClock
+            ? ChartSeconds >= Data.EndTime
+            : (holdTimer += Time.deltaTime) >= GetHoldDuration();
+        if (done)
         {
             CompleteHold();
         }

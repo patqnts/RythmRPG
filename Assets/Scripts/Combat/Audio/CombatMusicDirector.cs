@@ -5,10 +5,10 @@ using UnityEngine;
 namespace RythmRPG.Combat
 {
     /// <summary>
-    /// Encounter music: a chart's Audio Clip loops for the whole fight. On the player turn the music is filtered
-    /// (low-pass by default, a muffled "under water" sound) and opens up again on the enemy turn. Nothing is
-    /// restarted or seeked, so the beat never jumps. Charts started while the music plays are aligned to its bar
-    /// grid, so notes stay on the beat.
+    /// Combat music. The current sequence's <see cref="CombatSong"/> loops for as long as combat lasts; it is never
+    /// restarted for a chart. Charts start on the song's next bar line (<see cref="NextBarDsp"/>), so every chart
+    /// plays on the beat whatever moment of the song it lands on. Switching to a sequence with another song
+    /// cross-fades to it. On the player turn the music is filtered (low-pass by default: muffled, "under water").
     /// </summary>
     public sealed class CombatMusicDirector : MonoBehaviour
     {
@@ -16,9 +16,9 @@ namespace RythmRPG.Combat
 
         [SerializeField, Range(0f, 1f)] private float volume = 1f;
         [SerializeField, Min(0.05f)] private float leadInSeconds = 0.15f;
+        [Tooltip("Cross-fade when a sequence with a different song starts.")]
+        [SerializeField, Min(0f)] private float songChangeFadeSeconds = 1f;
         [SerializeField, Min(0f)] private float stopFadeSeconds = 0.8f;
-        [Tooltip("Start each enemy chart on a bar line of the running music so its notes land on the music's beats.")]
-        [SerializeField] private bool alignChartsToBars = true;
 
         [Header("Player Turn Filter")]
         [Tooltip("LowPass = muffled, under water. HighPass = thin, tinny.")]
@@ -28,58 +28,82 @@ namespace RythmRPG.Combat
         [SerializeField, Range(1f, 10f)] private float lowPassResonance = 1.4f;
         [Tooltip("High-pass cutoff on the player turn (Hz). Higher = thinner.")]
         [SerializeField, Range(10f, 5000f)] private float highPassCutoff = 1200f;
-        [Tooltip("Music volume on the player turn (the filter also removes energy, so you may want this at 1).")]
+        [Tooltip("Music volume on the player turn.")]
         [SerializeField, Range(0f, 1f)] private float playerTurnVolume = 0.85f;
         [SerializeField, Min(0f)] private float filterFadeSeconds = 0.5f;
 
         private const float OpenLowPass = 22000f;
         private const float OpenHighPass = 10f;
+        /// <summary>Minimum scheduling lead so PlayScheduled lands sample-accurately.</summary>
+        public const double MinLeadSeconds = 0.1d;
 
-        private AudioSource source;
-        private AudioLowPassFilter lowPass;
-        private AudioHighPassFilter highPass;
-        private TempoMap tempo;
-        private float filterAmount;        // 0 = open (enemy turn), 1 = fully filtered (player turn)
-        private float filterTarget;
-        private float masterFade = 1f;
-        private bool stopping;
-
-        public bool IsPlaying { get; private set; }
-        public double DspStartTime { get; private set; }
-        public AudioClip MainClip => source != null ? source.clip : null;
-
-        /// <summary>
-        /// Makes sure this chart's music is playing (starts it if another clip or nothing is playing). Returns true when
-        /// the running music belongs to the chart, i.e. the chart can be aligned to it.
-        /// </summary>
-        public bool PlayForChart(RhythmChart chart)
+        private sealed class Voice
         {
-            if (chart == null || chart.AudioClip == null) return false;
-            if (IsPlaying && !stopping && MainClip == chart.AudioClip)
-            {
-                tempo = chart.CreateTempoMap();
-                return true;
-            }
-
-            Play(chart.AudioClip, chart.CreateTempoMap());
-            return true;
+            public AudioSource Source;
+            public AudioLowPassFilter LowPass;
+            public AudioHighPassFilter HighPass;
+            public CombatSong Song;
+            public double StartDsp;
+            public float Gain;
+            public float FadeSeconds;
+            public bool FadingIn;
+            public bool FadingOut;
         }
 
-        public void Play(AudioClip clip, TempoMap tempoMap)
+        private readonly Voice[] voices = new Voice[2];
+        private int current = -1;
+        private float filterAmount;
+        private float filterTarget;
+
+        public CombatSong CurrentSong => Current?.Song;
+        /// <summary>True while a song is (or is about to be) playing and not fading out.</summary>
+        public bool HasSong => Current != null && Current.Song != null && !Current.FadingOut
+                               && (Current.Source.isPlaying || AudioSettings.dspTime < Current.StartDsp);
+
+        private Voice Current => current >= 0 ? voices[current] : null;
+
+        /// <summary>Starts the song (looping) unless it is already playing. A different song cross-fades in.</summary>
+        public void PlaySong(CombatSong song)
         {
-            StopImmediate();
-            if (clip == null) return;
-            EnsureSource();
-            tempo = tempoMap;
-            DspStartTime = AudioSettings.dspTime + leadInSeconds;
-            source.clip = clip;
-            source.loop = true;
-            source.timeSamples = 0;
-            source.PlayScheduled(DspStartTime);
-            masterFade = 1f;
-            stopping = false;
-            IsPlaying = true;
-            ApplyFilter();
+            if (song == null || song.Clip == null) return;
+            if (HasSong && Current.Song == song) return;
+            EnsureVoices();
+            bool crossfade = Current != null && Current.Source.isPlaying && !Current.FadingOut;
+            if (Current != null && Current.Source.isPlaying) BeginFadeOut(Current, crossfade ? songChangeFadeSeconds : 0f);
+
+            int next = current < 0 ? 0 : 1 - current;
+            Voice voice = voices[next];
+            voice.Source.Stop();
+            voice.Song = song;
+            voice.Source.clip = song.Clip;
+            voice.Source.loop = true;
+            voice.Source.timeSamples = 0;
+            voice.StartDsp = AudioSettings.dspTime + leadInSeconds;
+            voice.Source.PlayScheduled(voice.StartDsp);
+            voice.FadingOut = false;
+            voice.FadingIn = crossfade && songChangeFadeSeconds > 0f;
+            voice.FadeSeconds = songChangeFadeSeconds;
+            voice.Gain = voice.FadingIn ? 0f : 1f;
+            current = next;
+            ApplyAll();
+        }
+
+        /// <summary>
+        /// Dsp time of the running song's first bar line at or after <paramref name="earliestDsp"/> (accounts for the
+        /// song's offset and loop). Returns <paramref name="earliestDsp"/> when no song plays.
+        /// </summary>
+        public double NextBarDsp(double earliestDsp)
+        {
+            if (!HasSong) return earliestDsp;
+            Voice voice = Current;
+            CombatSong song = voice.Song;
+            double loop = song.Clip.length;
+            double elapsed = earliestDsp - voice.StartDsp;
+            if (elapsed < 0d) elapsed = 0d; // the song has not started yet: its first downbeat
+            double loopsDone = loop > 0d ? Math.Floor(elapsed / loop) : 0d;
+            double loopStartDsp = voice.StartDsp + loopsDone * loop;
+            double inLoop = elapsed - loopsDone * loop;
+            return loopStartDsp + CombatSong.NextBarInLoop(inLoop, song.AudioOffsetSeconds, song.BarSeconds, loop);
         }
 
         /// <summary>Player turn = filtered music, enemy turn = clean music. Fades; the music keeps running.</summary>
@@ -88,75 +112,85 @@ namespace RythmRPG.Combat
             filterTarget = playerTurn && playerTurnFilter != PlayerTurnFilter.None ? 1f : 0f;
         }
 
-        /// <summary>
-        /// Chart zero (dsp) for a chart that wants to start no earlier than <paramref name="earliestDsp"/>: the next bar
-        /// line of the running music. Chart time equals clip time, so bar-shifted charts keep every note on the beat.
-        /// </summary>
-        public double AlignChartStart(double earliestDsp)
-        {
-            if (!alignChartsToBars || !IsPlaying || tempo == null || tempo.Segments.Count == 0) return earliestDsp;
-            double barSeconds = 60d / Math.Max(1d, tempo.Segments[0].Bpm) * Math.Max(1, tempo.BeatsPerMeasure);
-            if (barSeconds <= 0d) return earliestDsp;
-            double bars = Math.Ceiling((earliestDsp - DspStartTime) / barSeconds - 1e-6d);
-            return DspStartTime + Math.Max(0d, bars) * barSeconds;
-        }
-
         /// <summary>Fades out and stops (end of the encounter).</summary>
         public void Stop()
         {
-            if (!IsPlaying) return;
-            if (stopFadeSeconds <= 0f) StopImmediate();
-            else stopping = true;
+            foreach (Voice voice in voices)
+                if (voice != null && voice.Source.isPlaying) BeginFadeOut(voice, stopFadeSeconds);
+            filterTarget = 0f;
+        }
+
+        private void BeginFadeOut(Voice voice, float seconds)
+        {
+            if (seconds <= 0f)
+            {
+                voice.Source.Stop();
+                voice.Gain = 0f;
+                voice.FadingOut = false;
+                voice.FadingIn = false;
+                return;
+            }
+
+            voice.FadingIn = false;
+            voice.FadingOut = true;
+            voice.FadeSeconds = seconds;
         }
 
         private void Update()
         {
-            if (!IsPlaying) return;
             float dt = Time.unscaledDeltaTime;
-            float step = filterFadeSeconds <= 0f ? 1f : dt / filterFadeSeconds;
-            filterAmount = Mathf.MoveTowards(filterAmount, filterTarget, step);
-            if (stopping)
+            filterAmount = Mathf.MoveTowards(filterAmount, filterTarget, filterFadeSeconds <= 0f ? 1f : dt / filterFadeSeconds);
+            double dsp = AudioSettings.dspTime;
+            foreach (Voice voice in voices)
             {
-                masterFade = Mathf.MoveTowards(masterFade, 0f, dt / Mathf.Max(0.0001f, stopFadeSeconds));
-                if (masterFade <= 0f)
+                if (voice == null) continue;
+                float step = voice.FadeSeconds <= 0f ? 1f : dt / voice.FadeSeconds;
+                if (voice.FadingIn && dsp >= voice.StartDsp)
                 {
-                    StopImmediate();
-                    return;
+                    voice.Gain = Mathf.MoveTowards(voice.Gain, 1f, step);
+                    if (voice.Gain >= 1f) voice.FadingIn = false;
+                }
+                else if (voice.FadingOut)
+                {
+                    voice.Gain = Mathf.MoveTowards(voice.Gain, 0f, step);
+                    if (voice.Gain <= 0f)
+                    {
+                        voice.Source.Stop();
+                        voice.FadingOut = false;
+                    }
                 }
             }
 
-            ApplyFilter();
+            ApplyAll();
         }
 
-        private void OnDisable() => StopImmediate();
-
-        private void StopImmediate()
+        private void OnDisable()
         {
-            IsPlaying = false;
-            stopping = false;
-            if (source != null) source.Stop();
-            masterFade = 1f;
-            filterAmount = filterTarget = 0f;
-            ApplyFilter();
+            foreach (Voice voice in voices)
+                if (voice != null) voice.Source.Stop();
+            current = -1;
         }
 
-        private void ApplyFilter()
+        private void ApplyAll()
         {
-            if (source == null) return;
             float t = Mathf.SmoothStep(0f, 1f, filterAmount);
-            source.volume = volume * masterFade * Mathf.Lerp(1f, playerTurnVolume, t);
-
             bool useLow = playerTurnFilter == PlayerTurnFilter.LowPass && t > 0f;
             bool useHigh = playerTurnFilter == PlayerTurnFilter.HighPass && t > 0f;
-            lowPass.enabled = useLow;
-            highPass.enabled = useHigh;
-            // Interpolate in log-frequency so the sweep sounds even.
-            if (useLow)
+            foreach (Voice voice in voices)
             {
-                lowPass.cutoffFrequency = LogLerp(OpenLowPass, lowPassCutoff, t);
-                lowPass.lowpassResonanceQ = Mathf.Lerp(1f, lowPassResonance, t);
+                if (voice == null) continue;
+                float songVolume = voice.Song != null ? voice.Song.Volume : 1f;
+                voice.Source.volume = volume * songVolume * voice.Gain * Mathf.Lerp(1f, playerTurnVolume, t);
+                voice.LowPass.enabled = useLow;
+                voice.HighPass.enabled = useHigh;
+                // Interpolate in log-frequency so the sweep sounds even.
+                if (useLow)
+                {
+                    voice.LowPass.cutoffFrequency = LogLerp(OpenLowPass, lowPassCutoff, t);
+                    voice.LowPass.lowpassResonanceQ = Mathf.Lerp(1f, lowPassResonance, t);
+                }
+                if (useHigh) voice.HighPass.cutoffFrequency = LogLerp(OpenHighPass, highPassCutoff, t);
             }
-            if (useHigh) highPass.cutoffFrequency = LogLerp(OpenHighPass, highPassCutoff, t);
         }
 
         private static float LogLerp(float from, float to, float t)
@@ -164,19 +198,26 @@ namespace RythmRPG.Combat
             return Mathf.Exp(Mathf.Lerp(Mathf.Log(Mathf.Max(1f, from)), Mathf.Log(Mathf.Max(1f, to)), t));
         }
 
-        private void EnsureSource()
+        private void EnsureVoices()
         {
-            if (source != null) return;
-            GameObject child = new("Combat Music");
-            child.transform.SetParent(transform, false);
-            source = child.AddComponent<AudioSource>();
-            source.playOnAwake = false;
-            source.spatialBlend = 0f;
-            // Filters must sit on the same GameObject as the source they process.
-            lowPass = child.AddComponent<AudioLowPassFilter>();
-            highPass = child.AddComponent<AudioHighPassFilter>();
-            lowPass.enabled = false;
-            highPass.enabled = false;
+            for (int i = 0; i < voices.Length; i++)
+            {
+                if (voices[i] != null) continue;
+                // One GameObject per voice: audio filters process the AudioSource on their own GameObject.
+                GameObject child = new($"Combat Music {i}");
+                child.transform.SetParent(transform, false);
+                var voice = new Voice
+                {
+                    Source = child.AddComponent<AudioSource>(),
+                    LowPass = child.AddComponent<AudioLowPassFilter>(),
+                    HighPass = child.AddComponent<AudioHighPassFilter>()
+                };
+                voice.Source.playOnAwake = false;
+                voice.Source.spatialBlend = 0f;
+                voice.LowPass.enabled = false;
+                voice.HighPass.enabled = false;
+                voices[i] = voice;
+            }
         }
     }
 }

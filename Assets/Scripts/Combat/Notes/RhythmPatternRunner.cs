@@ -111,18 +111,14 @@ namespace RythmRPG.Combat
             lanePresentation = presentation;
         }
 
-        /// <summary>Encounter music (filtered on the player turn). When set, enemy charts start their music here and are bar-aligned to it.</summary>
+        /// <summary>
+        /// Combat music. While its song plays, every chart starts on the song's next bar line: the chart's beat 0
+        /// (chart time = its audio offset) lands on a downbeat, so notes follow the song's beat whatever moment of the
+        /// looping song the chart starts at. Charts should be authored at the song's BPM.
+        /// </summary>
         public void ConfigureMusic(CombatMusicDirector director)
         {
             musicDirector = director;
-        }
-
-        // True when the encounter music plays this chart's audio, so the chart is timed against it instead of owning audio.
-        private bool UseEncounterMusic(RhythmChart chart)
-        {
-            if (musicDirector == null || chart == null || chart.AudioClip == null) return false;
-            if (currentContext.Mode == PatternRunMode.EnemyDefense) return musicDirector.PlayForChart(chart);
-            return musicDirector.IsPlaying && musicDirector.MainClip == chart.AudioClip;
         }
 
         public void ConfigureInput(LaneInputRouter inputRouter)
@@ -269,8 +265,8 @@ namespace RythmRPG.Combat
             List<RhythmNoteData> notes = chart.GetNotesBySpawnTime().ToList();
             double playbackStart = RhythmTimingUtility.GetPlaybackStartTime(chart);
             double zeroDspTime = AudioSettings.dspTime - playbackStart;
-            bool encounterMusic = UseEncounterMusic(chart);
-            if (encounterMusic) zeroDspTime = musicDirector.AlignChartStart(zeroDspTime);
+            bool encounterMusic = musicDirector != null && musicDirector.HasSong;
+            if (encounterMusic) zeroDspTime = AlignToSongBar(chart, notes);
             clock = new MusicClock(() => AudioSettings.dspTime, chart.CreateTempoMap());
             clock.StartAt(zeroDspTime);
             scheduler.Reposition(0d);
@@ -526,6 +522,33 @@ namespace RythmRPG.Combat
             if (cachedKeys == null || cachedKeys.Length == 0)
                 cachedKeys = FindObjectsByType<KeyButton>(FindObjectsInactive.Include, FindObjectsSortMode.None);
             return cachedKeys;
+        }
+
+        // Chart beat 0 sits at chart time = AudioOffsetSeconds. Put it on the song's next bar line that still leaves
+        // time for the first note to spawn (no dead time before the first note, whatever the chart's offset).
+        private double AlignToSongBar(RhythmChart chart, List<RhythmNoteData> notesBySpawn)
+        {
+            double now = AudioSettings.dspTime;
+            double beatZeroChartTime = chart.AudioOffsetSeconds;
+            double firstSpawn = notesBySpawn.Count > 0 ? notesBySpawn[0].SpawnTime : beatZeroChartTime;
+            foreach (SequenceActivationData sequence in chart.Sequences)
+                if (sequence != null) firstSpawn = Math.Min(firstSpawn, sequence.StartTime);
+            double earliestBeatZero = now + Math.Max(CombatMusicDirector.MinLeadSeconds, beatZeroChartTime - firstSpawn);
+            double beatZeroDsp = musicDirector.NextBarDsp(earliestBeatZero);
+            WarnIfTempoDiffers(chart, musicDirector.CurrentSong);
+            return beatZeroDsp - beatZeroChartTime;
+        }
+
+        private static readonly HashSet<RhythmChart> tempoWarned = new();
+
+        private static void WarnIfTempoDiffers(RhythmChart chart, CombatSong song)
+        {
+            if (song == null || chart == null) return;
+            bool differs = Math.Abs(chart.Bpm - song.Bpm) > 0.01f || chart.BeatsPerMeasure != song.BeatsPerMeasure;
+            if (!differs || !tempoWarned.Add(chart)) return;
+            Debug.LogWarning($"[Rhythm] Chart '{chart.name}' is authored at {chart.Bpm} BPM ({chart.BeatsPerMeasure}/bar) but the " +
+                $"song '{song.name}' is {song.Bpm} BPM ({song.BeatsPerMeasure}/bar). Its notes will drift off the beat: open it in " +
+                "the composer, set its Song and save.", chart);
         }
 
         private void ScheduleAudio(RhythmChart chart, double zeroDspTime)

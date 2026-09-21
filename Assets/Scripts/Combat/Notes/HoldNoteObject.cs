@@ -22,6 +22,16 @@ public class HoldNoteObject : Note
     private float revealedTailLength;
     private float holdStartTailLength;
 
+    // Clock-driven while a chart runs: the head reaches the hit line exactly at HitTime and the hold completes at
+    // EndTime (both song seconds), like the notes' positions in the composer timeline.
+    private bool clockDriven;
+    private Transform clockSpace;
+    private Vector3 clockStartLocal;
+    private Vector3 clockKeyLocal;
+    private Vector3 clockTargetLocal;
+    private float clockDuration;
+    private double pressedAtSeconds;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,7 +52,9 @@ public class HoldNoteObject : Note
             if (activeKeyButton != null && activeKeyButton.GetInteractable())
             {
                 isMoving = false;
-                holdTimer += Time.deltaTime;
+                holdTimer = clockDriven && UsesChartClock
+                    ? (float)(ChartSeconds - pressedAtSeconds)
+                    : holdTimer + Time.deltaTime;
                 UpdateTailVisual();
 
                 if (holdTimer >= holdTime)
@@ -68,6 +80,12 @@ public class HoldNoteObject : Note
             }
 
             EnsureMovementTween();
+            if (clockDriven && UsesChartClock && !IsResolved)
+            {
+                float elapsed = Mathf.Max(0f, (float)(ChartSeconds - Data.SpawnTime));
+                transform.position = EvaluateLaneTravel(clockSpace, clockStartLocal, clockKeyLocal, clockTargetLocal,
+                    elapsed, clockDuration);
+            }
         }
     }
 
@@ -88,11 +106,53 @@ public class HoldNoteObject : Note
             return;
         }
 
+        if (UsesChartClock && TryStartClockTravel(currentIdentity))
+        {
+            movementTweenStarted = true;
+            movementTweenIdentity = currentIdentity;
+            return;
+        }
+
         movementTweenStarted = true;
         movementTweenIdentity = currentIdentity;
 
         StopMovementTweens();
         TweenLaneFall(currentIdentity, -3f, speed);
+    }
+
+    // Travel-time driven (like NoteObject): speed = distance to the line / TravelTime, so the head arrives at HitTime.
+    // The tail length and hold time follow from the authored hold duration at that same speed.
+    private bool TryStartClockTravel(int identity)
+    {
+        if (!TryGetLaneTravelPositions(identity, 3f, out Transform movementSpace,
+                out Vector3 startLocal, out Vector3 keyLocal, out Vector3 targetLocal)) return false;
+        RhythmLaneTarget target = GetLaneTarget();
+        if (target == null) return false;
+
+        float travelTime = Mathf.Max(0.01f, (float)Data.TravelTime);
+        float distanceToKey = Vector3.Distance(transform.position, target.transform.position);
+        if (distanceToKey <= 0.01f) return false;
+        float worldSpeed = distanceToKey / travelTime;
+
+        StopMovementTweens();
+        clockDriven = true;
+        clockSpace = movementSpace;
+        clockStartLocal = startLocal;
+        clockKeyLocal = keyLocal;
+        clockTargetLocal = targetLocal;
+        clockDuration = Mathf.Max(0.01f,
+            Vector3.Distance(transform.position, FromMovementLocal(targetLocal, movementSpace)) / worldSpeed);
+
+        float holdSeconds = Mathf.Max(0.01f, (float)(Data.EndTime - Data.HitTime));
+        speed = worldSpeed;
+        length = holdSeconds * worldSpeed;
+        holdTime = holdSeconds;
+        if (activeTailVisual != null)
+        {
+            activeTailVisual.Initialize(length, speed);
+            SetTailLength(revealedTailLength = Mathf.Min(revealedTailLength, length));
+        }
+        return true;
     }
 
     private void InitializeTailVisual()
@@ -225,6 +285,12 @@ public class HoldNoteObject : Note
     {
         isHoldingKey = true;
         holdTimer = 0;
+        if (clockDriven && UsesChartClock)
+        {
+            // The hold ends at the authored EndTime, however early or late the press was.
+            pressedAtSeconds = ChartSeconds;
+            holdTime = Mathf.Max(0.01f, (float)(Data.EndTime - pressedAtSeconds));
+        }
         isMoving = false;
         holdStartTailLength = Mathf.Max(0f, revealedTailLength);
         StopMovementTweens();

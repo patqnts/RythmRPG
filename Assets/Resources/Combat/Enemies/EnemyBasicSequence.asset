@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.EnemyAttackSequenceDefinition
   id: basic-sequence
   selectionWeight: 1
+  song: {fileID: 11400000, guid: be022a97543154341b52e0cfff67c396, type: 2}
   steps:
   - animationName: Laser
     anticipationDuration: 1

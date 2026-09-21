@@ -45,6 +45,12 @@ namespace RythmRPG.Rhythm.Editor.Composer
         private WaveformPeaks waveform;
         private AudioClip audioClip;
         private bool metronomeOn;
+        private CombatSong song;
+        private int previewBar;
+        private ObjectField songField;
+        private IntegerField previewBarField;
+        private Scroller hScroller;
+        private bool syncingScroller;
         private bool refreshingTransport;
         private string audioMessage = "";
         private Button playButton;
@@ -94,7 +100,16 @@ namespace RythmRPG.Rhythm.Editor.Composer
             timeline.ArmedPlaced += OnArmedPlaced;
             timeline.PlayheadScrubbed += OnPlayheadScrubbed;
             timeline.TogglePlayRequested += TogglePlay;
-            body.Add(timeline);
+            timeline.ViewChanged += SyncScroller;
+
+            var timelineColumn = new VisualElement();
+            timelineColumn.style.flexGrow = 1f;
+            timelineColumn.style.flexDirection = FlexDirection.Column;
+            timelineColumn.Add(timeline);
+            hScroller = new Scroller(0f, 100f, OnScrollerMoved, SliderDirection.Horizontal);
+            hScroller.style.height = 14f;
+            timelineColumn.Add(hScroller);
+            body.Add(timelineColumn);
 
             body.Add(BuildInspector());
 
@@ -150,7 +165,7 @@ namespace RythmRPG.Rhythm.Editor.Composer
         private void RunValidation()
         {
             issues = session != null
-                ? ChartValidator.Validate(session, audioClip != null ? audioClip.length : 0d, DefaultsFor(NoteMigration.DefinitionIdMash))
+                ? ChartValidator.Validate(session, song != null ? 0d : audioClip != null ? audioClip.length : 0d, DefaultsFor(NoteMigration.DefinitionIdMash))
                 : new List<ValidationIssue>();
             if (timeline != null) timeline.Issues = ChartValidator.WorstByNote(issues);
             issueCursor = Mathf.Min(issueCursor, issues.Count - 1);
@@ -224,6 +239,27 @@ namespace RythmRPG.Rhythm.Editor.Composer
                 if (audio != null) audio.SetMetronome(metronomeOn);
             });
             bar.Add(metronome);
+
+            songField = new ObjectField("Song");
+            songField.objectType = typeof(CombatSong);
+            songField.allowSceneObjects = false;
+            songField.style.minWidth = 220f;
+            songField.labelElement.style.minWidth = 36f;
+            songField.tooltip = "Combat Song this chart is written for. Its BPM, beats per bar and offset rule the grid (edits below change the song). In combat the song loops and this chart starts on its next bar line.";
+            songField.RegisterValueChangedCallback(e => OnSongPicked(e.newValue as CombatSong));
+            bar.Add(songField);
+            previewBarField = new IntegerField("Preview bar");
+            previewBarField.style.width = 120f;
+            previewBarField.labelElement.style.minWidth = 70f;
+            previewBarField.tooltip = "Composer preview only: which bar of the song the chart's beat 0 is heard against. In combat the chart starts on whatever bar comes next.";
+            previewBarField.RegisterValueChangedCallback(e =>
+            {
+                if (refreshingTransport || session == null) return;
+                previewBar = Math.Max(0, e.newValue);
+                session.Dirty = true;
+                ApplySongTempo();
+            });
+            bar.Add(previewBarField);
 
             bar.Add(new ToolbarSpacer());
 
@@ -307,6 +343,20 @@ namespace RythmRPG.Rhythm.Editor.Composer
                 meterField.SetValueWithoutNotify(session != null ? session.Tempo.BeatsPerMeasure : 4);
                 offsetField.SetValueWithoutNotify(session != null ? session.Tempo.AudioOffsetSeconds : 0d);
                 clipField.SetValueWithoutNotify(audioClip);
+                clipField.SetEnabled(song == null);
+                if (songField != null) songField.SetValueWithoutNotify(song);
+                if (previewBarField != null)
+                {
+                    previewBarField.SetValueWithoutNotify(previewBar);
+                    previewBarField.SetEnabled(song != null);
+                }
+                if (song != null)
+                {
+                    // With a song the fields show (and edit) the song's own rules.
+                    bpmField.SetValueWithoutNotify(song.Bpm);
+                    meterField.SetValueWithoutNotify(song.BeatsPerMeasure);
+                    offsetField.SetValueWithoutNotify(song.AudioOffsetSeconds);
+                }
             }
             finally
             {
@@ -320,19 +370,111 @@ namespace RythmRPG.Rhythm.Editor.Composer
             double bpm = Math.Max(1d, bpmField.value);
             int meter = Math.Max(1, meterField.value);
             double offset = Math.Max(0d, offsetField.value);
+            if (song != null)
+            {
+                // The song owns the beat rules: every chart written for it follows the change.
+                Undo.RecordObject(song, "Combat Song Tempo");
+                song.Bpm = (float)bpm;
+                song.BeatsPerMeasure = meter;
+                song.AudioOffsetSeconds = offset;
+                EditorUtility.SetDirty(song);
+                ApplySongTempo();
+                return;
+            }
+
             session.Tempo = new TempoMap(bpm, meter, offset);
+            ApplyTempoChanged();
+        }
+
+        private void ApplyTempoChanged()
+        {
             session.NotifyTempoChanged();
             RefreshTransportFields();
             SyncPlayhead(false);
+            SyncScroller();
             // The music is not restarted: only the grid (and the metronome ticks on it) moves.
             if (audio != null) audio.Retime(session.Tempo);
         }
 
+        // Chart beat 0 = the song's first downbeat + Preview bar bars. Stored as the chart's offset (combat puts chart
+        // beat 0 on a bar line of the running song, so the preview bar only affects what you hear while charting).
+        private void ApplySongTempo()
+        {
+            if (session == null || song == null) return;
+            session.Tempo = new TempoMap(song.Bpm, song.BeatsPerMeasure, song.AudioOffsetSeconds + previewBar * song.BarSeconds);
+            ApplyTempoChanged();
+        }
+
+        private void OnSongPicked(CombatSong picked)
+        {
+            if (refreshingTransport || session == null) return;
+            bool wasPlaying = transport.IsPlaying;
+            StopPlayback();
+            song = picked;
+            session.Dirty = true;
+            if (song != null) ApplySongTempo();
+            else RefreshTransportFields();
+            RebuildWaveform();
+            RunValidation();
+            timeline.Refresh();
+            UpdateStatus();
+            if (wasPlaying) TogglePlay();
+        }
+
+        private bool MatchesSongTempo(TempoMap tempo)
+        {
+            if (song == null) return true;
+            return Math.Abs(tempo.Segments[0].Bpm - song.Bpm) < 1e-4
+                   && tempo.BeatsPerMeasure == song.BeatsPerMeasure
+                   && Math.Abs(tempo.AudioOffsetSeconds - (song.AudioOffsetSeconds + previewBar * song.BarSeconds)) < 1e-6;
+        }
+
+        /// <summary>The clip heard and drawn: the song's clip when a song is set, otherwise the chart's own clip.</summary>
+        private AudioClip PreviewClip => song != null && song.Clip != null ? song.Clip : audioClip;
+
         private void SetBeatZeroAtPlayhead()
         {
             if (session == null) return;
+            if (song != null)
+            {
+                // Put a downbeat on the playhead and keep the chart's beat 0 there.
+                double bar = song.BarSeconds;
+                double position = transport.Position;
+                double offset = ((position % bar) + bar) % bar;
+                previewBar = Math.Max(0, (int)Math.Round((position - offset) / bar));
+                offsetField.SetValueWithoutNotify(offset);
+                OnTempoFieldsChanged();
+                return;
+            }
+
             offsetField.SetValueWithoutNotify(transport.Position);
             OnTempoFieldsChanged();
+        }
+
+        private void OnScrollerMoved(float value)
+        {
+            if (syncingScroller || timeline == null) return;
+            timeline.ScrollBeat = value;
+        }
+
+        private void SyncScroller()
+        {
+            if (hScroller == null || timeline == null) return;
+            double span = timeline.VisibleBeatSpan;
+            double total = session != null ? session.Tempo.SecondsToBeat(ComputeDuration()) : 0d;
+            double max = Math.Max(0d, Math.Max(total, timeline.ScrollBeat + span) - span * 0.5d);
+            syncingScroller = true;
+            try
+            {
+                hScroller.lowValue = 0f;
+                hScroller.highValue = (float)Math.Max(0.01d, max);
+                hScroller.value = (float)Math.Min(max, timeline.ScrollBeat);
+                hScroller.Adjust((float)Math.Min(1d, span / Math.Max(span, max + span)));
+            }
+            finally
+            {
+                syncingScroller = false;
+            }
         }
 
         private void OnAudioClipPicked(AudioClip clip)
@@ -350,7 +492,7 @@ namespace RythmRPG.Rhythm.Editor.Composer
         private void RebuildWaveform()
         {
             string error;
-            waveform = ComposerAudio.BuildPeaks(audioClip, out error);
+            waveform = ComposerAudio.BuildPeaks(PreviewClip, out error);
             audioMessage = error ?? "";
 
             if (timeline != null) timeline.Waveform = waveform;
@@ -360,6 +502,7 @@ namespace RythmRPG.Rhythm.Editor.Composer
         {
             double d = chart != null ? chart.EffectiveDuration : 30d;
             if (audioClip != null) d = Math.Max(d, audioClip.length);
+            if (PreviewClip != null) d = Math.Max(d, PreviewClip.length);
             if (session != null)
             {
                 IList<NoteInstance> notes = session.Notes;
@@ -396,7 +539,8 @@ namespace RythmRPG.Rhythm.Editor.Composer
         private void StopPlayback()
         {
             if (transport == null) return;
-            transport.Stop(0d);
+            // Return to one bar before the chart's beat 0 (a count-in), or 0.
+            transport.Stop(session != null ? Math.Max(0d, session.Tempo.BeatToSeconds(-session.Tempo.BeatsPerMeasure)) : 0d);
             if (audio != null) audio.Stop();
             SyncPlayhead(true);
             UpdatePlayButton();
@@ -406,7 +550,7 @@ namespace RythmRPG.Rhythm.Editor.Composer
         {
             transport.Duration = ComputeDuration();
             double position = transport.Position;
-            double startsAt = audio.Play(position, audioClip, session.Tempo, metronomeOn);
+            double startsAt = audio.Play(position, PreviewClip, session.Tempo, metronomeOn);
             transport.SyncTo(position, startsAt);
         }
 
@@ -797,6 +941,8 @@ namespace RythmRPG.Rhythm.Editor.Composer
             {
                 session = null;
                 audioClip = null;
+                song = null;
+                previewBar = 0;
                 waveform = null;
                 timeline.Waveform = null;
                 RefreshTransportFields();
@@ -811,9 +957,14 @@ namespace RythmRPG.Rhythm.Editor.Composer
             session.Changed += OnSessionChanged;
             timeline.PlayheadBeat = 0d;
             audioClip = target.AudioClip;
+            song = target.Song;
+            previewBar = target.SongPreviewBar;
+            // Notes are beats in the session, so a chart whose song changed tempo follows the song (save to keep it).
+            if (song != null && !MatchesSongTempo(session.Tempo)) ApplySongTempo();
             RebuildWaveform();
             RefreshTransportFields();
             timeline.Bind(session, entries);
+            SyncScroller();
             issueCursor = -1;
             RunValidation();
             UpdateInspector();
@@ -826,6 +977,8 @@ namespace RythmRPG.Rhythm.Editor.Composer
             BackupAsset(chart);
             Undo.RecordObject(chart, "Rhythm Composer Save");
             chart.AudioClip = audioClip;
+            chart.Song = song;
+            chart.SongPreviewBar = previewBar;
             chart.Bpm = (float)session.Tempo.Segments[0].Bpm;
             chart.BeatsPerMeasure = session.Tempo.BeatsPerMeasure;
             chart.AudioOffsetSeconds = session.Tempo.AudioOffsetSeconds;
