@@ -18,6 +18,7 @@ namespace RythmRPG.Combat
         }
     }
 
+    [DefaultExecutionOrder(11000)]
     public sealed class CombatEncounterCoordinator : MonoBehaviour
     {
         [Header("Cinemachine")]
@@ -28,6 +29,7 @@ namespace RythmRPG.Combat
         [SerializeField] private Vector2 playerViewportPosition = new(0.5f, 0.2f);
         [SerializeField] private Vector2 enemyViewportPosition = new(0.5f, 0.7f);
         [SerializeField, Min(0.1f)] private float minimumPlayerEnemySeparation = 2.4f;
+        [SerializeField, Min(0f)] private float playerDistanceBehindHitLine = 0.45f;
         [SerializeField] private bool preservePlayerHeight = true;
 
         [Header("Transition")]
@@ -44,6 +46,11 @@ namespace RythmRPG.Combat
         private Transform combatEnemy;
         private CinemachineFollow followRig;
         private CharacterController transitioningController;
+        private CombatLanePresentation3D lanePresentation;
+        private PlayerCombatant alignedPlayer;
+        private float playerFootOffset;
+        private float combatPlayerHeight;
+        private float placementStartedAt;
 
         private void Awake()
         {
@@ -54,8 +61,16 @@ namespace RythmRPG.Combat
 
         private void LateUpdate()
         {
-            if (combatCameraTarget == null || combatEnemy == null) return;
-            combatCameraTarget.position = ResolveCombatCameraTarget(combatEnemy.position);
+            if (combatCameraTarget != null && combatEnemy != null)
+                combatCameraTarget.position = ResolveCombatCameraTarget(combatEnemy.position);
+            if (alignedPlayer == null || lanePresentation == null) return;
+            // Cinemachine and the render camera must finish before sampling the screen-anchored line.
+            lanePresentation.RefreshPresentation();
+            if (!lanePresentation.TryGetPlayerPosition(combatPlayerHeight, playerFootOffset,
+                playerDistanceBehindHitLine, out Vector3 target)) return;
+            float progress = moveDuration <= 0f ? 1f : Mathf.Clamp01((Time.time - placementStartedAt) / moveDuration);
+            alignedPlayer.transform.position = Vector3.Lerp(playerWorldPosition, target,
+                Mathf.SmoothStep(0f, 1f, progress));
         }
 
         public IEnumerator Prepare(CombatEncounterContext context)
@@ -78,7 +93,9 @@ namespace RythmRPG.Combat
             if (combatUIRoot != null) combatUIRoot.SetActive(true);
 
             ConfigureCombatCamera(context.Enemy.transform);
-            Vector3 playerTargetPosition = ResolvePlayerCombatPosition(context);
+            yield return null;
+            lanePresentation?.RefreshPresentation();
+            playerFootOffset = CombatLanePresentation3D.ResolveGroundHeight(context.Player) - context.Player.transform.position.y;
             CharacterController playerController = context.Player.GetComponent<CharacterController>();
             bool playerControllerWasEnabled = playerController != null && playerController.enabled;
             if (playerControllerWasEnabled)
@@ -87,6 +104,18 @@ namespace RythmRPG.Combat
                 playerController.enabled = false;
             }
 
+            if (lanePresentation != null && lanePresentation.HorizontalGameplay)
+            {
+                alignedPlayer = context.Player;
+                combatPlayerHeight = preservePlayerHeight ? playerWorldPosition.y : context.Enemy.transform.position.y;
+
+                placementStartedAt = Time.time;
+                yield return new WaitForSeconds(Mathf.Max(0f, moveDuration));
+                RestorePlayerController();
+                yield break;
+            }
+
+            Vector3 playerTargetPosition = ResolvePlayerCombatPosition(context);
             Tween playerMove = playerTargetPosition != context.Player.transform.position
                 ? Tween.Position(context.Player.transform, playerTargetPosition, moveDuration, Ease.InOutSine)
                 : default;
@@ -97,6 +126,7 @@ namespace RythmRPG.Combat
 
         public void Restore(CombatEncounterContext context, bool victory)
         {
+            alignedPlayer = null;
             Tween.StopAll(context.Player.transform);
             Tween.StopAll(context.Enemy.transform);
             CharacterController controller = context.Player.GetComponent<CharacterController>();
@@ -279,6 +309,7 @@ namespace RythmRPG.Combat
         {
             combatUIRoot ??= FindNamedTransform("CombatSystemUI")?.gameObject;
             virtualCamera ??= FindFirstObjectByType<CinemachineCamera>(FindObjectsInactive.Include);
+            lanePresentation ??= GetComponent<CombatLanePresentation3D>();
         }
 
         private static Transform FindNamedTransform(string objectName)

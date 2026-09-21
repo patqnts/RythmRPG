@@ -24,3 +24,9 @@ projectile and timing windows are edited on the linked `AbilityVFXProfile.asset`
 `Impact Projectile Prefab` for a custom projectile, or leave it empty to use the generated fallback
 bolt. `Impact Anticipation Duration` gives character animation time before firing, and
 `Impact Settle Duration` gives the enemy hit reaction time before the turn advances.
+
+The 2.5D lane presentation uses a level X/Z gameplay plane. At encounter start, the enemy's
+`ProjectileHolder`, the judgement line, lane targets, and spawned notes are assigned the same
+world height just above their ground-contact bounds. The player is positioned a short distance past
+the judgement line in the notes' direction of travel,
+which keeps the line between the enemy and player while the A/S/D/J/K controls remain screen UI.

@@ -46,13 +46,15 @@ namespace RythmRPG.Combat
         {
             if (IsBattleActive || context.Player == null || context.Enemy == null) return;
             EnsureServices();
+            runner = context.Enemy.PatternRunner ?? context.Enemy.gameObject.AddComponent<RhythmPatternRunner>();
+            runner.enabled = true;
+            lanePresentation.ConfigureEncounter(context, runner.ProjectileObjectHolder);
             lanePresentation.EnsurePresentation(inputRouter);
             lanePresentation.SetPresentationVisible(true);
             encounter = context;
             encounter.Player.CaptureBattleStart();
             encounter.Enemy.CaptureBattleStart();
-            runner = encounter.Enemy.PatternRunner ?? encounter.Enemy.gameObject.AddComponent<RhythmPatternRunner>();
-            runner.enabled = true;
+            runner.ConfigurePresentation(lanePresentation);
             BindRuntime();
             ConfigureStateMachine();
             IsBattleActive = true;

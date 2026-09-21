@@ -37,6 +37,7 @@ public class Note : MonoBehaviour
     public string RuntimeNoteId => runtimeNoteId;
     public bool IsResolved => resolved;
     public RhythmNoteData Data { get; private set; }
+    protected bool UsesHorizontalGameplay => runner != null && runner.HorizontalGameplay;
     public virtual bool ShouldAutoMissByPosition => true;
     public virtual bool ShouldResolveMissOnPlayerInput => false;
 

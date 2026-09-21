@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace RythmRPG.Combat
@@ -21,6 +22,12 @@ namespace RythmRPG.Combat
         [SerializeField] private Transform worldRoot;
         [SerializeField] private Camera worldCamera;
         [SerializeField] private LineRenderer judgementLine;
+        [Tooltip("Keep the hit line and note paths on a level X/Z plane, independent of camera tilt.")]
+        [SerializeField] private bool horizontalGameplay = true;
+        [FormerlySerializedAs("heightAboveCombatants")]
+        [Tooltip("Small vertical clearance above the combatants' ground contact level.")]
+        [SerializeField, Min(0f)] private float heightAboveGround = 1f;
+        [SerializeField] private float gameplayHeight;
 
         [Header("Screen UI")]
         [SerializeField] private Canvas canvas;
@@ -31,6 +38,9 @@ namespace RythmRPG.Combat
         private LaneInputRouter activeInput;
         private bool presentationVisible;
         public IReadOnlyList<RhythmLaneTarget> Targets => targets;
+        public bool HorizontalGameplay => horizontalGameplay;
+        public float GameplayHeight => gameplayHeight;
+        public Camera RenderCamera => ResolveWorldCamera() ? worldCamera : null;
 
         private void LateUpdate()
         {
@@ -45,6 +55,80 @@ namespace RythmRPG.Combat
             EnsureWorldTargets(input);
             EnsureButtonRow(input);
             AlignWorldTargetsAndLine(input);
+        }
+
+        public void ConfigureEncounter(CombatEncounterContext context, Transform projectileHolder)
+        {
+            if (!horizontalGameplay) return;
+            float playerGroundHeight = ResolveGroundHeight(context.Player);
+            float enemyGroundHeight = ResolveGroundHeight(context.Enemy);
+            gameplayHeight = HorizontalCombatGeometry.ResolveGameplayHeight(
+                playerGroundHeight, enemyGroundHeight, heightAboveGround);
+            if (projectileHolder == null) return;
+
+            projectileHolder.position = HorizontalCombatGeometry.AtHeight(projectileHolder.position, gameplayHeight);
+            projectileHolder.rotation = Quaternion.identity;
+            gameplayHeight = projectileHolder.position.y;
+        }
+
+        public static float ResolveGroundHeight(Component combatant)
+        {
+            Collider[] colliders = combatant.GetComponentsInChildren<Collider>(false)
+                .Where(collider => collider.enabled && !collider.isTrigger && collider.bounds.size.sqrMagnitude > 0f)
+                .ToArray();
+            if (colliders.Length > 0) return colliders.Min(collider => collider.bounds.min.y);
+
+            Renderer[] renderers = combatant.GetComponentsInChildren<Renderer>(false)
+                .Where(renderer => renderer.enabled && renderer.bounds.size.sqrMagnitude > 0f)
+                .ToArray();
+            if (renderers.Length > 0) return renderers.Min(renderer => renderer.bounds.min.y);
+            return combatant.transform.position.y;
+        }
+
+        public Vector3 ProjectToGameplayPlane(Vector3 position) => horizontalGameplay
+            ? HorizontalCombatGeometry.AtHeight(position, gameplayHeight)
+            : position;
+
+        public void RefreshPresentation()
+        {
+            if (activeInput != null) AlignWorldTargetsAndLine(activeInput);
+        }
+
+        public bool TryGetPlayerPosition(float rootHeight, float footOffset, float gap, out Vector3 position)
+        {
+            position = default;
+            if (!ResolveWorldCamera() || !TryGetHitLineFrame(out Vector3 center, out _)) return false;
+            // Project the elevated line onto the feet plane through the actual output camera.
+            Ray ray = worldCamera.ViewportPointToRay(worldCamera.WorldToViewportPoint(center));
+            Plane feetPlane = new(Vector3.up, Vector3.up * (rootHeight + footOffset));
+            if (!feetPlane.Raycast(ray, out float distance)) return false;
+            Vector3 screenUp = Vector3.ProjectOnPlane(worldCamera.transform.up, Vector3.up);
+            position = HorizontalCombatGeometry.PositionBehindLine(ray.GetPoint(distance),
+                screenUp, gap, rootHeight);
+            return true;
+        }
+
+        public bool TryGetHitLineFrame(out Vector3 center, out Vector3 towardPlayer)
+        {
+            List<RhythmLaneTarget> activeTargets = targets.Where(target => target != null).ToList();
+            if (activeTargets.Count == 0)
+            {
+                center = default;
+                towardPlayer = default;
+                return false;
+            }
+
+            center = activeTargets.Aggregate(Vector3.zero,
+                (sum, target) => sum + target.transform.position) / activeTargets.Count;
+            towardPlayer = activeTargets.Aggregate(Vector3.zero,
+                (sum, target) => sum + target.WorldTravelDirection).normalized;
+            if (horizontalGameplay)
+            {
+                center.y = gameplayHeight;
+                towardPlayer = Vector3.ProjectOnPlane(towardPlayer, Vector3.up).normalized;
+            }
+            if (towardPlayer.sqrMagnitude <= 0.0001f) towardPlayer = Vector3.back;
+            return true;
         }
 
         public void SetPresentationVisible(bool visible)
@@ -259,6 +343,9 @@ namespace RythmRPG.Combat
 
         private Plane BuildCombatPlane()
         {
+            if (horizontalGameplay)
+                return new Plane(Vector3.up, Vector3.up * gameplayHeight);
+
             Vector3 point = targets.Count > 0
                 ? targets.Aggregate(Vector3.zero, (sum, target) => sum + target.transform.position) / targets.Count
                 : worldRoot.position;
@@ -350,7 +437,9 @@ namespace RythmRPG.Combat
                 spriteRenderer.sortingOrder = -100;
                 Vector3 direction = end - start;
                 spriteRenderer.transform.position = (start + end) * 0.5f;
-                spriteRenderer.transform.rotation = Quaternion.FromToRotation(Vector3.right, direction.normalized);
+                spriteRenderer.transform.rotation = horizontalGameplay
+                    ? Quaternion.LookRotation(Vector3.up, Vector3.Cross(Vector3.up, direction.normalized))
+                    : Quaternion.FromToRotation(Vector3.right, direction.normalized);
                 Vector2 spriteSize = sprite.bounds.size;
                 spriteRenderer.transform.localScale = new Vector3(
                     direction.magnitude / Mathf.Max(0.0001f, spriteSize.x),
@@ -360,6 +449,8 @@ namespace RythmRPG.Combat
 
             if (spriteRenderer != null) spriteRenderer.enabled = false;
             judgementLine.enabled = true;
+            judgementLine.alignment = horizontalGameplay ? LineAlignment.TransformZ : LineAlignment.View;
+            if (horizontalGameplay) judgementLine.transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
             judgementLine.useWorldSpace = true;
             judgementLine.positionCount = 2;
             judgementLine.SetPosition(0, start);

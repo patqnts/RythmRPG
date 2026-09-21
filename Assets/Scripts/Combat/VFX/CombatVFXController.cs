@@ -103,8 +103,15 @@ namespace RythmRPG.Combat
             Vector3 start = origin != null ? origin.position + originOffset
                 : AbilitySpawnOrigin != null ? AbilitySpawnOrigin.position : Vector3.zero;
             Vector3 end = target.position + targetOffset;
+            CombatLanePresentation3D lanePresentation = FindAnyObjectByType<CombatLanePresentation3D>();
+            bool horizontal = lanePresentation != null && lanePresentation.HorizontalGameplay;
+            if (horizontal)
+            {
+                start.y = lanePresentation.GameplayHeight;
+                end.y = lanePresentation.GameplayHeight;
+            }
             GameObject projectile = profile?.ImpactProjectilePrefab != null
-                ? Instantiate(profile.ImpactProjectilePrefab, start, Quaternion.identity)
+                ? Instantiate(profile.ImpactProjectilePrefab, start, profile.ImpactProjectilePrefab.transform.rotation)
                 : new GameObject($"{ability.Definition.DisplayName} Impact Projectile");
             projectile.transform.position = start;
             projectile.transform.localScale = Vector3.one * (profile != null ? profile.ImpactProjectileScale : 0.55f);
@@ -120,7 +127,13 @@ namespace RythmRPG.Combat
             float speed = profile != null ? profile.ImpactProjectileSpeed : 14f;
             float duration = Mathf.Clamp(distance / Mathf.Max(0.01f, speed), 0.22f, 0.9f);
             Vector3 direction = end - start;
-            if (direction.sqrMagnitude > 0.001f)
+            if (horizontal)
+            {
+                RhythmNoteVisualLayer visualLayer = projectile.GetComponent<RhythmNoteVisualLayer>()
+                    ?? projectile.AddComponent<RhythmNoteVisualLayer>();
+                visualLayer.FaceSpritesToCamera(lanePresentation.RenderCamera);
+            }
+            else if (direction.sqrMagnitude > 0.001f)
             {
                 float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 projectile.transform.rotation = Quaternion.Euler(0f, 0f, angle);

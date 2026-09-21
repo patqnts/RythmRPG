@@ -76,6 +76,104 @@ namespace RythmRPG.Combat.Tests
         }
 
         [Test]
+        public void HorizontalCombatGeometry_KeepsLineNotesAndPlayerOnExpectedPlanes()
+        {
+            float height = HorizontalCombatGeometry.ResolveGameplayHeight(1.68f, 1.72f, 0.18f);
+            Vector3 note = HorizontalCombatGeometry.AtHeight(new Vector3(4f, -10f, 8f), height);
+            Vector3 player = HorizontalCombatGeometry.PositionBehindLine(
+                new Vector3(0f, height, 3f), Vector3.forward, 0.45f, 1f);
+
+            Assert.That(height, Is.EqualTo(1.9f).Within(0.0001f));
+            Assert.That(note.y, Is.EqualTo(height));
+            Assert.That(player, Is.EqualTo(new Vector3(0f, 1f, 2.55f)));
+        }
+
+        [Test]
+        public void NoteSprites_FaceCameraWithoutRotatingMovementOrParticles()
+        {
+            GameObject root = new("Mixed Note", typeof(SpriteRenderer));
+            GameObject cameraObject = new("Note Camera", typeof(Camera));
+            GameObject particles = new("3D Visual");
+            try
+            {
+                particles.transform.SetParent(root.transform);
+                particles.transform.localRotation = Quaternion.Euler(12f, 23f, 34f);
+                Quaternion particleRotation = particles.transform.rotation;
+                Camera camera = cameraObject.GetComponent<Camera>();
+                camera.transform.rotation = Quaternion.Euler(35f, 0f, 0f);
+                SpriteRenderer source = root.GetComponent<SpriteRenderer>();
+                RhythmNoteVisualLayer layer = root.AddComponent<RhythmNoteVisualLayer>();
+                layer.FaceSpritesToCamera(camera);
+                SpriteRenderer display = root.GetComponentsInChildren<SpriteRenderer>().First(r => r != source);
+                Assert.That(Quaternion.Angle(root.transform.rotation, Quaternion.identity), Is.LessThan(0.001f));
+                Assert.That(Quaternion.Angle(particles.transform.rotation, particleRotation), Is.LessThan(0.001f));
+                Assert.That(Quaternion.Angle(display.transform.rotation, camera.transform.rotation), Is.LessThan(0.001f));
+                source.color = Color.red;
+                source.flipX = true;
+                camera.transform.rotation = Quaternion.Euler(45f, 10f, 0f);
+                typeof(RhythmNoteVisualLayer).GetMethod("LateUpdate", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .Invoke(layer, null);
+                Assert.That(display.color, Is.EqualTo(Color.red));
+                Assert.That(display.flipX, Is.True);
+                Assert.That(Quaternion.Angle(display.transform.rotation, camera.transform.rotation), Is.LessThan(0.001f));
+                layer.enabled = false;
+                // Runtime MonoBehaviour callbacks are not dispatched by EditMode tests.
+                typeof(RhythmNoteVisualLayer).GetMethod("OnDisable", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .Invoke(layer, null);
+                Assert.That(source.forceRenderingOff, Is.False);
+                Assert.That(display.enabled, Is.False);
+            }
+            finally
+            {
+                Object.DestroyImmediate(root);
+                Object.DestroyImmediate(cameraObject);
+            }
+        }
+
+        [Test]
+        public void PlayerFeet_StayBelowHitLineWhenOrthographicCameraMoves()
+        {
+            GameObject cameraObject = new("Placement Camera");
+            GameObject presentationObject = new("Placement Lanes");
+            GameObject targetObject = new("Placement Target");
+            try
+            {
+                Camera camera = cameraObject.AddComponent<Camera>();
+                camera.orthographic = true;
+                camera.orthographicSize = 5f;
+                camera.transform.rotation = Quaternion.Euler(35f, 0f, 0f);
+                CombatLanePresentation3D presentation = presentationObject.AddComponent<CombatLanePresentation3D>();
+                typeof(CombatLanePresentation3D).GetField("worldCamera", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .SetValue(presentation, camera);
+                typeof(CombatLanePresentation3D).GetField("gameplayHeight", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .SetValue(presentation, 0.18f);
+                RhythmLaneTarget target = targetObject.AddComponent<RhythmLaneTarget>();
+                ((List<RhythmLaneTarget>)typeof(CombatLanePresentation3D).GetField("targets",
+                    BindingFlags.Instance | BindingFlags.NonPublic).GetValue(presentation)).Add(target);
+                foreach (Vector3 cameraPosition in new[] { new Vector3(0f, 7f, -9f), new Vector3(4f, 9f, -3f) })
+                {
+                    camera.transform.position = cameraPosition;
+                    Ray lineRay = camera.ViewportPointToRay(new Vector3(0.5f, 0.25f, 0f));
+                    Plane plane = new(Vector3.up, Vector3.up * 0.18f);
+                    Assert.That(plane.Raycast(lineRay, out float distance), Is.True);
+                    target.transform.position = lineRay.GetPoint(distance);
+                    Assert.That(presentation.TryGetPlayerPosition(0.3f, -0.3f, 0.45f, out Vector3 player), Is.True);
+                    Vector3 feetViewport = camera.WorldToViewportPoint(player - Vector3.up * 0.3f);
+                    Assert.That(feetViewport.x, Is.EqualTo(0.5f).Within(0.001f));
+                    Assert.That(feetViewport.y, Is.LessThan(0.25f));
+                    Assert.That(feetViewport.y, Is.GreaterThan(0.20f));
+                    Assert.That(player.y, Is.EqualTo(0.3f).Within(0.001f));
+                }
+            }
+            finally
+            {
+                Object.DestroyImmediate(targetObject);
+                Object.DestroyImmediate(presentationObject);
+                Object.DestroyImmediate(cameraObject);
+            }
+        }
+
+        [Test]
         public void Combatants_ClampDamageAndRestoreDefeatSnapshot()
         {
             GameObject playerObject = new("Player Test");

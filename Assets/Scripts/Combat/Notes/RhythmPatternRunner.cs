@@ -58,11 +58,21 @@ namespace RythmRPG.Combat
         private int expectedNoteCount;
         private bool cancelled;
         private KeyButton[] cachedKeys;
+        private CombatLanePresentation3D lanePresentation;
 
         public bool IsRunning => runCoroutine != null;
+        public bool HorizontalGameplay => lanePresentation != null && lanePresentation.HorizontalGameplay;
         public RhythmChart FallbackChart => fallbackChart;
         public float BadWindow => judgementConfig != null ? judgementConfig.BadWindow : 0.9f;
         public IReadOnlyList<Note> ActiveNotes => activeNotes;
+        public Transform ProjectileObjectHolder
+        {
+            get
+            {
+                ResolveProjectileHolder();
+                return projectileObjectHolder;
+            }
+        }
         public event Action<RhythmChart, PatternRunContext> PatternStarted;
         public event Action<Note> NoteSpawned;
         public event Action<RhythmJudgementResult> NoteResolved;
@@ -71,11 +81,12 @@ namespace RythmRPG.Combat
         private void Awake()
         {
             judgementConfig ??= Resources.Load<JudgementConfig>("Combat/Judgement/JudgementConfig");
-            if (projectileObjectHolder == null)
-            {
-                GameObject holder = GameObject.Find("ProjectileHolder");
-                projectileObjectHolder = holder != null ? holder.transform : transform;
-            }
+            ResolveProjectileHolder();
+        }
+
+        public void ConfigurePresentation(CombatLanePresentation3D presentation)
+        {
+            lanePresentation = presentation;
         }
 
         public void ConfigureInput(LaneInputRouter inputRouter)
@@ -244,11 +255,19 @@ namespace RythmRPG.Combat
             GameObject prefab = chart.ResolvePrefab(data);
             if (lane == null || prefab == null) return;
             Transform origin = currentContext.SpawnOrigin != null ? currentContext.SpawnOrigin : transform;
-            Quaternion rotation = projectileObjectHolder != null ? projectileObjectHolder.rotation : Quaternion.identity;
-            GameObject instance = Instantiate(prefab, origin.position, rotation, projectileObjectHolder);
+            ResolveProjectileHolder();
+            Vector3 spawnPosition = lanePresentation != null
+                ? lanePresentation.ProjectToGameplayPlane(origin.position)
+                : origin.position;
+            Quaternion rotation = lanePresentation != null && lanePresentation.HorizontalGameplay
+                ? prefab.transform.rotation
+                : projectileObjectHolder != null ? projectileObjectHolder.rotation : Quaternion.identity;
+            GameObject instance = Instantiate(prefab, spawnPosition, rotation, projectileObjectHolder);
             RhythmNoteVisualLayer visualLayer = instance.GetComponent<RhythmNoteVisualLayer>();
             if (visualLayer == null) visualLayer = instance.AddComponent<RhythmNoteVisualLayer>();
             visualLayer.Configure();
+            if (lanePresentation != null && lanePresentation.HorizontalGameplay)
+                visualLayer.FaceSpritesToCamera(lanePresentation.RenderCamera);
             Note note = instance.GetComponent<Note>();
             if (note == null)
             {
@@ -257,7 +276,9 @@ namespace RythmRPG.Combat
             }
             note.Initialize(new RhythmNoteSpawnContext(this, data, data.Id, lane.KeyIdentity,
                 Mathf.Max(0.01f, data.Speed), Mathf.Max(0, data.Damage), GetKeys()));
-            ApplyInitializeMovement(note, data.InitializeMovementType);
+            ApplyInitializeMovement(note, lanePresentation != null && lanePresentation.HorizontalGameplay
+                ? NoteInitializeMovementType.None
+                : data.InitializeMovementType);
             if (note is HoldNoteObject hold) hold.length = data.LegacyHoldLength;
             if (note is HoldLaserNote holdLaser) holdLaser.length = data.LegacyHoldLength;
             activeNotes.Add(note);
@@ -307,6 +328,17 @@ namespace RythmRPG.Combat
             if (movement == null && type != NoteInitializeMovementType.None)
                 movement = note.gameObject.AddComponent<NoteInitializeMovement>();
             if (movement != null) movement.SetMovementType(type);
+        }
+
+        private void ResolveProjectileHolder()
+        {
+            if (projectileObjectHolder != null) return;
+            projectileObjectHolder = FindObjectsByType<Transform>(FindObjectsInactive.Include)
+                .FirstOrDefault(candidate => candidate.name == "ProjectileHolder");
+            if (projectileObjectHolder != null) return;
+
+            GameObject holder = new("ProjectileHolder");
+            projectileObjectHolder = holder.transform;
         }
     }
 }

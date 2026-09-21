@@ -9,6 +9,11 @@ public class ClusterNote : Note
     void Start()
     {
         keys = FindObjectsByType<KeyButton>(FindObjectsSortMode.None);
+        if (UsesHorizontalGameplay)
+        {
+            StartFalling();
+            return;
+        }
         if (!TryStartInitializeMovement(StartMovementArc))
         {
             StartMovementArc();
