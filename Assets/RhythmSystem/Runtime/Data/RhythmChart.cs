@@ -196,8 +196,6 @@ namespace RythmRPG.Rhythm
         // Editor-only minimum timeline length. Combat ignores it: a chart ends once its last note is resolved.
         [SerializeField, HideInInspector] private double compositionDuration = 30d;
         [SerializeField] private AudioClip audioClip;
-        [Tooltip("Optional second music layer that plays in sync with Audio Clip. In combat, Audio Clip is heard on the enemy turn and this on the player turn (cross-faded). Same length, sample rate and BPM as Audio Clip.")]
-        [SerializeField] private AudioClip turnAudioClip;
         [SerializeField] private double audioOffsetSeconds;
         [SerializeField] private bool snapEnabled = true;
         [SerializeField] private RhythmSnapDivision snapDivision = RhythmSnapDivision.QuarterBeat;
@@ -212,8 +210,6 @@ namespace RythmRPG.Rhythm
         public int BeatsPerMeasure { get => beatsPerMeasure; set => beatsPerMeasure = value; }
         public double CompositionDuration { get => compositionDuration; set => compositionDuration = value; }
         public AudioClip AudioClip { get => audioClip; set => audioClip = value; }
-        /// <summary>Second music layer (player-turn arrangement) that plays sample-locked with <see cref="AudioClip"/>.</summary>
-        public AudioClip TurnAudioClip { get => turnAudioClip; set => turnAudioClip = value; }
         /// <summary>Seconds into the audio at which beat 0 falls (aligns the beat grid to the music).</summary>
         public double AudioOffsetSeconds { get => audioOffsetSeconds; set => audioOffsetSeconds = value; }
         public bool SnapEnabled { get => snapEnabled; set => snapEnabled = value; }

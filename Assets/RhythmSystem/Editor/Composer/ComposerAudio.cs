@@ -8,14 +8,11 @@ namespace RythmRPG.Rhythm.Editor.Composer
 {
     /// <summary>
     /// Editor-side audio for the composer. Uses real AudioSources on a hidden object (they play in Edit Mode):
-    /// the main and turn layers are scheduled for the same dsp time so they stay sample-locked, and metronome
-    /// ticks are scheduled a little ahead on their own sources, on top of the music. Tempo, offset, listen
-    /// layer and metronome can all change while playing without restarting the music.
+    /// the music plays on one source and metronome ticks are scheduled a little ahead on their own sources, on top
+    /// of the music. Tempo, offset and metronome can change while playing without restarting the music.
     /// </summary>
     internal sealed class ComposerAudio : IDisposable
     {
-        public enum Listen { Main, Turn, Both }
-
         private const double LeadSeconds = 0.08d;
         private const double ScheduleAheadSeconds = 0.25d;
         private const int ClickVoices = 8;
@@ -23,7 +20,6 @@ namespace RythmRPG.Rhythm.Editor.Composer
 
         private GameObject host;
         private AudioSource mainSource;
-        private AudioSource turnSource;
         private readonly List<AudioSource> clickSources = new List<AudioSource>();
         private AudioClip accentClick;
         private AudioClip normalClick;
@@ -35,7 +31,6 @@ namespace RythmRPG.Rhythm.Editor.Composer
         private double scheduledUntil;
         private TempoMap tempo;
         private bool metronome;
-        private Listen listen = Listen.Main;
 
         // Smoothed dsp clock (dspTime advances in audio-buffer steps).
         private double lastDsp = -1d;
@@ -68,18 +63,6 @@ namespace RythmRPG.Rhythm.Editor.Composer
             }
         }
 
-        /// <summary>Warning text when the turn layer cannot stay in step with the main layer, otherwise null.</summary>
-        public static string CheckLayers(AudioClip main, AudioClip turn)
-        {
-            if (main == null || turn == null) return null;
-            if (main.frequency != turn.frequency)
-                return "Turn audio sample rate (" + turn.frequency + ") differs from main (" + main.frequency + "): layers will drift.";
-            double diff = Math.Abs(main.length - turn.length);
-            if (diff > 0.005d)
-                return "Turn audio is " + diff.ToString("0.000") + " s " + (turn.length > main.length ? "longer" : "shorter") + " than main: loops will drift.";
-            return null;
-        }
-
         /// <summary>Smoothed AudioSettings.dspTime. Use it as the playhead's time source so the playhead follows the audio.</summary>
         public double Clock()
         {
@@ -95,20 +78,17 @@ namespace RythmRPG.Rhythm.Editor.Composer
             return dsp + Math.Min(0.05d, Math.Max(0d, now - realtimeAtDsp));
         }
 
-        /// <summary>Starts both layers at <paramref name="fromSeconds"/> (clip time). Returns the Clock() time at which audio begins.</summary>
-        public double Play(double fromSeconds, AudioClip main, AudioClip turn, TempoMap tempoMap, bool metronomeOn, Listen listenTo)
+        /// <summary>Starts the music at <paramref name="fromSeconds"/> (clip time). Returns the Clock() time at which audio begins.</summary>
+        public double Play(double fromSeconds, AudioClip main, TempoMap tempoMap, bool metronomeOn)
         {
             Stop();
             EnsureHost();
             tempo = tempoMap;
             metronome = metronomeOn;
-            listen = listenTo;
             startSeconds = Math.Max(0d, fromSeconds);
             dspStart = AudioSettings.dspTime + LeadSeconds;
             lastDsp = -1d;
             StartLayer(mainSource, main);
-            StartLayer(turnSource, turn);
-            ApplyListen();
             scheduledUntil = startSeconds;
             playing = true;
             ScheduleClicks();
@@ -119,14 +99,7 @@ namespace RythmRPG.Rhythm.Editor.Composer
         {
             playing = false;
             if (mainSource != null) mainSource.Stop();
-            if (turnSource != null) turnSource.Stop();
             StopClicks();
-        }
-
-        public void SetListen(Listen value)
-        {
-            listen = value;
-            ApplyListen();
         }
 
         public void SetMetronome(bool on)
@@ -178,14 +151,6 @@ namespace RythmRPG.Rhythm.Editor.Composer
             source.PlayScheduled(dspStart);
         }
 
-        private void ApplyListen()
-        {
-            if (mainSource == null) return;
-            bool hasTurn = turnSource.clip != null;
-            mainSource.volume = listen == Listen.Turn && hasTurn ? 0f : 1f;
-            turnSource.volume = listen == Listen.Main || !hasTurn ? 0f : 1f;
-        }
-
         private void ScheduleClicks()
         {
             if (!metronome || tempo == null || clickSources.Count == 0) return;
@@ -217,7 +182,6 @@ namespace RythmRPG.Rhythm.Editor.Composer
             if (host != null) return;
             host = EditorUtility.CreateGameObjectWithHideFlags("Rhythm Composer Audio", HideFlags.HideAndDontSave);
             mainSource = AddSource();
-            turnSource = AddSource();
             clickSources.Clear();
             for (int i = 0; i < ClickVoices; i++) clickSources.Add(AddSource());
             accentClick = BuildClick("ComposerClickAccent", 1800d, ClickGain);

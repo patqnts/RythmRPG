@@ -15,9 +15,8 @@ MonoBehaviour:
   schemaVersion: 1
   bpm: 140
   beatsPerMeasure: 4
-  compositionDuration: 4.5
+  compositionDuration: 25
   audioClip: {fileID: 8300000, guid: 78cb0fef327344e4ca877c293083380c, type: 3}
-  turnAudioClip: {fileID: 8300000, guid: 3f776ba755ba71341bb3f527c8369c60, type: 3}
   audioOffsetSeconds: 0.283
   snapEnabled: 1
   snapDivision: 2
@@ -63,7 +62,7 @@ MonoBehaviour:
   notes:
   - id: pat_c65c38b560254ee69483ca776c1fe4e3_0
     laneId: enemy_lane_1
-    hitTime: 0.7115714285714285
+    hitTime: 0.283
     noteType: 0
     holdDuration: 0
     initializeMovementType: 0
@@ -82,7 +81,7 @@ MonoBehaviour:
       value: c65c38b560254ee69483ca776c1fe4e3
   - id: pat_c65c38b560254ee69483ca776c1fe4e3_1
     laneId: enemy_lane_2
-    hitTime: 0.9258571428571429
+    hitTime: 0.4972857142857142
     noteType: 0
     holdDuration: 0
     initializeMovementType: 0
@@ -101,7 +100,7 @@ MonoBehaviour:
       value: c65c38b560254ee69483ca776c1fe4e3
   - id: pat_c65c38b560254ee69483ca776c1fe4e3_2
     laneId: enemy_lane_3
-    hitTime: 1.1401428571428571
+    hitTime: 0.7115714285714285
     noteType: 0
     holdDuration: 0
     initializeMovementType: 0
@@ -120,7 +119,7 @@ MonoBehaviour:
       value: c65c38b560254ee69483ca776c1fe4e3
   - id: pat_c65c38b560254ee69483ca776c1fe4e3_3
     laneId: enemy_lane_4
-    hitTime: 1.3544285714285713
+    hitTime: 0.9258571428571429
     noteType: 0
     holdDuration: 0
     initializeMovementType: 0
@@ -139,7 +138,7 @@ MonoBehaviour:
       value: c65c38b560254ee69483ca776c1fe4e3
   - id: pat_c65c38b560254ee69483ca776c1fe4e3_4
     laneId: enemy_lane_5
-    hitTime: 1.5687142857142857
+    hitTime: 1.1401428571428571
     noteType: 0
     holdDuration: 0
     initializeMovementType: 0
@@ -158,7 +157,7 @@ MonoBehaviour:
       value: c65c38b560254ee69483ca776c1fe4e3
   - id: pat_c65c38b560254ee69483ca776c1fe4e3_5
     laneId: enemy_lane_4
-    hitTime: 1.783
+    hitTime: 1.3544285714285713
     noteType: 0
     holdDuration: 0
     initializeMovementType: 0
@@ -177,7 +176,7 @@ MonoBehaviour:
       value: c65c38b560254ee69483ca776c1fe4e3
   - id: pat_c65c38b560254ee69483ca776c1fe4e3_6
     laneId: enemy_lane_3
-    hitTime: 1.997285714285714
+    hitTime: 1.5687142857142857
     noteType: 0
     holdDuration: 0
     initializeMovementType: 0
@@ -196,7 +195,7 @@ MonoBehaviour:
       value: c65c38b560254ee69483ca776c1fe4e3
   - id: pat_c65c38b560254ee69483ca776c1fe4e3_7
     laneId: enemy_lane_2
-    hitTime: 2.2115714285714287
+    hitTime: 1.783
     noteType: 0
     holdDuration: 0
     initializeMovementType: 0
@@ -213,6 +212,23 @@ MonoBehaviour:
     metadata:
     - key: pattern
       value: c65c38b560254ee69483ca776c1fe4e3
+  - id: enemy_note_1
+    laneId: enemy_lane_1
+    hitTime: 2.4258571428571427
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.1428571428571432
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
   - id: enemy_note_2
     laneId: enemy_lane_3
     hitTime: 2.7258571428571425
@@ -224,23 +240,6 @@ MonoBehaviour:
     damage: 10
     speed: 8
     travelTime: 2.142857142857143
-    stationaryBadWindow: 0.9
-    stationaryGoodWindow: 0.45
-    stationaryPerfectWindow: 0.15
-    mashRequiredPresses: 8
-    prefabOverride: {fileID: 0}
-    metadata: []
-  - id: enemy_note_1
-    laneId: enemy_lane_1
-    hitTime: 2.8544285714285715
-    noteType: 0
-    holdDuration: 0
-    initializeMovementType: 0
-    hitEffect: 0
-    playerState: 0
-    damage: 10
-    speed: 8
-    travelTime: 2.1428571428571432
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
@@ -1407,7 +1406,7 @@ MonoBehaviour:
     Reservation: 1
   - Id: c65c38b560254ee69483ca776c1fe4e3
     TemplateId: sweep
-    StartBeat: 1
+    StartBeat: 0
     DurationBeats: 4
     Seed: 77266921
     LaneMask: 0

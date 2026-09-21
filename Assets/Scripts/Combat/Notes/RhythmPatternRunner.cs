@@ -111,7 +111,7 @@ namespace RythmRPG.Combat
             lanePresentation = presentation;
         }
 
-        /// <summary>Encounter music (main + turn layers). When set, enemy charts start their music here and are bar-aligned to it.</summary>
+        /// <summary>Encounter music (filtered on the player turn). When set, enemy charts start their music here and are bar-aligned to it.</summary>
         public void ConfigureMusic(CombatMusicDirector director)
         {
             musicDirector = director;

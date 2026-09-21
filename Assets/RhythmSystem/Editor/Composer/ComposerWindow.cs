@@ -44,10 +44,6 @@ namespace RythmRPG.Rhythm.Editor.Composer
         private PlaybackTransport transport;
         private WaveformPeaks waveform;
         private AudioClip audioClip;
-        private AudioClip turnClip;
-        private ComposerAudio.Listen listen = ComposerAudio.Listen.Main;
-        private ObjectField turnClipField;
-        private EnumField listenField;
         private bool metronomeOn;
         private bool refreshingTransport;
         private string audioMessage = "";
@@ -229,35 +225,16 @@ namespace RythmRPG.Rhythm.Editor.Composer
             });
             bar.Add(metronome);
 
-            listenField = new EnumField("Hear", listen);
-            listenField.style.width = 120f;
-            listenField.labelElement.style.minWidth = 32f;
-            listenField.tooltip = "Which music layer you hear. Both layers always play in sync; this only changes their volume.";
-            listenField.RegisterValueChangedCallback(e =>
-            {
-                listen = (ComposerAudio.Listen)e.newValue;
-                if (audio != null) audio.SetListen(listen);
-            });
-            bar.Add(listenField);
             bar.Add(new ToolbarSpacer());
 
-            clipField = new ObjectField("Main audio");
+            clipField = new ObjectField("Audio");
             clipField.objectType = typeof(AudioClip);
             clipField.allowSceneObjects = false;
             clipField.style.minWidth = 240f;
-            clipField.labelElement.style.minWidth = 70f;
-            clipField.tooltip = "Music heard on the enemy turn. The waveform and beat grid follow this clip.";
+            clipField.labelElement.style.minWidth = 40f;
+            clipField.tooltip = "Chart music. The waveform and beat grid follow this clip. In combat it loops for the fight and is muffled on the player turn.";
             clipField.RegisterValueChangedCallback(e => OnAudioClipPicked(e.newValue as AudioClip));
             bar.Add(clipField);
-
-            turnClipField = new ObjectField("Turn audio");
-            turnClipField.objectType = typeof(AudioClip);
-            turnClipField.allowSceneObjects = false;
-            turnClipField.style.minWidth = 240f;
-            turnClipField.labelElement.style.minWidth = 70f;
-            turnClipField.tooltip = "Music layer for the player turn. Plays sample-locked with Main audio; use the same length, sample rate and BPM.";
-            turnClipField.RegisterValueChangedCallback(e => OnTurnClipPicked(e.newValue as AudioClip));
-            bar.Add(turnClipField);
             column.Add(bar);
 
             // Row 2: grid alignment. Everything here can be changed while playing; the music keeps going.
@@ -310,15 +287,6 @@ namespace RythmRPG.Rhythm.Editor.Composer
             OnTempoFieldsChanged();
         }
 
-        private void OnTurnClipPicked(AudioClip clip)
-        {
-            if (refreshingTransport || session == null) return;
-            turnClip = clip;
-            session.Dirty = true;
-            RebuildWaveform();
-            if (transport.IsPlaying) StartAudio();
-            UpdateStatus();
-        }
 
         private DoubleField MakeTempoField(string label, float width)
         {
@@ -339,7 +307,6 @@ namespace RythmRPG.Rhythm.Editor.Composer
                 meterField.SetValueWithoutNotify(session != null ? session.Tempo.BeatsPerMeasure : 4);
                 offsetField.SetValueWithoutNotify(session != null ? session.Tempo.AudioOffsetSeconds : 0d);
                 clipField.SetValueWithoutNotify(audioClip);
-                if (turnClipField != null) turnClipField.SetValueWithoutNotify(turnClip);
             }
             finally
             {
@@ -385,8 +352,6 @@ namespace RythmRPG.Rhythm.Editor.Composer
             string error;
             waveform = ComposerAudio.BuildPeaks(audioClip, out error);
             audioMessage = error ?? "";
-            string layerWarning = ComposerAudio.CheckLayers(audioClip, turnClip);
-            if (layerWarning != null) audioMessage = string.IsNullOrEmpty(audioMessage) ? layerWarning : audioMessage + " | " + layerWarning;
 
             if (timeline != null) timeline.Waveform = waveform;
         }
@@ -395,7 +360,6 @@ namespace RythmRPG.Rhythm.Editor.Composer
         {
             double d = chart != null ? chart.EffectiveDuration : 30d;
             if (audioClip != null) d = Math.Max(d, audioClip.length);
-            if (turnClip != null) d = Math.Max(d, turnClip.length);
             if (session != null)
             {
                 IList<NoteInstance> notes = session.Notes;
@@ -442,7 +406,7 @@ namespace RythmRPG.Rhythm.Editor.Composer
         {
             transport.Duration = ComputeDuration();
             double position = transport.Position;
-            double startsAt = audio.Play(position, audioClip, turnClip, session.Tempo, metronomeOn, listen);
+            double startsAt = audio.Play(position, audioClip, session.Tempo, metronomeOn);
             transport.SyncTo(position, startsAt);
         }
 
@@ -833,7 +797,6 @@ namespace RythmRPG.Rhythm.Editor.Composer
             {
                 session = null;
                 audioClip = null;
-                turnClip = null;
                 waveform = null;
                 timeline.Waveform = null;
                 RefreshTransportFields();
@@ -848,7 +811,6 @@ namespace RythmRPG.Rhythm.Editor.Composer
             session.Changed += OnSessionChanged;
             timeline.PlayheadBeat = 0d;
             audioClip = target.AudioClip;
-            turnClip = target.TurnAudioClip;
             RebuildWaveform();
             RefreshTransportFields();
             timeline.Bind(session, entries);
@@ -864,7 +826,6 @@ namespace RythmRPG.Rhythm.Editor.Composer
             BackupAsset(chart);
             Undo.RecordObject(chart, "Rhythm Composer Save");
             chart.AudioClip = audioClip;
-            chart.TurnAudioClip = turnClip;
             chart.Bpm = (float)session.Tempo.Segments[0].Bpm;
             chart.BeatsPerMeasure = session.Tempo.BeatsPerMeasure;
             chart.AudioOffsetSeconds = session.Tempo.AudioOffsetSeconds;
