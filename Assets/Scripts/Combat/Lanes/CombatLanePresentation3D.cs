@@ -51,9 +51,15 @@ namespace RythmRPG.Combat
         [SerializeField] private RectTransform hitLineAnchor;
         [Tooltip("FollowCamera: the line is placed from Hit Line Viewport every frame. WorldFixed: you place it.")]
         [SerializeField] private HitLinePlacement hitLinePlacement = HitLinePlacement.FollowCamera;
-        [Tooltip("FollowCamera only. Position of the line in the render-texture view (0-1). Y < 0 means 'seed from the button row on first run'.")]
-        [SerializeField] private Vector2 hitLineViewport = new(0.5f, -1f);
+        [Tooltip("FollowCamera only. Position of the line in the render-texture view (0-1, 0 = bottom). Y < 0 means 'seed from the button row on first run'.")]
+        [SerializeField] private Vector2 hitLineViewport = new(0.5f, 0.30f);
+        [Tooltip("FollowCamera only. Where the player's feet stand in the render-texture view (0-1, 0 = bottom). Keep it between the button row and the hit line.")]
+        [SerializeField, Range(0.02f, 0.9f)] private float playerFeetViewportY = 0.15f;
+        [Tooltip("FollowCamera only. Where the enemy stands in the render-texture view (0-1, 0 = bottom). Top centre of the screen.")]
+        [SerializeField, Range(0.3f, 0.95f)] private float enemyViewportY = 0.80f;
         [SerializeField] private HitLaneSource laneSource = HitLaneSource.ButtonPositions;
+        [Tooltip("Place each lane target where it appears ON the hit line through the camera (2D look). The line lies on the ground and notes fly higher, so in the Scene view the targets sit a little toward the camera from the line; in the Game view they overlap exactly. Off = same X/Z as the line (notes look early).")]
+        [SerializeField] private bool alignTargetsOnScreen = true;
 
         [Header("Screen UI")]
         [SerializeField] private Canvas canvas;
@@ -67,10 +73,19 @@ namespace RythmRPG.Combat
         private readonly List<RhythmLaneTarget> targets = new();
         private LaneInputRouter activeInput;
         private bool presentationVisible;
+        private float groundHeight;
+        private bool groundKnown;
         public IReadOnlyList<RhythmLaneTarget> Targets => targets;
         public bool HorizontalGameplay => horizontalGameplay;
         public float GameplayHeight => gameplayHeight;
+        /// <summary>Ground level of the combatants: the Perfect Hit Line lies here, while lane targets and notes stay at GameplayHeight.</summary>
+        public float GroundHeight => groundKnown ? groundHeight : gameplayHeight - heightAboveGround;
         public RectTransform HitLineAnchor => hitLineAnchor;
+        /// <summary>True when the combat screen layout (enemy, hit line, player) is defined in camera-view fractions.</summary>
+        public bool UsesScreenLayout => hitLinePlacement == HitLinePlacement.FollowCamera;
+        public float EnemyViewportY => enemyViewportY;
+        public float PlayerFeetViewportY => playerFeetViewportY;
+        public float HitLineViewportY => hitLineViewport.y;
         public Camera RenderCamera => ResolveWorldCamera() ? worldCamera : null;
 
         private void LateUpdate()
@@ -95,6 +110,8 @@ namespace RythmRPG.Combat
             float enemyGroundHeight = ResolveGroundHeight(context.Enemy);
             gameplayHeight = HorizontalCombatGeometry.ResolveGameplayHeight(
                 playerGroundHeight, enemyGroundHeight, heightAboveGround);
+            groundHeight = playerGroundHeight;
+            groundKnown = true;
             if (projectileHolder == null) return;
 
             projectileHolder.position = HorizontalCombatGeometry.AtHeight(projectileHolder.position, gameplayHeight);
@@ -129,9 +146,19 @@ namespace RythmRPG.Combat
         {
             position = default;
             if (!ResolveWorldCamera() || !TryGetHitLineFrame(out Vector3 center, out _)) return false;
+            Plane feetPlane = new(Vector3.up, Vector3.up * (rootHeight + footOffset));
+            if (UsesScreenLayout)
+            {
+                // Screen-anchored layout: the feet stand at a fixed spot in the camera view, whatever the camera does.
+                Ray feetRay = worldCamera.ViewportPointToRay(new Vector3(
+                    Mathf.Clamp01(hitLineViewport.x), playerFeetViewportY, 0f));
+                if (!feetPlane.Raycast(feetRay, out float feetDistance)) return false;
+                position = feetRay.GetPoint(feetDistance);
+                position.y = rootHeight;
+                return true;
+            }
             // Project the elevated line onto the feet plane through the actual output camera.
             Ray ray = worldCamera.ViewportPointToRay(worldCamera.WorldToViewportPoint(center));
-            Plane feetPlane = new(Vector3.up, Vector3.up * (rootHeight + footOffset));
             if (!feetPlane.Raycast(ray, out float distance)) return false;
             Vector3 screenUp = Vector3.ProjectOnPlane(worldCamera.transform.up, Vector3.up);
             position = HorizontalCombatGeometry.PositionBehindLine(ray.GetPoint(distance),
@@ -336,7 +363,8 @@ namespace RythmRPG.Combat
                 lineCanvas.sortingOrder = hitLineSortingOrder;
             }
             if (hitLinePlacement == HitLinePlacement.FollowCamera)
-                PlaceHitLineFollowingCamera(plane, uiCamera, canvasScale);
+                PlaceHitLineFollowingCamera(horizontalGameplay ? new Plane(Vector3.up, Vector3.up * GroundHeight) : plane,
+                    uiCamera, canvasScale);
 
             // The world-space line is the single source of truth for landing position and direction.
             Vector3 origin = hitLineAnchor.position;
@@ -375,9 +403,75 @@ namespace RythmRPG.Combat
                     along = (index + 0.5f - ordered.Count * 0.5f) * spacing;
                 }
 
-                target.transform.position = origin + right * along;
+                // The line lies on the ground; targets stay at gameplay height. Screen-aligned: slide the target along the
+                // camera's view line so it covers the line on screen. Otherwise: same X/Z as the line.
+                Vector3 targetPosition = origin + right * along;
+                if (horizontalGameplay) targetPosition = ToTargetHeight(targetPosition);
+                AttachToHitLine(target);
+                target.transform.position = targetPosition;
                 target.Configure(binding.LaneId, travel);
             }
+            SnapTargetsToHitLine();
+        }
+
+        private readonly HashSet<RhythmLaneTarget> reportedDrift = new();
+
+        // Lane targets live under the Perfect Hit Line so they move with it. The line canvas is scaled to 0.01 and lies
+        // flat, so the target cancels that scale/rotation to stay a plain 1:1 world anchor. In the line's local space the
+        // target's X is its lane position, Y is 0 (on the line) and Z is only the height above the ground.
+        private void AttachToHitLine(RhythmLaneTarget target)
+        {
+            Transform targetTransform = target.transform;
+            if (targetTransform.parent != hitLineAnchor) targetTransform.SetParent(hitLineAnchor, true);
+            targetTransform.rotation = Quaternion.identity;
+            Vector3 parentScale = hitLineAnchor.lossyScale;
+            targetTransform.localScale = new Vector3(
+                1f / Mathf.Max(0.0001f, Mathf.Abs(parentScale.x)),
+                1f / Mathf.Max(0.0001f, Mathf.Abs(parentScale.y)),
+                1f / Mathf.Max(0.0001f, Mathf.Abs(parentScale.z)));
+        }
+
+        /// <summary>
+        /// Final pass of the frame: every lane target sits exactly on the Perfect Hit Line in X/Z (only its height
+        /// differs). Anything that moved a target off the line since the layout pass is reported once and undone.
+        /// </summary>
+        public void SnapTargetsToHitLine()
+        {
+            if (hitLineAnchor == null || !horizontalGameplay) return;
+            Vector3 origin = hitLineAnchor.position;
+            Vector3 right = Vector3.ProjectOnPlane(hitLineAnchor.right, Vector3.up);
+            right = right.sqrMagnitude > 0.0001f ? right.normalized : Vector3.right;
+            foreach (RhythmLaneTarget target in targets)
+            {
+                if (target == null) continue;
+                Vector3 current = target.transform.position;
+                Vector3 onGround = alignTargetsOnScreen ? ShiftAlongView(current, origin.y) : current;
+                Vector3 onLine = ToTargetHeight(origin + right * Vector3.Dot(onGround - origin, right));
+                Vector3 drift = current - onLine;
+                if (drift.sqrMagnitude > 0.0001f && reportedDrift.Add(target))
+                    Debug.LogWarning($"[Combat] {target.name} was {drift.magnitude:0.###} units off the Perfect Hit Line " +
+                        $"(target {current}, line {origin}, parent '{(target.transform.parent != null ? target.transform.parent.name : "none")}'). Snapped back.", target);
+                target.transform.position = onLine;
+            }
+        }
+
+        // A point on the hit line (ground) moved up to gameplay height, keeping its on-screen position when screen-aligned.
+        private Vector3 ToTargetHeight(Vector3 linePoint)
+        {
+            if (alignTargetsOnScreen) return ShiftAlongView(linePoint, gameplayHeight);
+            linePoint.y = gameplayHeight;
+            return linePoint;
+        }
+
+        // Moves a point along the camera ray through it until it reaches `height`, so it stays on the same screen pixel.
+        private Vector3 ShiftAlongView(Vector3 point, float height)
+        {
+            if (!ResolveWorldCamera()) { point.y = height; return point; }
+            Vector3 direction = worldCamera.orthographic
+                ? worldCamera.transform.forward
+                : (point - worldCamera.transform.position).normalized;
+            if (Mathf.Abs(direction.y) < 0.0001f) { point.y = height; return point; }
+            return point + direction * ((height - point.y) / direction.y);
         }
 
         private void PlaceHitLineFollowingCamera(Plane plane, Camera uiCamera, float canvasScale)

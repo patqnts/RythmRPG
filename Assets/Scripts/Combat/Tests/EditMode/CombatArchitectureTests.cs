@@ -160,8 +160,8 @@ namespace RythmRPG.Combat.Tests
                     Assert.That(presentation.TryGetPlayerPosition(0.3f, -0.3f, 0.45f, out Vector3 player), Is.True);
                     Vector3 feetViewport = camera.WorldToViewportPoint(player - Vector3.up * 0.3f);
                     Assert.That(feetViewport.x, Is.EqualTo(0.5f).Within(0.001f));
+                    Assert.That(feetViewport.y, Is.EqualTo(presentation.PlayerFeetViewportY).Within(0.001f));
                     Assert.That(feetViewport.y, Is.LessThan(0.25f));
-                    Assert.That(feetViewport.y, Is.GreaterThan(0.20f));
                     Assert.That(player.y, Is.EqualTo(0.3f).Within(0.001f));
                 }
             }

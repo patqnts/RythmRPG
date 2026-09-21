@@ -29,6 +29,10 @@ namespace RythmRPG.Combat
         [SerializeField] private Vector2 playerViewportPosition = new(0.5f, 0.2f);
         [SerializeField] private Vector2 enemyViewportPosition = new(0.5f, 0.7f);
         [SerializeField, Min(0.1f)] private float minimumPlayerEnemySeparation = 2.4f;
+        [Tooltip("Combat does not start until the camera is this close (world units) to its combat framing.")]
+        [SerializeField, Min(0.001f)] private float cameraSettleTolerance = 0.02f;
+        [Tooltip("Give up waiting for the camera to settle after this long.")]
+        [SerializeField, Min(0.1f)] private float maxCameraSettleSeconds = 2f;
         [SerializeField, Min(0f)] private float playerDistanceBehindHitLine = 0.45f;
         [SerializeField] private bool preservePlayerHeight = true;
 
@@ -66,6 +70,7 @@ namespace RythmRPG.Combat
             if (alignedPlayer == null || lanePresentation == null) return;
             // Cinemachine and the render camera must finish before sampling the screen-anchored line.
             lanePresentation.RefreshPresentation();
+            lanePresentation.SnapTargetsToHitLine();
             if (!lanePresentation.TryGetPlayerPosition(combatPlayerHeight, playerFootOffset,
                 playerDistanceBehindHitLine, out Vector3 target)) return;
             float progress = moveDuration <= 0f ? 1f : Mathf.Clamp01((Time.time - placementStartedAt) / moveDuration);
@@ -111,6 +116,10 @@ namespace RythmRPG.Combat
 
                 placementStartedAt = Time.time;
                 yield return new WaitForSeconds(Mathf.Max(0f, moveDuration));
+                // Cinemachine damping keeps easing the camera after the player has arrived; combat must not start
+                // until the framing (and so the hit line, lanes and player spot) has stopped moving.
+                float settleDeadline = Time.time + maxCameraSettleSeconds;
+                while (Time.time < settleDeadline && !IsCameraSettled()) yield return null;
                 RestorePlayerController();
                 yield break;
             }
@@ -144,6 +153,18 @@ namespace RythmRPG.Combat
             context.Player.SendMessage("CloseBattleBG", SendMessageOptions.DontRequireReceiver);
             if (victory) context.Enemy.gameObject.SetActive(false);
         }
+
+        private bool IsCameraSettled()
+        {
+            if (virtualCamera == null || combatEnemy == null) return true;
+            Vector3 wanted = ResolveCombatCameraPosition(combatEnemy.position);
+            return (virtualCamera.transform.position - wanted).sqrMagnitude
+                <= cameraSettleTolerance * cameraSettleTolerance;
+        }
+
+        private Vector2 CombatEnemyViewport => lanePresentation != null && lanePresentation.UsesScreenLayout
+            ? new Vector2(0.5f, lanePresentation.EnemyViewportY)
+            : enemyViewportPosition;
 
         private void EnsureCinemachineFollowRig()
         {
@@ -239,7 +260,7 @@ namespace RythmRPG.Combat
             Transform cameraTransform = virtualCamera.transform;
             float orthographicSize = ResolveOrthographicSize();
             float aspect = ResolveCameraAspect();
-            Vector2 normalizedOffset = enemyViewportPosition - new Vector2(0.5f, 0.5f);
+            Vector2 normalizedOffset = CombatEnemyViewport - new Vector2(0.5f, 0.5f);
             Vector3 screenOffset = cameraTransform.right * (normalizedOffset.x * 2f * orthographicSize * aspect)
                 + cameraTransform.up * (normalizedOffset.y * 2f * orthographicSize);
             float depth = Mathf.Max(1f, Vector3.Dot(-ResolveFollowOffset(), cameraTransform.forward));

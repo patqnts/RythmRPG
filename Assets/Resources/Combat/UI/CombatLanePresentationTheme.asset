@@ -16,8 +16,8 @@ MonoBehaviour:
   ButtonPressedSprite: {fileID: 324652989, guid: f9f578db5a70632409b1db0ac0a6b6b2, type: 3}
   ButtonImageType: 0
   ButtonColor: {r: 1, g: 1, b: 1, a: 0.94}
-  ButtonSize: {x: 90, y: 90}
-  ButtonSpacing: 2
+  ButtonSize: {x: 64, y: 64}
+  ButtonSpacing: 28
   BottomOffset: 2
   ButtonFont: {fileID: 12800000, guid: 3c2172383277d46b697de74b6df875e5, type: 3}
   ButtonFontSize: 28
