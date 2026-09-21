@@ -202,6 +202,7 @@ namespace RythmRPG.Rhythm
         [SerializeField] private List<RhythmNoteDefinition> noteDefinitions = new List<RhythmNoteDefinition>();
         [SerializeField] private List<RhythmNoteData> notes = new List<RhythmNoteData>();
         [SerializeField] private List<PatternInstance> patterns = new List<PatternInstance>();
+        [SerializeField] private List<SequenceActivationData> sequences = new List<SequenceActivationData>();
 
         public int SchemaVersion => schemaVersion;
         public float Bpm { get => bpm; set => bpm = value; }
@@ -217,6 +218,8 @@ namespace RythmRPG.Rhythm
         public List<RhythmNoteData> Notes => notes;
         /// <summary>Programmed patterns placed in the composer. Their notes are also written into <see cref="Notes"/> (tagged with pattern metadata) on save.</summary>
         public List<PatternInstance> Patterns => patterns;
+        /// <summary>Run-time sequence attacks (e.g. Ping-Pong) started at chart times. They spawn their own notes while running.</summary>
+        public List<SequenceActivationData> Sequences => sequences;
         public double SecondsPerBeat => RhythmTimingUtility.GetSecondsPerBeat(bpm);
 
         /// <summary>Beat/seconds map for this chart (constant tempo for schema v1).</summary>
@@ -237,6 +240,17 @@ namespace RythmRPG.Rhythm
                     if (note != null)
                     {
                         result = Math.Max(result, note.EndTime);
+                    }
+                }
+
+                if (sequences != null)
+                {
+                    foreach (SequenceActivationData sequence in sequences)
+                    {
+                        if (sequence != null)
+                        {
+                            result = Math.Max(result, sequence.StartTime + 0.01d);
+                        }
                     }
                 }
 
@@ -279,6 +293,11 @@ namespace RythmRPG.Rhythm
             lanes ??= new List<RhythmLaneData>();
             noteDefinitions ??= new List<RhythmNoteDefinition>();
             notes ??= new List<RhythmNoteData>();
+            sequences ??= new List<SequenceActivationData>();
+            foreach (SequenceActivationData sequence in sequences.Where(sequence => sequence != null))
+            {
+                sequence.EnsureId();
+            }
 
             HashSet<string> laneIds = new HashSet<string>();
             foreach (RhythmLaneData lane in lanes.Where(lane => lane != null))

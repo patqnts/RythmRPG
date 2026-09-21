@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using RythmRPG.Rhythm;
+using RythmRPG.Rhythm.Sequences;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -50,6 +51,8 @@ namespace RythmRPG.Combat
         [SerializeField] private AudioSource chartAudioSource;
         [SerializeField] private bool playChartAudio;
         [SerializeField] private JudgementConfig judgementConfig;
+        [Tooltip("Used by sequence attacks (Ping-Pong) when the running chart has no Pong note definition with a prefab.")]
+        [SerializeField] private GameObject sequenceNotePrefab;
 
         private readonly List<Note> activeNotes = new();
         private readonly List<RhythmJudgementResult> results = new();
@@ -61,6 +64,8 @@ namespace RythmRPG.Combat
         private CombatLanePresentation3D lanePresentation;
         private MusicClock clock;
         private readonly BeatScheduler scheduler = new();
+        private readonly SequenceAttackPool sequencePool = new();
+        private RhythmChart currentChart;
 
         public bool IsRunning => runCoroutine != null;
         public bool HorizontalGameplay => lanePresentation != null && lanePresentation.HorizontalGameplay;
@@ -72,6 +77,8 @@ namespace RythmRPG.Combat
         public MusicClock Clock => clock;
         /// <summary>Fires beat callbacks while a chart runs (metronome pulses, enemy animation, WaitForBeat users).</summary>
         public BeatScheduler Scheduler => scheduler;
+        /// <summary>Running sequence attacks. The pattern run stays open (and the enemy turn with it) while blocking ones are active.</summary>
+        public SequenceAttackPool Sequences => sequencePool;
         /// <summary>Seconds into the running chart (0 when idle). Negative during the lead-in before the first note spawns.</summary>
         public double ChartSeconds => IsRunning && clock != null ? clock.Seconds : 0d;
         public double ChartBeat => IsRunning && clock != null ? clock.Beat : 0d;
@@ -168,6 +175,7 @@ namespace RythmRPG.Combat
             if (note == null || !activeNotes.Remove(note)) return;
             results.Add(result);
             NoteResolved?.Invoke(result);
+            sequencePool.NotifyNoteResolved(note.RuntimeNoteId, result.Judgement != HitJudgement.Miss, ChartSeconds);
             if (currentContext.Mode == PatternRunMode.EnemyDefense
                 && note.ShouldDamagePlayerOnResolve(result)
                 && currentContext.Player != null)
@@ -195,6 +203,7 @@ namespace RythmRPG.Combat
                 runCoroutine = null;
             }
             cancelled = true;
+            sequencePool.CancelAll(SequenceCancelReason.EncounterInterrupted);
             StopAudio();
             ClearRemaining(false);
             if (reportCompletion) Complete(true);
@@ -222,6 +231,8 @@ namespace RythmRPG.Combat
         private IEnumerator RunRoutine(RhythmChart chart)
         {
             results.Clear();
+            currentChart = chart;
+            sequencePool.CancelAll(SequenceCancelReason.Superseded);
             expectedNoteCount = chart?.Notes.Count(note => note != null) ?? 0;
             PatternStarted?.Invoke(chart, currentContext);
             if (chart == null)
@@ -237,6 +248,10 @@ namespace RythmRPG.Combat
             clock.StartAt(zeroDspTime);
             scheduler.Reposition(0d);
             int nextIndex = 0;
+            List<SequenceActivationData> sequences = chart.Sequences.Where(sequence => sequence != null)
+                .OrderBy(sequence => sequence.StartTime).ToList();
+            int nextSequence = 0;
+            TempoMap tempo = chart.CreateTempoMap();
             ScheduleAudio(chart, zeroDspTime);
             double configuredEnd = currentContext.DurationOverride > 0f ? currentContext.DurationOverride : chart.EffectiveDuration;
 
@@ -246,15 +261,35 @@ namespace RythmRPG.Combat
                 while (nextIndex < notes.Count && notes[nextIndex].SpawnTime <= chartTime)
                     Spawn(chart, notes[nextIndex++]);
 
+                while (nextSequence < sequences.Count && sequences[nextSequence].StartTime <= chartTime)
+                {
+                    ISequenceAttack attack = CreateSequence(sequences[nextSequence++], chart, tempo);
+                    if (attack != null) sequencePool.Start(attack, chartTime);
+                }
+                sequencePool.Tick(chartTime);
+
                 if (chartTime >= configuredEnd)
                 {
-                    if (currentContext.EndPolicy == AttackStepEndPolicy.ClearAsMisses) ClearRemaining(true);
-                    else if (currentContext.EndPolicy == AttackStepEndPolicy.ClearWithoutPenalty) ClearRemaining(false);
-                    if (currentContext.EndPolicy != AttackStepEndPolicy.WaitForResolvedNotes || activeNotes.Count == 0) break;
+                    if (currentContext.EndPolicy == AttackStepEndPolicy.ClearAsMisses)
+                    {
+                        sequencePool.CancelAll(SequenceCancelReason.ChartEnded);
+                        ClearRemaining(true);
+                    }
+                    else if (currentContext.EndPolicy == AttackStepEndPolicy.ClearWithoutPenalty)
+                    {
+                        sequencePool.CancelAll(SequenceCancelReason.ChartEnded);
+                        ClearRemaining(false);
+                    }
+                    if (currentContext.EndPolicy != AttackStepEndPolicy.WaitForResolvedNotes
+                        || (activeNotes.Count == 0 && !sequencePool.HasBlocking)) break;
                 }
-                if (nextIndex >= notes.Count && activeNotes.Count == 0 && chartTime >= chart.EffectiveDuration) break;
-                if (chartTime > Math.Max(chart.EffectiveDuration, configuredEnd) + 8d)
+                if (nextIndex >= notes.Count && activeNotes.Count == 0 && !sequencePool.HasBlocking
+                    && chartTime >= chart.EffectiveDuration) break;
+                // Failsafe. A blocking sequence has its own MaxAge, so allow for it before cutting the run short.
+                double failsafe = Math.Max(chart.EffectiveDuration, configuredEnd) + 8d + (sequencePool.HasBlocking ? 60d : 0d);
+                if (chartTime > failsafe)
                 {
+                    sequencePool.CancelAll(SequenceCancelReason.MaxAge);
                     ClearRemaining(true);
                     break;
                 }
@@ -263,11 +298,12 @@ namespace RythmRPG.Combat
             Complete(cancelled);
         }
 
-        private void Spawn(RhythmChart chart, RhythmNoteData data)
+        private bool Spawn(RhythmChart chart, RhythmNoteData data, GameObject fallbackPrefab = null)
         {
             RhythmLaneData lane = chart.FindLane(data.LaneId);
             GameObject prefab = chart.ResolvePrefab(data);
-            if (lane == null || prefab == null) return;
+            if (prefab == null) prefab = fallbackPrefab;
+            if (lane == null || prefab == null) return false;
             Transform origin = currentContext.SpawnOrigin != null ? currentContext.SpawnOrigin : transform;
             ResolveProjectileHolder();
             Vector3 spawnPosition = lanePresentation != null
@@ -286,7 +322,7 @@ namespace RythmRPG.Combat
             if (note == null)
             {
                 Destroy(instance);
-                return;
+                return false;
             }
             note.Initialize(new RhythmNoteSpawnContext(this, data, data.Id, lane.KeyIdentity,
                 Mathf.Max(0.01f, data.Speed), Mathf.Max(0, data.Damage), GetKeys()));
@@ -298,11 +334,83 @@ namespace RythmRPG.Combat
             activeNotes.Add(note);
             instance.SetActive(true);
             NoteSpawned?.Invoke(note);
+            return true;
+        }
+
+        // ---- sequence attacks ----
+
+        private ISequenceAttack CreateSequence(SequenceActivationData data, RhythmChart chart, TempoMap tempo)
+        {
+            switch (data.Kind)
+            {
+                case SequenceKind.PingPong:
+                {
+                    var settings = new PingPongSettings
+                    {
+                        Volleys = data.Volleys,
+                        InitialTravelSeconds = data.InitialTravelSeconds,
+                        SpeedUpFactor = data.SpeedUpFactor,
+                        MinTravelSeconds = data.MinTravelSeconds,
+                        ReturnSeconds = data.ReturnSeconds,
+                        LaneIds = ResolveSequenceLanes(data, chart)
+                    };
+                    Func<double, double> align = null;
+                    if (data.AlignToBeat) align = seconds => tempo.BeatToSeconds(Math.Ceiling(tempo.SecondsToBeat(seconds) - 1e-6d));
+                    var policy = new SequencePolicy { BlocksTurnEnd = true, MaxAgeSeconds = data.MaxAgeSeconds };
+                    return new PingPongAttack(data.Id, settings, new RunnerPingPongHost(this, data.Damage), policy, align);
+                }
+                default:
+                    Debug.LogWarning("Unknown sequence kind " + data.Kind + " in chart " + chart.name);
+                    return null;
+            }
+        }
+
+        private static string[] ResolveSequenceLanes(SequenceActivationData data, RhythmChart chart)
+        {
+            List<string> ids = data.LaneIds.Where(id => !string.IsNullOrEmpty(id) && chart.FindLane(id) != null).ToList();
+            if (ids.Count == 0 && chart.Lanes.Count > 0) ids.Add(chart.Lanes[chart.Lanes.Count / 2].Id);
+            return ids.ToArray();
+        }
+
+        private bool SpawnSequenceNote(string noteId, string laneId, double hitTime, double travelSeconds, int damage)
+        {
+            if (currentChart == null) return false;
+            RhythmNoteData data = new(laneId, hitTime, RhythmNoteType.Pong);
+            data.AssignId(noteId);
+            data.TravelTime = travelSeconds;
+            data.Damage = damage;
+            RhythmNoteDefinition definition = currentChart.FindDefinition(RhythmNoteType.Pong);
+            if (definition != null) data.Speed = definition.DefaultSpeed;
+            if (!Spawn(currentChart, data, sequenceNotePrefab))
+            {
+                Debug.LogWarning("Ping-Pong could not spawn a note: give the chart a Pong note definition with a prefab, or assign Sequence Note Prefab on the runner.");
+                return false;
+            }
+            expectedNoteCount++;
+            return true;
+        }
+
+        private sealed class RunnerPingPongHost : IPingPongHost
+        {
+            private readonly RhythmPatternRunner runner;
+            private readonly int damage;
+
+            public RunnerPingPongHost(RhythmPatternRunner runner, int damage)
+            {
+                this.runner = runner;
+                this.damage = damage;
+            }
+
+            public bool SpawnIncoming(string noteId, string laneId, double hitTime, double travelSeconds)
+                => runner.SpawnSequenceNote(noteId, laneId, hitTime, travelSeconds, damage);
+
+            public void ReturnShot(string laneId, double fromTime, double toTime) { }
         }
 
         private void Complete(bool wasCancelled)
         {
             runCoroutine = null;
+            sequencePool.CancelAll(SequenceCancelReason.ChartEnded);
             if (clock != null) clock.Stop();
             StopAudio();
             RhythmPerformanceResult performance = RhythmPerformanceCalculator.Calculate(expectedNoteCount, results, null);
