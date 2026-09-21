@@ -88,10 +88,33 @@ MonoBehaviour:
     defaultSpeed: 8
     defaultDamage: 1
     defaultTravelTime: 2.5
+  - noteType: 7
+    defaultPrefab: {fileID: 5029094789931625778, guid: 7a1e4b9c2d5f4e8a9c3b6d0f1e2a4b5c, type: 3}
+    displayColor: {r: 1, g: 0.85, b: 0.2, a: 1}
+    defaultSpeed: 8
+    defaultDamage: 1
+    defaultTravelTime: 2.5
   notes:
+  - id: f0e110a14bc246dc9a029a869699941d
+    laneId: 1029bee4e54e4ecd9a5f0fa346e3a501
+    hitTime: 2
+    noteType: 7
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 20
+    prefabOverride: {fileID: 0}
+    metadata: []
   - id: 5ac51a83143b4f45ba573fd6f47f9e9f
     laneId: 2e6bbaa24ef94343ac532f43aa1daea6
-    hitTime: 2.375
+    hitTime: 2.125
     noteType: 3
     holdDuration: 5.5
     initializeMovementType: 0
@@ -103,6 +126,24 @@ MonoBehaviour:
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 64ffa385e7c44564809c9c21fd06b70b
+    laneId: d2b53c08b1d04358acca2b2613f39ee6
+    hitTime: 2.125
+    noteType: 2
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
     prefabOverride: {fileID: 0}
     metadata: []
   - id: 6f2e0d74d1494ff6aced3d8af26362c3
@@ -119,6 +160,7 @@ MonoBehaviour:
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
     prefabOverride: {fileID: 0}
     metadata: []
   - id: 03003ede23894460901d7006149e9268
@@ -135,6 +177,24 @@ MonoBehaviour:
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 832a1c2d12ee4fe381aabef1ef75fbaf
+    laneId: 1029bee4e54e4ecd9a5f0fa346e3a501
+    hitTime: 12
+    noteType: 3
+    holdDuration: 2.5
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
     prefabOverride: {fileID: 0}
     metadata: []
   - id: b62a2568673a4c90b3c56655edf64e03
@@ -151,21 +211,6 @@ MonoBehaviour:
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
-    prefabOverride: {fileID: 0}
-    metadata: []
-  - id: 832a1c2d12ee4fe381aabef1ef75fbaf
-    laneId: 1029bee4e54e4ecd9a5f0fa346e3a501
-    hitTime: 12.25
-    noteType: 3
-    holdDuration: 2.5
-    initializeMovementType: 0
-    hitEffect: 0
-    playerState: 0
-    damage: 1
-    speed: 8
-    travelTime: 2.5
-    stationaryBadWindow: 0.9
-    stationaryGoodWindow: 0.45
-    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
     prefabOverride: {fileID: 0}
     metadata: []

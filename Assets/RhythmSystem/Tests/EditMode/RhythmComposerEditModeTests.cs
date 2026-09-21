@@ -183,13 +183,13 @@ namespace RythmRPG.Rhythm.Tests
         }
 
         [Test]
-        public void DefaultChart_HasFiveLanesAndAllSevenTypeDefinitions()
+        public void DefaultChart_HasFiveLanesAndAllTypeDefinitions()
         {
             Assert.That(chart.Bpm, Is.EqualTo(120f));
             Assert.That(chart.BeatsPerMeasure, Is.EqualTo(4));
             Assert.That(chart.Lanes.Count, Is.EqualTo(5));
             Assert.That(chart.Lanes.Select(lane => lane.KeyIdentity), Is.EqualTo(new[] { 1, 2, 3, 4, 5 }));
-            Assert.That(chart.NoteDefinitions.Select(definition => definition.NoteType).Distinct().Count(), Is.EqualTo(7));
+            Assert.That(chart.NoteDefinitions.Select(definition => definition.NoteType).Distinct().Count(), Is.EqualTo(System.Enum.GetValues(typeof(RhythmNoteType)).Length));
         }
 
         [Test]

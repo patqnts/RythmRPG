@@ -6,6 +6,22 @@ using UnityEngine.UI;
 
 namespace RythmRPG.Combat
 {
+    public enum HitLinePlacement
+    {
+        /// <summary>The hit line is re-projected every frame from a screen (viewport) position, so it always matches the camera framing. Edit "Hit Line Viewport".</summary>
+        FollowCamera,
+        /// <summary>The hit line stays where you put it in the world. Move / rotate / scale the object freely; notes land on it wherever it is.</summary>
+        WorldFixed
+    }
+
+    public enum HitLaneSource
+    {
+        /// <summary>Notes land above their UI buttons (same X as the buttons, measured along the hit line).</summary>
+        ButtonPositions,
+        /// <summary>Lanes are spread evenly across the width of the hit line.</summary>
+        EvenlyAcrossLine
+    }
+
     /// <summary>
     /// Keeps 3D rhythm gameplay aligned with its screen-space controls. UI positions are projected
     /// through the render-texture camera onto the world combat plane used by notes and judgement.
@@ -21,18 +37,32 @@ namespace RythmRPG.Combat
         [Header("World Gameplay")]
         [SerializeField] private Transform worldRoot;
         [SerializeField] private Camera worldCamera;
-        [SerializeField] private LineRenderer judgementLine;
         [Tooltip("Keep the hit line and note paths on a level X/Z plane, independent of camera tilt.")]
         [SerializeField] private bool horizontalGameplay = true;
         [FormerlySerializedAs("heightAboveCombatants")]
         [Tooltip("Small vertical clearance above the combatants' ground contact level.")]
         [SerializeField, Min(0f)] private float heightAboveGround = 1f;
         [SerializeField] private float gameplayHeight;
+        [Tooltip("Sorting order of the world-space hit line canvas. Must be above environment sprites/tilemaps and below notes (RhythmNoteVisualLayer lifts notes to 50+).")]
+        [SerializeField] private int hitLineSortingOrder = 45;
+
+        [Header("Hit Line (World-Space UI)")]
+        [Tooltip("A world-space Canvas lying on the gameplay plane. It is rendered by the same camera as the notes, so it shares their framing, tilt and sorting. Design it like any UI (Image, sprite, children, animation). Auto-created when empty; use the context menu 'Create Hit Line In Scene' to place one you can style in the editor.")]
+        [SerializeField] private RectTransform hitLineAnchor;
+        [Tooltip("FollowCamera: the line is placed from Hit Line Viewport every frame. WorldFixed: you place it.")]
+        [SerializeField] private HitLinePlacement hitLinePlacement = HitLinePlacement.FollowCamera;
+        [Tooltip("FollowCamera only. Position of the line in the render-texture view (0-1). Y < 0 means 'seed from the button row on first run'.")]
+        [SerializeField] private Vector2 hitLineViewport = new(0.5f, -1f);
+        [SerializeField] private HitLaneSource laneSource = HitLaneSource.ButtonPositions;
 
         [Header("Screen UI")]
         [SerializeField] private Canvas canvas;
         [SerializeField] private RectTransform buttonRow;
         private RawImage cameraOutput;
+
+        private const string LegacyUiAnchorName = "Perfect Hit Line UI";
+        private const string HitLineName = "Perfect Hit Line (World UI)";
+        private const float WorldUnitsPerCanvasUnit = 0.01f;
 
         private readonly List<RhythmLaneTarget> targets = new();
         private LaneInputRouter activeInput;
@@ -40,6 +70,7 @@ namespace RythmRPG.Combat
         public IReadOnlyList<RhythmLaneTarget> Targets => targets;
         public bool HorizontalGameplay => horizontalGameplay;
         public float GameplayHeight => gameplayHeight;
+        public RectTransform HitLineAnchor => hitLineAnchor;
         public Camera RenderCamera => ResolveWorldCamera() ? worldCamera : null;
 
         private void LateUpdate()
@@ -136,7 +167,7 @@ namespace RythmRPG.Combat
             presentationVisible = visible;
             if (worldRoot != null) worldRoot.gameObject.SetActive(visible);
             if (buttonRow != null) buttonRow.gameObject.SetActive(visible);
-            if (judgementLine != null) judgementLine.gameObject.SetActive(visible);
+            if (hitLineAnchor != null) hitLineAnchor.gameObject.SetActive(visible);
         }
 
         private void EnsureWorldTargets(LaneInputRouter input)
@@ -204,6 +235,7 @@ namespace RythmRPG.Combat
                 if (oldView.spriteRenderer != null) oldView.spriteRenderer.enabled = false;
                 foreach (Collider2D collider in oldView.GetComponents<Collider2D>()) collider.enabled = false;
             }
+            RetireLegacyUiAnchor(rowParent);
             Canvas.ForceUpdateCanvases();
         }
 
@@ -288,46 +320,109 @@ namespace RythmRPG.Combat
 
         private void AlignWorldTargetsAndLine(LaneInputRouter input)
         {
-            if (buttonRow == null || targets.Count == 0 || !ResolveWorldCamera())
-            {
-                ConfigureFallbackLine();
-                return;
-            }
+            if (buttonRow == null || targets.Count == 0 || !ResolveWorldCamera()) return;
 
             Plane plane = BuildCombatPlane();
             float canvasScale = Mathf.Max(0.0001f, canvas.scaleFactor);
-            float gap = (theme != null ? theme.LineGapAboveButtons : 8f) * canvasScale;
-            float padding = (theme != null ? theme.LineHorizontalPadding : 8f) * canvasScale;
-            float thickness = (theme != null ? theme.LineThickness : 2f) * canvasScale;
-            Vector3[] corners = new Vector3[4];
-            buttonRow.GetWorldCorners(corners);
             Camera uiCamera = canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
-            Vector2 bottomLeft = RectTransformUtility.WorldToScreenPoint(uiCamera, corners[0]);
-            Vector2 topRight = RectTransformUtility.WorldToScreenPoint(uiCamera, corners[2]);
-            float lineY = topRight.y + gap;
+            EnsureHitLine(plane, uiCamera, canvasScale);
+            if (hitLineAnchor == null) return;
 
-            if (!TryScreenToCombatPlane(new Vector2(bottomLeft.x - padding, lineY), plane, out Vector3 start)
-                || !TryScreenToCombatPlane(new Vector2(topRight.x + padding, lineY), plane, out Vector3 end))
+            if (Time.frameCount % 120 == 0) PrepareHitLineMaterials(hitLineAnchor);
+            Canvas lineCanvas = hitLineAnchor.GetComponent<Canvas>();
+            if (lineCanvas != null)
             {
-                ConfigureFallbackLine();
-                return;
+                if (lineCanvas.worldCamera != worldCamera) lineCanvas.worldCamera = worldCamera;
+                lineCanvas.sortingOrder = hitLineSortingOrder;
             }
+            if (hitLinePlacement == HitLinePlacement.FollowCamera)
+                PlaceHitLineFollowingCamera(plane, uiCamera, canvasScale);
 
-            Vector3 travel = ResolveTravelDirection(plane, (bottomLeft.x + topRight.x) * 0.5f, lineY, thickness);
-            foreach (LaneKeyBinding binding in input.Bindings.OrderBy(binding => binding.LaneId))
+            // The world-space line is the single source of truth for landing position and direction.
+            Vector3 origin = hitLineAnchor.position;
+            Vector3 right = hitLineAnchor.right;
+            Vector3 travel = -hitLineAnchor.up;
+            Plane linePlane = plane;
+            if (horizontalGameplay)
             {
+                right = Vector3.ProjectOnPlane(right, Vector3.up);
+                travel = Vector3.ProjectOnPlane(travel, Vector3.up);
+                linePlane = new Plane(Vector3.up, origin);
+            }
+            right = right.sqrMagnitude > 0.0001f ? right.normalized : Vector3.right;
+            travel = travel.sqrMagnitude > 0.0001f ? travel.normalized : Vector3.back;
+
+            List<LaneKeyBinding> ordered = input.Bindings.OrderBy(binding => binding.LaneId).ToList();
+            float lineWidth = hitLineAnchor.rect.width * Mathf.Abs(hitLineAnchor.lossyScale.x);
+            for (int index = 0; index < ordered.Count; index++)
+            {
+                LaneKeyBinding binding = ordered[index];
                 RhythmLaneTarget target = targets.FirstOrDefault(candidate => candidate.LaneId == binding.LaneId);
-                RectTransform buttonRect = buttonRow.Find($"Lane {binding.LaneId} Button") as RectTransform;
-                if (target == null || buttonRect == null) continue;
-                Vector2 buttonCenter = RectTransformUtility.WorldToScreenPoint(uiCamera, buttonRect.position);
-                if (!TryScreenToCombatPlane(new Vector2(buttonCenter.x, lineY), plane, out Vector3 point)) continue;
-                target.transform.position = point;
+                if (target == null) continue;
+
+                float along;
+                if (laneSource == HitLaneSource.ButtonPositions)
+                {
+                    RectTransform buttonRect = buttonRow.Find($"Lane {binding.LaneId} Button") as RectTransform;
+                    if (buttonRect == null) continue;
+                    Vector2 buttonCenter = RectTransformUtility.WorldToScreenPoint(uiCamera, buttonRect.position);
+                    if (!TryScreenToCombatPlane(buttonCenter, linePlane, out Vector3 hit)) continue;
+                    along = Vector3.Dot(hit - origin, right);
+                }
+                else
+                {
+                    float spacing = lineWidth / Mathf.Max(1, ordered.Count);
+                    along = (index + 0.5f - ordered.Count * 0.5f) * spacing;
+                }
+
+                target.transform.position = origin + right * along;
                 target.Configure(binding.LaneId, travel);
             }
+        }
 
-            float worldThickness = ResolveWorldThickness(plane,
-                new Vector2((bottomLeft.x + topRight.x) * 0.5f, lineY), thickness);
-            ConfigureJudgementLine(start, end, worldThickness);
+        private void PlaceHitLineFollowingCamera(Plane plane, Camera uiCamera, float canvasScale)
+        {
+            if (hitLineViewport.y < 0f) SeedHitLineViewport(uiCamera, canvasScale);
+            Vector2 viewport = new(Mathf.Clamp01(hitLineViewport.x), Mathf.Clamp01(hitLineViewport.y));
+            Ray ray = worldCamera.ViewportPointToRay(viewport);
+            if (!plane.Raycast(ray, out float distance)) return;
+            Vector3 point = ray.GetPoint(distance);
+
+            Vector3 travel = Vector3.back;
+            Ray below = worldCamera.ViewportPointToRay(new Vector2(viewport.x, Mathf.Clamp01(viewport.y - 0.02f)));
+            if (plane.Raycast(below, out float belowDistance))
+            {
+                Vector3 direction = below.GetPoint(belowDistance) - point;
+                if (horizontalGameplay) direction = Vector3.ProjectOnPlane(direction, Vector3.up);
+                if (direction.sqrMagnitude > 0.000001f) travel = direction.normalized;
+            }
+
+            // Canvas +Z points away from the viewer (into the plane); canvas up points against note travel.
+            Vector3 forward = horizontalGameplay ? Vector3.down : worldCamera.transform.forward;
+            hitLineAnchor.SetPositionAndRotation(point, Quaternion.LookRotation(forward, -travel));
+        }
+
+        private void SeedHitLineViewport(Camera uiCamera, float canvasScale)
+        {
+            Vector3[] corners = new Vector3[4];
+            buttonRow.GetWorldCorners(corners);
+            Vector2 bottomLeft = RectTransformUtility.WorldToScreenPoint(uiCamera, corners[0]);
+            Vector2 topRight = RectTransformUtility.WorldToScreenPoint(uiCamera, corners[2]);
+            float gap = (theme != null ? theme.LineGapAboveButtons : 8f) * canvasScale;
+            hitLineViewport = ScreenPointToWorldCameraViewport(
+                new Vector2((bottomLeft.x + topRight.x) * 0.5f, topRight.y + gap));
+        }
+
+        private static bool IsWorldSpace(RectTransform rect)
+        {
+            Canvas root = rect != null ? rect.GetComponentInParent<Canvas>() : null;
+            return root != null && root.rootCanvas.renderMode == RenderMode.WorldSpace;
+        }
+
+        private void RetireLegacyUiAnchor(Transform parent)
+        {
+            Transform legacy = parent != null ? parent.Find(LegacyUiAnchorName) : null;
+            if (legacy != null) legacy.gameObject.SetActive(false);
         }
 
         private bool ResolveWorldCamera()
@@ -416,74 +511,145 @@ namespace RythmRPG.Combat
             return 0.075f;
         }
 
-        private void ConfigureJudgementLine(Vector3 start, Vector3 end, float width)
+        private void EnsureHitLine(Plane plane, Camera uiCamera, float canvasScale)
         {
-            EnsureJudgementLineObject();
-            Material material = theme != null && theme.LineMaterial != null
-                ? theme.LineMaterial
-                : Resources.Load<Material>("Combat/VFX/JudgementLineOverlay");
-            Color color = theme != null ? theme.LineColor : Color.white;
-            Sprite sprite = theme != null ? theme.LineSprite : null;
-            SpriteRenderer spriteRenderer = judgementLine.GetComponent<SpriteRenderer>();
-
-            if (sprite != null)
+            if (hitLineAnchor != null && !IsWorldSpace(hitLineAnchor))
             {
-                if (spriteRenderer == null) spriteRenderer = judgementLine.gameObject.AddComponent<SpriteRenderer>();
-                judgementLine.enabled = false;
-                spriteRenderer.enabled = true;
-                spriteRenderer.sprite = sprite;
-                spriteRenderer.color = color;
-                spriteRenderer.sharedMaterial = material;
-                spriteRenderer.sortingOrder = -100;
-                Vector3 direction = end - start;
-                spriteRenderer.transform.position = (start + end) * 0.5f;
-                spriteRenderer.transform.rotation = horizontalGameplay
-                    ? Quaternion.LookRotation(Vector3.up, Vector3.Cross(Vector3.up, direction.normalized))
-                    : Quaternion.FromToRotation(Vector3.right, direction.normalized);
-                Vector2 spriteSize = sprite.bounds.size;
-                spriteRenderer.transform.localScale = new Vector3(
-                    direction.magnitude / Mathf.Max(0.0001f, spriteSize.x),
-                    width / Mathf.Max(0.0001f, spriteSize.y), 1f);
+                Debug.LogWarning("[Combat] Hit Line Anchor is a screen-space UI element. The hit line is now a world-space Canvas; " +
+                    "assign a world-space one or clear the field.", this);
+                hitLineAnchor = null;
+            }
+            if (hitLineAnchor != null)
+            {
+                if (hitLineAnchor != materialPreparedFor) PrepareHitLineMaterials(hitLineAnchor);
                 return;
             }
 
-            if (spriteRenderer != null) spriteRenderer.enabled = false;
-            judgementLine.enabled = true;
-            judgementLine.alignment = horizontalGameplay ? LineAlignment.TransformZ : LineAlignment.View;
-            if (horizontalGameplay) judgementLine.transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
-            judgementLine.useWorldSpace = true;
-            judgementLine.positionCount = 2;
-            judgementLine.SetPosition(0, start);
-            judgementLine.SetPosition(1, end);
-            judgementLine.startWidth = judgementLine.endWidth = width;
-            judgementLine.startColor = judgementLine.endColor = color;
-            if (material != null) judgementLine.sharedMaterial = material;
-            judgementLine.numCapVertices = 2;
-            judgementLine.sortingOrder = -100;
+            Transform parent = worldRoot != null ? worldRoot : transform;
+            Transform existing = parent.Find(HitLineName);
+            if (existing is RectTransform existingRect && IsWorldSpace(existingRect))
+            {
+                hitLineAnchor = existingRect;
+                PrepareHitLineMaterials(hitLineAnchor);
+                return;
+            }
+            hitLineAnchor = CreateHitLine(parent, plane, uiCamera, canvasScale);
+            PrepareHitLineMaterials(hitLineAnchor);
         }
 
-        private void ConfigureFallbackLine()
+        // Seeds a sensible default size; afterwards the object is yours to restyle and resize.
+        private RectTransform CreateHitLine(Transform parent, Plane plane, Camera uiCamera, float canvasScale)
         {
-            List<RhythmLaneTarget> ordered = targets.OrderBy(target => target.LaneId).ToList();
-            if (ordered.Count == 0) return;
-            Vector3 axis = ordered.Count > 1
-                ? (ordered[^1].transform.position - ordered[0].transform.position).normalized
-                : Vector3.right;
-            float extension = ordered.Count > 1
-                ? Vector3.Distance(ordered[0].transform.position, ordered[^1].transform.position) * 0.08f
-                : 1f;
-            ConfigureJudgementLine(ordered[0].transform.position - axis * extension,
-                ordered[^1].transform.position + axis * extension, 0.075f);
+            float widthWorld = 6f;
+            float thicknessWorld = 0.06f;
+            if (buttonRow != null && ResolveWorldCamera())
+            {
+                Vector3[] corners = new Vector3[4];
+                buttonRow.GetWorldCorners(corners);
+                Vector2 bottomLeft = RectTransformUtility.WorldToScreenPoint(uiCamera, corners[0]);
+                Vector2 topRight = RectTransformUtility.WorldToScreenPoint(uiCamera, corners[2]);
+                float padding = (theme != null ? theme.LineHorizontalPadding : 8f) * canvasScale;
+                float midY = (bottomLeft.y + topRight.y) * 0.5f;
+                if (TryScreenToCombatPlane(new Vector2(bottomLeft.x - padding, midY), plane, out Vector3 left)
+                    && TryScreenToCombatPlane(new Vector2(topRight.x + padding, midY), plane, out Vector3 rightPoint))
+                    widthWorld = Mathf.Max(0.5f, Vector3.Distance(left, rightPoint));
+                thicknessWorld = ResolvePixelThickness(theme != null ? theme.LineThickness : 2f);
+            }
+            return BuildHitLineObject(parent, widthWorld, Mathf.Max(0.02f, thicknessWorld));
         }
 
-        private void EnsureJudgementLineObject()
+        // Thickness (on the gameplay plane) that covers `pixels` render-texture rows on screen. A line thinner than
+        // ~2 render-texture pixels misses pixel centres as the camera moves and flickers or vanishes.
+        private float ResolvePixelThickness(float pixels)
         {
-            if (judgementLine != null) return;
-            Transform existing = worldRoot != null ? worldRoot.Find("Perfect Hit Line") : null;
-            GameObject lineObject = existing != null ? existing.gameObject : new GameObject("Perfect Hit Line");
-            lineObject.transform.SetParent(worldRoot, false);
-            judgementLine = lineObject.GetComponent<LineRenderer>();
-            if (judgementLine == null) judgementLine = lineObject.AddComponent<LineRenderer>();
+            float rtHeight = worldCamera.targetTexture != null ? worldCamera.targetTexture.height : worldCamera.pixelHeight;
+            // Theme thickness is in canvas pixels of a 270-row reference; convert to render-texture rows.
+            pixels = Mathf.Max(3f, pixels * Mathf.Max(1f, rtHeight) / 270f);
+            float unitsPerPixel = worldCamera.orthographic && rtHeight > 0f
+                ? 2f * worldCamera.orthographicSize / rtHeight
+                : 0.03f;
+            float facing = Mathf.Abs(Vector3.Dot(worldCamera.transform.up, Vector3.up));
+            float planar = horizontalGameplay ? Mathf.Max(0.2f, Mathf.Sqrt(Mathf.Max(0f, 1f - facing * facing))) : 1f;
+            return pixels * unitsPerPixel / planar;
         }
+
+        private RectTransform materialPreparedFor;
+        private Material hitLineMaterial;
+
+        // The Canvas system controls ZTest for graphics using the default UI material, so world geometry (ground, props)
+        // sitting on the gameplay plane can swallow a thin line. Graphics still on the default material are switched to
+        // "Hit Line UI", a UI shader with ZTest Always (Resources/Combat/VFX/HitLineUI.shader). Graphics with a
+        // material of your own are left alone.
+        private void PrepareHitLineMaterials(RectTransform root)
+        {
+            materialPreparedFor = root;
+            if (hitLineMaterial == null)
+            {
+                Shader shader = Resources.Load<Shader>("Combat/VFX/HitLineUI");
+                if (shader == null) shader = Shader.Find("Rythm RPG/Combat/Hit Line UI");
+                if (shader != null) hitLineMaterial = new Material(shader) { name = "Hit Line UI (runtime)" };
+                else Debug.LogWarning("[Combat] Hit Line UI shader not found (Assets/Resources/Combat/VFX/HitLineUI.shader). The hit line may be hidden by world geometry.", this);
+            }
+            if (hitLineMaterial == null) return;
+
+            Material defaultMaterial = Canvas.GetDefaultCanvasMaterial();
+            foreach (Graphic graphic in root.GetComponentsInChildren<Graphic>(true))
+                if (graphic.material == defaultMaterial) graphic.material = hitLineMaterial;
+        }
+
+        private RectTransform BuildHitLineObject(Transform parent, float widthWorld, float thicknessWorld)
+        {
+            GameObject lineObject = new(HitLineName, typeof(RectTransform), typeof(Canvas));
+            lineObject.transform.SetParent(parent, false);
+            RectTransform rect = lineObject.GetComponent<RectTransform>();
+            Canvas lineCanvas = lineObject.GetComponent<Canvas>();
+            lineCanvas.renderMode = RenderMode.WorldSpace;
+            lineCanvas.worldCamera = worldCamera;
+            lineCanvas.sortingOrder = hitLineSortingOrder;
+            rect.pivot = new Vector2(0.5f, 0.5f);
+            rect.localScale = Vector3.one * WorldUnitsPerCanvasUnit;
+            rect.sizeDelta = new Vector2(widthWorld / WorldUnitsPerCanvasUnit, thicknessWorld / WorldUnitsPerCanvasUnit);
+            rect.rotation = Quaternion.Euler(90f, 0f, 0f);
+
+            GameObject visual = new("Line", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+            visual.transform.SetParent(rect, false);
+            RectTransform visualRect = visual.GetComponent<RectTransform>();
+            visualRect.anchorMin = Vector2.zero;
+            visualRect.anchorMax = Vector2.one;
+            visualRect.offsetMin = visualRect.offsetMax = Vector2.zero;
+            Image image = visual.GetComponent<Image>();
+            image.sprite = theme != null ? theme.LineSprite : null;
+            image.color = theme != null ? theme.LineColor : Color.white;
+            image.raycastTarget = false;
+            return rect;
+        }
+
+#if UNITY_EDITOR
+        [ContextMenu("Create Hit Line In Scene")]
+        private void CreateHitLineInEditor()
+        {
+            if (hitLineAnchor != null)
+            {
+                UnityEditor.Selection.activeObject = hitLineAnchor.gameObject;
+                return;
+            }
+
+            RectTransform rect = BuildHitLineObject(transform, 6f, 0.06f);
+            UnityEditor.Undo.RegisterCreatedObjectUndo(rect.gameObject, "Create Hit Line");
+            UnityEditor.Undo.RecordObject(this, "Assign Hit Line");
+            hitLineAnchor = rect;
+            UnityEditor.EditorUtility.SetDirty(this);
+            UnityEditor.Selection.activeObject = rect.gameObject;
+        }
+
+        private void OnDrawGizmos()
+        {
+            if (hitLineAnchor == null) return;
+            Gizmos.color = new Color(1f, 0.85f, 0.2f, 0.6f);
+            Gizmos.matrix = hitLineAnchor.localToWorldMatrix;
+            Rect r = hitLineAnchor.rect;
+            Gizmos.DrawWireCube(r.center, new Vector3(r.width, r.height, 0f));
+        }
+#endif
     }
 }

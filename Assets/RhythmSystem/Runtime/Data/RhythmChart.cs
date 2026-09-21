@@ -13,7 +13,8 @@ namespace RythmRPG.Rhythm
         HoldLaser,
         Pong,
         Arrow,
-        Cluster
+        Cluster,
+        Mash
     }
 
     public enum RhythmSnapDivision
@@ -124,6 +125,7 @@ namespace RythmRPG.Rhythm
         [SerializeField] private float stationaryBadWindow = 0.9f;
         [SerializeField] private float stationaryGoodWindow = 0.45f;
         [SerializeField] private float stationaryPerfectWindow = 0.15f;
+        [SerializeField] private int mashRequiredPresses = 8;
         [SerializeField] private GameObject prefabOverride;
         [SerializeField] private List<RhythmMetadataEntry> metadata = new List<RhythmMetadataEntry>();
 
@@ -141,6 +143,7 @@ namespace RythmRPG.Rhythm
         public float StationaryBadWindow { get => stationaryBadWindow; set => stationaryBadWindow = value; }
         public float StationaryGoodWindow { get => stationaryGoodWindow; set => stationaryGoodWindow = value; }
         public float StationaryPerfectWindow { get => stationaryPerfectWindow; set => stationaryPerfectWindow = value; }
+        public int MashRequiredPresses { get => mashRequiredPresses; set => mashRequiredPresses = Math.Max(1, value); }
         public GameObject PrefabOverride { get => prefabOverride; set => prefabOverride = value; }
         public List<RhythmMetadataEntry> Metadata => metadata;
         public bool IsHold => RhythmTimingUtility.IsHoldType(noteType);
@@ -175,6 +178,12 @@ namespace RythmRPG.Rhythm
         {
             id = Guid.NewGuid().ToString("N");
         }
+
+        /// <summary>Sets a specific id (used when rebuilding legacy notes from editor state).</summary>
+        public void AssignId(string newId)
+        {
+            id = string.IsNullOrEmpty(newId) ? Guid.NewGuid().ToString("N") : newId;
+        }
     }
 
     public sealed class RhythmChart : ScriptableObject
@@ -186,23 +195,32 @@ namespace RythmRPG.Rhythm
         [SerializeField, Min(1)] private int beatsPerMeasure = 4;
         [SerializeField] private double compositionDuration = 30d;
         [SerializeField] private AudioClip audioClip;
+        [SerializeField] private double audioOffsetSeconds;
         [SerializeField] private bool snapEnabled = true;
         [SerializeField] private RhythmSnapDivision snapDivision = RhythmSnapDivision.QuarterBeat;
         [SerializeField] private List<RhythmLaneData> lanes = new List<RhythmLaneData>();
         [SerializeField] private List<RhythmNoteDefinition> noteDefinitions = new List<RhythmNoteDefinition>();
         [SerializeField] private List<RhythmNoteData> notes = new List<RhythmNoteData>();
+        [SerializeField] private List<PatternInstance> patterns = new List<PatternInstance>();
 
         public int SchemaVersion => schemaVersion;
         public float Bpm { get => bpm; set => bpm = value; }
         public int BeatsPerMeasure { get => beatsPerMeasure; set => beatsPerMeasure = value; }
         public double CompositionDuration { get => compositionDuration; set => compositionDuration = value; }
         public AudioClip AudioClip { get => audioClip; set => audioClip = value; }
+        /// <summary>Seconds into the audio at which beat 0 falls (aligns the beat grid to the music).</summary>
+        public double AudioOffsetSeconds { get => audioOffsetSeconds; set => audioOffsetSeconds = value; }
         public bool SnapEnabled { get => snapEnabled; set => snapEnabled = value; }
         public RhythmSnapDivision SnapDivision { get => snapDivision; set => snapDivision = value; }
         public List<RhythmLaneData> Lanes => lanes;
         public List<RhythmNoteDefinition> NoteDefinitions => noteDefinitions;
         public List<RhythmNoteData> Notes => notes;
+        /// <summary>Programmed patterns placed in the composer. Their notes are also written into <see cref="Notes"/> (tagged with pattern metadata) on save.</summary>
+        public List<PatternInstance> Patterns => patterns;
         public double SecondsPerBeat => RhythmTimingUtility.GetSecondsPerBeat(bpm);
+
+        /// <summary>Beat/seconds map for this chart (constant tempo for schema v1).</summary>
+        public TempoMap CreateTempoMap() => new TempoMap(bpm, beatsPerMeasure, audioOffsetSeconds);
 
         public double EffectiveDuration
         {

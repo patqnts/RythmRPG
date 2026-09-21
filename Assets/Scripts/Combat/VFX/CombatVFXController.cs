@@ -220,7 +220,10 @@ namespace RythmRPG.Combat
             mesh.characterSize = 0.075f;
             mesh.fontStyle = FontStyle.Bold;
             mesh.color = color;
-            label.GetComponent<MeshRenderer>().sortingOrder = 500;
+            MeshRenderer textRenderer = label.GetComponent<MeshRenderer>();
+            textRenderer.sortingOrder = 500;
+            // Judgement text must never be hidden by world geometry or by the hit line canvas.
+            textRenderer.material.SetInt("unity_GUIZTestMode", (int)UnityEngine.Rendering.CompareFunction.Always);
             Tween.PositionY(label.transform, position.y + 0.8f, 0.65f, Ease.OutSine);
             Tween.Custom(mesh, 1f, 0f, 0.65f, (target, alpha) =>
             {

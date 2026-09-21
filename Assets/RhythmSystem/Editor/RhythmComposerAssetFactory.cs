@@ -15,7 +15,8 @@ namespace RythmRPG.Rhythm.Editor
             { RhythmNoteType.HoldLaser, "Assets/Prefab/Hold Laser.prefab" },
             { RhythmNoteType.Pong, "Assets/Prefab/PongNote.prefab" },
             { RhythmNoteType.Arrow, "Assets/Prefab/Arrow.prefab" },
-            { RhythmNoteType.Cluster, "Assets/Prefab/ClusterNote.prefab" }
+            { RhythmNoteType.Cluster, "Assets/Prefab/ClusterNote.prefab" },
+            { RhythmNoteType.Mash, "Assets/Prefab/Mash.prefab" }
         };
 
         private static readonly Color[] LaneColors =

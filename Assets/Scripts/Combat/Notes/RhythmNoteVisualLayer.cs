@@ -13,6 +13,8 @@ namespace RythmRPG.Combat
     {
         private const int MinimumRenderQueue = 3000;
         private const int MinimumSortingOrder = 0;
+        // Lifts notes above the Perfect Hit Line (sorting order 1) while keeping their relative layering.
+        private const int SortingOrderOffset = 50;
         private readonly List<Material> ownedMaterials = new();
         private readonly List<(SpriteRenderer source, SpriteRenderer display, bool hidden)> sprites = new();
         private Camera visualCamera;
@@ -81,7 +83,7 @@ namespace RythmRPG.Combat
         {
             foreach (Renderer visualRenderer in GetComponentsInChildren<Renderer>(true))
             {
-                visualRenderer.sortingOrder = Mathf.Max(visualRenderer.sortingOrder, MinimumSortingOrder);
+                visualRenderer.sortingOrder = Mathf.Max(visualRenderer.sortingOrder, MinimumSortingOrder) + SortingOrderOffset;
                 Material[] materials = visualRenderer.sharedMaterials;
                 bool changed = false;
 

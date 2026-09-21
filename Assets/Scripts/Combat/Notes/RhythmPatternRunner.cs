@@ -59,12 +59,22 @@ namespace RythmRPG.Combat
         private bool cancelled;
         private KeyButton[] cachedKeys;
         private CombatLanePresentation3D lanePresentation;
+        private MusicClock clock;
+        private readonly BeatScheduler scheduler = new();
 
         public bool IsRunning => runCoroutine != null;
         public bool HorizontalGameplay => lanePresentation != null && lanePresentation.HorizontalGameplay;
         public RhythmChart FallbackChart => fallbackChart;
         public float BadWindow => judgementConfig != null ? judgementConfig.BadWindow : 0.9f;
         public IReadOnlyList<Note> ActiveNotes => activeNotes;
+
+        /// <summary>Song clock of the running chart (AudioSettings.dspTime based); null when nothing has run yet.</summary>
+        public MusicClock Clock => clock;
+        /// <summary>Fires beat callbacks while a chart runs (metronome pulses, enemy animation, WaitForBeat users).</summary>
+        public BeatScheduler Scheduler => scheduler;
+        /// <summary>Seconds into the running chart (0 when idle). Negative during the lead-in before the first note spawns.</summary>
+        public double ChartSeconds => IsRunning && clock != null ? clock.Seconds : 0d;
+        public double ChartBeat => IsRunning && clock != null ? clock.Beat : 0d;
         public Transform ProjectileObjectHolder
         {
             get
@@ -97,6 +107,7 @@ namespace RythmRPG.Combat
         private void Update()
         {
             if (!IsRunning) return;
+            if (clock != null) scheduler.Advance(clock.Beat);
             foreach (Note note in activeNotes.ToArray())
             {
                 if (note == null)
@@ -222,6 +233,9 @@ namespace RythmRPG.Combat
             List<RhythmNoteData> notes = chart.GetNotesBySpawnTime().ToList();
             double playbackStart = RhythmTimingUtility.GetPlaybackStartTime(chart);
             double zeroDspTime = AudioSettings.dspTime - playbackStart;
+            clock = new MusicClock(() => AudioSettings.dspTime, chart.CreateTempoMap());
+            clock.StartAt(zeroDspTime);
+            scheduler.Reposition(0d);
             int nextIndex = 0;
             ScheduleAudio(chart, zeroDspTime);
             double configuredEnd = currentContext.DurationOverride > 0f ? currentContext.DurationOverride : chart.EffectiveDuration;
@@ -289,6 +303,7 @@ namespace RythmRPG.Combat
         private void Complete(bool wasCancelled)
         {
             runCoroutine = null;
+            if (clock != null) clock.Stop();
             StopAudio();
             RhythmPerformanceResult performance = RhythmPerformanceCalculator.Calculate(expectedNoteCount, results, null);
             PatternCompleted?.Invoke(new PatternRunResult(currentContext.Mode, performance, wasCancelled));

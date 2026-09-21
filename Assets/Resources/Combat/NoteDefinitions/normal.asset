@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1cc3b6814f0f14488de0e8aede148bd, type: 3}
+  m_Name: normal
+  m_EditorClassIdentifier: RythmRPG.Rhythm.Runtime::RythmRPG.Rhythm.NoteDefinition
+  definitionId: normal
+  displayName: Normal
+  behavior: 0
+  prefab: {fileID: 5029094789931625778, guid: fff99d626b5218741bf0c888080b7065, type: 3}
+  displayColor: {r: 0.35, g: 0.75, b: 1, a: 1}
+  defaultSpeed: 8
+  defaultDamage: 1
+  defaultTravelSeconds: 2.5
+  stationaryBadWindow: 0.45
+  stationaryGoodWindow: 0.25
+  stationaryPerfectWindow: 0.1

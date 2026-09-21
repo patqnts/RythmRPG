@@ -41,7 +41,10 @@ public class StationaryNote : Note
 
     public override bool ShouldAutoMissByPosition => false;
     public override bool ShouldResolveMissOnPlayerInput => true;
-    protected float ElapsedSinceSpawn => Time.time - spawnedAtTime;
+    // Locked to the chart (audio) clock while a chart runs: the note is due at HitTime, anticipation started at SpawnTime.
+    protected float ElapsedSinceSpawn => UsesChartClock
+        ? (float)(ChartSeconds - Data.SpawnTime)
+        : Time.time - spawnedAtTime;
     protected float SecondsUntilAnticipationComplete => anticipationDuration - ElapsedSinceSpawn;
     protected bool IsInsideAnticipationWindow => ElapsedSinceSpawn <= anticipationDuration;
     protected bool HasPassedAnticipationWindow => ElapsedSinceSpawn > anticipationDuration;

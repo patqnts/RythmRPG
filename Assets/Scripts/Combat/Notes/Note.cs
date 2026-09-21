@@ -38,6 +38,10 @@ public class Note : MonoBehaviour
     public bool IsResolved => resolved;
     public RhythmNoteData Data { get; private set; }
     protected bool UsesHorizontalGameplay => runner != null && runner.HorizontalGameplay;
+    /// <summary>True while a chart is running, so timing can follow the audio clock instead of Time.time.</summary>
+    protected bool UsesChartClock => runner != null && runner.IsRunning && runner.Clock != null && Data != null;
+    /// <summary>Seconds into the running chart. Compare against <see cref="Data"/>.HitTime / EndTime.</summary>
+    protected double ChartSeconds => runner != null ? runner.ChartSeconds : 0d;
     public virtual bool ShouldAutoMissByPosition => true;
     public virtual bool ShouldResolveMissOnPlayerInput => false;
 
@@ -265,11 +269,25 @@ public class Note : MonoBehaviour
         float safeLaneDuration = Mathf.Max(0.01f, laneDuration);
         Tween.Custom(transform, 0f, 1f, safeDuration, (target, progress) =>
         {
-            Vector3 localPosition = Vector3.LerpUnclamped(startLocal, targetLocal, progress);
-            float laneProgress = Mathf.Sin(Mathf.Clamp01(progress * safeDuration / safeLaneDuration) * Mathf.PI * 0.5f);
-            localPosition.x = Mathf.LerpUnclamped(startLocal.x, keyLocal.x, laneProgress);
-            target.position = FromMovementLocal(localPosition, movementSpace);
+            target.position = EvaluateLaneTravel(movementSpace, startLocal, keyLocal, targetLocal,
+                progress * safeDuration, safeDuration, safeLaneDuration);
         }, Ease.Linear);
+    }
+
+    /// <summary>
+    /// World position of a lane-travel movement after <paramref name="elapsed"/> seconds. The same curve the tween
+    /// plays, exposed so notes can be positioned directly from the audio clock instead of a real-time tween.
+    /// </summary>
+    protected static Vector3 EvaluateLaneTravel(Transform movementSpace, Vector3 startLocal, Vector3 keyLocal,
+        Vector3 targetLocal, float elapsed, float duration, float laneDuration = 0.25f)
+    {
+        float safeDuration = Mathf.Max(0.01f, duration);
+        float safeLaneDuration = Mathf.Max(0.01f, laneDuration);
+        float progress = elapsed / safeDuration;
+        Vector3 localPosition = Vector3.LerpUnclamped(startLocal, targetLocal, progress);
+        float laneProgress = Mathf.Sin(Mathf.Clamp01(elapsed / safeLaneDuration) * Mathf.PI * 0.5f);
+        localPosition.x = Mathf.LerpUnclamped(startLocal.x, keyLocal.x, laneProgress);
+        return FromMovementLocal(localPosition, movementSpace);
     }
 
     protected static Vector3 ToMovementLocal(Vector3 worldPosition, Transform movementSpace)

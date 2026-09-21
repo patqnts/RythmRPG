@@ -17,6 +17,7 @@ MonoBehaviour:
   beatsPerMeasure: 4
   compositionDuration: 4.5
   audioClip: {fileID: 0}
+  audioOffsetSeconds: 0
   snapEnabled: 1
   snapDivision: 4
   lanes:
@@ -52,6 +53,12 @@ MonoBehaviour:
     defaultSpeed: 8
     defaultDamage: 10
     defaultTravelTime: 2.5
+  - noteType: 7
+    defaultPrefab: {fileID: 5029094789931625778, guid: 7a1e4b9c2d5f4e8a9c3b6d0f1e2a4b5c, type: 3}
+    displayColor: {r: 1, g: 0.85, b: 0.2, a: 1}
+    defaultSpeed: 8
+    defaultDamage: 1
+    defaultTravelTime: 2.5
   notes:
   - id: enemy_note_1
     laneId: enemy_lane_1
@@ -67,11 +74,12 @@ MonoBehaviour:
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
     prefabOverride: {fileID: 0}
     metadata: []
   - id: enemy_note_2
     laneId: enemy_lane_3
-    hitTime: 2.85
+    hitTime: 2.8499999999999996
     noteType: 0
     holdDuration: 0
     initializeMovementType: 0
@@ -83,11 +91,12 @@ MonoBehaviour:
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
     prefabOverride: {fileID: 0}
     metadata: []
   - id: enemy_note_3
     laneId: enemy_lane_5
-    hitTime: 3.2
+    hitTime: 3.199999999999999
     noteType: 0
     holdDuration: 0
     initializeMovementType: 0
@@ -95,15 +104,16 @@ MonoBehaviour:
     playerState: 0
     damage: 10
     speed: 8
-    travelTime: 2.5
+    travelTime: 2.499999999999998
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
     prefabOverride: {fileID: 0}
     metadata: []
   - id: enemy_note_4
     laneId: enemy_lane_2
-    hitTime: 3.55
+    hitTime: 3.550000000000001
     noteType: 0
     holdDuration: 0
     initializeMovementType: 0
@@ -111,15 +121,16 @@ MonoBehaviour:
     playerState: 0
     damage: 10
     speed: 8
-    travelTime: 2.5
+    travelTime: 2.5000000000000004
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
     prefabOverride: {fileID: 0}
     metadata: []
   - id: enemy_note_5
     laneId: enemy_lane_4
-    hitTime: 3.9
+    hitTime: 3.9000000000000004
     noteType: 0
     holdDuration: 0
     initializeMovementType: 0
@@ -131,5 +142,795 @@ MonoBehaviour:
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
     prefabOverride: {fileID: 0}
     metadata: []
+  - id: pat_4ba0db5e33874eee8d990ccd39e4365e_0
+    laneId: enemy_lane_1
+    hitTime: 4
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: 4ba0db5e33874eee8d990ccd39e4365e
+  - id: pat_4ba0db5e33874eee8d990ccd39e4365e_1
+    laneId: enemy_lane_2
+    hitTime: 4.25
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: 4ba0db5e33874eee8d990ccd39e4365e
+  - id: pat_4ba0db5e33874eee8d990ccd39e4365e_2
+    laneId: enemy_lane_3
+    hitTime: 4.5
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: 4ba0db5e33874eee8d990ccd39e4365e
+  - id: pat_4ba0db5e33874eee8d990ccd39e4365e_3
+    laneId: enemy_lane_4
+    hitTime: 4.75
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: 4ba0db5e33874eee8d990ccd39e4365e
+  - id: pat_4ba0db5e33874eee8d990ccd39e4365e_4
+    laneId: enemy_lane_5
+    hitTime: 5
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: 4ba0db5e33874eee8d990ccd39e4365e
+  - id: pat_4ba0db5e33874eee8d990ccd39e4365e_5
+    laneId: enemy_lane_4
+    hitTime: 5.25
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: 4ba0db5e33874eee8d990ccd39e4365e
+  - id: pat_4ba0db5e33874eee8d990ccd39e4365e_6
+    laneId: enemy_lane_3
+    hitTime: 5.5
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: 4ba0db5e33874eee8d990ccd39e4365e
+  - id: pat_4ba0db5e33874eee8d990ccd39e4365e_7
+    laneId: enemy_lane_2
+    hitTime: 5.75
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: 4ba0db5e33874eee8d990ccd39e4365e
+  - id: pat_d509e346942a4b179a6dbb1cb97dbcc9_0
+    laneId: enemy_lane_3
+    hitTime: 6
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: d509e346942a4b179a6dbb1cb97dbcc9
+  - id: pat_d509e346942a4b179a6dbb1cb97dbcc9_1
+    laneId: enemy_lane_2
+    hitTime: 6.125
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: d509e346942a4b179a6dbb1cb97dbcc9
+  - id: pat_d509e346942a4b179a6dbb1cb97dbcc9_2
+    laneId: enemy_lane_1
+    hitTime: 6.25
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: d509e346942a4b179a6dbb1cb97dbcc9
+  - id: pat_d509e346942a4b179a6dbb1cb97dbcc9_3
+    laneId: enemy_lane_2
+    hitTime: 6.375
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: d509e346942a4b179a6dbb1cb97dbcc9
+  - id: pat_d509e346942a4b179a6dbb1cb97dbcc9_4
+    laneId: enemy_lane_1
+    hitTime: 6.5
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: d509e346942a4b179a6dbb1cb97dbcc9
+  - id: pat_d509e346942a4b179a6dbb1cb97dbcc9_5
+    laneId: enemy_lane_2
+    hitTime: 6.625
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: d509e346942a4b179a6dbb1cb97dbcc9
+  - id: pat_d509e346942a4b179a6dbb1cb97dbcc9_6
+    laneId: enemy_lane_1
+    hitTime: 6.75
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: d509e346942a4b179a6dbb1cb97dbcc9
+  - id: pat_d509e346942a4b179a6dbb1cb97dbcc9_7
+    laneId: enemy_lane_2
+    hitTime: 6.875
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: d509e346942a4b179a6dbb1cb97dbcc9
+  - id: pat_d509e346942a4b179a6dbb1cb97dbcc9_8
+    laneId: enemy_lane_3
+    hitTime: 7
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: d509e346942a4b179a6dbb1cb97dbcc9
+  - id: pat_d509e346942a4b179a6dbb1cb97dbcc9_9
+    laneId: enemy_lane_2
+    hitTime: 7.125
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: d509e346942a4b179a6dbb1cb97dbcc9
+  - id: pat_d509e346942a4b179a6dbb1cb97dbcc9_10
+    laneId: enemy_lane_1
+    hitTime: 7.25
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: d509e346942a4b179a6dbb1cb97dbcc9
+  - id: pat_d509e346942a4b179a6dbb1cb97dbcc9_11
+    laneId: enemy_lane_2
+    hitTime: 7.375
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: d509e346942a4b179a6dbb1cb97dbcc9
+  - id: pat_d509e346942a4b179a6dbb1cb97dbcc9_12
+    laneId: enemy_lane_1
+    hitTime: 7.5
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: d509e346942a4b179a6dbb1cb97dbcc9
+  - id: pat_d509e346942a4b179a6dbb1cb97dbcc9_13
+    laneId: enemy_lane_2
+    hitTime: 7.625
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: d509e346942a4b179a6dbb1cb97dbcc9
+  - id: pat_d509e346942a4b179a6dbb1cb97dbcc9_14
+    laneId: enemy_lane_3
+    hitTime: 7.75
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: d509e346942a4b179a6dbb1cb97dbcc9
+  - id: pat_d509e346942a4b179a6dbb1cb97dbcc9_15
+    laneId: enemy_lane_4
+    hitTime: 7.875
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: d509e346942a4b179a6dbb1cb97dbcc9
+  - id: pat_dbbf1b3432254ee78d9e0816b75e6b6a_0
+    laneId: enemy_lane_3
+    hitTime: 8.75
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: dbbf1b3432254ee78d9e0816b75e6b6a
+  - id: pat_dbbf1b3432254ee78d9e0816b75e6b6a_1
+    laneId: enemy_lane_2
+    hitTime: 8.75
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: dbbf1b3432254ee78d9e0816b75e6b6a
+  - id: pat_dbbf1b3432254ee78d9e0816b75e6b6a_2
+    laneId: enemy_lane_4
+    hitTime: 9.25
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: dbbf1b3432254ee78d9e0816b75e6b6a
+  - id: pat_dbbf1b3432254ee78d9e0816b75e6b6a_3
+    laneId: enemy_lane_1
+    hitTime: 9.25
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: dbbf1b3432254ee78d9e0816b75e6b6a
+  - id: pat_dbbf1b3432254ee78d9e0816b75e6b6a_5
+    laneId: enemy_lane_5
+    hitTime: 9.75
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: dbbf1b3432254ee78d9e0816b75e6b6a
+  - id: pat_dbbf1b3432254ee78d9e0816b75e6b6a_4
+    laneId: enemy_lane_1
+    hitTime: 9.75
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: dbbf1b3432254ee78d9e0816b75e6b6a
+  - id: pat_dbbf1b3432254ee78d9e0816b75e6b6a_6
+    laneId: enemy_lane_1
+    hitTime: 10.25
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: dbbf1b3432254ee78d9e0816b75e6b6a
+  - id: pat_dbbf1b3432254ee78d9e0816b75e6b6a_7
+    laneId: enemy_lane_4
+    hitTime: 10.25
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: dbbf1b3432254ee78d9e0816b75e6b6a
+  - id: pat_38fe77d6274f4a56b23b94ac9e487e9c_0
+    laneId: enemy_lane_1
+    hitTime: 11
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: 38fe77d6274f4a56b23b94ac9e487e9c
+  - id: pat_38fe77d6274f4a56b23b94ac9e487e9c_1
+    laneId: enemy_lane_2
+    hitTime: 11.25
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: 38fe77d6274f4a56b23b94ac9e487e9c
+  - id: pat_38fe77d6274f4a56b23b94ac9e487e9c_2
+    laneId: enemy_lane_3
+    hitTime: 11.5
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: 38fe77d6274f4a56b23b94ac9e487e9c
+  - id: pat_38fe77d6274f4a56b23b94ac9e487e9c_3
+    laneId: enemy_lane_4
+    hitTime: 11.75
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: 38fe77d6274f4a56b23b94ac9e487e9c
+  - id: pat_38fe77d6274f4a56b23b94ac9e487e9c_4
+    laneId: enemy_lane_5
+    hitTime: 12
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: 38fe77d6274f4a56b23b94ac9e487e9c
+  - id: pat_38fe77d6274f4a56b23b94ac9e487e9c_5
+    laneId: enemy_lane_1
+    hitTime: 12.25
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: 38fe77d6274f4a56b23b94ac9e487e9c
+  - id: pat_38fe77d6274f4a56b23b94ac9e487e9c_6
+    laneId: enemy_lane_2
+    hitTime: 12.5
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: 38fe77d6274f4a56b23b94ac9e487e9c
+  - id: pat_38fe77d6274f4a56b23b94ac9e487e9c_7
+    laneId: enemy_lane_3
+    hitTime: 12.75
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 10
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata:
+    - key: pattern
+      value: 38fe77d6274f4a56b23b94ac9e487e9c
+  patterns:
+  - Id: 4ba0db5e33874eee8d990ccd39e4365e
+    TemplateId: sweep
+    StartBeat: 8
+    DurationBeats: 4
+    Seed: 62210140
+    LaneMask: 0
+    Reservation: 1
+  - Id: d509e346942a4b179a6dbb1cb97dbcc9
+    TemplateId: stream
+    StartBeat: 12
+    DurationBeats: 4
+    Seed: 62219812
+    LaneMask: 0
+    Reservation: 1
+  - Id: dbbf1b3432254ee78d9e0816b75e6b6a
+    TemplateId: barrage
+    StartBeat: 17.5
+    DurationBeats: 4
+    Seed: 62391687
+    LaneMask: 0
+    Reservation: 1
+  - Id: 38fe77d6274f4a56b23b94ac9e487e9c
+    TemplateId: stairs
+    StartBeat: 22
+    DurationBeats: 4
+    Seed: 62414859
+    LaneMask: 0
+    Reservation: 1
