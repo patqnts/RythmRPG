@@ -93,7 +93,7 @@ MonoBehaviour:
   subtitleSize: 30
   rowSize: 34
   detailSize: 26
-  gradeSize: 250
+  gradeSize: 350
   badgeSize: 28
   promptSize: 26
   fadeInSeconds: 0.3
@@ -143,7 +143,7 @@ MonoBehaviour:
   stampShakePixels: 14
   stampShakeSeconds: 0.3
   gradePulse: 0.035
-  gradePulsePeriod: 1.4
+  gradePulsePeriod: 0.76
   badgeStagger: 0.14
   badgeSeconds: 0.28
   promptDelay: 0.4
