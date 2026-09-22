@@ -22,6 +22,14 @@ namespace RythmRPG.Combat
         [SerializeField] private RhythmChart defaultEnemyPattern;
         [SerializeField] private CombatMusicDirector musicDirector;
 
+        [Header("Battle result")]
+        [Tooltip("Show the result screen (grade, score, stats) when a battle ends.")]
+        [SerializeField] private bool showResultScreen = true;
+        [Tooltip("Empty = a CombatResultScreen in the scene, then the result style's prefab, then the generated template.")]
+        [SerializeField] private CombatResultScreen resultScreen;
+        [Tooltip("Empty = Resources/Combat/UI/CombatResultGrading.")]
+        [SerializeField] private CombatResultGrading resultGrading;
+
         private CombatTurnStateMachine stateMachine;
         private EnemyAttackSequenceDefinition nextSequence;
         private CombatResourceRules resourceRules;
@@ -31,6 +39,14 @@ namespace RythmRPG.Combat
         private AbilityRuntimeInstance selectedAbility;
         private int selectedLane;
         private Coroutine stateRoutine;
+        private CombatStatsTracker stats;
+
+        /// <summary>The report of the last finished battle (null until one ends).</summary>
+        public CombatReport LastReport { get; private set; }
+        /// <summary>Raised when a battle ends, before the result screen opens.</summary>
+        public event Action<CombatReport> ResultReady;
+        /// <summary>Current hit combo this battle (for a combo counter).</summary>
+        public int CurrentCombo => stats?.Combo ?? 0;
 
         public CombatState CurrentState => stateMachine?.CurrentState ?? CombatState.BattleStart;
         public bool IsBattleActive { get; private set; }
@@ -67,6 +83,9 @@ namespace RythmRPG.Combat
             modifierSystem.Clear();
             manaCarry = 0f;
             BindRuntime();
+            stats?.Stop();
+            stats = new CombatStatsTracker(resultGrading);
+            stats.Begin(encounter.Player, encounter.Enemy);
             ConfigureStateMachine();
             IsBattleActive = true;
             uiController?.Bind(this, encounter.Player, encounter.Enemy);
@@ -84,6 +103,8 @@ namespace RythmRPG.Combat
             musicDirector?.Stop();
             abilitySlots.EndSelection();
             vfxController.SetAbilitySlotsVisible(false, false);
+            stats?.Stop();
+            if (resultScreen != null && resultScreen.IsOpen) resultScreen.Close();
             encounterCoordinator.Restore(encounter, false);
             lanePresentation?.SetPresentationVisible(false);
             IsBattleActive = false;
@@ -123,6 +144,8 @@ namespace RythmRPG.Combat
             judgementSystem.OnJudgementResolved += HandleModifierJudgement;
             judgementSystem.OnJudgementResolved -= HandleManaJudgement;
             judgementSystem.OnJudgementResolved += HandleManaJudgement;
+            judgementSystem.OnJudgementResolved -= HandleStatsJudgement;
+            judgementSystem.OnJudgementResolved += HandleStatsJudgement;
             modifierSystem.DamageBlocked -= HandleDamageBlocked;
             modifierSystem.DamageBlocked += HandleDamageBlocked;
             abilitySlots.Initialize(inputRouter, encounter.Player);
@@ -231,6 +254,7 @@ namespace RythmRPG.Combat
 
         private IEnumerator PlayerTurnStartRoutine()
         {
+            stats?.RecordTurn();
             abilitySlots.TickCooldowns();
             musicDirector?.SetPlayerTurn(true);
             if (resourceRules != null && resourceRules.ManaPerPlayerTurn > 0) encounter.Player.GainMana(resourceRules.ManaPerPlayerTurn);
@@ -250,6 +274,7 @@ namespace RythmRPG.Combat
             if (CurrentState != CombatState.PlayerAbilitySelection) return;
             selectedLane = laneId;
             selectedAbility = ability;
+            stats?.RecordAbility(ability);
             abilitySlots.EndSelection();
             Transition(CombatState.PlayerAbilityExecuting);
         }
@@ -331,6 +356,23 @@ namespace RythmRPG.Combat
             vfxController.SetAbilitySlotsVisible(false, true);
             yield return new WaitForSecondsRealtime(vfxController.TerminalDelay);
             bool victory = terminalState == CombatState.Victory;
+
+            // Result: built before a defeat restores health, shown before the encounter is restored.
+            if (stats != null)
+            {
+                EnemyCombatant enemy = encounter.Enemy;
+                string enemyName = enemy == null ? string.Empty
+                    : enemy.Definition != null ? enemy.Definition.DisplayName : enemy.name;
+                LastReport = stats.Finish(victory, enemyName);
+                stats.Stop();
+                ResultReady?.Invoke(LastReport);
+                if (showResultScreen)
+                {
+                    CombatResultScreen screen = ResolveResultScreen();
+                    if (screen != null) yield return screen.Show(LastReport);
+                }
+            }
+
             if (!victory)
             {
                 encounter.Player.RestoreBattleStart();
@@ -368,7 +410,29 @@ namespace RythmRPG.Combat
         private void HandleDamageBlocked(RhythmJudgementResult result)
         {
             vfxController?.ShowFloatingText("GUARD", result.WorldPosition, new Color(0.6f, 0.8f, 1f));
+            stats?.RecordGuard();
         }
+
+        private void HandleStatsJudgement(RhythmJudgementResult result)
+        {
+            if (!IsBattleActive || stats == null) return;
+            stats.RecordJudgement(result.Judgement, runner != null ? runner.CurrentMode : PatternRunMode.EnemyDefense);
+        }
+
+        private CombatResultScreen ResolveResultScreen()
+        {
+            if (resultScreen != null) return resultScreen;
+            resultScreen = FindAnyObjectByType<CombatResultScreen>(FindObjectsInactive.Include);
+            if (resultScreen != null) return resultScreen;
+            CombatResultStyle style = CombatResultStyle.LoadOrDefault();
+            resultScreen = style.ScreenPrefab != null ? Instantiate(style.ScreenPrefab) : CombatResultScreen.CreateTemplate(style);
+            return resultScreen;
+        }
+
+#if UNITY_EDITOR
+        /// <summary>Editor tool: assigns a result screen built in the scene.</summary>
+        public void EditorAssignResultScreen(CombatResultScreen screen) => resultScreen = screen;
+#endif
 
         private void Transition(CombatState next)
         {
