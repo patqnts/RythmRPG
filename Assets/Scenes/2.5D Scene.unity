@@ -4257,7 +4257,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 680622201}
-  - component: {fileID: 680622202}
   m_Layer: 0
   m_Name: Combat HUD Bars
   m_TagString: Untagged
@@ -4287,30 +4286,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &680622202
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 680622200}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e44798393a7017a13a975780e2186c4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.CombatUIController
-  hudStyle: {fileID: 11400000, guid: 9043db6af7f0491c8217e6273cb70f3b, type: 2}
-  playerHealthBar: {fileID: 649168081}
-  playerManaBar: {fileID: 1957285733}
-  enemyHealthBar: {fileID: 1587652202}
-  showEnemyName: 1
-  slideInOnBattleStart: 1
-  hideOnBattleEnd: 1
-  playerHealth: {fileID: 0}
-  enemyHealth: {fileID: 0}
-  playerMana: {fileID: 0}
-  turnText: {fileID: 0}
-  showLegacyLabels: 0
 --- !u!1001 &680760347
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11536,6 +11511,7 @@ GameObject:
   - component: {fileID: 1709887228}
   - component: {fileID: 1709887227}
   - component: {fileID: 1709887226}
+  - component: {fileID: 1709887230}
   m_Layer: 0
   m_Name: Combat HUD Canvas
   m_TagString: Untagged
@@ -11627,6 +11603,30 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1709887230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1709887225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e44798393a7017a13a975780e2186c4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.CombatUIController
+  hudStyle: {fileID: 11400000, guid: 9043db6af7f0491c8217e6273cb70f3b, type: 2}
+  playerHealthBar: {fileID: 649168081}
+  playerManaBar: {fileID: 1957285733}
+  enemyHealthBar: {fileID: 1587652202}
+  showEnemyName: 1
+  slideInOnBattleStart: 1
+  hideOnBattleEnd: 1
+  playerHealth: {fileID: 0}
+  enemyHealth: {fileID: 0}
+  playerMana: {fileID: 0}
+  turnText: {fileID: 0}
+  showLegacyLabels: 0
 --- !u!4 &1723595346 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6191650215760293972, guid: d58b34d5ed044984296458a1502db568, type: 3}

@@ -42,6 +42,7 @@ namespace RythmRPG.Combat
         private RectTransform hudRoot;
         private Coroutine hudRoutine;
         private float hudAlpha;
+        private bool battleShown;
         private readonly List<SlideTarget> slideTargets = new();
 
         private struct SlideTarget
@@ -66,8 +67,10 @@ namespace RythmRPG.Combat
             EnsureCanvas();
             EnsureOptionalLabels();
             // Bars placed in the scene stay hidden until a battle starts, like the generated ones.
+            // Only when no battle has bound yet: if this object starts inactive (e.g. under CombatSystemUI),
+            // Awake runs the first time it is switched on, which is AFTER Bind, and must not hide a live HUD.
             RegisterAssignedBars();
-            if (hideOnBattleEnd) ShowHud(false, false);
+            if (hideOnBattleEnd && !battleShown) ShowHud(false, false);
         }
 
         private void EnsureOptionalLabels()
@@ -111,6 +114,7 @@ namespace RythmRPG.Combat
                     ? enemy.Definition != null ? enemy.Definition.DisplayName : enemy.name
                     : string.Empty;
             Refresh(false);
+            battleShown = true;
             ShowHud(true, slideInOnBattleStart);
         }
 
@@ -157,6 +161,7 @@ namespace RythmRPG.Combat
 
         private void HandleBattleEnded(CombatState _)
         {
+            battleShown = false;
             if (hideOnBattleEnd) ShowHud(false, slideInOnBattleStart);
         }
 
@@ -210,15 +215,22 @@ namespace RythmRPG.Combat
             RegisterSlide(playerHealthBar, style.PlayerHealthLayout);
             RegisterSlide(playerManaBar, style.PlayerManaLayout);
             RegisterSlide(enemyHealthBar, style.EnemyHealthLayout);
+            // The turn label fades in and out with the bars (no slide).
+            if (turnText != null) RegisterSlide(turnText.gameObject, Vector2.zero);
         }
 
         private void RegisterSlide(ResourceBarView bar, HudBarLayout layout)
         {
-            if (bar == null || !(bar.transform is RectTransform rect)) return;
+            if (bar != null) RegisterSlide(bar.gameObject, layout != null ? layout.introOffset : Vector2.zero);
+        }
+
+        private void RegisterSlide(GameObject target, Vector2 introOffset)
+        {
+            if (target == null || !(target.transform is RectTransform rect)) return;
             foreach (SlideTarget existing in slideTargets)
                 if (existing.Rect == rect) return;
-            CanvasGroup group = bar.GetComponent<CanvasGroup>();
-            if (group == null) group = bar.gameObject.AddComponent<CanvasGroup>();
+            CanvasGroup group = target.GetComponent<CanvasGroup>();
+            if (group == null) group = target.AddComponent<CanvasGroup>();
             group.interactable = false;
             group.blocksRaycasts = false;
             slideTargets.Add(new SlideTarget
@@ -226,7 +238,7 @@ namespace RythmRPG.Combat
                 Rect = rect,
                 Group = group,
                 Rest = rect.anchoredPosition,
-                Offset = layout != null ? layout.introOffset : Vector2.zero
+                Offset = introOffset
             });
         }
 
@@ -351,6 +363,8 @@ namespace RythmRPG.Combat
                 enemy.HealthChanged += HandleEnemyHealth;
             }
             Refresh(false);
+            // A slide cut short by the object being switched off would leave the bars half faded.
+            if (battleShown) ShowHud(true, false);
         }
 
 #if UNITY_EDITOR
