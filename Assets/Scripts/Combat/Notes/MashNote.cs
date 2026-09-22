@@ -116,7 +116,7 @@ public class MashNote : NoteObject
     public override float GetTimingError(KeyButton keyButton)
     {
         RhythmLaneTarget target = GetLaneTarget();
-        return target != null ? target.GetTimingDistance(transform.position) : 0f;
+        return target != null ? DistanceToSeconds(target.GetTimingDistance(transform.position)) : 0f;
     }
 
     // Any accepted press is fine for the runner; the real grade is decided when the note is cleared.

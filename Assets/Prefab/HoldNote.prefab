@@ -36,7 +36,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2065483540222419741
 SpriteRenderer:
-  serializedVersion: 2
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -93,6 +93,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
+  m_BlendShapeWeights: []
 --- !u!95 &7389059084711790540
 Animator:
   serializedVersion: 7
@@ -188,14 +189,13 @@ MonoBehaviour:
   speed: 1
   damage: 1
   keys: []
+  animator: {fileID: 3715451124983419268}
   isMoving: 0
+  canBePressed: 0
   keyCode: 49
   moveset: 0
   state: 0
   hitEffect: 0
-  animator: {fileID: 3715451124983419268}
-  canBePressed: 0
-  stateHandler: {fileID: 0}
   tailMode: 1
   tailVisuals:
   - {fileID: 3237105755465327772}
@@ -406,7 +406,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5641783139057411830
 SpriteRenderer:
-  serializedVersion: 2
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -463,6 +463,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+  m_BlendShapeWeights: []
 --- !u!95 &3715451124983419268
 Animator:
   serializedVersion: 7
@@ -553,6 +554,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: HoldNotePixelFireTail
       objectReference: {fileID: 0}
+    - target: {fileID: 1140335292439178262, guid: 7ac741ee9c7348f08624ce3f53f5b987, type: 3}
+      propertyPath: beamHeadPrefab
+      value: 
+      objectReference: {fileID: 158756, guid: 8396fce600232da4dbbf9a8c440e40ba, type: 3}
+    - target: {fileID: 1140335292439178262, guid: 7ac741ee9c7348f08624ce3f53f5b987, type: 3}
+      propertyPath: beamLinePrefab
+      value: 
+      objectReference: {fileID: 168570, guid: 1f7452042ec77d94ea7cece5cc4816fc, type: 3}
     - target: {fileID: 1140335292439178262, guid: 7ac741ee9c7348f08624ce3f53f5b987, type: 3}
       propertyPath: fireColorMax.b
       value: 0.74088055

@@ -33,6 +33,15 @@ public class Note : MonoBehaviour
     private string runtimeNoteId;
     private float closestTimingError = float.MaxValue;
     private RhythmLaneTarget laneTarget;
+    private float travelSpeed;
+
+    /// <summary>World units per second the note actually travels at (set when its travel starts). Falls back to speed.</summary>
+    protected float TravelSpeed => travelSpeed > 0.0001f ? travelSpeed : Mathf.Max(0.01f, speed);
+    protected void SetTravelSpeed(float worldUnitsPerSecond) => travelSpeed = Mathf.Max(0f, worldUnitsPerSecond);
+
+    /// <summary>Converts a distance from the hit line into seconds at this note's travel speed.</summary>
+    protected float DistanceToSeconds(float distance) =>
+        distance >= float.MaxValue ? float.MaxValue : distance / TravelSpeed;
 
     public string RuntimeNoteId => runtimeNoteId;
     public bool IsResolved => resolved;
@@ -59,16 +68,22 @@ public class Note : MonoBehaviour
         resolved = false;
         canBePressed = false;
         closestTimingError = float.MaxValue;
+        travelSpeed = 0f;
     }
 
     public virtual Vector3 GetJudgementWorldPosition() => transform.position;
 
+    /// <summary>
+    /// Seconds between now and the moment this note is on the hit line (always positive). Measured from where the
+    /// note is and how fast it moves, so it matches what the player sees; compared with the JudgementConfig windows.
+    /// </summary>
     public virtual float GetTimingError(KeyButton keyButton)
     {
         RhythmLaneTarget target = GetLaneTarget();
-        return target != null
+        float distance = target != null
             ? target.GetTimingDistance(GetJudgementWorldPosition())
             : keyButton != null ? Vector3.Distance(GetJudgementWorldPosition(), keyButton.transform.position) : float.MaxValue;
+        return DistanceToSeconds(distance);
     }
 
     public virtual HitJudgement AdjustJudgement(HitJudgement judgement, float timingError) => judgement;
@@ -80,7 +95,7 @@ public class Note : MonoBehaviour
         float timingError = GetTimingError(keyButton);
         closestTimingError = Mathf.Min(closestTimingError, timingError);
         return closestTimingError <= badWindow
-            && target.GetSignedProgressPastLine(GetJudgementWorldPosition()) > badWindow;
+            && DistanceToSeconds(target.GetSignedProgressPastLine(GetJudgementWorldPosition())) > badWindow;
     }
 
     public virtual bool CanReceiveHit(KeyButton keyButton)
@@ -89,8 +104,9 @@ public class Note : MonoBehaviour
             && keyButton != null && keyButton.GetInteractable() && keyButton.keyIdentity == noteIdentity;
     }
 
+    // Presses inside the Miss window reach the note (and can count as a Miss); further away they are ignored.
     protected virtual bool IsWithinPressWindow(KeyButton keyButton) =>
-        GetTimingError(keyButton) <= (runner != null ? runner.BadWindow : 0.9f);
+        GetTimingError(keyButton) <= (runner != null ? runner.PressWindow : 0.18f);
 
     public bool TryHitFromKey(KeyButton keyButton, RhythmJudgementResult judgement)
     {
@@ -129,7 +145,7 @@ public class Note : MonoBehaviour
         Vector3 position = target != null ? target.transform.position
             : keyButton != null ? keyButton.transform.position : GetJudgementWorldPosition();
         Resolve(new RhythmJudgementResult(runtimeNoteId, noteIdentity, HitJudgement.Miss,
-            runner != null ? runner.BadWindow : 0.9f, position, source));
+            runner != null ? runner.BadWindow : 0.125f, position, source));
     }
 
     public virtual void ForceMiss(KeyButton keyButton, NoteResolutionSource source = NoteResolutionSource.Timeout) => ResolveMiss(keyButton, source);

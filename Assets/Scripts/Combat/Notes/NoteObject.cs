@@ -80,6 +80,7 @@ public class NoteObject : Note
         float travelTime = Mathf.Max(0.01f, (float)(Data?.TravelTime ?? 2.5d));
         float distanceToKey = Vector3.Distance(transform.position, target.transform.position);
         float worldSpeed = distanceToKey > 0.01f ? distanceToKey / travelTime : Mathf.Max(0.01f, speed);
+        SetTravelSpeed(worldSpeed); // timing windows are in seconds: distance / this speed
         float totalDuration = Vector3.Distance(transform.position, FromMovementLocal(targetLocal, movementSpace)) / worldSpeed;
         if (UsesChartClock)
         {

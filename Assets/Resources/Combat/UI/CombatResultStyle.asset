@@ -62,7 +62,7 @@ MonoBehaviour:
   - stat: 15
     label: FAVORITE
     color: {r: 1, g: 1, b: 1, a: 0}
-  dimColor: {r: 0.02, g: 0.02, b: 0.05, a: 0.82}
+  dimColor: {r: 0.02, g: 0.02, b: 0.05, a: 0.9647059}
   panelColor: {r: 0.07, g: 0.06, b: 0.12, a: 0.96}
   panelFrameColor: {r: 0.93, g: 0.9, b: 0.82, a: 1}
   victoryColor: {r: 0.0990566, g: 1, b: 0.5671635, a: 1}
@@ -136,9 +136,9 @@ MonoBehaviour:
   inputDelay: 0.5
   pressToSkip: 1
   autoCloseSeconds: 0
-  victoryJingle: {fileID: 0}
-  defeatJingle: {fileID: 0}
-  rowTick: {fileID: 0}
-  gradeSlam: {fileID: 0}
-  badgePop: {fileID: 0}
+  victoryJingle: {fileID: 8300000, guid: f4b4525eb7afb3d4eb057594677f504a, type: 3}
+  defeatJingle: {fileID: 8300000, guid: 3b8ecac020b074145a93797932dcfe47, type: 3}
+  rowTick: {fileID: 8300000, guid: a10d9e73505dbfd4182d86955e9f05b8, type: 3}
+  gradeSlam: {fileID: 8300000, guid: 517a38c489bf17042a033bc233bdbebb, type: 3}
+  badgePop: {fileID: 8300000, guid: 9b4c417d01df59d4598ffec6b554232b, type: 3}
   volume: 0.8

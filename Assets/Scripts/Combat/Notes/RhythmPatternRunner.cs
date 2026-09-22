@@ -80,7 +80,10 @@ namespace RythmRPG.Combat
         public bool IsRunning => runCoroutine != null;
         public bool HorizontalGameplay => lanePresentation != null && lanePresentation.HorizontalGameplay;
         public RhythmChart FallbackChart => fallbackChart;
-        public float BadWindow => judgementConfig != null ? judgementConfig.BadWindow : 0.9f;
+        /// <summary>Seconds. Past this a note that was not pressed is a Miss.</summary>
+        public float BadWindow => judgementConfig != null ? judgementConfig.BadWindow : 0.125f;
+        /// <summary>Seconds. Presses closer than this reach a note; between Bad and this they are a Miss.</summary>
+        public float PressWindow => judgementConfig != null ? judgementConfig.MissWindow : 0.18f;
         public IReadOnlyList<Note> ActiveNotes => activeNotes;
 
         /// <summary>Song clock of the running chart (AudioSettings.dspTime based); null when nothing has run yet.</summary>
@@ -176,7 +179,9 @@ namespace RythmRPG.Combat
                 best.GetJudgementWorldPosition(), NoteResolutionSource.PlayerInput);
             if (judgement == HitJudgement.Miss)
             {
-                if (best.ShouldResolveMissOnPlayerInput) best.ForceResolve(result);
+                // Pressed in the Miss range (too early / too late): the note is used up as a Miss.
+                bool missOnPress = judgementConfig == null || judgementConfig.PressInMissRangeCountsAsMiss;
+                if (best.ShouldResolveMissOnPlayerInput || missOnPress) best.ForceResolve(result);
                 return;
             }
             best.TryHitFromKey(key, result);
@@ -521,10 +526,11 @@ namespace RythmRPG.Combat
 
         private HitJudgement Evaluate(float distance)
         {
+            // distance = timing error in seconds.
             if (judgementConfig != null) return judgementConfig.Evaluate(distance);
-            if (distance <= 0.15f) return HitJudgement.Perfect;
-            if (distance <= 0.45f) return HitJudgement.Good;
-            if (distance <= 0.9f) return HitJudgement.Bad;
+            if (distance <= 0.04f) return HitJudgement.Perfect;
+            if (distance <= 0.08f) return HitJudgement.Good;
+            if (distance <= 0.125f) return HitJudgement.Bad;
             return HitJudgement.Miss;
         }
 

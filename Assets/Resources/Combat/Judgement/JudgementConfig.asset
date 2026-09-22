@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1000000000000000000000000000010, type: 3}
   m_Name: JudgementConfig
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.JudgementConfig
-  perfectWindow: 0.15
-  goodWindow: 0.45
-  badWindow: 0.9
+  perfectMs: 45
+  goodMs: 90
+  badMs: 125
+  missMs: 180
+  pressInMissRangeCountsAsMiss: 1

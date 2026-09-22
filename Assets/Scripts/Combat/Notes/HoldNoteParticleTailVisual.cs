@@ -1,13 +1,54 @@
 using UnityEngine;
 
+/// <summary>
+/// Hold-note tail drawn as a beam (LineRenderer, like the laser note's MagicBeamStatic) with optional pixel-fire
+/// particles along it.
+///
+/// Beam: assign Beam Line Prefab (e.g. the same line prefab the laser note's MagicBeamStatic uses) or leave it
+/// empty for a generated pixel beam. Like the laser, the texture is tiled along the length, can scroll, and the
+/// width pulses. Optional Head / End effect prefabs sit at the note end and the tail end.
+/// Particles: the previous look; keep them on for sparks around the beam or turn them off for a clean beam.
+/// </summary>
 [DisallowMultipleComponent]
 public class HoldNoteParticleTailVisual : HoldNoteTailVisual
 {
-    [SerializeField] private ParticleSystem tailParticles;
-    [SerializeField] private bool createParticleSystemIfMissing = true;
+    [Header("Shape")]
     [SerializeField] private HoldNoteTailAxis lengthAxis = HoldNoteTailAxis.Y;
     [SerializeField] private HoldNoteTailDirection tailDirection = HoldNoteTailDirection.Up;
     [SerializeField, Min(0f)] private float lengthScale = 1f;
+
+    [Header("Beam (line renderer)")]
+    [SerializeField] private bool useBeam = true;
+    [Tooltip("A prefab with a LineRenderer, e.g. the beam line prefab the laser note uses. Empty = generated pixel beam.")]
+    [SerializeField] private GameObject beamLinePrefab;
+    [Tooltip("Spawned at the note end of the tail (optional).")]
+    [SerializeField] private GameObject beamHeadPrefab;
+    [Tooltip("Spawned at the far end of the tail (optional).")]
+    [SerializeField] private GameObject beamEndPrefab;
+    [SerializeField, Min(0f)] private float beamWidth = 0.3f;
+    [Tooltip("Width along the tail: 0 = note end, 1 = far end.")]
+    [SerializeField] private AnimationCurve beamWidthCurve = AnimationCurve.Linear(0f, 1f, 1f, 0.75f);
+    [Tooltip("Beam colors along the tail (0 = note end). Used by the generated beam, and by a prefab beam when Override Prefab Colors is on.")]
+    [SerializeField] private Gradient beamColor = DefaultBeamGradient();
+    [Tooltip("Replace the Beam Line Prefab's own colors with Beam Color.")]
+    [SerializeField] private bool overridePrefabColors;
+    [Tooltip("Tile the texture along the length instead of stretching it (like the laser).")]
+    [SerializeField] private bool tileTexture = true;
+    [Tooltip("Texture length relative to its height (a 600x200 texture = 3).")]
+    [SerializeField, Min(0.01f)] private float textureLengthScale = 1f;
+    [Tooltip("Texture scroll along the beam (units per second, sign = direction).")]
+    [SerializeField] private float textureScrollSpeed = 2f;
+    [Tooltip("Width grows to this multiple at the top of each pulse (1 = no pulse).")]
+    [SerializeField, Min(0f)] private float widthPulseMultiplier = 1.35f;
+    [SerializeField, Min(0f)] private float widthPulseSpeed = 6f;
+    [SerializeField] private int beamSortingOrder = 50;
+    [Tooltip("Width grows while the note is being held (1 = no change).")]
+    [SerializeField, Min(0f)] private float heldWidthBoost = 1.25f;
+
+    [Header("Particles (optional sparks)")]
+    [SerializeField] private bool useParticles = true;
+    [SerializeField] private ParticleSystem tailParticles;
+    [SerializeField] private bool createParticleSystemIfMissing = true;
     [SerializeField, Min(0f)] private float tailThickness = 0.35f;
     [SerializeField, Min(0f)] private float emissionRatePerUnit = 18f;
     [SerializeField, Min(0)] private int initialBurstParticles;
@@ -19,9 +60,20 @@ public class HoldNoteParticleTailVisual : HoldNoteTailVisual
 
     private const string RuntimePixelMaterialName = "Runtime Hold Note Pixel Fire Particle";
     private static Material sharedPixelMaterial;
+    private static Texture2D generatedBeamTexture;
 
     private Vector3 initialLocalPosition;
     private bool initialized;
+
+    private GameObject beamObject;
+    private LineRenderer beamLine;
+    private Material beamMaterial;
+    private GameObject beamHead;
+    private GameObject beamEnd;
+    private float currentLength;
+    private float pulseTime;
+    private float holdBlend;
+    private float lastNormalized = 1f;
 
     public override HoldNoteTailMode TailMode => HoldNoteTailMode.Particle;
 
@@ -40,52 +92,220 @@ public class HoldNoteParticleTailVisual : HoldNoteTailVisual
     {
         CacheInitialTransform();
         gameObject.SetActive(true);
+        pulseTime = 0f;
+        holdBlend = 0f;
+        lastNormalized = 1f;
 
-        if (configureAsPixelFireBurst)
-        {
-            ConfigurePixelFireBurst();
-        }
+        if (useBeam) EnsureBeam();
+        if (useParticles && configureAsPixelFireBurst) ConfigurePixelFireBurst();
 
         SetRemainingLength(0f, 0f);
 
-        if (tailParticles != null && !tailParticles.isPlaying)
-        {
-            tailParticles.Play(true);
-        }
-
-        EmitInitialBurst(totalLength);
+        if (useParticles && tailParticles != null && !tailParticles.isPlaying) tailParticles.Play(true);
+        if (useParticles) EmitInitialBurst(totalLength);
     }
 
     public override void SetRemainingLength(float remainingLength, float normalizedRemaining)
     {
         CacheInitialTransform();
 
-        if (tailParticles == null)
-        {
-            return;
-        }
-
         float visualLength = Mathf.Max(0f, remainingLength * lengthScale);
-        Vector3 direction = GetDirectionVector(tailDirection);
-        transform.localPosition = initialLocalPosition + direction * visualLength * 0.5f;
-        ApplyParticleLength(visualLength, visualLength > 0.01f);
+        bool visible = visualLength > 0.01f;
+        // The tail shrinks from the far end while held: normalized goes down over the hold.
+        if (normalizedRemaining < lastNormalized - 0.0001f) holdBlend = 1f;
+        lastNormalized = normalizedRemaining;
+        currentLength = visualLength;
 
-        if (visualLength <= 0.01f)
+        if (useParticles && tailParticles != null)
         {
-            Hide();
+            Vector3 direction = GetDirectionVector(tailDirection);
+            transform.localPosition = initialLocalPosition + direction * visualLength * 0.5f;
+            ApplyParticleLength(visualLength, visible);
         }
+        else if (tailParticles != null && tailParticles.isPlaying)
+        {
+            tailParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        }
+
+        if (useBeam)
+        {
+            EnsureBeam();
+            SetBeamVisible(visible);
+            UpdateBeam(0f);
+        }
+
+        if (!visible) Hide();
     }
 
     public override void Hide()
     {
+        SetBeamVisible(false);
         if (tailParticles != null)
         {
             tailParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             return;
         }
-
+        // Keep the object alive when a beam exists so it can be shown again (and keep updating).
+        if (beamLine != null) return;
         base.Hide();
     }
+
+    private void LateUpdate()
+    {
+        // The note moves every frame; a world-space beam must follow it even when the length does not change.
+        if (useBeam && beamLine != null && beamLine.enabled) UpdateBeam(Time.deltaTime);
+    }
+
+    private void OnDestroy()
+    {
+        if (beamMaterial != null) Destroy(beamMaterial);
+    }
+
+    // ---------- beam ----------
+
+    private void EnsureBeam()
+    {
+        if (beamLine != null) return;
+
+        if (beamLinePrefab != null)
+        {
+            beamObject = Instantiate(beamLinePrefab, transform);
+            beamObject.name = "Hold Tail Beam";
+            beamLine = beamObject.GetComponentInChildren<LineRenderer>(true);
+            if (beamLine == null)
+            {
+                Debug.LogWarning($"{name}: Beam Line Prefab has no LineRenderer; using the generated beam.", this);
+                Destroy(beamObject);
+                beamObject = null;
+            }
+        }
+
+        bool generated = beamLine == null;
+        if (generated)
+        {
+            beamObject = new GameObject("Hold Tail Beam");
+            beamObject.transform.SetParent(transform, false);
+            beamLine = beamObject.AddComponent<LineRenderer>();
+            beamLine.sharedMaterial = CreateGeneratedBeamMaterial();
+            beamLine.textureMode = LineTextureMode.Stretch;
+            beamLine.numCapVertices = 0;
+        }
+
+        // Laser-style: two points in world space, own material instance so the texture can tile and scroll.
+        beamLine.useWorldSpace = true;
+        beamLine.positionCount = 2;
+        beamLine.alignment = LineAlignment.View;
+        beamLine.sortingOrder = beamSortingOrder;
+        if (generated || overridePrefabColors) beamLine.colorGradient = beamColor ?? DefaultBeamGradient();
+        if (beamMaterial == null && beamLine.sharedMaterial != null)
+        {
+            beamMaterial = new Material(beamLine.sharedMaterial) { name = beamLine.sharedMaterial.name + " (Hold Tail)" };
+            beamLine.sharedMaterial = beamMaterial;
+        }
+
+        if (beamHeadPrefab != null) beamHead = Instantiate(beamHeadPrefab, beamObject.transform);
+        if (beamEndPrefab != null) beamEnd = Instantiate(beamEndPrefab, beamObject.transform);
+    }
+
+    private void SetBeamVisible(bool visible)
+    {
+        if (beamLine != null) beamLine.enabled = visible;
+        if (beamHead != null) beamHead.SetActive(visible);
+        if (beamEnd != null) beamEnd.SetActive(visible);
+    }
+
+    private void UpdateBeam(float deltaTime)
+    {
+        if (beamLine == null) return;
+
+        Transform parent = transform.parent;
+        Vector3 localStart = initialLocalPosition;
+        Vector3 localEnd = initialLocalPosition + GetDirectionVector(tailDirection) * currentLength;
+        Vector3 start = parent != null ? parent.TransformPoint(localStart) : localStart;
+        Vector3 end = parent != null ? parent.TransformPoint(localEnd) : localEnd;
+        beamLine.SetPosition(0, start);
+        beamLine.SetPosition(1, end);
+
+        // Width: base x pulse x held boost, shaped by the curve along the tail.
+        pulseTime += deltaTime * widthPulseSpeed;
+        float pulse = Mathf.Lerp(1f, Mathf.Max(0.01f, widthPulseMultiplier), 0.5f + 0.5f * Mathf.Sin(pulseTime));
+        float held = Mathf.Lerp(1f, heldWidthBoost, holdBlend);
+        beamLine.widthCurve = beamWidthCurve != null && beamWidthCurve.length > 0 ? beamWidthCurve : AnimationCurve.Constant(0f, 1f, 1f);
+        beamLine.widthMultiplier = beamWidth * pulse * held;
+
+        if (beamMaterial != null)
+        {
+            float distance = Vector3.Distance(start, end);
+            if (tileTexture) beamMaterial.mainTextureScale = new Vector2(Mathf.Max(0.01f, distance / textureLengthScale), 1f);
+            if (!Mathf.Approximately(textureScrollSpeed, 0f))
+                beamMaterial.mainTextureOffset -= new Vector2(deltaTime * textureScrollSpeed, 0f);
+        }
+
+        if (beamHead != null)
+        {
+            beamHead.transform.position = start;
+            if ((end - start).sqrMagnitude > 0.0001f) beamHead.transform.rotation = Quaternion.LookRotation(end - start);
+        }
+        if (beamEnd != null)
+        {
+            beamEnd.transform.position = end;
+            if ((start - end).sqrMagnitude > 0.0001f) beamEnd.transform.rotation = Quaternion.LookRotation(start - end);
+        }
+    }
+
+    private static Gradient DefaultBeamGradient()
+    {
+        var gradient = new Gradient();
+        gradient.SetKeys(
+            new[]
+            {
+                new GradientColorKey(new Color(1f, 0.95f, 0.55f), 0f),
+                new GradientColorKey(new Color(1f, 0.55f, 0.12f), 1f)
+            },
+            new[]
+            {
+                new GradientAlphaKey(1f, 0f),
+                new GradientAlphaKey(0.85f, 1f)
+            });
+        return gradient;
+    }
+
+    /// <summary>A pixel beam: bright white core with soft edges across the width, point-filtered.</summary>
+    private static Material CreateGeneratedBeamMaterial()
+    {
+        Shader shader = Shader.Find("Sprites/Default");
+        if (shader == null) shader = Shader.Find("Universal Render Pipeline/Particles/Unlit");
+        if (shader == null) return null;
+
+        if (generatedBeamTexture == null)
+        {
+            // Width runs along the texture's V axis on a LineRenderer.
+            float[] profile = { 0.15f, 0.45f, 0.85f, 1f, 1f, 0.85f, 0.45f, 0.15f };
+            generatedBeamTexture = new Texture2D(2, profile.Length, TextureFormat.RGBA32, false)
+            {
+                name = "Runtime Hold Tail Beam Texture",
+                filterMode = FilterMode.Point,
+                wrapMode = TextureWrapMode.Repeat,
+                hideFlags = HideFlags.HideAndDontSave
+            };
+            for (int y = 0; y < profile.Length; y++)
+            {
+                float core = profile[y];
+                Color color = Color.Lerp(new Color(1f, 1f, 1f, core * 0.6f), Color.white, core >= 1f ? 1f : 0f);
+                color.a = core;
+                // Two columns with slightly different brightness give the scroll something to move.
+                generatedBeamTexture.SetPixel(0, y, color);
+                generatedBeamTexture.SetPixel(1, y, new Color(color.r * 0.85f, color.g * 0.85f, color.b * 0.85f, color.a));
+            }
+            generatedBeamTexture.Apply();
+        }
+
+        var material = new Material(shader) { name = "Runtime Hold Tail Beam", mainTexture = generatedBeamTexture };
+        if (material.HasProperty("_BaseMap")) material.SetTexture("_BaseMap", generatedBeamTexture);
+        return material;
+    }
+
+    // ---------- particles (previous look) ----------
 
     private Vector3 GetShapeScale(float visualLength)
     {
@@ -99,7 +319,7 @@ public class HoldNoteParticleTailVisual : HoldNoteTailVisual
 
     private void CacheInitialTransform()
     {
-        EnsureParticleSystem();
+        if (useParticles) EnsureParticleSystem();
 
         if (initialized)
         {
@@ -170,7 +390,7 @@ public class HoldNoteParticleTailVisual : HoldNoteTailVisual
         if (particleRenderer != null)
         {
             particleRenderer.renderMode = ParticleSystemRenderMode.Billboard;
-            particleRenderer.sortingOrder = 51;
+            particleRenderer.sortingOrder = beamSortingOrder + 1;
 
             if (useGeneratedPixelMaterial)
             {
