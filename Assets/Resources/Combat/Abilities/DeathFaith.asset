@@ -10,27 +10,32 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a1000000000000000000000000000040, type: 3}
-  m_Name: BasicAttack
+  m_Name: DeathFaith
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.AbilityDefinition
-  id: basic-attack
-  displayName: Basic Attack
-  icon: {fileID: 21300000, guid: d8e8dc4df2f885c48be073724700409e, type: 3}
-  abilityType: 0
+  id: death-faith
+  displayName: Death Faith
+  icon: {fileID: 21300000, guid: b3211798ba9323e49a18e1dc5cd40fae, type: 3}
+  abilityType: 2
   element: 0
-  manaCost: 0
-  cooldown: 0
-  basePower: 22
+  manaCost: 25
+  cooldown: 4
+  basePower: 0
   rhythmPattern: {fileID: 11400000, guid: b100000000000000000000000000010d, type: 2}
   outcomeProfile: {fileID: 11400000, guid: b1000000000000000000000000000102, type: 2}
   vfxProfile: {fileID: 11400000, guid: b1000000000000000000000000000103, type: 2}
-  attackSequence: {fileID: 11400000, guid: dff2a0e2354b23e45ac06feae1f8cf62, type: 2}
+  attackSequence: {fileID: 11400000, guid: 8723036c076846e697a8d687e88680d4, type: 2}
   effects:
-  - rid: 2956268411002028143
+  - rid: 1000
   references:
     version: 2
     RefIds:
-    - rid: 2956268411002028143
-      type: {class: DealDamageEffect, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
+    - rid: 1000
+      type: {class: WardLanesEffect, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
       data:
-        timing: 0
-        powerScale: 1
+        timing: 1
+        lanes: 0
+        laneIds: 
+        enemyTurns: 3
+        bonusTurnAtPerformance: 0.9
+        blockBad: 1
+        blockMiss: 1

@@ -18,27 +18,22 @@ namespace RythmRPG.Combat
 
         private Transform effectRoot;
 
-        /// <param name="applyDamage">Applies the ability's damage. Called once: by a damage step, or after the last step.</param>
+        /// <param name="hit">Called for every hit the steps land, with its weight. The caller divides the ability's
+        /// effects by weight and delivers anything left over after the sequence.</param>
         public IEnumerator Perform(CharacterAttackSequence sequence, PlayerCombatant player, EnemyCombatant enemy,
-            Color accent, Action applyDamage)
+            Color accent, Action<float> hit)
         {
             ResolveReferences();
-            bool damageApplied = false;
-            void DamageOnce()
-            {
-                if (damageApplied) return;
-                damageApplied = true;
-                applyDamage?.Invoke();
-            }
-
-            if (sequence == null || player == null)
-            {
-                DamageOnce();
-                yield break;
-            }
+            if (sequence == null || player == null) yield break;
 
             Transform caster = player.transform;
             Animator animator = player.GetComponentInChildren<Animator>();
+            AttackAnimationEventRelay relay = null;
+            if (animator != null)
+            {
+                relay = animator.GetComponent<AttackAnimationEventRelay>();
+                if (relay == null) relay = animator.gameObject.AddComponent<AttackAnimationEventRelay>();
+            }
             Camera view = lanePresentation != null && lanePresentation.RenderCamera != null ? lanePresentation.RenderCamera : Camera.main;
             Vector3 home = caster.position;
             CharacterController controller = player.GetComponent<CharacterController>();
@@ -63,7 +58,8 @@ namespace RythmRPG.Combat
                     Camera = view,
                     CasterHome = home,
                     EffectParent = EffectRoot,
-                    ApplyDamage = DamageOnce,
+                    Hit = hit,
+                    AnimationEvents = relay,
                     Accent = accent
                 };
 
@@ -90,7 +86,6 @@ namespace RythmRPG.Combat
 
                 // Let background steps (projectiles in flight, effects) finish before walking back.
                 while (running.Count > 0 && Time.time < deadline) yield return null;
-                DamageOnce();
 
                 if (sequence.MoveToStage && (caster.position - home).sqrMagnitude > 0.0001f)
                     yield return Move(caster, animator, sequence.MovingBoolParameter, caster.position, home, sequence.MoveBackSeconds);

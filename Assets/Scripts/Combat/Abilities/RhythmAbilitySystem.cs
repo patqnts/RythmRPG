@@ -11,6 +11,7 @@ namespace RythmRPG.Combat
         private RhythmPatternRunner runner;
         private AbilityExecutionContext context;
         private Transform abilityImpactOrigin;
+        private int laneId = -1;
 
         public event Action<AbilityRuntimeInstance> ExecutionStarted;
         public event Action<AbilityRuntimeInstance, RhythmPerformanceResult> ExecutionCompleted;
@@ -24,8 +25,9 @@ namespace RythmRPG.Combat
         }
 
         public void Execute(AbilityRuntimeInstance ability, PlayerCombatant player, EnemyCombatant enemy,
-            RhythmPatternRunner patternRunner, Transform spawnOrigin = null, Transform impactOrigin = null)
+            RhythmPatternRunner patternRunner, Transform spawnOrigin = null, Transform impactOrigin = null, int selectedLane = -1)
         {
+            laneId = selectedLane;
             if (executor == null) executor = GetComponent<AbilityExecutor>();
             if (vfxController == null) vfxController = GetComponent<CombatVFXController>();
             runner = patternRunner;
@@ -65,30 +67,47 @@ namespace RythmRPG.Combat
             if (vfxProfile != null && vfxProfile.ImpactAnticipationDuration > 0f)
                 yield return new WaitForSeconds(vfxProfile.ImpactAnticipationDuration);
 
-            CharacterAttackSequence sequence = context.Ability?.Definition?.AttackSequence;
-            bool impactDone = false;
-            void Impact()
+            AbilityDefinition definition = context.Ability?.Definition;
+            CharacterAttackSequence sequence = definition?.AttackSequence;
+            var effectContext = new AbilityEffectContext
             {
-                if (impactDone) return;
-                impactDone = true;
-                executor?.Execute(context, performance);
+                Player = context.Player,
+                Enemy = context.Enemy,
+                Ability = definition,
+                Performance = performance,
+                LaneId = laneId,
+                Modifiers = GetComponent<CombatModifierSystem>(),
+                Rules = CombatResourceRules.Load(),
+                ShowText = vfxController != null ? new Action<string, Vector3, Color>(vfxController.ShowFloatingText) : null
+            };
+            // The ability's effects land as the attack's hits land: split by hit weight (multi-hit, damage over
+            // time), once-effects on their chosen hit. Whatever is left lands when the sequence ends.
+            var resolution = new AbilityResolution(effectContext, definition != null ? definition.Effects : null,
+                sequence != null ? sequence.TotalHitWeight : 0f);
+            bool announced = false;
+            void Hit(float weight)
+            {
+                resolution.Hit(weight);
+                if (announced) return;
+                announced = true;
                 ImpactResolved?.Invoke(context, performance);
             }
 
             if (sequence != null)
             {
-                // Character-performed attack: the sequence decides when the hit lands (projectile arrival, impact step).
                 if (attackPerformer == null) attackPerformer = GetComponent<CharacterAttackPerformer>();
                 if (attackPerformer == null) attackPerformer = gameObject.AddComponent<CharacterAttackPerformer>();
                 Color accent = vfxProfile != null ? vfxProfile.AccentColor : Color.white;
-                yield return attackPerformer.Perform(sequence, context.Player, context.Enemy, accent, Impact);
+                yield return attackPerformer.Perform(sequence, context.Player, context.Enemy, accent, Hit);
             }
-            else if (vfxController != null)
+            else if (vfxController != null && definition != null
+                     && (definition.AbilityType == AbilityType.BasicAttack || definition.AbilityType == AbilityType.SpecialAttack))
             {
                 yield return vfxController.PlayAbilityImpact(context.Ability, abilityImpactOrigin, context.Enemy != null ? context.Enemy.transform : null);
             }
 
-            Impact();
+            resolution.Finish();
+            if (!announced) ImpactResolved?.Invoke(context, performance);
             if (vfxProfile != null && vfxProfile.ImpactSettleDuration > 0f)
                 yield return new WaitForSeconds(vfxProfile.ImpactSettleDuration);
 

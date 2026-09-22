@@ -36,14 +36,18 @@ namespace RythmRPG.Combat
         public string ArriveState => arriveState;
         public IReadOnlyList<AttackStep> Steps => steps;
 
-        /// <summary>True when any step applies the damage itself; otherwise damage lands after the last step.</summary>
-        public bool HasImpactStep
+        /// <summary>True when any step lands hits; otherwise the ability's effects land after the last step.</summary>
+        public bool HasImpactStep => TotalHitWeight > 0f;
+
+        /// <summary>Sum of all steps' hit weights: each hit gets weight / total of the ability's damage or heal.</summary>
+        public float TotalHitWeight
         {
             get
             {
+                float total = 0f;
                 foreach (AttackStep step in steps)
-                    if (step != null && step.DealsDamage) return true;
-                return false;
+                    if (step != null) total += step.HitWeight;
+                return total;
             }
         }
     }

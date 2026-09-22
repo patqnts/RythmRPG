@@ -68,6 +68,11 @@ namespace RythmRPG.Combat
         private RhythmChart currentChart;
         private const double EndGraceSeconds = 1d;
         private CombatMusicDirector musicDirector;
+
+        /// <summary>Damage the player takes when an enemy note resolves (set by the combat controller).</summary>
+        public Func<Note, RhythmJudgementResult, int> DefenseDamageResolver { get; set; }
+        /// <summary>Mode of the running (or last) pattern.</summary>
+        public PatternRunMode CurrentMode => currentContext.Mode;
         // Ping-Pong: the shot deflected during the current ResolveNote call, and shots kept alive between volleys.
         private PongNote deflectedThisResolve;
         private readonly HashSet<PongNote> rallyShots = new();
@@ -196,12 +201,18 @@ namespace RythmRPG.Combat
             if (deflectedThisResolve != null) deflectedThisResolve.BeginDeflect();
             sequencePool.NotifyNoteResolved(note.RuntimeNoteId, success, ChartSeconds);
             deflectedThisResolve = null;
-            if (currentContext.Mode == PatternRunMode.EnemyDefense
-                && note.ShouldDamagePlayerOnResolve(result)
-                && currentContext.Player != null)
+            if (currentContext.Mode == PatternRunMode.EnemyDefense && currentContext.Player != null)
             {
-                currentContext.Player.ApplyDamage(note.damage);
-                if (currentContext.Player.IsDefeated) CancelCurrentPattern(true);
+                // Damage is weighted by judgement (Miss / Bad hurt, Good / Perfect do not by default) and may be
+                // cancelled by wards; the combat controller supplies the rule. Without one: legacy "Miss = full damage".
+                int amount = DefenseDamageResolver != null
+                    ? DefenseDamageResolver(note, result)
+                    : note.ShouldDamagePlayerOnResolve(result) ? note.damage : 0;
+                if (amount > 0)
+                {
+                    currentContext.Player.ApplyDamage(amount);
+                    if (currentContext.Player.IsDefeated) CancelCurrentPattern(true);
+                }
             }
         }
 

@@ -98,7 +98,13 @@ namespace RythmRPG.Combat
         private void BuildSlots()
         {
             slots.Clear();
-            foreach (AbilitySlotAssignment assignment in assignments.Where(assignment => assignment?.Ability != null))
+            IEnumerable<AbilitySlotAssignment> source = assignments;
+            if (assignments.All(assignment => assignment?.Ability == null))
+            {
+                AbilityLoadout loadout = Resources.Load<AbilityLoadout>(AbilityLoadout.ResourcePath);
+                if (loadout != null) source = loadout.Slots;
+            }
+            foreach (AbilitySlotAssignment assignment in source.Where(assignment => assignment?.Ability != null))
                 slots[assignment.LaneId] = new AbilityRuntimeInstance(assignment.Ability);
 
             if (slots.Count == 0 && defaultAbility == null)

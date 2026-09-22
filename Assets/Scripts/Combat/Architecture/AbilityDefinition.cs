@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using RythmRPG.Rhythm;
 using UnityEngine;
 
@@ -19,6 +20,8 @@ namespace RythmRPG.Combat
         [SerializeField] private AbilityVFXProfile vfxProfile;
         [Tooltip("How the character performs the attack after the rhythm part: move to the middle of the screen, animation / projectile / effects, move back. Empty = the old projectile impact from the VFX profile.")]
         [SerializeField] private CharacterAttackSequence attackSequence;
+        [Tooltip("What the ability does (damage, heal, ward, mana...). Amount effects are divided across the attack sequence's hits. Empty = by Ability Type: attacks deal Base Power damage, Healing heals Base Power, Defensive does nothing.")]
+        [SerializeReference, SubclassSelector] private List<AbilityEffect> effects = new();
 
         public string Id => id;
         public string DisplayName => displayName;
@@ -32,5 +35,8 @@ namespace RythmRPG.Combat
         public AbilityOutcomeProfile OutcomeProfile => outcomeProfile;
         public AbilityVFXProfile VFXProfile => vfxProfile;
         public CharacterAttackSequence AttackSequence => attackSequence;
+        public IReadOnlyList<AbilityEffect> Effects => effects != null && effects.Count > 0
+            ? effects
+            : AbilityResolution.DefaultEffects(abilityType);
     }
 }

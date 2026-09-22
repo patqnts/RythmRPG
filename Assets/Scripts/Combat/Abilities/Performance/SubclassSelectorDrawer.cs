@@ -79,11 +79,19 @@ namespace RythmRPG.Combat
             if (Cache.TryGetValue(baseType, out Type[] cached)) return cached;
             Type[] found = TypeCache.GetTypesDerivedFrom(baseType)
                 .Where(t => !t.IsAbstract && !t.IsGenericType && t.IsSerializable && t.GetConstructor(Type.EmptyTypes) != null
-                            && !typeof(UnityEngine.Object).IsAssignableFrom(t))
+                            && !typeof(UnityEngine.Object).IsAssignableFrom(t)
+                            && (t.IsPublic || t.IsNestedPublic) && !IsTestAssembly(t))
                 .OrderBy(t => t.Name)
                 .ToArray();
             Cache[baseType] = found;
             return found;
+        }
+
+        // Test-only helpers (e.g. AbilityResolutionTests' fake effects) must never be picked for real content.
+        private static bool IsTestAssembly(Type type)
+        {
+            string name = type.Assembly.GetName().Name;
+            return name.EndsWith(".Tests") || name.Contains(".Tests.") || name.EndsWith("Tests.EditMode") || name.EndsWith("Tests.PlayMode");
         }
 
         // "managedReferenceFieldTypename" is "Assembly TypeName"; for list elements it is the element type.

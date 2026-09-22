@@ -177,7 +177,7 @@ namespace RythmRPG.Combat
         private void HandleSelectionStarted(int lane, AbilityRuntimeInstance ability)
         {
             if (slotViews.TryGetValue(lane, out AbilitySlotView view)) view.SetHighlighted(true);
-            if (cameraTransform != null) Tween.ShakeLocalPosition(cameraTransform, Vector3.one * 0.025f, 0.15f);
+            CombatCameraShaker.Shake(ResolveActiveCamera(), 0.025f, 0.15f);
         }
 
         private void HandleSelectionProgressed(int lane, float progress)
@@ -207,6 +207,9 @@ namespace RythmRPG.Combat
             if (slotViews.TryGetValue(result.LaneId, out AbilitySlotView slot))
                 slot.GetComponent<KeyButton>()?.PlayJudgementFeedback(result.Judgement, color);
         }
+
+        /// <summary>Floating combat text (heal numbers, WARD, GUARD...).</summary>
+        public void ShowFloatingText(string value, Vector3 position, Color color) => CreateFloatingText(value, position, color);
 
         private void CreateFloatingText(string value, Vector3 position, Color color)
         {

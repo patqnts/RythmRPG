@@ -82,6 +82,16 @@ namespace RythmRPG.Combat
             return true;
         }
 
+        /// <summary>Restores mana (clamped to the maximum). Returns the amount actually gained.</summary>
+        public int GainMana(int amount)
+        {
+            int previous = currentMana;
+            currentMana = Mathf.Clamp(currentMana + Mathf.Max(0, amount), 0, maxMana);
+            int gained = currentMana - previous;
+            if (gained > 0) ManaChanged?.Invoke(currentMana, maxMana);
+            return gained;
+        }
+
         public void ResetToMaximum()
         {
             currentHealth = maxHealth;

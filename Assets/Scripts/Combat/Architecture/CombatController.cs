@@ -24,6 +24,8 @@ namespace RythmRPG.Combat
 
         private CombatTurnStateMachine stateMachine;
         private EnemyAttackSequenceDefinition nextSequence;
+        private CombatResourceRules resourceRules;
+        private float manaCarry;
         private CombatEncounterContext encounter;
         private RhythmPatternRunner runner;
         private AbilityRuntimeInstance selectedAbility;
@@ -60,6 +62,10 @@ namespace RythmRPG.Combat
             encounter.Enemy.CaptureBattleStart();
             runner.ConfigurePresentation(lanePresentation);
             runner.ConfigureMusic(musicDirector);
+            resourceRules = CombatResourceRules.Load();
+            runner.DefenseDamageResolver = ResolveDefenseDamage;
+            modifierSystem.Clear();
+            manaCarry = 0f;
             BindRuntime();
             ConfigureStateMachine();
             IsBattleActive = true;
@@ -115,6 +121,10 @@ namespace RythmRPG.Combat
             runner.ConfigureInput(inputRouter);
             judgementSystem.OnJudgementResolved -= HandleModifierJudgement;
             judgementSystem.OnJudgementResolved += HandleModifierJudgement;
+            judgementSystem.OnJudgementResolved -= HandleManaJudgement;
+            judgementSystem.OnJudgementResolved += HandleManaJudgement;
+            modifierSystem.DamageBlocked -= HandleDamageBlocked;
+            modifierSystem.DamageBlocked += HandleDamageBlocked;
             abilitySlots.Initialize(inputRouter, encounter.Player);
             abilitySlots.AbilitySelected -= HandleAbilitySelected;
             abilitySlots.AbilitySelected += HandleAbilitySelected;
@@ -223,6 +233,7 @@ namespace RythmRPG.Combat
         {
             abilitySlots.TickCooldowns();
             musicDirector?.SetPlayerTurn(true);
+            if (resourceRules != null && resourceRules.ManaPerPlayerTurn > 0) encounter.Player.GainMana(resourceRules.ManaPerPlayerTurn);
             vfxController.SetAbilitySlotsVisible(true, true);
             yield return null;
             Transition(CombatState.PlayerAbilitySelection);
@@ -251,7 +262,7 @@ namespace RythmRPG.Combat
             void OnCompleted(AbilityRuntimeInstance _, RhythmPerformanceResult __) => completed = true;
             abilitySystem.ExecutionCompleted += OnCompleted;
             abilitySystem.Execute(selectedAbility, encounter.Player, encounter.Enemy, runner,
-                vfxController.AbilityPatternSpawnOrigin, vfxController.GetCenterLaneViewTransform());
+                vfxController.AbilityPatternSpawnOrigin, vfxController.GetCenterLaneViewTransform(), selectedLane);
             while (!completed) yield return null;
             abilitySystem.ExecutionCompleted -= OnCompleted;
             Transition(CombatState.PlayerTurnEnd);
@@ -332,6 +343,31 @@ namespace RythmRPG.Combat
         }
 
         private void HandleModifierJudgement(RhythmJudgementResult result) => modifierSystem.OnJudgementResolved(result, runner);
+
+        // Enemy turn: damage weighted by judgement (see CombatResourceRules), unless a ward covers the lane.
+        private int ResolveDefenseDamage(Note note, RhythmJudgementResult result)
+        {
+            int amount = (resourceRules ?? CombatResourceRules.Load()).DefenseDamage(note.damage, result.Judgement);
+            if (amount > 0 && modifierSystem.TryBlockDamage(result)) return 0;
+            return amount;
+        }
+
+        // Mana builds up from good play: Perfect / Good hits (player input only), weighted by judgement.
+        private void HandleManaJudgement(RhythmJudgementResult result)
+        {
+            if (!IsBattleActive || encounter.Player == null || result.Source != NoteResolutionSource.PlayerInput) return;
+            CombatResourceRules rules = resourceRules ?? CombatResourceRules.Load();
+            manaCarry += rules.ManaGain(result.Judgement, runner != null ? runner.CurrentMode : PatternRunMode.EnemyDefense);
+            int whole = Mathf.FloorToInt(manaCarry);
+            if (whole <= 0) return;
+            manaCarry -= whole;
+            encounter.Player.GainMana(whole);
+        }
+
+        private void HandleDamageBlocked(RhythmJudgementResult result)
+        {
+            vfxController?.ShowFloatingText("GUARD", result.WorldPosition, new Color(0.6f, 0.8f, 1f));
+        }
 
         private void Transition(CombatState next)
         {

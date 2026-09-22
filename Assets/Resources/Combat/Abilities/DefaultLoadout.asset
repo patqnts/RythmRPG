@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35848617b8f7402686dc76bd68ec1025, type: 3}
+  m_Name: DefaultLoadout
+  m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.AbilityLoadout
+  slots:
+  - laneId: 1
+    ability: {fileID: 11400000, guid: b1000000000000000000000000000106, type: 2}
+  - laneId: 2
+    ability: {fileID: 11400000, guid: 340e4127703b618499b3e2724de0e073, type: 2}
+  - laneId: 3
+    ability: {fileID: 11400000, guid: d8363dcb13e34c49897902f5ad539f05, type: 2}
+  - laneId: 4
+    ability: {fileID: 11400000, guid: aa25e5de67b34916bc918348e5ef2d0c, type: 2}

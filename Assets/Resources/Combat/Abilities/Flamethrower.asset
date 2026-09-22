@@ -17,10 +17,20 @@ MonoBehaviour:
   icon: {fileID: -1638154954, guid: 49386da3e39b02740ac12ffc877e867a, type: 3}
   abilityType: 1
   element: 1
-  manaCost: 0
+  manaCost: 20
   cooldown: 0
-  basePower: 100
+  basePower: 180
   rhythmPattern: {fileID: 11400000, guid: b100000000000000000000000000010d, type: 2}
   outcomeProfile: {fileID: 11400000, guid: b1000000000000000000000000000102, type: 2}
   vfxProfile: {fileID: 11400000, guid: b1000000000000000000000000000103, type: 2}
   attackSequence: {fileID: 11400000, guid: e3e51a83b6e28ba418720d20d15c42e9, type: 2}
+  effects:
+  - rid: 2956268411002028142
+  references:
+    version: 2
+    RefIds:
+    - rid: 2956268411002028142
+      type: {class: DealDamageEffect, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
+      data:
+        timing: 0
+        powerScale: 1
