@@ -47,6 +47,21 @@ namespace RythmRPG.WorldBuilder.Editor
             return tile;
         }
 
+        /// <summary>Same convenience flow as CreateTileDefinitionFromSprite (Phase 3's Object Placement drop zone).</summary>
+        public static PropDefinition CreatePropDefinitionFromSprite(Sprite sprite, string folder)
+        {
+            if (sprite == null) return null;
+
+            EnsureFolder(folder);
+            PropDefinition prop = ScriptableObject.CreateInstance<PropDefinition>();
+            prop.sprite = sprite;
+            prop.displayName = sprite.name;
+
+            string path = AssetDatabase.GenerateUniqueAssetPath($"{folder}/Prop_{sprite.name}.asset");
+            AssetDatabase.CreateAsset(prop, path);
+            return prop;
+        }
+
         /// <summary>
         /// Captures the tile cells currently inside a Select-tool selection into a new <see cref="TileStamp"/>
         /// asset, relative to the selection's min corner. Returns null if the selection is empty (no

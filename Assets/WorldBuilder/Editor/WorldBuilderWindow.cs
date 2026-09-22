@@ -37,6 +37,7 @@ namespace RythmRPG.WorldBuilder.Editor
         [SerializeField] private WorldBuilderWorld activeWorld;
 
         private readonly WorldBuilderSceneTool sceneTool = new WorldBuilderSceneTool();
+        private readonly WorldBuilderPropTool propTool = new WorldBuilderPropTool();
         private readonly WorldBuilderPaletteView paletteView = new WorldBuilderPaletteView();
         private Section currentSection = Section.TerrainAndGround;
         private Vector2 bodyScroll;
@@ -80,6 +81,7 @@ namespace RythmRPG.WorldBuilder.Editor
         {
             SceneView.duringSceneGui -= OnSceneGUI;
             sceneTool.ToolEnabled = false;
+            propTool.ToolEnabled = false;
         }
 
         private void RefreshSerializedWorld()
@@ -104,6 +106,8 @@ namespace RythmRPG.WorldBuilder.Editor
 
             sceneTool.ActiveWorld = activeWorld;
             sceneTool.SelectedTile = paletteView.SelectedTile;
+            propTool.ActiveWorld = activeWorld;
+            propTool.SelectedProp = activeWorld.palette != null ? activeWorld.palette.FindPropById(WorldBuilderPrefs.SelectedPropGuid) : null;
 
             bodyScroll = EditorGUILayout.BeginScrollView(bodyScroll);
             DrawSectionTabs();
@@ -114,7 +118,7 @@ namespace RythmRPG.WorldBuilder.Editor
                 case Section.WorldSettings: DrawWorldSettings(); break;
                 case Section.TerrainAndGround: DrawTerrainAndGround(); break;
                 case Section.TilePalette: DrawTilePalette(); break;
-                case Section.ObjectPlacement: DrawPlaceholder("Object and Prop Placement", "Phase 3"); break;
+                case Section.ObjectPlacement: DrawObjectPlacement(); break;
                 case Section.EnvironmentLayers: DrawEnvironmentLayers(); break;
                 case Section.ElevationAndStructures: DrawElevationAndStructures(); break;
                 case Section.CollisionAndNavigation: DrawCollisionAndNavigation(); break;
@@ -151,6 +155,7 @@ namespace RythmRPG.WorldBuilder.Editor
                 if (GUILayout.Button("Rebuild All", EditorStyles.toolbarButton, GUILayout.Width(80f)))
                 {
                     activeWorld.RebuildAllChunks();
+                    activeWorld.RebuildAllProps();
                 }
             }
 
@@ -820,6 +825,147 @@ namespace RythmRPG.WorldBuilder.Editor
             return true;
         }
 
+        // ---------------------------------------------------------------
+        // Object Placement (Phase 3)
+        // ---------------------------------------------------------------
+
+        private void DrawObjectPlacement()
+        {
+            EditorGUILayout.LabelField("Object Placement", EditorStyles.boldLabel);
+            EditorGUILayout.HelpBox(
+                "Click in the Scene view to place the selected prop below at the raycast hit point on the " +
+                "active elevation plane (the same plane and Active Elevation Level control as Terrain & " +
+                "Ground). Placed props are real GameObjects under the world's \"Props\" child -- once " +
+                "placed, select one normally and use Unity's own Move/Rotate/Scale tools on it; this tool " +
+                "only handles the initial placement.",
+                MessageType.None);
+
+            EditorGUI.BeginChangeCheck();
+            propTool.ToolEnabled = EditorGUILayout.ToggleLeft("Enable Object Placement in Scene View", propTool.ToolEnabled);
+            if (EditorGUI.EndChangeCheck()) SceneView.RepaintAll();
+
+            if (sceneTool.ToolEnabled && propTool.ToolEnabled)
+            {
+                EditorGUILayout.HelpBox(
+                    "Ground Painting is also enabled (Terrain & Ground tab) -- a single click will both " +
+                    "paint a tile and place a prop. Turn one off if that's not what you want.",
+                    MessageType.Warning);
+            }
+
+            if (activeWorld.palette == null)
+            {
+                EditorGUILayout.HelpBox("Create or assign a Tile Palette (Tile Palette tab) to hold props too.", MessageType.Info);
+                return;
+            }
+
+            EditorGUILayout.Space(4f);
+            DrawPropDropZone();
+
+            EditorGUILayout.Space(6f);
+            EditorGUILayout.LabelField($"Props ({activeWorld.palette.props.Count})", EditorStyles.boldLabel);
+
+            string selectedGuid = WorldBuilderPrefs.SelectedPropGuid;
+            foreach (PropDefinition prop in activeWorld.palette.props)
+            {
+                if (prop == null) continue;
+
+                EditorGUILayout.BeginHorizontal();
+                bool isSelected = prop.PropId == selectedGuid;
+                bool nextSelected = EditorGUILayout.ToggleLeft(prop.displayName, isSelected, GUILayout.Width(180f));
+                if (nextSelected && !isSelected) WorldBuilderPrefs.SelectedPropGuid = prop.PropId;
+
+                EditorGUI.BeginChangeCheck();
+                PropOrientationMode nextOrientation = (PropOrientationMode)EditorGUILayout.EnumPopup(prop.defaultOrientation, GUILayout.Width(100f));
+                if (EditorGUI.EndChangeCheck())
+                {
+                    Undo.RecordObject(prop, "Change Prop Orientation");
+                    prop.defaultOrientation = nextOrientation;
+                    EditorUtility.SetDirty(prop);
+                }
+
+                EditorGUILayout.EndHorizontal();
+            }
+
+            if (activeWorld.palette.props.Count == 0)
+            {
+                EditorGUILayout.HelpBox("Drag a sprite above to create your first prop.", MessageType.Info);
+            }
+
+            if (!propTool.ToolEnabled)
+            {
+                EditorGUILayout.HelpBox("Object placement is off. Enable it above, then click in the Scene view.", MessageType.Info);
+            }
+            else if (propTool.SelectedProp == null)
+            {
+                EditorGUILayout.HelpBox("Select a prop above before clicking in the Scene view.", MessageType.Info);
+            }
+
+            EditorGUILayout.Space(8f);
+            EditorGUILayout.HelpBox(
+                "Occlusion against characters relies on prop art having hard (non-antialiased) alpha edges: " +
+                "props render with an opaque alpha-clip material so Unity's normal depth buffer sorts them " +
+                "correctly from any angle, with no manual sorting-order system needed.",
+                MessageType.None);
+        }
+
+        private void DrawPropDropZone()
+        {
+            Rect dropRect = GUILayoutUtility.GetRect(0f, 40f, GUILayout.ExpandWidth(true));
+            GUI.Box(dropRect, "Drag Sprites here to add props to this palette", EditorStyles.helpBox);
+
+            Event evt = Event.current;
+            if (!dropRect.Contains(evt.mousePosition)) return;
+
+            if (evt.type == EventType.DragUpdated)
+            {
+                DragAndDrop.visualMode = DragAndDropVisualMode.Copy;
+                evt.Use();
+            }
+            else if (evt.type == EventType.DragPerform)
+            {
+                DragAndDrop.AcceptDrag();
+                const string folder = "Assets/WorldBuilder/Generated/Props";
+                bool added = false;
+
+                foreach (UnityEngine.Object obj in DragAndDrop.objectReferences)
+                {
+                    if (obj is Sprite sprite)
+                    {
+                        added |= AddPropFromSprite(sprite, folder);
+                    }
+                    else if (obj is Texture2D texture)
+                    {
+                        string path = AssetDatabase.GetAssetPath(texture);
+                        foreach (UnityEngine.Object asset in AssetDatabase.LoadAllAssetsAtPath(path))
+                        {
+                            if (asset is Sprite spriteAsset)
+                            {
+                                added |= AddPropFromSprite(spriteAsset, folder);
+                            }
+                        }
+                    }
+                }
+
+                if (added)
+                {
+                    AssetDatabase.SaveAssets();
+                    EditorUtility.SetDirty(activeWorld.palette);
+                }
+
+                evt.Use();
+            }
+        }
+
+        private bool AddPropFromSprite(Sprite sprite, string folder)
+        {
+            PropDefinition prop = WorldBuilderAssetFactory.CreatePropDefinitionFromSprite(sprite, folder);
+            if (prop == null) return false;
+
+            Undo.RecordObject(activeWorld.palette, "Add Prop");
+            activeWorld.palette.props.Add(prop);
+            return true;
+        }
+
         private void DrawEnvironmentLayers()
         {
             EditorGUILayout.LabelField("Environment Layers", EditorStyles.boldLabel);
@@ -977,6 +1123,7 @@ namespace RythmRPG.WorldBuilder.Editor
         private void OnSceneGUI(SceneView sceneView)
         {
             sceneTool.OnSceneGUI(sceneView);
+            propTool.OnSceneGUI(sceneView);
         }
     }
 }

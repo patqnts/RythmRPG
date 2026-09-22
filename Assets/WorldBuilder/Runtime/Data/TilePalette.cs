@@ -23,8 +23,14 @@ namespace RythmRPG.WorldBuilder
         [Tooltip("Auto-tiling rule sets (Phase 2 terrain transitions) that belong with this palette.")]
         public List<TerrainTransitionSet> terrainSets = new List<TerrainTransitionSet>();
 
+        [Tooltip("Placeable props (Phase 3 Object Placement) that belong with this palette.")]
+        public List<PropDefinition> props = new List<PropDefinition>();
+
         private Dictionary<string, TileDefinition> lookup;
         private int lookupBuiltForCount = -1;
+
+        private Dictionary<string, PropDefinition> propLookup;
+        private int propLookupBuiltForCount = -1;
 
         public TileDefinition FindById(string id)
         {
@@ -45,6 +51,25 @@ namespace RythmRPG.WorldBuilder
             lookupBuiltForCount = tiles.Count;
         }
 
+        public PropDefinition FindPropById(string id)
+        {
+            if (string.IsNullOrEmpty(id)) return null;
+            if (propLookup == null || propLookupBuiltForCount != props.Count) RebuildPropLookup();
+            return propLookup.TryGetValue(id, out PropDefinition prop) ? prop : null;
+        }
+
+        public void RebuildPropLookup()
+        {
+            propLookup = new Dictionary<string, PropDefinition>();
+            foreach (PropDefinition prop in props)
+            {
+                if (prop == null) continue;
+                propLookup[prop.PropId] = prop;
+            }
+
+            propLookupBuiltForCount = props.Count;
+        }
+
         public IEnumerable<string> Categories =>
             tiles.Where(t => t != null)
                 .Select(t => string.IsNullOrEmpty(t.category) ? "Uncategorized" : t.category)
@@ -54,5 +79,15 @@ namespace RythmRPG.WorldBuilder
         public IEnumerable<TileDefinition> TilesInCategory(string category) =>
             tiles.Where(t => t != null &&
                               (string.IsNullOrEmpty(t.category) ? "Uncategorized" : t.category) == category);
+
+        public IEnumerable<string> PropCategories =>
+            props.Where(p => p != null)
+                .Select(p => string.IsNullOrEmpty(p.category) ? "Uncategorized" : p.category)
+                .Distinct()
+                .OrderBy(c => c);
+
+        public IEnumerable<PropDefinition> PropsInCategory(string category) =>
+            props.Where(p => p != null &&
+                              (string.IsNullOrEmpty(p.category) ? "Uncategorized" : p.category) == category);
     }
 }

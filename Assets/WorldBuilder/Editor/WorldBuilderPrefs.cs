@@ -91,6 +91,13 @@ namespace RythmRPG.WorldBuilder.Editor
             set => EditorPrefs.SetString(Prefix + "SelectedStampGuid", value);
         }
 
+        /// <summary>The PropDefinition currently selected for placement in the Object Placement tab (Phase 3).</summary>
+        public static string SelectedPropGuid
+        {
+            get => EditorPrefs.GetString(Prefix + "SelectedPropGuid", string.Empty);
+            set => EditorPrefs.SetString(Prefix + "SelectedPropGuid", value);
+        }
+
         public static string SearchFilter
         {
             get => EditorPrefs.GetString(Prefix + "SearchFilter", string.Empty);

@@ -161,5 +161,37 @@ namespace RythmRPG.WorldBuilder.Editor
                 Handles.DrawSolidRectangleWithOutline(TileFootprintQuad(coord, tileSize, y), fill, outline);
             }
         }
+
+        /// <summary>
+        /// Object Placement tool hover preview (Phase 3): the prop's collision footprint (or a 1x1 world
+        /// unit default if it has none/is disabled) centered on the raycast hit point, plus a vertical
+        /// tick so its ground position reads clearly even though the actual prop quad may stand upright.
+        /// </summary>
+        public static void DrawPropPreview(PropDefinition definition, Vector3 worldPosition, float elevationY)
+        {
+            Vector2 footprint = definition != null && definition.collisionEnabled ? definition.footprintSize : Vector2.one;
+            Vector2 offset = definition != null && definition.collisionEnabled ? definition.footprintOffset : Vector2.zero;
+            float y = elevationY + 0.006f;
+
+            float minX = worldPosition.x + offset.x - footprint.x * 0.5f;
+            float maxX = worldPosition.x + offset.x + footprint.x * 0.5f;
+            float minZ = worldPosition.z + offset.y - footprint.y * 0.5f;
+            float maxZ = worldPosition.z + offset.y + footprint.y * 0.5f;
+
+            Vector3[] quad =
+            {
+                new Vector3(minX, y, minZ),
+                new Vector3(maxX, y, minZ),
+                new Vector3(maxX, y, maxZ),
+                new Vector3(minX, y, maxZ)
+            };
+
+            Handles.DrawSolidRectangleWithOutline(quad, new Color(1f, 0.55f, 0.2f, 0.25f), new Color(1f, 0.55f, 0.2f, 0.9f));
+
+            Color previous = Handles.color;
+            Handles.color = new Color(1f, 0.55f, 0.2f, 0.9f);
+            Handles.DrawLine(new Vector3(worldPosition.x, y, worldPosition.z), new Vector3(worldPosition.x, y + 1f, worldPosition.z));
+            Handles.color = previous;
+        }
     }
 }

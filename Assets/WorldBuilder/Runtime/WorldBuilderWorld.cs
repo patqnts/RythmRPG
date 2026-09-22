@@ -30,8 +30,18 @@ namespace RythmRPG.WorldBuilder
         private readonly Dictionary<TileCoord, GroundChunk> chunkLookup = new Dictionary<TileCoord, GroundChunk>();
         private readonly HashSet<TileCoord> dirtyChunks = new HashSet<TileCoord>();
         private Transform chunkRoot;
+        private Transform propRoot;
 
         public IReadOnlyList<TileLayerData> Layers => groundLayers;
+
+        public Transform PropRoot
+        {
+            get
+            {
+                EnsurePropRoot();
+                return propRoot;
+            }
+        }
 
         public TileLayerData ActiveLayer
         {
@@ -203,10 +213,73 @@ namespace RythmRPG.WorldBuilder
             chunkRoot = rootGO.transform;
         }
 
+        private void EnsurePropRoot()
+        {
+            if (propRoot != null) return;
+
+            Transform existing = transform.Find("Props");
+            if (existing != null)
+            {
+                propRoot = existing;
+                return;
+            }
+
+            GameObject rootGO = new GameObject("Props");
+#if UNITY_EDITOR
+            // Same undo-safety reasoning as EnsureChunkRoot/GetOrCreateChunk: this is created as a side
+            // effect of placing the world's first prop, inside that same placement action's undo group.
+            if (!Application.isPlaying)
+            {
+                Undo.RegisterCreatedObjectUndo(rootGO, "Place Prop");
+            }
+#endif
+            rootGO.transform.SetParent(transform, false);
+            propRoot = rootGO.transform;
+        }
+
+        /// <summary>
+        /// Creates and places one prop instance at <paramref name="worldPosition"/>, undo-registered as
+        /// a single step (same pattern as GetOrCreateChunk: the whole GameObject is registered right
+        /// after creation, so undoing placement simply removes it -- there is no separate "prop data" to
+        /// desync the way groundLayers can from an unregistered chunk).
+        /// </summary>
+        public WorldBuilderProp CreateProp(PropDefinition definition, Vector3 worldPosition)
+        {
+            if (definition == null) return null;
+
+            EnsurePropRoot();
+            GameObject go = new GameObject("Prop");
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
+            {
+                Undo.RegisterCreatedObjectUndo(go, "Place Prop");
+            }
+#endif
+            go.transform.SetParent(propRoot, false);
+            go.transform.position = worldPosition;
+
+            WorldBuilderProp prop = go.AddComponent<WorldBuilderProp>();
+            prop.Configure(definition);
+            prop.Rebuild(settings, settings.referenceCamera);
+            return prop;
+        }
+
+        /// <summary>Rebuilds every placed prop's mesh/material/rotation/collider from its current PropDefinition.</summary>
+        public void RebuildAllProps()
+        {
+            EnsurePropRoot();
+            foreach (Transform child in propRoot)
+            {
+                WorldBuilderProp prop = child.GetComponent<WorldBuilderProp>();
+                if (prop != null) prop.Rebuild(settings, settings.referenceCamera);
+            }
+        }
+
         private void OnEnable()
         {
             EnsureLayers();
             EnsureChunkRoot();
+            EnsurePropRoot();
             RebuildMissingChunks();
 #if UNITY_EDITOR
             Undo.undoRedoPerformed += HandleUndoRedo;
