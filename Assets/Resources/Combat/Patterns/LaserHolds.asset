@@ -17,7 +17,8 @@ MonoBehaviour:
   beatsPerMeasure: 4
   compositionDuration: 1
   audioClip: {fileID: 0}
-  turnAudioClip: {fileID: 0}
+  song: {fileID: 0}
+  songPreviewBar: 0
   audioOffsetSeconds: 0
   snapEnabled: 1
   snapDivision: 4
@@ -99,7 +100,7 @@ MonoBehaviour:
   notes:
   - id: e8132b4895594859afe01e1b4c87296c
     laneId: d2b53c08b1d04358acca2b2613f39ee6
-    hitTime: 4.5
+    hitTime: 3.75
     noteType: 3
     holdDuration: 11.5
     initializeMovementType: 0
