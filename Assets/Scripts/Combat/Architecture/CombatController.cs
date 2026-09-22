@@ -70,7 +70,7 @@ namespace RythmRPG.Combat
             ConfigureStateMachine();
             IsBattleActive = true;
             uiController?.Bind(this, encounter.Player, encounter.Enemy);
-            vfxController.Bind(abilitySlots, inputRouter, judgementSystem, encounter.Enemy);
+            vfxController.Bind(abilitySlots, inputRouter, judgementSystem, encounter.Enemy, encounter.Player);
             abilitySlots.SetHoldDuration(vfxController.SelectionHoldDuration);
             BattleStarted?.Invoke(encounter);
             stateMachine.Start();

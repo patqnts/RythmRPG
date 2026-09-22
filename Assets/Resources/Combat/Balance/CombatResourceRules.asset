@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: CombatResourceRules
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.CombatResourceRules
   missDamage: 1
-  badDamage: 0.5
+  badDamage: 0.2
   goodDamage: 0
   perfectDamage: 0
-  perfectMana: 1
-  goodMana: 0.5
+  perfectMana: 0.5
+  goodMana: 0
   badMana: 0
   abilityChartManaScale: 0.5
   manaPerPlayerTurn: 5

@@ -13,11 +13,14 @@ namespace RythmRPG.Combat
         [SerializeField] private Transform abilityCenter;
         [SerializeField] private Transform cameraTransform;
         [SerializeField, Min(0f)] private float minimumAbilityPatternSpawnHeightAboveLanes = 2.5f;
+        [Tooltip("Pop-up / float / charge motion of the ability icons. Empty = Resources/Combat/UI/AbilitySlotAnimation.")]
+        [SerializeField] private AbilitySlotAnimationProfile slotAnimation;
 
         private readonly Dictionary<int, AbilitySlotView> slotViews = new();
         private AbilitySlotController slots;
         private RhythmJudgementSystem judgement;
         private EnemyCombatant enemy;
+        private PlayerCombatant player;
         private EnemyHitReactionView hitReaction;
         private Transform runtimeAbilityCenter;
         private Transform runtimeAbilitySelectionCenter;
@@ -34,11 +37,12 @@ namespace RythmRPG.Combat
         {
             uiTheme ??= Resources.Load<CombatUITheme>("Combat/UI/CombatUITheme");
             vfxTheme ??= Resources.Load<CombatVFXTheme>("Combat/VFX/CombatVFXTheme");
+            if (slotAnimation == null) slotAnimation = AbilitySlotAnimationProfile.LoadOrDefault();
             ResolvePresentationReferences();
         }
 
         public void Bind(AbilitySlotController slotController, LaneInputRouter input,
-            RhythmJudgementSystem judgementSystem, EnemyCombatant enemyCombatant)
+            RhythmJudgementSystem judgementSystem, EnemyCombatant enemyCombatant, PlayerCombatant playerCombatant = null)
         {
             Unbind();
             slotViews.Clear();
@@ -46,10 +50,14 @@ namespace RythmRPG.Combat
             slots = slotController;
             judgement = judgementSystem;
             enemy = enemyCombatant;
+            player = playerCombatant;
+            if (slotAnimation == null) slotAnimation = AbilitySlotAnimationProfile.LoadOrDefault();
             foreach (LaneKeyBinding binding in input.Bindings)
             {
                 if (binding.View == null) continue;
-                AbilitySlotView view = binding.View.GetComponent<AbilitySlotView>() ?? binding.View.gameObject.AddComponent<AbilitySlotView>();
+                AbilitySlotView view = binding.View.GetComponent<AbilitySlotView>();
+                if (view == null) view = binding.View.gameObject.AddComponent<AbilitySlotView>();
+                view.SetProfile(slotAnimation);
                 slotViews[binding.LaneId] = view;
             }
             if (slots != null)
@@ -61,6 +69,7 @@ namespace RythmRPG.Combat
                 RefreshSlots(slots.Slots);
             }
             SetAbilitySlotsVisible(false, false);
+            if (player != null) player.ManaChanged += HandlePlayerManaChanged;
             if (judgement != null) judgement.OnJudgementResolved += PlayJudgement;
             if (enemy != null)
             {
@@ -72,6 +81,8 @@ namespace RythmRPG.Combat
         public IEnumerator PlayAbilitySelected(int laneId, AbilityRuntimeInstance ability)
         {
             if (!slotViews.TryGetValue(laneId, out AbilitySlotView slot) || ability?.Definition?.Icon == null) yield break;
+            // The held icon finishes its "charged" punch, then drops away as its copy flies to the centre.
+            slot.SetVisible(false, true, slotAnimation != null ? slotAnimation.ReadyPunchSeconds : 0.15f, 0f);
             GameObject iconObject = new("Selected Ability Icon");
             RhythmLaneTarget laneTarget = FindObjectsByType<RhythmLaneTarget>(FindObjectsInactive.Include,
                 FindObjectsSortMode.None).FirstOrDefault(target => target.LaneId == laneId);
@@ -155,12 +166,37 @@ namespace RythmRPG.Combat
             return ordered.Count == 0 ? null : ordered[ordered.Count / 2].Value.transform;
         }
 
+        /// <summary>
+        /// Show/hide the ability icons. Animated shows pop up left to right after the profile's delay, each one
+        /// bobbing a little behind its neighbour; animated hides drop them away in the same order.
+        /// </summary>
         public void SetAbilitySlotsVisible(bool visible, bool animate)
         {
             abilitySlotsVisible = visible;
-            foreach (AbilitySlotView view in slotViews.Values)
-                if (view != null) view.SetVisible(visible, animate);
+            if (visible) RefreshUsability();
+            AbilitySlotAnimationProfile profile = slotAnimation != null ? slotAnimation : AbilitySlotAnimationProfile.LoadOrDefault();
+            int index = 0;
+            foreach (KeyValuePair<int, AbilitySlotView> pair in slotViews.OrderBy(pair => pair.Key))
+            {
+                if (pair.Value == null) continue;
+                float delay = visible ? profile.AppearDelay + index * profile.AppearStagger : index * profile.HideStagger;
+                pair.Value.SetVisible(visible, animate, delay, index * profile.FloatPhaseStep);
+                index++;
+            }
         }
+
+        private void RefreshUsability()
+        {
+            if (slots == null) return;
+            foreach ((int lane, AbilitySlotView view) in slotViews)
+            {
+                if (view == null) continue;
+                slots.Slots.TryGetValue(lane, out AbilityRuntimeInstance ability);
+                view.SetUsable(ability != null && (player == null || ability.CanUse(player)));
+            }
+        }
+
+        private void HandlePlayerManaChanged(int current, int maximum) => RefreshUsability();
 
         public void PrepareEnemyDefeat() => hitReaction?.StopAndRestore();
 
@@ -170,13 +206,13 @@ namespace RythmRPG.Combat
             {
                 runtimeSlots.TryGetValue(lane, out AbilityRuntimeInstance ability);
                 view.Configure(ability);
-                view.SetVisible(abilitySlotsVisible, false);
             }
+            RefreshUsability();
         }
 
         private void HandleSelectionStarted(int lane, AbilityRuntimeInstance ability)
         {
-            if (slotViews.TryGetValue(lane, out AbilitySlotView view)) view.SetHighlighted(true);
+            if (slotViews.TryGetValue(lane, out AbilitySlotView view)) view.SetCharging(true);
             CombatCameraShaker.Shake(ResolveActiveCamera(), 0.025f, 0.15f);
         }
 
@@ -188,8 +224,8 @@ namespace RythmRPG.Combat
         private void HandleSelectionCancelled(int lane)
         {
             if (!slotViews.TryGetValue(lane, out AbilitySlotView view)) return;
+            view.SetCharging(false);
             view.SetProgress(0f);
-            view.SetHighlighted(false);
         }
 
         private void HandleEnemyDamaged(int amount)
@@ -247,6 +283,7 @@ namespace RythmRPG.Combat
             }
             if (judgement != null) judgement.OnJudgementResolved -= PlayJudgement;
             if (enemy != null) enemy.Damaged -= HandleEnemyDamaged;
+            if (player != null) player.ManaChanged -= HandlePlayerManaChanged;
         }
 
         private void ResolvePresentationReferences()
