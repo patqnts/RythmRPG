@@ -347,6 +347,7 @@ namespace RythmRPG.Combat
         // Enemy turn: damage weighted by judgement (see CombatResourceRules), unless a ward covers the lane.
         private int ResolveDefenseDamage(Note note, RhythmJudgementResult result)
         {
+            if (DebugInvulnerable) return 0;
             int amount = (resourceRules ?? CombatResourceRules.Load()).DefenseDamage(note.damage, result.Judgement);
             if (amount > 0 && modifierSystem.TryBlockDamage(result)) return 0;
             return amount;
@@ -374,6 +375,69 @@ namespace RythmRPG.Combat
             stateRoutine = null;
             if (!stateMachine.TryTransition(next))
                 Debug.LogError($"Invalid combat transition: {CurrentState} -> {next}", this);
+        }
+
+        // ---------- Dev tools (driven by CombatDebugTools) ----------
+
+        public CombatEncounterContext Encounter => encounter;
+        public AbilitySlotController AbilitySlots => abilitySlots;
+
+        /// <summary>Dev tool: enemy notes deal no damage while true.</summary>
+        public bool DebugInvulnerable { get; set; }
+
+        /// <summary>Dev tool: ends the enemy's attack now (remaining notes vanish, no damage) and moves to the player turn.</summary>
+        public bool DebugSkipEnemyTurn()
+        {
+            if (!IsBattleActive) return false;
+            if (CurrentState == CombatState.EnemyTurnStart)
+            {
+                StopStateRoutine();
+                Transition(CombatState.EnemyTurnExecuting);
+            }
+            if (CurrentState != CombatState.EnemyTurnExecuting) return false;
+            StopStateRoutine();
+            runner?.CancelCurrentPattern(false);
+            Transition(CombatState.EnemyTurnEnd);
+            return true;
+        }
+
+        /// <summary>Dev tool: the player passes the turn without using an ability.</summary>
+        public bool DebugSkipPlayerTurn()
+        {
+            if (!IsBattleActive || CurrentState != CombatState.PlayerAbilitySelection) return false;
+            StopStateRoutine();
+            abilitySlots.EndSelection();
+            Transition(CombatState.PlayerTurnEnd);
+            return true;
+        }
+
+        /// <summary>
+        /// Dev tool: kills the enemy (victory) or the player (defeat) and plays the normal ending.
+        /// While an ability is running the kill is applied and the battle ends when the ability finishes.
+        /// </summary>
+        public bool DebugEndBattle(bool victory)
+        {
+            if (!IsBattleActive || CurrentState == CombatState.BattleStart
+                || CurrentState == CombatState.Victory || CurrentState == CombatState.Defeat) return false;
+            if (CurrentState == CombatState.PlayerAbilityExecuting)
+            {
+                if (!victory) return false;
+                encounter.Enemy.ApplyDamage(encounter.Enemy.CurrentHealth);
+                return true;
+            }
+            StopStateRoutine();
+            runner?.CancelCurrentPattern(false);
+            abilitySlots.EndSelection();
+            if (victory) encounter.Enemy.ApplyDamage(encounter.Enemy.CurrentHealth);
+            else encounter.Player.ApplyDamage(encounter.Player.CurrentHealth);
+            stateRoutine = StartCoroutine(DebugFinishRoutine(victory));
+            return true;
+        }
+
+        private IEnumerator DebugFinishRoutine(bool victory)
+        {
+            if (victory) yield return PlayEnemyDefeat();
+            Transition(victory ? CombatState.Victory : CombatState.Defeat);
         }
 
         private void StopStateRoutine()

@@ -20,7 +20,7 @@ MonoBehaviour:
   arriveState: 
   steps:
   - rid: 1000
-  - rid: 1001
+  - rid: 2956268416212402176
   references:
     version: 2
     RefIds:
@@ -34,21 +34,16 @@ MonoBehaviour:
         crossFadeSeconds: 0.05
         wait: 1
         seconds: 0.35
-    - rid: 1001
-      type: {class: ChannelDamageStep, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
+    - rid: 2956268416212402176
+      type: {class: SpawnEffectStep, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
       data:
         waitForCompletion: 1
         delay: 0
-        channelSeconds: 0.9
-        ticks: 3
-        weightPerTick: 1
-        tickAtStart: 1
-        channelState: 
-        channelBool: 
-        loopEffect: {fileID: 0}
-        loopEffectAt: 0
-        loopEffectOffset: {x: 0, y: 0.6, z: 0}
-        tickEffect: {fileID: 0}
-        tickEffectAt: 0
-        tickEffectOffset: {x: 0, y: 0.6, z: 0}
-        tickShake: 0
+        prefab: {fileID: 105302, guid: e4a4dd0be891ef542a95aef4b72806c4, type: 3}
+        at: 0
+        offset: {x: 0, y: 0, z: 0}
+        attachToAnchor: 0
+        scale: 0.5
+        lifetime: 2
+        holdSeconds: 0.3
+        faceCamera: 1

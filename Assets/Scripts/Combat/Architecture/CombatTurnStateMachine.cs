@@ -17,11 +17,13 @@ namespace RythmRPG.Combat
             new Dictionary<CombatState, HashSet<CombatState>>
             {
                 [CombatState.BattleStart] = new() { CombatState.EnemyTurnStart, CombatState.Victory, CombatState.Defeat },
-                [CombatState.EnemyTurnStart] = new() { CombatState.EnemyTurnExecuting, CombatState.Defeat },
-                [CombatState.EnemyTurnExecuting] = new() { CombatState.EnemyTurnEnd, CombatState.Defeat },
+                // Victory during the enemy turn: the enemy can die on its own turn (dev tools, future reflect damage).
+                [CombatState.EnemyTurnStart] = new() { CombatState.EnemyTurnExecuting, CombatState.Victory, CombatState.Defeat },
+                [CombatState.EnemyTurnExecuting] = new() { CombatState.EnemyTurnEnd, CombatState.Victory, CombatState.Defeat },
                 [CombatState.EnemyTurnEnd] = new() { CombatState.PlayerTurnStart, CombatState.Victory, CombatState.Defeat },
                 [CombatState.PlayerTurnStart] = new() { CombatState.PlayerAbilitySelection, CombatState.Victory, CombatState.Defeat },
-                [CombatState.PlayerAbilitySelection] = new() { CombatState.PlayerAbilityExecuting, CombatState.Victory, CombatState.Defeat },
+                // PlayerTurnEnd from selection = the player passes the turn without acting.
+                [CombatState.PlayerAbilitySelection] = new() { CombatState.PlayerAbilityExecuting, CombatState.PlayerTurnEnd, CombatState.Victory, CombatState.Defeat },
                 [CombatState.PlayerAbilityExecuting] = new() { CombatState.PlayerTurnEnd, CombatState.Victory, CombatState.Defeat },
                 [CombatState.PlayerTurnEnd] = new() { CombatState.EnemyTurnStart, CombatState.Victory, CombatState.Defeat },
                 [CombatState.Victory] = new(),
