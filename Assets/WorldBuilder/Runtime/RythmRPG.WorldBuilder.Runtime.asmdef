@@ -1,0 +1,14 @@
+{
+  "name": "RythmRPG.WorldBuilder.Runtime",
+  "rootNamespace": "RythmRPG.WorldBuilder",
+  "references": [],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}
