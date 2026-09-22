@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.AbilityDefinition
   id: heal
   displayName: Heal
-  icon: {fileID: -505979077, guid: 10c61ee0f6a92db429c706eeb35e538a, type: 3}
+  icon: {fileID: 21300000, guid: c3aab7237df394c4890e647a4ae580ea, type: 3}
   abilityType: 3
   element: 2
   manaCost: 30

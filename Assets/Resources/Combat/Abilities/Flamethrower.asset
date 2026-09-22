@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.AbilityDefinition
   id: flamethrower
   displayName: Flamethrower
-  icon: {fileID: -1638154954, guid: 49386da3e39b02740ac12ffc877e867a, type: 3}
+  icon: {fileID: 21300000, guid: dd3885098198d104888439be4c590aba, type: 3}
   abilityType: 1
   element: 1
   manaCost: 20

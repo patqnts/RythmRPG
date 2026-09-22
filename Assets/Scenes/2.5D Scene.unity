@@ -4258,7 +4258,6 @@ GameObject:
   m_Component:
   - component: {fileID: 680622201}
   - component: {fileID: 680622202}
-  - component: {fileID: 680622203}
   m_Layer: 0
   m_Name: Combat HUD Bars
   m_TagString: Untagged
@@ -4312,18 +4311,6 @@ MonoBehaviour:
   playerMana: {fileID: 0}
   turnText: {fileID: 0}
   showLegacyLabels: 0
---- !u!225 &680622203
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 680622200}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!1001 &680760347
 PrefabInstance:
   m_ObjectHideFlags: 0

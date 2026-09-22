@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.AbilityDefinition
   id: basic-attack
   displayName: Basic Attack
-  icon: {fileID: 21300000, guid: d8e8dc4df2f885c48be073724700409e, type: 3}
+  icon: {fileID: 21300000, guid: 4d7635c366a76274c85747592d98d2f5, type: 3}
   abilityType: 0
   element: 0
   manaCost: 0
