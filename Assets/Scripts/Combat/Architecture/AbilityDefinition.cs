@@ -17,6 +17,8 @@ namespace RythmRPG.Combat
         [SerializeField] private RhythmChart rhythmPattern;
         [SerializeField] private AbilityOutcomeProfile outcomeProfile;
         [SerializeField] private AbilityVFXProfile vfxProfile;
+        [Tooltip("How the character performs the attack after the rhythm part: move to the middle of the screen, animation / projectile / effects, move back. Empty = the old projectile impact from the VFX profile.")]
+        [SerializeField] private CharacterAttackSequence attackSequence;
 
         public string Id => id;
         public string DisplayName => displayName;
@@ -29,5 +31,6 @@ namespace RythmRPG.Combat
         public RhythmChart RhythmPattern => rhythmPattern;
         public AbilityOutcomeProfile OutcomeProfile => outcomeProfile;
         public AbilityVFXProfile VFXProfile => vfxProfile;
+        public CharacterAttackSequence AttackSequence => attackSequence;
     }
 }

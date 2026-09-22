@@ -7,6 +7,7 @@ namespace RythmRPG.Combat
     {
         [SerializeField] private AbilityExecutor executor;
         [SerializeField] private CombatVFXController vfxController;
+        [SerializeField] private CharacterAttackPerformer attackPerformer;
         private RhythmPatternRunner runner;
         private AbilityExecutionContext context;
         private Transform abilityImpactOrigin;
@@ -64,11 +65,30 @@ namespace RythmRPG.Combat
             if (vfxProfile != null && vfxProfile.ImpactAnticipationDuration > 0f)
                 yield return new WaitForSeconds(vfxProfile.ImpactAnticipationDuration);
 
-            if (vfxController != null)
-                yield return vfxController.PlayAbilityImpact(context.Ability, abilityImpactOrigin, context.Enemy != null ? context.Enemy.transform : null);
+            CharacterAttackSequence sequence = context.Ability?.Definition?.AttackSequence;
+            bool impactDone = false;
+            void Impact()
+            {
+                if (impactDone) return;
+                impactDone = true;
+                executor?.Execute(context, performance);
+                ImpactResolved?.Invoke(context, performance);
+            }
 
-            executor?.Execute(context, performance);
-            ImpactResolved?.Invoke(context, performance);
+            if (sequence != null)
+            {
+                // Character-performed attack: the sequence decides when the hit lands (projectile arrival, impact step).
+                if (attackPerformer == null) attackPerformer = GetComponent<CharacterAttackPerformer>();
+                if (attackPerformer == null) attackPerformer = gameObject.AddComponent<CharacterAttackPerformer>();
+                Color accent = vfxProfile != null ? vfxProfile.AccentColor : Color.white;
+                yield return attackPerformer.Perform(sequence, context.Player, context.Enemy, accent, Impact);
+            }
+            else if (vfxController != null)
+            {
+                yield return vfxController.PlayAbilityImpact(context.Ability, abilityImpactOrigin, context.Enemy != null ? context.Enemy.transform : null);
+            }
+
+            Impact();
             if (vfxProfile != null && vfxProfile.ImpactSettleDuration > 0f)
                 yield return new WaitForSeconds(vfxProfile.ImpactSettleDuration);
 

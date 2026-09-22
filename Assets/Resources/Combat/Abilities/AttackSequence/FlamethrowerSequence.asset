@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a24d139eae904b479eef368918af55f, type: 3}
+  m_Name: FlamethrowerSequence
+  m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.CharacterAttackSequence
+  moveToStage: 1
+  stageViewport: {x: 0.5, y: 0.45}
+  moveInSeconds: 0.35
+  moveBackSeconds: 0.35
+  movingBoolParameter: 
+  arriveState: 
+  steps:
+  - rid: 2956268411002028131
+  - rid: 2956268411002028129
+  - rid: 2956268411002028132
+  - rid: 2956268411002028130
+  references:
+    version: 2
+    RefIds:
+    - rid: 2956268411002028129
+      type: {class: SpawnEffectStep, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
+      data:
+        waitForCompletion: 1
+        delay: 0
+        prefab: {fileID: 100002, guid: 437e7a040f5263181ae6ef6dac489e6b, type: 3}
+        at: 0
+        offset: {x: 0, y: 0.6, z: 1}
+        attachToAnchor: 0
+        scale: 1
+        lifetime: 2
+        holdSeconds: 1
+        faceCamera: 0
+    - rid: 2956268411002028130
+      type: {class: ImpactStep, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
+      data:
+        waitForCompletion: 0
+        delay: 0
+    - rid: 2956268411002028131
+      type: {class: PlayAnimationStep, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
+      data:
+        waitForCompletion: 1
+        delay: 0
+        stateName: Attack
+        trigger: 
+        crossFadeSeconds: 0.05
+        wait: 2
+        seconds: 0.4
+    - rid: 2956268411002028132
+      type: {class: CameraShakeStep, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
+      data:
+        waitForCompletion: 0
+        delay: 0
+        strength: 0.08
+        seconds: 0.5

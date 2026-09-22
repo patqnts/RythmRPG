@@ -56,6 +56,9 @@ namespace RythmRPG.Combat
         private float combatPlayerHeight;
         private float placementStartedAt;
 
+        /// <summary>While true the coordinator leaves the player where it is (e.g. an attack moves it to the stage).</summary>
+        public bool PlayerPlacementSuspended { get; set; }
+
         private void Awake()
         {
             ResolveReferences();
@@ -71,6 +74,7 @@ namespace RythmRPG.Combat
             // Cinemachine and the render camera must finish before sampling the screen-anchored line.
             lanePresentation.RefreshPresentation();
             lanePresentation.SnapTargetsToHitLine();
+            if (PlayerPlacementSuspended) return;
             if (!lanePresentation.TryGetPlayerPosition(combatPlayerHeight, playerFootOffset,
                 playerDistanceBehindHitLine, out Vector3 target)) return;
             float progress = moveDuration <= 0f ? 1f : Mathf.Clamp01((Time.time - placementStartedAt) / moveDuration);
