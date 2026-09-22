@@ -10,7 +10,7 @@ public class ArrowNote : NoteObject
 
     void Start()
     {
-        keys = FindObjectsByType<KeyButton>(FindObjectsSortMode.None);
+        keys = FindObjectsByType<KeyButton>();
         isMoving = false;
         isSpecialMovement = true;
         specialMovementTimer = 5f;

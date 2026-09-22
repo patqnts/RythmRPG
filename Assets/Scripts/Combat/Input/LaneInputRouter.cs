@@ -82,7 +82,7 @@ namespace RythmRPG.Combat
         private void EnsureBindings()
         {
             if (bindings.Count > 0) return;
-            KeyButton[] views = FindObjectsByType<KeyButton>(FindObjectsInactive.Include, FindObjectsSortMode.None)
+            KeyButton[] views = FindObjectsByType<KeyButton>(FindObjectsInactive.Include)
                 .OrderBy(view => view.keyIdentity).ToArray();
             int laneCount = Mathf.Max(DefaultKeys.Length, views.Length);
             for (int index = 0; index < laneCount; index++)

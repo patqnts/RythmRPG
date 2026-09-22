@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
     float idleTime;
     private void Start()
     {
-        combatController = FindFirstObjectByType<CombatController>();
+        combatController = FindAnyObjectByType<CombatController>();
         if (combatController != null) combatController.BattleEnded += OnBattleEnded;
     }
 
@@ -165,7 +165,7 @@ public class PlayerMovement : MonoBehaviour
         GameObject notice = Instantiate(noticeObject, enemyObject.transform);
         yield return new WaitForSeconds(1.5f);
         Destroy(notice);
-        combatController ??= FindFirstObjectByType<CombatController>();
+        combatController ??= FindAnyObjectByType<CombatController>();
         PlayerCombatant player = GetComponent<PlayerCombatant>() ?? gameObject.AddComponent<PlayerCombatant>();
         EnemyCombatant enemy = enemyObject.GetComponent<EnemyCombatant>();
         if (combatController != null && enemy != null)

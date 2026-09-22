@@ -344,14 +344,13 @@ namespace RythmRPG.Combat
         private void ResolveReferences()
         {
             combatUIRoot ??= FindNamedTransform("CombatSystemUI")?.gameObject;
-            virtualCamera ??= FindFirstObjectByType<CinemachineCamera>(FindObjectsInactive.Include);
+            virtualCamera ??= FindAnyObjectByType<CinemachineCamera>(FindObjectsInactive.Include);
             lanePresentation ??= GetComponent<CombatLanePresentation3D>();
         }
 
         private static Transform FindNamedTransform(string objectName)
         {
-            Transform[] transforms = FindObjectsByType<Transform>(FindObjectsInactive.Include,
-                FindObjectsSortMode.None);
+            Transform[] transforms = FindObjectsByType<Transform>(FindObjectsInactive.Include);
             foreach (Transform candidate in transforms)
             {
                 if (candidate.name == objectName) return candidate;

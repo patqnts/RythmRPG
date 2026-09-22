@@ -27,6 +27,8 @@ public class StationaryNote : Note
     [Header("Animation States")]
     [SerializeField] private string anticipationStateName = "Anticipation";
     [SerializeField] private string hitWindowStateName = "HitWindow";
+    /// <summary>Reserved for a hit-window animation state (kept so existing prefabs keep the value).</summary>
+    public string HitWindowStateName => hitWindowStateName;
     [SerializeField] private string holdStateName = "Hold";
     [SerializeField] private string endStateName = "End";
     [SerializeField] private string missStateName = "Miss";

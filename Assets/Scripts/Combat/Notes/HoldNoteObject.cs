@@ -35,7 +35,7 @@ public class HoldNoteObject : Note
     // Start is called before the first frame update
     void Start()
     {
-        keys = FindObjectsByType<KeyButton>(FindObjectsSortMode.None);
+        keys = FindObjectsByType<KeyButton>();
         isMoving = true;
 
         // Calculate hold time based on the length of the tail

@@ -84,8 +84,7 @@ namespace RythmRPG.Combat
             // The held icon finishes its "charged" punch, then drops away as its copy flies to the centre.
             slot.SetVisible(false, true, slotAnimation != null ? slotAnimation.ReadyPunchSeconds : 0.15f, 0f);
             GameObject iconObject = new("Selected Ability Icon");
-            RhythmLaneTarget laneTarget = FindObjectsByType<RhythmLaneTarget>(FindObjectsInactive.Include,
-                FindObjectsSortMode.None).FirstOrDefault(target => target.LaneId == laneId);
+            RhythmLaneTarget laneTarget = FindObjectsByType<RhythmLaneTarget>(FindObjectsInactive.Include).FirstOrDefault(target => target.LaneId == laneId);
             iconObject.transform.position = laneTarget != null
                 ? laneTarget.transform.position + Vector3.up
                 : AbilitySelectionCenter.position;
@@ -158,8 +157,7 @@ namespace RythmRPG.Combat
 
         public Transform GetCenterLaneViewTransform()
         {
-            List<RhythmLaneTarget> lanes = FindObjectsByType<RhythmLaneTarget>(FindObjectsInactive.Include,
-                FindObjectsSortMode.None).Where(target => target != null).OrderBy(target => target.LaneId).ToList();
+            List<RhythmLaneTarget> lanes = FindObjectsByType<RhythmLaneTarget>(FindObjectsInactive.Include).Where(target => target != null).OrderBy(target => target.LaneId).ToList();
             if (lanes.Count > 0) return lanes[lanes.Count / 2].transform;
             List<KeyValuePair<int, AbilitySlotView>> ordered = slotViews
                 .Where(pair => pair.Value != null).OrderBy(pair => pair.Key).ToList();
@@ -345,8 +343,7 @@ namespace RythmRPG.Combat
 
         private Vector3 ClampPresentationPointAboveLanes(Vector3 position)
         {
-            List<RhythmLaneTarget> lanes = FindObjectsByType<RhythmLaneTarget>(FindObjectsInactive.Include,
-                FindObjectsSortMode.None).Where(target => target != null).OrderBy(target => target.LaneId).ToList();
+            List<RhythmLaneTarget> lanes = FindObjectsByType<RhythmLaneTarget>(FindObjectsInactive.Include).Where(target => target != null).OrderBy(target => target.LaneId).ToList();
             if (lanes.Count > 0)
             {
                 float highestLaneY = lanes.Select(target => target.transform.position.y).Max();
@@ -379,7 +376,7 @@ namespace RythmRPG.Combat
             Camera mainCamera = Camera.main;
             if (mainCamera != null) return mainCamera;
 
-            return FindObjectsByType<Camera>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)
+            return FindObjectsByType<Camera>(FindObjectsInactive.Exclude)
                 .Where(camera => camera != null && camera.enabled)
                 .OrderByDescending(camera => camera.depth)
                 .FirstOrDefault();

@@ -36,13 +36,13 @@ public sealed class PlayerEnemyInteractor3D : MonoBehaviour
 
     private void Awake()
     {
-        combatController ??= FindFirstObjectByType<CombatController>();
+        combatController ??= FindAnyObjectByType<CombatController>();
         playerCombatant ??= GetComponent<PlayerCombatant>() ?? gameObject.AddComponent<PlayerCombatant>();
     }
 
     private void OnEnable()
     {
-        combatController ??= FindFirstObjectByType<CombatController>();
+        combatController ??= FindAnyObjectByType<CombatController>();
         if (combatController != null) combatController.BattleEnded += HandleBattleEnded;
     }
 
@@ -123,7 +123,7 @@ public sealed class PlayerEnemyInteractor3D : MonoBehaviour
         if (encounterDelay > 0f) yield return new WaitForSeconds(encounterDelay);
         if (notice != null) Destroy(notice);
 
-        combatController ??= FindFirstObjectByType<CombatController>();
+        combatController ??= FindAnyObjectByType<CombatController>();
         playerCombatant ??= GetComponent<PlayerCombatant>() ?? gameObject.AddComponent<PlayerCombatant>();
 
         if (combatController != null && enemy != null)

@@ -8,7 +8,7 @@ public class ClusterNote : Note
     public int force;
     void Start()
     {
-        keys = FindObjectsByType<KeyButton>(FindObjectsSortMode.None);
+        keys = FindObjectsByType<KeyButton>();
         if (UsesHorizontalGameplay)
         {
             StartFalling();

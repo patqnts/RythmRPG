@@ -103,7 +103,7 @@ namespace RythmRPG.Combat
             vfxController ??= GetComponent<CombatVFXController>() ?? gameObject.AddComponent<CombatVFXController>();
             lanePresentation ??= GetComponent<CombatLanePresentation3D>() ?? gameObject.AddComponent<CombatLanePresentation3D>();
             musicDirector ??= GetComponent<CombatMusicDirector>() ?? gameObject.AddComponent<CombatMusicDirector>();
-            uiController ??= FindFirstObjectByType<CombatUIController>(FindObjectsInactive.Include);
+            uiController ??= FindAnyObjectByType<CombatUIController>(FindObjectsInactive.Include);
             if (uiController == null)
             {
                 GameObject uiObject = new("Runtime Combat UI");

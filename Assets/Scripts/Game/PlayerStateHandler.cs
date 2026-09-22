@@ -26,7 +26,7 @@ public class PlayerStateHandler : MonoBehaviour
     {
         if (playerState == PlayerState.Freeze)
         {
-            inputRouter ??= FindFirstObjectByType<LaneInputRouter>();
+            inputRouter ??= FindAnyObjectByType<LaneInputRouter>();
             if (inputRouter == null) return;
             foreach (LaneKeyBinding binding in inputRouter.Bindings)
             {

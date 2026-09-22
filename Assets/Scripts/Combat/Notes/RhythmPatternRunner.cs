@@ -531,7 +531,7 @@ namespace RythmRPG.Combat
         private KeyButton[] GetKeys()
         {
             if (cachedKeys == null || cachedKeys.Length == 0)
-                cachedKeys = FindObjectsByType<KeyButton>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+                cachedKeys = FindObjectsByType<KeyButton>(FindObjectsInactive.Include);
             return cachedKeys;
         }
 

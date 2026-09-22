@@ -7,7 +7,7 @@ public class ScreenshakeManager : MonoBehaviour
 
     private float shakeDuration = 0f;
     private float shakeMagnitude = 0.7f;
-    private float dampingSpeed = 1.0f;
+    // private float dampingSpeed = 1.0f; // only used by the disabled shake code in Update
 
     private void Start()
     {
@@ -20,7 +20,7 @@ public class ScreenshakeManager : MonoBehaviour
         //{
         //    cameraTransform.localPosition = originalPosition + Random.insideUnitSphere * shakeMagnitude;
 
-        //    shakeDuration -= Time.deltaTime * dampingSpeed;
+        //    shakeDuration -= Time.deltaTime * dampingSpeed; // restore the dampingSpeed field above too
         //}
         //else
         //{

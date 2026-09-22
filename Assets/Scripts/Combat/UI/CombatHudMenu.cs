@@ -15,7 +15,7 @@ namespace RythmRPG.Combat
         [MenuItem("Tools/Rythm RPG/Combat/Create HUD Bars In Scene")]
         private static void CreateHudBars()
         {
-            CombatUIController ui = Object.FindFirstObjectByType<CombatUIController>(FindObjectsInactive.Include);
+            CombatUIController ui = Object.FindAnyObjectByType<CombatUIController>(FindObjectsInactive.Include);
             Canvas canvas = ui != null ? ui.GetComponentInParent<Canvas>(true) : null;
             if (canvas == null && Selection.activeGameObject != null) canvas = Selection.activeGameObject.GetComponentInParent<Canvas>(true);
             if (canvas == null)

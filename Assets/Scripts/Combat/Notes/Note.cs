@@ -152,7 +152,7 @@ public class Note : MonoBehaviour
     protected RhythmLaneTarget GetLaneTarget()
     {
         if (laneTarget != null && laneTarget.LaneId == noteIdentity) return laneTarget;
-        laneTarget = FindObjectsByType<RhythmLaneTarget>(FindObjectsInactive.Include, FindObjectsSortMode.None)
+        laneTarget = FindObjectsByType<RhythmLaneTarget>(FindObjectsInactive.Include)
             .FirstOrDefault(target => target != null && target.LaneId == noteIdentity);
         return laneTarget;
     }
@@ -160,7 +160,7 @@ public class Note : MonoBehaviour
     private void EnsureKeys()
     {
         if (keys == null || keys.Length == 0)
-            keys = FindObjectsByType<KeyButton>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            keys = FindObjectsByType<KeyButton>(FindObjectsInactive.Include);
     }
 
     protected void StopMovementTweens() => Tween.StopAll(transform);

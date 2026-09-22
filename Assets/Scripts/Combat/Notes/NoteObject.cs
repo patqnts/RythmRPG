@@ -21,7 +21,7 @@ public class NoteObject : Note
 
     private void Start()
     {
-        keys = FindObjectsByType<KeyButton>(FindObjectsSortMode.None);
+        keys = FindObjectsByType<KeyButton>();
         //animator.SetBool(moveset.ToString(), true);
         isMoving = true;
     }

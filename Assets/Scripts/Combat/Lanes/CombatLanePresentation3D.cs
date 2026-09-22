@@ -221,8 +221,7 @@ namespace RythmRPG.Combat
         private void EnsureWorldTargets(LaneInputRouter input)
         {
             targets.Clear();
-            targets.AddRange(FindObjectsByType<RhythmLaneTarget>(FindObjectsInactive.Include,
-                FindObjectsSortMode.None).Where(target => target != null));
+            targets.AddRange(FindObjectsByType<RhythmLaneTarget>(FindObjectsInactive.Include).Where(target => target != null));
 
             if (worldRoot == null)
             {
@@ -291,14 +290,14 @@ namespace RythmRPG.Combat
         {
             if (ResolveWorldCamera() && worldCamera.targetTexture != null)
             {
-                cameraOutput = FindObjectsByType<RawImage>(FindObjectsInactive.Include, FindObjectsSortMode.None)
+                cameraOutput = FindObjectsByType<RawImage>(FindObjectsInactive.Include)
                     .FirstOrDefault(candidate => candidate.texture == worldCamera.targetTexture
                         && candidate.gameObject.activeInHierarchy);
                 if (cameraOutput != null) canvas = cameraOutput.GetComponentInParent<Canvas>();
             }
             if (canvas == null)
             {
-                canvas = FindObjectsByType<Canvas>(FindObjectsInactive.Include, FindObjectsSortMode.None)
+                canvas = FindObjectsByType<Canvas>(FindObjectsInactive.Include)
                     .Where(candidate => candidate.renderMode == RenderMode.ScreenSpaceOverlay)
                     .OrderByDescending(candidate => candidate.gameObject.activeInHierarchy)
                     .ThenByDescending(candidate => candidate.transform.parent == null)
@@ -599,9 +598,9 @@ namespace RythmRPG.Combat
             if (worldCamera != null && worldCamera.isActiveAndEnabled) return true;
             worldCamera = Camera.main;
             if (worldCamera != null && worldCamera.isActiveAndEnabled) return true;
-            worldCamera = FindObjectsByType<Camera>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)
+            worldCamera = FindObjectsByType<Camera>(FindObjectsInactive.Exclude)
                 .FirstOrDefault(candidate => candidate.targetTexture != null)
-                ?? FindFirstObjectByType<Camera>();
+                ?? FindAnyObjectByType<Camera>();
             return worldCamera != null;
         }
 
@@ -643,7 +642,7 @@ namespace RythmRPG.Combat
 
         private Vector2 ScreenPointToWorldCameraViewport(Vector2 screenPoint)
         {
-            RawImage output = FindObjectsByType<RawImage>(FindObjectsInactive.Include, FindObjectsSortMode.None)
+            RawImage output = FindObjectsByType<RawImage>(FindObjectsInactive.Include)
                 .FirstOrDefault(candidate => candidate.texture != null && candidate.texture == worldCamera.targetTexture);
             if (output == null)
                 return new Vector2(screenPoint.x / Mathf.Max(1f, Screen.width), screenPoint.y / Mathf.Max(1f, Screen.height));

@@ -388,7 +388,7 @@ public class NoteInitializeMovement : MonoBehaviour
             return null;
         }
 
-        RhythmLaneTarget[] sceneTargets = FindObjectsByType<RhythmLaneTarget>(FindObjectsSortMode.None);
+        RhythmLaneTarget[] sceneTargets = FindObjectsByType<RhythmLaneTarget>();
         foreach (RhythmLaneTarget target in sceneTargets)
         {
             if (target != null && target.LaneId == keyIdentity)
