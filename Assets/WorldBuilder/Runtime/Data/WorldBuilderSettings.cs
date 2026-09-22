@@ -56,9 +56,9 @@ namespace RythmRPG.WorldBuilder
 
         /// <summary>
         /// 1 / sin(cameraTiltDegrees): the factor a top-down-authored square tile's depth (Z) axis needs
-        /// to be scaled by, in the generated visual mesh only, so it reads as square again once
-        /// foreshortened by the tilted orthographic camera. Collision and gameplay geometry never use
-        /// this factor -- see TileMeshBuilder.
+        /// to be scaled by, in the generated visual mesh, so it reads as square again once foreshortened
+        /// by the tilted orthographic camera. The generated collision mesh uses this same factor so its
+        /// footprint matches the (stretched) visual mesh -- see TileMeshBuilder.
         /// </summary>
         public float DefaultCompensationFactor
         {

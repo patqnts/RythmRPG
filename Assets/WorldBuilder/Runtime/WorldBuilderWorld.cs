@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace RythmRPG.WorldBuilder
 {
@@ -146,6 +149,19 @@ namespace RythmRPG.WorldBuilder
 
             EnsureChunkRoot();
             GameObject go = new GameObject($"Chunk_{chunkKey.x}_{chunkKey.z}_L{chunkKey.elevationLevel}");
+#if UNITY_EDITOR
+            // Painting creates this GameObject as a side effect of a tile edit that
+            // Undo.RegisterCompleteObjectUndo already recorded on this component, in the same undo
+            // group (this call happens synchronously within that same edit, before Unity opens a new
+            // group). Registering the GameObject too keeps that group consistent: without this,
+            // Unity's undo system has no record of the child ever being created, so undoing the tile
+            // edit leaves it "dangling" in the hierarchy instead of removing it along with the data
+            // that produced it -- exactly the warning this fixes.
+            if (!Application.isPlaying)
+            {
+                Undo.RegisterCreatedObjectUndo(go, "Paint Tiles");
+            }
+#endif
             go.transform.SetParent(chunkRoot, false);
             GroundChunk chunk = go.AddComponent<GroundChunk>();
             chunk.Configure(chunkKey.x, chunkKey.z, chunkKey.elevationLevel);
@@ -174,6 +190,15 @@ namespace RythmRPG.WorldBuilder
             }
 
             GameObject rootGO = new GameObject("Chunks");
+#if UNITY_EDITOR
+            // Same reasoning as the per-chunk registration below: this is the first thing painting
+            // ever creates for a freshly-added WorldBuilderWorld, so it needs to be tied into the
+            // same undo group as the tile edit that triggered it, or it's left dangling on undo too.
+            if (!Application.isPlaying)
+            {
+                Undo.RegisterCreatedObjectUndo(rootGO, "Paint Tiles");
+            }
+#endif
             rootGO.transform.SetParent(transform, false);
             chunkRoot = rootGO.transform;
         }
@@ -183,6 +208,30 @@ namespace RythmRPG.WorldBuilder
             EnsureLayers();
             EnsureChunkRoot();
             RebuildMissingChunks();
+#if UNITY_EDITOR
+            Undo.undoRedoPerformed += HandleUndoRedo;
+#endif
         }
+
+#if UNITY_EDITOR
+        private void OnDisable()
+        {
+            Undo.undoRedoPerformed -= HandleUndoRedo;
+        }
+
+        private void HandleUndoRedo()
+        {
+            // Undo/redo reverts groundLayers (a serialized field Undo.RegisterCompleteObjectUndo
+            // snapshots) but has no idea the already-built chunk meshes exist -- they're procedurally
+            // generated and were never part of that snapshot. Left alone, the Scene keeps showing
+            // whatever was on screen right before the undo until the next paint stroke happens to
+            // touch the same chunk, at which point a full chunk's worth of tiles (up to
+            // chunkSizeInTiles^2) suddenly snaps to the correct data all at once -- which is what
+            // reads as "a big random chunk" appearing when painting right after an undo. Rebuilding
+            // everything the instant undo/redo happens keeps the Scene matched to the data instead.
+            if (this == null) return;
+            RebuildAllChunks();
+        }
+#endif
     }
 }

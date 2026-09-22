@@ -7,15 +7,20 @@ namespace RythmRPG.WorldBuilder
     /// <summary>
     /// Builds the visual mesh (multi-submesh, one per unique source texture) and a separate collision
     /// mesh for one chunk, from tile data. This is the only place that applies projection compensation,
-    /// and it applies it exclusively to the visual mesh: the collision mesh always uses uncompensated,
-    /// logical grid coordinates so movement distances, adjacency and physical world geometry stay
-    /// correct regardless of how the ground is visually stretched for the tilted camera.
+    /// and it applies the same per-tile depth (Z) axis factor to both meshes: the collision mesh's
+    /// footprint always matches whatever is actually drawn on screen, so a character standing on visible
+    /// ground is always standing on a real collider, whether or not that tile is compensated. (An
+    /// earlier version kept collision at the uncompensated logical size for "clean" grid math, but this
+    /// project's ground movement is a real physics-driven CharacterController that stands directly on
+    /// these colliders, not tile-locked movement -- so a smaller collider than the art it sits under is
+    /// a real gameplay bug, not just a cosmetic mismatch.)
     ///
     /// Compensation is applied as a per-tile depth (Z) axis scale measured from the world origin (not
     /// each tile's own center), so that a run of adjacently-compensated tiles remains seamless; mixing
-    /// compensated and uncompensated tiles next to each other will show a seam, which is an inherent
-    /// and expected consequence of the two texture conventions having different intended footprints
-    /// (see WorldBuilderWindow's World Preview section for a way to compare the two).
+    /// compensated and uncompensated tiles next to each other will show a seam -- now in the collider
+    /// too, matching the visual seam -- which is an inherent and expected consequence of the two texture
+    /// conventions having different intended footprints (see WorldBuilderWindow's World Preview section
+    /// for a way to compare the two).
     /// </summary>
     public static class TileMeshBuilder
     {
@@ -137,10 +142,14 @@ namespace RythmRPG.WorldBuilder
                     if (tile.collisionEnabled)
                     {
                         anyCollision = true;
-                        Vector3 c00 = new Vector3(logicalX0, baseElevationY, logicalZ0);
-                        Vector3 c10 = new Vector3(logicalX1, baseElevationY, logicalZ0);
-                        Vector3 c11 = new Vector3(logicalX1, baseElevationY, logicalZ1);
-                        Vector3 c01 = new Vector3(logicalX0, baseElevationY, logicalZ1);
+                        // Same X/Z footprint as the visual quad above (visualZ0/visualZ1, the
+                        // compensation-scaled depth), at the tile's true elevation with no per-layer
+                        // visual offset -- the collider should sit exactly under the art, not under the
+                        // art's tiny anti-z-fighting nudge.
+                        Vector3 c00 = new Vector3(logicalX0, baseElevationY, visualZ0);
+                        Vector3 c10 = new Vector3(logicalX1, baseElevationY, visualZ0);
+                        Vector3 c11 = new Vector3(logicalX1, baseElevationY, visualZ1);
+                        Vector3 c01 = new Vector3(logicalX0, baseElevationY, visualZ1);
                         collisionBuilder.AddQuad(c00, c10, c11, c01, Vector2.zero, Vector2.zero, Vector2.zero, Vector2.zero);
                     }
                 }
@@ -207,6 +216,19 @@ namespace RythmRPG.WorldBuilder
             mesh.SetTriangles(builder.triangles, 0);
             mesh.RecalculateNormals();
             mesh.RecalculateBounds();
+
+            // This mesh is built procedurally (never goes through the asset import pipeline), so Unity
+            // does not automatically pre-bake its triangle collision data the way an imported mesh asset
+            // would. A MeshCollider referencing an unbaked mesh still works today via an implicit
+            // just-in-time bake, but logs the "missing pre-baked triangle collision data" warning and
+            // Unity's own docs say that implicit fallback goes away in a future version -- so bake
+            // explicitly right after the mesh data is finalized, once per rebuild, non-convex (this is a
+            // flat, open ground surface, not a closed convex shape).
+            // Physics.BakeMesh(int, bool) and Object.GetInstanceID() are both hard-obsoleted (CS0619,
+            // a compile error not just a warning) on this project's Unity version in favor of the
+            // EntityId-based overload -- GetEntityId() takes GetInstanceID()'s place here.
+            Physics.BakeMesh(mesh.GetEntityId(), false);
+
             return mesh;
         }
 

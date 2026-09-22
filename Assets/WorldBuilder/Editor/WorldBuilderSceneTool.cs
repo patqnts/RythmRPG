@@ -146,9 +146,22 @@ namespace RythmRPG.WorldBuilder.Editor
 
             Event e = Event.current;
 
-            // Claim the control so default Scene view tools (move/rotate handles etc.) do not fight
-            // for these mouse events while painting is active.
-            HandleUtility.AddDefaultControl(GUIUtility.GetControlID(FocusType.Passive));
+            // While Unity's own View/Pan tool is engaged, step aside entirely rather than paint.
+            // This covers both ways the View tool can be active: selected persistently via Q on the
+            // toolbar (Tools.current == Tool.View), and engaged temporarily without changing
+            // Tools.current at all -- holding Space to pan, Alt to orbit, Alt+Ctrl to pan/zoom, or
+            // dragging with the right mouse button to look around (Tools.viewToolActive covers all
+            // of these). Missing the temporary case is what caused an earlier regression here: only
+            // checking Tools.current let ordinary Space-drag panning fall through to painting,
+            // scattering tiles in "random spots" while the user was just moving the camera.
+            bool navigating = Tools.viewToolActive || Tools.current == Tool.View;
+
+            if (!navigating)
+            {
+                // Claim the control so default Scene view tools (move/rotate handles etc.) do not fight
+                // for these mouse events while painting is active.
+                HandleUtility.AddDefaultControl(GUIUtility.GetControlID(FocusType.Passive));
+            }
 
             WorldBuilderSettings settings = ActiveWorld.settings;
             float planeY = ActiveWorld.activeElevationLevel * settings.elevationIncrement;
@@ -179,7 +192,13 @@ namespace RythmRPG.WorldBuilder.Editor
             DrawSelectionOverlayIfAny(tileSize, planeY);
             HandleKeyboardShortcuts(e, tool, coord);
 
-            if (hasHit)
+            if (navigating)
+            {
+                // Bail out of any in-progress paint interaction rather than leaving it half-committed
+                // the moment the user starts panning/orbiting the camera mid-stroke.
+                if (dragging || boxDragging || moveDragging) CancelDrag();
+            }
+            else if (hasHit)
             {
                 DrawToolPreview(tool, coord, tileSize, planeY);
                 HandleMouse(e, tool, coord);
