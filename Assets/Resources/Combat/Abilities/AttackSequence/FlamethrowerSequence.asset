@@ -20,8 +20,10 @@ MonoBehaviour:
   arriveState: 
   steps:
   - rid: 2956268411002028131
+  - rid: 2956268416212402419
   - rid: 2956268411002028129
   - rid: 2956268411002028139
+  - rid: 2956268416212402422
   references:
     version: 2
     RefIds:
@@ -66,3 +68,21 @@ MonoBehaviour:
         tickEffectAt: 1
         tickEffectOffset: {x: 0, y: 0.5, z: 0}
         tickShake: 0.03
+    - rid: 2956268416212402419
+      type: {class: MoveCasterStep, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
+      data:
+        waitForCompletion: 1
+        delay: 0
+        to: 2
+        offset: {x: 0, y: 0, z: -0.8}
+        seconds: 0.2
+        ease: 6
+    - rid: 2956268416212402422
+      type: {class: MoveCasterStep, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
+      data:
+        waitForCompletion: 1
+        delay: 0
+        to: 3
+        offset: {x: 0, y: 0, z: -0.8}
+        seconds: 0.2
+        ease: 6

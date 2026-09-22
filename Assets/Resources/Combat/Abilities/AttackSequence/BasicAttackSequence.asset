@@ -21,7 +21,7 @@ MonoBehaviour:
   steps:
   - rid: 2956268411002028140
   - rid: 2956268411002028141
-  - rid: 2956268416212402418
+  - rid: 2956268416212402421
   references:
     version: 2
     RefIds:
@@ -61,9 +61,12 @@ MonoBehaviour:
         effectAt: 1
         effectOffset: {x: 0, y: 0.5, z: -1}
         waitForAnimationEnd: 1
-    - rid: 2956268416212402418
-      type: {class: WaitStep, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
+    - rid: 2956268416212402421
+      type: {class: MoveCasterStep, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
       data:
         waitForCompletion: 1
-        delay: 0
-        seconds: 0.5
+        delay: 0.5
+        to: 3
+        offset: {x: 0, y: 0, z: -0.8}
+        seconds: 0.2
+        ease: 6
