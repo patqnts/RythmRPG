@@ -12,3 +12,133 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9816b2a0af1c43118ca7448b0707aad3, type: 3}
   m_Name: CombatResultStyle
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.CombatResultStyle
+  screenPrefab: {fileID: 0}
+  victoryTitle: VICTORY
+  defeatTitle: DEFEAT
+  subtitleFormat: vs {0}
+  gradeCaption: RANK
+  continuePrompt: PRESS ANY KEY TO CONTINUE
+  fullComboBadge: FULL COMBO
+  allPerfectBadge: ALL PERFECT
+  noDamageBadge: NO DAMAGE
+  mainRows:
+  - stat: 0
+    label: PERFECT
+    color: {r: 1, g: 0.84, b: 0.2, a: 1}
+  - stat: 1
+    label: GOOD
+    color: {r: 0.2, g: 1, b: 0.75, a: 1}
+  - stat: 2
+    label: BAD
+    color: {r: 1, g: 0.5, b: 0.12, a: 1}
+  - stat: 3
+    label: MISS
+    color: {r: 1, g: 0.2, b: 0.35, a: 1}
+  - stat: 4
+    label: MAX COMBO
+    color: {r: 1, g: 1, b: 1, a: 0}
+  - stat: 5
+    label: ACCURACY
+    color: {r: 1, g: 1, b: 1, a: 0}
+  - stat: 6
+    label: SCORE
+    color: {r: 1, g: 1, b: 1, a: 0}
+  detailRows:
+  - stat: 8
+    label: DAMAGE DEALT
+    color: {r: 1, g: 1, b: 1, a: 0}
+  - stat: 9
+    label: DAMAGE TAKEN
+    color: {r: 1, g: 1, b: 1, a: 0}
+  - stat: 10
+    label: HEALED
+    color: {r: 1, g: 1, b: 1, a: 0}
+  - stat: 12
+    label: TURNS
+    color: {r: 1, g: 1, b: 1, a: 0}
+  - stat: 13
+    label: TIME
+    color: {r: 1, g: 1, b: 1, a: 0}
+  - stat: 15
+    label: FAVORITE
+    color: {r: 1, g: 1, b: 1, a: 0}
+  dimColor: {r: 0.02, g: 0.02, b: 0.05, a: 0.82}
+  panelColor: {r: 0.07, g: 0.06, b: 0.12, a: 0.96}
+  panelFrameColor: {r: 0.93, g: 0.9, b: 0.82, a: 1}
+  victoryColor: {r: 0.0990566, g: 1, b: 0.5671635, a: 1}
+  defeatColor: {r: 1, g: 0.3, b: 0.35, a: 1}
+  labelColor: {r: 0.8, g: 0.8, b: 0.88, a: 1}
+  valueColor: {r: 1, g: 1, b: 1, a: 1}
+  badgeColor: {r: 1, g: 0.9, b: 0.4, a: 1}
+  promptColor: {r: 1, g: 1, b: 1, a: 0.85}
+  outlineColor: {r: 0, g: 0, b: 0, a: 0.9}
+  font: {fileID: 12800000, guid: 80a0137e3d8f78f41bfdb2aca0cfac44, type: 3}
+  titleSize: 96
+  subtitleSize: 30
+  rowSize: 34
+  detailSize: 26
+  gradeSize: 250
+  badgeSize: 28
+  promptSize: 26
+  fadeInSeconds: 0.3
+  titleDelay: 0.15
+  titleSeconds: 0.4
+  rowsDelay: 0.6
+  rowStagger: 0.09
+  rowSlideSeconds: 0.25
+  countSeconds: 0.5
+  rowSlideDistance: 70
+  gradeDelay: 0.35
+  gradeStampSeconds: 0.32
+  gradeStartScale: 3
+  gradeStampCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.7
+      value: 1.08
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  stampShakePixels: 14
+  stampShakeSeconds: 0.3
+  gradePulse: 0.035
+  gradePulsePeriod: 1.4
+  badgeStagger: 0.14
+  badgeSeconds: 0.28
+  promptDelay: 0.4
+  promptBlinkPeriod: 1.1
+  fadeOutSeconds: 0.3
+  inputDelay: 0.5
+  pressToSkip: 1
+  autoCloseSeconds: 0
+  victoryJingle: {fileID: 0}
+  defeatJingle: {fileID: 0}
+  rowTick: {fileID: 0}
+  gradeSlam: {fileID: 0}
+  badgePop: {fileID: 0}
+  volume: 0.8
