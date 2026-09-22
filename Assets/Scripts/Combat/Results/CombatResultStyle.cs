@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace RythmRPG.Combat
 {
@@ -12,6 +14,15 @@ namespace RythmRPG.Combat
         public string label = "PERFECT";
         [Tooltip("Label color. Alpha 0 = the style's default label color.")]
         public Color color = new(1f, 1f, 1f, 0f);
+    }
+
+    /// <summary>The TextMeshPro material the rank letter uses for one grade label (SS, S, A...).</summary>
+    [Serializable]
+    public sealed class RankTextLook
+    {
+        public string grade = "S";
+        [Tooltip("A material made for the Rank Font (e.g. Assets/Shader/Combat/RankText/Materials).")]
+        public Material material;
     }
 
     /// <summary>
@@ -72,9 +83,24 @@ namespace RythmRPG.Combat
         [SerializeField] private Color promptColor = new(1f, 1f, 1f, 0.85f);
         [SerializeField] private Color outlineColor = new(0f, 0f, 0f, 0.9f);
 
-        [Header("Font")]
-        [Tooltip("Empty = Unity's built-in font. Use a pixel font for the pixel look.")]
-        [SerializeField] private Font font;
+        [Header("Font (TextMeshPro)")]
+        [Tooltip("TextMeshPro font for every result-screen text except the rank letter. Empty = generated from Legacy Font, else TMP's default font.")]
+        [SerializeField] private TMP_FontAsset fontAsset;
+        [Tooltip("Old uGUI font, kept only so existing assets still pick their font. Converted to a TMP font automatically.")]
+        [FormerlySerializedAs("font")]
+        [SerializeField] private Font legacyFont;
+
+        [Header("Rank letter (TextMeshPro)")]
+        [Tooltip("Font of the rank letter. Must be the font the rank materials were made for (Combat Rank SDF).")]
+        [SerializeField] private TMP_FontAsset rankFont;
+        [Tooltip("Material per grade label. Unlisted grades use the rank font's own material.")]
+        [SerializeField] private List<RankTextLook> rankMaterials = new()
+        {
+            new RankTextLook { grade = "SS" }, new RankTextLook { grade = "S" }, new RankTextLook { grade = "A" },
+            new RankTextLook { grade = "B" }, new RankTextLook { grade = "C" }, new RankTextLook { grade = "D" }
+        };
+        [Tooltip("Paragraph texture mapping: both letters of SS share one continuous finish (recommended by the rank materials).")]
+        [SerializeField] private bool rankParagraphMapping = true;
         [SerializeField, Min(8)] private int titleSize = 96;
         [SerializeField, Min(8)] private int subtitleSize = 30;
         [SerializeField, Min(8)] private int rowSize = 34;
@@ -146,7 +172,48 @@ namespace RythmRPG.Combat
         public Color BadgeColor => badgeColor;
         public Color PromptColor => promptColor;
         public Color OutlineColor => outlineColor;
-        public Font Font => font != null ? font : Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+        public TMP_FontAsset FontAsset => CombatText.ResolveFont(fontAsset, legacyFont);
+        public Font LegacyFont => legacyFont;
+        public bool RankParagraphMapping => rankParagraphMapping;
+
+        /// <summary>The rank letter's font (null = none set: the letter keeps the result font and no rank material).</summary>
+        public TMP_FontAsset RankFont
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (rankFont == null) rankFont = UnityEditor.AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(DefaultRankFontPath);
+#endif
+                return rankFont;
+            }
+        }
+
+        /// <summary>The material for a grade label, or null to keep the font's own material.</summary>
+        public Material GetRankMaterial(string grade)
+        {
+            if (rankMaterials == null || string.IsNullOrEmpty(grade)) return null;
+            foreach (RankTextLook look in rankMaterials)
+            {
+                if (look == null || !string.Equals(look.grade, grade, StringComparison.OrdinalIgnoreCase)) continue;
+#if UNITY_EDITOR
+                if (look.material == null && DefaultRankMaterials.TryGetValue(look.grade.ToUpperInvariant(), out string path))
+                    look.material = UnityEditor.AssetDatabase.LoadAssetAtPath<Material>(path);
+#endif
+                return look.material;
+            }
+            return null;
+        }
+
+        public const string DefaultRankFontPath = "Assets/Shader/Combat/RankText/Combat Rank SDF.asset";
+        public static readonly IReadOnlyDictionary<string, string> DefaultRankMaterials = new Dictionary<string, string>
+        {
+            { "SS", "Assets/Shader/Combat/RankText/Materials/Combat Rank SDF - SS Iridescent.mat" },
+            { "S", "Assets/Shader/Combat/RankText/Materials/Combat Rank SDF - S Gold.mat" },
+            { "A", "Assets/Shader/Combat/RankText/Materials/Combat Rank SDF - A Emerald.mat" },
+            { "B", "Assets/Shader/Combat/RankText/Materials/Combat Rank SDF - B Sapphire.mat" },
+            { "C", "Assets/Shader/Combat/RankText/Materials/Combat Rank SDF - C Violet.mat" },
+            { "D", "Assets/Shader/Combat/RankText/Materials/Combat Rank SDF - D Crimson.mat" }
+        };
         public int TitleSize => titleSize;
         public int SubtitleSize => subtitleSize;
         public int RowSize => rowSize;

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using RythmRPG.Combat;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,7 +14,7 @@ public class KeyButton : MonoBehaviour
     public Sprite[] sprites;
     public SpriteRenderer spriteRenderer;
     [SerializeField] private UnityEngine.UI.Image uiImage;
-    [SerializeField] private UnityEngine.UI.Text uiLabel;
+    [SerializeField] private TMP_Text uiLabel;
     [SerializeField] private Sprite uiUnpressedSprite;
     [SerializeField] private Sprite uiPressedSprite;
     private bool interactable;
@@ -63,7 +64,7 @@ public class KeyButton : MonoBehaviour
         }
     }
 
-    public void ConfigureUI(int laneId, UnityEngine.UI.Image image, UnityEngine.UI.Text label,
+    public void ConfigureUI(int laneId, UnityEngine.UI.Image image, TMP_Text label,
         Sprite unpressedSprite = null, Sprite pressedSprite = null)
     {
         keyIdentity = laneId;

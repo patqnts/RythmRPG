@@ -1,5 +1,5 @@
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace RythmRPG.Combat
 {
@@ -10,14 +10,14 @@ namespace RythmRPG.Combat
     public sealed class ResultStatRow : MonoBehaviour
     {
         [SerializeField] private RectTransform content;
-        [SerializeField] private Text label;
-        [SerializeField] private Text value;
+        [SerializeField] private TMP_Text label;
+        [SerializeField] private TMP_Text value;
 
         private CanvasGroup group;
 
         public RectTransform Content => content != null ? content : (RectTransform)transform;
-        public Text Label => label;
-        public Text Value => value;
+        public TMP_Text Label => label;
+        public TMP_Text Value => value;
 
         public CanvasGroup Group
         {
@@ -34,7 +34,7 @@ namespace RythmRPG.Combat
             }
         }
 
-        public void Assign(RectTransform contentRoot, Text labelText, Text valueText)
+        public void Assign(RectTransform contentRoot, TMP_Text labelText, TMP_Text valueText)
         {
             content = contentRoot;
             label = labelText;

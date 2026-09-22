@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,21 +26,21 @@ namespace RythmRPG.Combat
         [SerializeField] private Graphic dim;
         [Tooltip("Shakes when the grade lands.")]
         [SerializeField] private RectTransform panel;
-        [SerializeField] private Text title;
-        [SerializeField] private Text subtitle;
+        [SerializeField] private TMP_Text title;
+        [SerializeField] private TMP_Text subtitle;
         [SerializeField] private RectTransform mainRowsContainer;
         [SerializeField] private RectTransform detailRowsContainer;
         [Tooltip("Inactive row copied for every stat line.")]
         [SerializeField] private ResultStatRow rowTemplate;
         [SerializeField] private RectTransform gradeRoot;
-        [SerializeField] private Text gradeLetter;
-        [SerializeField] private Text gradeCaption;
-        [SerializeField] private Text gradeComment;
+        [SerializeField] private TMP_Text gradeLetter;
+        [SerializeField] private TMP_Text gradeCaption;
+        [SerializeField] private TMP_Text gradeComment;
         [SerializeField] private Graphic gradeFlash;
         [SerializeField] private RectTransform badgeContainer;
         [Tooltip("Inactive text copied for every badge.")]
-        [SerializeField] private Text badgeTemplate;
-        [SerializeField] private Text prompt;
+        [SerializeField] private TMP_Text badgeTemplate;
+        [SerializeField] private TMP_Text prompt;
         [SerializeField] private AudioSource audioSource;
 
         public event Action<CombatReport> Opened;
@@ -222,6 +223,7 @@ namespace RythmRPG.Combat
             CombatGrade grade = report.Grade ?? new CombatGrade { label = "-" };
             if (gradeLetter != null)
             {
+                ApplyRankLook(s, gradeLetter, grade.label);
                 gradeLetter.text = grade.label;
                 gradeLetter.fontSize = s.GradeSize;
                 gradeLetter.color = WithAlpha(grade.color, 0f);
@@ -325,7 +327,7 @@ namespace RythmRPG.Combat
         private void AddBadge(string text, float at)
         {
             if (badgeTemplate == null || badgeContainer == null) return;
-            Text badge = Instantiate(badgeTemplate, badgeContainer, false);
+            TMP_Text badge = Instantiate(badgeTemplate, badgeContainer, false);
             badge.gameObject.SetActive(true);
             spawned.Add(badge.gameObject);
             badge.text = text;
@@ -340,6 +342,28 @@ namespace RythmRPG.Combat
             {
                 if (!skipping) Play(Style.BadgePop);
             });
+        }
+
+        /// <summary>
+        /// Rank letter look: the Combat Rank SDF font with the grade's material (SS iridescent, S gold, A emerald...),
+        /// paragraph texture mapping so SS shares one finish, and the TexCoord1 canvas channel the rank shader needs.
+        /// </summary>
+        private static void ApplyRankLook(CombatResultStyle s, TMP_Text letter, string label)
+        {
+            if (s == null || letter == null) return;
+            TMP_FontAsset rankFont = s.RankFont;
+            if (rankFont == null) return;
+            if (letter.font != rankFont) letter.font = rankFont;
+            Material material = s.GetRankMaterial(label);
+            letter.fontSharedMaterial = material != null ? material : rankFont.material;
+            if (s.RankParagraphMapping)
+            {
+                letter.horizontalMapping = TextureMappingOptions.Paragraph;
+                letter.verticalMapping = TextureMappingOptions.Paragraph;
+            }
+            letter.extraPadding = true;
+            Canvas canvas = letter.canvas;
+            if (canvas != null) canvas.additionalShaderChannels |= AdditionalCanvasShaderChannels.TexCoord1;
         }
 
         /// <summary>Schedules an animation. applyStart puts it in its t=0 state right away (hidden, zero...).</summary>
@@ -501,8 +525,11 @@ namespace RythmRPG.Combat
             AudioSource audio = root.GetComponent<AudioSource>();
             audio.playOnAwake = false;
             audio.spatialBlend = 0f;
-            Font font = s.Font;
+            TMP_FontAsset font = s.FontAsset;
             Color outline = s.OutlineColor;
+            // The rank shader reads TexCoord1 (Paragraph mapping); TMP needs Normal/Tangent for its SDF shading.
+            canvas.additionalShaderChannels |= AdditionalCanvasShaderChannels.TexCoord1
+                | AdditionalCanvasShaderChannels.Normal | AdditionalCanvasShaderChannels.Tangent;
             var rootRect = (RectTransform)root.transform;
 
             Image dimImage = NewImage("Dim", rootRect, s.DimColor);
@@ -516,9 +543,9 @@ namespace RythmRPG.Combat
             Image inner = NewImage("Background", panelRect, s.PanelColor);
             Stretch(inner.rectTransform, 4f);
 
-            Text titleText = NewText("Title", panelRect, font, s.TitleSize, s.VictoryColor, outline, TextAnchor.MiddleCenter);
+            TMP_Text titleText = NewText("Title", panelRect, font, s.TitleSize, s.VictoryColor, outline, TextAlignmentOptions.Center);
             Place(titleText.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -95f), new Vector2(1200f, 130f));
-            Text subtitleText = NewText("Subtitle", panelRect, font, s.SubtitleSize, s.LabelColor, outline, TextAnchor.MiddleCenter);
+            TMP_Text subtitleText = NewText("Subtitle", panelRect, font, s.SubtitleSize, s.LabelColor, outline, TextAlignmentOptions.Center);
             Place(subtitleText.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -175f), new Vector2(1200f, 44f));
 
             RectTransform mainRows = NewRect("Main Rows", panelRect);
@@ -556,12 +583,13 @@ namespace RythmRPG.Combat
             Stretch(diamondInner.rectTransform, 6f);
             Image flash = NewImage("Flash", diamondFrame.rectTransform, new Color(1f, 1f, 1f, 0f));
             Stretch(flash.rectTransform, 0f);
-            Text letter = NewText("Letter", grade, font, s.GradeSize, Color.white, outline, TextAnchor.MiddleCenter);
+            TMP_Text letter = NewText("Letter", grade, font, s.GradeSize, Color.white, outline, TextAlignmentOptions.Center);
             Stretch(letter.rectTransform, -60f);
+            ApplyRankLook(s, letter, "S");
 
-            Text caption = NewText("Grade Caption", panelRect, font, s.SubtitleSize, s.LabelColor, outline, TextAnchor.MiddleCenter);
+            TMP_Text caption = NewText("Grade Caption", panelRect, font, s.SubtitleSize, s.LabelColor, outline, TextAlignmentOptions.Center);
             Place(caption.rectTransform, new Vector2(1f, 1f), new Vector2(-320f, -222f), new Vector2(400f, 40f));
-            Text comment = NewText("Grade Comment", panelRect, font, s.SubtitleSize, Color.white, outline, TextAnchor.MiddleCenter);
+            TMP_Text comment = NewText("Grade Comment", panelRect, font, s.SubtitleSize, Color.white, outline, TextAlignmentOptions.Center);
             Place(comment.rectTransform, new Vector2(1f, 1f), new Vector2(-320f, -590f), new Vector2(520f, 40f));
 
             RectTransform badges = NewRect("Badges", panelRect);
@@ -573,10 +601,10 @@ namespace RythmRPG.Combat
             horizontal.childControlHeight = true;
             horizontal.childForceExpandWidth = false;
             horizontal.childForceExpandHeight = true;
-            Text badge = NewText("Badge Template", badges, font, s.BadgeSize, s.BadgeColor, outline, TextAnchor.MiddleCenter);
+            TMP_Text badge = NewText("Badge Template", badges, font, s.BadgeSize, s.BadgeColor, outline, TextAlignmentOptions.Center);
             badge.gameObject.SetActive(false);
 
-            Text promptText = NewText("Prompt", rootRect, font, s.PromptSize, s.PromptColor, outline, TextAnchor.MiddleCenter);
+            TMP_Text promptText = NewText("Prompt", rootRect, font, s.PromptSize, s.PromptColor, outline, TextAlignmentOptions.Center);
             Place(promptText.rectTransform, new Vector2(0.5f, 0f), new Vector2(0f, 60f), new Vector2(1200f, 40f));
 
             // Row template: the row sits in the layout, its Content child is what animates.
@@ -585,9 +613,9 @@ namespace RythmRPG.Combat
             layout.minHeight = layout.preferredHeight = 52f;
             RectTransform content = NewRect("Content", row);
             Stretch(content, 0f);
-            Text rowLabel = NewText("Label", content, font, s.RowSize, s.LabelColor, outline, TextAnchor.MiddleLeft);
+            TMP_Text rowLabel = NewText("Label", content, font, s.RowSize, s.LabelColor, outline, TextAlignmentOptions.Left);
             Stretch(rowLabel.rectTransform, 0f);
-            Text rowValue = NewText("Value", content, font, s.RowSize, s.ValueColor, outline, TextAnchor.MiddleRight);
+            TMP_Text rowValue = NewText("Value", content, font, s.RowSize, s.ValueColor, outline, TextAlignmentOptions.Right);
             Stretch(rowValue.rectTransform, 0f);
             ResultStatRow rowView = row.gameObject.AddComponent<ResultStatRow>();
             rowView.Assign(content, rowLabel, rowValue);
@@ -632,24 +660,9 @@ namespace RythmRPG.Combat
             return image;
         }
 
-        private static Text NewText(string name, Transform parent, Font font, int size, Color color, Color outline, TextAnchor alignment)
-        {
-            Text text = NewRect(name, parent).gameObject.AddComponent<Text>();
-            text.font = font;
-            text.fontSize = size;
-            text.color = color;
-            text.alignment = alignment;
-            text.raycastTarget = false;
-            text.horizontalOverflow = HorizontalWrapMode.Overflow;
-            text.verticalOverflow = VerticalWrapMode.Overflow;
-            if (outline.a > 0f)
-            {
-                Outline effect = text.gameObject.AddComponent<Outline>();
-                effect.effectColor = outline;
-                effect.effectDistance = new Vector2(3f, -3f);
-            }
-            return text;
-        }
+        private static TMP_Text NewText(string name, Transform parent, TMP_FontAsset font, int size, Color color, Color outline,
+            TextAlignmentOptions alignment) =>
+            CombatText.CreateUGUI(name, parent, font, size, color, alignment, outline, CombatText.OutlineWidthFromPixels(3f, size) + 0.1f);
 
         private static void Stretch(RectTransform rect, float inset)
         {

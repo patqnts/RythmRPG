@@ -1,3 +1,4 @@
+using PrimeTween;
 using UnityEngine;
 
 namespace RythmRPG.Combat
@@ -30,13 +31,22 @@ namespace RythmRPG.Combat
         private Color radialBaseColor = new(1f, 1f, 1f, 0.45f);
 
         private Phase phase = Phase.Hidden;
-        private float phaseStart;
+        // appearT/hideT/floatLift/punchT are 0..1 (floatLift is -1..1) progress values driven by PrimeTween;
+        // Apply() is still the single place that blends them into one final transform, every LateUpdate.
+        private float appearT;
+        private float hideT;
+        private float floatLift;
         private float floatPhase;
+        private Tween appearTween;
+        private Tween hideTween;
+        private Tween floatTween;
+        private Tween punchTween;
+        private bool punchActive;
+        private float punchT;
         private bool usable = true;
         private bool charging;
         private float chargeProgress;
         private float chargeBlend;
-        private float punchStart = -1f;
 
         public bool IsShown => phase == Phase.Appearing || phase == Phase.Shown;
 
@@ -87,26 +97,64 @@ namespace RythmRPG.Combat
         public void SetVisible(bool isVisible, bool animate, float delay, float floatPhase01)
         {
             EnsureVisuals();
-            float now = Time.unscaledTime;
+            AbilitySlotAnimationProfile p = Profile;
             if (isVisible)
             {
                 floatPhase = floatPhase01;
+                RestartFloatTween(p);
                 if (IsShown) return;
-                phase = animate ? Phase.Appearing : Phase.Shown;
-                phaseStart = now + Mathf.Max(0f, delay);
+                StartAppear(p, animate, delay);
             }
             else
             {
                 SetCharging(false);
                 if (phase == Phase.Hidden) return;
-                if (!animate) phase = Phase.Hidden;
-                else if (phase != Phase.Hiding)
+                if (!animate)
                 {
-                    phase = Phase.Hiding;
-                    phaseStart = now + Mathf.Max(0f, delay);
+                    appearTween.Stop();
+                    hideTween.Stop();
+                    phase = Phase.Hidden;
                 }
+                else if (phase != Phase.Hiding) StartHide(p, delay);
             }
             Apply();
+        }
+
+        // Idle bob: a continuous infinite yoyo (-1..1) so the row bobs without any per-frame Time.unscaledTime
+        // polling. startDelay approximates the old per-slot phase offset, so the row still bobs like a wave.
+        private void RestartFloatTween(AbilitySlotAnimationProfile p)
+        {
+            floatTween.Stop();
+            float half = Mathf.Max(0.01f, p.FloatPeriod * 0.5f);
+            float phaseDelay = Mathf.Repeat(floatPhase, 1f) * p.FloatPeriod;
+            floatTween = Tween.Custom(this, -1f, 1f,
+                new TweenSettings(half, Ease.InOutSine, cycles: -1, cycleMode: CycleMode.Yoyo, startDelay: phaseDelay),
+                (view, v) => view.floatLift = v);
+        }
+
+        private void StartAppear(AbilitySlotAnimationProfile p, bool animate, float delay)
+        {
+            appearTween.Stop();
+            hideTween.Stop();
+            appearT = 0f;
+            phase = animate ? Phase.Appearing : Phase.Shown;
+            if (!animate) return;
+            appearTween = Tween.Custom(this, 0f, 1f,
+                new TweenSettings(Mathf.Max(0.0001f, p.AppearSeconds), Ease.Linear, startDelay: Mathf.Max(0f, delay)),
+                (view, t) => view.appearT = t);
+            appearTween.OnComplete(this, view => view.phase = Phase.Shown);
+        }
+
+        private void StartHide(AbilitySlotAnimationProfile p, float delay)
+        {
+            appearTween.Stop();
+            hideTween.Stop();
+            hideT = 0f;
+            phase = Phase.Hiding;
+            hideTween = Tween.Custom(this, 0f, 1f,
+                new TweenSettings(Mathf.Max(0.0001f, p.HideSeconds), Ease.Linear, startDelay: Mathf.Max(0f, delay)),
+                (view, t) => view.hideT = t);
+            hideTween.OnComplete(this, view => view.phase = Phase.Hidden);
         }
 
         /// <summary>Hold on this ability started (true) or was released/cancelled (false).</summary>
@@ -124,7 +172,7 @@ namespace RythmRPG.Combat
         {
             EnsureVisuals();
             float clamped = Mathf.Clamp01(progress);
-            if (clamped >= 1f && chargeProgress < 1f && charging) punchStart = Time.unscaledTime;
+            if (clamped >= 1f && chargeProgress < 1f && charging) TriggerReadyPunch();
             chargeProgress = clamped;
 
             bool showRadial = IsShown && clamped > 0f;
@@ -150,13 +198,22 @@ namespace RythmRPG.Combat
             }
         }
 
+        private void TriggerReadyPunch()
+        {
+            AbilitySlotAnimationProfile p = Profile;
+            punchTween.Stop();
+            punchT = 0f;
+            punchActive = true;
+            punchTween = Tween.Custom(this, 0f, 1f, Mathf.Max(0.0001f, p.ReadyPunchSeconds), (view, t) => view.punchT = t, Ease.Linear);
+            punchTween.OnComplete(this, view => view.punchActive = false);
+        }
+
         private void LateUpdate() => Apply(true);
 
         private void Apply(bool advance = false)
         {
             if (iconTransform == null) return;
             AbilitySlotAnimationProfile p = Profile;
-            float now = Time.unscaledTime;
             float dt = advance ? Time.unscaledDeltaTime : 0f; // blend only advances once per frame
 
             float scale = 1f;
@@ -171,37 +228,19 @@ namespace RythmRPG.Combat
                     break;
                 case Phase.Appearing:
                 {
-                    float t = (now - phaseStart) / p.AppearSeconds;
-                    if (t >= 1f) phase = Phase.Shown;
-                    else if (t <= 0f)
-                    {
-                        scale = 0f;
-                        alpha = 0f;
-                        lift = -p.AppearRise;
-                    }
-                    else
-                    {
-                        scale = p.EvaluateAppearScale(t);
-                        alpha = Mathf.Clamp01(t * 3f);
-                        float eased = 1f - (1f - t) * (1f - t) * (1f - t);
-                        lift = -p.AppearRise * (1f - eased);
-                    }
+                    float t = appearT;
+                    scale = p.EvaluateAppearScale(t);
+                    alpha = Mathf.Clamp01(t * 3f);
+                    float eased = 1f - (1f - t) * (1f - t) * (1f - t);
+                    lift = -p.AppearRise * (1f - eased);
                     break;
                 }
                 case Phase.Hiding:
                 {
-                    float t = (now - phaseStart) / p.HideSeconds;
-                    if (t >= 1f)
-                    {
-                        phase = Phase.Hidden;
-                        active = false;
-                    }
-                    else if (t > 0f)
-                    {
-                        scale = 1f - t * t;
-                        alpha = 1f - t;
-                        lift = -p.HideDrop * t * t;
-                    }
+                    float t = hideT;
+                    scale = 1f - t * t;
+                    alpha = 1f - t;
+                    lift = -p.HideDrop * t * t;
                     break;
                 }
             }
@@ -209,16 +248,18 @@ namespace RythmRPG.Combat
             chargeBlend = Mathf.MoveTowards(chargeBlend, charging && active ? 1f : 0f, p.ChargeBlendSpeed * dt);
             float size = IconSize();
 
-            // Idle float: a slow bob plus a little sway, offset per slot so the row moves like a wave.
-            float wave = (now / p.FloatPeriod + floatPhase) * Mathf.PI * 2f;
+            // Idle float: vertical bob only (no sway/rotation - floatLift comes from an infinite PrimeTween yoyo).
             float floatKeep = Mathf.Lerp(1f, p.FloatWhileCharging, chargeBlend);
-            lift += Mathf.Sin(wave) * p.FloatHeight * floatKeep;
-            float tilt = Mathf.Sin(wave * 0.5f) * p.FloatSwayDegrees * floatKeep;
+            lift += floatLift * p.FloatHeight * floatKeep;
+            float tilt = 0f;
 
-            // Charge: jitter that grows with the hold, a slight tilt and a swell.
+            // Charge: jitter that grows with the hold, a slight tilt and a swell. Driven by the live, open-ended
+            // hold duration from SetProgress (no fixed end time), so - unlike the rest of this file - it stays a
+            // per-frame procedural effect rather than a discrete PrimeTween tween (flagged and accepted up front).
             Vector2 shake = Vector2.zero;
             if (chargeBlend > 0f)
             {
+                float now = Time.unscaledTime;
                 float amount = Mathf.Lerp(p.ChargeShakeStart, p.ChargeShakeEnd, chargeProgress) * chargeBlend;
                 float f = now * p.ChargeShakeFrequency;
                 shake = new Vector2(Mathf.PerlinNoise(f, 0.37f) * 2f - 1f, Mathf.PerlinNoise(0.71f, f) * 2f - 1f) * amount;
@@ -226,12 +267,7 @@ namespace RythmRPG.Combat
                 scale *= Mathf.Lerp(1f, p.ChargeScale, chargeProgress * chargeBlend);
             }
 
-            if (punchStart >= 0f)
-            {
-                float t = (now - punchStart) / p.ReadyPunchSeconds;
-                if (t >= 1f) punchStart = -1f;
-                else scale *= 1f + p.ReadyPunch * Mathf.Sin(t * Mathf.PI);
-            }
+            if (punchActive) scale *= 1f + p.ReadyPunch * Mathf.Sin(punchT * Mathf.PI);
 
             Vector3 offset = new Vector3(shake.x, lift + shake.y, 0f) * size;
             Quaternion rotation = Quaternion.Euler(0f, 0f, tilt);
@@ -389,6 +425,7 @@ namespace RythmRPG.Combat
 
         private void OnDisable()
         {
+            Tween.StopAll(this);
             if (iconTransform != null)
             {
                 iconTransform.localPosition = iconRestingLocalPosition;

@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using PrimeTween;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -337,26 +339,29 @@ namespace RythmRPG.Combat
             image.color = theme != null ? theme.ButtonColor : new Color(0.06f, 0.07f, 0.09f, 0.94f);
             buttonObject.GetComponent<Button>().interactable = false;
 
-            Text label = buttonObject.GetComponentInChildren<Text>(true);
+            // Old scenes/objects may still carry a legacy uGUI Text label: replace it with TextMeshPro.
+            foreach (Text legacy in buttonObject.GetComponentsInChildren<Text>(true))
+            {
+                if (Application.isPlaying) Destroy(legacy.gameObject);
+                else DestroyImmediate(legacy.gameObject);
+            }
+            TMP_Text label = buttonObject.GetComponentInChildren<TMP_Text>(true);
             if (label == null)
             {
-                GameObject labelObject = new("Label", typeof(RectTransform), typeof(CanvasRenderer), typeof(Text));
-                labelObject.transform.SetParent(buttonObject.transform, false);
-                RectTransform labelRect = labelObject.GetComponent<RectTransform>();
+                label = CombatText.CreateUGUI("Label", buttonObject.transform, null, 28f, Color.white,
+                    TextAlignmentOptions.Center, Color.clear);
+                RectTransform labelRect = label.rectTransform;
                 labelRect.anchorMin = Vector2.zero;
                 labelRect.anchorMax = Vector2.one;
                 labelRect.offsetMin = labelRect.offsetMax = Vector2.zero;
-                label = labelObject.GetComponent<Text>();
-                label.alignment = TextAnchor.MiddleCenter;
-                label.raycastTarget = false;
             }
 
-            label.font = theme != null && theme.ButtonFont != null
-                ? theme.ButtonFont
-                : Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-            label.fontSize = theme != null ? theme.ButtonFontSize : 28;
-            label.fontStyle = theme != null ? theme.ButtonFontStyle : FontStyle.Bold;
-            label.color = theme != null ? theme.ButtonTextColor : Color.white;
+            TMP_FontAsset labelFont = CombatText.ResolveFont(theme != null ? theme.ButtonFontAsset : null,
+                theme != null ? theme.ButtonFont : null);
+            CombatText.Configure(label, labelFont, theme != null ? theme.ButtonFontSize : 28,
+                theme != null ? theme.ButtonTextColor : Color.white, TextAlignmentOptions.Center,
+                theme != null ? theme.ButtonTextOutline : Color.clear);
+            label.fontStyle = CombatText.ToTmp(theme != null ? theme.ButtonFontStyle : FontStyle.Bold);
             label.text = binding.KeyCode == KeyCode.None ? binding.LaneId.ToString() : binding.KeyCode.ToString();
             KeyButton view = buttonObject.GetComponent<KeyButton>();
             view.ConfigureUI(binding.LaneId, image, label,
@@ -374,7 +379,6 @@ namespace RythmRPG.Combat
             Camera uiCamera = canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
             EnsureHitLine(plane, uiCamera, canvasScale);
             if (hitLineAnchor == null) return;
-            UpdateHitLineReveal();
 
             if (Time.frameCount % 120 == 0) PrepareHitLineMaterials(hitLineAnchor);
             Canvas lineCanvas = hitLineAnchor.GetComponent<Canvas>();
@@ -438,47 +442,46 @@ namespace RythmRPG.Combat
 
         private readonly HashSet<RhythmLaneTarget> reportedDrift = new();
         private bool hitLineRevealed = true;
-        private float hitLineRevealStartedAt = -1f;
 
         public float HitLineRevealSeconds => hitLineRevealSeconds;
 
-        /// <summary>Hides the hit line (it keeps tracking the camera and player so the lanes stay valid).</summary>
+        /// <summary>Hides the hit line (it keeps tracking the camera and player so the lanes stay valid). Instant - no notes should be landing while it's hidden.</summary>
         public void HideHitLine()
         {
             hitLineRevealed = false;
-            hitLineRevealStartedAt = -1f;
-            ApplyHitLineAlpha(0f);
+            AnimateHitLineAlpha(0f, 0f);
         }
 
-        /// <summary>Fades the hit line in over Hit Line Reveal Seconds.</summary>
+        /// <summary>Fades the hit line in over Hit Line Reveal Seconds (PrimeTween).</summary>
         public void RevealHitLine()
         {
             hitLineRevealed = true;
-            hitLineRevealStartedAt = Time.time;
-            UpdateHitLineReveal();
+            AnimateHitLineAlpha(1f, hitLineRevealSeconds);
         }
 
-        private void UpdateHitLineReveal()
+        private void AnimateHitLineAlpha(float target, float seconds)
         {
-            float alpha = 1f;
-            if (!hitLineRevealed) alpha = 0f;
-            else if (hitLineRevealStartedAt >= 0f && hitLineRevealSeconds > 0f)
-                alpha = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01((Time.time - hitLineRevealStartedAt) / hitLineRevealSeconds));
-            ApplyHitLineAlpha(alpha);
+            CanvasGroup group = EnsureHitLineCanvasGroup();
+            if (group == null) return;
+            Tween.StopAll(group);
+            if (seconds <= 0f) group.alpha = target;
+            else Tween.Alpha(group, target, seconds, Ease.OutSine);
         }
 
-        private void ApplyHitLineAlpha(float alpha)
+        // The line always carries a CanvasGroup once it exists, so Hide/RevealHitLine always have a tween target
+        // (both call sites only fire after EnsurePresentation, so the anchor already exists by then).
+        private CanvasGroup EnsureHitLineCanvasGroup()
         {
-            if (hitLineAnchor == null) return;
+            if (hitLineAnchor == null) return null;
             CanvasGroup group = hitLineAnchor.GetComponent<CanvasGroup>();
             if (group == null)
             {
-                if (alpha >= 1f) return;
                 group = hitLineAnchor.gameObject.AddComponent<CanvasGroup>();
                 group.interactable = false;
                 group.blocksRaycasts = false;
+                group.alpha = hitLineRevealed ? 1f : 0f;
             }
-            group.alpha = alpha;
+            return group;
         }
 
         // Lane targets live under the Perfect Hit Line so they move with it. The line canvas is scaled to 0.01 and lies

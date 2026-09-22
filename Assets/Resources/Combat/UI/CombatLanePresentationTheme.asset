@@ -17,16 +17,18 @@ MonoBehaviour:
   ButtonImageType: 0
   ButtonColor: {r: 1, g: 1, b: 1, a: 0.94}
   ButtonSize: {x: 64, y: 64}
-  ButtonSpacing: 28
+  ButtonSpacing: 15
   BottomOffset: 2
+  ButtonFontAsset: {fileID: 11400000, guid: 48c87fb84799300439e6bf99003e763a, type: 2}
   ButtonFont: {fileID: 12800000, guid: 3c2172383277d46b697de74b6df875e5, type: 3}
   ButtonFontSize: 28
   ButtonFontStyle: 1
   ButtonTextColor: {r: 1, g: 1, b: 1, a: 1}
+  ButtonTextOutline: {r: 0, g: 0, b: 0, a: 0.75}
   LineSprite: {fileID: 0}
   LineMaterial: {fileID: 2100000, guid: 03bcabf8287c4daebc85e66d0092d1ed, type: 2}
   LineColor: {r: 1, g: 1, b: 1, a: 1}
-  LineThickness: 2
+  LineThickness: 1
   LineGapAboveButtons: 8
   LineHorizontalPadding: 8
   SnapToRenderTexturePixels: 1

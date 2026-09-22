@@ -47,6 +47,8 @@ namespace RythmRPG.Combat
         public event Action<CombatReport> ResultReady;
         /// <summary>Current hit combo this battle (for a combo counter).</summary>
         public int CurrentCombo => stats?.Combo ?? 0;
+        /// <summary>Raised right after a judgement updates the combo (new combo count, 0 = it just broke).</summary>
+        public event Action<int> ComboChanged;
 
         public CombatState CurrentState => stateMachine?.CurrentState ?? CombatState.BattleStart;
         public bool IsBattleActive { get; private set; }
@@ -196,6 +198,9 @@ namespace RythmRPG.Combat
 
         private IEnumerator EnemyTurnStartRoutine()
         {
+            // Defensive: guarantees the hit line is back even if the player skipped ability selection
+            // (DebugSkipPlayerTurn) without ever reaching PlayerAbilityExecuting.
+            lanePresentation?.RevealHitLine();
             vfxController.SetAbilitySlotsVisible(false, true);
             musicDirector?.SetPlayerTurn(false);
             modifierSystem.OnEnemyTurnStarted();
@@ -257,6 +262,10 @@ namespace RythmRPG.Combat
             stats?.RecordTurn();
             abilitySlots.TickCooldowns();
             musicDirector?.SetPlayerTurn(true);
+            // The hit line is only meaningful while notes are on it; hide it while the player is just
+            // choosing an ability (PlayerTurnStart + PlayerAbilitySelection), reveal it again once a chart
+            // actually starts (see PlayerAbilityRoutine / EnemyTurnStartRoutine).
+            lanePresentation?.HideHitLine();
             if (resourceRules != null && resourceRules.ManaPerPlayerTurn > 0) encounter.Player.GainMana(resourceRules.ManaPerPlayerTurn);
             vfxController.SetAbilitySlotsVisible(true, true);
             yield return null;
@@ -281,6 +290,8 @@ namespace RythmRPG.Combat
 
         private IEnumerator PlayerAbilityRoutine()
         {
+            // The player finished choosing; reveal the hit line before its rhythm chart starts.
+            lanePresentation?.RevealHitLine();
             yield return vfxController.PlayAbilitySelected(selectedLane, selectedAbility);
             vfxController.SetAbilitySlotsVisible(false, true);
             bool completed = false;
@@ -417,6 +428,7 @@ namespace RythmRPG.Combat
         {
             if (!IsBattleActive || stats == null) return;
             stats.RecordJudgement(result.Judgement, runner != null ? runner.CurrentMode : PatternRunMode.EnemyDefense);
+            ComboChanged?.Invoke(stats.Combo);
         }
 
         private CombatResultScreen ResolveResultScreen()

@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -20,10 +21,15 @@ namespace RythmRPG.Combat
         public Vector2 ButtonSize = new(72f, 58f);
         [Min(0f)] public float ButtonSpacing = 24f;
         [Min(0f)] public float BottomOffset = 8f;
+        [Tooltip("TextMeshPro font for the key labels. Empty = generated from Button Font (legacy), else TMP's default font.")]
+        public TMP_FontAsset ButtonFontAsset;
+        [Tooltip("Legacy uGUI font, only used to generate a TMP font when Button Font Asset is empty.")]
         public Font ButtonFont;
         [Min(1)] public int ButtonFontSize = 28;
         public FontStyle ButtonFontStyle = FontStyle.Bold;
         public Color ButtonTextColor = Color.white;
+        [Tooltip("Key label outline (alpha 0 = none).")]
+        public Color ButtonTextOutline = new(0f, 0f, 0f, 0.75f);
 
         [Header("Perfect Hit Line")]
         [Tooltip("Optional sprite. Leave empty to use the LineRenderer fallback.")]

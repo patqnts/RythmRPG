@@ -1,5 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
+using PrimeTween;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -28,11 +29,17 @@ namespace RythmRPG.Combat
         [SerializeField] private bool slideInOnBattleStart = true;
         [SerializeField] private bool hideOnBattleEnd = true;
 
+        [Header("Combo streak")]
+        [Tooltip("Empty = Resources/Combat/UI/ComboStreakStyle (or built-in defaults).")]
+        [SerializeField] private ComboStreakStyle comboStreakStyle;
+        [Tooltip("Empty = created from the style.")]
+        [SerializeField] private ComboStreakView comboStreak;
+
         [Header("Old number labels (optional)")]
-        [FormerlySerializedAs("PlayerHealth"), SerializeField] private Text playerHealth;
-        [FormerlySerializedAs("EnemyHealth"), SerializeField] private Text enemyHealth;
-        [SerializeField] private Text playerMana;
-        [SerializeField] private Text turnText;
+        [FormerlySerializedAs("PlayerHealth"), SerializeField] private TMP_Text playerHealth;
+        [FormerlySerializedAs("EnemyHealth"), SerializeField] private TMP_Text enemyHealth;
+        [SerializeField] private TMP_Text playerMana;
+        [SerializeField] private TMP_Text turnText;
         [Tooltip("Keep the old number-only labels visible next to the bars.")]
         [SerializeField] private bool showLegacyLabels;
 
@@ -40,7 +47,7 @@ namespace RythmRPG.Combat
         private PlayerCombatant player;
         private EnemyCombatant enemy;
         private RectTransform hudRoot;
-        private Coroutine hudRoutine;
+        private Tween hudTween;
         private float hudAlpha;
         private bool battleShown;
         private readonly List<SlideTarget> slideTargets = new();
@@ -62,6 +69,15 @@ namespace RythmRPG.Combat
             }
         }
 
+        private ComboStreakStyle ComboStyle
+        {
+            get
+            {
+                if (comboStreakStyle == null) comboStreakStyle = ComboStreakStyle.LoadOrDefault();
+                return comboStreakStyle;
+            }
+        }
+
         private void Awake()
         {
             EnsureCanvas();
@@ -76,14 +92,14 @@ namespace RythmRPG.Combat
         private void EnsureOptionalLabels()
         {
             if (playerMana == null && showLegacyLabels)
-                playerMana = CreateFallbackLabel("Player Mana", new Vector2(-420f, 180f), TextAnchor.MiddleLeft);
+                playerMana = CreateFallbackLabel("Player Mana", new Vector2(-420f, 180f), TextAlignmentOptions.Left);
             //if (turnText == null) turnText = CreateFallbackLabel("Turn State", new Vector2(0f, 250f), TextAnchor.MiddleCenter);
             SetLegacyVisible(playerHealth);
             SetLegacyVisible(enemyHealth);
             SetLegacyVisible(playerMana);
         }
 
-        private void SetLegacyVisible(Text label)
+        private void SetLegacyVisible(TMP_Text label)
         {
             if (label != null) label.enabled = showLegacyLabels;
         }
@@ -93,15 +109,18 @@ namespace RythmRPG.Combat
             EnsureCanvas();
             EnsureOptionalLabels();
             EnsureBars();
+            EnsureComboStreak();
             RegisterAssignedBars();
             Unbind();
             controller = combatController;
             player = playerCombatant;
             enemy = enemyCombatant;
+            comboStreak?.ResetImmediate();
             if (controller != null)
             {
                 controller.StateChanged += HandleStateChanged;
                 controller.BattleEnded += HandleBattleEnded;
+                controller.ComboChanged += HandleComboChanged;
             }
             if (player != null)
             {
@@ -159,9 +178,12 @@ namespace RythmRPG.Combat
             if (turnText != null) turnText.text = GetTurnLabel(state);
         }
 
+        private void HandleComboChanged(int combo) => comboStreak?.Show(combo);
+
         private void HandleBattleEnded(CombatState _)
         {
             battleShown = false;
+            comboStreak?.Hide(true);
             if (hideOnBattleEnd) ShowHud(false, slideInOnBattleStart);
         }
 
@@ -171,6 +193,7 @@ namespace RythmRPG.Combat
             {
                 controller.StateChanged -= HandleStateChanged;
                 controller.BattleEnded -= HandleBattleEnded;
+                controller.ComboChanged -= HandleComboChanged;
             }
             if (player != null)
             {
@@ -188,6 +211,14 @@ namespace RythmRPG.Combat
             if (playerHealthBar == null) playerHealthBar = CreateBar("Player Health", style.PlayerHealthPrefab, style.PlayerHealth, style.PlayerHealthLayout);
             if (playerManaBar == null) playerManaBar = CreateBar("Player Mana", style.PlayerManaPrefab, style.PlayerMana, style.PlayerManaLayout);
             if (enemyHealthBar == null) enemyHealthBar = CreateBar("Enemy Health", style.EnemyHealthPrefab, style.EnemyHealth, style.EnemyHealthLayout);
+        }
+
+        private void EnsureComboStreak()
+        {
+            if (comboStreak != null) return;
+            RectTransform root = EnsureHudRoot();
+            if (root == null) return;
+            comboStreak = ComboStreakView.CreateTemplate(root, ComboStyle, Style);
         }
 
         private ResourceBarView CreateBar(string barName, ResourceBarView prefab, ResourceBarStyle barStyle, HudBarLayout layout)
@@ -262,63 +293,43 @@ namespace RythmRPG.Combat
 
         private void ShowHud(bool show, bool animate)
         {
-            if (hudRoutine != null) StopCoroutine(hudRoutine);
-            hudRoutine = null;
+            hudTween.Stop();
             float seconds = Style.IntroSeconds;
+            float to = show ? 1f : 0f;
             if (!animate || seconds <= 0f || !isActiveAndEnabled)
             {
-                hudAlpha = show ? 1f : 0f;
-                foreach (SlideTarget target in slideTargets)
-                {
-                    if (target.Rect == null) continue;
-                    target.Rect.anchoredPosition = target.Rest + (show ? Vector2.zero : target.Offset);
-                    if (target.Group != null) target.Group.alpha = hudAlpha;
-                }
+                ApplyHudVisibility(to);
                 return;
             }
-            hudRoutine = StartCoroutine(SlideHud(show, seconds));
+            // Matches the old hand-rolled curves: ease-out-cubic sliding in, ease-in-quad sliding out.
+            Ease ease = show ? Ease.OutCubic : Ease.InQuad;
+            hudTween = Tween.Custom(this, hudAlpha, to, seconds, (view, v) => view.ApplyHudVisibility(v), ease);
         }
 
-        private IEnumerator SlideHud(bool show, float seconds)
+        // visibility 0 = fully hidden (slid out, transparent), 1 = fully shown.
+        private void ApplyHudVisibility(float visibility)
         {
-            float from = hudAlpha;
-            float to = show ? 1f : 0f;
-            float start = Time.unscaledTime;
-            while (true)
+            hudAlpha = visibility;
+            float away = 1f - visibility;
+            foreach (SlideTarget target in slideTargets)
             {
-                float t = Mathf.Clamp01((Time.unscaledTime - start) / seconds);
-                float eased = show ? 1f - (1f - t) * (1f - t) * (1f - t) : t * t;
-                hudAlpha = Mathf.Lerp(from, to, eased);
-                float away = show ? 1f - eased : eased;
-                foreach (SlideTarget target in slideTargets)
-                {
-                    if (target.Rect == null) continue;
-                    Vector2 offset = target.Offset * away;
-                    target.Rect.anchoredPosition = target.Rest + new Vector2(Mathf.Round(offset.x), Mathf.Round(offset.y));
-                    if (target.Group != null) target.Group.alpha = hudAlpha;
-                }
-                if (t >= 1f) break;
-                yield return null;
+                if (target.Rect == null) continue;
+                Vector2 offset = target.Offset * away;
+                target.Rect.anchoredPosition = target.Rest + new Vector2(Mathf.Round(offset.x), Mathf.Round(offset.y));
+                if (target.Group != null) target.Group.alpha = hudAlpha;
             }
-            hudRoutine = null;
         }
 
         // ---------- canvas / labels ----------
 
-        private Text CreateFallbackLabel(string objectName, Vector2 anchoredPosition, TextAnchor alignment)
+        private TMP_Text CreateFallbackLabel(string objectName, Vector2 anchoredPosition, TextAlignmentOptions alignment)
         {
-            GameObject label = new(objectName, typeof(RectTransform), typeof(CanvasRenderer), typeof(Text));
-            RectTransform rect = label.GetComponent<RectTransform>();
-            rect.SetParent(transform, false);
+            TextMeshProUGUI text = CombatText.CreateUGUI(objectName, transform, Style.FontAsset, 24, Color.white,
+                alignment, Style.TextOutline);
+            RectTransform rect = text.rectTransform;
             rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 0.5f);
             rect.anchoredPosition = anchoredPosition;
             rect.sizeDelta = new Vector2(360f, 48f);
-            Text text = label.GetComponent<Text>();
-            text.font = Style.Font;
-            text.fontSize = 24;
-            text.alignment = alignment;
-            text.color = Color.white;
-            text.raycastTarget = false;
             return text;
         }
 
@@ -358,6 +369,7 @@ namespace RythmRPG.Combat
                 Unbind();
                 controller.StateChanged += HandleStateChanged;
                 controller.BattleEnded += HandleBattleEnded;
+                controller.ComboChanged += HandleComboChanged;
                 player.HealthChanged += HandlePlayerHealth;
                 player.ManaChanged += HandlePlayerMana;
                 enemy.HealthChanged += HandleEnemyHealth;

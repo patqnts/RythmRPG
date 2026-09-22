@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using PrimeTween;
+using TMPro;
 using UnityEngine;
 
 namespace RythmRPG.Combat
@@ -15,6 +16,8 @@ namespace RythmRPG.Combat
         [SerializeField, Min(0f)] private float minimumAbilityPatternSpawnHeightAboveLanes = 2.5f;
         [Tooltip("Pop-up / float / charge motion of the ability icons. Empty = Resources/Combat/UI/AbilitySlotAnimation.")]
         [SerializeField] private AbilitySlotAnimationProfile slotAnimation;
+        [Tooltip("World-space size of floating combat text (TextMeshPro font size; 10 = 1 world unit tall).")]
+        [SerializeField, Min(0.1f)] private float floatingTextSize = 2.7f;
 
         private readonly Dictionary<int, AbilitySlotView> slotViews = new();
         private AbilitySlotController slots;
@@ -249,25 +252,27 @@ namespace RythmRPG.Combat
         {
             GameObject label = new(value);
             label.transform.position = position;
-            TextMesh mesh = label.AddComponent<TextMesh>();
+            // World-space TextMeshPro (3D). Font size is in world units x10: 2.7 ~ the old TextMesh size.
+            TextMeshPro mesh = label.AddComponent<TextMeshPro>();
+            CombatHudStyle hud = CombatHudStyle.LoadOrDefault();
+            TMP_FontAsset font = hud.FontAsset;
+            if (font != null) mesh.font = font;
             mesh.text = value;
-            mesh.anchor = TextAnchor.MiddleCenter;
-            mesh.alignment = TextAlignment.Center;
-            mesh.fontSize = 36;
-            mesh.characterSize = 0.075f;
-            mesh.fontStyle = FontStyle.Bold;
+            mesh.alignment = TextAlignmentOptions.Center;
+            mesh.textWrappingMode = TextWrappingModes.NoWrap;
+            mesh.overflowMode = TextOverflowModes.Overflow;
+            mesh.fontSize = floatingTextSize;
+            mesh.fontStyle = FontStyles.Bold;
             mesh.color = color;
+            mesh.rectTransform.sizeDelta = new Vector2(6f, 1.5f);
+            // Judgement text must never be hidden by world geometry or by the hit line canvas: shared ZTest-Always
+            // material with an outline for readability (one material per font, not one per popup).
+            CombatText.ApplyOutline(mesh, hud.TextOutline, CombatText.DefaultOutlineWidth, alwaysOnTop: true);
             MeshRenderer textRenderer = label.GetComponent<MeshRenderer>();
-            textRenderer.sortingOrder = 500;
-            // Judgement text must never be hidden by world geometry or by the hit line canvas.
-            textRenderer.material.SetInt("unity_GUIZTestMode", (int)UnityEngine.Rendering.CompareFunction.Always);
+            if (textRenderer != null) textRenderer.sortingOrder = 500;
             Tween.PositionY(label.transform, position.y + 0.8f, 0.65f, Ease.OutSine);
-            Tween.Custom(mesh, 1f, 0f, 0.65f, (target, alpha) =>
-            {
-                Color current = target.color;
-                current.a = alpha;
-                target.color = current;
-            }).OnComplete(label, target => Destroy(target));
+            Tween.Custom(mesh, 1f, 0f, 0.65f, (target, alpha) => target.alpha = alpha)
+                .OnComplete(label, target => Destroy(target));
         }
 
         private void Unbind()

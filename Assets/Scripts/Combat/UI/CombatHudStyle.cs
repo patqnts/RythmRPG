@@ -1,5 +1,7 @@
 using System;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace RythmRPG.Combat
 {
@@ -118,9 +120,12 @@ namespace RythmRPG.Combat
         [Tooltip("Seconds for the HUD to slide in at battle start and out at battle end.")]
         [SerializeField, Min(0f)] private float introSeconds = 0.4f;
 
-        [Header("Text")]
-        [Tooltip("Empty = Unity's built-in font. Use a pixel font for the pixel look.")]
-        [SerializeField] private Font font;
+        [Header("Text (TextMeshPro)")]
+        [Tooltip("TextMeshPro font for every HUD text. Empty = generated from Legacy Font below, else TMP's default font.")]
+        [SerializeField] private TMP_FontAsset fontAsset;
+        [Tooltip("Old uGUI font, kept only so existing assets still pick their font. Converted to a TMP font automatically.")]
+        [FormerlySerializedAs("font")]
+        [SerializeField] private Font legacyFont;
         [SerializeField, Min(6)] private int fontSize = 20;
         [SerializeField] private Color textColor = Color.white;
         [SerializeField] private Color textOutline = new(0f, 0f, 0f, 0.85f);
@@ -136,7 +141,8 @@ namespace RythmRPG.Combat
         public HudBarLayout EnemyHealthLayout => enemyHealthLayout;
         public ResourceBarMotion Motion => motion;
         public float IntroSeconds => introSeconds;
-        public Font Font => font != null ? font : Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+        public TMP_FontAsset FontAsset => CombatText.ResolveFont(fontAsset, legacyFont);
+        public Font LegacyFont => legacyFont;
         public int FontSize => fontSize;
         public Color TextColor => textColor;
         public Color TextOutline => textOutline;

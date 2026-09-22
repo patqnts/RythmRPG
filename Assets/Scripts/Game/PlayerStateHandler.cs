@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using RythmRPG.Combat;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerStateHandler : MonoBehaviour
 {
     // Start is called before the first frame update
-    public Text pressMeter;
-    public Text status;
+    public TMP_Text pressMeter;
+    public TMP_Text status;
     public KeyButton[] keys;
     private PlayerState playerState;
     public PlayerStateHandler instance;

@@ -36,7 +36,7 @@ namespace RythmRPG.Combat
         [SerializeField, Min(0.05f)] private float floatPeriod = 1.7f;
         [Tooltip("Each icon is this much of a period behind its left neighbour, so they bob in a wave.")]
         [SerializeField, Range(0f, 1f)] private float floatPhaseStep = 0.22f;
-        [Tooltip("Gentle side-to-side sway in degrees.")]
+        [Tooltip("Unused: idle float is vertical-only (no rotation). Kept only so old assets keep this value; nothing reads it any more.")]
         [SerializeField] private float floatSwayDegrees = 3f;
 
         [Header("Charge (holding a selected ability)")]

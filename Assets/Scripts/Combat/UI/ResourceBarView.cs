@@ -1,4 +1,6 @@
 using System;
+using PrimeTween;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,8 +26,8 @@ namespace RythmRPG.Combat
         [SerializeField] private RectTransform trail;
         [Tooltip("Optional overlay flashed on a loss.")]
         [SerializeField] private Graphic flash;
-        [SerializeField] private Text valueLabel;
-        [SerializeField] private Text titleLabel;
+        [SerializeField] private TMP_Text valueLabel;
+        [SerializeField] private TMP_Text titleLabel;
 
         [Header("Colors")]
         [SerializeField] private Color fillColor = new(0.36f, 0.86f, 0.42f);
@@ -51,13 +53,21 @@ namespace RythmRPG.Combat
         private Graphic fillGraphic;
         private Graphic trailGraphic;
         private bool initialized;
-        private Ramp fillRamp;
-        private Ramp trailRamp;
-        private Ramp countRamp;
-        private float shakeStart = -1f;
-        private float shakeStrength;
-        private float flashStart = -1f;
-        private float pulseStart = -1f;
+
+        // PrimeTween-driven values. fillValue/trailValue/countValue are pushed to the visuals from each
+        // tween's onValueChange, so nothing needs to be re-evaluated every frame.
+        private float fillValue;
+        private float trailValue;
+        private float countValue;
+        private Tween fillTween;
+        private Tween trailTween;
+        private Tween countTween;
+        private Tween lowPulseTween;
+        // Kept as handles: the pulse lives inside a Sequence, and PrimeTween refuses Tween.StopAll(body) on
+        // tweens nested in a Sequence, so the body's animations are always stopped through these instead.
+        private Tween shakeTween;
+        private Sequence pulseSequence;
+        private bool lowPulseActive;
         private int lastShownNumber = int.MinValue;
         private Vector2 bodyRestPosition;
         private bool bodyRestCaptured;
@@ -90,44 +100,89 @@ namespace RythmRPG.Combat
             Maximum = Mathf.Max(1, maximum);
             Current = Mathf.Clamp(current, 0, Maximum);
             float after = Normalized;
-            float now = Time.unscaledTime;
 
             if (!animate || !initialized || !isActiveAndEnabled)
             {
-                fillRamp = Ramp.Hold(after);
-                trailRamp = Ramp.Hold(after);
-                countRamp = Ramp.Hold(Current);
+                StopValueTweens();
+                fillValue = trailValue = after;
+                countValue = Current;
                 bool wasInitialized = initialized;
                 initialized = true;
-                Apply(now);
+                PushValuesToVisuals();
+                UpdateLowPulse();
                 if (wasInitialized && previous != Current) ValueChanged?.Invoke(previous, Current, Maximum);
                 return;
             }
 
-            float shownFill = fillRamp.Evaluate(now);
-            float shownTrail = Mathf.Max(shownFill, trailRamp.Evaluate(now));
-            countRamp = new Ramp(countRamp.Evaluate(now), Current, now, motion.countSeconds);
+            float shownFill = fillValue;
+            float shownTrail = Mathf.Max(shownFill, trailValue);
+
+            countTween.Stop();
+            float fromCount = countValue;
+            countTween = Tween.Custom(this, fromCount, Current, motion.countSeconds, (view, v) => view.SetCount(v), Ease.OutCubic);
 
             if (after < before)
             {
-                fillRamp = new Ramp(shownFill, after, now, motion.lossSeconds);
+                fillTween.Stop();
+                fillTween = Tween.Custom(this, shownFill, after, motion.lossSeconds, (view, v) => view.SetFill(v), Ease.OutCubic);
                 // The lost chunk waits, then drains. Keep the highest trail if losses stack up.
-                trailRamp = new Ramp(shownTrail, after, now + motion.trailDelay, motion.trailSeconds);
+                trailTween.Stop();
+                trailTween = Tween.Custom(this, shownTrail, after, new TweenSettings(motion.trailSeconds, Ease.OutCubic, startDelay: motion.trailDelay),
+                    (view, v) => view.SetTrail(v));
                 if (trailGraphic != null) trailGraphic.color = loseTrailColor;
-                flashStart = now;
-                shakeStart = now;
-                shakeStrength = Mathf.Clamp01((before - after) / 0.2f) * 0.7f + 0.3f;
+                PlayLossEffects(before, after);
             }
             else if (after > before)
             {
-                trailRamp = Ramp.Hold(after);
-                fillRamp = new Ramp(shownFill, after, now, motion.gainSeconds);
+                trailTween.Stop();
+                trailValue = after;
+                SetTrail(after);
+                fillTween.Stop();
+                fillTween = Tween.Custom(this, shownFill, after, motion.gainSeconds, (view, v) => view.SetFill(v), Ease.OutCubic);
                 if (trailGraphic != null) trailGraphic.color = gainTrailColor;
-                pulseStart = now;
+                PlayGainPulse();
             }
 
             if (previous != Current) ValueChanged?.Invoke(previous, Current, Maximum);
-            Apply(now);
+            UpdateLowPulse();
+        }
+
+        private void StopValueTweens()
+        {
+            fillTween.Stop();
+            trailTween.Stop();
+            countTween.Stop();
+        }
+
+        private void SetFill(float value)
+        {
+            fillValue = value;
+            SetAmount(fill, fillValue);
+            if (trailValue < fillValue) SetTrail(fillValue);
+        }
+
+        private void SetTrail(float value)
+        {
+            trailValue = Mathf.Max(fillValue, value);
+            SetAmount(trail, trailValue);
+        }
+
+        private void SetCount(float value)
+        {
+            countValue = value;
+            int number = Mathf.RoundToInt(value);
+            if (valueLabel == null || number == lastShownNumber) return;
+            lastShownNumber = number;
+            valueLabel.text = string.Format(valueFormat, number, Maximum);
+        }
+
+        private void PushValuesToVisuals()
+        {
+            SetAmount(fill, fillValue);
+            SetAmount(trail, trailValue);
+            lastShownNumber = int.MinValue;
+            SetCount(countValue);
+            if (fillGraphic != null) fillGraphic.color = fillColor;
         }
 
         /// <summary>Copy colors and sprites from a style (used by the template and by code that restyles bars).</summary>
@@ -144,86 +199,98 @@ namespace RythmRPG.Combat
             if (trailGraphic is Image trailImage && style.fillSprite != null) SetSprite(trailImage, style.fillSprite);
             if (valueLabel != null) valueLabel.enabled = style.showNumbers;
             Title = style.title;
-            Apply(Time.unscaledTime);
-        }
-
-        private void Update()
-        {
-            if (initialized) Apply(Time.unscaledTime);
+            PushValuesToVisuals();
+            UpdateLowPulse();
         }
 
         private void OnDisable()
         {
+            Tween.StopAll(this);
+            lowPulseTween.Stop();
+            lowPulseActive = false;
+            StopBodyTweens();
             if (body != null && bodyRestCaptured)
             {
                 body.anchoredPosition = bodyRestPosition;
                 body.localScale = Vector3.one;
             }
+            if (flash != null) flash.enabled = false;
         }
 
-        private void Apply(float now)
+        private void CaptureBodyRest()
         {
-            float fillValue = fillRamp.Evaluate(now);
-            float trailValue = Mathf.Max(fillValue, trailRamp.Evaluate(now));
-            SetAmount(fill, fillValue);
-            SetAmount(trail, trailValue);
+            if (body == null || bodyRestCaptured) return;
+            bodyRestPosition = body.anchoredPosition;
+            bodyRestCaptured = true;
+        }
 
-            if (fillGraphic != null)
-            {
-                Color color = fillColor;
-                if (lowThreshold > 0f && Normalized <= lowThreshold && Current > 0 && motion.lowPulseSpeed > 0f)
-                {
-                    float wave = 0.5f + 0.5f * Mathf.Sin(now * motion.lowPulseSpeed * Mathf.PI * 2f);
-                    color = Color.Lerp(fillColor, lowFillColor, wave);
-                }
-                fillGraphic.color = color;
-            }
+        // A loss: flash + shake the body, then let the fill/trail tweens (already started in Set) play out.
+        private void PlayLossEffects(float before, float after)
+        {
+            CaptureBodyRest();
+            float shakeStrength = Mathf.Clamp01((before - after) / 0.2f) * 0.7f + 0.3f;
 
-            if (flash != null)
+            if (flash != null && motion.flashSeconds > 0f)
             {
-                float t = flashStart < 0f || motion.flashSeconds <= 0f ? 1f : (now - flashStart) / motion.flashSeconds;
+                Tween.StopAll(flash);
                 Color color = flash.color;
-                color.a = t >= 1f ? 0f : 0.85f * (1f - t);
+                color.a = 0.85f;
                 flash.color = color;
-                flash.enabled = color.a > 0.001f;
+                flash.enabled = true;
+                Tween.Alpha(flash, 0f, motion.flashSeconds, Ease.Linear).OnComplete(flash, target => target.enabled = false);
             }
 
-            int number = Mathf.RoundToInt(countRamp.Evaluate(now));
-            if (valueLabel != null && number != lastShownNumber)
+            if (body != null && motion.shakeSeconds > 0f && motion.shakePixels > 0f)
             {
-                lastShownNumber = number;
-                valueLabel.text = string.Format(valueFormat, number, Maximum);
+                StopBodyTweens();
+                body.anchoredPosition = bodyRestPosition;
+                body.localScale = Vector3.one;
+                // PrimeTween's shake settles back to the rest position on its own.
+                shakeTween = Tween.ShakeLocalPosition(body, new Vector3(motion.shakePixels, motion.shakePixels, 0f) * shakeStrength,
+                    motion.shakeSeconds, frequency: 22f);
             }
+        }
 
-            if (body == null) return;
-            if (!bodyRestCaptured)
+        // A gain: a quick single-hump scale pulse on the body.
+        private void PlayGainPulse()
+        {
+            CaptureBodyRest();
+            if (body == null || motion.pulseSeconds <= 0f || motion.gainPulse <= 0f) return;
+            StopBodyTweens();
+            if (bodyRestCaptured) body.anchoredPosition = bodyRestPosition;
+            body.localScale = Vector3.one;
+            float half = motion.pulseSeconds * 0.5f;
+            pulseSequence = Sequence.Create()
+                .Group(Tween.Scale(body, 1f + motion.gainPulse, half, Ease.OutSine))
+                .Chain(Tween.Scale(body, 1f, half, Ease.InSine));
+        }
+
+        private void StopBodyTweens()
+        {
+            shakeTween.Stop();
+            pulseSequence.Stop();
+        }
+
+        // Low-value warning: a continuous fill-color pulse between fillColor and lowFillColor while the bar
+        // stays at or below Low Threshold. Runs as an infinite PrimeTween yoyo so it needs no per-frame polling.
+        private void UpdateLowPulse()
+        {
+            bool shouldPulse = fillGraphic != null && lowThreshold > 0f && Current > 0
+                && Normalized <= lowThreshold && motion.lowPulseSpeed > 0f;
+            if (shouldPulse == lowPulseActive) return;
+            lowPulseActive = shouldPulse;
+            lowPulseTween.Stop();
+            if (!shouldPulse)
             {
-                bodyRestPosition = body.anchoredPosition;
-                bodyRestCaptured = true;
+                if (fillGraphic != null) fillGraphic.color = fillColor;
+                return;
             }
-
-            Vector2 offset = Vector2.zero;
-            if (shakeStart >= 0f && motion.shakeSeconds > 0f)
-            {
-                float t = (now - shakeStart) / motion.shakeSeconds;
-                if (t >= 1f) shakeStart = -1f;
-                else
+            float halfPeriod = 1f / Mathf.Max(0.01f, motion.lowPulseSpeed * 2f);
+            lowPulseTween = Tween.Custom(this, 0f, 1f, new TweenSettings(halfPeriod, Ease.InOutSine, cycles: -1, cycleMode: CycleMode.Yoyo),
+                (view, v) =>
                 {
-                    float amplitude = motion.shakePixels * shakeStrength * (1f - t) * (1f - t);
-                    offset = new Vector2(Mathf.Sin(now * 95f), Mathf.Cos(now * 71f)) * amplitude;
-                }
-            }
-            // Whole pixels keep pixel art crisp.
-            body.anchoredPosition = bodyRestPosition + new Vector2(Mathf.Round(offset.x), Mathf.Round(offset.y));
-
-            float scale = 1f;
-            if (pulseStart >= 0f && motion.pulseSeconds > 0f)
-            {
-                float t = (now - pulseStart) / motion.pulseSeconds;
-                if (t >= 1f) pulseStart = -1f;
-                else scale += motion.gainPulse * Mathf.Sin(t * Mathf.PI);
-            }
-            body.localScale = new Vector3(scale, scale, 1f);
+                    if (view.fillGraphic != null) view.fillGraphic.color = Color.Lerp(view.fillColor, view.lowFillColor, v);
+                });
         }
 
         private static void SetAmount(RectTransform part, float value)
@@ -256,7 +323,7 @@ namespace RythmRPG.Combat
 
         /// <summary>Wire parts from code (the template builder uses this).</summary>
         public void AssignParts(RectTransform bodyRoot, RectTransform fillPart, RectTransform trailPart, Graphic flashOverlay,
-            Text value, Text title)
+            TMP_Text value, TMP_Text title)
         {
             body = bodyRoot;
             fill = fillPart;
@@ -295,18 +362,20 @@ namespace RythmRPG.Combat
             Image flashImage = NewImage("Flash", fillImage.rectTransform, new Color(1f, 1f, 1f, 0f), null);
             Stretch(flashImage.rectTransform, 0f);
 
-            Font font = hud != null ? hud.Font : Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+            TMP_FontAsset font = hud != null ? hud.FontAsset : CombatText.DefaultFont;
             int fontSize = hud != null ? hud.FontSize : 20;
             Color textColor = hud != null ? hud.TextColor : Color.white;
             Color outline = hud != null ? hud.TextOutline : new Color(0f, 0f, 0f, 0.85f);
 
-            Text value = NewText("Value", bodyRoot, font, Mathf.Max(8, fontSize - 4), textColor, outline, TextAnchor.MiddleRight);
+            TextMeshProUGUI value = CombatText.CreateUGUI("Value", bodyRoot, font, Mathf.Max(8, fontSize - 4), textColor,
+                TextAlignmentOptions.Right, outline);
             Stretch(value.rectTransform, 0f);
             value.rectTransform.offsetMin = new Vector2(8f, 0f);
             value.rectTransform.offsetMax = new Vector2(-8f, 0f);
             value.enabled = style.showNumbers;
 
-            Text title = NewText("Title", root, font, fontSize, textColor, outline, TextAnchor.LowerLeft);
+            TextMeshProUGUI title = CombatText.CreateUGUI("Title", root, font, fontSize, textColor,
+                TextAlignmentOptions.BottomLeft, outline);
             RectTransform titleRect = title.rectTransform;
             titleRect.anchorMin = new Vector2(0f, 1f);
             titleRect.anchorMax = new Vector2(1f, 1f);
@@ -346,26 +415,6 @@ namespace RythmRPG.Combat
             return image;
         }
 
-        private static Text NewText(string name, Transform parent, Font font, int size, Color color, Color outline, TextAnchor alignment)
-        {
-            RectTransform rect = NewRect(name, parent);
-            Text text = rect.gameObject.AddComponent<Text>();
-            text.font = font;
-            text.fontSize = size;
-            text.color = color;
-            text.alignment = alignment;
-            text.raycastTarget = false;
-            text.horizontalOverflow = HorizontalWrapMode.Overflow;
-            text.verticalOverflow = VerticalWrapMode.Overflow;
-            if (outline.a > 0f)
-            {
-                Outline effect = rect.gameObject.AddComponent<Outline>();
-                effect.effectColor = outline;
-                effect.effectDistance = new Vector2(2f, -2f);
-            }
-            return text;
-        }
-
         private static void Stretch(RectTransform rect, float inset)
         {
             rect.anchorMin = Vector2.zero;
@@ -373,34 +422,6 @@ namespace RythmRPG.Combat
             rect.pivot = new Vector2(0.5f, 0.5f);
             rect.offsetMin = new Vector2(inset, inset);
             rect.offsetMax = new Vector2(-inset, -inset);
-        }
-
-        /// <summary>A value that eases from one number to another, optionally after a delay.</summary>
-        private readonly struct Ramp
-        {
-            private readonly float from;
-            private readonly float to;
-            private readonly float start;
-            private readonly float duration;
-
-            public Ramp(float from, float to, float start, float duration)
-            {
-                this.from = from;
-                this.to = to;
-                this.start = start;
-                this.duration = duration;
-            }
-
-            public static Ramp Hold(float value) => new(value, value, 0f, 0f);
-
-            public float Evaluate(float now)
-            {
-                if (duration <= 0f || now >= start + duration) return to;
-                if (now <= start) return from;
-                float t = (now - start) / duration;
-                t = 1f - (1f - t) * (1f - t) * (1f - t); // ease out cubic
-                return Mathf.LerpUnclamped(from, to, t);
-            }
         }
     }
 }
