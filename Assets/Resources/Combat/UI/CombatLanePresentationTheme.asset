@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70e41e82d04f4050932dcbbcbfeeb503, type: 3}
   m_Name: CombatLanePresentationTheme
   m_EditorClassIdentifier: 
-  ButtonUnpressedSprite: {fileID: -1960483087, guid: f9f578db5a70632409b1db0ac0a6b6b2, type: 3}
-  ButtonPressedSprite: {fileID: 324652989, guid: f9f578db5a70632409b1db0ac0a6b6b2, type: 3}
+  ButtonUnpressedSprite: {fileID: 21300000, guid: dbaad250b49fbb947abd461eaf98cbc2, type: 3}
+  ButtonPressedSprite: {fileID: 21300000, guid: f2478e00832815c4bb0f3d23c36db4a7, type: 3}
   ButtonImageType: 0
   ButtonColor: {r: 1, g: 1, b: 1, a: 0.94}
   ButtonSize: {x: 64, y: 64}
@@ -32,7 +32,7 @@ MonoBehaviour:
   LineGapAboveButtons: 8
   LineHorizontalPadding: 8
   SnapToRenderTexturePixels: 1
-  LineCapSprite: {fileID: 21300000, guid: da6e5d60e01a4882a55986abd5097357, type: 3}
+  LineCapSprite: {fileID: 1853943049, guid: c8a0152b2ff9ce942b76c2f10ca43d89, type: 3}
   LineCapJoinHeight: 3
   LineCapColor: {r: 1, g: 1, b: 1, a: 0}
   LineCapOverlap: 0
