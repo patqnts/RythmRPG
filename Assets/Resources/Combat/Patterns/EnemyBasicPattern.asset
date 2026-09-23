@@ -16,8 +16,8 @@ MonoBehaviour:
   bpm: 225
   beatsPerMeasure: 4
   compositionDuration: 25
-  audioClip: {fileID: 8300000, guid: 78cb0fef327344e4ca877c293083380c, type: 3}
-  song: {fileID: 11400000, guid: be022a97543154341b52e0cfff67c396, type: 2}
+  audioClip: {fileID: 0}
+  song: {fileID: 0}
   songPreviewBar: 0
   audioOffsetSeconds: 0
   snapEnabled: 1
@@ -54,13 +54,13 @@ MonoBehaviour:
     displayColor: {r: 1, g: 0.32, b: 0.25, a: 1}
     defaultSpeed: 8
     defaultDamage: 1
-    defaultTravelTime: 2.5
+    defaultTravelTime: 1.0666667
   - noteType: 7
     defaultPrefab: {fileID: 5029094789931625778, guid: 7a1e4b9c2d5f4e8a9c3b6d0f1e2a4b5c, type: 3}
     displayColor: {r: 1, g: 0.85, b: 0.2, a: 1}
     defaultSpeed: 8
     defaultDamage: 1
-    defaultTravelTime: 2.5
+    defaultTravelTime: 1.0666667
   notes:
   - id: fc3fbfd59b9f44b89bf0222a8d84551a
     laneId: enemy_lane_2
@@ -72,7 +72,7 @@ MonoBehaviour:
     playerState: 0
     damage: 1
     speed: 8
-    travelTime: 2.5
+    travelTime: 1.0666666666666667
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
@@ -89,7 +89,7 @@ MonoBehaviour:
     playerState: 0
     damage: 1
     speed: 8
-    travelTime: 2.5
+    travelTime: 1.0666666666666667
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
@@ -106,7 +106,7 @@ MonoBehaviour:
     playerState: 0
     damage: 1
     speed: 8
-    travelTime: 2.5
+    travelTime: 1.0666666666666667
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
@@ -123,7 +123,7 @@ MonoBehaviour:
     playerState: 0
     damage: 1
     speed: 8
-    travelTime: 2.5
+    travelTime: 1.0666666666666667
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
@@ -140,7 +140,7 @@ MonoBehaviour:
     playerState: 0
     damage: 1
     speed: 8
-    travelTime: 2.5
+    travelTime: 1.0666666666666667
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
@@ -157,7 +157,7 @@ MonoBehaviour:
     playerState: 0
     damage: 1
     speed: 8
-    travelTime: 2.5
+    travelTime: 1.0666666666666667
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
@@ -174,7 +174,7 @@ MonoBehaviour:
     playerState: 0
     damage: 1
     speed: 8
-    travelTime: 2.5
+    travelTime: 1.0666666666666667
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
@@ -191,7 +191,7 @@ MonoBehaviour:
     playerState: 0
     damage: 1
     speed: 8
-    travelTime: 2.5
+    travelTime: 1.0666666666666667
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
@@ -208,7 +208,7 @@ MonoBehaviour:
     playerState: 0
     damage: 1
     speed: 8
-    travelTime: 2.5
+    travelTime: 1.0666666666666667
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
@@ -225,7 +225,7 @@ MonoBehaviour:
     playerState: 0
     damage: 1
     speed: 8
-    travelTime: 2.5
+    travelTime: 1.0666666666666667
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
@@ -242,7 +242,7 @@ MonoBehaviour:
     playerState: 0
     damage: 1
     speed: 8
-    travelTime: 2.5
+    travelTime: 1.0666666666666667
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
@@ -259,7 +259,7 @@ MonoBehaviour:
     playerState: 0
     damage: 1
     speed: 8
-    travelTime: 2.5
+    travelTime: 1.0666666666666667
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
@@ -276,7 +276,7 @@ MonoBehaviour:
     playerState: 0
     damage: 1
     speed: 8
-    travelTime: 2.5
+    travelTime: 1.0666666666666667
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
@@ -293,7 +293,7 @@ MonoBehaviour:
     playerState: 0
     damage: 1
     speed: 8
-    travelTime: 2.5
+    travelTime: 1.0666666666666667
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
@@ -310,7 +310,7 @@ MonoBehaviour:
     playerState: 0
     damage: 1
     speed: 8
-    travelTime: 2.5
+    travelTime: 1.0666666666666667
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
@@ -327,7 +327,7 @@ MonoBehaviour:
     playerState: 0
     damage: 1
     speed: 8
-    travelTime: 2.5
+    travelTime: 1.0666666666666667
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15

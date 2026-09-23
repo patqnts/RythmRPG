@@ -64,24 +64,19 @@ public class NoteObject : Note
             return;
         }
 
-        if (!TryGetLaneTravelPositions(currentIdentity, 3f, out Transform movementSpace,
-                out Vector3 startLocal, out Vector3 keyLocal, out Vector3 targetLocal))
+        // Reaches the hit line exactly TravelTime after it starts, measured along the lane (see TryPlanLaneTravel).
+        float travelTime = Mathf.Max(0.01f, (float)(Data?.TravelTime ?? 2.5d));
+        if (!TryPlanLaneTravel(currentIdentity, travelTime, 3f, out Transform movementSpace,
+                out Vector3 startLocal, out Vector3 keyLocal, out Vector3 targetLocal,
+                out float laneSpeed, out float totalDuration))
         {
             return;
         }
 
-        RhythmLaneTarget target = GetLaneTarget();
-        if (target == null) return;
-
         StopMovementTweens();
         movementTweenIdentity = currentIdentity;
         movementTweenStarted = true;
-
-        float travelTime = Mathf.Max(0.01f, (float)(Data?.TravelTime ?? 2.5d));
-        float distanceToKey = Vector3.Distance(transform.position, target.transform.position);
-        float worldSpeed = distanceToKey > 0.01f ? distanceToKey / travelTime : Mathf.Max(0.01f, speed);
-        SetTravelSpeed(worldSpeed); // timing windows are in seconds: distance / this speed
-        float totalDuration = Vector3.Distance(transform.position, FromMovementLocal(targetLocal, movementSpace)) / worldSpeed;
+        SetTravelSpeed(laneSpeed); // timing windows are in seconds: distance along the lane / this speed
         if (UsesChartClock)
         {
             clockDriven = true;

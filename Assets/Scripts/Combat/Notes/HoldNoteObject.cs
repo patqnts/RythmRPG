@@ -124,15 +124,11 @@ public class HoldNoteObject : Note
     // The tail length and hold time follow from the authored hold duration at that same speed.
     private bool TryStartClockTravel(int identity)
     {
-        if (!TryGetLaneTravelPositions(identity, 3f, out Transform movementSpace,
-                out Vector3 startLocal, out Vector3 keyLocal, out Vector3 targetLocal)) return false;
-        RhythmLaneTarget target = GetLaneTarget();
-        if (target == null) return false;
-
+        // Head reaches the hit line exactly TravelTime after spawning, measured along the lane (see TryPlanLaneTravel).
         float travelTime = Mathf.Max(0.01f, (float)Data.TravelTime);
-        float distanceToKey = Vector3.Distance(transform.position, target.transform.position);
-        if (distanceToKey <= 0.01f) return false;
-        float worldSpeed = distanceToKey / travelTime;
+        if (!TryPlanLaneTravel(identity, travelTime, 3f, out Transform movementSpace,
+                out Vector3 startLocal, out Vector3 keyLocal, out Vector3 targetLocal,
+                out float worldSpeed, out float totalDuration)) return false;
 
         StopMovementTweens();
         clockDriven = true;
@@ -140,8 +136,7 @@ public class HoldNoteObject : Note
         clockStartLocal = startLocal;
         clockKeyLocal = keyLocal;
         clockTargetLocal = targetLocal;
-        clockDuration = Mathf.Max(0.01f,
-            Vector3.Distance(transform.position, FromMovementLocal(targetLocal, movementSpace)) / worldSpeed);
+        clockDuration = Mathf.Max(0.01f, totalDuration);
 
         float holdSeconds = Mathf.Max(0.01f, (float)(Data.EndTime - Data.HitTime));
         speed = worldSpeed;

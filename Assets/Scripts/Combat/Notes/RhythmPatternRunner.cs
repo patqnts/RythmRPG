@@ -332,7 +332,8 @@ namespace RythmRPG.Combat
             bool encounterMusic = musicDirector != null && musicDirector.HasSong;
             if (plannedZeroDsp.HasValue) zeroDspTime = plannedZeroDsp.Value;
             else if (encounterMusic) zeroDspTime = PlanStart(chart, AudioSettings.dspTime, out _);
-            clock = new MusicClock(() => AudioSettings.dspTime, chart.CreateTempoMap());
+            // Smoothed audio clock: notes glide instead of stepping once per audio buffer, same timeline as dspTime.
+            clock = new MusicClock(() => SmoothedDspTime.Now, chart.CreateTempoMap());
             clock.StartAt(zeroDspTime);
             scheduler.Reposition(0d);
             int nextIndex = 0;

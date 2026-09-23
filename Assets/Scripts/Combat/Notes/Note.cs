@@ -257,6 +257,40 @@ public class Note : MonoBehaviour
         return true;
     }
 
+    /// <summary>
+    /// Travel plan that puts the note on the hit line exactly <paramref name="travelTime"/> after it starts. Notes spawn
+    /// at one point (the enemy) and slide sideways into their lane while travelling down it; only the travel down the
+    /// lane decides when the note reaches the line, so speed and duration are measured along the lane, not along the
+    /// slanted line from the spawn point (which made off-centre lanes arrive early).
+    /// </summary>
+    /// <param name="laneSpeed">World units per second along the lane (what the timing windows measure).</param>
+    /// <param name="totalDuration">Seconds for the whole movement, from the start to the miss point past the line.</param>
+    protected bool TryPlanLaneTravel(int keyIdentity, float travelTime, float missDistancePastKey,
+        out Transform movementSpace, out Vector3 startLocal, out Vector3 keyLocal, out Vector3 targetLocal,
+        out float laneSpeed, out float totalDuration)
+    {
+        laneSpeed = 0f;
+        totalDuration = 0f;
+        if (!TryGetLaneTravelPositions(keyIdentity, missDistancePastKey, out movementSpace,
+                out startLocal, out keyLocal, out targetLocal)) return false;
+        RhythmLaneTarget target = GetLaneTarget();
+        if (target == null) return false;
+
+        // EvaluateLaneTravel moves linearly from the lane start (spawn with the lane's X) to the miss point, and
+        // eases X into the lane on the side, so the line is reached at progress toKey / (toKey + pastKey).
+        Vector3 laneStartLocal = startLocal;
+        laneStartLocal.x = keyLocal.x;
+        float toKey = Vector3.Distance(laneStartLocal, keyLocal);
+        float pastKey = Vector3.Distance(keyLocal, targetLocal);
+        if (toKey <= 0.0001f) return false;
+
+        float safeTravel = Mathf.Max(0.01f, travelTime);
+        totalDuration = safeTravel * (toKey + pastKey) / toKey;
+        float worldToLine = target.GetTimingDistance(transform.position);
+        laneSpeed = worldToLine > 0.0001f ? worldToLine / safeTravel : Mathf.Max(0.01f, speed);
+        return true;
+    }
+
     protected void TweenLaneX(int keyIdentity, float duration = 0.25f)
     {
         if (TryGetLaneX(keyIdentity, out float x))

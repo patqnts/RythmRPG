@@ -26,6 +26,8 @@ namespace RythmRPG.Combat
         public void SetView(KeyButton laneView) => view = laneView;
     }
 
+    // Runs after the notes' Update, so a press is judged against where the note is drawn this frame, not last frame.
+    [DefaultExecutionOrder(100)]
     public sealed class LaneInputRouter : MonoBehaviour
     {
         private static readonly KeyCode[] DefaultKeys = { KeyCode.A, KeyCode.S, KeyCode.D, KeyCode.J, KeyCode.K };

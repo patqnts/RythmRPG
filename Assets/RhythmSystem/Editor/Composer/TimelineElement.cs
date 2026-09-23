@@ -39,6 +39,8 @@ namespace RythmRPG.Rhythm.Editor.Composer
         private double previewHold;
         private NoteHandleKind dragHandle;
         private double previewHandleBeat;
+        // Travel handle dragged on one of several selected notes: every selected note gets the same travel length.
+        private bool dragTravelGroup;
         private Vector2 marqueeStart;
         private Vector2 marqueeEnd;
         private Vector2 panLast;
@@ -163,6 +165,14 @@ namespace RythmRPG.Rhythm.Editor.Composer
         {
             NoteCatalogEntry entry;
             return catalog.TryGetValue(n.DefinitionId, out entry) ? entry.Behavior : NoteBehaviorKind.Moving;
+        }
+
+        // Travel length (beats) the dragged handle gives its note; applied to every selected note in a group drag.
+        private double GroupTravelBeats()
+        {
+            NoteInstance anchor = dragAnchorId != null ? session.Find(dragAnchorId) : null;
+            return anchor == null ? NoteHandles.MinTravelBeats
+                : Math.Max(NoteHandles.MinTravelBeats, anchor.HitBeat - previewHandleBeat);
         }
 
         private List<NoteHandlePoint> HandlePointsOf(NoteInstance n)
@@ -506,6 +516,11 @@ namespace RythmRPG.Rhythm.Editor.Composer
                     n = n.Clone();
                     NoteHandles.Apply(dragHandle, n, previewHandleBeat, DefaultsOf(n), session.Tempo);
                 }
+                else if (drag == DragMode.Handle && dragTravelGroup && selected)
+                {
+                    n = n.Clone();
+                    n.TravelBeats = new Overridable<double>(GroupTravelBeats());
+                }
 
                 double beat = n.HitBeat;
                 int lane = session.LaneIndex(n.LaneId);
@@ -631,6 +646,8 @@ namespace RythmRPG.Rhythm.Editor.Composer
                 dragAnchorId = hit.NoteId;
                 dragHandle = hit.Handle;
                 previewHandleBeat = NoteHandles.BeatOf(hit.Handle, hn, DefaultsOf(hn), session.Tempo);
+                dragTravelGroup = hit.Handle == NoteHandleKind.Travel && session.IsSelected(hit.NoteId)
+                                  && session.SelectionCount > 1;
                 drag = DragMode.Handle;
                 this.CapturePointer(evt.pointerId);
                 evt.StopPropagation();
@@ -762,7 +779,13 @@ namespace RythmRPG.Rhythm.Editor.Composer
                 case DragMode.Handle:
                 {
                     NoteInstance hn = dragAnchorId != null ? session.Find(dragAnchorId) : null;
-                    if (hn != null) session.SetNoteHandle(hn.Id, dragHandle, previewHandleBeat, DefaultsOf(hn));
+                    if (hn != null && dragTravelGroup)
+                    {
+                        double travel = GroupTravelBeats();
+                        session.ModifySelected("Edit Travel", n => n.TravelBeats = new Overridable<double>(travel));
+                    }
+                    else if (hn != null) session.SetNoteHandle(hn.Id, dragHandle, previewHandleBeat, DefaultsOf(hn));
+                    dragTravelGroup = false;
                     break;
                 }
                 case DragMode.MovePattern:

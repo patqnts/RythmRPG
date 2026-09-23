@@ -19,6 +19,7 @@ MonoBehaviour:
   beatsPerMeasure: 4
   audioOffsetSeconds: 0
   volume: 0.722
+  chartSync: 1
   playerTurnClip: {fileID: 0}
   playerTurnVolume: 1
   mainVolumeOnPlayerTurn: 0

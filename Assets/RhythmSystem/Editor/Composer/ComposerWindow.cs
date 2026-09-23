@@ -25,6 +25,9 @@ namespace RythmRPG.Rhythm.Editor.Composer
         private IntegerField damageField;
         private IntegerField pressesField;
         private Label rateLabel;
+        private DoubleField travelField;
+        private Label travelInfo;
+        private VisualElement travelPresets;
 
         // pattern inspector
         private VisualElement patternBody;
@@ -783,6 +786,44 @@ namespace RythmRPG.Rhythm.Editor.Composer
             });
             inspectorBody.Add(holdField);
 
+            // Travel time (spawn -> hit line) in beats; applies to every selected note. Shorter = faster notes.
+            travelField = new DoubleField("Travel (beats)");
+            travelField.tooltip = "How long the note travels to the hit line. Shorter = faster. Applies to all selected notes; " +
+                                  "hit times stay on their beats.";
+            travelField.RegisterValueChangedCallback(e =>
+            {
+                if (refreshingInspector || session == null) return;
+                SetSelectedTravel(e.newValue);
+            });
+            inspectorBody.Add(travelField);
+
+            travelInfo = new Label();
+            travelInfo.style.whiteSpace = WhiteSpace.Normal;
+            travelInfo.style.fontSize = 10;
+            travelInfo.style.color = new Color(0.75f, 0.75f, 0.75f);
+            inspectorBody.Add(travelInfo);
+
+            travelPresets = new VisualElement();
+            travelPresets.style.flexDirection = FlexDirection.Row;
+            travelPresets.style.flexWrap = Wrap.Wrap;
+            AddTravelPreset("\u00BD bar", 0.5d);
+            AddTravelPreset("1 bar", 1d);
+            AddTravelPreset("1\u00BD", 1.5d);
+            AddTravelPreset("2 bars", 2d);
+            var faster = new Button(() => ScaleSelectedTravel(0.9d)) { text = "Faster" };
+            faster.tooltip = "Travel time x0.9 on every selected note (keeps their differences).";
+            travelPresets.Add(faster);
+            var slower = new Button(() => ScaleSelectedTravel(1d / 0.9d)) { text = "Slower" };
+            slower.tooltip = "Travel time /0.9 on every selected note.";
+            travelPresets.Add(slower);
+            var reset = new Button(() =>
+            {
+                if (session != null) session.ModifySelected("Reset travel", n => n.TravelBeats = default);
+            }) { text = "Default" };
+            reset.tooltip = "Back to the note type's default travel time.";
+            travelPresets.Add(reset);
+            inspectorBody.Add(travelPresets);
+
             damageField = new IntegerField("Damage");
             damageField.RegisterValueChangedCallback(e =>
             {
@@ -807,6 +848,66 @@ namespace RythmRPG.Rhythm.Editor.Composer
 
             panel.Add(BuildPatternInspector());
             return panel;
+        }
+
+        private void AddTravelPreset(string label, double bars)
+        {
+            var button = new Button(() =>
+            {
+                if (session == null) return;
+                SetSelectedTravel(bars * Math.Max(1, session.Tempo.BeatsPerMeasure));
+            }) { text = label };
+            button.tooltip = "Travel time = " + bars + " bar(s) on every selected note.";
+            travelPresets.Add(button);
+        }
+
+        private void SetSelectedTravel(double beats)
+        {
+            if (session == null) return;
+            double v = Math.Max(NoteHandles.MinTravelBeats, beats);
+            session.ModifySelected("Set travel", n => n.TravelBeats = new Overridable<double>(v));
+        }
+
+        private void ScaleSelectedTravel(double factor)
+        {
+            if (session == null) return;
+            session.ModifySelected("Scale travel", n =>
+            {
+                double current = NoteHandles.TravelBeats(n, DefaultsFor(n.DefinitionId), session.Tempo);
+                n.TravelBeats = new Overridable<double>(Math.Max(NoteHandles.MinTravelBeats, current * factor));
+            });
+        }
+
+        // Travel field for the selection: the shared value, or "mixed" when the selected notes differ.
+        private void RefreshTravelField(List<NoteInstance> selected)
+        {
+            double min = double.MaxValue, max = double.MinValue, minSec = double.MaxValue, maxSec = double.MinValue;
+            foreach (NoteInstance n in selected)
+            {
+                NoteHandleDefaults d = DefaultsFor(n.DefinitionId);
+                double beats = NoteHandles.TravelBeats(n, d, session.Tempo);
+                double seconds = NoteHandles.TravelSeconds(n, d, session.Tempo);
+                min = Math.Min(min, beats);
+                max = Math.Max(max, beats);
+                minSec = Math.Min(minSec, seconds);
+                maxSec = Math.Max(maxSec, seconds);
+            }
+
+            if (selected.Count == 0) return;
+            bool mixed = max - min > 1e-6;
+            travelField.showMixedValue = mixed;
+            if (!mixed) travelField.SetValueWithoutNotify(Math.Round(min, 4));
+            double bar = Math.Max(1, session.Tempo.BeatsPerMeasure);
+            travelInfo.text = mixed
+                ? $"Mixed: {min:0.##}-{max:0.##} beats ({minSec:0.###}-{maxSec:0.###} s). Type a value to set all."
+                : $"= {minSec:0.###} s, {min / bar:0.##} bar(s). Shorter = faster.";
+        }
+
+        private int ResolveDamage(NoteInstance n)
+        {
+            if (n.Damage.HasValue) return n.Damage.Value;
+            RhythmNoteDefinition def = chart != null ? chart.FindDefinition(NoteMigration.LegacyTypeFor(n.DefinitionId)) : null;
+            return def != null ? def.DefaultDamage : 0;
         }
 
         private NoteHandleDefaults DefaultsFor(string definitionId)
@@ -1074,23 +1175,40 @@ namespace RythmRPG.Rhythm.Editor.Composer
                 }
 
                 int count = session != null ? session.SelectionCount : 0;
-                inspectorBody.SetEnabled(count == 1);
+                inspectorBody.SetEnabled(count >= 1);
                 pressesField.style.display = DisplayStyle.None;
                 rateLabel.style.display = DisplayStyle.None;
+                // Beat and hold are per note; travel (and damage) also edit a multi-selection.
+                beatField.style.display = count > 1 ? DisplayStyle.None : DisplayStyle.Flex;
+                holdField.style.display = count > 1 ? DisplayStyle.None : DisplayStyle.Flex;
+                travelField.showMixedValue = false;
+                travelInfo.text = string.Empty;
                 if (count == 0)
                 {
                     inspectorHeader.text = "Inspector (nothing selected)";
                     return;
                 }
 
+                var selectedNotes = new List<NoteInstance>();
+                foreach (string id in session.Selection)
+                {
+                    NoteInstance found = session.Find(id);
+                    if (found != null) selectedNotes.Add(found);
+                }
+                RefreshTravelField(selectedNotes);
+
                 if (count > 1)
                 {
                     inspectorHeader.text = count + " notes selected";
+                    int firstDamage = ResolveDamage(selectedNotes[0]);
+                    bool mixedDamage = selectedNotes.Exists(note => ResolveDamage(note) != firstDamage);
+                    damageField.showMixedValue = mixedDamage;
+                    if (!mixedDamage) damageField.SetValueWithoutNotify(firstDamage);
                     return;
                 }
 
-                NoteInstance n = null;
-                foreach (string id in session.Selection) n = session.Find(id);
+                damageField.showMixedValue = false;
+                NoteInstance n = selectedNotes.Count > 0 ? selectedNotes[0] : null;
                 if (n == null) return;
 
                 string label = n.DefinitionId;
@@ -1103,14 +1221,7 @@ namespace RythmRPG.Rhythm.Editor.Composer
                 beatField.SetValueWithoutNotify(n.HitBeat);
                 holdField.SetValueWithoutNotify(n.HoldBeats);
                 holdField.SetEnabled(RhythmTimingUtility.IsHoldType(NoteMigration.LegacyTypeFor(n.DefinitionId)));
-                int damage = n.Damage.HasValue ? n.Damage.Value : 0;
-                if (!n.Damage.HasValue && chart != null)
-                {
-                    RhythmNoteDefinition def = chart.FindDefinition(NoteMigration.LegacyTypeFor(n.DefinitionId));
-                    if (def != null) damage = def.DefaultDamage;
-                }
-
-                damageField.SetValueWithoutNotify(damage);
+                damageField.SetValueWithoutNotify(ResolveDamage(n));
 
                 bool isMash = n.DefinitionId == NoteMigration.DefinitionIdMash;
                 pressesField.style.display = isMash ? DisplayStyle.Flex : DisplayStyle.None;
@@ -1124,7 +1235,7 @@ namespace RythmRPG.Rhythm.Editor.Composer
                     double perfectRate = MashRules.PressesPerSecond(presses, MashRules.PerfectDeadlineSeconds(seconds));
                     MashRateSeverity severity = MashRules.Severity(presses, seconds);
                     string text = rate.ToString("0.0") + " presses/s to clear within " + seconds.ToString("0.00") + " s of travel; "
-                        + perfectRate.ToString("0.0") + "/s for a Perfect (fast) clear. Change travel with the note's travel handle.";
+                        + perfectRate.ToString("0.0") + "/s for a Perfect (fast) clear. Change it with Travel above or the travel handle.";
                     if (severity == MashRateSeverity.Error) text += " TOO FAST, not reliably achievable.";
                     else if (severity == MashRateSeverity.Warning) text += seconds < MashRules.ShortWindowSeconds ? " Very short window." : " Fast.";
                     rateLabel.text = text;
