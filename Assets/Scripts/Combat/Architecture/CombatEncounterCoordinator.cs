@@ -71,6 +71,8 @@ namespace RythmRPG.Combat
             if (combatCameraTarget != null && combatEnemy != null)
                 combatCameraTarget.position = ResolveCombatCameraTarget(combatEnemy.position);
             if (alignedPlayer == null || lanePresentation == null) return;
+            // Ability-selection zoom: the layout is frozen, so the player stays put while the camera moves.
+            if (lanePresentation.LayoutFrozen) return;
             // Cinemachine and the render camera must finish before sampling the screen-anchored line.
             lanePresentation.RefreshPresentation();
             lanePresentation.SnapTargetsToHitLine();

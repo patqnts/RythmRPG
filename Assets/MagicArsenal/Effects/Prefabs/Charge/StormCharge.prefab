@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 428392}
   - component: {fileID: 19876594}
   - component: {fileID: 19991106}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Rings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2798,7 +2798,7 @@ GameObject:
   - component: {fileID: 415222}
   - component: {fileID: 19871548}
   - component: {fileID: 19901708}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5532,13 +5532,13 @@ GameObject:
   - component: {fileID: 10896580}
   - component: {fileID: 11441164}
   - component: {fileID: 8174019552640912191}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Point light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &483460
 Transform:
   m_ObjectHideFlags: 0
@@ -5676,7 +5676,7 @@ GameObject:
   - component: {fileID: 479072}
   - component: {fileID: 19908090}
   - component: {fileID: 19844766}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: StormCharge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8422,7 +8422,7 @@ GameObject:
   - component: {fileID: 1832908001576870002}
   - component: {fileID: 3396010911141611344}
   - component: {fileID: 3213992434614724230}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Rings
   m_TagString: Untagged
   m_Icon: {fileID: 0}

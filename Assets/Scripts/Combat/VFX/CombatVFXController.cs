@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using PrimeTween;
+using RythmRPG.Core;
 using TMPro;
 using UnityEngine;
 
@@ -20,6 +21,9 @@ namespace RythmRPG.Combat
         [SerializeField, Min(0.1f)] private float floatingTextSize = 2.7f;
 
         private readonly Dictionary<int, AbilitySlotView> slotViews = new();
+        private readonly Dictionary<int, KeyButton> keyViews = new();
+        private AbilitySelectionStage selectionStage;
+        private LaneInputRouter boundInput;
         private AbilitySlotController slots;
         private RhythmJudgementSystem judgement;
         private EnemyCombatant enemy;
@@ -59,14 +63,29 @@ namespace RythmRPG.Combat
             enemy = enemyCombatant;
             player = playerCombatant;
             if (slotAnimation == null) slotAnimation = AbilitySlotAnimationProfile.LoadOrDefault();
+            keyViews.Clear();
+            boundInput = input;
+
+            // Ability icons: in a row above the player's head (world-space canvas), or above the lane buttons.
+            IReadOnlyDictionary<int, RectTransform> headSlots = null;
+            if ((vfxTheme == null || vfxTheme.AbilityIconsAbovePlayer) && player != null)
+                headSlots = EnsureSelectionStage().BuildSlots(player.transform, input.Bindings);
+
             foreach (LaneKeyBinding binding in input.Bindings)
             {
-                if (binding.View == null) continue;
-                AbilitySlotView view = binding.View.GetComponent<AbilitySlotView>();
-                if (view == null) view = binding.View.gameObject.AddComponent<AbilitySlotView>();
+                if (binding.View != null) keyViews[binding.LaneId] = binding.View;
+                Component host = headSlots != null && headSlots.TryGetValue(binding.LaneId, out RectTransform slotRect)
+                    ? (Component)slotRect
+                    : binding.View;
+                if (host == null) continue;
+                AbilitySlotView view = host.GetComponent<AbilitySlotView>();
+                if (view == null) view = host.gameObject.AddComponent<AbilitySlotView>();
                 view.SetProfile(slotAnimation);
+                view.SetFrameStyle(vfxTheme != null ? vfxTheme.IconFrame : null);
                 slotViews[binding.LaneId] = view;
             }
+            GameInput.BindingsChanged -= RefreshSelectionKeys;
+            GameInput.BindingsChanged += RefreshSelectionKeys;
             if (slots != null)
             {
                 slots.SlotsChanged += RefreshSlots;
@@ -130,6 +149,7 @@ namespace RythmRPG.Combat
         /// <summary>Removes a charge or wisp left over when a battle ends or is cancelled mid-cast.</summary>
         public void ClearCastEffects()
         {
+            if (selectionStage != null) selectionStage.ResetAll();
             if (activeCharge != null) activeCharge.Cancel();
             activeCharge = null;
             chargeLane = -1;
@@ -138,11 +158,29 @@ namespace RythmRPG.Combat
                 if (wisp != null) Destroy(wisp.gameObject);
         }
 
-        /// <summary>Shortest time from selecting an ability to its wisp popping (flight + minimum hover).</summary>
+        /// <summary>
+        /// Shortest time from selecting an ability to its wisp popping (flight + minimum hover), and never shorter than
+        /// the camera's blend back from the ability-selection zoom, so no note appears before the combat view is back.
+        /// </summary>
         public float MinimumCastSeconds(AbilityDefinition definition)
         {
             AbilityVFXProfile profile = definition != null ? definition.VFXProfile : null;
-            return profile != null ? profile.WispTravelSeconds + profile.WispMinHoverSeconds : 0.55f;
+            float cast = profile != null ? profile.WispTravelSeconds + profile.WispMinHoverSeconds : 0.55f;
+            float zoomOut = selectionStage != null ? selectionStage.ZoomOutSeconds + 0.05f : 0f;
+            return Mathf.Max(cast, zoomOut);
+        }
+
+        private AbilitySelectionStage EnsureSelectionStage()
+        {
+            if (selectionStage == null) selectionStage = GetComponent<AbilitySelectionStage>();
+            if (selectionStage == null) selectionStage = gameObject.AddComponent<AbilitySelectionStage>();
+            selectionStage.Configure(vfxTheme);
+            return selectionStage;
+        }
+
+        private void RefreshSelectionKeys()
+        {
+            if (selectionStage != null && boundInput != null) selectionStage.RefreshKeyLabels(boundInput.Bindings);
         }
 
         /// <summary>A small spark at <paramref name="position"/> as one of the ability's projectiles is thrown.</summary>
@@ -272,6 +310,12 @@ namespace RythmRPG.Combat
         public void SetAbilitySlotsVisible(bool visible, bool animate)
         {
             abilitySlotsVisible = visible;
+            // Choosing an ability: the camera zooms in on the player; hiding the choice blends back to the combat view.
+            if (selectionStage != null)
+            {
+                if (visible && slotViews.Count > 0) selectionStage.ZoomIn(player != null ? player.transform : null);
+                else if (!visible) selectionStage.ZoomOut(!animate);
+            }
             if (visible) RefreshUsability();
             AbilitySlotAnimationProfile profile = slotAnimation != null ? slotAnimation : AbilitySlotAnimationProfile.LoadOrDefault();
             int index = 0;
@@ -313,23 +357,39 @@ namespace RythmRPG.Combat
         {
             if (slotViews.TryGetValue(lane, out AbilitySlotView view)) view.SetCharging(true);
             StartCharge(lane, ability);
-            CombatCameraShaker.Shake(ResolveActiveCamera(), 0.025f, 0.15f);
+            // Rumble that builds while held, the icon is drawn toward the player, and the ability's name shows.
+            if (selectionStage != null) selectionStage.BeginCharge(lane, ability?.Definition != null ? ability.Definition.DisplayName : null);
+            else CombatCameraShaker.Shake(ResolveActiveCamera(), 0.025f, 0.15f);
         }
 
         private void HandleSelectionProgressed(int lane, float progress)
         {
             if (slotViews.TryGetValue(lane, out AbilitySlotView view)) view.SetProgress(progress);
             if (activeCharge != null && lane == chargeLane) activeCharge.SetProgress(progress);
+            if (selectionStage != null) selectionStage.SetCharge(lane, progress);
         }
 
         // The hold completed: the charge stays up until PlayAbilitySelected turns it into the wisp.
         private void HandleSelectionCommitted(int lane, AbilityRuntimeInstance ability)
         {
             if (lane == chargeLane) chargeCommitted = true;
+            if (selectionStage == null) return;
+            // Picked: one kick, the other icons drop away and the camera heads back to the combat view while the
+            // chosen ability's charge turns into its wisp.
+            selectionStage.CommitCharge(lane);
+            selectionStage.ZoomOut();
+            AbilitySlotAnimationProfile profile = slotAnimation != null ? slotAnimation : AbilitySlotAnimationProfile.LoadOrDefault();
+            int index = 0;
+            foreach (KeyValuePair<int, AbilitySlotView> pair in slotViews.OrderBy(pair => pair.Key))
+            {
+                if (pair.Value != null && pair.Key != lane) pair.Value.SetVisible(false, true, index * profile.HideStagger, 0f);
+                index++;
+            }
         }
 
         private void HandleSelectionCancelled(int lane)
         {
+            if (selectionStage != null && !chargeCommitted) selectionStage.StopCharge();
             if (activeCharge != null && lane == chargeLane && !chargeCommitted)
             {
                 activeCharge.Cancel();
@@ -353,8 +413,8 @@ namespace RythmRPG.Combat
             string text = uiTheme != null ? uiTheme.GetText(result.Judgement) : result.Judgement.ToString().ToUpperInvariant();
             Color color = uiTheme != null ? uiTheme.GetColor(result.Judgement) : Color.white;
             CreateFloatingText(text, result.WorldPosition + Vector3.up * 0.65f, color);
-            if (slotViews.TryGetValue(result.LaneId, out AbilitySlotView slot))
-                slot.GetComponent<KeyButton>()?.PlayJudgementFeedback(result.Judgement, color);
+            if (keyViews.TryGetValue(result.LaneId, out KeyButton key) && key != null)
+                key.PlayJudgementFeedback(result.Judgement, color);
         }
 
         /// <summary>Floating combat text (heal numbers, WARD, GUARD...).</summary>
@@ -399,6 +459,7 @@ namespace RythmRPG.Combat
             }
             if (judgement != null) judgement.OnJudgementResolved -= PlayJudgement;
             if (enemy != null) enemy.Damaged -= HandleEnemyDamaged;
+            GameInput.BindingsChanged -= RefreshSelectionKeys;
             if (player != null) player.ManaChanged -= HandlePlayerManaChanged;
         }
 
@@ -513,6 +574,7 @@ namespace RythmRPG.Combat
         private void OnDisable()
         {
             Unbind();
+            if (selectionStage != null) selectionStage.ResetAll();
             if (activeCharge != null) activeCharge.Cancel();
             activeCharge = null;
         }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using PrimeTween;
+using RythmRPG.Core;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -81,6 +82,16 @@ namespace RythmRPG.Combat
         private const float WorldUnitsPerCanvasUnit = 0.01f;
 
         private readonly List<RhythmLaneTarget> targets = new();
+        private readonly Dictionary<int, LaneKeyMarker> keyMarkers = new();
+        private readonly List<(LaneKeyBinding binding, float x)> markerLanes = new();
+        private readonly List<Image> lineSegments = new();
+        private Image hitLineImage;
+
+        /// <summary>
+        /// While true the hit line, lane targets and the player's combat spot stay where they are instead of being
+        /// re-projected from the camera every frame (set while the ability-selection camera zooms in on the player).
+        /// </summary>
+        public bool LayoutFrozen { get; set; }
         private LaneInputRouter activeInput;
         private bool presentationVisible;
         private float groundHeight;
@@ -113,7 +124,21 @@ namespace RythmRPG.Combat
 
         private void LateUpdate()
         {
-            if (presentationVisible && activeInput != null) AlignWorldTargetsAndLine(activeInput);
+            if (!presentationVisible || activeInput == null) return;
+            if (LayoutFrozen) TickKeyMarkers();
+            else AlignWorldTargetsAndLine(activeInput);
+        }
+
+        private void OnEnable()
+        {
+            GameInput.BindingsChanged += RefreshKeyMarkerLabels;
+            KeyButton.JudgementFeedbackPlayed += FlashKeyMarker;
+        }
+
+        private void OnDisable()
+        {
+            GameInput.BindingsChanged -= RefreshKeyMarkerLabels;
+            KeyButton.JudgementFeedbackPlayed -= FlashKeyMarker;
         }
 
         public void EnsurePresentation(LaneInputRouter input)
@@ -162,7 +187,7 @@ namespace RythmRPG.Combat
 
         public void RefreshPresentation()
         {
-            if (activeInput != null) AlignWorldTargetsAndLine(activeInput);
+            if (activeInput != null && !LayoutFrozen) AlignWorldTargetsAndLine(activeInput);
         }
 
         public bool TryGetPlayerPosition(float rootHeight, float footOffset, float gap, out Vector3 position)
@@ -367,6 +392,10 @@ namespace RythmRPG.Combat
             view.ConfigureUI(binding.LaneId, image, label,
                 theme != null ? theme.ButtonUnpressedSprite : null,
                 theme != null ? theme.ButtonPressedSprite : null);
+            // Hidden buttons keep their object: it still positions the lanes and carries the ability icon above it.
+            bool showButton = theme == null || theme.ShowButtons;
+            image.enabled = showButton;
+            label.enabled = showButton;
             return view;
         }
 
@@ -439,6 +468,177 @@ namespace RythmRPG.Combat
                 target.Configure(binding.LaneId, travel);
             }
             SnapTargetsToHitLine();
+            UpdateKeyMarkers(ordered);
+        }
+
+        // ---------- Hit line key markers ----------
+
+        private void UpdateKeyMarkers(List<LaneKeyBinding> ordered)
+        {
+            if (!Application.isPlaying) return;
+            bool show = theme == null || theme.ShowKeyMarkers;
+            if (!show || hitLineAnchor == null)
+            {
+                foreach (LaneKeyMarker hidden in keyMarkers.Values)
+                    if (hidden != null && hidden.gameObject.activeSelf) hidden.gameObject.SetActive(false);
+                if (hitLineAnchor != null) UpdateLineSegments(null, 0f);
+                return;
+            }
+
+            // Lane positions along the line, in the line canvas' local units.
+            List<(LaneKeyBinding binding, float x)> lanes = markerLanes;
+            lanes.Clear();
+            foreach (LaneKeyBinding binding in ordered)
+            {
+                RhythmLaneTarget target = targets.FirstOrDefault(candidate => candidate != null && candidate.LaneId == binding.LaneId);
+                if (target != null) lanes.Add((binding, hitLineAnchor.InverseTransformPoint(target.transform.position).x));
+            }
+            if (lanes.Count == 0)
+            {
+                UpdateLineSegments(null, 0f);
+                return;
+            }
+
+            float minGap = float.MaxValue;
+            for (int i = 1; i < lanes.Count; i++) minGap = Mathf.Min(minGap, Mathf.Abs(lanes[i].x - lanes[i - 1].x));
+            float size = ReferencePixelsToLineUnits(theme != null ? theme.KeyMarkerSize : 20f, false);
+            if (minGap < float.MaxValue) size = Mathf.Min(size, minGap * 0.85f);
+            float outlineThickness = ReferencePixelsToLineUnits(theme != null ? theme.KeyMarkerOutline : 1f, true);
+
+            bool created = false;
+            float deltaTime = Time.unscaledDeltaTime;
+            foreach ((LaneKeyBinding binding, float x) in lanes)
+            {
+                if (!keyMarkers.TryGetValue(binding.LaneId, out LaneKeyMarker marker) || marker == null
+                    || marker.transform.parent != hitLineAnchor)
+                {
+                    if (marker != null) Destroy(marker.gameObject);
+                    marker = LaneKeyMarker.Create(hitLineAnchor, binding.LaneId, theme);
+                    marker.SetLabel(binding.DisplayName);
+                    keyMarkers[binding.LaneId] = marker;
+                    created = true;
+                }
+                if (!marker.gameObject.activeSelf) marker.gameObject.SetActive(true);
+                marker.Layout(x, size, outlineThickness);
+                bool held = !GamePause.IsPaused && (binding.Action?.IsPressed() ?? false);
+                marker.Tick(held, GamePause.IsPaused ? 0f : deltaTime);
+            }
+            // Every shape reaches +-size/2 along the line (square sides, diamond tips, circle edge).
+            UpdateLineSegments(lanes, size * 0.5f);
+            if (created) PrepareHitLineMaterials(hitLineAnchor);
+        }
+
+        // Layout frozen (camera zoomed on the player): markers keep reacting to the keys, nothing moves.
+        private void TickKeyMarkers()
+        {
+            if (!Application.isPlaying) return;
+            float deltaTime = GamePause.IsPaused ? 0f : Time.unscaledDeltaTime;
+            foreach ((int laneId, LaneKeyMarker marker) in keyMarkers)
+            {
+                if (marker == null || !marker.gameObject.activeInHierarchy) continue;
+                bool held = !GamePause.IsPaused && (GameInput.Lane(laneId)?.IsPressed() ?? false);
+                marker.Tick(held, deltaTime);
+            }
+        }
+
+        /// <summary>
+        /// Draws the hit line as pieces between the key markers, so the line runs up to each shape's outline and
+        /// never through it: line and markers read as one connected shape. The original "Line" image is hidden
+        /// meanwhile; its sprite, colour and material are copied to the pieces every frame.
+        /// </summary>
+        private void UpdateLineSegments(List<(LaneKeyBinding binding, float x)> lanes, float halfGap)
+        {
+            if (hitLineImage == null || hitLineImage.transform.parent != hitLineAnchor)
+                hitLineImage = hitLineAnchor.Find("Line") is Transform line ? line.GetComponent<Image>() : null;
+            if (hitLineImage == null) return;
+
+            bool split = lanes != null && lanes.Count > 0 && (theme == null || theme.KeyMarkersBreakLine);
+            hitLineImage.enabled = !split;
+            if (!split)
+            {
+                foreach (Image segment in lineSegments)
+                    if (segment != null && segment.gameObject.activeSelf) segment.gameObject.SetActive(false);
+                return;
+            }
+
+            lanes.Sort((left, right) => left.x.CompareTo(right.x));
+            Rect bounds = hitLineAnchor.rect;
+            RectTransform source = hitLineImage.rectTransform;
+            int pieces = lanes.Count + 1;
+            while (lineSegments.Count < pieces) lineSegments.Add(null);
+            float start = bounds.xMin;
+            for (int i = 0; i < lineSegments.Count; i++)
+            {
+                Image segment = lineSegments[i];
+                if (i >= pieces)
+                {
+                    if (segment != null) segment.gameObject.SetActive(false);
+                    continue;
+                }
+                float end = i < lanes.Count ? lanes[i].x - halfGap : bounds.xMax;
+                float from = start;
+                if (i < lanes.Count) start = lanes[i].x + halfGap;
+
+                if (segment == null || segment.transform.parent != hitLineAnchor)
+                {
+                    var go = new GameObject($"Line Piece {i}", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+                    go.layer = hitLineAnchor.gameObject.layer;
+                    go.transform.SetParent(hitLineAnchor, false);
+                    segment = go.GetComponent<Image>();
+                    segment.raycastTarget = false;
+                    lineSegments[i] = segment;
+                }
+                segment.transform.SetSiblingIndex(hitLineImage.transform.GetSiblingIndex() + 1 + i);
+                float length = end - from;
+                if (length <= 0.0001f)
+                {
+                    segment.gameObject.SetActive(false);
+                    continue;
+                }
+                if (!segment.gameObject.activeSelf) segment.gameObject.SetActive(true);
+
+                RectTransform rect = segment.rectTransform;
+                rect.anchorMin = new Vector2(0f, source.anchorMin.y);
+                rect.anchorMax = new Vector2(0f, source.anchorMax.y);
+                rect.pivot = new Vector2(0f, source.pivot.y);
+                rect.sizeDelta = new Vector2(length, source.sizeDelta.y);
+                rect.anchoredPosition = new Vector2(from - bounds.xMin, source.anchoredPosition.y);
+                rect.localRotation = Quaternion.identity;
+                rect.localScale = Vector3.one;
+
+                if (segment.sprite != hitLineImage.sprite) segment.sprite = hitLineImage.sprite;
+                segment.type = hitLineImage.type;
+                segment.color = hitLineImage.color;
+                if (segment.material != hitLineImage.material) segment.material = hitLineImage.material;
+            }
+        }
+
+        // Pixels of a 270-row screen -> hit line canvas units. Whole render-texture pixels when snapping, so thin
+        // outlines stay crisp instead of shimmering.
+        private float ReferencePixelsToLineUnits(float referencePixels, bool snapToWholePixels)
+        {
+            if (!ResolveWorldCamera() || hitLineAnchor == null) return referencePixels;
+            float rtHeight = worldCamera.targetTexture != null ? worldCamera.targetTexture.height : worldCamera.pixelHeight;
+            float pixels = referencePixels * Mathf.Max(1f, rtHeight) / 270f;
+            if (snapToWholePixels) pixels = Mathf.Max(1f, Mathf.Round(pixels));
+            float unitsPerPixel = worldCamera.orthographic && rtHeight > 0f
+                ? 2f * worldCamera.orthographicSize / rtHeight
+                : 0.03f;
+            float scale = Mathf.Max(0.0001f, Mathf.Abs(hitLineAnchor.lossyScale.y));
+            return pixels * unitsPerPixel / scale;
+        }
+
+        private void RefreshKeyMarkerLabels()
+        {
+            if (activeInput == null) return;
+            foreach (LaneKeyBinding binding in activeInput.Bindings)
+                if (binding != null && keyMarkers.TryGetValue(binding.LaneId, out LaneKeyMarker marker) && marker != null)
+                    marker.SetLabel(binding.DisplayName);
+        }
+
+        private void FlashKeyMarker(int laneId, HitJudgement judgement, Color color)
+        {
+            if (keyMarkers.TryGetValue(laneId, out LaneKeyMarker marker) && marker != null) marker.Flash(color);
         }
 
         private readonly HashSet<RhythmLaneTarget> reportedDrift = new();

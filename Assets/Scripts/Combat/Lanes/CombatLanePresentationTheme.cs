@@ -13,6 +13,9 @@ namespace RythmRPG.Combat
     public sealed class CombatLanePresentationTheme : ScriptableObject
     {
         [Header("Button UI")]
+        [Tooltip("Show the key buttons under the lanes. Off: they are hidden (they still hold the layout and the ability " +
+                 "icons) and the Hit Line Key Markers show the keys instead.")]
+        public bool ShowButtons;
         [FormerlySerializedAs("ButtonSprite")]
         public Sprite ButtonUnpressedSprite;
         public Sprite ButtonPressedSprite;
@@ -40,6 +43,31 @@ namespace RythmRPG.Combat
         [Min(0f)] public float LineGapAboveButtons = 8f;
         [Min(0f)] public float LineHorizontalPadding = 8f;
         public bool SnapToRenderTexturePixels = true;
+
+        [Header("Hit Line Key Markers")]
+        [Tooltip("An outline shape on the hit line for each lane, where its notes land. Lights up while the key is held " +
+                 "and flashes in the judgement colour on a hit.")]
+        public bool ShowKeyMarkers = true;
+        [Tooltip("Draw the hit line in pieces between the markers, so it runs up to each outline instead of through it.")]
+        public bool KeyMarkersBreakLine = true;
+        public KeyMarkerShape KeyMarkerShape = KeyMarkerShape.Square;
+        [Tooltip("Optional outline art. Overrides the shape (the pressed glow uses the same silhouette).")]
+        public Sprite KeyMarkerSprite;
+        [Tooltip("Marker size in pixels of a 270-row screen (same unit as Line Thickness). Shrinks automatically if the " +
+                 "lanes are closer together.")]
+        [Min(2f)] public float KeyMarkerSize = 20f;
+        [Tooltip("Outline thickness in pixels of a 270-row screen. Square / Diamond only.")]
+        [Min(0.25f)] public float KeyMarkerOutline = 1f;
+        public Color KeyMarkerColor = new(1f, 1f, 1f, 0.85f);
+        public Color KeyMarkerPressedColor = new(1f, 0.85f, 0.35f, 1f);
+        [Tooltip("Fill shown inside the outline while the key is held.")]
+        public Color KeyMarkerPressedFill = new(1f, 0.85f, 0.35f, 0.35f);
+        [Range(1f, 1.6f)] public float KeyMarkerPressedScale = 1.15f;
+        [Tooltip("Show the lane's key (A, S, D...) inside the marker. Follows rebinding.")]
+        public bool ShowKeyMarkerLabels = true;
+        public Color KeyMarkerLabelColor = new(1f, 1f, 1f, 0.9f);
+        [Tooltip("Key label size relative to the marker.")]
+        [Range(0.2f, 1f)] public float KeyMarkerLabelScale = 0.55f;
 
         [Header("Perfect Hit Line End Caps")]
         [Tooltip("Art added past both ends of the hit line (the line itself is unchanged). Drawn for the LEFT end, facing outward; the right end uses a mirrored copy. The sprite's pivot row is lined up with the middle of the line, and its right edge touches the line's end. Empty = no caps.")]

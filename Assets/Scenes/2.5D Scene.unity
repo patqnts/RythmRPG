@@ -5536,7 +5536,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   triggerInteraction: 2
-  interactKey: 0
   requireInteractKey: 0
   useOverlapCheck: 1
   beginBattleOnTriggerEnter: 1

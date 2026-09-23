@@ -21,6 +21,15 @@ namespace RythmRPG.Combat
         private SpriteRenderer iconRenderer;
         private UnityEngine.UI.Image uiIcon;
         private UnityEngine.UI.Image uiRadialFill;
+        // UI mode: "Ability Icon" is an animated root holding a backdrop disc, a circular mask with the icon, and a frame.
+        private UnityEngine.UI.Image uiFrame;
+        private UnityEngine.UI.Image uiBackdrop;
+        private UnityEngine.UI.Image uiMaskImage;
+        private UnityEngine.UI.Mask uiMask;
+        private RectTransform uiMaskRect;
+        private AbilityIconFrameStyle frameStyle;
+        private Color accentColor = Color.white;
+        private bool hasAccent;
         private Transform iconTransform;
         private Transform radialTransform;
         private LineRenderer radialFill;
@@ -70,9 +79,25 @@ namespace RythmRPG.Combat
             if (animationProfile != null) profile = animationProfile;
         }
 
+        /// <summary>Circular frame / backdrop / hold-ring look (UI icons). Null = the defaults.</summary>
+        public void SetFrameStyle(AbilityIconFrameStyle style)
+        {
+            frameStyle = style;
+            EnsureVisuals();
+            ApplyFrameStyle();
+        }
+
         public void Configure(AbilityRuntimeInstance ability)
         {
             EnsureVisuals();
+            AbilityVFXProfile vfx = ability?.Definition != null ? ability.Definition.VFXProfile : null;
+            hasAccent = vfx != null;
+            if (hasAccent)
+            {
+                accentColor = vfx.AccentColor;
+                accentColor.a = 1f;
+            }
+            ApplyFrameStyle();
             Sprite icon = ability?.Definition?.Icon;
             iconBaseColor = new Color(1f, 1f, 1f, ability == null ? 0.25f : 1f);
             if (uiIcon != null) uiIcon.sprite = icon;
@@ -175,7 +200,7 @@ namespace RythmRPG.Combat
             if (clamped >= 1f && chargeProgress < 1f && charging) TriggerReadyPunch();
             chargeProgress = clamped;
 
-            bool showRadial = IsShown && clamped > 0f;
+            bool showRadial = IsShown && clamped > 0f && (frameStyle == null || frameStyle.ShowHoldProgress);
             if (uiRadialFill != null)
             {
                 uiRadialFill.enabled = showRadial;
@@ -291,6 +316,7 @@ namespace RythmRPG.Combat
                 uiIcon.enabled = active && uiIcon.sprite != null;
                 uiIcon.color = color;
             }
+            ApplyFrameColors(active, alpha * usableAlpha, tint);
             if (iconRenderer != null)
             {
                 iconRenderer.enabled = active && iconRenderer.sprite != null;
@@ -373,26 +399,38 @@ namespace RythmRPG.Combat
         {
             if (uiIcon == null)
             {
-                Transform icon = transform.Find("Ability Icon");
-                if (icon == null)
+                // Animated root (scale / shake / bob), with: backdrop disc, circular mask -> icon, frame ring.
+                Transform root = transform.Find("Ability Icon");
+                if (root == null)
                 {
-                    GameObject iconObject = new("Ability Icon", typeof(RectTransform), typeof(CanvasRenderer), typeof(UnityEngine.UI.Image));
-                    icon = iconObject.transform;
-                    icon.SetParent(transform, false);
+                    root = new GameObject("Ability Icon", typeof(RectTransform)).transform;
+                    root.SetParent(transform, false);
                 }
-                RectTransform rect = icon as RectTransform;
+                UnityEngine.UI.Image legacyImage = root.GetComponent<UnityEngine.UI.Image>();
+                if (legacyImage != null) legacyImage.enabled = false; // older layout had the icon on the root
+                RectTransform rect = root as RectTransform;
                 rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 1f);
                 // Centre pivot so scale, tilt and shake happen around the middle of the icon.
                 rect.pivot = new Vector2(0.5f, 0.5f);
                 rect.anchoredPosition = new Vector2(0f, 10f + 27f);
                 rect.sizeDelta = new Vector2(54f, 54f);
-                iconTransform = icon;
-                iconRestingLocalPosition = icon.localPosition;
-                uiIcon = icon.GetComponent<UnityEngine.UI.Image>();
-                if (uiIcon == null)
-                    uiIcon = icon.gameObject.AddComponent<UnityEngine.UI.Image>();
+                iconTransform = root;
+                iconRestingLocalPosition = root.localPosition;
+
+                uiBackdrop = UiChild(root, "Backdrop");
+                uiBackdrop.sprite = UiCircleSprites.Disc;
+
+                uiMaskImage = UiChild(root, "Mask");
+                uiMaskImage.sprite = UiCircleSprites.Disc;
+                uiMaskRect = uiMaskImage.rectTransform;
+                uiMask = uiMaskImage.gameObject.AddComponent<UnityEngine.UI.Mask>();
+                uiMask.showMaskGraphic = false;
+
+                uiIcon = UiChild(uiMaskRect, "Icon");
                 uiIcon.preserveAspect = true;
-                uiIcon.raycastTarget = false;
+
+                uiFrame = UiChild(root, "Frame");
+                ApplyFrameStyle();
             }
             if (uiRadialFill == null)
             {
@@ -420,6 +458,68 @@ namespace RythmRPG.Combat
                 uiRadialFill.color = radialBaseColor;
                 uiRadialFill.raycastTarget = false;
                 uiRadialFill.enabled = false;
+                ApplyFrameStyle();
+            }
+        }
+
+        private static UnityEngine.UI.Image UiChild(Transform parent, string childName)
+        {
+            var go = new GameObject(childName, typeof(RectTransform), typeof(CanvasRenderer), typeof(UnityEngine.UI.Image));
+            go.layer = parent.gameObject.layer;
+            go.transform.SetParent(parent, false);
+            var child = (RectTransform)go.transform;
+            child.anchorMin = Vector2.zero;
+            child.anchorMax = Vector2.one;
+            child.offsetMin = child.offsetMax = Vector2.zero;
+            var image = go.GetComponent<UnityEngine.UI.Image>();
+            image.raycastTarget = false;
+            return image;
+        }
+
+        private AbilityIconFrameStyle Style => frameStyle ?? DefaultFrameStyle;
+        private static readonly AbilityIconFrameStyle DefaultFrameStyle = new();
+
+        // Sprites, sizes and the hold-ring colour from the frame style.
+        private void ApplyFrameStyle()
+        {
+            AbilityIconFrameStyle style = Style;
+            bool framed = style.Enabled;
+            if (uiFrame != null) uiFrame.sprite = UiCircleSprites.Ring(style.FrameThickness);
+            if (uiMaskRect != null)
+            {
+                float inset = framed ? (1f - style.IconInset) * 0.5f : 0f;
+                uiMaskRect.anchorMin = new Vector2(inset, inset);
+                uiMaskRect.anchorMax = new Vector2(1f - inset, 1f - inset);
+                uiMaskRect.offsetMin = uiMaskRect.offsetMax = Vector2.zero;
+            }
+            if (uiMask != null) uiMask.enabled = framed;
+            if (uiMaskImage != null) uiMaskImage.enabled = framed;
+            if (uiRadialFill != null)
+            {
+                // A ring that fills around the icon (replaces the old white square sweep).
+                uiRadialFill.sprite = UiCircleSprites.Ring(style.ProgressThickness);
+                radialBaseColor = style.UseAbilityAccent && hasAccent ? accentColor : style.ProgressColor;
+            }
+        }
+
+        private void ApplyFrameColors(bool active, float alpha, Color tint)
+        {
+            if (uiFrame == null && uiBackdrop == null) return;
+            AbilityIconFrameStyle style = Style;
+            bool framed = style.Enabled && active;
+            if (uiFrame != null)
+            {
+                uiFrame.enabled = framed;
+                // The frame warms up toward the ability's colour as the hold fills.
+                Color frame = Color.Lerp(style.FrameColor, radialBaseColor, chargeBlend * chargeProgress);
+                uiFrame.color = new Color(frame.r * tint.r, frame.g * tint.g, frame.b * tint.b, frame.a * alpha);
+            }
+            if (uiBackdrop != null)
+            {
+                uiBackdrop.enabled = framed && style.BackdropColor.a > 0f;
+                Color back = style.BackdropColor;
+                back.a *= alpha;
+                uiBackdrop.color = back;
             }
         }
 

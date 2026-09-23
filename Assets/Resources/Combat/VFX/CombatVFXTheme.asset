@@ -12,7 +12,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a10000000000000000000000000000a0, type: 3}
   m_Name: CombatVFXTheme
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.CombatVFXTheme
-  selectionHoldDuration: 0.75
+  selectionHoldDuration: 2
   terminalStateDelay: 1
   hitFlashDuration: 0.12
   hitShakeStrength: 0.12
+  defaultChargePrefab: {fileID: 0}
+  defaultChargeReleasePrefab: {fileID: 0}
+  defaultWispPrefab: {fileID: 0}
+  defaultPopPrefab: {fileID: 0}
+  defaultNoteSparkPrefab: {fileID: 0}
+  centerStageBias: 0.5
+  centerStageHeight: 0
+  abilityIconsAbovePlayer: 1
+  iconSize: 0.394
+  iconSpacing: 1.245
+  iconsHeightAboveHead: 0.579
+  showKeysUnderIcons: 1
+  rowCurvature: 1.06
+  iconFrame:
+    Enabled: 1
+    FrameColor: {r: 1, g: 0.86, b: 0.5, a: 1}
+    FrameThickness: 0.1
+    BackdropColor: {r: 0.07, g: 0.08, b: 0.13, a: 0.85}
+    IconInset: 0.74
+    ShowHoldProgress: 1
+    ProgressThickness: 0.12
+    UseAbilityAccent: 1
+    ProgressColor: {r: 1, g: 0.9, b: 0.55, a: 1}
+  pullIntoCharacter: 1
+  pullDistance: 0.55
+  pullCurve: 2.42
+  pullScale: 0.35
+  absorbSeconds: 0.15
+  otherIconsAlphaWhileHolding: 0.45
+  showAbilityName: 1
+  abilityNameSize: 1
+  abilityNameHoldSeconds: 0.6
+  zoomOnPlayerTurn: 1
+  zoomScale: 0.839
+  zoomScreenPosition: {x: 0.5, y: 0.38}
+  zoomInSeconds: 0.45
+  zoomOutSeconds: 0.35
+  chargeShakeStart: 0.004
+  chargeShakeEnd: 0.045
+  chargeShakeCurve: 2
+  chargeShakeFrequency: 28
+  selectShake: 0.08
+  selectShakeSeconds: 0.25

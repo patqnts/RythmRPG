@@ -97,8 +97,12 @@ public class KeyButton : MonoBehaviour
         isPressed = pressed;
     }
 
+    /// <summary>Raised for every judgement feedback (lane id, judgement, colour); the hit line key markers flash on it.</summary>
+    public static event System.Action<int, HitJudgement, Color> JudgementFeedbackPlayed;
+
     public void PlayJudgementFeedback(HitJudgement judgement, Color color)
     {
+        JudgementFeedbackPlayed?.Invoke(keyIdentity, judgement, color);
         if (!isActiveAndEnabled)
         {
             return;
