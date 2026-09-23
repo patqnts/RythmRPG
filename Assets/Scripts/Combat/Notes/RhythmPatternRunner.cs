@@ -155,13 +155,61 @@ namespace RythmRPG.Combat
             }
         }
 
-        public Coroutine Run(RhythmChart chart, PatternRunContext context)
+        public Coroutine Run(RhythmChart chart, PatternRunContext context) => Run(chart, context, null);
+
+        /// <summary>
+        /// Runs a chart whose start was planned with <see cref="PlanStart"/>: chart time 0 happens at
+        /// <paramref name="plannedZeroDsp"/> (null = align now, as <see cref="Run(RhythmChart, PatternRunContext)"/>).
+        /// </summary>
+        public Coroutine Run(RhythmChart chart, PatternRunContext context, double? plannedZeroDsp)
         {
             CancelCurrentPattern(false);
             currentContext = context;
             cancelled = false;
-            runCoroutine = StartCoroutine(RunRoutine(chart));
+            runCoroutine = StartCoroutine(RunRoutine(chart, plannedZeroDsp));
             return runCoroutine;
+        }
+
+        /// <summary>
+        /// Plans when <paramref name="chart"/> would start so that its first projectile appears no earlier than
+        /// <paramref name="earliestFirstSpawnDsp"/> and its beat 0 lands on the song's grid (see the song's Chart Sync).
+        /// Returns the dsp time of chart time 0; <paramref name="firstSpawnDsp"/> is when the first projectile appears.
+        /// Lets the enemy's wind-up animation be timed to the throw instead of adding to the wait.
+        /// </summary>
+        public double PlanStart(RhythmChart chart, double earliestFirstSpawnDsp, out double firstSpawnDsp)
+        {
+            double now = AudioSettings.dspTime;
+            if (chart == null)
+            {
+                firstSpawnDsp = Math.Max(now, earliestFirstSpawnDsp);
+                return firstSpawnDsp;
+            }
+
+            double beatZeroChartTime = chart.AudioOffsetSeconds;
+            double firstSpawn = FirstSpawnChartTime(chart);
+            double lead = Math.Max(0d, beatZeroChartTime - firstSpawn); // time from the first spawn to beat 0
+            double earliestBeatZero = Math.Max(earliestFirstSpawnDsp + lead,
+                now + Math.Max(CombatMusicDirector.MinLeadSeconds, lead));
+            double beatZeroDsp = earliestBeatZero;
+            if (musicDirector != null && musicDirector.HasSong)
+            {
+                beatZeroDsp = musicDirector.NextBarDsp(earliestBeatZero);
+                WarnIfTempoDiffers(chart, musicDirector.CurrentSong);
+            }
+
+            double zeroDsp = beatZeroDsp - beatZeroChartTime;
+            firstSpawnDsp = zeroDsp + firstSpawn;
+            return zeroDsp;
+        }
+
+        private static double FirstSpawnChartTime(RhythmChart chart)
+        {
+            double firstSpawn = double.MaxValue;
+            foreach (RhythmNoteData note in chart.Notes)
+                if (note != null) firstSpawn = Math.Min(firstSpawn, note.SpawnTime);
+            foreach (SequenceActivationData sequence in chart.Sequences)
+                if (sequence != null) firstSpawn = Math.Min(firstSpawn, sequence.StartTime);
+            return firstSpawn == double.MaxValue ? chart.AudioOffsetSeconds : firstSpawn;
         }
 
         public void HandleLanePressed(int laneId)
@@ -265,7 +313,7 @@ namespace RythmRPG.Combat
             }
         }
 
-        private IEnumerator RunRoutine(RhythmChart chart)
+        private IEnumerator RunRoutine(RhythmChart chart, double? plannedZeroDsp)
         {
             results.Clear();
             currentChart = chart;
@@ -282,7 +330,8 @@ namespace RythmRPG.Combat
             double playbackStart = RhythmTimingUtility.GetPlaybackStartTime(chart);
             double zeroDspTime = AudioSettings.dspTime - playbackStart;
             bool encounterMusic = musicDirector != null && musicDirector.HasSong;
-            if (encounterMusic) zeroDspTime = AlignToSongBar(chart, notes);
+            if (plannedZeroDsp.HasValue) zeroDspTime = plannedZeroDsp.Value;
+            else if (encounterMusic) zeroDspTime = PlanStart(chart, AudioSettings.dspTime, out _);
             clock = new MusicClock(() => AudioSettings.dspTime, chart.CreateTempoMap());
             clock.StartAt(zeroDspTime);
             scheduler.Reposition(0d);
@@ -539,21 +588,6 @@ namespace RythmRPG.Combat
             if (cachedKeys == null || cachedKeys.Length == 0)
                 cachedKeys = FindObjectsByType<KeyButton>(FindObjectsInactive.Include);
             return cachedKeys;
-        }
-
-        // Chart beat 0 sits at chart time = AudioOffsetSeconds. Put it on the song's next bar line that still leaves
-        // time for the first note to spawn (no dead time before the first note, whatever the chart's offset).
-        private double AlignToSongBar(RhythmChart chart, List<RhythmNoteData> notesBySpawn)
-        {
-            double now = AudioSettings.dspTime;
-            double beatZeroChartTime = chart.AudioOffsetSeconds;
-            double firstSpawn = notesBySpawn.Count > 0 ? notesBySpawn[0].SpawnTime : beatZeroChartTime;
-            foreach (SequenceActivationData sequence in chart.Sequences)
-                if (sequence != null) firstSpawn = Math.Min(firstSpawn, sequence.StartTime);
-            double earliestBeatZero = now + Math.Max(CombatMusicDirector.MinLeadSeconds, beatZeroChartTime - firstSpawn);
-            double beatZeroDsp = musicDirector.NextBarDsp(earliestBeatZero);
-            WarnIfTempoDiffers(chart, musicDirector.CurrentSong);
-            return beatZeroDsp - beatZeroChartTime;
         }
 
         private static readonly HashSet<RhythmChart> tempoWarned = new();

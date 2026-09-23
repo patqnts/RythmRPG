@@ -21,6 +21,10 @@ namespace RythmRPG.Combat
         [SerializeField] private CombatLanePresentation3D lanePresentation;
         [SerializeField] private RhythmChart defaultEnemyPattern;
         [SerializeField] private CombatMusicDirector musicDirector;
+        [Tooltip("The encounter intro (intro music + enemy intro animation) plays out in full: no projectile appears before the song's loop starts. Off: the first attack may start during the intro.")]
+        [SerializeField] private bool startCombatWithLoop = true;
+        [Tooltip("Off (default): the enemy's first wind-up animation may begin in the last moments of the intro so its first projectile appears right as the loop starts. On: the wind-up also waits for the loop (the first projectile comes a bit later).")]
+        [SerializeField] private bool windUpAfterIntro;
 
         [Header("Battle result")]
         [Tooltip("Show the result screen (grade, score, stats) when a battle ends.")]
@@ -188,10 +192,14 @@ namespace RythmRPG.Combat
 
         private IEnumerator BattleStartRoutine()
         {
-            // Pick the first attack now so its song already plays during the intro.
+            // Encounter intro = intro music + enemy intro animation. The song's Intro starts as soon as the player
+            // has moved into place and hands over to the Loop on its last sample. The enemy turn starts right after
+            // the intro animation, but its first projectile is planned for the Loop (see RunEnemyStep), so the intro
+            // always plays out in full and the attack lands as the Loop begins.
             nextSequence = encounter.Enemy.SelectAttackSequence(UnityEngine.Random.value);
-            if (nextSequence != null) musicDirector?.PlaySong(nextSequence.Song);
-            yield return encounterCoordinator.Prepare(encounter);
+            CombatSong song = nextSequence != null ? nextSequence.Song : null;
+            CombatMusicDirector.Preload(song); // load the audio while the player walks, not when a section starts
+            yield return encounterCoordinator.Prepare(encounter, () => musicDirector?.BeginEncounter(song));
             yield return PlayEnemyBattleIntro();
             Transition(CombatState.EnemyTurnStart);
         }
@@ -212,7 +220,8 @@ namespace RythmRPG.Combat
         {
             EnemyAttackSequenceDefinition sequence = nextSequence ?? encounter.Enemy.SelectAttackSequence(UnityEngine.Random.value);
             nextSequence = null;
-            // The sequence's song keeps looping across steps and turns; only a different song cross-fades in.
+            // The sequence's song keeps looping across steps and turns; only a different song cross-fades in
+            // (on the next bar, loop only, no intro).
             if (sequence != null) musicDirector?.PlaySong(sequence.Song);
             IReadOnlyList<EnemyAttackStepDefinition> steps = sequence?.Steps;
             if (steps == null || steps.Count == 0)
@@ -230,14 +239,30 @@ namespace RythmRPG.Combat
                     if (encounter.Player.IsDefeated) break;
                 }
             }
+            // Player death: the End section starts now (on the next bar), not after the turn bookkeeping.
+            if (encounter.Player.IsDefeated) musicDirector?.PlayEnd(false);
             Transition(CombatState.EnemyTurnEnd);
         }
 
         private IEnumerator RunEnemyStep(RhythmChart chart, string animationName, float anticipationDuration,
             float duration, AttackStepEndPolicy policy)
         {
+            // Plan first, then wind up: the chart's beat 0 has to land on the song's grid, so instead of
+            // "wind-up, then wait for the next bar, then the notes' travel lead", pick the first grid-valid start whose
+            // first projectile is at least one wind-up away (and not before the loop), and play the wind-up exactly
+            // that long before the first projectile. The grid wait now overlaps the wind-up instead of adding to it.
+            double anticipation = Math.Max(0f, anticipationDuration);
+            double earliestSpawn = AudioSettings.dspTime + anticipation;
+            if (startCombatWithLoop && musicDirector != null && musicDirector.IsPlayingIntro)
+            {
+                double loopStart = musicDirector.LoopStartDsp;
+                earliestSpawn = Math.Max(earliestSpawn, windUpAfterIntro ? loopStart + anticipation : loopStart);
+            }
+            double zeroDsp = runner.PlanStart(chart, earliestSpawn, out double firstSpawnDsp);
+            double windUpDsp = firstSpawnDsp - anticipation;
+            while (AudioSettings.dspTime < windUpDsp && !encounter.Player.IsDefeated) yield return null;
             encounter.Enemy.PlayAnimation(animationName);
-            if (anticipationDuration > 0f) yield return new WaitForSeconds(anticipationDuration);
+
             bool completed = false;
             void OnCompleted(PatternRunResult result)
             {
@@ -245,7 +270,7 @@ namespace RythmRPG.Combat
             }
             runner.PatternCompleted += OnCompleted;
             runner.Run(chart, new PatternRunContext(PatternRunMode.EnemyDefense, encounter.Player,
-                encounter.Enemy.transform, duration, policy));
+                encounter.Enemy.transform, duration, policy), zeroDsp);
             while (!completed && !encounter.Player.IsDefeated) yield return null;
             runner.PatternCompleted -= OnCompleted;
         }
@@ -261,6 +286,7 @@ namespace RythmRPG.Combat
         {
             stats?.RecordTurn();
             abilitySlots.TickCooldowns();
+            // Ability selection: player-turn stem (or low-pass). Casting brings the main loop back.
             musicDirector?.SetPlayerTurn(true);
             // The hit line is only meaningful while notes are on it; hide it while the player is just
             // choosing an ability (PlayerTurnStart + PlayerAbilitySelection), reveal it again once a chart
@@ -290,7 +316,8 @@ namespace RythmRPG.Combat
 
         private IEnumerator PlayerAbilityRoutine()
         {
-            // The player finished choosing; reveal the hit line before its rhythm chart starts.
+            // The player finished choosing; back to the main loop and reveal the hit line before the chart starts.
+            musicDirector?.SetPlayerTurn(false);
             lanePresentation?.RevealHitLine();
             yield return vfxController.PlayAbilitySelected(selectedLane, selectedAbility);
             vfxController.SetAbilitySlotsVisible(false, true);
@@ -310,6 +337,8 @@ namespace RythmRPG.Combat
             yield return null;
             if (encounter.Enemy.IsDefeated)
             {
+                // Enemy death: the End section starts with the death animation.
+                musicDirector?.PlayEnd(true);
                 yield return PlayEnemyDefeat();
                 Transition(CombatState.Victory);
             }
@@ -362,11 +391,13 @@ namespace RythmRPG.Combat
 
         private IEnumerator TerminalRoutine(CombatState terminalState)
         {
+            bool victory = terminalState == CombatState.Victory;
             runner?.CancelCurrentPattern(false);
-            musicDirector?.Stop();
+            // Usually already triggered on the death itself; PlayEnd does nothing if the ending is scheduled.
+            // The End clip plays out on its own (through the result screen); no End clip = fade out.
+            musicDirector?.PlayEnd(victory);
             vfxController.SetAbilitySlotsVisible(false, true);
             yield return new WaitForSecondsRealtime(vfxController.TerminalDelay);
-            bool victory = terminalState == CombatState.Victory;
 
             // Result: built before a defeat restores health, shown before the encounter is restored.
             if (stats != null)
@@ -512,6 +543,7 @@ namespace RythmRPG.Combat
 
         private IEnumerator DebugFinishRoutine(bool victory)
         {
+            musicDirector?.PlayEnd(victory);
             if (victory) yield return PlayEnemyDefeat();
             Transition(victory ? CombatState.Victory : CombatState.Defeat);
         }

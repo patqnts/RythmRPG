@@ -82,7 +82,9 @@ namespace RythmRPG.Combat
                 Mathf.SmoothStep(0f, 1f, progress));
         }
 
-        public IEnumerator Prepare(CombatEncounterContext context)
+        /// <param name="onPlayerPlaced">Called once the player has reached its combat spot (before the camera settles
+        /// and the hit line appears); combat music's intro starts here.</param>
+        public IEnumerator Prepare(CombatEncounterContext context, System.Action onPlayerPlaced = null)
         {
             ResolveReferences();
             EnsureCinemachineFollowRig();
@@ -120,6 +122,7 @@ namespace RythmRPG.Combat
 
                 placementStartedAt = Time.time;
                 yield return new WaitForSeconds(Mathf.Max(0f, moveDuration));
+                onPlayerPlaced?.Invoke();
                 // Cinemachine damping keeps easing the camera after the player has arrived; combat must not start
                 // until the framing (and so the hit line, lanes and player spot) has stopped moving.
                 float settleDeadline = Time.time + maxCameraSettleSeconds;
@@ -134,6 +137,7 @@ namespace RythmRPG.Combat
                 ? Tween.Position(context.Player.transform, playerTargetPosition, moveDuration, Ease.InOutSine)
                 : default;
             if (playerMove.isAlive) yield return new WaitForSeconds(moveDuration);
+            onPlayerPlaced?.Invoke();
 
             RestorePlayerController();
             yield return RevealHitLine();

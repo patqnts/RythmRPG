@@ -12,8 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a733d1f1ee894d04ebdb9638a1999587, type: 3}
   m_Name: CombatSong
   m_EditorClassIdentifier: RythmRPG.Rhythm.Runtime::RythmRPG.Rhythm.CombatSong
-  clip: {fileID: 8300000, guid: 78cb0fef327344e4ca877c293083380c, type: 3}
-  bpm: 140
+  introClip: {fileID: 8300000, guid: 0333eeaf2a61aac4686d5757c3570e5b, type: 3}
+  chartsWaitForLoop: 1
+  clip: {fileID: 8300000, guid: a8ccf951295235d4b8e9d77c741d6edf, type: 3}
+  bpm: 225
   beatsPerMeasure: 4
-  audioOffsetSeconds: 0.283
+  audioOffsetSeconds: 0
   volume: 0.722
+  playerTurnClip: {fileID: 0}
+  playerTurnVolume: 1
+  mainVolumeOnPlayerTurn: 0
+  endClip: {fileID: 8300000, guid: cff6954bc935be4448f538b205a44db3, type: 3}
+  defeatEndClip: {fileID: 8300000, guid: cff6954bc935be4448f538b205a44db3, type: 3}
+  endSync: 2
