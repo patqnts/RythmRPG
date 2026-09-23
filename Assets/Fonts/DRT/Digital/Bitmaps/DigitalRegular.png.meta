@@ -1,0 +1,2056 @@
+fileFormatVersion: 2
+guid: 5bec4c7abec31e842b884d8e66343d49
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4032323043135951853
+    second: DigitalRegular_0
+  - first:
+      213: -7948726270386138456
+    second: DigitalRegular_1
+  - first:
+      213: 3303147613859626640
+    second: DigitalRegular_2
+  - first:
+      213: -5245246879322980766
+    second: DigitalRegular_3
+  - first:
+      213: -8471174378877902291
+    second: DigitalRegular_4
+  - first:
+      213: 3010770985858892315
+    second: DigitalRegular_5
+  - first:
+      213: 101628736475827068
+    second: DigitalRegular_6
+  - first:
+      213: -5488073071585402969
+    second: DigitalRegular_7
+  - first:
+      213: 1869174279830175480
+    second: DigitalRegular_8
+  - first:
+      213: 1611219913974340330
+    second: DigitalRegular_9
+  - first:
+      213: -8118121836518658239
+    second: DigitalRegular_10
+  - first:
+      213: 7394714343556263496
+    second: DigitalRegular_11
+  - first:
+      213: -1291069639641824032
+    second: DigitalRegular_12
+  - first:
+      213: 5067557206038534839
+    second: DigitalRegular_13
+  - first:
+      213: 8434142938566750163
+    second: DigitalRegular_14
+  - first:
+      213: -8306444442263209484
+    second: DigitalRegular_15
+  - first:
+      213: 4382173706413000202
+    second: DigitalRegular_16
+  - first:
+      213: -3137832979618650470
+    second: DigitalRegular_17
+  - first:
+      213: 6253854111534740129
+    second: DigitalRegular_18
+  - first:
+      213: 2725196002375899444
+    second: DigitalRegular_19
+  - first:
+      213: 1818293991275596333
+    second: DigitalRegular_20
+  - first:
+      213: -464234903964599248
+    second: DigitalRegular_21
+  - first:
+      213: 3424273836861012602
+    second: DigitalRegular_22
+  - first:
+      213: 8602332703178031495
+    second: DigitalRegular_23
+  - first:
+      213: -7194634591908114118
+    second: DigitalRegular_24
+  - first:
+      213: 77827396161765304
+    second: DigitalRegular_25
+  - first:
+      213: -6211384120963104669
+    second: DigitalRegular_26
+  - first:
+      213: 4209322600113208970
+    second: DigitalRegular_27
+  - first:
+      213: -5223774772776402375
+    second: DigitalRegular_28
+  - first:
+      213: 3811071967159584809
+    second: DigitalRegular_29
+  - first:
+      213: 7493682643100263191
+    second: DigitalRegular_30
+  - first:
+      213: -3245323437250165273
+    second: DigitalRegular_31
+  - first:
+      213: 2840279978766098861
+    second: DigitalRegular_32
+  - first:
+      213: 3995934904921204787
+    second: DigitalRegular_33
+  - first:
+      213: 8157627888453450990
+    second: DigitalRegular_34
+  - first:
+      213: 3493087666273706399
+    second: DigitalRegular_35
+  - first:
+      213: 5660960698897063656
+    second: DigitalRegular_36
+  - first:
+      213: 8406116761042786840
+    second: DigitalRegular_37
+  - first:
+      213: 6879297744489732818
+    second: DigitalRegular_38
+  - first:
+      213: -7191212937451030847
+    second: DigitalRegular_39
+  - first:
+      213: 795267014660076133
+    second: DigitalRegular_40
+  - first:
+      213: -2574910850153906452
+    second: DigitalRegular_41
+  - first:
+      213: -1333833223623224288
+    second: DigitalRegular_42
+  - first:
+      213: -6024456057534981750
+    second: DigitalRegular_43
+  - first:
+      213: -3695960703209340332
+    second: DigitalRegular_44
+  - first:
+      213: 2250070656203917877
+    second: DigitalRegular_45
+  - first:
+      213: 1736761804751347162
+    second: DigitalRegular_46
+  - first:
+      213: 9133233705055164814
+    second: DigitalRegular_47
+  - first:
+      213: 7386600309963377692
+    second: DigitalRegular_48
+  - first:
+      213: 4433600602824869418
+    second: DigitalRegular_49
+  - first:
+      213: -5531571252362159550
+    second: DigitalRegular_50
+  - first:
+      213: -8729325534786741732
+    second: DigitalRegular_51
+  - first:
+      213: 2577715181724501841
+    second: DigitalRegular_52
+  - first:
+      213: -9074871730453263261
+    second: DigitalRegular_53
+  - first:
+      213: -7772473430245193443
+    second: DigitalRegular_54
+  - first:
+      213: 250678675023384703
+    second: DigitalRegular_55
+  - first:
+      213: 1824457670353249088
+    second: DigitalRegular_56
+  - first:
+      213: -7844819343020903475
+    second: DigitalRegular_57
+  - first:
+      213: 5402490319378036292
+    second: DigitalRegular_58
+  - first:
+      213: -4351981503547857446
+    second: DigitalRegular_59
+  - first:
+      213: -4078055882257485895
+    second: DigitalRegular_60
+  - first:
+      213: -2193622142858721706
+    second: DigitalRegular_61
+  - first:
+      213: -8049464638097002012
+    second: DigitalRegular_62
+  - first:
+      213: 1147314572577595880
+    second: DigitalRegular_63
+  - first:
+      213: 8333252064304086939
+    second: DigitalRegular_64
+  - first:
+      213: -8561607345830486131
+    second: DigitalRegular_65
+  - first:
+      213: -8338801895092688483
+    second: DigitalRegular_66
+  - first:
+      213: 6227562427956538597
+    second: DigitalRegular_67
+  - first:
+      213: 4174526068745241719
+    second: DigitalRegular_68
+  - first:
+      213: 3453111219033975875
+    second: DigitalRegular_69
+  - first:
+      213: 2992837240746282845
+    second: DigitalRegular_70
+  - first:
+      213: -7743692851711705827
+    second: DigitalRegular_71
+  - first:
+      213: -4147936396337026321
+    second: DigitalRegular_72
+  - first:
+      213: 9222676829894202768
+    second: DigitalRegular_73
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: DigitalRegular_0
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 35
+        width: 210
+        height: 178
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de39dbd8170b5f730800000000000000
+      internalID: 4032323043135951853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_1
+      rect:
+        serializedVersion: 2
+        x: 219
+        y: 196
+        width: 30
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a291dc329370b190800000000000000
+      internalID: -7948726270386138456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_2
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 196
+        width: 48
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 09e38c4014327dd20800000000000000
+      internalID: 3303147613859626640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_3
+      rect:
+        serializedVersion: 2
+        x: 309
+        y: 101
+        width: 66
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26e3ab6f0c32537b0800000000000000
+      internalID: -5245246879322980766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_4
+      rect:
+        serializedVersion: 2
+        x: 363
+        y: 196
+        width: 30
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d22a79cd8c7507a80800000000000000
+      internalID: -8471174378877902291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_5
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 196
+        width: 24
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b120c28824868c920800000000000000
+      internalID: 3010770985858892315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_6
+      rect:
+        serializedVersion: 2
+        x: 417
+        y: 196
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7b0d902cce096100800000000000000
+      internalID: 101628736475827068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_7
+      rect:
+        serializedVersion: 2
+        x: 423
+        y: 196
+        width: 24
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7afd3c25e9276d3b0800000000000000
+      internalID: -5488073071585402969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_8
+      rect:
+        serializedVersion: 2
+        x: 423
+        y: 196
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8fef29caa14a0f910800000000000000
+      internalID: 1869174279830175480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_9
+      rect:
+        serializedVersion: 2
+        x: 453
+        y: 196
+        width: 12
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aead973a9f33c5610800000000000000
+      internalID: 1611219913974340330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_10
+      rect:
+        serializedVersion: 2
+        x: 186
+        y: 173
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14fa6fa8333a65f80800000000000000
+      internalID: -8118121836518658239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_11
+      rect:
+        serializedVersion: 2
+        x: 219
+        y: 164
+        width: 30
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84e282f348d4f9660800000000000000
+      internalID: 7394714343556263496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_12
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 164
+        width: 48
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e48bdcc003351ee0800000000000000
+      internalID: -1291069639641824032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_13
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 164
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7bad5e80e64935640800000000000000
+      internalID: 5067557206038534839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_14
+      rect:
+        serializedVersion: 2
+        x: 363
+        y: 164
+        width: 30
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3dfe32e01581c0570800000000000000
+      internalID: 8434142938566750163
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_15
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 164
+        width: 24
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f932680ac499bc80800000000000000
+      internalID: -8306444442263209484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_16
+      rect:
+        serializedVersion: 2
+        x: 417
+        y: 164
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a06cdcaa4cb90dc30800000000000000
+      internalID: 4382173706413000202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_17
+      rect:
+        serializedVersion: 2
+        x: 423
+        y: 164
+        width: 24
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a96235da78d2474d0800000000000000
+      internalID: -3137832979618650470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_18
+      rect:
+        serializedVersion: 2
+        x: 423
+        y: 164
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a2f42b1e272ac650800000000000000
+      internalID: 6253854111534740129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_19
+      rect:
+        serializedVersion: 2
+        x: 453
+        y: 164
+        width: 12
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4391ee05357d1d520800000000000000
+      internalID: 2725196002375899444
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_20
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 137
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d2a853750c0eb3910800000000000000
+      internalID: 1818293991275596333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_21
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 132
+        width: 12
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03c3ad080d4be89f0800000000000000
+      internalID: -464234903964599248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_22
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 142
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7ab3cb79e6758f20800000000000000
+      internalID: 3424273836861012602
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_23
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 35
+        width: 120
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78107a43400a16770800000000000000
+      internalID: 8602332703178031495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_24
+      rect:
+        serializedVersion: 2
+        x: 219
+        y: 142
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a31549c15f5872c90800000000000000
+      internalID: -7194634591908114118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_25
+      rect:
+        serializedVersion: 2
+        x: 237
+        y: 142
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8bff30eba9f741100800000000000000
+      internalID: 77827396161765304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_26
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 142
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3600e722d0bbcc9a0800000000000000
+      internalID: -6211384120963104669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_27
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 142
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8e75c45a948a6a30800000000000000
+      internalID: 4209322600113208970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_28
+      rect:
+        serializedVersion: 2
+        x: 309
+        y: 138
+        width: 11
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 932040a558c6187b0800000000000000
+      internalID: -5223774772776402375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_29
+      rect:
+        serializedVersion: 2
+        x: 310
+        y: 129
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9280fff13c5a3e430800000000000000
+      internalID: 3811071967159584809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_30
+      rect:
+        serializedVersion: 2
+        x: 381
+        y: 140
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 713608129a8eef760800000000000000
+      internalID: 7493682643100263191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_31
+      rect:
+        serializedVersion: 2
+        x: 381
+        y: 101
+        width: 12
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e5447d378b46f2d0800000000000000
+      internalID: -3245323437250165273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_32
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 138
+        width: 12
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da1e10d9793ba6720800000000000000
+      internalID: 2840279978766098861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_33
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 101
+        width: 12
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 338a969ef99647730800000000000000
+      internalID: 3995934904921204787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_34
+      rect:
+        serializedVersion: 2
+        x: 418
+        y: 101
+        width: 65
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eec7615f757b53170800000000000000
+      internalID: 8157627888453450990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_35
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 101
+        width: 13
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f91ea8da9b0f97030800000000000000
+      internalID: 3493087666273706399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_36
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 107
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8eed43933c5cf8e40800000000000000
+      internalID: 5660960698897063656
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_37
+      rect:
+        serializedVersion: 2
+        x: 417
+        y: 101
+        width: 12
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81a996a18a688a470800000000000000
+      internalID: 8406116761042786840
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_38
+      rect:
+        serializedVersion: 2
+        x: 435
+        y: 101
+        width: 13
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2dad47cb9dc287f50800000000000000
+      internalID: 6879297744489732818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_39
+      rect:
+        serializedVersion: 2
+        x: 489
+        y: 36
+        width: 156
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c6b90f1feda33c90800000000000000
+      internalID: -7191212937451030847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_40
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 68
+        width: 13
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5623666e22b590b00800000000000000
+      internalID: 795267014660076133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_41
+      rect:
+        serializedVersion: 2
+        x: 327
+        y: 35
+        width: 120
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ceef6486934144cd0800000000000000
+      internalID: -2574910850153906452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_42
+      rect:
+        serializedVersion: 2
+        x: 327
+        y: 68
+        width: 12
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 024d25400c54d7de0800000000000000
+      internalID: -1333833223623224288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_43
+      rect:
+        serializedVersion: 2
+        x: 453
+        y: 68
+        width: 30
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a895da57225d46ca0800000000000000
+      internalID: -6024456057534981750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_44
+      rect:
+        serializedVersion: 2
+        x: 381
+        y: 41
+        width: 43
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 452876d825f45bcc0800000000000000
+      internalID: -3695960703209340332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_45
+      rect:
+        serializedVersion: 2
+        x: 423
+        y: 41
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53a8096275bd93f10800000000000000
+      internalID: 2250070656203917877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_46
+      rect:
+        serializedVersion: 2
+        x: 435
+        y: 44
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: add9bafd8a73a1810800000000000000
+      internalID: 1736761804751347162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_47
+      rect:
+        serializedVersion: 2
+        x: 435
+        y: 36
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8910703aa3cfbe70800000000000000
+      internalID: 9133233705055164814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_48
+      rect:
+        serializedVersion: 2
+        x: 456
+        y: 44
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1c482598d9728660800000000000000
+      internalID: 7386600309963377692
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_49
+      rect:
+        serializedVersion: 2
+        x: 456
+        y: 36
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a26855f0240578d30800000000000000
+      internalID: 4433600602824869418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_50
+      rect:
+        serializedVersion: 2
+        x: 471
+        y: 44
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24ad035e049eb33b0800000000000000
+      internalID: -5531571252362159550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_51
+      rect:
+        serializedVersion: 2
+        x: 471
+        y: 36
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1a1a421da43bd680800000000000000
+      internalID: -8729325534786741732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_52
+      rect:
+        serializedVersion: 2
+        x: 492
+        y: 44
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15702daec42e5c320800000000000000
+      internalID: 2577715181724501841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_53
+      rect:
+        serializedVersion: 2
+        x: 492
+        y: 36
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36c491ced349f0280800000000000000
+      internalID: -9074871730453263261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_54
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 44
+        width: 13
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d19c2147890a22490800000000000000
+      internalID: -7772473430245193443
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_55
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 36
+        width: 13
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f70d8814de69a7300800000000000000
+      internalID: 250678675023384703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_56
+      rect:
+        serializedVersion: 2
+        x: 525
+        y: 44
+        width: 13
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0436425b596c15910800000000000000
+      internalID: 1824457670353249088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_57
+      rect:
+        serializedVersion: 2
+        x: 525
+        y: 36
+        width: 13
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc330240f5a912390800000000000000
+      internalID: -7844819343020903475
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_58
+      rect:
+        serializedVersion: 2
+        x: 543
+        y: 38
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 446b305625089fa40800000000000000
+      internalID: 5402490319378036292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_59
+      rect:
+        serializedVersion: 2
+        x: 561
+        y: 38
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad5a5fb51e7aa93c0800000000000000
+      internalID: -4351981503547857446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_60
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 4
+        width: 116
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9bfa9d318c5d767c0800000000000000
+      internalID: -4078055882257485895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_61
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 13
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 656897b8840be81e0800000000000000
+      internalID: -2193622142858721706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_62
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 15
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e1f82e3f8e8a4090800000000000000
+      internalID: -8049464638097002012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_63
+      rect:
+        serializedVersion: 2
+        x: 165
+        y: 6
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e1ed1866841cef00800000000000000
+      internalID: 1147314572577595880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_64
+      rect:
+        serializedVersion: 2
+        x: 183
+        y: 6
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9fb2acd998a5a370800000000000000
+      internalID: 8333252064304086939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_65
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 12
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d8f1665fa7f0f2980800000000000000
+      internalID: -8561607345830486131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_66
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 6
+        width: 23
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9965a67bdf964c80800000000000000
+      internalID: -8338801895092688483
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_67
+      rect:
+        serializedVersion: 2
+        x: 237
+        y: 4
+        width: 48
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ec2bee780fbc6650800000000000000
+      internalID: 6227562427956538597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_68
+      rect:
+        serializedVersion: 2
+        x: 291
+        y: 14
+        width: 26
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7740b298755eee930800000000000000
+      internalID: 4174526068745241719
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_69
+      rect:
+        serializedVersion: 2
+        x: 326
+        y: 4
+        width: 23
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 34caf6cbb5aebef20800000000000000
+      internalID: 3453111219033975875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_70
+      rect:
+        serializedVersion: 2
+        x: 363
+        y: 1
+        width: 44
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5f0e3d1d91b88920800000000000000
+      internalID: 2992837240746282845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_71
+      rect:
+        serializedVersion: 2
+        x: 417
+        y: 4
+        width: 12
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1dfdf31160e88490800000000000000
+      internalID: -7743692851711705827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_72
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 6
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: feaea6103d19f66c0800000000000000
+      internalID: -4147936396337026321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalRegular_73
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 6
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 095d11486b78dff70800000000000000
+      internalID: 9222676829894202768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      DigitalRegular_0: 4032323043135951853
+      DigitalRegular_1: -7948726270386138456
+      DigitalRegular_10: -8118121836518658239
+      DigitalRegular_11: 7394714343556263496
+      DigitalRegular_12: -1291069639641824032
+      DigitalRegular_13: 5067557206038534839
+      DigitalRegular_14: 8434142938566750163
+      DigitalRegular_15: -8306444442263209484
+      DigitalRegular_16: 4382173706413000202
+      DigitalRegular_17: -3137832979618650470
+      DigitalRegular_18: 6253854111534740129
+      DigitalRegular_19: 2725196002375899444
+      DigitalRegular_2: 3303147613859626640
+      DigitalRegular_20: 1818293991275596333
+      DigitalRegular_21: -464234903964599248
+      DigitalRegular_22: 3424273836861012602
+      DigitalRegular_23: 8602332703178031495
+      DigitalRegular_24: -7194634591908114118
+      DigitalRegular_25: 77827396161765304
+      DigitalRegular_26: -6211384120963104669
+      DigitalRegular_27: 4209322600113208970
+      DigitalRegular_28: -5223774772776402375
+      DigitalRegular_29: 3811071967159584809
+      DigitalRegular_3: -5245246879322980766
+      DigitalRegular_30: 7493682643100263191
+      DigitalRegular_31: -3245323437250165273
+      DigitalRegular_32: 2840279978766098861
+      DigitalRegular_33: 3995934904921204787
+      DigitalRegular_34: 8157627888453450990
+      DigitalRegular_35: 3493087666273706399
+      DigitalRegular_36: 5660960698897063656
+      DigitalRegular_37: 8406116761042786840
+      DigitalRegular_38: 6879297744489732818
+      DigitalRegular_39: -7191212937451030847
+      DigitalRegular_4: -8471174378877902291
+      DigitalRegular_40: 795267014660076133
+      DigitalRegular_41: -2574910850153906452
+      DigitalRegular_42: -1333833223623224288
+      DigitalRegular_43: -6024456057534981750
+      DigitalRegular_44: -3695960703209340332
+      DigitalRegular_45: 2250070656203917877
+      DigitalRegular_46: 1736761804751347162
+      DigitalRegular_47: 9133233705055164814
+      DigitalRegular_48: 7386600309963377692
+      DigitalRegular_49: 4433600602824869418
+      DigitalRegular_5: 3010770985858892315
+      DigitalRegular_50: -5531571252362159550
+      DigitalRegular_51: -8729325534786741732
+      DigitalRegular_52: 2577715181724501841
+      DigitalRegular_53: -9074871730453263261
+      DigitalRegular_54: -7772473430245193443
+      DigitalRegular_55: 250678675023384703
+      DigitalRegular_56: 1824457670353249088
+      DigitalRegular_57: -7844819343020903475
+      DigitalRegular_58: 5402490319378036292
+      DigitalRegular_59: -4351981503547857446
+      DigitalRegular_6: 101628736475827068
+      DigitalRegular_60: -4078055882257485895
+      DigitalRegular_61: -2193622142858721706
+      DigitalRegular_62: -8049464638097002012
+      DigitalRegular_63: 1147314572577595880
+      DigitalRegular_64: 8333252064304086939
+      DigitalRegular_65: -8561607345830486131
+      DigitalRegular_66: -8338801895092688483
+      DigitalRegular_67: 6227562427956538597
+      DigitalRegular_68: 4174526068745241719
+      DigitalRegular_69: 3453111219033975875
+      DigitalRegular_7: -5488073071585402969
+      DigitalRegular_70: 2992837240746282845
+      DigitalRegular_71: -7743692851711705827
+      DigitalRegular_72: -4147936396337026321
+      DigitalRegular_73: 9222676829894202768
+      DigitalRegular_8: 1869174279830175480
+      DigitalRegular_9: 1611219913974340330
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

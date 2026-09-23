@@ -1,0 +1,4266 @@
+fileFormatVersion: 2
+guid: 7742af892ca681e4d836de28f5cc1380
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1400240245041608562
+    second: GameRegular_0
+  - first:
+      213: -3350530371192574966
+    second: GameRegular_1
+  - first:
+      213: 866028150431716087
+    second: GameRegular_2
+  - first:
+      213: 3456281644674925039
+    second: GameRegular_3
+  - first:
+      213: 8230377726725570348
+    second: GameRegular_4
+  - first:
+      213: -2467680307031422472
+    second: GameRegular_5
+  - first:
+      213: -970465291723310451
+    second: GameRegular_6
+  - first:
+      213: -8603564371623640396
+    second: GameRegular_7
+  - first:
+      213: -3707053001070892286
+    second: GameRegular_8
+  - first:
+      213: -6815832220064923651
+    second: GameRegular_9
+  - first:
+      213: -2748320994986785173
+    second: GameRegular_10
+  - first:
+      213: -7356161027711207762
+    second: GameRegular_11
+  - first:
+      213: -3139015927917282547
+    second: GameRegular_12
+  - first:
+      213: 2947995827597679369
+    second: GameRegular_13
+  - first:
+      213: 6903010499852184594
+    second: GameRegular_14
+  - first:
+      213: 6294265282022757631
+    second: GameRegular_15
+  - first:
+      213: -2919281734039979413
+    second: GameRegular_16
+  - first:
+      213: -5533523468719446684
+    second: GameRegular_17
+  - first:
+      213: 8821048173416660447
+    second: GameRegular_18
+  - first:
+      213: -8954911990258153400
+    second: GameRegular_19
+  - first:
+      213: -3839075143430026265
+    second: GameRegular_20
+  - first:
+      213: -7796032444626321451
+    second: GameRegular_21
+  - first:
+      213: -4865963639650780931
+    second: GameRegular_22
+  - first:
+      213: -6610032166974278667
+    second: GameRegular_23
+  - first:
+      213: -1652759289504401799
+    second: GameRegular_24
+  - first:
+      213: 2871169495045301043
+    second: GameRegular_25
+  - first:
+      213: -5997761223347597934
+    second: GameRegular_26
+  - first:
+      213: -2327639840068579964
+    second: GameRegular_27
+  - first:
+      213: -7119601306302510063
+    second: GameRegular_28
+  - first:
+      213: 4053391127396857524
+    second: GameRegular_29
+  - first:
+      213: -1255549912298301895
+    second: GameRegular_30
+  - first:
+      213: -7447117667324663647
+    second: GameRegular_31
+  - first:
+      213: -3118878959012755219
+    second: GameRegular_32
+  - first:
+      213: 3942303035378835390
+    second: GameRegular_33
+  - first:
+      213: -937228966990733619
+    second: GameRegular_34
+  - first:
+      213: 9086400129395116354
+    second: GameRegular_35
+  - first:
+      213: 5590158306407919908
+    second: GameRegular_36
+  - first:
+      213: -2993725498325370538
+    second: GameRegular_37
+  - first:
+      213: 6708931306450451526
+    second: GameRegular_38
+  - first:
+      213: 1038430852815958217
+    second: GameRegular_39
+  - first:
+      213: -4869112633886019660
+    second: GameRegular_40
+  - first:
+      213: -6035126742875111266
+    second: GameRegular_41
+  - first:
+      213: -5335693841043980470
+    second: GameRegular_42
+  - first:
+      213: -6961722773036486160
+    second: GameRegular_43
+  - first:
+      213: 5113252160671312020
+    second: GameRegular_44
+  - first:
+      213: -3295208463987178060
+    second: GameRegular_45
+  - first:
+      213: -2201484949412404919
+    second: GameRegular_46
+  - first:
+      213: 1151638289886002600
+    second: GameRegular_47
+  - first:
+      213: -546680434181926136
+    second: GameRegular_48
+  - first:
+      213: 4210657354440953523
+    second: GameRegular_49
+  - first:
+      213: 2990983009318124198
+    second: GameRegular_50
+  - first:
+      213: -6497431247459583569
+    second: GameRegular_51
+  - first:
+      213: 1287516050932340996
+    second: GameRegular_52
+  - first:
+      213: 4000848661700837950
+    second: GameRegular_53
+  - first:
+      213: 3510735770572928966
+    second: GameRegular_54
+  - first:
+      213: -1498393657890003624
+    second: GameRegular_55
+  - first:
+      213: 6221516331743925876
+    second: GameRegular_56
+  - first:
+      213: -6887768878743567282
+    second: GameRegular_57
+  - first:
+      213: -8754973703859545831
+    second: GameRegular_58
+  - first:
+      213: -6405043598267146661
+    second: GameRegular_59
+  - first:
+      213: -5169913929712881211
+    second: GameRegular_60
+  - first:
+      213: 433156683485857103
+    second: GameRegular_61
+  - first:
+      213: 3895558301195374074
+    second: GameRegular_62
+  - first:
+      213: 560030973747298894
+    second: GameRegular_63
+  - first:
+      213: -8809190627696199480
+    second: GameRegular_64
+  - first:
+      213: -6538691036204852256
+    second: GameRegular_65
+  - first:
+      213: 7212822848716559359
+    second: GameRegular_66
+  - first:
+      213: 4752509523463219887
+    second: GameRegular_67
+  - first:
+      213: -709748292081922400
+    second: GameRegular_68
+  - first:
+      213: 5423175565276118672
+    second: GameRegular_69
+  - first:
+      213: -3825650996180114953
+    second: GameRegular_70
+  - first:
+      213: -711863814662347429
+    second: GameRegular_71
+  - first:
+      213: 8568230205866686042
+    second: GameRegular_72
+  - first:
+      213: -2775973191659314996
+    second: GameRegular_73
+  - first:
+      213: -6863566163234690949
+    second: GameRegular_74
+  - first:
+      213: -4063483271023971088
+    second: GameRegular_75
+  - first:
+      213: 2043453145823954918
+    second: GameRegular_76
+  - first:
+      213: -2639828725179406785
+    second: GameRegular_77
+  - first:
+      213: 1809655157650925578
+    second: GameRegular_78
+  - first:
+      213: -2007951686799329977
+    second: GameRegular_79
+  - first:
+      213: -7285062376710973802
+    second: GameRegular_80
+  - first:
+      213: 1643541418315392188
+    second: GameRegular_81
+  - first:
+      213: 2490746969159800187
+    second: GameRegular_82
+  - first:
+      213: 4955439206234948277
+    second: GameRegular_83
+  - first:
+      213: 3605481369798374303
+    second: GameRegular_84
+  - first:
+      213: -8080251799839890624
+    second: GameRegular_85
+  - first:
+      213: 551361212773048650
+    second: GameRegular_86
+  - first:
+      213: -8371659565306934085
+    second: GameRegular_87
+  - first:
+      213: -7005481045972217845
+    second: GameRegular_88
+  - first:
+      213: 2449901418168444
+    second: GameRegular_89
+  - first:
+      213: 6887716652972718182
+    second: GameRegular_90
+  - first:
+      213: -5885513545364782493
+    second: GameRegular_91
+  - first:
+      213: 8691766621293309176
+    second: GameRegular_92
+  - first:
+      213: 1917850962724115772
+    second: GameRegular_93
+  - first:
+      213: 5725902297882250064
+    second: GameRegular_94
+  - first:
+      213: 7245186415010930202
+    second: GameRegular_95
+  - first:
+      213: -4491851372498382857
+    second: GameRegular_96
+  - first:
+      213: -7500786698784522617
+    second: GameRegular_97
+  - first:
+      213: -968111642101669202
+    second: GameRegular_98
+  - first:
+      213: -575215455687714827
+    second: GameRegular_99
+  - first:
+      213: 7248806443579646881
+    second: GameRegular_100
+  - first:
+      213: -8707312390960098739
+    second: GameRegular_101
+  - first:
+      213: -1260791706248541354
+    second: GameRegular_102
+  - first:
+      213: -9144668946878324671
+    second: GameRegular_103
+  - first:
+      213: 4672574730965261387
+    second: GameRegular_104
+  - first:
+      213: 5981402767791369825
+    second: GameRegular_105
+  - first:
+      213: -7909588222607951797
+    second: GameRegular_106
+  - first:
+      213: -446172770933510117
+    second: GameRegular_107
+  - first:
+      213: 4805535515053090655
+    second: GameRegular_108
+  - first:
+      213: -5165024728006374399
+    second: GameRegular_109
+  - first:
+      213: -2142124843063496899
+    second: GameRegular_110
+  - first:
+      213: -8540047530951741020
+    second: GameRegular_111
+  - first:
+      213: -5769312315811673867
+    second: GameRegular_112
+  - first:
+      213: -2376502389965249468
+    second: GameRegular_113
+  - first:
+      213: -3549792164544658213
+    second: GameRegular_114
+  - first:
+      213: 414837971942086659
+    second: GameRegular_115
+  - first:
+      213: 817121595673433384
+    second: GameRegular_116
+  - first:
+      213: -2549482366418446651
+    second: GameRegular_117
+  - first:
+      213: 5640341364498300694
+    second: GameRegular_118
+  - first:
+      213: -6408560411240284844
+    second: GameRegular_119
+  - first:
+      213: 4521274499261095279
+    second: GameRegular_120
+  - first:
+      213: 4810385950058768011
+    second: GameRegular_121
+  - first:
+      213: -5012283036720855247
+    second: GameRegular_122
+  - first:
+      213: -629447675439563666
+    second: GameRegular_123
+  - first:
+      213: 6432468345087264626
+    second: GameRegular_124
+  - first:
+      213: -93300307689098245
+    second: GameRegular_125
+  - first:
+      213: 3599140418629665272
+    second: GameRegular_126
+  - first:
+      213: -451818721741982494
+    second: GameRegular_127
+  - first:
+      213: 6009068040487291308
+    second: GameRegular_128
+  - first:
+      213: 4658741016980071432
+    second: GameRegular_129
+  - first:
+      213: -1162055696809773345
+    second: GameRegular_130
+  - first:
+      213: 3587260538218134397
+    second: GameRegular_131
+  - first:
+      213: 6848026420636941346
+    second: GameRegular_132
+  - first:
+      213: 762524474481912881
+    second: GameRegular_133
+  - first:
+      213: -7105061935260664808
+    second: GameRegular_134
+  - first:
+      213: 6253679910565842152
+    second: GameRegular_135
+  - first:
+      213: -3428734820069165780
+    second: GameRegular_136
+  - first:
+      213: 7835658218240456934
+    second: GameRegular_137
+  - first:
+      213: 2048269216114903147
+    second: GameRegular_138
+  - first:
+      213: 6719162939219215212
+    second: GameRegular_139
+  - first:
+      213: -4334249183861692710
+    second: GameRegular_140
+  - first:
+      213: 7358498595722027983
+    second: GameRegular_141
+  - first:
+      213: 8569492089817788087
+    second: GameRegular_142
+  - first:
+      213: -5040372264829147367
+    second: GameRegular_143
+  - first:
+      213: -4551407729501470759
+    second: GameRegular_144
+  - first:
+      213: -867070500064029376
+    second: GameRegular_145
+  - first:
+      213: -6089972539334334366
+    second: GameRegular_146
+  - first:
+      213: -5504814769775015037
+    second: GameRegular_147
+  - first:
+      213: 4580996931773747986
+    second: GameRegular_148
+  - first:
+      213: -5125827005938934634
+    second: GameRegular_149
+  - first:
+      213: 6828789368230731226
+    second: GameRegular_150
+  - first:
+      213: -6113271701605545969
+    second: GameRegular_151
+  - first:
+      213: -5880516096686081319
+    second: GameRegular_152
+  - first:
+      213: 4263636057647268746
+    second: GameRegular_153
+  - first:
+      213: -9015229521346750160
+    second: GameRegular_154
+  - first:
+      213: 1623190173435002977
+    second: GameRegular_155
+  - first:
+      213: -3455384968529229254
+    second: GameRegular_156
+  - first:
+      213: -4534088488004930873
+    second: GameRegular_157
+  - first:
+      213: 2352667150732342326
+    second: GameRegular_158
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: GameRegular_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 99
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e88c61a7ae8519ce0800000000000000
+      internalID: -1400240245041608562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_1
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 99
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0ca8e711668081d0800000000000000
+      internalID: -3350530371192574966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_2
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 99
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f298ffa300c40c00800000000000000
+      internalID: 866028150431716087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_3
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 99
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe14d8af7dd27ff20800000000000000
+      internalID: 3456281644674925039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_4
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 99
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2fb3c0afec283270800000000000000
+      internalID: 8230377726725570348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_5
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 99
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f94a28c5d901cdd0800000000000000
+      internalID: -2467680307031422472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_6
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 99
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d8a7cfb75f63882f0800000000000000
+      internalID: -970465291723310451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_7
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 99
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b28a23a9cff99880800000000000000
+      internalID: -8603564371623640396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_8
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 99
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20baf93bfe6ed8cc0800000000000000
+      internalID: -3707053001070892286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_9
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 99
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dff3e5a25bc4961a0800000000000000
+      internalID: -6815832220064923651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_10
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 99
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b668015cd900cd9d0800000000000000
+      internalID: -2748320994986785173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_11
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 99
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea673b8158aa9e990800000000000000
+      internalID: -7356161027711207762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_12
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 99
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0b723015a9ff64d0800000000000000
+      internalID: -3139015927917282547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_13
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 99
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90b1b47069269e820800000000000000
+      internalID: 2947995827597679369
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_14
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 99
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 21c2b74d97b6ccf50800000000000000
+      internalID: 6903010499852184594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_15
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 99
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff45a01fce8b95750800000000000000
+      internalID: 6294265282022757631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_16
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 98
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6ab24bdab0ac77d0800000000000000
+      internalID: -2919281734039979413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_17
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 99
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 465a0ba19b9f433b0800000000000000
+      internalID: -5533523468719446684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_18
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 99
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fddbb1be398aa6a70800000000000000
+      internalID: 8821048173416660447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_19
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 99
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 848c6c17df2c9b380800000000000000
+      internalID: -8954911990258153400
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_20
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 99
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7eb42d15f7dd8bac0800000000000000
+      internalID: -3839075143430026265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_21
+      rect:
+        serializedVersion: 2
+        x: 233
+        y: 99
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5dfb0a8fbcdeec390800000000000000
+      internalID: -7796032444626321451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_22
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 99
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df8f5a8c9df987cb0800000000000000
+      internalID: -4865963639650780931
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_23
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 99
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f3b79df3c27444a0800000000000000
+      internalID: -6610032166974278667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_24
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 99
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 976fcd1de283019e0800000000000000
+      internalID: -1652759289504401799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_25
+      rect:
+        serializedVersion: 2
+        x: 277
+        y: 99
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 333ec12917178d720800000000000000
+      internalID: 2871169495045301043
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_26
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 83
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29d01c2e1fba3cca0800000000000000
+      internalID: -5997761223347597934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_27
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 83
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48d4aa7d5ef82bfd0800000000000000
+      internalID: -2327639840068579964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_28
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 83
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11c8e6b4558123d90800000000000000
+      internalID: -7119601306302510063
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_29
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 83
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b6b53c21c9804830800000000000000
+      internalID: 4053391127396857524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_30
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 83
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 936dfa7c104639ee0800000000000000
+      internalID: -1255549912298301895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_31
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 83
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a8e39620f586a890800000000000000
+      internalID: -7447117667324663647
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_32
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 83
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de8ca9e7c1487b4d0800000000000000
+      internalID: -3118878959012755219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_33
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 83
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ebf13b439bfd5b630800000000000000
+      internalID: 3942303035378835390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_34
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 83
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dce9f4d583b4ef2f0800000000000000
+      internalID: -937228966990733619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_35
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 83
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 249c8af96c0691e70800000000000000
+      internalID: 9086400129395116354
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_36
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 83
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 421b4ab9c5b349d40800000000000000
+      internalID: 5590158306407919908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_37
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 83
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 659794d45862476d0800000000000000
+      internalID: -2993725498325370538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_38
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 83
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64cf97f4a79ea1d50800000000000000
+      internalID: 6708931306450451526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_39
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 83
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c0b6e9db5f396e00800000000000000
+      internalID: 1038430852815958217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_40
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 83
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4bf6bdd6bdf6d6cb0800000000000000
+      internalID: -4869112633886019660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_41
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 83
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e90087ce33cee3ca0800000000000000
+      internalID: -6035126742875111266
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_42
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 82
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4f7556a8bec3f5b0800000000000000
+      internalID: -5335693841043980470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_43
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 83
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f1b960d50ef26f90800000000000000
+      internalID: -6961722773036486160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_44
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 83
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 498efcbbfbbe5f640800000000000000
+      internalID: 5113252160671312020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_45
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 83
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b50f2b5c511542d0800000000000000
+      internalID: -3295208463987178060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_46
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 83
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 941a7eb3a11c271e0800000000000000
+      internalID: -2201484949412404919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_47
+      rect:
+        serializedVersion: 2
+        x: 233
+        y: 83
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8adb46a4ce07bff00800000000000000
+      internalID: 1151638289886002600
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_48
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 83
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8031ee2aa0dc968f0800000000000000
+      internalID: -546680434181926136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_49
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 83
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3bec65a0e824f6a30800000000000000
+      internalID: 4210657354440953523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_50
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 83
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6aab2a7333b128920800000000000000
+      internalID: 2990983009318124198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_51
+      rect:
+        serializedVersion: 2
+        x: 277
+        y: 83
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa9f5ae84bc74d5a0800000000000000
+      internalID: -6497431247459583569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_52
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 67
+        width: 16
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4099f6ad60d2ed110800000000000000
+      internalID: 1287516050932340996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_53
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 67
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3286c019aed58730800000000000000
+      internalID: 4000848661700837950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_54
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 67
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c7b1492593a8b030800000000000000
+      internalID: 3510735770572928966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_55
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 67
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 855a4cf28e2a43be0800000000000000
+      internalID: -1498393657890003624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_56
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 67
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47653e50424475650800000000000000
+      internalID: 6221516331743925876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_57
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 67
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e44cf7f92bab960a0800000000000000
+      internalID: -6887768878743567282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_58
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 67
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 919d09b5dc5108680800000000000000
+      internalID: -8754973703859545831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_59
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 67
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5e956268c6bc17a0800000000000000
+      internalID: -6405043598267146661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_60
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 67
+        width: 16
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c1be1c1ca6c048b0800000000000000
+      internalID: -5169913929712881211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_61
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 69
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f45c24b65b1e20600800000000000000
+      internalID: 433156683485857103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_62
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 69
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: afd0398a2adcf0630800000000000000
+      internalID: 3895558301195374074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_63
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 69
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e428c651431a5c700800000000000000
+      internalID: 560030973747298894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_64
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 69
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c8b7751cc77fb580800000000000000
+      internalID: -8809190627696199480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_65
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 69
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0eb9af26527e145a0800000000000000
+      internalID: -6538691036204852256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_66
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 67
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff3529d6a28191460800000000000000
+      internalID: 7212822848716559359
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_67
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 66
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: faaafa15b3e44f140800000000000000
+      internalID: 4752509523463219887
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_68
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 67
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ae448250b77626f0800000000000000
+      internalID: -709748292081922400
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_69
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 67
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 09e7cd2817df24b40800000000000000
+      internalID: 5423175565276118672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_70
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 67
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f1a01a20be88eac0800000000000000
+      internalID: -3825650996180114953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_71
+      rect:
+        serializedVersion: 2
+        x: 233
+        y: 66
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b55a896d1a3fe16f0800000000000000
+      internalID: -711863814662347429
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_72
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 66
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a56b47ec9f778e670800000000000000
+      internalID: 8568230205866686042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_73
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 67
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc0a3250713c979d0800000000000000
+      internalID: -2775973191659314996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_74
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 67
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b78610470f6bfb0a0800000000000000
+      internalID: -6863566163234690949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_75
+      rect:
+        serializedVersion: 2
+        x: 277
+        y: 67
+        width: 14
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f4bfd78e7b9b97c0800000000000000
+      internalID: -4063483271023971088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_76
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 51
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e7cdf73fcdcb5c10800000000000000
+      internalID: 2043453145823954918
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_77
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 51
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f362fc7c2c17d5bd0800000000000000
+      internalID: -2639828725179406785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_78
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 51
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a08acb527cf2d1910800000000000000
+      internalID: 1809655157650925578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_79
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 51
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 745fd2654925224e0800000000000000
+      internalID: -2007951686799329977
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_80
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 51
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6965495cd5246ea90800000000000000
+      internalID: -7285062376710973802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_81
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 51
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb4a45c46380fc610800000000000000
+      internalID: 1643541418315392188
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_82
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 51
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b7596220c29e09220800000000000000
+      internalID: 2490746969159800187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_83
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 49
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b28da9f3b145c440800000000000000
+      internalID: 4955439206234948277
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_84
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 51
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f93fe13043e390230800000000000000
+      internalID: 3605481369798374303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_85
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 51
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04325de8ccd2ddf80800000000000000
+      internalID: -8080251799839890624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_86
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 51
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a41244e0a14d6a700800000000000000
+      internalID: 551361212773048650
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_87
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 51
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bbc0165faf3e1db80800000000000000
+      internalID: -8371659565306934085
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_88
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 51
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b001816fa1887ce90800000000000000
+      internalID: -7005481045972217845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_89
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 51
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c70c3cf1c24b80000800000000000000
+      internalID: 2449901418168444
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_90
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 51
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6683bfd9dc5169f50800000000000000
+      internalID: 6887716652972718182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_91
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 51
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36248cffc94725ea0800000000000000
+      internalID: -5885513545364782493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_92
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 51
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8fce8cce0bb5f9870800000000000000
+      internalID: 8691766621293309176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_93
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 51
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c35df451a439d9a10800000000000000
+      internalID: 1917850962724115772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_94
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 51
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05b4dd38dcd767f40800000000000000
+      internalID: 5725902297882250064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_95
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 51
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1e563668a21c8460800000000000000
+      internalID: 7245186415010930202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_96
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 51
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ff026eb9fcb9a1c0800000000000000
+      internalID: -4491851372498382857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_97
+      rect:
+        serializedVersion: 2
+        x: 233
+        y: 51
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78e39f20d3ad7e790800000000000000
+      internalID: -7500786698784522617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_98
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 51
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea22c9d37939092f0800000000000000
+      internalID: -968111642101669202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_99
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 50
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f75b66379c6408f0800000000000000
+      internalID: -575215455687714827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_100
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 51
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a3a02bfd0fe89460800000000000000
+      internalID: 7248806443579646881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_101
+      rect:
+        serializedVersion: 2
+        x: 277
+        y: 51
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4257748389692780800000000000000
+      internalID: -8707312390960098739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_102
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 51
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65b0c458f94c08ee0800000000000000
+      internalID: -1260791706248541354
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_103
+      rect:
+        serializedVersion: 2
+        x: 299
+        y: 51
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 140a5c81b0c971180800000000000000
+      internalID: -9144668946878324671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_104
+      rect:
+        serializedVersion: 2
+        x: 309
+        y: 51
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4c96a126f158d040800000000000000
+      internalID: 4672574730965261387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_105
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 51
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16e2eb06026320350800000000000000
+      internalID: 5981402767791369825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_106
+      rect:
+        serializedVersion: 2
+        x: 331
+        y: 51
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b48f6d71b6f7b3290800000000000000
+      internalID: -7909588222607951797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_107
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 51
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b107e009a30eec9f0800000000000000
+      internalID: -446172770933510117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_108
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 51
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f5763421711b0b240800000000000000
+      internalID: 4805535515053090655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_109
+      rect:
+        serializedVersion: 2
+        x: 364
+        y: 51
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10c421710652258b0800000000000000
+      internalID: -5165024728006374399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_110
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 49
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3f29a00ec4a542e0800000000000000
+      internalID: -2142124843063496899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_111
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 35
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a17ba88408ab7980800000000000000
+      internalID: -8540047530951741020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_112
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 18
+        width: 38
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f842c114094fefa0800000000000000
+      internalID: -5769312315811673867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_113
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 35
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4442146eaa7f40fd0800000000000000
+      internalID: -2376502389965249468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_114
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 35
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd4c9dd75da9cbec0800000000000000
+      internalID: -3549792164544658213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_115
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 35
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 30893f400fcc1c500800000000000000
+      internalID: 414837971942086659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_116
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 19
+        width: 36
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8255a6013cff65b00800000000000000
+      internalID: 817121595673433384
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_117
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 35
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c69184ab4b6e9cd0800000000000000
+      internalID: -2549482366418446651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_118
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 33
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61ffcd25694864e40800000000000000
+      internalID: 5640341364498300694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_119
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 35
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45d346e82483017a0800000000000000
+      internalID: -6408560411240284844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_120
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 19
+        width: 50
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6d5d7cc33bcebe30800000000000000
+      internalID: 4521274499261095279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_121
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 35
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8668c9f88ce1c240800000000000000
+      internalID: 4810385950058768011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_122
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 35
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1378982622bc07ab0800000000000000
+      internalID: -5012283036720855247
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_123
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 35
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6cbab49ca0c347f0800000000000000
+      internalID: -629447675439563666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_124
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 35
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2770fd111e7b44950800000000000000
+      internalID: 6432468345087264626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_125
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 3
+        width: 49
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf3b1ce4dd784bef0800000000000000
+      internalID: -93300307689098245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_126
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 35
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f10c254427b2f130800000000000000
+      internalID: 3599140418629665272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_127
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 35
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e4b2b33441dab9f0800000000000000
+      internalID: -451818721741982494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_128
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 35
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca9c560ab8f746350800000000000000
+      internalID: 6009068040487291308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_129
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 35
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 804a3a9954c27a040800000000000000
+      internalID: 4658741016980071432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_130
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 18
+        width: 28
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd63f66208c8fdfe0800000000000000
+      internalID: -1162055696809773345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_131
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 35
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7bb441147288c130800000000000000
+      internalID: 3587260538218134397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_132
+      rect:
+        serializedVersion: 2
+        x: 233
+        y: 35
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22cfd864fb3190f50800000000000000
+      internalID: 6848026420636941346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_133
+      rect:
+        serializedVersion: 2
+        x: 233
+        y: 1
+        width: 38
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13c290238f7059a00800000000000000
+      internalID: 762524474481912881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_134
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 35
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81c73a960dfb56d90800000000000000
+      internalID: -7105061935260664808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_135
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 34
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ec0648ceb889c650800000000000000
+      internalID: 6253679910565842152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_136
+      rect:
+        serializedVersion: 2
+        x: 277
+        y: 35
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c25b3cce8dfaa60d0800000000000000
+      internalID: -3428734820069165780
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_137
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 35
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e8b79762a9ddbc60800000000000000
+      internalID: 7835658218240456934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_138
+      rect:
+        serializedVersion: 2
+        x: 299
+        y: 35
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6885e6fff9ec6c10800000000000000
+      internalID: 2048269216114903147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_139
+      rect:
+        serializedVersion: 2
+        x: 310
+        y: 35
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c638124f7134f3d50800000000000000
+      internalID: 6719162939219215212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_140
+      rect:
+        serializedVersion: 2
+        x: 321
+        y: 35
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad6a5e3c457a9d3c0800000000000000
+      internalID: -4334249183861692710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_141
+      rect:
+        serializedVersion: 2
+        x: 332
+        y: 35
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc3e83e5c73ae1660800000000000000
+      internalID: 7358498595722027983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_142
+      rect:
+        serializedVersion: 2
+        x: 343
+        y: 35
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7beeb1f07a3fce670800000000000000
+      internalID: 8569492089817788087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_143
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 35
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 917a02351200d0ab0800000000000000
+      internalID: -5040372264829147367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_144
+      rect:
+        serializedVersion: 2
+        x: 365
+        y: 19
+        width: 7
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9dff81fc8c626d0c0800000000000000
+      internalID: -4551407729501470759
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_145
+      rect:
+        serializedVersion: 2
+        x: 376
+        y: 35
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 045967069fb87f3f0800000000000000
+      internalID: -867070500064029376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_146
+      rect:
+        serializedVersion: 2
+        x: 376
+        y: 17
+        width: 18
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 268e715dd321c7ba0800000000000000
+      internalID: -6089972539334334366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_147
+      rect:
+        serializedVersion: 2
+        x: 277
+        y: 19
+        width: 40
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 38b8c35f128fa93b0800000000000000
+      internalID: -5504814769775015037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_148
+      rect:
+        serializedVersion: 2
+        x: 321
+        y: 19
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 21357833078f29f30800000000000000
+      internalID: 4580996931773747986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_149
+      rect:
+        serializedVersion: 2
+        x: 332
+        y: 19
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69cd7e2fe776dd8b0800000000000000
+      internalID: -5125827005938934634
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_150
+      rect:
+        serializedVersion: 2
+        x: 343
+        y: 19
+        width: 18
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: add5b5bffbbb4ce50800000000000000
+      internalID: 6828789368230731226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_151
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 3
+        width: 74
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f088a52e6cb492ba0800000000000000
+      internalID: -6113271701605545969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_152
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 3
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9da3f0134c5346ea0800000000000000
+      internalID: -5880516096686081319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_153
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 2
+        width: 16
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a83cc9b976a7b2b30800000000000000
+      internalID: 4263636057647268746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_154
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 3
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 039138bd38873e280800000000000000
+      internalID: -9015229521346750160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_155
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 3
+        width: 18
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1608f7adcdab68610800000000000000
+      internalID: 1623190173435002977
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_156
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 3
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3a4794bda10c00d0800000000000000
+      internalID: -3455384968529229254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_157
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 3
+        width: 14
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c23744fa8ea311c0800000000000000
+      internalID: -4534088488004930873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameRegular_158
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 3
+        width: 18
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 634b1220f4a56a020800000000000000
+      internalID: 2352667150732342326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      GameRegular_0: -1400240245041608562
+      GameRegular_1: -3350530371192574966
+      GameRegular_10: -2748320994986785173
+      GameRegular_100: 7248806443579646881
+      GameRegular_101: -8707312390960098739
+      GameRegular_102: -1260791706248541354
+      GameRegular_103: -9144668946878324671
+      GameRegular_104: 4672574730965261387
+      GameRegular_105: 5981402767791369825
+      GameRegular_106: -7909588222607951797
+      GameRegular_107: -446172770933510117
+      GameRegular_108: 4805535515053090655
+      GameRegular_109: -5165024728006374399
+      GameRegular_11: -7356161027711207762
+      GameRegular_110: -2142124843063496899
+      GameRegular_111: -8540047530951741020
+      GameRegular_112: -5769312315811673867
+      GameRegular_113: -2376502389965249468
+      GameRegular_114: -3549792164544658213
+      GameRegular_115: 414837971942086659
+      GameRegular_116: 817121595673433384
+      GameRegular_117: -2549482366418446651
+      GameRegular_118: 5640341364498300694
+      GameRegular_119: -6408560411240284844
+      GameRegular_12: -3139015927917282547
+      GameRegular_120: 4521274499261095279
+      GameRegular_121: 4810385950058768011
+      GameRegular_122: -5012283036720855247
+      GameRegular_123: -629447675439563666
+      GameRegular_124: 6432468345087264626
+      GameRegular_125: -93300307689098245
+      GameRegular_126: 3599140418629665272
+      GameRegular_127: -451818721741982494
+      GameRegular_128: 6009068040487291308
+      GameRegular_129: 4658741016980071432
+      GameRegular_13: 2947995827597679369
+      GameRegular_130: -1162055696809773345
+      GameRegular_131: 3587260538218134397
+      GameRegular_132: 6848026420636941346
+      GameRegular_133: 762524474481912881
+      GameRegular_134: -7105061935260664808
+      GameRegular_135: 6253679910565842152
+      GameRegular_136: -3428734820069165780
+      GameRegular_137: 7835658218240456934
+      GameRegular_138: 2048269216114903147
+      GameRegular_139: 6719162939219215212
+      GameRegular_14: 6903010499852184594
+      GameRegular_140: -4334249183861692710
+      GameRegular_141: 7358498595722027983
+      GameRegular_142: 8569492089817788087
+      GameRegular_143: -5040372264829147367
+      GameRegular_144: -4551407729501470759
+      GameRegular_145: -867070500064029376
+      GameRegular_146: -6089972539334334366
+      GameRegular_147: -5504814769775015037
+      GameRegular_148: 4580996931773747986
+      GameRegular_149: -5125827005938934634
+      GameRegular_15: 6294265282022757631
+      GameRegular_150: 6828789368230731226
+      GameRegular_151: -6113271701605545969
+      GameRegular_152: -5880516096686081319
+      GameRegular_153: 4263636057647268746
+      GameRegular_154: -9015229521346750160
+      GameRegular_155: 1623190173435002977
+      GameRegular_156: -3455384968529229254
+      GameRegular_157: -4534088488004930873
+      GameRegular_158: 2352667150732342326
+      GameRegular_16: -2919281734039979413
+      GameRegular_17: -5533523468719446684
+      GameRegular_18: 8821048173416660447
+      GameRegular_19: -8954911990258153400
+      GameRegular_2: 866028150431716087
+      GameRegular_20: -3839075143430026265
+      GameRegular_21: -7796032444626321451
+      GameRegular_22: -4865963639650780931
+      GameRegular_23: -6610032166974278667
+      GameRegular_24: -1652759289504401799
+      GameRegular_25: 2871169495045301043
+      GameRegular_26: -5997761223347597934
+      GameRegular_27: -2327639840068579964
+      GameRegular_28: -7119601306302510063
+      GameRegular_29: 4053391127396857524
+      GameRegular_3: 3456281644674925039
+      GameRegular_30: -1255549912298301895
+      GameRegular_31: -7447117667324663647
+      GameRegular_32: -3118878959012755219
+      GameRegular_33: 3942303035378835390
+      GameRegular_34: -937228966990733619
+      GameRegular_35: 9086400129395116354
+      GameRegular_36: 5590158306407919908
+      GameRegular_37: -2993725498325370538
+      GameRegular_38: 6708931306450451526
+      GameRegular_39: 1038430852815958217
+      GameRegular_4: 8230377726725570348
+      GameRegular_40: -4869112633886019660
+      GameRegular_41: -6035126742875111266
+      GameRegular_42: -5335693841043980470
+      GameRegular_43: -6961722773036486160
+      GameRegular_44: 5113252160671312020
+      GameRegular_45: -3295208463987178060
+      GameRegular_46: -2201484949412404919
+      GameRegular_47: 1151638289886002600
+      GameRegular_48: -546680434181926136
+      GameRegular_49: 4210657354440953523
+      GameRegular_5: -2467680307031422472
+      GameRegular_50: 2990983009318124198
+      GameRegular_51: -6497431247459583569
+      GameRegular_52: 1287516050932340996
+      GameRegular_53: 4000848661700837950
+      GameRegular_54: 3510735770572928966
+      GameRegular_55: -1498393657890003624
+      GameRegular_56: 6221516331743925876
+      GameRegular_57: -6887768878743567282
+      GameRegular_58: -8754973703859545831
+      GameRegular_59: -6405043598267146661
+      GameRegular_6: -970465291723310451
+      GameRegular_60: -5169913929712881211
+      GameRegular_61: 433156683485857103
+      GameRegular_62: 3895558301195374074
+      GameRegular_63: 560030973747298894
+      GameRegular_64: -8809190627696199480
+      GameRegular_65: -6538691036204852256
+      GameRegular_66: 7212822848716559359
+      GameRegular_67: 4752509523463219887
+      GameRegular_68: -709748292081922400
+      GameRegular_69: 5423175565276118672
+      GameRegular_7: -8603564371623640396
+      GameRegular_70: -3825650996180114953
+      GameRegular_71: -711863814662347429
+      GameRegular_72: 8568230205866686042
+      GameRegular_73: -2775973191659314996
+      GameRegular_74: -6863566163234690949
+      GameRegular_75: -4063483271023971088
+      GameRegular_76: 2043453145823954918
+      GameRegular_77: -2639828725179406785
+      GameRegular_78: 1809655157650925578
+      GameRegular_79: -2007951686799329977
+      GameRegular_8: -3707053001070892286
+      GameRegular_80: -7285062376710973802
+      GameRegular_81: 1643541418315392188
+      GameRegular_82: 2490746969159800187
+      GameRegular_83: 4955439206234948277
+      GameRegular_84: 3605481369798374303
+      GameRegular_85: -8080251799839890624
+      GameRegular_86: 551361212773048650
+      GameRegular_87: -8371659565306934085
+      GameRegular_88: -7005481045972217845
+      GameRegular_89: 2449901418168444
+      GameRegular_9: -6815832220064923651
+      GameRegular_90: 6887716652972718182
+      GameRegular_91: -5885513545364782493
+      GameRegular_92: 8691766621293309176
+      GameRegular_93: 1917850962724115772
+      GameRegular_94: 5725902297882250064
+      GameRegular_95: 7245186415010930202
+      GameRegular_96: -4491851372498382857
+      GameRegular_97: -7500786698784522617
+      GameRegular_98: -968111642101669202
+      GameRegular_99: -575215455687714827
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,5410 @@
+fileFormatVersion: 2
+guid: d9c880461c6edb2438ac5667b36ae5d5
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5037472404199230289
+    second: GameOutlined_0
+  - first:
+      213: 2337585394784194680
+    second: GameOutlined_1
+  - first:
+      213: 4844590055394056388
+    second: GameOutlined_2
+  - first:
+      213: -7133509216676166902
+    second: GameOutlined_3
+  - first:
+      213: -9183841661832364739
+    second: GameOutlined_4
+  - first:
+      213: 670620405065047132
+    second: GameOutlined_5
+  - first:
+      213: 3407554949386736667
+    second: GameOutlined_6
+  - first:
+      213: -8595732210258835307
+    second: GameOutlined_7
+  - first:
+      213: 2816861350178540618
+    second: GameOutlined_8
+  - first:
+      213: 1558613676525239622
+    second: GameOutlined_9
+  - first:
+      213: 1873394299342221435
+    second: GameOutlined_10
+  - first:
+      213: 3177674728370998516
+    second: GameOutlined_11
+  - first:
+      213: 230245084499658993
+    second: GameOutlined_12
+  - first:
+      213: -4101140903327892564
+    second: GameOutlined_13
+  - first:
+      213: 4473888427249208614
+    second: GameOutlined_14
+  - first:
+      213: 783650140392685521
+    second: GameOutlined_15
+  - first:
+      213: 5918126611469236883
+    second: GameOutlined_16
+  - first:
+      213: 665136590210902131
+    second: GameOutlined_17
+  - first:
+      213: 5088966720189550542
+    second: GameOutlined_18
+  - first:
+      213: 3135858675735459578
+    second: GameOutlined_19
+  - first:
+      213: -5710675176214271211
+    second: GameOutlined_20
+  - first:
+      213: 8060030509962589577
+    second: GameOutlined_21
+  - first:
+      213: 6795632375669758908
+    second: GameOutlined_22
+  - first:
+      213: -2505287256847185787
+    second: GameOutlined_23
+  - first:
+      213: -4929916310896549420
+    second: GameOutlined_24
+  - first:
+      213: -8675960284854245412
+    second: GameOutlined_25
+  - first:
+      213: 1990238539757976065
+    second: GameOutlined_26
+  - first:
+      213: 2223140485484232888
+    second: GameOutlined_27
+  - first:
+      213: 5230638477776467755
+    second: GameOutlined_28
+  - first:
+      213: -7171039033134568785
+    second: GameOutlined_29
+  - first:
+      213: -4827942872071277227
+    second: GameOutlined_30
+  - first:
+      213: -358647386532435605
+    second: GameOutlined_31
+  - first:
+      213: -6720269850102108441
+    second: GameOutlined_32
+  - first:
+      213: 287272830662214003
+    second: GameOutlined_33
+  - first:
+      213: 1824797504691772392
+    second: GameOutlined_34
+  - first:
+      213: -8594086246166953209
+    second: GameOutlined_35
+  - first:
+      213: 6957022122888998055
+    second: GameOutlined_36
+  - first:
+      213: 3356520753851930179
+    second: GameOutlined_37
+  - first:
+      213: -289434793681121721
+    second: GameOutlined_38
+  - first:
+      213: -1776906021158799957
+    second: GameOutlined_39
+  - first:
+      213: -6777117809179894891
+    second: GameOutlined_40
+  - first:
+      213: 4819779192533763387
+    second: GameOutlined_41
+  - first:
+      213: 7305437917605696621
+    second: GameOutlined_42
+  - first:
+      213: -1227948150388745101
+    second: GameOutlined_43
+  - first:
+      213: 2034576256991028940
+    second: GameOutlined_44
+  - first:
+      213: 5655113175051695163
+    second: GameOutlined_45
+  - first:
+      213: 3206512706992479959
+    second: GameOutlined_46
+  - first:
+      213: -3299204688125520476
+    second: GameOutlined_47
+  - first:
+      213: 3189685678619912919
+    second: GameOutlined_48
+  - first:
+      213: -2167576033347486152
+    second: GameOutlined_49
+  - first:
+      213: -6967682592460425583
+    second: GameOutlined_50
+  - first:
+      213: 2913572510001090673
+    second: GameOutlined_51
+  - first:
+      213: 2023116965605213436
+    second: GameOutlined_52
+  - first:
+      213: 3407723938566085474
+    second: GameOutlined_53
+  - first:
+      213: 7714685160869000285
+    second: GameOutlined_54
+  - first:
+      213: -6292076051215645399
+    second: GameOutlined_55
+  - first:
+      213: 3029411738764562958
+    second: GameOutlined_56
+  - first:
+      213: 2948849918988143336
+    second: GameOutlined_57
+  - first:
+      213: -3429259952313402499
+    second: GameOutlined_58
+  - first:
+      213: -8438423932270730778
+    second: GameOutlined_59
+  - first:
+      213: -8657807745995863716
+    second: GameOutlined_60
+  - first:
+      213: 7994481715496599386
+    second: GameOutlined_61
+  - first:
+      213: -7428697258624928476
+    second: GameOutlined_62
+  - first:
+      213: -1086497534017383618
+    second: GameOutlined_63
+  - first:
+      213: 5134309155197170934
+    second: GameOutlined_64
+  - first:
+      213: -6924869337076855450
+    second: GameOutlined_65
+  - first:
+      213: 189717436092585931
+    second: GameOutlined_66
+  - first:
+      213: -3298510848848797937
+    second: GameOutlined_67
+  - first:
+      213: -6338460314596546306
+    second: GameOutlined_68
+  - first:
+      213: -8130321313838942758
+    second: GameOutlined_69
+  - first:
+      213: -4786446487771437597
+    second: GameOutlined_70
+  - first:
+      213: 4001574320420789354
+    second: GameOutlined_71
+  - first:
+      213: -713826538821604289
+    second: GameOutlined_72
+  - first:
+      213: -2838317011430658951
+    second: GameOutlined_73
+  - first:
+      213: -5895009847569582603
+    second: GameOutlined_74
+  - first:
+      213: 6880418225086770889
+    second: GameOutlined_75
+  - first:
+      213: 7365140507210668461
+    second: GameOutlined_76
+  - first:
+      213: 6687110921962509309
+    second: GameOutlined_77
+  - first:
+      213: 602968245485471011
+    second: GameOutlined_78
+  - first:
+      213: 6179229361630649696
+    second: GameOutlined_79
+  - first:
+      213: 1050749149053063458
+    second: GameOutlined_80
+  - first:
+      213: -3600009619386184917
+    second: GameOutlined_81
+  - first:
+      213: 1704509783570824135
+    second: GameOutlined_82
+  - first:
+      213: -8369941066037433265
+    second: GameOutlined_83
+  - first:
+      213: -3185017339515596962
+    second: GameOutlined_84
+  - first:
+      213: -6351000186428860557
+    second: GameOutlined_85
+  - first:
+      213: -5421640607674835800
+    second: GameOutlined_86
+  - first:
+      213: -8477539173938463609
+    second: GameOutlined_87
+  - first:
+      213: -5817532390983887348
+    second: GameOutlined_88
+  - first:
+      213: 6257431704210037416
+    second: GameOutlined_89
+  - first:
+      213: -6308507747371873726
+    second: GameOutlined_90
+  - first:
+      213: -2737300753881381997
+    second: GameOutlined_91
+  - first:
+      213: -6189293648905453090
+    second: GameOutlined_92
+  - first:
+      213: -2137316634118153136
+    second: GameOutlined_93
+  - first:
+      213: -2645554359561532276
+    second: GameOutlined_94
+  - first:
+      213: 3300701497151528290
+    second: GameOutlined_95
+  - first:
+      213: -6749074753114692856
+    second: GameOutlined_96
+  - first:
+      213: 874400108574024052
+    second: GameOutlined_97
+  - first:
+      213: -3977403610438736307
+    second: GameOutlined_98
+  - first:
+      213: 1937672215452242183
+    second: GameOutlined_99
+  - first:
+      213: -6525454398680699129
+    second: GameOutlined_100
+  - first:
+      213: 654504969126798277
+    second: GameOutlined_101
+  - first:
+      213: 3321224490235753468
+    second: GameOutlined_102
+  - first:
+      213: -7331768713346650492
+    second: GameOutlined_103
+  - first:
+      213: -2585078155284998490
+    second: GameOutlined_104
+  - first:
+      213: 7548611156508579757
+    second: GameOutlined_105
+  - first:
+      213: 3687885190177986058
+    second: GameOutlined_106
+  - first:
+      213: -8530326261153529830
+    second: GameOutlined_107
+  - first:
+      213: -8454303846582245071
+    second: GameOutlined_108
+  - first:
+      213: 9027552236439930963
+    second: GameOutlined_109
+  - first:
+      213: -3044409403982362750
+    second: GameOutlined_110
+  - first:
+      213: 1764924158069570945
+    second: GameOutlined_111
+  - first:
+      213: -4913823206358548480
+    second: GameOutlined_112
+  - first:
+      213: 3378685219716812610
+    second: GameOutlined_113
+  - first:
+      213: 5709223956246083661
+    second: GameOutlined_114
+  - first:
+      213: -8773372303249439448
+    second: GameOutlined_115
+  - first:
+      213: -4046673322209452950
+    second: GameOutlined_116
+  - first:
+      213: 7019790644663259582
+    second: GameOutlined_117
+  - first:
+      213: -3567841685431932899
+    second: GameOutlined_118
+  - first:
+      213: -4234198748127902641
+    second: GameOutlined_119
+  - first:
+      213: 4297230726499663612
+    second: GameOutlined_120
+  - first:
+      213: -1773577810086521657
+    second: GameOutlined_121
+  - first:
+      213: 3758968658287845887
+    second: GameOutlined_122
+  - first:
+      213: -1065905036268057138
+    second: GameOutlined_123
+  - first:
+      213: -3621058535677787039
+    second: GameOutlined_124
+  - first:
+      213: -7500053815982610531
+    second: GameOutlined_125
+  - first:
+      213: 1053199430333790990
+    second: GameOutlined_126
+  - first:
+      213: -5258091649295914553
+    second: GameOutlined_127
+  - first:
+      213: -331575367858928877
+    second: GameOutlined_128
+  - first:
+      213: 6109041425496949967
+    second: GameOutlined_129
+  - first:
+      213: -8158732759630950459
+    second: GameOutlined_130
+  - first:
+      213: 6650185506440888303
+    second: GameOutlined_131
+  - first:
+      213: 3188469474334000189
+    second: GameOutlined_132
+  - first:
+      213: -6452674742110206315
+    second: GameOutlined_133
+  - first:
+      213: -8936558135735444487
+    second: GameOutlined_134
+  - first:
+      213: 6081459346424654530
+    second: GameOutlined_135
+  - first:
+      213: 2450742385386571495
+    second: GameOutlined_136
+  - first:
+      213: 8666222457141678497
+    second: GameOutlined_137
+  - first:
+      213: -2579126955080438779
+    second: GameOutlined_138
+  - first:
+      213: -4742654254834981167
+    second: GameOutlined_139
+  - first:
+      213: -6783975555399056433
+    second: GameOutlined_140
+  - first:
+      213: 1539063819672897869
+    second: GameOutlined_141
+  - first:
+      213: 5334428020865033708
+    second: GameOutlined_142
+  - first:
+      213: -9037375701309358620
+    second: GameOutlined_143
+  - first:
+      213: -2104917949440623399
+    second: GameOutlined_144
+  - first:
+      213: -4566822591176391130
+    second: GameOutlined_145
+  - first:
+      213: -2394166681228000055
+    second: GameOutlined_146
+  - first:
+      213: 1355457089787598175
+    second: GameOutlined_147
+  - first:
+      213: 8178134089952459683
+    second: GameOutlined_148
+  - first:
+      213: -1826451049172682820
+    second: GameOutlined_149
+  - first:
+      213: 5296715616033395771
+    second: GameOutlined_150
+  - first:
+      213: -7804078779069223711
+    second: GameOutlined_151
+  - first:
+      213: 2630983564234817599
+    second: GameOutlined_152
+  - first:
+      213: 1720315852148984472
+    second: GameOutlined_153
+  - first:
+      213: -6842784066220067924
+    second: GameOutlined_154
+  - first:
+      213: 1780409867258772333
+    second: GameOutlined_155
+  - first:
+      213: -2420248388388817076
+    second: GameOutlined_156
+  - first:
+      213: -7881484387262752131
+    second: GameOutlined_157
+  - first:
+      213: -5415882213077498794
+    second: GameOutlined_158
+  - first:
+      213: -915288841165163253
+    second: GameOutlined_159
+  - first:
+      213: -7924707964315981519
+    second: GameOutlined_160
+  - first:
+      213: -1675471654557004358
+    second: GameOutlined_161
+  - first:
+      213: 208583483758533005
+    second: GameOutlined_162
+  - first:
+      213: 7081999689320991863
+    second: GameOutlined_163
+  - first:
+      213: 2819855386886540821
+    second: GameOutlined_164
+  - first:
+      213: 7299665683749114646
+    second: GameOutlined_165
+  - first:
+      213: -1855876753630083833
+    second: GameOutlined_166
+  - first:
+      213: 5755137066393746340
+    second: GameOutlined_167
+  - first:
+      213: 1879328236276148404
+    second: GameOutlined_168
+  - first:
+      213: 8024572825683154082
+    second: GameOutlined_169
+  - first:
+      213: -8954328495256528748
+    second: GameOutlined_170
+  - first:
+      213: 6307393658006230748
+    second: GameOutlined_171
+  - first:
+      213: -4760910081797497541
+    second: GameOutlined_172
+  - first:
+      213: 5737862563587270515
+    second: GameOutlined_173
+  - first:
+      213: -6715538343179738789
+    second: GameOutlined_174
+  - first:
+      213: -815252186131163769
+    second: GameOutlined_175
+  - first:
+      213: 2794678870956705637
+    second: GameOutlined_176
+  - first:
+      213: -3772113855016389911
+    second: GameOutlined_177
+  - first:
+      213: 8482105632046315898
+    second: GameOutlined_178
+  - first:
+      213: -4402885484112767825
+    second: GameOutlined_179
+  - first:
+      213: -3004865013880233982
+    second: GameOutlined_180
+  - first:
+      213: 1467523629180320995
+    second: GameOutlined_181
+  - first:
+      213: 7590857990508429239
+    second: GameOutlined_182
+  - first:
+      213: 2020838374944322263
+    second: GameOutlined_183
+  - first:
+      213: 2959867958556365229
+    second: GameOutlined_184
+  - first:
+      213: 5757223037709565620
+    second: GameOutlined_185
+  - first:
+      213: -4449918162370130119
+    second: GameOutlined_186
+  - first:
+      213: -3058671688010913586
+    second: GameOutlined_187
+  - first:
+      213: -528293472863102559
+    second: GameOutlined_188
+  - first:
+      213: -2506026711749404239
+    second: GameOutlined_189
+  - first:
+      213: -2037606729206323337
+    second: GameOutlined_190
+  - first:
+      213: -1388849011531942019
+    second: GameOutlined_191
+  - first:
+      213: 3992300092962892299
+    second: GameOutlined_192
+  - first:
+      213: -1572728494074628004
+    second: GameOutlined_193
+  - first:
+      213: -4134090716715671889
+    second: GameOutlined_194
+  - first:
+      213: 1996202644468218445
+    second: GameOutlined_195
+  - first:
+      213: -2287664924918484930
+    second: GameOutlined_196
+  - first:
+      213: 3122108046804970759
+    second: GameOutlined_197
+  - first:
+      213: 6295391928608642879
+    second: GameOutlined_198
+  - first:
+      213: -3628389974866108269
+    second: GameOutlined_199
+  - first:
+      213: 5801599794097077934
+    second: GameOutlined_200
+  - first:
+      213: 4995522347487485690
+    second: GameOutlined_201
+  - first:
+      213: -5062632439679537375
+    second: GameOutlined_202
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: GameOutlined_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa43fddb98d471ab0800000000000000
+      internalID: -5037472404199230289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_1
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 870d0401885c07020800000000000000
+      internalID: 2337585394784194680
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_2
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c81726dcf07b3340800000000000000
+      internalID: 4844590055394056388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_3
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a03ca02992fa00d90800000000000000
+      internalID: -7133509216676166902
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_4
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3d7c09aaa07c8080800000000000000
+      internalID: -9183841661832364739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_5
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c5cd70f84b58e4900800000000000000
+      internalID: 670620405065047132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_6
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1412d62c211a4f20800000000000000
+      internalID: 3407554949386736667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_7
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 598832fc813d5b880800000000000000
+      internalID: -8595732210258835307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_8
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4c4bee3970871720800000000000000
+      internalID: 2816861350178540618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_9
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64d3a5381ee41a510800000000000000
+      internalID: 1558613676525239622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_10
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b70f8888032aff910800000000000000
+      internalID: 1873394299342221435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_11
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4fc0a44545e591c20800000000000000
+      internalID: 3177674728370998516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_12
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f8c1e83faef13300800000000000000
+      internalID: 230245084499658993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_13
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cabf053c312d517c0800000000000000
+      internalID: -4101140903327892564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_14
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62d8be622d1761e30800000000000000
+      internalID: 4473888427249208614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_15
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1df7a4696a510ea00800000000000000
+      internalID: 783650140392685521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_16
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 96
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39af86c2cc8612250800000000000000
+      internalID: 5918126611469236883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_17
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 378a2aa643a0b3900800000000000000
+      internalID: 665136590210902131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_18
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ecfceaef444af9640800000000000000
+      internalID: 5088966720189550542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_19
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af6f901e9dec48b20800000000000000
+      internalID: 3135858675735459578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_20
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51b6b160f2b9fb0b0800000000000000
+      internalID: -5710675176214271211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_21
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98571218b0bfadf60800000000000000
+      internalID: 8060030509962589577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_22
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cbb90ff04afee4e50800000000000000
+      internalID: 6795632375669758908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_23
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5888f43738e6b3dd0800000000000000
+      internalID: -2505287256847185787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_24
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d16b9c2c3b659bb0800000000000000
+      internalID: -4929916310896549420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_25
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd7addf861cc89780800000000000000
+      internalID: -8675960284854245412
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_26
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10af09c386fbe9b10800000000000000
+      internalID: 1990238539757976065
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_27
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b0c31b2e7e2ade10800000000000000
+      internalID: 2223140485484232888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_28
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b273b508bf5f69840800000000000000
+      internalID: 5230638477776467755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_29
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: faaad8f3ef95b7c90800000000000000
+      internalID: -7171039033134568785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_30
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 555ff429983bffcb0800000000000000
+      internalID: -4827942872071277227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_31
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b69ac162a14d50bf0800000000000000
+      internalID: -358647386532435605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_32
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ee65e54d2eccb2a0800000000000000
+      internalID: -6720269850102108441
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_33
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3710e311e199cf300800000000000000
+      internalID: 287272830662214003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_34
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8eb1c2e89abf25910800000000000000
+      internalID: 1824797504691772392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_35
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7030620b71cabb880800000000000000
+      internalID: -8594086246166953209
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_36
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ac2559c2ce4c8060800000000000000
+      internalID: 6957022122888998055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_37
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 346129e87d1c49e20800000000000000
+      internalID: 3356520753851930179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_38
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74e8ff0b698bbfbf0800000000000000
+      internalID: -289434793681121721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_39
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba5b39163692757e0800000000000000
+      internalID: -1776906021158799957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_40
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59bdbde5247d2f1a0800000000000000
+      internalID: -6777117809179894891
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_41
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b354bcaa3ab43e240800000000000000
+      internalID: 4819779192533763387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_42
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 80
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d649e878411226560800000000000000
+      internalID: 7305437917605696621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_43
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 37c1b75c9a375fee0800000000000000
+      internalID: -1227948150388745101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_44
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc6e46a73544c3c10800000000000000
+      internalID: 2034576256991028940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_45
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b34769b787ffa7e40800000000000000
+      internalID: 5655113175051695163
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_46
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7de10147152df7c20800000000000000
+      internalID: 3206512706992479959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_47
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a599fae0ded632d0800000000000000
+      internalID: -3299204688125520476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_48
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7da6a4b993a044c20800000000000000
+      internalID: 3189685678619912919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_49
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83e3cacf4193be1e0800000000000000
+      internalID: -2167576033347486152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_50
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 19639b83991dd4f90800000000000000
+      internalID: -6967682592460425583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_51
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17055f5d2c61f6820800000000000000
+      internalID: 2913572510001090673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_52
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 65
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf407f9492e831c10800000000000000
+      internalID: 2023116965605213436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_53
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 65
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26b93d20edaaa4f20800000000000000
+      internalID: 3407723938566085474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_54
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 65
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d54f2979741101b60800000000000000
+      internalID: 7714685160869000285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_55
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 65
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9258c831b2e0ea8a0800000000000000
+      internalID: -6292076051215645399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_56
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 65
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e02d5770de1aa0a20800000000000000
+      internalID: 3029411738764562958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_57
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 65
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ea4a3da06b6ce820800000000000000
+      internalID: 2948849918988143336
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_58
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 65
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7bf2eb0e32d860d0800000000000000
+      internalID: -3429259952313402499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_59
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 65
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e129dc6422b4ea80800000000000000
+      internalID: -8438423932270730778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_60
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 65
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c598a4ed9b949d780800000000000000
+      internalID: -8657807745995863716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_61
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 65
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5fb78f73ca12fe60800000000000000
+      internalID: 7994481715496599386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_62
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 67
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4253eb3c337f7e890800000000000000
+      internalID: -7428697258624928476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_63
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 67
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e335e83df3cfbe0f0800000000000000
+      internalID: -1086497534017383618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_64
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 67
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f4309259fab04740800000000000000
+      internalID: 5134309155197170934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_65
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 67
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66d0a87070ce5ef90800000000000000
+      internalID: -6924869337076855450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_66
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 67
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc71ff1c00302a200800000000000000
+      internalID: 189717436092585931
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_67
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 67
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0f5896fbd55932d0800000000000000
+      internalID: -3298510848848797937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_68
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 65
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef8ef8d2de34908a0800000000000000
+      internalID: -6338460314596546306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_69
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 64
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad5b7d267db4b2f80800000000000000
+      internalID: -8130321313838942758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_70
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 65
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e5a7ff6740239db0800000000000000
+      internalID: -4786446487771437597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_71
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 65
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6c9107a4a2788730800000000000000
+      internalID: 4001574320420789354
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_72
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 65
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3caa428b8af716f0800000000000000
+      internalID: -713826538821604289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_73
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 64
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97c2ab557b54c98d0800000000000000
+      internalID: -2838317011430658951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_74
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 64
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f57f28d6c7b03ea0800000000000000
+      internalID: -5895009847569582603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_75
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 65
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ceab64fbe72c7f50800000000000000
+      internalID: 6880418225086770889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_76
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 65
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da9d125e44c363660800000000000000
+      internalID: 7365140507210668461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_77
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 65
+        width: 16
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df3d53524f36dcc50800000000000000
+      internalID: 6687110921962509309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_78
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3258003bc6c2e5800800000000000000
+      internalID: 602968245485471011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_79
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06d98ad8d5801c550800000000000000
+      internalID: 6179229361630649696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_80
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2211a51b8c2059e00800000000000000
+      internalID: 1050749149053063458
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_81
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b2b4f7823523a0ec0800000000000000
+      internalID: -3600009619386184917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_82
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 49
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7cbbae50e92a7a710800000000000000
+      internalID: 1704509783570824135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_83
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 49
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4c62ef32fef7db80800000000000000
+      internalID: -8369941066037433265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_84
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 49
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5f86baca9b8cc3d0800000000000000
+      internalID: -3185017339515596962
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_85
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 47
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 377d77fbaf6bcd7a0800000000000000
+      internalID: -6351000186428860557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_86
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ac55b7a79672c4b0800000000000000
+      internalID: -5421640607674835800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_87
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78c70f7890bb95a80800000000000000
+      internalID: -8477539173938463609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_88
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c06931eec19f34fa0800000000000000
+      internalID: -5817532390983887348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_89
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 49
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8aad4bf4bfcd6d650800000000000000
+      internalID: 6257431704210037416
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_90
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24a891fa0ada378a0800000000000000
+      internalID: -6308507747371873726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_91
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 393cd799777230ad0800000000000000
+      internalID: -2737300753881381997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_92
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed1c866f7363b1aa0800000000000000
+      internalID: -6189293648905453090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_93
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 49
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05c9ad268d9b652e0800000000000000
+      internalID: -2137316634118153136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_94
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 49
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c8c4954a35a194bd0800000000000000
+      internalID: -2645554359561532276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_95
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26d115716827ecd20800000000000000
+      internalID: 3300701497151528290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_96
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 803aa0a25487652a0800000000000000
+      internalID: -6749074753114692856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_97
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4712e17144e722c00800000000000000
+      internalID: 874400108574024052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_98
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d46617f4d7c6dc8c0800000000000000
+      internalID: -3977403610438736307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_99
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 701dc2d1d9ef3ea10800000000000000
+      internalID: 1937672215452242183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_100
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 49
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70f60a83ccde075a0800000000000000
+      internalID: -6525454398680699129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_101
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 48
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c3e78c3dc4451900800000000000000
+      internalID: 654504969126798277
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_102
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 49
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf374d7c31c571e20800000000000000
+      internalID: 3321224490235753468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_103
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48e66a95333504a90800000000000000
+      internalID: -7331768713346650492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_104
+      rect:
+        serializedVersion: 2
+        x: 287
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a69d953d15ff1cd0800000000000000
+      internalID: -2585078155284998490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_105
+      rect:
+        serializedVersion: 2
+        x: 298
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da79e334add02c860800000000000000
+      internalID: 7548611156508579757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_106
+      rect:
+        serializedVersion: 2
+        x: 309
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a069bfc8a000e2330800000000000000
+      internalID: 3687885190177986058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_107
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 49
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1002c906713e9980800000000000000
+      internalID: -8530326261153529830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_108
+      rect:
+        serializedVersion: 2
+        x: 330
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1392f31c1774caa80800000000000000
+      internalID: -8454303846582245071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_109
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 49
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3580944ddee484d70800000000000000
+      internalID: 9027552236439930963
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_110
+      rect:
+        serializedVersion: 2
+        x: 351
+        y: 49
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 287c5cce6c510c5d0800000000000000
+      internalID: -3044409403982362750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_111
+      rect:
+        serializedVersion: 2
+        x: 363
+        y: 49
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 18dfd39bb254e7810800000000000000
+      internalID: 1764924158069570945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_112
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 47
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0008def04d79ecbb0800000000000000
+      internalID: -4913823206358548480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_113
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24f45196e4083ee20800000000000000
+      internalID: 3378685219716812610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_114
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d48b23f70fc3b3f40800000000000000
+      internalID: 5709223956246083661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_115
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 825019e9f58be3680800000000000000
+      internalID: -8773372303249439448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_116
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6cd7abbd0457d7c0800000000000000
+      internalID: -4046673322209452950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_117
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 33
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb193cc166e4b6160800000000000000
+      internalID: 7019790644663259582
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_118
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 33
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d18affce3ea7c7ec0800000000000000
+      internalID: -3567841685431932899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_119
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 33
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f44ce6d1caa1d35c0800000000000000
+      internalID: -4234198748127902641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_120
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 31
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cfef7eaf394d2ab30800000000000000
+      internalID: 4297230726499663612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_121
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c41748e06cf267e0800000000000000
+      internalID: -1773577810086521657
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_122
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff1e21f241a8a2430800000000000000
+      internalID: 3758968658287845887
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_123
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ecd41f454052531f0800000000000000
+      internalID: -1065905036268057138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_124
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 33
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 164870e627a6fbdc0800000000000000
+      internalID: -3621058535677787039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_125
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d972b069ac47ae790800000000000000
+      internalID: -7500053815982610531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_126
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0b70b24d47bd9e00800000000000000
+      internalID: 1053199430333790990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_127
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c9e447e0818707b0800000000000000
+      internalID: -5258091649295914553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_128
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 33
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 313cf7ea5f1066bf0800000000000000
+      internalID: -331575367858928877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_129
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 33
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc444e43fcca7c450800000000000000
+      internalID: 6109041425496949967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_130
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 33
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5cfcadc28cb56ce80800000000000000
+      internalID: -8158732759630950459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_131
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fef3cd1eb743a4c50800000000000000
+      internalID: 6650185506440888303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_132
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d34cadaf718bf3c20800000000000000
+      internalID: 3188469474334000189
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_133
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 596c261828e7376a0800000000000000
+      internalID: -6452674742110206315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_134
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9fb9cd439b7faf380800000000000000
+      internalID: -8936558135735444487
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_135
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2caee9bfd0fa56450800000000000000
+      internalID: 6081459346424654530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_136
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 33
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e6c5f40739c20220800000000000000
+      internalID: 2450742385386571495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_137
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 32
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a1517eb86b944870800000000000000
+      internalID: 8666222457141678497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_138
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 33
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50cabcbf2b9153cd0800000000000000
+      internalID: -2579126955080438779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_139
+      rect:
+        serializedVersion: 2
+        x: 287
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d6e0183515be2eb0800000000000000
+      internalID: -4742654254834981167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_140
+      rect:
+        serializedVersion: 2
+        x: 298
+        y: 33
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc38187ec2a7ad1a0800000000000000
+      internalID: -6783975555399056433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_141
+      rect:
+        serializedVersion: 2
+        x: 309
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d494242c36adb5510800000000000000
+      internalID: 1539063819672897869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_142
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce5ec8f9502b70a40800000000000000
+      internalID: 5334428020865033708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_143
+      rect:
+        serializedVersion: 2
+        x: 331
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ed75b58eaac49280800000000000000
+      internalID: -9037375701309358620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_144
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 33
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9dc7f3ef644d9c2e0800000000000000
+      internalID: -2104917949440623399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_145
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 626c3b4ac036f90c0800000000000000
+      internalID: -4566822591176391130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_146
+      rect:
+        serializedVersion: 2
+        x: 364
+        y: 33
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c44458961636ced0800000000000000
+      internalID: -2394166681228000055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_147
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f551319aa0d8fc210800000000000000
+      internalID: 1355457089787598175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_148
+      rect:
+        serializedVersion: 2
+        x: 386
+        y: 32
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3abf02d00a19e7170800000000000000
+      internalID: 8178134089952459683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_149
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 16
+        width: 16
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb73c6e927427a6e0800000000000000
+      internalID: -1826451049172682820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_150
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 16
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b345fe12ac6b18940800000000000000
+      internalID: 5296715616033395771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_151
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 19
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ec2a6eb2b752b390800000000000000
+      internalID: -7804078779069223711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_152
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 19
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f308b14bc91238420800000000000000
+      internalID: 2630983564234817599
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_153
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 19
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89a40d4272acfd710800000000000000
+      internalID: 1720315852148984472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_154
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 18
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca3ff3a752c8901a0800000000000000
+      internalID: -6842784066220067924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_155
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 1
+        width: 10
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6b3f8c575945b810800000000000000
+      internalID: 1780409867258772333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_156
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 17
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c477fdde9ec896ed0800000000000000
+      internalID: -2420248388388817076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_157
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 22
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7a9a6a25b75f9290800000000000000
+      internalID: -7881484387262752131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_158
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 22
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 654c82062dbe6d4b0800000000000000
+      internalID: -5415882213077498794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_159
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 22
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b05b87bf5ad3c43f0800000000000000
+      internalID: -915288841165163253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_160
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 19
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 139ac36e718c50290800000000000000
+      internalID: -7924707964315981519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_161
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 21
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: abdc4ee38678fb8e0800000000000000
+      internalID: -1675471654557004358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_162
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 21
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d89d077c29905e200800000000000000
+      internalID: 208583483758533005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_163
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 21
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77c87650231584260800000000000000
+      internalID: 7081999689320991863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_164
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 21
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51e085db883222720800000000000000
+      internalID: 2819855386886540821
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_165
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 16
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61399fa934f9d4560800000000000000
+      internalID: 7299665683749114646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_166
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 21
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70549f8ece99e36e0800000000000000
+      internalID: -1855876753630083833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_167
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 21
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ab351c7baa5edf40800000000000000
+      internalID: 5755137066393746340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_168
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 16
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b8e993e217b41a10800000000000000
+      internalID: 1879328236276148404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_169
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 21
+        width: 16
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a4d81d08720d5f60800000000000000
+      internalID: 8024572825683154082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_170
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 19
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4989316fca5dbb380800000000000000
+      internalID: -8954328495256528748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_171
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 17
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd6530c2d1d588750800000000000000
+      internalID: 6307393658006230748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_172
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 17
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3d52e64189ddedb0800000000000000
+      internalID: -4760910081797497541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_173
+      rect:
+        serializedVersion: 2
+        x: 287
+        y: 17
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 377a1a0e99bf0af40800000000000000
+      internalID: 5737862563587270515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_174
+      rect:
+        serializedVersion: 2
+        x: 298
+        y: 17
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b51a143157d9dc2a0800000000000000
+      internalID: -6715538343179738789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_175
+      rect:
+        serializedVersion: 2
+        x: 309
+        y: 17
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7859a43c474afa4f0800000000000000
+      internalID: -815252186131163769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_176
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 17
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5670aa450a1b8c620800000000000000
+      internalID: 2794678870956705637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_177
+      rect:
+        serializedVersion: 2
+        x: 331
+        y: 17
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e23b633f62c6abc0800000000000000
+      internalID: -3772113855016389911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_178
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 17
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a79f579d12e76b570800000000000000
+      internalID: 8482105632046315898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_179
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 17
+        width: 16
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa41cbccafec5e2c0800000000000000
+      internalID: -4402885484112767825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_180
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 15
+        width: 16
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2006ba9b0339c46d0800000000000000
+      internalID: -3004865013880233982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_181
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ecf8c827f0bd5410800000000000000
+      internalID: 1467523629180320995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_182
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 1
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7bfb0b0df15285960800000000000000
+      internalID: 7590857990508429239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_183
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 1
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d2b80f8bc57b0c10800000000000000
+      internalID: 2020838374944322263
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_184
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 1
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da110dbe930931920800000000000000
+      internalID: 2959867958556365229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_185
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 1
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4bebf5789d3c5ef40800000000000000
+      internalID: 5757223037709565620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_186
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 1
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93f8e5c0207be32c0800000000000000
+      internalID: -4449918162370130119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_187
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 1
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec8a0972e4a6d85d0800000000000000
+      internalID: -3058671688010913586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_188
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 3
+        width: 12
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a956dca2ef1ba8f0800000000000000
+      internalID: -528293472863102559
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_189
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 0
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b95980bbfdc83dd0800000000000000
+      internalID: -2506026711749404239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_190
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 1
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77726b9b977f8b3e0800000000000000
+      internalID: -2037606729206323337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_191
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 1
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d777cf4be21d9bce0800000000000000
+      internalID: -1388849011531942019
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_192
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 1
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0aefcd48cf776730800000000000000
+      internalID: 3992300092962892299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_193
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 2
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c58fb8e64cb8c2ae0800000000000000
+      internalID: -1572728494074628004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_194
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 1
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fae1ce08562c0a6c0800000000000000
+      internalID: -4134090716715671889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_195
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 1
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4a39339abfe3bb10800000000000000
+      internalID: 1996202644468218445
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_196
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 5
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e30fc111fd49040e0800000000000000
+      internalID: -2287664924918484930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_197
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 4
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70de2381ab4f35b20800000000000000
+      internalID: 3122108046804970759
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_198
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 1
+        width: 16
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f37549aca99bd5750800000000000000
+      internalID: 6295391928608642879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_199
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 2
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3906489ba8e55adc0800000000000000
+      internalID: -3628389974866108269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_200
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 1
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eaeb228464c638050800000000000000
+      internalID: 5801599794097077934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_201
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 0
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: afe548d8b19a35540800000000000000
+      internalID: 4995522347487485690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameOutlined_202
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 2
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12f288c7e9aedb9b0800000000000000
+      internalID: -5062632439679537375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      GameOutlined_0: -5037472404199230289
+      GameOutlined_1: 2337585394784194680
+      GameOutlined_10: 1873394299342221435
+      GameOutlined_100: -6525454398680699129
+      GameOutlined_101: 654504969126798277
+      GameOutlined_102: 3321224490235753468
+      GameOutlined_103: -7331768713346650492
+      GameOutlined_104: -2585078155284998490
+      GameOutlined_105: 7548611156508579757
+      GameOutlined_106: 3687885190177986058
+      GameOutlined_107: -8530326261153529830
+      GameOutlined_108: -8454303846582245071
+      GameOutlined_109: 9027552236439930963
+      GameOutlined_11: 3177674728370998516
+      GameOutlined_110: -3044409403982362750
+      GameOutlined_111: 1764924158069570945
+      GameOutlined_112: -4913823206358548480
+      GameOutlined_113: 3378685219716812610
+      GameOutlined_114: 5709223956246083661
+      GameOutlined_115: -8773372303249439448
+      GameOutlined_116: -4046673322209452950
+      GameOutlined_117: 7019790644663259582
+      GameOutlined_118: -3567841685431932899
+      GameOutlined_119: -4234198748127902641
+      GameOutlined_12: 230245084499658993
+      GameOutlined_120: 4297230726499663612
+      GameOutlined_121: -1773577810086521657
+      GameOutlined_122: 3758968658287845887
+      GameOutlined_123: -1065905036268057138
+      GameOutlined_124: -3621058535677787039
+      GameOutlined_125: -7500053815982610531
+      GameOutlined_126: 1053199430333790990
+      GameOutlined_127: -5258091649295914553
+      GameOutlined_128: -331575367858928877
+      GameOutlined_129: 6109041425496949967
+      GameOutlined_13: -4101140903327892564
+      GameOutlined_130: -8158732759630950459
+      GameOutlined_131: 6650185506440888303
+      GameOutlined_132: 3188469474334000189
+      GameOutlined_133: -6452674742110206315
+      GameOutlined_134: -8936558135735444487
+      GameOutlined_135: 6081459346424654530
+      GameOutlined_136: 2450742385386571495
+      GameOutlined_137: 8666222457141678497
+      GameOutlined_138: -2579126955080438779
+      GameOutlined_139: -4742654254834981167
+      GameOutlined_14: 4473888427249208614
+      GameOutlined_140: -6783975555399056433
+      GameOutlined_141: 1539063819672897869
+      GameOutlined_142: 5334428020865033708
+      GameOutlined_143: -9037375701309358620
+      GameOutlined_144: -2104917949440623399
+      GameOutlined_145: -4566822591176391130
+      GameOutlined_146: -2394166681228000055
+      GameOutlined_147: 1355457089787598175
+      GameOutlined_148: 8178134089952459683
+      GameOutlined_149: -1826451049172682820
+      GameOutlined_15: 783650140392685521
+      GameOutlined_150: 5296715616033395771
+      GameOutlined_151: -7804078779069223711
+      GameOutlined_152: 2630983564234817599
+      GameOutlined_153: 1720315852148984472
+      GameOutlined_154: -6842784066220067924
+      GameOutlined_155: 1780409867258772333
+      GameOutlined_156: -2420248388388817076
+      GameOutlined_157: -7881484387262752131
+      GameOutlined_158: -5415882213077498794
+      GameOutlined_159: -915288841165163253
+      GameOutlined_16: 5918126611469236883
+      GameOutlined_160: -7924707964315981519
+      GameOutlined_161: -1675471654557004358
+      GameOutlined_162: 208583483758533005
+      GameOutlined_163: 7081999689320991863
+      GameOutlined_164: 2819855386886540821
+      GameOutlined_165: 7299665683749114646
+      GameOutlined_166: -1855876753630083833
+      GameOutlined_167: 5755137066393746340
+      GameOutlined_168: 1879328236276148404
+      GameOutlined_169: 8024572825683154082
+      GameOutlined_17: 665136590210902131
+      GameOutlined_170: -8954328495256528748
+      GameOutlined_171: 6307393658006230748
+      GameOutlined_172: -4760910081797497541
+      GameOutlined_173: 5737862563587270515
+      GameOutlined_174: -6715538343179738789
+      GameOutlined_175: -815252186131163769
+      GameOutlined_176: 2794678870956705637
+      GameOutlined_177: -3772113855016389911
+      GameOutlined_178: 8482105632046315898
+      GameOutlined_179: -4402885484112767825
+      GameOutlined_18: 5088966720189550542
+      GameOutlined_180: -3004865013880233982
+      GameOutlined_181: 1467523629180320995
+      GameOutlined_182: 7590857990508429239
+      GameOutlined_183: 2020838374944322263
+      GameOutlined_184: 2959867958556365229
+      GameOutlined_185: 5757223037709565620
+      GameOutlined_186: -4449918162370130119
+      GameOutlined_187: -3058671688010913586
+      GameOutlined_188: -528293472863102559
+      GameOutlined_189: -2506026711749404239
+      GameOutlined_19: 3135858675735459578
+      GameOutlined_190: -2037606729206323337
+      GameOutlined_191: -1388849011531942019
+      GameOutlined_192: 3992300092962892299
+      GameOutlined_193: -1572728494074628004
+      GameOutlined_194: -4134090716715671889
+      GameOutlined_195: 1996202644468218445
+      GameOutlined_196: -2287664924918484930
+      GameOutlined_197: 3122108046804970759
+      GameOutlined_198: 6295391928608642879
+      GameOutlined_199: -3628389974866108269
+      GameOutlined_2: 4844590055394056388
+      GameOutlined_20: -5710675176214271211
+      GameOutlined_200: 5801599794097077934
+      GameOutlined_201: 4995522347487485690
+      GameOutlined_202: -5062632439679537375
+      GameOutlined_21: 8060030509962589577
+      GameOutlined_22: 6795632375669758908
+      GameOutlined_23: -2505287256847185787
+      GameOutlined_24: -4929916310896549420
+      GameOutlined_25: -8675960284854245412
+      GameOutlined_26: 1990238539757976065
+      GameOutlined_27: 2223140485484232888
+      GameOutlined_28: 5230638477776467755
+      GameOutlined_29: -7171039033134568785
+      GameOutlined_3: -7133509216676166902
+      GameOutlined_30: -4827942872071277227
+      GameOutlined_31: -358647386532435605
+      GameOutlined_32: -6720269850102108441
+      GameOutlined_33: 287272830662214003
+      GameOutlined_34: 1824797504691772392
+      GameOutlined_35: -8594086246166953209
+      GameOutlined_36: 6957022122888998055
+      GameOutlined_37: 3356520753851930179
+      GameOutlined_38: -289434793681121721
+      GameOutlined_39: -1776906021158799957
+      GameOutlined_4: -9183841661832364739
+      GameOutlined_40: -6777117809179894891
+      GameOutlined_41: 4819779192533763387
+      GameOutlined_42: 7305437917605696621
+      GameOutlined_43: -1227948150388745101
+      GameOutlined_44: 2034576256991028940
+      GameOutlined_45: 5655113175051695163
+      GameOutlined_46: 3206512706992479959
+      GameOutlined_47: -3299204688125520476
+      GameOutlined_48: 3189685678619912919
+      GameOutlined_49: -2167576033347486152
+      GameOutlined_5: 670620405065047132
+      GameOutlined_50: -6967682592460425583
+      GameOutlined_51: 2913572510001090673
+      GameOutlined_52: 2023116965605213436
+      GameOutlined_53: 3407723938566085474
+      GameOutlined_54: 7714685160869000285
+      GameOutlined_55: -6292076051215645399
+      GameOutlined_56: 3029411738764562958
+      GameOutlined_57: 2948849918988143336
+      GameOutlined_58: -3429259952313402499
+      GameOutlined_59: -8438423932270730778
+      GameOutlined_6: 3407554949386736667
+      GameOutlined_60: -8657807745995863716
+      GameOutlined_61: 7994481715496599386
+      GameOutlined_62: -7428697258624928476
+      GameOutlined_63: -1086497534017383618
+      GameOutlined_64: 5134309155197170934
+      GameOutlined_65: -6924869337076855450
+      GameOutlined_66: 189717436092585931
+      GameOutlined_67: -3298510848848797937
+      GameOutlined_68: -6338460314596546306
+      GameOutlined_69: -8130321313838942758
+      GameOutlined_7: -8595732210258835307
+      GameOutlined_70: -4786446487771437597
+      GameOutlined_71: 4001574320420789354
+      GameOutlined_72: -713826538821604289
+      GameOutlined_73: -2838317011430658951
+      GameOutlined_74: -5895009847569582603
+      GameOutlined_75: 6880418225086770889
+      GameOutlined_76: 7365140507210668461
+      GameOutlined_77: 6687110921962509309
+      GameOutlined_78: 602968245485471011
+      GameOutlined_79: 6179229361630649696
+      GameOutlined_8: 2816861350178540618
+      GameOutlined_80: 1050749149053063458
+      GameOutlined_81: -3600009619386184917
+      GameOutlined_82: 1704509783570824135
+      GameOutlined_83: -8369941066037433265
+      GameOutlined_84: -3185017339515596962
+      GameOutlined_85: -6351000186428860557
+      GameOutlined_86: -5421640607674835800
+      GameOutlined_87: -8477539173938463609
+      GameOutlined_88: -5817532390983887348
+      GameOutlined_89: 6257431704210037416
+      GameOutlined_9: 1558613676525239622
+      GameOutlined_90: -6308507747371873726
+      GameOutlined_91: -2737300753881381997
+      GameOutlined_92: -6189293648905453090
+      GameOutlined_93: -2137316634118153136
+      GameOutlined_94: -2645554359561532276
+      GameOutlined_95: 3300701497151528290
+      GameOutlined_96: -6749074753114692856
+      GameOutlined_97: 874400108574024052
+      GameOutlined_98: -3977403610438736307
+      GameOutlined_99: 1937672215452242183
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

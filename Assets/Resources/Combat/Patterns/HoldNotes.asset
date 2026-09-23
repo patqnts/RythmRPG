@@ -100,15 +100,15 @@ MonoBehaviour:
   notes:
   - id: 2dc744d7fb7f403397deebbd536ae335
     laneId: 112828802d0c49f18509ed71a3ce9fa4
-    hitTime: 3.4285714285714284
+    hitTime: 1.9285714285714286
     noteType: 1
-    holdDuration: 7.5
+    holdDuration: 1.392857142857143
     initializeMovementType: 0
     hitEffect: 0
     playerState: 0
     damage: 1
     speed: 8
-    travelTime: 2.5
+    travelTime: 1.5
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
@@ -117,15 +117,15 @@ MonoBehaviour:
     metadata: []
   - id: 7548893b8ddf459d8d642d1b3c393dcd
     laneId: 1029bee4e54e4ecd9a5f0fa346e3a501
-    hitTime: 4.607142857142857
+    hitTime: 3.107142857142857
     noteType: 1
-    holdDuration: 7.92857142857143
+    holdDuration: 2.142857142857143
     initializeMovementType: 0
     hitEffect: 0
     playerState: 0
     damage: 1
     speed: 8
-    travelTime: 2.5
+    travelTime: 1.5
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
@@ -134,7 +134,7 @@ MonoBehaviour:
     metadata: []
   - id: 393325c1ebed4b0aa468c41d88f6192a
     laneId: d97666cee177405798f681ce3ecff058
-    hitTime: 4.714285714285714
+    hitTime: 3.2142857142857144
     noteType: 1
     holdDuration: 2.8928571428571423
     initializeMovementType: 0
@@ -142,7 +142,7 @@ MonoBehaviour:
     playerState: 0
     damage: 1
     speed: 8
-    travelTime: 2.5
+    travelTime: 1.5000000000000002
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
@@ -151,15 +151,15 @@ MonoBehaviour:
     metadata: []
   - id: 0c95f1fe46644c94bfe06e4e73d79507
     laneId: d2b53c08b1d04358acca2b2613f39ee6
-    hitTime: 12
+    hitTime: 6.428571428571429
     noteType: 1
-    holdDuration: 3.5357142857142865
+    holdDuration: 1.0714285714285712
     initializeMovementType: 0
     hitEffect: 0
     playerState: 0
     damage: 1
     speed: 8
-    travelTime: 2.5
+    travelTime: 1.5
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
@@ -168,7 +168,7 @@ MonoBehaviour:
     metadata: []
   - id: 4eccff1e6642490eaebdc1a0e9b8c8db
     laneId: 2e6bbaa24ef94343ac532f43aa1daea6
-    hitTime: 13.714285714285714
+    hitTime: 8.142857142857142
     noteType: 1
     holdDuration: 0.8571428571428577
     initializeMovementType: 0
@@ -176,7 +176,7 @@ MonoBehaviour:
     playerState: 0
     damage: 1
     speed: 8
-    travelTime: 2.5
+    travelTime: 1.4999999999999991
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
@@ -185,15 +185,15 @@ MonoBehaviour:
     metadata: []
   - id: 8908824e1cf54e77ac5e4f24e9c93f14
     laneId: 1029bee4e54e4ecd9a5f0fa346e3a501
-    hitTime: 18.107142857142858
+    hitTime: 12.535714285714286
     noteType: 1
-    holdDuration: 0.8571428571428577
+    holdDuration: 0.8571428571428559
     initializeMovementType: 0
     hitEffect: 0
     playerState: 0
     damage: 1
     speed: 8
-    travelTime: 2.5
+    travelTime: 1.5
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
@@ -202,15 +202,15 @@ MonoBehaviour:
     metadata: []
   - id: 14459f40566f49f49e183685cef82ffc
     laneId: d97666cee177405798f681ce3ecff058
-    hitTime: 18.321428571428573
+    hitTime: 12.75
     noteType: 1
-    holdDuration: 0.8571428571428541
+    holdDuration: 0.8571428571428577
     initializeMovementType: 0
     hitEffect: 0
     playerState: 0
     damage: 1
     speed: 8
-    travelTime: 2.5
+    travelTime: 1.5
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
@@ -219,7 +219,7 @@ MonoBehaviour:
     metadata: []
   - id: 3fdbe9f3aa8e460ab5b94a881a2ade3b
     laneId: 112828802d0c49f18509ed71a3ce9fa4
-    hitTime: 18.535714285714285
+    hitTime: 12.964285714285714
     noteType: 1
     holdDuration: 0.8571428571428577
     initializeMovementType: 0
@@ -227,7 +227,7 @@ MonoBehaviour:
     playerState: 0
     damage: 1
     speed: 8
-    travelTime: 2.5
+    travelTime: 1.5
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
@@ -236,7 +236,7 @@ MonoBehaviour:
     metadata: []
   - id: ce76189f09e94e978f4e5a046c76b3de
     laneId: 1029bee4e54e4ecd9a5f0fa346e3a501
-    hitTime: 21.964285714285715
+    hitTime: 16.392857142857142
     noteType: 1
     holdDuration: 0.8571428571428577
     initializeMovementType: 0
@@ -244,7 +244,7 @@ MonoBehaviour:
     playerState: 0
     damage: 1
     speed: 8
-    travelTime: 2.5
+    travelTime: 1.5
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
@@ -253,7 +253,7 @@ MonoBehaviour:
     metadata: []
   - id: 880494489b334c6a9497212fb3c0ad6a
     laneId: d97666cee177405798f681ce3ecff058
-    hitTime: 24
+    hitTime: 18.428571428571427
     noteType: 1
     holdDuration: 0.8571428571428577
     initializeMovementType: 0
@@ -261,7 +261,7 @@ MonoBehaviour:
     playerState: 0
     damage: 1
     speed: 8
-    travelTime: 2.5
+    travelTime: 1.5
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
@@ -270,15 +270,15 @@ MonoBehaviour:
     metadata: []
   - id: d625806144b54f9482f1db5b884fbf74
     laneId: d2b53c08b1d04358acca2b2613f39ee6
-    hitTime: 24.321428571428573
+    hitTime: 18.75
     noteType: 1
-    holdDuration: 0.8571428571428541
+    holdDuration: 0.8571428571428577
     initializeMovementType: 0
     hitEffect: 0
     playerState: 0
     damage: 1
     speed: 8
-    travelTime: 2.5
+    travelTime: 1.5
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
@@ -287,7 +287,7 @@ MonoBehaviour:
     metadata: []
   - id: 23dfc338fa064955af8a246e18252757
     laneId: 112828802d0c49f18509ed71a3ce9fa4
-    hitTime: 24.857142857142858
+    hitTime: 19.285714285714285
     noteType: 1
     holdDuration: 0.8571428571428577
     initializeMovementType: 0
@@ -295,7 +295,7 @@ MonoBehaviour:
     playerState: 0
     damage: 1
     speed: 8
-    travelTime: 2.5
+    travelTime: 1.5
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
@@ -304,7 +304,7 @@ MonoBehaviour:
     metadata: []
   - id: cdfd55be894e45db9d8629cc2ed65d83
     laneId: d2b53c08b1d04358acca2b2613f39ee6
-    hitTime: 28.178571428571427
+    hitTime: 22.607142857142858
     noteType: 1
     holdDuration: 0.8571428571428577
     initializeMovementType: 0
@@ -312,7 +312,7 @@ MonoBehaviour:
     playerState: 0
     damage: 1
     speed: 8
-    travelTime: 2.5
+    travelTime: 1.5
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
@@ -321,7 +321,7 @@ MonoBehaviour:
     metadata: []
   - id: 32d9abf123cd45cc833847f1bbdc101b
     laneId: 2e6bbaa24ef94343ac532f43aa1daea6
-    hitTime: 28.714285714285715
+    hitTime: 23.142857142857142
     noteType: 1
     holdDuration: 0.8571428571428577
     initializeMovementType: 0
@@ -329,7 +329,7 @@ MonoBehaviour:
     playerState: 0
     damage: 1
     speed: 8
-    travelTime: 2.5
+    travelTime: 1.5
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15

@@ -24,14 +24,14 @@ MonoBehaviour:
   centerStageBias: 0.5
   centerStageHeight: 0
   abilityIconsAbovePlayer: 1
-  iconSize: 0.394
-  iconSpacing: 1.245
+  iconSize: 0.463
+  iconSpacing: 1.145
   iconsHeightAboveHead: 0.579
-  showKeysUnderIcons: 1
+  showKeysUnderIcons: 0
   rowCurvature: 1.06
   iconFrame:
     Enabled: 1
-    FrameColor: {r: 1, g: 0.86, b: 0.5, a: 1}
+    FrameColor: {r: 1, g: 1, b: 1, a: 1}
     FrameThickness: 0.1
     BackdropColor: {r: 0.07, g: 0.08, b: 0.13, a: 0.85}
     IconInset: 0.74
@@ -39,6 +39,14 @@ MonoBehaviour:
     ProgressThickness: 0.12
     UseAbilityAccent: 1
     ProgressColor: {r: 1, g: 0.9, b: 0.55, a: 1}
+  morphMarkersIntoSlots: 1
+  morphSeconds: 0.45
+  morphStagger: 0.05
+  morphArc: 0.3
+  morphStretch: 0.177
+  morphWobble: 0.102
+  morphWobbleLobes: 4
+  morphWobbleSpeed: 18
   pullIntoCharacter: 1
   pullDistance: 0.55
   pullCurve: 2.42

@@ -12,6 +12,7 @@ public class HoldNoteSpriteTailVisual : HoldNoteTailVisual
     [SerializeField, Min(0f)] private float thickness = 1f;
 
     private Vector3 initialLocalPosition;
+    private Quaternion initialLocalRotation;
     private Vector3 initialLocalScale;
     private bool initialized;
 
@@ -64,9 +65,20 @@ public class HoldNoteSpriteTailVisual : HoldNoteTailVisual
             }
         }
 
-        Vector3 direction = GetDirectionVector(tailDirection);
         tailTransform.localScale = scale;
-        tailTransform.localPosition = initialLocalPosition + direction * visualLength * 0.5f;
+        if (tailDirection == HoldNoteTailDirection.AlongLane)
+        {
+            // Along the lane in world space: turn the sprite's length axis onto the lane, ignoring the note's tilt.
+            Transform parent = tailTransform.parent;
+            Vector3 direction = GetWorldDirection(tailDirection, parent);
+            Quaternion baseRotation = (parent != null ? parent.rotation : Quaternion.identity) * initialLocalRotation;
+            tailTransform.rotation = AlignAxis(baseRotation, lengthAxis == HoldNoteTailAxis.X ? Vector3.right : Vector3.up, direction);
+            tailTransform.localPosition = initialLocalPosition + WorldToParentVector(parent, direction * visualLength * 0.5f);
+            return;
+        }
+
+        Vector3 localDirection = GetDirectionVector(tailDirection);
+        tailTransform.localPosition = initialLocalPosition + localDirection * visualLength * 0.5f;
     }
 
     public override void Hide()
@@ -98,6 +110,7 @@ public class HoldNoteSpriteTailVisual : HoldNoteTailVisual
         }
 
         initialLocalPosition = tailTransform.localPosition;
+        initialLocalRotation = tailTransform.localRotation;
         initialLocalScale = tailTransform.localScale;
         initialized = true;
     }

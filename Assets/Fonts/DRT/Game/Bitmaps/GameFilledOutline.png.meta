@@ -1,0 +1,5410 @@
+fileFormatVersion: 2
+guid: 9db6da4fbb7a12142b136b8249bbb82b
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7355799725904183180
+    second: GameFilledOutline_0
+  - first:
+      213: 5400666071259956031
+    second: GameFilledOutline_1
+  - first:
+      213: 5350119730833627141
+    second: GameFilledOutline_2
+  - first:
+      213: 8607073785655093868
+    second: GameFilledOutline_3
+  - first:
+      213: -5129791018967043054
+    second: GameFilledOutline_4
+  - first:
+      213: 6993782188000795257
+    second: GameFilledOutline_5
+  - first:
+      213: 5549397917841788863
+    second: GameFilledOutline_6
+  - first:
+      213: -1194963271735301007
+    second: GameFilledOutline_7
+  - first:
+      213: 5579492969390358617
+    second: GameFilledOutline_8
+  - first:
+      213: 8350449460304569288
+    second: GameFilledOutline_9
+  - first:
+      213: -5629845132354286435
+    second: GameFilledOutline_10
+  - first:
+      213: 798521446726373787
+    second: GameFilledOutline_11
+  - first:
+      213: 2378495337313561781
+    second: GameFilledOutline_12
+  - first:
+      213: 8123222463621626314
+    second: GameFilledOutline_13
+  - first:
+      213: -7197556009826034127
+    second: GameFilledOutline_14
+  - first:
+      213: -5856065593212603248
+    second: GameFilledOutline_15
+  - first:
+      213: -5739905354673519380
+    second: GameFilledOutline_16
+  - first:
+      213: 9171911601972815466
+    second: GameFilledOutline_17
+  - first:
+      213: -6632215434145660424
+    second: GameFilledOutline_18
+  - first:
+      213: 5606174685052106640
+    second: GameFilledOutline_19
+  - first:
+      213: -7758989890057089009
+    second: GameFilledOutline_20
+  - first:
+      213: -5241734047151529747
+    second: GameFilledOutline_21
+  - first:
+      213: -5500990378452296466
+    second: GameFilledOutline_22
+  - first:
+      213: -8471804020863376939
+    second: GameFilledOutline_23
+  - first:
+      213: 7131976610779254366
+    second: GameFilledOutline_24
+  - first:
+      213: -4872901325611512198
+    second: GameFilledOutline_25
+  - first:
+      213: -2277047851426764717
+    second: GameFilledOutline_26
+  - first:
+      213: 8226850748039285833
+    second: GameFilledOutline_27
+  - first:
+      213: -2389244817415870196
+    second: GameFilledOutline_28
+  - first:
+      213: 7039580813332198677
+    second: GameFilledOutline_29
+  - first:
+      213: -7194677009075186129
+    second: GameFilledOutline_30
+  - first:
+      213: 6328249398144081629
+    second: GameFilledOutline_31
+  - first:
+      213: -1991980780509538672
+    second: GameFilledOutline_32
+  - first:
+      213: 4770900990900970681
+    second: GameFilledOutline_33
+  - first:
+      213: 4249755192293157794
+    second: GameFilledOutline_34
+  - first:
+      213: -8632487357631358244
+    second: GameFilledOutline_35
+  - first:
+      213: -4262861930180709282
+    second: GameFilledOutline_36
+  - first:
+      213: -3192154986482310315
+    second: GameFilledOutline_37
+  - first:
+      213: 7304441012024542146
+    second: GameFilledOutline_38
+  - first:
+      213: 4687484994335915932
+    second: GameFilledOutline_39
+  - first:
+      213: -7722500359653151499
+    second: GameFilledOutline_40
+  - first:
+      213: 5215246102216472016
+    second: GameFilledOutline_41
+  - first:
+      213: -1462801820552432247
+    second: GameFilledOutline_42
+  - first:
+      213: -8116522085881167045
+    second: GameFilledOutline_43
+  - first:
+      213: -5961159341513310234
+    second: GameFilledOutline_44
+  - first:
+      213: 1434028484648307162
+    second: GameFilledOutline_45
+  - first:
+      213: 4596927353225936718
+    second: GameFilledOutline_46
+  - first:
+      213: 940266580443463558
+    second: GameFilledOutline_47
+  - first:
+      213: 8290094383007167255
+    second: GameFilledOutline_48
+  - first:
+      213: -3794885014610634976
+    second: GameFilledOutline_49
+  - first:
+      213: -5803897001124797124
+    second: GameFilledOutline_50
+  - first:
+      213: -1195835966029042059
+    second: GameFilledOutline_51
+  - first:
+      213: -8155226875701656371
+    second: GameFilledOutline_52
+  - first:
+      213: -9123624713696377308
+    second: GameFilledOutline_53
+  - first:
+      213: -1562474963851212487
+    second: GameFilledOutline_54
+  - first:
+      213: 8304767108485868635
+    second: GameFilledOutline_55
+  - first:
+      213: -5735023817485530712
+    second: GameFilledOutline_56
+  - first:
+      213: -5278618789397185940
+    second: GameFilledOutline_57
+  - first:
+      213: -7657328811654401546
+    second: GameFilledOutline_58
+  - first:
+      213: 6340671655497833048
+    second: GameFilledOutline_59
+  - first:
+      213: 819459825963055800
+    second: GameFilledOutline_60
+  - first:
+      213: 173321031424759799
+    second: GameFilledOutline_61
+  - first:
+      213: -2696165283237788744
+    second: GameFilledOutline_62
+  - first:
+      213: -1898780444878655095
+    second: GameFilledOutline_63
+  - first:
+      213: -7756908272610724801
+    second: GameFilledOutline_64
+  - first:
+      213: -5741980100571301406
+    second: GameFilledOutline_65
+  - first:
+      213: 992940042418525888
+    second: GameFilledOutline_66
+  - first:
+      213: -1406118604648456619
+    second: GameFilledOutline_67
+  - first:
+      213: 4584824063770441237
+    second: GameFilledOutline_68
+  - first:
+      213: -305777353645330345
+    second: GameFilledOutline_69
+  - first:
+      213: -8123744398385916411
+    second: GameFilledOutline_70
+  - first:
+      213: 1398349367406112568
+    second: GameFilledOutline_71
+  - first:
+      213: 9220382742907189214
+    second: GameFilledOutline_72
+  - first:
+      213: 1395619831586766913
+    second: GameFilledOutline_73
+  - first:
+      213: 1110038475760535947
+    second: GameFilledOutline_74
+  - first:
+      213: 7472490653459622933
+    second: GameFilledOutline_75
+  - first:
+      213: -4979290655845955898
+    second: GameFilledOutline_76
+  - first:
+      213: 5483479300141395460
+    second: GameFilledOutline_77
+  - first:
+      213: 773263696942326512
+    second: GameFilledOutline_78
+  - first:
+      213: 3121562772225891628
+    second: GameFilledOutline_79
+  - first:
+      213: 3457771990454277163
+    second: GameFilledOutline_80
+  - first:
+      213: 2657814221531975928
+    second: GameFilledOutline_81
+  - first:
+      213: 1415654628016860731
+    second: GameFilledOutline_82
+  - first:
+      213: -3584341203872784330
+    second: GameFilledOutline_83
+  - first:
+      213: 6120227384609737632
+    second: GameFilledOutline_84
+  - first:
+      213: 7912854718686002795
+    second: GameFilledOutline_85
+  - first:
+      213: -3052986345363621767
+    second: GameFilledOutline_86
+  - first:
+      213: 5271208046927729051
+    second: GameFilledOutline_87
+  - first:
+      213: -8047676017653056653
+    second: GameFilledOutline_88
+  - first:
+      213: -3144524598169777446
+    second: GameFilledOutline_89
+  - first:
+      213: -7509481693270630702
+    second: GameFilledOutline_90
+  - first:
+      213: -7585204149598135863
+    second: GameFilledOutline_91
+  - first:
+      213: 4664403419477474038
+    second: GameFilledOutline_92
+  - first:
+      213: 3757377348949565274
+    second: GameFilledOutline_93
+  - first:
+      213: 3787926718224558249
+    second: GameFilledOutline_94
+  - first:
+      213: 4000105805202818957
+    second: GameFilledOutline_95
+  - first:
+      213: -1907998809369897857
+    second: GameFilledOutline_96
+  - first:
+      213: -8008578496831379960
+    second: GameFilledOutline_97
+  - first:
+      213: -7513036659376128920
+    second: GameFilledOutline_98
+  - first:
+      213: 4681500749644397845
+    second: GameFilledOutline_99
+  - first:
+      213: -2067071115827625689
+    second: GameFilledOutline_100
+  - first:
+      213: -6038247075376507269
+    second: GameFilledOutline_101
+  - first:
+      213: 1924978685038793597
+    second: GameFilledOutline_102
+  - first:
+      213: -1867256432450545265
+    second: GameFilledOutline_103
+  - first:
+      213: 5884014364420336069
+    second: GameFilledOutline_104
+  - first:
+      213: -8801506595320226070
+    second: GameFilledOutline_105
+  - first:
+      213: 5172397570944006633
+    second: GameFilledOutline_106
+  - first:
+      213: 9129575354114942388
+    second: GameFilledOutline_107
+  - first:
+      213: -3556502080331760537
+    second: GameFilledOutline_108
+  - first:
+      213: -7876376664261021174
+    second: GameFilledOutline_109
+  - first:
+      213: 5870141859114874756
+    second: GameFilledOutline_110
+  - first:
+      213: 7479481949093232636
+    second: GameFilledOutline_111
+  - first:
+      213: -1079385758781366106
+    second: GameFilledOutline_112
+  - first:
+      213: -7293094984996194836
+    second: GameFilledOutline_113
+  - first:
+      213: 3341326096526781250
+    second: GameFilledOutline_114
+  - first:
+      213: -6967154444664882461
+    second: GameFilledOutline_115
+  - first:
+      213: 5965765812690481275
+    second: GameFilledOutline_116
+  - first:
+      213: -8676211502984604072
+    second: GameFilledOutline_117
+  - first:
+      213: -6440474716070738071
+    second: GameFilledOutline_118
+  - first:
+      213: 533343927615260687
+    second: GameFilledOutline_119
+  - first:
+      213: -6737009456961545235
+    second: GameFilledOutline_120
+  - first:
+      213: 4641886716966658045
+    second: GameFilledOutline_121
+  - first:
+      213: -1897914378845878665
+    second: GameFilledOutline_122
+  - first:
+      213: 932351059397098158
+    second: GameFilledOutline_123
+  - first:
+      213: 895038578144303571
+    second: GameFilledOutline_124
+  - first:
+      213: -3923042592781624329
+    second: GameFilledOutline_125
+  - first:
+      213: 6396876454321047572
+    second: GameFilledOutline_126
+  - first:
+      213: -3156542552147593240
+    second: GameFilledOutline_127
+  - first:
+      213: -3860048336645360418
+    second: GameFilledOutline_128
+  - first:
+      213: -4529098953550374087
+    second: GameFilledOutline_129
+  - first:
+      213: 6596659594754975672
+    second: GameFilledOutline_130
+  - first:
+      213: -8886810032930154071
+    second: GameFilledOutline_131
+  - first:
+      213: 7114238858450453709
+    second: GameFilledOutline_132
+  - first:
+      213: 7289429012636313853
+    second: GameFilledOutline_133
+  - first:
+      213: -2104824295457419130
+    second: GameFilledOutline_134
+  - first:
+      213: -79179860597409883
+    second: GameFilledOutline_135
+  - first:
+      213: -3607693918193508635
+    second: GameFilledOutline_136
+  - first:
+      213: -4645818053821203041
+    second: GameFilledOutline_137
+  - first:
+      213: -2119382524596070974
+    second: GameFilledOutline_138
+  - first:
+      213: 7940579989162730213
+    second: GameFilledOutline_139
+  - first:
+      213: 7091634840374606734
+    second: GameFilledOutline_140
+  - first:
+      213: -5277390744477738778
+    second: GameFilledOutline_141
+  - first:
+      213: 2945798798963522708
+    second: GameFilledOutline_142
+  - first:
+      213: -6876889305299917850
+    second: GameFilledOutline_143
+  - first:
+      213: 7459199626186049005
+    second: GameFilledOutline_144
+  - first:
+      213: -4104985245677824285
+    second: GameFilledOutline_145
+  - first:
+      213: -8583851197514242244
+    second: GameFilledOutline_146
+  - first:
+      213: 7432808211493358833
+    second: GameFilledOutline_147
+  - first:
+      213: -3065970855324704665
+    second: GameFilledOutline_148
+  - first:
+      213: 42634207776653921
+    second: GameFilledOutline_149
+  - first:
+      213: -4223555929418034386
+    second: GameFilledOutline_150
+  - first:
+      213: -5170225721435393825
+    second: GameFilledOutline_151
+  - first:
+      213: 7351190925469090849
+    second: GameFilledOutline_152
+  - first:
+      213: 1843045714137603651
+    second: GameFilledOutline_153
+  - first:
+      213: 8078731238690173522
+    second: GameFilledOutline_154
+  - first:
+      213: -1301057779448384236
+    second: GameFilledOutline_155
+  - first:
+      213: -2851245483077316445
+    second: GameFilledOutline_156
+  - first:
+      213: -3048535183016957367
+    second: GameFilledOutline_157
+  - first:
+      213: 7941188905729518195
+    second: GameFilledOutline_158
+  - first:
+      213: 4743734246861316976
+    second: GameFilledOutline_159
+  - first:
+      213: 7041402527478686109
+    second: GameFilledOutline_160
+  - first:
+      213: -7633303433125464169
+    second: GameFilledOutline_161
+  - first:
+      213: -6928921347566156985
+    second: GameFilledOutline_162
+  - first:
+      213: 2706426781816957462
+    second: GameFilledOutline_163
+  - first:
+      213: -6212894088303826539
+    second: GameFilledOutline_164
+  - first:
+      213: 8056276858942814024
+    second: GameFilledOutline_165
+  - first:
+      213: 6058387779552638481
+    second: GameFilledOutline_166
+  - first:
+      213: -2633411102616045512
+    second: GameFilledOutline_167
+  - first:
+      213: -1944563626570795211
+    second: GameFilledOutline_168
+  - first:
+      213: -8160360207462015741
+    second: GameFilledOutline_169
+  - first:
+      213: -3032759541582998519
+    second: GameFilledOutline_170
+  - first:
+      213: -6366452379798419300
+    second: GameFilledOutline_171
+  - first:
+      213: 342915150234061747
+    second: GameFilledOutline_172
+  - first:
+      213: 449787482422653822
+    second: GameFilledOutline_173
+  - first:
+      213: -9037433873806764204
+    second: GameFilledOutline_174
+  - first:
+      213: 5107246499207555807
+    second: GameFilledOutline_175
+  - first:
+      213: 3969805092304133846
+    second: GameFilledOutline_176
+  - first:
+      213: -5712372426490897511
+    second: GameFilledOutline_177
+  - first:
+      213: -7308049473480909431
+    second: GameFilledOutline_178
+  - first:
+      213: 2851524923761409343
+    second: GameFilledOutline_179
+  - first:
+      213: -6206369804780793629
+    second: GameFilledOutline_180
+  - first:
+      213: 9078604378779431348
+    second: GameFilledOutline_181
+  - first:
+      213: 9043613347467873108
+    second: GameFilledOutline_182
+  - first:
+      213: 1268254427243206959
+    second: GameFilledOutline_183
+  - first:
+      213: -9065504818044195920
+    second: GameFilledOutline_184
+  - first:
+      213: -2902523001760070072
+    second: GameFilledOutline_185
+  - first:
+      213: -3317922863757298564
+    second: GameFilledOutline_186
+  - first:
+      213: -3137662664204195267
+    second: GameFilledOutline_187
+  - first:
+      213: 3819146453131876750
+    second: GameFilledOutline_188
+  - first:
+      213: 2466948198549236132
+    second: GameFilledOutline_189
+  - first:
+      213: -2333598468917995605
+    second: GameFilledOutline_190
+  - first:
+      213: 513853463827675422
+    second: GameFilledOutline_191
+  - first:
+      213: -2375602361782997392
+    second: GameFilledOutline_192
+  - first:
+      213: -7735131735890138539
+    second: GameFilledOutline_193
+  - first:
+      213: -4512857049168683301
+    second: GameFilledOutline_194
+  - first:
+      213: -2278872624142349638
+    second: GameFilledOutline_195
+  - first:
+      213: -1713146057435731296
+    second: GameFilledOutline_196
+  - first:
+      213: -7031921135965871918
+    second: GameFilledOutline_197
+  - first:
+      213: -567745277122933736
+    second: GameFilledOutline_198
+  - first:
+      213: 6219197970551160509
+    second: GameFilledOutline_199
+  - first:
+      213: -4658931801372254310
+    second: GameFilledOutline_200
+  - first:
+      213: -3633138428611825250
+    second: GameFilledOutline_201
+  - first:
+      213: 2835731564302022717
+    second: GameFilledOutline_202
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: GameFilledOutline_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 470c09a3f13fae990800000000000000
+      internalID: -7355799725904183180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_1
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3344f78d2503fa40800000000000000
+      internalID: 5400666071259956031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_2
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 508952e8c817f3a40800000000000000
+      internalID: 5350119730833627141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_3
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6a6c8d7108727770800000000000000
+      internalID: 8607073785655093868
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_4
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 214fa7e3f325fc8b0800000000000000
+      internalID: -5129791018967043054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_5
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97add3868d7ee0160800000000000000
+      internalID: 6993782188000795257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_6
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fbf804a110c630d40800000000000000
+      internalID: 5549397917841788863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_7
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17c249c4c33aa6fe0800000000000000
+      internalID: -1194963271735301007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_8
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9504d435b475e6d40800000000000000
+      internalID: 5579492969390358617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_9
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c36e44aa81c2e370800000000000000
+      internalID: 8350449460304569288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_10
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9c8f892ea5ced1b0800000000000000
+      internalID: -5629845132354286435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_11
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9118a9660be41b00800000000000000
+      internalID: 798521446726373787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_12
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5bc6f7058ec120120800000000000000
+      internalID: 2378495337313561781
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_13
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac9f3afbacb7bb070800000000000000
+      internalID: 8123222463621626314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_14
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13e575f71f42d1c90800000000000000
+      internalID: -7197556009826034127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_15
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 094fc27ae531bbea0800000000000000
+      internalID: -5856065593212603248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_16
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 96
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce48252cd72c750b0800000000000000
+      internalID: -5739905354673519380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_17
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a66afd2d10d294f70800000000000000
+      internalID: 9171911601972815466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_18
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f182ed9333a5f3a0800000000000000
+      internalID: -6632215434145660424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_19
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 097715b5c222dcd40800000000000000
+      internalID: 5606174685052106640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_20
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f00dc4bcdc7825490800000000000000
+      internalID: -7758989890057089009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_21
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de06670f7ae9147b0800000000000000
+      internalID: -5241734047151529747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_22
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eec5283756e88a3b0800000000000000
+      internalID: -5500990378452296466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_23
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d166b9e02b1e6a80800000000000000
+      internalID: -8471804020863376939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_24
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5e44efc0fed9f260800000000000000
+      internalID: 7131976610779254366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_25
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 97
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7e4565ef0aff5cb0800000000000000
+      internalID: -4872901325611512198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_26
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 358242f1b0d4660e0800000000000000
+      internalID: -2277047851426764717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_27
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94cc909ea25ab2270800000000000000
+      internalID: 8226850748039285833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_28
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c09eb705f72b7ded0800000000000000
+      internalID: -2389244817415870196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_29
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5153252d37d91b160800000000000000
+      internalID: 7039580813332198677
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_30
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f265768116f572c90800000000000000
+      internalID: -7194677009075186129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_31
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dde15729c4572d750800000000000000
+      internalID: 6328249398144081629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_32
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 096d25ab8001b54e0800000000000000
+      internalID: -1991980780509538672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_33
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b426358c25a53240800000000000000
+      internalID: 4770900990900970681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_34
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ab610bc4d92afa30800000000000000
+      internalID: 4249755192293157794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_35
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cda15503c7e333880800000000000000
+      internalID: -8632487357631358244
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_36
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e54fa0df8a547d4c0800000000000000
+      internalID: -4262861930180709282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_37
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 553eabad3ff23b3d0800000000000000
+      internalID: -3192154986482310315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_38
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c3848c56669e5560800000000000000
+      internalID: 7304441012024542146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_39
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c9fbd5954ca4d0140800000000000000
+      internalID: 4687484994335915932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_40
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5fc2c05a6da24d490800000000000000
+      internalID: -7722500359653151499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_41
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d57adac2b6406840800000000000000
+      internalID: 5215246102216472016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_42
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 80
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9857d259e7513bbe0800000000000000
+      internalID: -1462801820552432247
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_43
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b33c0738a225c5f80800000000000000
+      internalID: -8116522085881167045
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_44
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6eff8979925b54da0800000000000000
+      internalID: -5961159341513310234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_45
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad901491f41b6e310800000000000000
+      internalID: 1434028484648307162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_46
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4ffe4b72119bcf30800000000000000
+      internalID: 4596927353225936718
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_47
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 68ff081297f7c0d00800000000000000
+      internalID: 940266580443463558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_48
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7137a952be45c0370800000000000000
+      internalID: 8290094383007167255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_49
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0271ea47f2cd55bc0800000000000000
+      internalID: -3794885014610634976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_50
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3560078d6a647fa0800000000000000
+      internalID: -5803897001124797124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_51
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 81
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57ee3335689876fe0800000000000000
+      internalID: -1195835966029042059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_52
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 65
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc485136d50d2de80800000000000000
+      internalID: -8155226875701656371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_53
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 65
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 426072479af526180800000000000000
+      internalID: -9123624713696377308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_54
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 65
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93905397c49f05ae0800000000000000
+      internalID: -1562474963851212487
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_55
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 65
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5ce5a34fa5704370800000000000000
+      internalID: 8304767108485868635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_56
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 65
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a9ce54393a1960b0800000000000000
+      internalID: -5735023817485530712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_57
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 65
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6a3749ad249eb6b0800000000000000
+      internalID: -5278618789397185940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_58
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 65
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f1b9fc1404bbb590800000000000000
+      internalID: -7657328811654401546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_59
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 65
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85a165fb6479ef750800000000000000
+      internalID: 6340671655497833048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_60
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 65
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ba3b3abe5e4f5b00800000000000000
+      internalID: 819459825963055800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_61
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 65
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f75d2e4f82c76200800000000000000
+      internalID: 173321031424759799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_62
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 67
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b30fd4b5fb459ad0800000000000000
+      internalID: -2696165283237788744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_63
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 67
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 981bc8cde3d26a5e0800000000000000
+      internalID: -1898780444878655095
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_64
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 67
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f34bfbf160de95490800000000000000
+      internalID: -7756908272610724801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_65
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 67
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e9f51655836050b0800000000000000
+      internalID: -5741980100571301406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_66
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 67
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c61e9f25b1a7cd00800000000000000
+      internalID: 992940042418525888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_67
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 67
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55e5cd934967c7ce0800000000000000
+      internalID: -1406118604648456619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_68
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 65
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51633bec13190af30800000000000000
+      internalID: 4584824063770441237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_69
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 64
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7507c9fed19a1cbf0800000000000000
+      internalID: -305777353645330345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_70
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 65
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5065328d289a24f80800000000000000
+      internalID: -8123744398385916411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_71
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 65
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83f2224475fe76310800000000000000
+      internalID: 1398349367406112568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_72
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 65
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed7ff14c04165ff70800000000000000
+      internalID: 9220382742907189214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_73
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 64
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 140483fa7dc3e5310800000000000000
+      internalID: 1395619831586766913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_74
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 64
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8909bacc16a76f00800000000000000
+      internalID: 1110038475760535947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_75
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 65
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51c23ea88ae93b760800000000000000
+      internalID: 7472490653459622933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_76
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 65
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c641e8a78106eab0800000000000000
+      internalID: -4979290655845955898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_77
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 65
+        width: 16
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40ea22aee5b391c40800000000000000
+      internalID: 5483479300141395460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_78
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f2e3f54c3f2bba00800000000000000
+      internalID: 773263696942326512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_79
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2d9b967dc4025b20800000000000000
+      internalID: 3121562772225891628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_80
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b2492552e497cff20800000000000000
+      internalID: 3457771990454277163
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_81
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f01569e3f372e420800000000000000
+      internalID: 2657814221531975928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_82
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 49
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3e259b326a65a310800000000000000
+      internalID: 1415654628016860731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_83
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 49
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 630ed5d6aacd14ec0800000000000000
+      internalID: -3584341203872784330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_84
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 49
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ab0844416a6fe450800000000000000
+      internalID: 6120227384609737632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_85
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 47
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6e7d8a417b10dd60800000000000000
+      internalID: 7912854718686002795
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_86
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 978bb74281d91a5d0800000000000000
+      internalID: -3052986345363621767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_87
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b91de466ac7172940800000000000000
+      internalID: 5271208046927729051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_88
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 37bfb54ec49e05090800000000000000
+      internalID: -8047676017653056653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_89
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 49
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: adacc92d9876c54d0800000000000000
+      internalID: -3144524598169777446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_90
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2de1e49df26f8c790800000000000000
+      internalID: -7509481693270630702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_91
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c9526a9301fbb690800000000000000
+      internalID: -7585204149598135863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_92
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6fa721b623a4bb040800000000000000
+      internalID: 4664403419477474038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_93
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 49
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5fdc3b9ac2e42430800000000000000
+      internalID: 3757377348949565274
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_94
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 49
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a86cfae74b619430800000000000000
+      internalID: 3787926718224558249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_95
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d87871f490b338730800000000000000
+      internalID: 4000105805202818957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_96
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7493af113d6585e0800000000000000
+      internalID: -1907998809369897857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_97
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 806a884d940dbd090800000000000000
+      internalID: -8008578496831379960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_98
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86cf56dc6f45cb790800000000000000
+      internalID: -7513036659376128920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_99
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51d774ec02808f040800000000000000
+      internalID: 4681500749644397845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_100
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 49
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 721cf9f95c94053e0800000000000000
+      internalID: -2067071115827625689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_101
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 48
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b765426e646d33ca0800000000000000
+      internalID: -6038247075376507269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_102
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 49
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d739fe14ae5e6ba10800000000000000
+      internalID: 1924978685038793597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_103
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f89d837fa2c2616e0800000000000000
+      internalID: -1867256432450545265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_104
+      rect:
+        serializedVersion: 2
+        x: 287
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c9e19cb3e738a150800000000000000
+      internalID: 5884014364420336069
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_105
+      rect:
+        serializedVersion: 2
+        x: 298
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aee1ea94264cad580800000000000000
+      internalID: -8801506595320226070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_106
+      rect:
+        serializedVersion: 2
+        x: 309
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e9f53daf2c08c740800000000000000
+      internalID: 5172397570944006633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_107
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 49
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b5ae2cf964c2be70800000000000000
+      internalID: 9129575354114942388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_108
+      rect:
+        serializedVersion: 2
+        x: 331
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76c33ea7334c4aec0800000000000000
+      internalID: -3556502080331760537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_109
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 49
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a02bb89972d71b290800000000000000
+      internalID: -7876376664261021174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_110
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 49
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48771b56beee67150800000000000000
+      internalID: 5870141859114874756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_111
+      rect:
+        serializedVersion: 2
+        x: 364
+        y: 49
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cfff5a764357cc760800000000000000
+      internalID: 7479481949093232636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_112
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 47
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a0a8380f504501f0800000000000000
+      internalID: -1079385758781366106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_113
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce57e1a60c8b9ca90800000000000000
+      internalID: -7293094984996194836
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_114
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24ba836b166ce5e20800000000000000
+      internalID: 3341326096526781250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_115
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ea377632f1bf4f90800000000000000
+      internalID: -6967154444664882461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_116
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b70f59e0668aac250800000000000000
+      internalID: 5965765812690481275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_117
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 33
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 856d1784b97e79780800000000000000
+      internalID: -8676211502984604072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_118
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 33
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96708bb6e56de96a0800000000000000
+      internalID: -6440474716070738071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_119
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 33
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f088e94f971d66700800000000000000
+      internalID: 533343927615260687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_120
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 31
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: deb1c55d7955182a0800000000000000
+      internalID: -6737009456961545235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_121
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dffd664106b4b6040800000000000000
+      internalID: 4641886716966658045
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_122
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77609c29de049a5e0800000000000000
+      internalID: -1897914378845878665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_123
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eaab255495060fc00800000000000000
+      internalID: 932351059397098158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_124
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 33
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d9df8e38d0db6c00800000000000000
+      internalID: 895038578144303571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_125
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7fb168a0c8d8e89c0800000000000000
+      internalID: -3923042592781624329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_126
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 418cddb3e3546c850800000000000000
+      internalID: 6396876454321047572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_127
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e776dcd545b134d0800000000000000
+      internalID: -3156542552147593240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_128
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 33
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed47a6e3d7a5e6ac0800000000000000
+      internalID: -3860048336645360418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_129
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 33
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93b59097f786521c0800000000000000
+      internalID: -4529098953550374087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_130
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 33
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b7ea8963fa0c8b50800000000000000
+      internalID: 6596659594754975672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_131
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a912d00c55bba480800000000000000
+      internalID: -8886810032930154071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_132
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc448358c8adab260800000000000000
+      internalID: 7114238858450453709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_133
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df82d91e011492560800000000000000
+      internalID: 7289429012636313853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_134
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 68016a284792ac2e0800000000000000
+      internalID: -2104824295457419130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_135
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5a7f9b71652b6eef0800000000000000
+      internalID: -79179860597409883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_136
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 33
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ee1dbbee75eeedc0800000000000000
+      internalID: -3607693918193508635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_137
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 32
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9df3ea381db68fb0800000000000000
+      internalID: -4645818053821203041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_138
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 33
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c5d746a2d07692e0800000000000000
+      internalID: -2119382524596070974
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_139
+      rect:
+        serializedVersion: 2
+        x: 287
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e2ae9cdd6b923e60800000000000000
+      internalID: 7940579989162730213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_140
+      rect:
+        serializedVersion: 2
+        x: 298
+        y: 33
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8bff41705c8a6260800000000000000
+      internalID: 7091634840374606734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_141
+      rect:
+        serializedVersion: 2
+        x: 309
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e858762411f2c6b0800000000000000
+      internalID: -5277390744477738778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_142
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49c3eff666491e820800000000000000
+      internalID: 2945798798963522708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_143
+      rect:
+        serializedVersion: 2
+        x: 331
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e36ae5bc916090a0800000000000000
+      internalID: -6876889305299917850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_144
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 33
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de5cb8b1a86648760800000000000000
+      internalID: 7459199626186049005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_145
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e6572f0ba92807c0800000000000000
+      internalID: -4104985245677824285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_146
+      rect:
+        serializedVersion: 2
+        x: 364
+        y: 33
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c372a57a0d800e880800000000000000
+      internalID: -8583851197514242244
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_147
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 33
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1fc0ba900b3a62760800000000000000
+      internalID: 7432808211493358833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_148
+      rect:
+        serializedVersion: 2
+        x: 386
+        y: 32
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 760aba450cb7375d0800000000000000
+      internalID: -3065970855324704665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_149
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 16
+        width: 16
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 162cec90697779000800000000000000
+      internalID: 42634207776653921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_150
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 16
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e231b02724ae265c0800000000000000
+      internalID: -4223555929418034386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_151
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 19
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd07141791baf38b0800000000000000
+      internalID: -5170225721435393825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_152
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 19
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12409acc23da40660800000000000000
+      internalID: 7351190925469090849
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_153
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 19
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 34e5af7ef40d39910800000000000000
+      internalID: 1843045714137603651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_154
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 18
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 252baf5324b6d1070800000000000000
+      internalID: 8078731238690173522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_155
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 1
+        width: 10
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41578b7c7d6b1fde0800000000000000
+      internalID: -1301057779448384236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_156
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 17
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a05db5f6575e68d0800000000000000
+      internalID: -2851245483077316445
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_157
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 22
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94a6ef2276d61b5d0800000000000000
+      internalID: -3048535183016957367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_158
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 22
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 37ae74c4c35c43e60800000000000000
+      internalID: 7941188905729518195
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_159
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 22
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07326050a2125d140800000000000000
+      internalID: 4743734246861316976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_160
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 19
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d91a7e2ba4618b160800000000000000
+      internalID: 7041402527478686109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_161
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 21
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79779c578fe011690800000000000000
+      internalID: -7633303433125464169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_162
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 21
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 743c2b1deb687df90800000000000000
+      internalID: -6928921347566156985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_163
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 21
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61aadcc91d82f8520800000000000000
+      internalID: 2706426781816957462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_164
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 21
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 599a6877ebd57c9a0800000000000000
+      internalID: -6212894088303826539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_165
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 16
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8477c758e15adcf60800000000000000
+      internalID: 8056276858942814024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_166
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 21
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1167dc73697b31450800000000000000
+      internalID: 6058387779552638481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_167
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 21
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8383009fd8e347bd0800000000000000
+      internalID: -2633411102616045512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_168
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 16
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5373a133fa58305e0800000000000000
+      internalID: -1944563626570795211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_169
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 21
+        width: 16
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 30d5ef270a390ce80800000000000000
+      internalID: -8160360207462015741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_170
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 19
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 904d4c2e34979e5d0800000000000000
+      internalID: -3032759541582998519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_171
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 17
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c98ccae9a41d5a7a0800000000000000
+      internalID: -6366452379798419300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_172
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 17
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3bb0dc5238742c400800000000000000
+      internalID: 342915150234061747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_173
+      rect:
+        serializedVersion: 2
+        x: 287
+        y: 17
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e73383a0557fd3600800000000000000
+      internalID: 449787482422653822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_174
+      rect:
+        serializedVersion: 2
+        x: 298
+        y: 17
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4575aae26c5949280800000000000000
+      internalID: -9037433873806764204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_175
+      rect:
+        serializedVersion: 2
+        x: 309
+        y: 17
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fdaaf95b1a590e640800000000000000
+      internalID: 5107246499207555807
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_176
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 17
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6de1352d2b4971730800000000000000
+      internalID: 3969805092304133846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_177
+      rect:
+        serializedVersion: 2
+        x: 331
+        y: 17
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 99b16462b8399b0b0800000000000000
+      internalID: -5712372426490897511
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_178
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 17
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98d903c39b7949a90800000000000000
+      internalID: -7308049473480909431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_179
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 17
+        width: 16
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3db8f46fc6a29720800000000000000
+      internalID: 2851524923761409343
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_180
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 15
+        width: 16
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e094599b8b8ed9a0800000000000000
+      internalID: -6206369804780793629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_181
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b1347df49eadfd70800000000000000
+      internalID: 9078604378779431348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_182
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 1
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45bcdc5ac6e518d70800000000000000
+      internalID: 9043613347467873108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_183
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 1
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f29d5ac9eaeb99110800000000000000
+      internalID: 1268254427243206959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_184
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 1
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0bb22ea266bd03280800000000000000
+      internalID: -9065504818044195920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_185
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 1
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 846c0b745ba28b7d0800000000000000
+      internalID: -2902523001760070072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_186
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 1
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7479990cbe54f1d0800000000000000
+      internalID: -3317922863757298564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_187
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 1
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3a6a135e68c474d0800000000000000
+      internalID: -3137662664204195267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_188
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 3
+        width: 12
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e895e14e675500530800000000000000
+      internalID: 3819146453131876750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_189
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 0
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a921dde05c5c3220800000000000000
+      internalID: 2466948198549236132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_190
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 1
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba75fb37e846d9fd0800000000000000
+      internalID: -2333598468917995605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_191
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 1
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e197d0ab003912700800000000000000
+      internalID: 513853463827675422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_192
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 1
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07e685a0d3a280fd0800000000000000
+      internalID: -2375602361782997392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_193
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 2
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55aea6f2baa47a490800000000000000
+      internalID: -7735131735890138539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_194
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 1
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bdede268c6c1f51c0800000000000000
+      internalID: -4512857049168683301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_195
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 1
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aba02ad1c61df50e0800000000000000
+      internalID: -2278872624142349638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_196
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 5
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0aaae26ccbea938e0800000000000000
+      internalID: -1713146057435731296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_197
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 4
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d0613acbf8996e90800000000000000
+      internalID: -7031921135965871918
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_198
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 1
+        width: 16
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81c8e22bda6fe18f0800000000000000
+      internalID: -567745277122933736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_199
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 2
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dbe388e7a970f4650800000000000000
+      internalID: 6219197970551160509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_200
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 1
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a9f9f62f536285fb0800000000000000
+      internalID: -4658931801372254310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_201
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 0
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9175ce29df749dc0800000000000000
+      internalID: -3633138428611825250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameFilledOutline_202
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 2
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d38b59855da8a5720800000000000000
+      internalID: 2835731564302022717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      GameFilledOutline_0: -7355799725904183180
+      GameFilledOutline_1: 5400666071259956031
+      GameFilledOutline_10: -5629845132354286435
+      GameFilledOutline_100: -2067071115827625689
+      GameFilledOutline_101: -6038247075376507269
+      GameFilledOutline_102: 1924978685038793597
+      GameFilledOutline_103: -1867256432450545265
+      GameFilledOutline_104: 5884014364420336069
+      GameFilledOutline_105: -8801506595320226070
+      GameFilledOutline_106: 5172397570944006633
+      GameFilledOutline_107: 9129575354114942388
+      GameFilledOutline_108: -3556502080331760537
+      GameFilledOutline_109: -7876376664261021174
+      GameFilledOutline_11: 798521446726373787
+      GameFilledOutline_110: 5870141859114874756
+      GameFilledOutline_111: 7479481949093232636
+      GameFilledOutline_112: -1079385758781366106
+      GameFilledOutline_113: -7293094984996194836
+      GameFilledOutline_114: 3341326096526781250
+      GameFilledOutline_115: -6967154444664882461
+      GameFilledOutline_116: 5965765812690481275
+      GameFilledOutline_117: -8676211502984604072
+      GameFilledOutline_118: -6440474716070738071
+      GameFilledOutline_119: 533343927615260687
+      GameFilledOutline_12: 2378495337313561781
+      GameFilledOutline_120: -6737009456961545235
+      GameFilledOutline_121: 4641886716966658045
+      GameFilledOutline_122: -1897914378845878665
+      GameFilledOutline_123: 932351059397098158
+      GameFilledOutline_124: 895038578144303571
+      GameFilledOutline_125: -3923042592781624329
+      GameFilledOutline_126: 6396876454321047572
+      GameFilledOutline_127: -3156542552147593240
+      GameFilledOutline_128: -3860048336645360418
+      GameFilledOutline_129: -4529098953550374087
+      GameFilledOutline_13: 8123222463621626314
+      GameFilledOutline_130: 6596659594754975672
+      GameFilledOutline_131: -8886810032930154071
+      GameFilledOutline_132: 7114238858450453709
+      GameFilledOutline_133: 7289429012636313853
+      GameFilledOutline_134: -2104824295457419130
+      GameFilledOutline_135: -79179860597409883
+      GameFilledOutline_136: -3607693918193508635
+      GameFilledOutline_137: -4645818053821203041
+      GameFilledOutline_138: -2119382524596070974
+      GameFilledOutline_139: 7940579989162730213
+      GameFilledOutline_14: -7197556009826034127
+      GameFilledOutline_140: 7091634840374606734
+      GameFilledOutline_141: -5277390744477738778
+      GameFilledOutline_142: 2945798798963522708
+      GameFilledOutline_143: -6876889305299917850
+      GameFilledOutline_144: 7459199626186049005
+      GameFilledOutline_145: -4104985245677824285
+      GameFilledOutline_146: -8583851197514242244
+      GameFilledOutline_147: 7432808211493358833
+      GameFilledOutline_148: -3065970855324704665
+      GameFilledOutline_149: 42634207776653921
+      GameFilledOutline_15: -5856065593212603248
+      GameFilledOutline_150: -4223555929418034386
+      GameFilledOutline_151: -5170225721435393825
+      GameFilledOutline_152: 7351190925469090849
+      GameFilledOutline_153: 1843045714137603651
+      GameFilledOutline_154: 8078731238690173522
+      GameFilledOutline_155: -1301057779448384236
+      GameFilledOutline_156: -2851245483077316445
+      GameFilledOutline_157: -3048535183016957367
+      GameFilledOutline_158: 7941188905729518195
+      GameFilledOutline_159: 4743734246861316976
+      GameFilledOutline_16: -5739905354673519380
+      GameFilledOutline_160: 7041402527478686109
+      GameFilledOutline_161: -7633303433125464169
+      GameFilledOutline_162: -6928921347566156985
+      GameFilledOutline_163: 2706426781816957462
+      GameFilledOutline_164: -6212894088303826539
+      GameFilledOutline_165: 8056276858942814024
+      GameFilledOutline_166: 6058387779552638481
+      GameFilledOutline_167: -2633411102616045512
+      GameFilledOutline_168: -1944563626570795211
+      GameFilledOutline_169: -8160360207462015741
+      GameFilledOutline_17: 9171911601972815466
+      GameFilledOutline_170: -3032759541582998519
+      GameFilledOutline_171: -6366452379798419300
+      GameFilledOutline_172: 342915150234061747
+      GameFilledOutline_173: 449787482422653822
+      GameFilledOutline_174: -9037433873806764204
+      GameFilledOutline_175: 5107246499207555807
+      GameFilledOutline_176: 3969805092304133846
+      GameFilledOutline_177: -5712372426490897511
+      GameFilledOutline_178: -7308049473480909431
+      GameFilledOutline_179: 2851524923761409343
+      GameFilledOutline_18: -6632215434145660424
+      GameFilledOutline_180: -6206369804780793629
+      GameFilledOutline_181: 9078604378779431348
+      GameFilledOutline_182: 9043613347467873108
+      GameFilledOutline_183: 1268254427243206959
+      GameFilledOutline_184: -9065504818044195920
+      GameFilledOutline_185: -2902523001760070072
+      GameFilledOutline_186: -3317922863757298564
+      GameFilledOutline_187: -3137662664204195267
+      GameFilledOutline_188: 3819146453131876750
+      GameFilledOutline_189: 2466948198549236132
+      GameFilledOutline_19: 5606174685052106640
+      GameFilledOutline_190: -2333598468917995605
+      GameFilledOutline_191: 513853463827675422
+      GameFilledOutline_192: -2375602361782997392
+      GameFilledOutline_193: -7735131735890138539
+      GameFilledOutline_194: -4512857049168683301
+      GameFilledOutline_195: -2278872624142349638
+      GameFilledOutline_196: -1713146057435731296
+      GameFilledOutline_197: -7031921135965871918
+      GameFilledOutline_198: -567745277122933736
+      GameFilledOutline_199: 6219197970551160509
+      GameFilledOutline_2: 5350119730833627141
+      GameFilledOutline_20: -7758989890057089009
+      GameFilledOutline_200: -4658931801372254310
+      GameFilledOutline_201: -3633138428611825250
+      GameFilledOutline_202: 2835731564302022717
+      GameFilledOutline_21: -5241734047151529747
+      GameFilledOutline_22: -5500990378452296466
+      GameFilledOutline_23: -8471804020863376939
+      GameFilledOutline_24: 7131976610779254366
+      GameFilledOutline_25: -4872901325611512198
+      GameFilledOutline_26: -2277047851426764717
+      GameFilledOutline_27: 8226850748039285833
+      GameFilledOutline_28: -2389244817415870196
+      GameFilledOutline_29: 7039580813332198677
+      GameFilledOutline_3: 8607073785655093868
+      GameFilledOutline_30: -7194677009075186129
+      GameFilledOutline_31: 6328249398144081629
+      GameFilledOutline_32: -1991980780509538672
+      GameFilledOutline_33: 4770900990900970681
+      GameFilledOutline_34: 4249755192293157794
+      GameFilledOutline_35: -8632487357631358244
+      GameFilledOutline_36: -4262861930180709282
+      GameFilledOutline_37: -3192154986482310315
+      GameFilledOutline_38: 7304441012024542146
+      GameFilledOutline_39: 4687484994335915932
+      GameFilledOutline_4: -5129791018967043054
+      GameFilledOutline_40: -7722500359653151499
+      GameFilledOutline_41: 5215246102216472016
+      GameFilledOutline_42: -1462801820552432247
+      GameFilledOutline_43: -8116522085881167045
+      GameFilledOutline_44: -5961159341513310234
+      GameFilledOutline_45: 1434028484648307162
+      GameFilledOutline_46: 4596927353225936718
+      GameFilledOutline_47: 940266580443463558
+      GameFilledOutline_48: 8290094383007167255
+      GameFilledOutline_49: -3794885014610634976
+      GameFilledOutline_5: 6993782188000795257
+      GameFilledOutline_50: -5803897001124797124
+      GameFilledOutline_51: -1195835966029042059
+      GameFilledOutline_52: -8155226875701656371
+      GameFilledOutline_53: -9123624713696377308
+      GameFilledOutline_54: -1562474963851212487
+      GameFilledOutline_55: 8304767108485868635
+      GameFilledOutline_56: -5735023817485530712
+      GameFilledOutline_57: -5278618789397185940
+      GameFilledOutline_58: -7657328811654401546
+      GameFilledOutline_59: 6340671655497833048
+      GameFilledOutline_6: 5549397917841788863
+      GameFilledOutline_60: 819459825963055800
+      GameFilledOutline_61: 173321031424759799
+      GameFilledOutline_62: -2696165283237788744
+      GameFilledOutline_63: -1898780444878655095
+      GameFilledOutline_64: -7756908272610724801
+      GameFilledOutline_65: -5741980100571301406
+      GameFilledOutline_66: 992940042418525888
+      GameFilledOutline_67: -1406118604648456619
+      GameFilledOutline_68: 4584824063770441237
+      GameFilledOutline_69: -305777353645330345
+      GameFilledOutline_7: -1194963271735301007
+      GameFilledOutline_70: -8123744398385916411
+      GameFilledOutline_71: 1398349367406112568
+      GameFilledOutline_72: 9220382742907189214
+      GameFilledOutline_73: 1395619831586766913
+      GameFilledOutline_74: 1110038475760535947
+      GameFilledOutline_75: 7472490653459622933
+      GameFilledOutline_76: -4979290655845955898
+      GameFilledOutline_77: 5483479300141395460
+      GameFilledOutline_78: 773263696942326512
+      GameFilledOutline_79: 3121562772225891628
+      GameFilledOutline_8: 5579492969390358617
+      GameFilledOutline_80: 3457771990454277163
+      GameFilledOutline_81: 2657814221531975928
+      GameFilledOutline_82: 1415654628016860731
+      GameFilledOutline_83: -3584341203872784330
+      GameFilledOutline_84: 6120227384609737632
+      GameFilledOutline_85: 7912854718686002795
+      GameFilledOutline_86: -3052986345363621767
+      GameFilledOutline_87: 5271208046927729051
+      GameFilledOutline_88: -8047676017653056653
+      GameFilledOutline_89: -3144524598169777446
+      GameFilledOutline_9: 8350449460304569288
+      GameFilledOutline_90: -7509481693270630702
+      GameFilledOutline_91: -7585204149598135863
+      GameFilledOutline_92: 4664403419477474038
+      GameFilledOutline_93: 3757377348949565274
+      GameFilledOutline_94: 3787926718224558249
+      GameFilledOutline_95: 4000105805202818957
+      GameFilledOutline_96: -1907998809369897857
+      GameFilledOutline_97: -8008578496831379960
+      GameFilledOutline_98: -7513036659376128920
+      GameFilledOutline_99: 4681500749644397845
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

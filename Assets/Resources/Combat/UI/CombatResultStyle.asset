@@ -17,7 +17,9 @@ MonoBehaviour:
   defeatTitle: DEFEAT
   subtitleFormat: vs {0}
   gradeCaption: RANK
-  continuePrompt: PRESS ANY KEY TO CONTINUE
+  continuePromptFormat: '[{0}] CONTINUE'
+  restartPromptFormat: '[{0}] RETRY'
+  promptSeparator: '        '
   fullComboBadge: FULL COMBO
   allPerfectBadge: ALL PERFECT
   noDamageBadge: NO DAMAGE
@@ -72,7 +74,7 @@ MonoBehaviour:
   badgeColor: {r: 1, g: 0.9, b: 0.4, a: 1}
   promptColor: {r: 1, g: 1, b: 1, a: 0.85}
   outlineColor: {r: 0, g: 0, b: 0, a: 0.9}
-  fontAsset: {fileID: 11400000, guid: 11b93ff62af0a9f41923eaa3394f4c79, type: 2}
+  fontAsset: {fileID: 11400000, guid: 566c9319f9aed2e4f9ecf9065150e29d, type: 2}
   legacyFont: {fileID: 12800000, guid: 80a0137e3d8f78f41bfdb2aca0cfac44, type: 3}
   rankFont: {fileID: 11400000, guid: af7a62c53273f424b827bf87c7a51153, type: 2}
   rankMaterials:
@@ -150,7 +152,11 @@ MonoBehaviour:
   promptBlinkPeriod: 1.1
   fadeOutSeconds: 0.3
   inputDelay: 0.5
+  closeKeys: 0d0000000f010000i
+  allowRestart: 1
+  restartKeys: 72000000i
   pressToSkip: 1
+  skipWithAnyKey: 0
   autoCloseSeconds: 0
   victoryJingle: {fileID: 8300000, guid: f4b4525eb7afb3d4eb057594677f504a, type: 3}
   defeatJingle: {fileID: 8300000, guid: 3b8ecac020b074145a93797932dcfe47, type: 3}

@@ -1,0 +1,4474 @@
+fileFormatVersion: 2
+guid: 4fe59941525b3404fafec57a0b23dfad
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5992965720812247409
+    second: ArcadeRegular_0
+  - first:
+      213: -1275326902757535000
+    second: ArcadeRegular_1
+  - first:
+      213: -961559199139593861
+    second: ArcadeRegular_2
+  - first:
+      213: 8931595332933479887
+    second: ArcadeRegular_3
+  - first:
+      213: 844711418875303179
+    second: ArcadeRegular_4
+  - first:
+      213: 3655764584087347326
+    second: ArcadeRegular_5
+  - first:
+      213: -3488447718915384366
+    second: ArcadeRegular_6
+  - first:
+      213: -1940868602862096806
+    second: ArcadeRegular_7
+  - first:
+      213: -8873547461881153957
+    second: ArcadeRegular_8
+  - first:
+      213: 4610019337268159452
+    second: ArcadeRegular_9
+  - first:
+      213: 3735122486246419336
+    second: ArcadeRegular_10
+  - first:
+      213: -5829059214103816041
+    second: ArcadeRegular_11
+  - first:
+      213: 2950846993049959219
+    second: ArcadeRegular_12
+  - first:
+      213: 1611355507292706651
+    second: ArcadeRegular_13
+  - first:
+      213: 6297786683580414363
+    second: ArcadeRegular_14
+  - first:
+      213: -9181090272056768323
+    second: ArcadeRegular_15
+  - first:
+      213: 1337693647494435176
+    second: ArcadeRegular_16
+  - first:
+      213: 8372419565361134779
+    second: ArcadeRegular_17
+  - first:
+      213: -4424724923200397729
+    second: ArcadeRegular_18
+  - first:
+      213: 6159602750690976259
+    second: ArcadeRegular_19
+  - first:
+      213: -3516749063496351452
+    second: ArcadeRegular_20
+  - first:
+      213: 2677283385371715826
+    second: ArcadeRegular_21
+  - first:
+      213: 7536319581883732369
+    second: ArcadeRegular_22
+  - first:
+      213: 7859177761103708086
+    second: ArcadeRegular_23
+  - first:
+      213: 4976302782320023305
+    second: ArcadeRegular_24
+  - first:
+      213: 699025633091766889
+    second: ArcadeRegular_25
+  - first:
+      213: -1776867183366387169
+    second: ArcadeRegular_26
+  - first:
+      213: 1855912211258612976
+    second: ArcadeRegular_27
+  - first:
+      213: 2363612256032120886
+    second: ArcadeRegular_28
+  - first:
+      213: -4113357062987641298
+    second: ArcadeRegular_29
+  - first:
+      213: 894608742228987809
+    second: ArcadeRegular_30
+  - first:
+      213: 798410836431112690
+    second: ArcadeRegular_31
+  - first:
+      213: -4850655033397027701
+    second: ArcadeRegular_32
+  - first:
+      213: 2794908465530812510
+    second: ArcadeRegular_33
+  - first:
+      213: -793322270210262879
+    second: ArcadeRegular_34
+  - first:
+      213: -4209959715178654067
+    second: ArcadeRegular_35
+  - first:
+      213: -6214988774076132461
+    second: ArcadeRegular_36
+  - first:
+      213: -7666575795416305990
+    second: ArcadeRegular_37
+  - first:
+      213: 3517229868532395818
+    second: ArcadeRegular_38
+  - first:
+      213: -718133023643357301
+    second: ArcadeRegular_39
+  - first:
+      213: -3735181690833579584
+    second: ArcadeRegular_40
+  - first:
+      213: 2863754280367064251
+    second: ArcadeRegular_41
+  - first:
+      213: 1944488805995986123
+    second: ArcadeRegular_42
+  - first:
+      213: -6260397913775733955
+    second: ArcadeRegular_43
+  - first:
+      213: 578363496187599003
+    second: ArcadeRegular_44
+  - first:
+      213: -5530983717933577618
+    second: ArcadeRegular_45
+  - first:
+      213: -5336221599040077295
+    second: ArcadeRegular_46
+  - first:
+      213: 5686696409350455149
+    second: ArcadeRegular_47
+  - first:
+      213: 2347362154732403630
+    second: ArcadeRegular_48
+  - first:
+      213: -2659022168799269618
+    second: ArcadeRegular_49
+  - first:
+      213: -2553239644376715657
+    second: ArcadeRegular_50
+  - first:
+      213: -4850519486551299833
+    second: ArcadeRegular_51
+  - first:
+      213: 2215387020361047276
+    second: ArcadeRegular_52
+  - first:
+      213: -2505979057252105215
+    second: ArcadeRegular_53
+  - first:
+      213: -6291097322728372482
+    second: ArcadeRegular_54
+  - first:
+      213: -1107185961829677016
+    second: ArcadeRegular_55
+  - first:
+      213: -589885529561005873
+    second: ArcadeRegular_56
+  - first:
+      213: 8372937618686384268
+    second: ArcadeRegular_57
+  - first:
+      213: -1066837050992099848
+    second: ArcadeRegular_58
+  - first:
+      213: 2913212220275618236
+    second: ArcadeRegular_59
+  - first:
+      213: 5550964700998669248
+    second: ArcadeRegular_60
+  - first:
+      213: -5851501166503252971
+    second: ArcadeRegular_61
+  - first:
+      213: 7750765699446960585
+    second: ArcadeRegular_62
+  - first:
+      213: 1511220898451182161
+    second: ArcadeRegular_63
+  - first:
+      213: 2707723733045688429
+    second: ArcadeRegular_64
+  - first:
+      213: 4438964639791895830
+    second: ArcadeRegular_65
+  - first:
+      213: 1542251904046011982
+    second: ArcadeRegular_66
+  - first:
+      213: 4297677179946492610
+    second: ArcadeRegular_67
+  - first:
+      213: 250546168859296294
+    second: ArcadeRegular_68
+  - first:
+      213: 3278371848940760603
+    second: ArcadeRegular_69
+  - first:
+      213: 1690666808353441983
+    second: ArcadeRegular_70
+  - first:
+      213: 6028639124727413875
+    second: ArcadeRegular_71
+  - first:
+      213: -2881536129289506991
+    second: ArcadeRegular_72
+  - first:
+      213: 3067976968987345507
+    second: ArcadeRegular_73
+  - first:
+      213: -6611674293160396677
+    second: ArcadeRegular_74
+  - first:
+      213: 8269873673752082747
+    second: ArcadeRegular_75
+  - first:
+      213: 2677911289140050090
+    second: ArcadeRegular_76
+  - first:
+      213: -2478420997043844087
+    second: ArcadeRegular_77
+  - first:
+      213: -5772320940773263202
+    second: ArcadeRegular_78
+  - first:
+      213: -1711016009853397915
+    second: ArcadeRegular_79
+  - first:
+      213: -5419186104615049003
+    second: ArcadeRegular_80
+  - first:
+      213: 7303062598430638860
+    second: ArcadeRegular_81
+  - first:
+      213: 2551301308282241678
+    second: ArcadeRegular_82
+  - first:
+      213: -3863670776334777232
+    second: ArcadeRegular_83
+  - first:
+      213: -880683302320229901
+    second: ArcadeRegular_84
+  - first:
+      213: 579337225300712112
+    second: ArcadeRegular_85
+  - first:
+      213: -7087961043513357710
+    second: ArcadeRegular_86
+  - first:
+      213: -559265489765851448
+    second: ArcadeRegular_87
+  - first:
+      213: 8129027658985506254
+    second: ArcadeRegular_88
+  - first:
+      213: 6603941309999607788
+    second: ArcadeRegular_89
+  - first:
+      213: 1523563564487440337
+    second: ArcadeRegular_90
+  - first:
+      213: 4959867065492269585
+    second: ArcadeRegular_91
+  - first:
+      213: -8298011185733728378
+    second: ArcadeRegular_92
+  - first:
+      213: -4875089040187356399
+    second: ArcadeRegular_93
+  - first:
+      213: 7621068686898784911
+    second: ArcadeRegular_94
+  - first:
+      213: 3898119089559288642
+    second: ArcadeRegular_95
+  - first:
+      213: 19554704541784568
+    second: ArcadeRegular_96
+  - first:
+      213: -1444408678514853356
+    second: ArcadeRegular_97
+  - first:
+      213: -2588986546090434733
+    second: ArcadeRegular_98
+  - first:
+      213: 4685560152019378512
+    second: ArcadeRegular_99
+  - first:
+      213: 4883081260914456307
+    second: ArcadeRegular_100
+  - first:
+      213: 3301671177531167249
+    second: ArcadeRegular_101
+  - first:
+      213: -2534587309690126141
+    second: ArcadeRegular_102
+  - first:
+      213: 574040933226346491
+    second: ArcadeRegular_103
+  - first:
+      213: -1818434894160713102
+    second: ArcadeRegular_104
+  - first:
+      213: 801881466335162193
+    second: ArcadeRegular_105
+  - first:
+      213: 1660740744379120704
+    second: ArcadeRegular_106
+  - first:
+      213: -4368586978396475200
+    second: ArcadeRegular_107
+  - first:
+      213: -8420714704589592627
+    second: ArcadeRegular_108
+  - first:
+      213: -4743013393175548115
+    second: ArcadeRegular_109
+  - first:
+      213: -1713255222542337550
+    second: ArcadeRegular_110
+  - first:
+      213: 8222439281058526042
+    second: ArcadeRegular_111
+  - first:
+      213: -5466024931356702936
+    second: ArcadeRegular_112
+  - first:
+      213: -8878541284635745647
+    second: ArcadeRegular_113
+  - first:
+      213: 926114286801377379
+    second: ArcadeRegular_114
+  - first:
+      213: -8708923602075184457
+    second: ArcadeRegular_115
+  - first:
+      213: 6869623844714000995
+    second: ArcadeRegular_116
+  - first:
+      213: 3491283513927193651
+    second: ArcadeRegular_117
+  - first:
+      213: -6271666645064701593
+    second: ArcadeRegular_118
+  - first:
+      213: 575727889472446889
+    second: ArcadeRegular_119
+  - first:
+      213: -5502956120164967846
+    second: ArcadeRegular_120
+  - first:
+      213: 5207349934020752591
+    second: ArcadeRegular_121
+  - first:
+      213: 6922103626460426182
+    second: ArcadeRegular_122
+  - first:
+      213: 2984806238712684050
+    second: ArcadeRegular_123
+  - first:
+      213: 257227024916486082
+    second: ArcadeRegular_124
+  - first:
+      213: 6300791057949449944
+    second: ArcadeRegular_125
+  - first:
+      213: 5096630558285882642
+    second: ArcadeRegular_126
+  - first:
+      213: 5230495961260046836
+    second: ArcadeRegular_127
+  - first:
+      213: 1075725489134851792
+    second: ArcadeRegular_128
+  - first:
+      213: -9076188481026046693
+    second: ArcadeRegular_129
+  - first:
+      213: 7121005544795672315
+    second: ArcadeRegular_130
+  - first:
+      213: 6082300889355616651
+    second: ArcadeRegular_131
+  - first:
+      213: -4934910911181460599
+    second: ArcadeRegular_132
+  - first:
+      213: -3914731250531364481
+    second: ArcadeRegular_133
+  - first:
+      213: -3226957207804859546
+    second: ArcadeRegular_134
+  - first:
+      213: -4950885953017092847
+    second: ArcadeRegular_135
+  - first:
+      213: -6721623334172109114
+    second: ArcadeRegular_136
+  - first:
+      213: -722790673024502239
+    second: ArcadeRegular_137
+  - first:
+      213: -1086056707470234974
+    second: ArcadeRegular_138
+  - first:
+      213: -5613000659555900355
+    second: ArcadeRegular_139
+  - first:
+      213: 923093185875910783
+    second: ArcadeRegular_140
+  - first:
+      213: -1482015793022657063
+    second: ArcadeRegular_141
+  - first:
+      213: 4335147259422468473
+    second: ArcadeRegular_142
+  - first:
+      213: 3087343981956235215
+    second: ArcadeRegular_143
+  - first:
+      213: 8922000655639625409
+    second: ArcadeRegular_144
+  - first:
+      213: 1397771137164271814
+    second: ArcadeRegular_145
+  - first:
+      213: 6403917043675025380
+    second: ArcadeRegular_146
+  - first:
+      213: -1435712141553348068
+    second: ArcadeRegular_147
+  - first:
+      213: 6340881265226983130
+    second: ArcadeRegular_148
+  - first:
+      213: 7356475629815853859
+    second: ArcadeRegular_149
+  - first:
+      213: 1057034116348442137
+    second: ArcadeRegular_150
+  - first:
+      213: -2657600389246631054
+    second: ArcadeRegular_151
+  - first:
+      213: -5305155653058624537
+    second: ArcadeRegular_152
+  - first:
+      213: 7457626634016855752
+    second: ArcadeRegular_153
+  - first:
+      213: 6787880408524218227
+    second: ArcadeRegular_154
+  - first:
+      213: 8815011192998827948
+    second: ArcadeRegular_155
+  - first:
+      213: 4309789532668438866
+    second: ArcadeRegular_156
+  - first:
+      213: -8540180748792253099
+    second: ArcadeRegular_157
+  - first:
+      213: 5124698380746641663
+    second: ArcadeRegular_158
+  - first:
+      213: 4757008454760905253
+    second: ArcadeRegular_159
+  - first:
+      213: -4885236569419748306
+    second: ArcadeRegular_160
+  - first:
+      213: -3342914400236471325
+    second: ArcadeRegular_161
+  - first:
+      213: -3988433905082654411
+    second: ArcadeRegular_162
+  - first:
+      213: -7027316121316177386
+    second: ArcadeRegular_163
+  - first:
+      213: 2497934457991758423
+    second: ArcadeRegular_164
+  - first:
+      213: 126283172272838478
+    second: ArcadeRegular_165
+  - first:
+      213: 2273801884259931261
+    second: ArcadeRegular_166
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ArcadeRegular_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 196
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f86a4e3dd65b4dca0800000000000000
+      internalID: -5992965720812247409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_1
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 196
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e253ac50f02d4ee0800000000000000
+      internalID: -1275326902757535000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_2
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 196
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b7186c0c00bd7a2f0800000000000000
+      internalID: -961559199139593861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_3
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 196
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fcd690932a663fb70800000000000000
+      internalID: 8931595332933479887
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_4
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 196
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0557cb5f8409bb00800000000000000
+      internalID: 844711418875303179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_5
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 196
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e70eaf82582ebb230800000000000000
+      internalID: 3655764584087347326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_6
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 196
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2dbd680484b869fc0800000000000000
+      internalID: -3488447718915384366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_7
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 196
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5e22b2f946a015e0800000000000000
+      internalID: -1940868602862096806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_8
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 196
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b563105f893dad480800000000000000
+      internalID: -8873547461881153957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_9
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 196
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd3ec8d89241aff30800000000000000
+      internalID: 4610019337268159452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_10
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 196
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88baa499c12d5d330800000000000000
+      internalID: 3735122486246419336
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_11
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 196
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 798df9847850b1fa0800000000000000
+      internalID: -5829059214103816041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_12
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 196
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33bb547b4b383f820800000000000000
+      internalID: 2950846993049959219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_13
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 196
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b571d0beb4fac5610800000000000000
+      internalID: 1611355507292706651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_14
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 196
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b99fef12f9b366750800000000000000
+      internalID: 6297786683580414363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_15
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 196
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db803438a07369080800000000000000
+      internalID: -9181090272056768323
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_16
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 196
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 861d335f841709210800000000000000
+      internalID: 1337693647494435176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_17
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 196
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bbc71e75c3fc03470800000000000000
+      internalID: 8372419565361134779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_18
+      rect:
+        serializedVersion: 2
+        x: 218
+        y: 196
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f5e92d320283892c0800000000000000
+      internalID: -4424724923200397729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_19
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 196
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3026478111e4b7550800000000000000
+      internalID: 6159602750690976259
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_20
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 196
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 421cc1afb5ff13fc0800000000000000
+      internalID: -3516749063496351452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_21
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 196
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f8e22cdd0f972520800000000000000
+      internalID: 2677283385371715826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_22
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 196
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 19110080bb2669860800000000000000
+      internalID: 7536319581883732369
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_23
+      rect:
+        serializedVersion: 2
+        x: 278
+        y: 196
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6bf7c35b888611d60800000000000000
+      internalID: 7859177761103708086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_24
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 196
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90719f2d3016f0540800000000000000
+      internalID: 4976302782320023305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_25
+      rect:
+        serializedVersion: 2
+        x: 302
+        y: 196
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96ac3551c1073b900800000000000000
+      internalID: 699025633091766889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_26
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 164
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1ac56206bc4757e0800000000000000
+      internalID: -1776867183366387169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_27
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 164
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0fc1166b25681c910800000000000000
+      internalID: 1855912211258612976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_28
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 164
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 630ed8be2dc3dc020800000000000000
+      internalID: 2363612256032120886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_29
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 164
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2e07427b8b6ae6c0800000000000000
+      internalID: -4113357062987641298
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_30
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 164
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1af848549e94a6c00800000000000000
+      internalID: 894608742228987809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_31
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 164
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f98c42fc66841b00800000000000000
+      internalID: 798410836431112690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_32
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 162
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8cd86e62f20facb0800000000000000
+      internalID: -4850655033397027701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_33
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 164
+        width: 16
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5832bbf07289c620800000000000000
+      internalID: 2794908465530812510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_34
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 164
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a8f5b3399d8df4f0800000000000000
+      internalID: -793322270210262879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_35
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 164
+        width: 16
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d865212c1f73395c0800000000000000
+      internalID: -4209959715178654067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_36
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 164
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 393d62e63acefb9a0800000000000000
+      internalID: -6214988774076132461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_37
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 164
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: abe6a9eeee9da9590800000000000000
+      internalID: -7666575795416305990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_38
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 164
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2f644b2ee5bfc030800000000000000
+      internalID: 3517229868532395818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_39
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 162
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8fa240e1dda806f0800000000000000
+      internalID: -718133023643357301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_40
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 162
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c15252ca08f92cc0800000000000000
+      internalID: -3735181690833579584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_41
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 164
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb4884d58591eb720800000000000000
+      internalID: 2863754280367064251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_42
+      rect:
+        serializedVersion: 2
+        x: 218
+        y: 164
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bcc3d1744463cfa10800000000000000
+      internalID: 1944488805995986123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_43
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 164
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d330dc434499e19a0800000000000000
+      internalID: -6260397913775733955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_44
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 164
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9890551982c60800800000000000000
+      internalID: 578363496187599003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_45
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 164
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6a891aec9ffd33b0800000000000000
+      internalID: -5530983717933577618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_46
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 164
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 112037a6abee1f5b0800000000000000
+      internalID: -5336221599040077295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_47
+      rect:
+        serializedVersion: 2
+        x: 278
+        y: 164
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6fb2d041443bee40800000000000000
+      internalID: 5686696409350455149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_48
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 162
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eab35006171839020800000000000000
+      internalID: 2347362154732403630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_49
+      rect:
+        serializedVersion: 2
+        x: 302
+        y: 164
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0da4d2fc61491bd0800000000000000
+      internalID: -2659022168799269618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_50
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 132
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77e2b723212119cd0800000000000000
+      internalID: -2553239644376715657
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_51
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 132
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 709eff3e93e7facb0800000000000000
+      internalID: -4850519486551299833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_52
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 132
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cec91a4e1c2aebe10800000000000000
+      internalID: 2215387020361047276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_53
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 132
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1048bed1359f83dd0800000000000000
+      internalID: -2505979057252105215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_54
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 132
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef64d5f015881b8a0800000000000000
+      internalID: -6291097322728372482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_55
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 132
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 828c7dcdb3c72a0f0800000000000000
+      internalID: -1107185961829677016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_56
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 132
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc08f587c3e40d7f0800000000000000
+      internalID: -589885529561005873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_57
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 132
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c889e480766a23470800000000000000
+      internalID: 8372937618686384268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_58
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 132
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8fdf36eba55d131f0800000000000000
+      internalID: -1066837050992099848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_59
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 132
+        width: 17
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb1fad8541fcd6820800000000000000
+      internalID: 2913212220275618236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_60
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 137
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c312cb3cfcf80d40800000000000000
+      internalID: 5550964700998669248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_61
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 137
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51c2acf01ba4bcea0800000000000000
+      internalID: -5851501166503252971
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_62
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 136
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c171dc9650409b60800000000000000
+      internalID: 7750765699446960585
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_63
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 137
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 152545d766fe8f410800000000000000
+      internalID: 1511220898451182161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_64
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 137
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d68351a9364c39520800000000000000
+      internalID: 2707723733045688429
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_65
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 132
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 615d05d32de5a9d30800000000000000
+      internalID: 4438964639791895830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_66
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 131
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4615de7fed276510800000000000000
+      internalID: 1542251904046011982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_67
+      rect:
+        serializedVersion: 2
+        x: 218
+        y: 132
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c2630600aa64ab30800000000000000
+      internalID: 4297677179946492610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_68
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 132
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62281b2c96e1a7300800000000000000
+      internalID: 250546168859296294
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_69
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 132
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1e21c9b3dd1f7d20800000000000000
+      internalID: 3278371848940760603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_70
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 131
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb843713184767710800000000000000
+      internalID: 1690666808353441983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_71
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 132
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 37c3664c7570aa350800000000000000
+      internalID: 6028639124727413875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_72
+      rect:
+        serializedVersion: 2
+        x: 278
+        y: 133
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15fae3e482ab208d0800000000000000
+      internalID: -2881536129289506991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_73
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 132
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36202976cc4a39a20800000000000000
+      internalID: 3067976968987345507
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_74
+      rect:
+        serializedVersion: 2
+        x: 302
+        y: 132
+        width: 16
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b78b791b24d9e34a0800000000000000
+      internalID: -6611674293160396677
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_75
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 100
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b39f8556a4e74c270800000000000000
+      internalID: 8269873673752082747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_76
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 100
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa87339112ad92520800000000000000
+      internalID: 2677911289140050090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_77
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 100
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90c05530c31ea9dd0800000000000000
+      internalID: -2478420997043844087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_78
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 100
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9839abffa894efa0800000000000000
+      internalID: -5772320940773263202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_79
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 100
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5649eaf11004148e0800000000000000
+      internalID: -1711016009853397915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_80
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 100
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d8efae23fe2bc4b0800000000000000
+      internalID: -5419186104615049003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_81
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 100
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0346ef6db0b95560800000000000000
+      internalID: 7303062598430638860
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_82
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 98
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e820723c50b086320800000000000000
+      internalID: 2551301308282241678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_83
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 100
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 074028746eb716ac0800000000000000
+      internalID: -3863670776334777232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_84
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 100
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f1b59dd33f27c3f0800000000000000
+      internalID: -880683302320229901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_85
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 100
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ba953f03283a0800800000000000000
+      internalID: 579337225300712112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_86
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 100
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27a449b0cf082ad90800000000000000
+      internalID: -7087961043513357710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_87
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 100
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ce1f5b00071d38f0800000000000000
+      internalID: -559265489765851448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_88
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 100
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec5082f169b10d070800000000000000
+      internalID: 8129027658985506254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_89
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 100
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cefed0cd1a9e5ab50800000000000000
+      internalID: 6603941309999607788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_90
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 100
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d7700e5df8c42510800000000000000
+      internalID: 1523563564487440337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_91
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 100
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11a63db41dcf4d440800000000000000
+      internalID: 4959867065492269585
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_92
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 100
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6878f149aca87dc80800000000000000
+      internalID: -8298011185733728378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_93
+      rect:
+        serializedVersion: 2
+        x: 218
+        y: 100
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11b8b37e854385cb0800000000000000
+      internalID: -4875089040187356399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_94
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 100
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f8a6473b79973c960800000000000000
+      internalID: 7621068686898784911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_95
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 100
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24bb959a8a6e81630800000000000000
+      internalID: 3898119089559288642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_96
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 100
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f996e176e8754000800000000000000
+      internalID: 19554704541784568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_97
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 100
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41a71aea5fd64fbe0800000000000000
+      internalID: -1444408678514853356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_98
+      rect:
+        serializedVersion: 2
+        x: 277
+        y: 99
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35f93001472121cd0800000000000000
+      internalID: -2588986546090434733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_99
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 100
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05127d21224760140800000000000000
+      internalID: 4685560152019378512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_100
+      rect:
+        serializedVersion: 2
+        x: 302
+        y: 100
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f63c2ef88034c340800000000000000
+      internalID: 4883081260914456307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_101
+      rect:
+        serializedVersion: 2
+        x: 314
+        y: 100
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11214e56174e1dd20800000000000000
+      internalID: 3301671177531167249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_102
+      rect:
+        serializedVersion: 2
+        x: 326
+        y: 100
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c005b9454653dcd0800000000000000
+      internalID: -2534587309690126141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_103
+      rect:
+        serializedVersion: 2
+        x: 338
+        y: 100
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf77d77ff2767f700800000000000000
+      internalID: 574040933226346491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_104
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 100
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27a2066291f93c6e0800000000000000
+      internalID: -1818434894160713102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_105
+      rect:
+        serializedVersion: 2
+        x: 362
+        y: 100
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15f60e0f1fad02b00800000000000000
+      internalID: 801881466335162193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_106
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 100
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04c3cb478e22c0710800000000000000
+      internalID: 1660740744379120704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_107
+      rect:
+        serializedVersion: 2
+        x: 385
+        y: 100
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c0f746f949af53c0800000000000000
+      internalID: -4368586978396475200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_108
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 100
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc7670e479c932b80800000000000000
+      internalID: -8420714704589592627
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_109
+      rect:
+        serializedVersion: 2
+        x: 410
+        y: 98
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d2fe9dec27e6d2eb0800000000000000
+      internalID: -4743013393175548115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_110
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 68
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f9f7cac37b4938e0800000000000000
+      internalID: -1713255222542337550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_111
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 35
+        width: 43
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5336b636f8fb1270800000000000000
+      internalID: 8222439281058526042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_112
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 68
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8270e010947c424b0800000000000000
+      internalID: -5466024931356702936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_113
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 68
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 19265adfdb519c480800000000000000
+      internalID: -8878541284635745647
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_114
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 68
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 368d53e79083adc00800000000000000
+      internalID: 926114286801377379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_115
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 68
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b21b423020b32780800000000000000
+      internalID: -8708923602075184457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_116
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 68
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3623bbc6d7ec55f50800000000000000
+      internalID: 6869623844714000995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_117
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 66
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 334dec9bbd7837030800000000000000
+      internalID: 3491283513927193651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_118
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 36
+        width: 57
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 769a04f3a6096f8a0800000000000000
+      internalID: -6271666645064701593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_119
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 68
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a16a4317756df700800000000000000
+      internalID: 575727889472446889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_120
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 68
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5a510b809291a3b0800000000000000
+      internalID: -5502956120164967846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_121
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 68
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc4f57edc29344840800000000000000
+      internalID: 5207349934020752591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_122
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 68
+        width: 57
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6cfed99c290401060800000000000000
+      internalID: 6922103626460426182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_123
+      rect:
+        serializedVersion: 2
+        x: 218
+        y: 68
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 21ed6ddb5792c6920800000000000000
+      internalID: 2984806238712684050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_124
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 68
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c717c6cd9ad19300800000000000000
+      internalID: 257227024916486082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_125
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 68
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ded80d8518e07750800000000000000
+      internalID: 6300791057949449944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_126
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 68
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 215e70a5d7edab640800000000000000
+      internalID: 5096630558285882642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_127
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 68
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f9350a4d54769840800000000000000
+      internalID: 5230495961260046836
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_128
+      rect:
+        serializedVersion: 2
+        x: 278
+        y: 68
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d657b702aebdee00800000000000000
+      internalID: 1075725489134851792
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_129
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 67
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1543f90aa6ea0280800000000000000
+      internalID: -9076188481026046693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_130
+      rect:
+        serializedVersion: 2
+        x: 301
+        y: 68
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bfe022570d4e2d260800000000000000
+      internalID: 7121005544795672315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_131
+      rect:
+        serializedVersion: 2
+        x: 314
+        y: 68
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b818517fe6ca86450800000000000000
+      internalID: 6082300889355616651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_132
+      rect:
+        serializedVersion: 2
+        x: 326
+        y: 68
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98b64dc2caca38bb0800000000000000
+      internalID: -4934910911181460599
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_133
+      rect:
+        serializedVersion: 2
+        x: 338
+        y: 68
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7115f43ba41ca9c0800000000000000
+      internalID: -3914731250531364481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_134
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 68
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66ba763448b8733d0800000000000000
+      internalID: -3226957207804859546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_135
+      rect:
+        serializedVersion: 2
+        x: 362
+        y: 68
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 115e1f6e47bea4bb0800000000000000
+      internalID: -4950885953017092847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_136
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 68
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c6d1b4b03ff7b2a0800000000000000
+      internalID: -6721623334172109114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_137
+      rect:
+        serializedVersion: 2
+        x: 386
+        y: 66
+        width: 8
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 126b86f56b128f5f0800000000000000
+      internalID: -722790673024502239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_138
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 66
+        width: 8
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2aa6e41cd2d8de0f0800000000000000
+      internalID: -1086056707470234974
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_139
+      rect:
+        serializedVersion: 2
+        x: 410
+        y: 68
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d34232b93ad9a12b0800000000000000
+      internalID: -5613000659555900355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_140
+      rect:
+        serializedVersion: 2
+        x: 422
+        y: 66
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f70a7be9c5c7fcc00800000000000000
+      internalID: 923093185875910783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_141
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 5
+        width: 40
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9dd9d510d72de6be0800000000000000
+      internalID: -1482015793022657063
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_142
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 35
+        width: 129
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97962eeb679892c30800000000000000
+      internalID: 4335147259422468473
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_143
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 36
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fcff0ff7ef278da20800000000000000
+      internalID: 3087343981956235215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_144
+      rect:
+        serializedVersion: 2
+        x: 302
+        y: 36
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ceb335535051db70800000000000000
+      internalID: 8922000655639625409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_145
+      rect:
+        serializedVersion: 2
+        x: 314
+        y: 36
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c068fb8171e56310800000000000000
+      internalID: 1397771137164271814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_146
+      rect:
+        serializedVersion: 2
+        x: 326
+        y: 36
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4efc15f2f984fd850800000000000000
+      internalID: 6403917043675025380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_147
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 36
+        width: 12
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c125ffaf963531ce0800000000000000
+      internalID: -1435712141553348068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_148
+      rect:
+        serializedVersion: 2
+        x: 349
+        y: 36
+        width: 12
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad6a8c05ae55ff750800000000000000
+      internalID: 6340881265226983130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_149
+      rect:
+        serializedVersion: 2
+        x: 362
+        y: 36
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 323fdf9eb93771660800000000000000
+      internalID: 7356475629815853859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_150
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 36
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 916fa6cade65bae00800000000000000
+      internalID: 1057034116348442137
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_151
+      rect:
+        serializedVersion: 2
+        x: 386
+        y: 36
+        width: 16
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 273c30cc68e4e1bd0800000000000000
+      internalID: -2657600389246631054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_152
+      rect:
+        serializedVersion: 2
+        x: 410
+        y: 32
+        width: 16
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e3094d9a0d4066b0800000000000000
+      internalID: -5305155653058624537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_153
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 4
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c6111459efce7760800000000000000
+      internalID: 7457626634016855752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_154
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 4
+        width: 18
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 37f5bef8445633e50800000000000000
+      internalID: 6787880408524218227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_155
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 4
+        width: 20
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca799c1e9f5355a70800000000000000
+      internalID: 8815011192998827948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_156
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 4
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2592667eeb27fcb30800000000000000
+      internalID: 4309789532668438866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_157
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 5
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 555bb965bde2b7980800000000000000
+      internalID: -8540180748792253099
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_158
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 7
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff05c6586069e1740800000000000000
+      internalID: 5124698380746641663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_159
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 4
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52abd836cf9440240800000000000000
+      internalID: 4757008454760905253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_160
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 5
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2cecf32937243cb0800000000000000
+      internalID: -4885236569419748306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_161
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 4
+        width: 20
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ebfd5380159b91d0800000000000000
+      internalID: -3342914400236471325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_162
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 4
+        width: 32
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 531ac65be7c36a8c0800000000000000
+      internalID: -3988433905082654411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_163
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 8
+        width: 19
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61ac2905835f97e90800000000000000
+      internalID: -7027316121316177386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_164
+      rect:
+        serializedVersion: 2
+        x: 218
+        y: 4
+        width: 16
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7528ec8a7227aa220800000000000000
+      internalID: 2497934457991758423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_165
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 2
+        width: 29
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e479e6840e5a0c100800000000000000
+      internalID: 126283172272838478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeRegular_166
+      rect:
+        serializedVersion: 2
+        x: 278
+        y: 4
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d745de044ca2e8f10800000000000000
+      internalID: 2273801884259931261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      ArcadeRegular_0: -5992965720812247409
+      ArcadeRegular_1: -1275326902757535000
+      ArcadeRegular_10: 3735122486246419336
+      ArcadeRegular_100: 4883081260914456307
+      ArcadeRegular_101: 3301671177531167249
+      ArcadeRegular_102: -2534587309690126141
+      ArcadeRegular_103: 574040933226346491
+      ArcadeRegular_104: -1818434894160713102
+      ArcadeRegular_105: 801881466335162193
+      ArcadeRegular_106: 1660740744379120704
+      ArcadeRegular_107: -4368586978396475200
+      ArcadeRegular_108: -8420714704589592627
+      ArcadeRegular_109: -4743013393175548115
+      ArcadeRegular_11: -5829059214103816041
+      ArcadeRegular_110: -1713255222542337550
+      ArcadeRegular_111: 8222439281058526042
+      ArcadeRegular_112: -5466024931356702936
+      ArcadeRegular_113: -8878541284635745647
+      ArcadeRegular_114: 926114286801377379
+      ArcadeRegular_115: -8708923602075184457
+      ArcadeRegular_116: 6869623844714000995
+      ArcadeRegular_117: 3491283513927193651
+      ArcadeRegular_118: -6271666645064701593
+      ArcadeRegular_119: 575727889472446889
+      ArcadeRegular_12: 2950846993049959219
+      ArcadeRegular_120: -5502956120164967846
+      ArcadeRegular_121: 5207349934020752591
+      ArcadeRegular_122: 6922103626460426182
+      ArcadeRegular_123: 2984806238712684050
+      ArcadeRegular_124: 257227024916486082
+      ArcadeRegular_125: 6300791057949449944
+      ArcadeRegular_126: 5096630558285882642
+      ArcadeRegular_127: 5230495961260046836
+      ArcadeRegular_128: 1075725489134851792
+      ArcadeRegular_129: -9076188481026046693
+      ArcadeRegular_13: 1611355507292706651
+      ArcadeRegular_130: 7121005544795672315
+      ArcadeRegular_131: 6082300889355616651
+      ArcadeRegular_132: -4934910911181460599
+      ArcadeRegular_133: -3914731250531364481
+      ArcadeRegular_134: -3226957207804859546
+      ArcadeRegular_135: -4950885953017092847
+      ArcadeRegular_136: -6721623334172109114
+      ArcadeRegular_137: -722790673024502239
+      ArcadeRegular_138: -1086056707470234974
+      ArcadeRegular_139: -5613000659555900355
+      ArcadeRegular_14: 6297786683580414363
+      ArcadeRegular_140: 923093185875910783
+      ArcadeRegular_141: -1482015793022657063
+      ArcadeRegular_142: 4335147259422468473
+      ArcadeRegular_143: 3087343981956235215
+      ArcadeRegular_144: 8922000655639625409
+      ArcadeRegular_145: 1397771137164271814
+      ArcadeRegular_146: 6403917043675025380
+      ArcadeRegular_147: -1435712141553348068
+      ArcadeRegular_148: 6340881265226983130
+      ArcadeRegular_149: 7356475629815853859
+      ArcadeRegular_15: -9181090272056768323
+      ArcadeRegular_150: 1057034116348442137
+      ArcadeRegular_151: -2657600389246631054
+      ArcadeRegular_152: -5305155653058624537
+      ArcadeRegular_153: 7457626634016855752
+      ArcadeRegular_154: 6787880408524218227
+      ArcadeRegular_155: 8815011192998827948
+      ArcadeRegular_156: 4309789532668438866
+      ArcadeRegular_157: -8540180748792253099
+      ArcadeRegular_158: 5124698380746641663
+      ArcadeRegular_159: 4757008454760905253
+      ArcadeRegular_16: 1337693647494435176
+      ArcadeRegular_160: -4885236569419748306
+      ArcadeRegular_161: -3342914400236471325
+      ArcadeRegular_162: -3988433905082654411
+      ArcadeRegular_163: -7027316121316177386
+      ArcadeRegular_164: 2497934457991758423
+      ArcadeRegular_165: 126283172272838478
+      ArcadeRegular_166: 2273801884259931261
+      ArcadeRegular_17: 8372419565361134779
+      ArcadeRegular_18: -4424724923200397729
+      ArcadeRegular_19: 6159602750690976259
+      ArcadeRegular_2: -961559199139593861
+      ArcadeRegular_20: -3516749063496351452
+      ArcadeRegular_21: 2677283385371715826
+      ArcadeRegular_22: 7536319581883732369
+      ArcadeRegular_23: 7859177761103708086
+      ArcadeRegular_24: 4976302782320023305
+      ArcadeRegular_25: 699025633091766889
+      ArcadeRegular_26: -1776867183366387169
+      ArcadeRegular_27: 1855912211258612976
+      ArcadeRegular_28: 2363612256032120886
+      ArcadeRegular_29: -4113357062987641298
+      ArcadeRegular_3: 8931595332933479887
+      ArcadeRegular_30: 894608742228987809
+      ArcadeRegular_31: 798410836431112690
+      ArcadeRegular_32: -4850655033397027701
+      ArcadeRegular_33: 2794908465530812510
+      ArcadeRegular_34: -793322270210262879
+      ArcadeRegular_35: -4209959715178654067
+      ArcadeRegular_36: -6214988774076132461
+      ArcadeRegular_37: -7666575795416305990
+      ArcadeRegular_38: 3517229868532395818
+      ArcadeRegular_39: -718133023643357301
+      ArcadeRegular_4: 844711418875303179
+      ArcadeRegular_40: -3735181690833579584
+      ArcadeRegular_41: 2863754280367064251
+      ArcadeRegular_42: 1944488805995986123
+      ArcadeRegular_43: -6260397913775733955
+      ArcadeRegular_44: 578363496187599003
+      ArcadeRegular_45: -5530983717933577618
+      ArcadeRegular_46: -5336221599040077295
+      ArcadeRegular_47: 5686696409350455149
+      ArcadeRegular_48: 2347362154732403630
+      ArcadeRegular_49: -2659022168799269618
+      ArcadeRegular_5: 3655764584087347326
+      ArcadeRegular_50: -2553239644376715657
+      ArcadeRegular_51: -4850519486551299833
+      ArcadeRegular_52: 2215387020361047276
+      ArcadeRegular_53: -2505979057252105215
+      ArcadeRegular_54: -6291097322728372482
+      ArcadeRegular_55: -1107185961829677016
+      ArcadeRegular_56: -589885529561005873
+      ArcadeRegular_57: 8372937618686384268
+      ArcadeRegular_58: -1066837050992099848
+      ArcadeRegular_59: 2913212220275618236
+      ArcadeRegular_6: -3488447718915384366
+      ArcadeRegular_60: 5550964700998669248
+      ArcadeRegular_61: -5851501166503252971
+      ArcadeRegular_62: 7750765699446960585
+      ArcadeRegular_63: 1511220898451182161
+      ArcadeRegular_64: 2707723733045688429
+      ArcadeRegular_65: 4438964639791895830
+      ArcadeRegular_66: 1542251904046011982
+      ArcadeRegular_67: 4297677179946492610
+      ArcadeRegular_68: 250546168859296294
+      ArcadeRegular_69: 3278371848940760603
+      ArcadeRegular_7: -1940868602862096806
+      ArcadeRegular_70: 1690666808353441983
+      ArcadeRegular_71: 6028639124727413875
+      ArcadeRegular_72: -2881536129289506991
+      ArcadeRegular_73: 3067976968987345507
+      ArcadeRegular_74: -6611674293160396677
+      ArcadeRegular_75: 8269873673752082747
+      ArcadeRegular_76: 2677911289140050090
+      ArcadeRegular_77: -2478420997043844087
+      ArcadeRegular_78: -5772320940773263202
+      ArcadeRegular_79: -1711016009853397915
+      ArcadeRegular_8: -8873547461881153957
+      ArcadeRegular_80: -5419186104615049003
+      ArcadeRegular_81: 7303062598430638860
+      ArcadeRegular_82: 2551301308282241678
+      ArcadeRegular_83: -3863670776334777232
+      ArcadeRegular_84: -880683302320229901
+      ArcadeRegular_85: 579337225300712112
+      ArcadeRegular_86: -7087961043513357710
+      ArcadeRegular_87: -559265489765851448
+      ArcadeRegular_88: 8129027658985506254
+      ArcadeRegular_89: 6603941309999607788
+      ArcadeRegular_9: 4610019337268159452
+      ArcadeRegular_90: 1523563564487440337
+      ArcadeRegular_91: 4959867065492269585
+      ArcadeRegular_92: -8298011185733728378
+      ArcadeRegular_93: -4875089040187356399
+      ArcadeRegular_94: 7621068686898784911
+      ArcadeRegular_95: 3898119089559288642
+      ArcadeRegular_96: 19554704541784568
+      ArcadeRegular_97: -1444408678514853356
+      ArcadeRegular_98: -2588986546090434733
+      ArcadeRegular_99: 4685560152019378512
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

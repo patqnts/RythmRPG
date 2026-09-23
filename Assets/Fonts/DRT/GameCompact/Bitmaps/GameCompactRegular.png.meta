@@ -1,0 +1,808 @@
+fileFormatVersion: 2
+guid: 235d1912554738d4c8286108054a779d
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4453020350693270305
+    second: GameCompactRegular_0
+  - first:
+      213: -9074056909523311784
+    second: GameCompactRegular_1
+  - first:
+      213: 3542446663051951293
+    second: GameCompactRegular_2
+  - first:
+      213: 7964914875843833118
+    second: GameCompactRegular_3
+  - first:
+      213: 729638102400529086
+    second: GameCompactRegular_4
+  - first:
+      213: 4358104369897549126
+    second: GameCompactRegular_5
+  - first:
+      213: -3108445212040124537
+    second: GameCompactRegular_6
+  - first:
+      213: -4453932910617597092
+    second: GameCompactRegular_7
+  - first:
+      213: -1125622431285727638
+    second: GameCompactRegular_8
+  - first:
+      213: 2939681016497182408
+    second: GameCompactRegular_9
+  - first:
+      213: -7644096316644881630
+    second: GameCompactRegular_10
+  - first:
+      213: -8945983672797918460
+    second: GameCompactRegular_11
+  - first:
+      213: -6009817306852852663
+    second: GameCompactRegular_12
+  - first:
+      213: -3418348299254148017
+    second: GameCompactRegular_13
+  - first:
+      213: -3700425993878030992
+    second: GameCompactRegular_14
+  - first:
+      213: -7335494312586427751
+    second: GameCompactRegular_15
+  - first:
+      213: 4536738807084716830
+    second: GameCompactRegular_16
+  - first:
+      213: -7242725859805737049
+    second: GameCompactRegular_17
+  - first:
+      213: 2642736630207266832
+    second: GameCompactRegular_18
+  - first:
+      213: 5984483264774011412
+    second: GameCompactRegular_19
+  - first:
+      213: -8188645976986713982
+    second: GameCompactRegular_20
+  - first:
+      213: -1293188611913037162
+    second: GameCompactRegular_21
+  - first:
+      213: 9124008138330200751
+    second: GameCompactRegular_22
+  - first:
+      213: -4470111448241602996
+    second: GameCompactRegular_23
+  - first:
+      213: -3333588532264609620
+    second: GameCompactRegular_24
+  - first:
+      213: -7612410153351734802
+    second: GameCompactRegular_25
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: GameCompactRegular_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 99
+        width: 139
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fdc975b8591b332c0800000000000000
+      internalID: -4453020350693270305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameCompactRegular_1
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 3
+        width: 192
+        height: 103
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8532f243159721280800000000000000
+      internalID: -9074056909523311784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameCompactRegular_2
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 99
+        width: 71
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dbcbafaa87c492130800000000000000
+      internalID: 3542446663051951293
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameCompactRegular_3
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 67
+        width: 25
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1d65e031ef098e60800000000000000
+      internalID: 7964914875843833118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameCompactRegular_4
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 83
+        width: 139
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb27c240df1302a00800000000000000
+      internalID: 729638102400529086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameCompactRegular_5
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 83
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64d22dd85d81b7c30800000000000000
+      internalID: 4358104369897549126
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameCompactRegular_6
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 83
+        width: 71
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 787a5948c859cd4d0800000000000000
+      internalID: -3108445212040124537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameCompactRegular_7
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 51
+        width: 27
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c5b6731ad937032c0800000000000000
+      internalID: -4453932910617597092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameCompactRegular_8
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 51
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6ea000dc5cf060f0800000000000000
+      internalID: -1125622431285727638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameCompactRegular_9
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 66
+        width: 18
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c616453f48dbc820800000000000000
+      internalID: 2939681016497182408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameCompactRegular_10
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 67
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22b828176e6bae590800000000000000
+      internalID: -7644096316644881630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameCompactRegular_11
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 51
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40b8f685f3b79d380800000000000000
+      internalID: -8945983672797918460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameCompactRegular_12
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 51
+        width: 16
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94c7a043007d89ca0800000000000000
+      internalID: -6009817306852852663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameCompactRegular_13
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 51
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f44556045569f80d0800000000000000
+      internalID: -3418348299254148017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameCompactRegular_14
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 1
+        width: 61
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 075374d0a2275acc0800000000000000
+      internalID: -3700425993878030992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameCompactRegular_15
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 51
+        width: 16
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 992436ea9c6133a90800000000000000
+      internalID: -7335494312586427751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameCompactRegular_16
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 17
+        width: 104
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e13930b88ebb5fe30800000000000000
+      internalID: 4536738807084716830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameCompactRegular_17
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 35
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7af4eb0443bac7b90800000000000000
+      internalID: -7242725859805737049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameCompactRegular_18
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 35
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 010ca6e96f2eca420800000000000000
+      internalID: 2642736630207266832
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameCompactRegular_19
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 35
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41aff1972d72d0350800000000000000
+      internalID: 5984483264774011412
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameCompactRegular_20
+      rect:
+        serializedVersion: 2
+        x: 233
+        y: 20
+        width: 48
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28086468ed51c5e80800000000000000
+      internalID: -8188645976986713982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameCompactRegular_21
+      rect:
+        serializedVersion: 2
+        x: 277
+        y: 35
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69ac75f1fcbad0ee0800000000000000
+      internalID: -1293188611913037162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameCompactRegular_22
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 4
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: faad1fc8f0dfe9e70800000000000000
+      internalID: 9124008138330200751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameCompactRegular_23
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 3
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4ef62d4259f6f1c0800000000000000
+      internalID: -4470111448241602996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameCompactRegular_24
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 3
+        width: 14
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca85d0b54e6bcb1d0800000000000000
+      internalID: -3333588532264609620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameCompactRegular_25
+      rect:
+        serializedVersion: 2
+        x: 233
+        y: 3
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee994ec3c494b5690800000000000000
+      internalID: -7612410153351734802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      GameCompactRegular_0: -4453020350693270305
+      GameCompactRegular_1: -9074056909523311784
+      GameCompactRegular_10: -7644096316644881630
+      GameCompactRegular_11: -8945983672797918460
+      GameCompactRegular_12: -6009817306852852663
+      GameCompactRegular_13: -3418348299254148017
+      GameCompactRegular_14: -3700425993878030992
+      GameCompactRegular_15: -7335494312586427751
+      GameCompactRegular_16: 4536738807084716830
+      GameCompactRegular_17: -7242725859805737049
+      GameCompactRegular_18: 2642736630207266832
+      GameCompactRegular_19: 5984483264774011412
+      GameCompactRegular_2: 3542446663051951293
+      GameCompactRegular_20: -8188645976986713982
+      GameCompactRegular_21: -1293188611913037162
+      GameCompactRegular_22: 9124008138330200751
+      GameCompactRegular_23: -4470111448241602996
+      GameCompactRegular_24: -3333588532264609620
+      GameCompactRegular_25: -7612410153351734802
+      GameCompactRegular_3: 7964914875843833118
+      GameCompactRegular_4: 729638102400529086
+      GameCompactRegular_5: 4358104369897549126
+      GameCompactRegular_6: -3108445212040124537
+      GameCompactRegular_7: -4453932910617597092
+      GameCompactRegular_8: -1125622431285727638
+      GameCompactRegular_9: 2939681016497182408
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -139,6 +139,7 @@ namespace RythmRPG.Combat
                 group.blocksRaycasts = true;
             }
             openedAt = GamePause.UnpausedRealtime;
+            ApplyStyleFont(Style);
             Build(report);
             Play(report.Victory ? Style.VictoryJingle : Style.DefeatJingle);
             Opened?.Invoke(report);
@@ -186,6 +187,39 @@ namespace RythmRPG.Combat
                 group.blocksRaycasts = false;
             }
             gameObject.SetActive(false);
+        }
+
+        // ---------- font ----------
+
+        /// <summary>
+        /// Puts the style's font on every text of the screen. A screen saved in a scene or prefab otherwise keeps the
+        /// font it was built with, so changing the style's font would do nothing. The rank letter keeps the Rank Font.
+        /// </summary>
+        private void ApplyStyleFont(CombatResultStyle s)
+        {
+            if (s == null || !s.HasCustomFont) return; // no font chosen: leave hand-made fonts alone
+            TMP_FontAsset font = s.FontAsset;
+            if (font == null) return;
+            bool letterUsesRankFont = s.RankFont != null;
+
+            var texts = new HashSet<TMP_Text>(GetComponentsInChildren<TMP_Text>(true));
+            if (rowTemplate != null) texts.UnionWith(rowTemplate.GetComponentsInChildren<TMP_Text>(true));
+            if (badgeTemplate != null) texts.Add(badgeTemplate);
+            foreach (TMP_Text text in texts)
+            {
+                if (text == null || (text == gradeLetter && letterUsesRankFont) || text.font == font) continue;
+                text.font = font;
+                CombatText.ApplyOutline(text, s.OutlineColor, CombatText.OutlineWidthFromPixels(3f, text.fontSize) + 0.1f);
+            }
+        }
+
+        [ContextMenu("Apply Style Font Now")]
+        private void ApplyStyleFontInEditor()
+        {
+            ApplyStyleFont(Style);
+#if UNITY_EDITOR
+            foreach (TMP_Text text in GetComponentsInChildren<TMP_Text>(true)) UnityEditor.EditorUtility.SetDirty(text);
+#endif
         }
 
         // ---------- timeline ----------

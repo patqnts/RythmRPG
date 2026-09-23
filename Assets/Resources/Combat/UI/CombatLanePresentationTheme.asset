@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70e41e82d04f4050932dcbbcbfeeb503, type: 3}
   m_Name: CombatLanePresentationTheme
   m_EditorClassIdentifier: 
+  ShowButtons: 0
   ButtonUnpressedSprite: {fileID: 21300000, guid: dbaad250b49fbb947abd461eaf98cbc2, type: 3}
   ButtonPressedSprite: {fileID: 21300000, guid: f2478e00832815c4bb0f3d23c36db4a7, type: 3}
   ButtonImageType: 0
@@ -19,7 +20,7 @@ MonoBehaviour:
   ButtonSize: {x: 64, y: 64}
   ButtonSpacing: 15
   BottomOffset: 2
-  ButtonFontAsset: {fileID: 11400000, guid: 11b93ff62af0a9f41923eaa3394f4c79, type: 2}
+  ButtonFontAsset: {fileID: 11400000, guid: 9cdeccbcbadc8cf4fb32c2cd30dd1f83, type: 2}
   ButtonFont: {fileID: 12800000, guid: 80a0137e3d8f78f41bfdb2aca0cfac44, type: 3}
   ButtonFontSize: 28
   ButtonFontStyle: 1
@@ -32,7 +33,20 @@ MonoBehaviour:
   LineGapAboveButtons: 8
   LineHorizontalPadding: 8
   SnapToRenderTexturePixels: 1
-  LineCapSprite: {fileID: 1853943049, guid: c8a0152b2ff9ce942b76c2f10ca43d89, type: 3}
+  ShowKeyMarkers: 1
+  KeyMarkersBreakLine: 1
+  KeyMarkerShape: 0
+  KeyMarkerSprite: {fileID: 0}
+  KeyMarkerSize: 21
+  KeyMarkerOutline: 0.25
+  KeyMarkerColor: {r: 1, g: 1, b: 1, a: 0.85}
+  KeyMarkerPressedColor: {r: 1, g: 0.85, b: 0.35, a: 1}
+  KeyMarkerPressedFill: {r: 1, g: 0.85, b: 0.35, a: 0.35}
+  KeyMarkerPressedScale: 1.15
+  ShowKeyMarkerLabels: 0
+  KeyMarkerLabelColor: {r: 1, g: 1, b: 1, a: 0.9}
+  KeyMarkerLabelScale: 0.55
+  LineCapSprite: {fileID: 21300000, guid: da6e5d60e01a4882a55986abd5097357, type: 3}
   LineCapJoinHeight: 3
   LineCapColor: {r: 1, g: 1, b: 1, a: 0}
   LineCapOverlap: 0

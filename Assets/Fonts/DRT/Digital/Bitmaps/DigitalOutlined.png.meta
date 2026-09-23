@@ -1,0 +1,5592 @@
+fileFormatVersion: 2
+guid: 6bff500fc867dbf40bd73989c6472b90
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2937417184597327463
+    second: DigitalOutlined_0
+  - first:
+      213: -6627818236102853266
+    second: DigitalOutlined_1
+  - first:
+      213: 4392514685172757798
+    second: DigitalOutlined_2
+  - first:
+      213: -8183222108272116260
+    second: DigitalOutlined_3
+  - first:
+      213: 2785496338905799495
+    second: DigitalOutlined_4
+  - first:
+      213: 3334672416288413241
+    second: DigitalOutlined_5
+  - first:
+      213: -8568033458545154306
+    second: DigitalOutlined_6
+  - first:
+      213: -5287435967051011857
+    second: DigitalOutlined_7
+  - first:
+      213: -407770825930626086
+    second: DigitalOutlined_8
+  - first:
+      213: 2728680534056263763
+    second: DigitalOutlined_9
+  - first:
+      213: 943371005574323577
+    second: DigitalOutlined_10
+  - first:
+      213: -4176737628744477576
+    second: DigitalOutlined_11
+  - first:
+      213: -4059377564789510726
+    second: DigitalOutlined_12
+  - first:
+      213: -499586170237206148
+    second: DigitalOutlined_13
+  - first:
+      213: 6243835102763559733
+    second: DigitalOutlined_14
+  - first:
+      213: 3906783556490036314
+    second: DigitalOutlined_15
+  - first:
+      213: 3917234027072976123
+    second: DigitalOutlined_16
+  - first:
+      213: -8802368179888557141
+    second: DigitalOutlined_17
+  - first:
+      213: -7916155162228526629
+    second: DigitalOutlined_18
+  - first:
+      213: 6973798496867982516
+    second: DigitalOutlined_19
+  - first:
+      213: -269293688865805168
+    second: DigitalOutlined_20
+  - first:
+      213: -7818741739549884980
+    second: DigitalOutlined_21
+  - first:
+      213: 2652825142105459487
+    second: DigitalOutlined_22
+  - first:
+      213: -4785792017487582415
+    second: DigitalOutlined_23
+  - first:
+      213: -1304379582312766125
+    second: DigitalOutlined_24
+  - first:
+      213: 8529475287056442090
+    second: DigitalOutlined_25
+  - first:
+      213: 2148869093049115374
+    second: DigitalOutlined_26
+  - first:
+      213: 6680338857290606607
+    second: DigitalOutlined_27
+  - first:
+      213: -9164447321257045701
+    second: DigitalOutlined_28
+  - first:
+      213: -4214433286478449109
+    second: DigitalOutlined_29
+  - first:
+      213: 2569908332369279197
+    second: DigitalOutlined_30
+  - first:
+      213: -6435958080843248306
+    second: DigitalOutlined_31
+  - first:
+      213: -199958942448075864
+    second: DigitalOutlined_32
+  - first:
+      213: -2360659739995560644
+    second: DigitalOutlined_33
+  - first:
+      213: 144922606600052564
+    second: DigitalOutlined_34
+  - first:
+      213: 8705782930956493314
+    second: DigitalOutlined_35
+  - first:
+      213: -2093235976789003841
+    second: DigitalOutlined_36
+  - first:
+      213: 2858188858692816187
+    second: DigitalOutlined_37
+  - first:
+      213: -3742992171161716783
+    second: DigitalOutlined_38
+  - first:
+      213: -7993922107272120078
+    second: DigitalOutlined_39
+  - first:
+      213: 3958449247297416656
+    second: DigitalOutlined_40
+  - first:
+      213: -7924071211459197996
+    second: DigitalOutlined_41
+  - first:
+      213: 6171289482868590616
+    second: DigitalOutlined_42
+  - first:
+      213: -4727532775238212266
+    second: DigitalOutlined_43
+  - first:
+      213: 7911776249026831177
+    second: DigitalOutlined_44
+  - first:
+      213: 5816811265865082878
+    second: DigitalOutlined_45
+  - first:
+      213: 2309283446005488657
+    second: DigitalOutlined_46
+  - first:
+      213: -317809508893285637
+    second: DigitalOutlined_47
+  - first:
+      213: 6310780706633313368
+    second: DigitalOutlined_48
+  - first:
+      213: -2166189288363190148
+    second: DigitalOutlined_49
+  - first:
+      213: -1340732549512495093
+    second: DigitalOutlined_50
+  - first:
+      213: -7362217637910950662
+    second: DigitalOutlined_51
+  - first:
+      213: 3318958421826776380
+    second: DigitalOutlined_52
+  - first:
+      213: 1817126014381856411
+    second: DigitalOutlined_53
+  - first:
+      213: -7105591555137541540
+    second: DigitalOutlined_54
+  - first:
+      213: -966846111496854353
+    second: DigitalOutlined_55
+  - first:
+      213: -8073664608033140169
+    second: DigitalOutlined_56
+  - first:
+      213: 1341821686631008006
+    second: DigitalOutlined_57
+  - first:
+      213: -4687420360973217842
+    second: DigitalOutlined_58
+  - first:
+      213: 25547232273351897
+    second: DigitalOutlined_59
+  - first:
+      213: -6626169690107751997
+    second: DigitalOutlined_60
+  - first:
+      213: -3694044734106832505
+    second: DigitalOutlined_61
+  - first:
+      213: -7418830838795600164
+    second: DigitalOutlined_62
+  - first:
+      213: -1613015434839945029
+    second: DigitalOutlined_63
+  - first:
+      213: 602351254714534028
+    second: DigitalOutlined_64
+  - first:
+      213: 1018222722661968564
+    second: DigitalOutlined_65
+  - first:
+      213: -833929750599740573
+    second: DigitalOutlined_66
+  - first:
+      213: -8783055562363491962
+    second: DigitalOutlined_67
+  - first:
+      213: -8211345062920631511
+    second: DigitalOutlined_68
+  - first:
+      213: 7865418710711233314
+    second: DigitalOutlined_69
+  - first:
+      213: -4722260952358614340
+    second: DigitalOutlined_70
+  - first:
+      213: -4445001768751973514
+    second: DigitalOutlined_71
+  - first:
+      213: 3146662095184946026
+    second: DigitalOutlined_72
+  - first:
+      213: -7560853892317586227
+    second: DigitalOutlined_73
+  - first:
+      213: -6712641627700995665
+    second: DigitalOutlined_74
+  - first:
+      213: -8141744203653868753
+    second: DigitalOutlined_75
+  - first:
+      213: 5547536738575167995
+    second: DigitalOutlined_76
+  - first:
+      213: -578244532538880055
+    second: DigitalOutlined_77
+  - first:
+      213: 8504202200169934190
+    second: DigitalOutlined_78
+  - first:
+      213: -5812053213613445196
+    second: DigitalOutlined_79
+  - first:
+      213: -4531423084995032808
+    second: DigitalOutlined_80
+  - first:
+      213: -3548002031063623497
+    second: DigitalOutlined_81
+  - first:
+      213: 7015485596297736713
+    second: DigitalOutlined_82
+  - first:
+      213: 5260546908019063568
+    second: DigitalOutlined_83
+  - first:
+      213: 3617617399975346121
+    second: DigitalOutlined_84
+  - first:
+      213: 397110876839255810
+    second: DigitalOutlined_85
+  - first:
+      213: -8860156821771158018
+    second: DigitalOutlined_86
+  - first:
+      213: 6376738978163491544
+    second: DigitalOutlined_87
+  - first:
+      213: -1800827788700199167
+    second: DigitalOutlined_88
+  - first:
+      213: -4371490822382727407
+    second: DigitalOutlined_89
+  - first:
+      213: 3857139317361957671
+    second: DigitalOutlined_90
+  - first:
+      213: -735845950169155012
+    second: DigitalOutlined_91
+  - first:
+      213: 6585771584808958493
+    second: DigitalOutlined_92
+  - first:
+      213: 6029172911291598858
+    second: DigitalOutlined_93
+  - first:
+      213: -1892323419968575737
+    second: DigitalOutlined_94
+  - first:
+      213: -9127487511617160428
+    second: DigitalOutlined_95
+  - first:
+      213: -3517608799680578887
+    second: DigitalOutlined_96
+  - first:
+      213: -9135109594619526341
+    second: DigitalOutlined_97
+  - first:
+      213: -8304640102980203672
+    second: DigitalOutlined_98
+  - first:
+      213: 3286339677369253119
+    second: DigitalOutlined_99
+  - first:
+      213: 3539326009789078261
+    second: DigitalOutlined_100
+  - first:
+      213: -4361491668858185820
+    second: DigitalOutlined_101
+  - first:
+      213: -5451875162434017824
+    second: DigitalOutlined_102
+  - first:
+      213: 6240926978533020985
+    second: DigitalOutlined_103
+  - first:
+      213: -9179952044270167535
+    second: DigitalOutlined_104
+  - first:
+      213: -7315764885884186277
+    second: DigitalOutlined_105
+  - first:
+      213: -6999028371287713181
+    second: DigitalOutlined_106
+  - first:
+      213: 4418643061922990753
+    second: DigitalOutlined_107
+  - first:
+      213: 1565480765136902884
+    second: DigitalOutlined_108
+  - first:
+      213: 8826482846357108582
+    second: DigitalOutlined_109
+  - first:
+      213: 1469248506238868117
+    second: DigitalOutlined_110
+  - first:
+      213: -7552614974819328007
+    second: DigitalOutlined_111
+  - first:
+      213: -5027069196054021151
+    second: DigitalOutlined_112
+  - first:
+      213: -7789598154088397679
+    second: DigitalOutlined_113
+  - first:
+      213: 5198510611777369811
+    second: DigitalOutlined_114
+  - first:
+      213: -2155693310497442392
+    second: DigitalOutlined_115
+  - first:
+      213: -4987414581610909053
+    second: DigitalOutlined_116
+  - first:
+      213: -7399760303295425012
+    second: DigitalOutlined_117
+  - first:
+      213: 2299411525812039846
+    second: DigitalOutlined_118
+  - first:
+      213: -6836638152002151836
+    second: DigitalOutlined_119
+  - first:
+      213: 6978445650113228092
+    second: DigitalOutlined_120
+  - first:
+      213: 3934084884591457994
+    second: DigitalOutlined_121
+  - first:
+      213: -5837348974390884786
+    second: DigitalOutlined_122
+  - first:
+      213: 4109539603125030042
+    second: DigitalOutlined_123
+  - first:
+      213: -8166553263631403283
+    second: DigitalOutlined_124
+  - first:
+      213: 8162068651340061542
+    second: DigitalOutlined_125
+  - first:
+      213: -7386082849357643075
+    second: DigitalOutlined_126
+  - first:
+      213: -4567556480159933812
+    second: DigitalOutlined_127
+  - first:
+      213: -3496843408915155375
+    second: DigitalOutlined_128
+  - first:
+      213: 94330994775963031
+    second: DigitalOutlined_129
+  - first:
+      213: -8723813522196808627
+    second: DigitalOutlined_130
+  - first:
+      213: -8441519573728298780
+    second: DigitalOutlined_131
+  - first:
+      213: -8501651980297853315
+    second: DigitalOutlined_132
+  - first:
+      213: 2037315237879077736
+    second: DigitalOutlined_133
+  - first:
+      213: -8944853521657598694
+    second: DigitalOutlined_134
+  - first:
+      213: 1734743441197486763
+    second: DigitalOutlined_135
+  - first:
+      213: -2587500539883599716
+    second: DigitalOutlined_136
+  - first:
+      213: 1818017825346318184
+    second: DigitalOutlined_137
+  - first:
+      213: 8733811160054859557
+    second: DigitalOutlined_138
+  - first:
+      213: -7797536850252215916
+    second: DigitalOutlined_139
+  - first:
+      213: 3649669586167354790
+    second: DigitalOutlined_140
+  - first:
+      213: -5037770673063641524
+    second: DigitalOutlined_141
+  - first:
+      213: -8299977657496117541
+    second: DigitalOutlined_142
+  - first:
+      213: 8582288739020482081
+    second: DigitalOutlined_143
+  - first:
+      213: 8534021005181803768
+    second: DigitalOutlined_144
+  - first:
+      213: -6921998120159041530
+    second: DigitalOutlined_145
+  - first:
+      213: 3980733923889510132
+    second: DigitalOutlined_146
+  - first:
+      213: 649094122581486604
+    second: DigitalOutlined_147
+  - first:
+      213: 7930413509437428556
+    second: DigitalOutlined_148
+  - first:
+      213: -2970077998457491812
+    second: DigitalOutlined_149
+  - first:
+      213: -6884208273527427426
+    second: DigitalOutlined_150
+  - first:
+      213: 7535484282983951758
+    second: DigitalOutlined_151
+  - first:
+      213: -3759306201104147517
+    second: DigitalOutlined_152
+  - first:
+      213: 4308152702375110670
+    second: DigitalOutlined_153
+  - first:
+      213: 3309089221139221451
+    second: DigitalOutlined_154
+  - first:
+      213: 4414602734102803812
+    second: DigitalOutlined_155
+  - first:
+      213: 4718805709181309030
+    second: DigitalOutlined_156
+  - first:
+      213: 5657850664569555610
+    second: DigitalOutlined_157
+  - first:
+      213: -8814635685562618433
+    second: DigitalOutlined_158
+  - first:
+      213: 3381371717393684038
+    second: DigitalOutlined_159
+  - first:
+      213: 8136952572753593802
+    second: DigitalOutlined_160
+  - first:
+      213: 3490159496722741923
+    second: DigitalOutlined_161
+  - first:
+      213: 711649658936050383
+    second: DigitalOutlined_162
+  - first:
+      213: -5801822332515755023
+    second: DigitalOutlined_163
+  - first:
+      213: -586740515298732239
+    second: DigitalOutlined_164
+  - first:
+      213: -1490923124880290444
+    second: DigitalOutlined_165
+  - first:
+      213: 2897039216395509212
+    second: DigitalOutlined_166
+  - first:
+      213: 972238278247104372
+    second: DigitalOutlined_167
+  - first:
+      213: -8532190963609612608
+    second: DigitalOutlined_168
+  - first:
+      213: -1099871679195082373
+    second: DigitalOutlined_169
+  - first:
+      213: -7893460234127457726
+    second: DigitalOutlined_170
+  - first:
+      213: 2582765664878714545
+    second: DigitalOutlined_171
+  - first:
+      213: 3303549135725353395
+    second: DigitalOutlined_172
+  - first:
+      213: 1634662679088569032
+    second: DigitalOutlined_173
+  - first:
+      213: -7118134083884192907
+    second: DigitalOutlined_174
+  - first:
+      213: 1047458795255841521
+    second: DigitalOutlined_175
+  - first:
+      213: 8445409437846053565
+    second: DigitalOutlined_176
+  - first:
+      213: -1957155136266265291
+    second: DigitalOutlined_177
+  - first:
+      213: 6595101615110673191
+    second: DigitalOutlined_178
+  - first:
+      213: 6504865927558717111
+    second: DigitalOutlined_179
+  - first:
+      213: 2104029499220267894
+    second: DigitalOutlined_180
+  - first:
+      213: 6187924183630023264
+    second: DigitalOutlined_181
+  - first:
+      213: 3937767842003839312
+    second: DigitalOutlined_182
+  - first:
+      213: -7550497389783943674
+    second: DigitalOutlined_183
+  - first:
+      213: -9213441088171724880
+    second: DigitalOutlined_184
+  - first:
+      213: 239179439644878193
+    second: DigitalOutlined_185
+  - first:
+      213: 5368756725987011239
+    second: DigitalOutlined_186
+  - first:
+      213: 5761719334239527680
+    second: DigitalOutlined_187
+  - first:
+      213: 2267637613169696299
+    second: DigitalOutlined_188
+  - first:
+      213: -3796065533362987416
+    second: DigitalOutlined_189
+  - first:
+      213: -3385195594341386535
+    second: DigitalOutlined_190
+  - first:
+      213: 6749469395287229662
+    second: DigitalOutlined_191
+  - first:
+      213: -3598548105628748953
+    second: DigitalOutlined_192
+  - first:
+      213: -109736613717254557
+    second: DigitalOutlined_193
+  - first:
+      213: -325460746850331773
+    second: DigitalOutlined_194
+  - first:
+      213: 8637830724878149856
+    second: DigitalOutlined_195
+  - first:
+      213: -7196938320788879957
+    second: DigitalOutlined_196
+  - first:
+      213: -8095542250734571315
+    second: DigitalOutlined_197
+  - first:
+      213: 6510387292878721561
+    second: DigitalOutlined_198
+  - first:
+      213: -7508565118722267123
+    second: DigitalOutlined_199
+  - first:
+      213: -1089814617630024636
+    second: DigitalOutlined_200
+  - first:
+      213: 4237386062316376147
+    second: DigitalOutlined_201
+  - first:
+      213: -7487475075094637499
+    second: DigitalOutlined_202
+  - first:
+      213: 6050720226641171557
+    second: DigitalOutlined_203
+  - first:
+      213: 1478015502630375639
+    second: DigitalOutlined_204
+  - first:
+      213: 7388543445886599756
+    second: DigitalOutlined_205
+  - first:
+      213: 7945005815976979507
+    second: DigitalOutlined_206
+  - first:
+      213: 8940549302716804922
+    second: DigitalOutlined_207
+  - first:
+      213: -7165445109110073604
+    second: DigitalOutlined_208
+  - first:
+      213: -6416087688515737654
+    second: DigitalOutlined_209
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: DigitalOutlined_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 194
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76e3d05cd5dc3c820800000000000000
+      internalID: 2937417184597327463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_1
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 194
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6dbb311e624504a0800000000000000
+      internalID: -6627818236102853266
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_2
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 194
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 625b86865d855fc30800000000000000
+      internalID: 4392514685172757798
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_3
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 194
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cdd315e59da5f6e80800000000000000
+      internalID: -8183222108272116260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_4
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 194
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74b91ab792218a620800000000000000
+      internalID: 2785496338905799495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_5
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 194
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9361a2f05e2274e20800000000000000
+      internalID: 3334672416288413241
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_6
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 194
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef621cff6fa381980800000000000000
+      internalID: -8568033458545154306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_7
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 194
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe8ec4380014f96b0800000000000000
+      internalID: -5287435967051011857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_8
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 194
+        width: 6
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: adb23a2289e475af0800000000000000
+      internalID: -407770825930626086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_9
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 194
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35062f11d783ed520800000000000000
+      internalID: 2728680534056263763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_10
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 194
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97d19ae6ee6871d00800000000000000
+      internalID: 943371005574323577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_11
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 194
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8749da6814f3906c0800000000000000
+      internalID: -4176737628744477576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_12
+      rect:
+        serializedVersion: 2
+        x: 218
+        y: 194
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: abde781cc913aa7c0800000000000000
+      internalID: -4059377564789510726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_13
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 194
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c71405c660d1119f0800000000000000
+      internalID: -499586170237206148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_14
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 194
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53b2658d1fe86a650800000000000000
+      internalID: 6243835102763559733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_15
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 194
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a540de212fea73630800000000000000
+      internalID: 3906783556490036314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_16
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 194
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf4f1cdd79fcc5630800000000000000
+      internalID: 3917234027072976123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_17
+      rect:
+        serializedVersion: 2
+        x: 308
+        y: 194
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba37a8ff6c4b7d580800000000000000
+      internalID: -8802368179888557141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_18
+      rect:
+        serializedVersion: 2
+        x: 326
+        y: 194
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd17e7052da242290800000000000000
+      internalID: -7916155162228526629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_19
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 194
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4bc18fcb8c8e7c060800000000000000
+      internalID: 6973798496867982516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_20
+      rect:
+        serializedVersion: 2
+        x: 362
+        y: 194
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 09c26e611d6434cf0800000000000000
+      internalID: -269293688865805168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_21
+      rect:
+        serializedVersion: 2
+        x: 380
+        y: 194
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ccdfb9730df3e7390800000000000000
+      internalID: -7818741739549884980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_22
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 194
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1bcb66596ab0d420800000000000000
+      internalID: 2652825142105459487
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_23
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 194
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13ba0cc2483759db0800000000000000
+      internalID: -4785792017487582415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_24
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 194
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 355a9f74ea9e5ede0800000000000000
+      internalID: -1304379582312766125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_25
+      rect:
+        serializedVersion: 2
+        x: 452
+        y: 194
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae2e87d1598ce5670800000000000000
+      internalID: 8529475287056442090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_26
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 162
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee222001e0152dd10800000000000000
+      internalID: 2148869093049115374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_27
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 162
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f08ab08fbc455bc50800000000000000
+      internalID: 6680338857290606607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_28
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 162
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3191b577b751d080800000000000000
+      internalID: -9164447321257045701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_29
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 162
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b26bed541435385c0800000000000000
+      internalID: -4214433286478449109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_30
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 162
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd8ff2823062aa320800000000000000
+      internalID: 2569908332369279197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_31
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 162
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4d88028932eea6a0800000000000000
+      internalID: -6435958080843248306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_32
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 162
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ab38b9b66a993df0800000000000000
+      internalID: -199958942448075864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_33
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 162
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c35aff949704d3fd0800000000000000
+      internalID: -2360659739995560644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_34
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 162
+        width: 6
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45fd156c75ed20200800000000000000
+      internalID: 144922606600052564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_35
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 162
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2022253537721d870800000000000000
+      internalID: 8705782930956493314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_36
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 162
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb17c6438f453f2e0800000000000000
+      internalID: -2093235976789003841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_37
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 162
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3d4d57af935aa720800000000000000
+      internalID: 2858188858692816187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_38
+      rect:
+        serializedVersion: 2
+        x: 218
+        y: 162
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d776d893783e0cc0800000000000000
+      internalID: -3742992171161716783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_39
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 162
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f837e17232ef0190800000000000000
+      internalID: -7993922107272120078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_40
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 162
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0dd239e1e9c3fe630800000000000000
+      internalID: 3958449247297416656
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_41
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 162
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d3431a773b080290800000000000000
+      internalID: -7924071211459197996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_42
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 162
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8188c787613d4a550800000000000000
+      internalID: 6171289482868590616
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_43
+      rect:
+        serializedVersion: 2
+        x: 308
+        y: 162
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 655e8eb0dfd646eb0800000000000000
+      internalID: -4727532775238212266
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_44
+      rect:
+        serializedVersion: 2
+        x: 326
+        y: 162
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 943ed9184964ccd60800000000000000
+      internalID: 7911776249026831177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_45
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 162
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef7e06b070779b050800000000000000
+      internalID: 5816811265865082878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_46
+      rect:
+        serializedVersion: 2
+        x: 362
+        y: 162
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11cd8dc1f093c0020800000000000000
+      internalID: 2309283446005488657
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_47
+      rect:
+        serializedVersion: 2
+        x: 380
+        y: 162
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf2ac2c7fe9e69bf0800000000000000
+      internalID: -317809508893285637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_48
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 162
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85c6442ed95649750800000000000000
+      internalID: 6310780706633313368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_49
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 162
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c781bd6b15620f1e0800000000000000
+      internalID: -2166189288363190148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_50
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 162
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b00018789d2c46de0800000000000000
+      internalID: -1340732549512495093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_51
+      rect:
+        serializedVersion: 2
+        x: 452
+        y: 162
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: afcc335a01624d990800000000000000
+      internalID: -7362217637910950662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_52
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 130
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3da64d991f4f0e20800000000000000
+      internalID: 3318958421826776380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_53
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 130
+        width: 6
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b961a578b7ab73910800000000000000
+      internalID: 1817126014381856411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_54
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 130
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c5ae20da02ed36d90800000000000000
+      internalID: -7105591555137541540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_55
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 130
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa423cb85921592f0800000000000000
+      internalID: -966846111496854353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_56
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 130
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7329a8aa0d494ff80800000000000000
+      internalID: -8073664608033140169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_57
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 130
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6078e87f6bb1f9210800000000000000
+      internalID: 1341821686631008006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_58
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 130
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ecf02474400f2feb0800000000000000
+      internalID: -4687420360973217842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_59
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 130
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d4c5a88213ca5000800000000000000
+      internalID: 25547232273351897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_60
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 130
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c1daa716cd1b04a0800000000000000
+      internalID: -6626169690107751997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_61
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 130
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 781f82fd2ed1cbcc0800000000000000
+      internalID: -3694044734106832505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_62
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 140
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cdeffd4a8a40b0990800000000000000
+      internalID: -7418830838795600164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_63
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 140
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb09425120b6d99e0800000000000000
+      internalID: -1613015434839945029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_64
+      rect:
+        serializedVersion: 2
+        x: 218
+        y: 140
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c884547564bfb5800800000000000000
+      internalID: 602351254714534028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_65
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 140
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ba6f76eb24712e00800000000000000
+      internalID: 1018222722661968564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_66
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 140
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3635fd76f494d64f0800000000000000
+      internalID: -833929750599740573
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_67
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 140
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6892eca20815c1680800000000000000
+      internalID: -8783055562363491962
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_68
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 132
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92b457cbb217b0e80800000000000000
+      internalID: -8211345062920631511
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_69
+      rect:
+        serializedVersion: 2
+        x: 308
+        y: 127
+        width: 14
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22b67a505a4972d60800000000000000
+      internalID: 7865418710711233314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_70
+      rect:
+        serializedVersion: 2
+        x: 326
+        y: 129
+        width: 16
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cba87f5fea8277eb0800000000000000
+      internalID: -4722260952358614340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_71
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 130
+        width: 15
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 67b3e83217e2052c0800000000000000
+      internalID: -4445001768751973514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_72
+      rect:
+        serializedVersion: 2
+        x: 362
+        y: 129
+        width: 14
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a636fabf0803bab20800000000000000
+      internalID: 3146662095184946026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_73
+      rect:
+        serializedVersion: 2
+        x: 380
+        y: 127
+        width: 14
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dccd7cda173721790800000000000000
+      internalID: -7560853892317586227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_74
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 127
+        width: 14
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa9d1643108e7d2a0800000000000000
+      internalID: -6712641627700995665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_75
+      rect:
+        serializedVersion: 2
+        x: 417
+        y: 133
+        width: 12
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f239d1998c6b20f80800000000000000
+      internalID: -8141744203653868753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_76
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 132
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf1b339854fccfc40800000000000000
+      internalID: 5547536738575167995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_77
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 130
+        width: 22
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9cf45bc49a9a9f7f0800000000000000
+      internalID: -578244532538880055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_78
+      rect:
+        serializedVersion: 2
+        x: 470
+        y: 130
+        width: 6
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6d693708def40670800000000000000
+      internalID: 8504202200169934190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_79
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 99
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4bf27e25560775fa0800000000000000
+      internalID: -5812053213613445196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_80
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 99
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 819cdd376b62d11c0800000000000000
+      internalID: -4531423084995032808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_81
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 99
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b8961c63f6f2cec0800000000000000
+      internalID: -3548002031063623497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_82
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 99
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 902323eeaf20c5160800000000000000
+      internalID: 7015485596297736713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_83
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 99
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01b71c09a87310940800000000000000
+      internalID: 5260546908019063568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_84
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 99
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9cf7dcabbdb543230800000000000000
+      internalID: 3617617399975346121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_85
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 99
+        width: 15
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20f927e0d32d28500800000000000000
+      internalID: 397110876839255810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_86
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 96
+        width: 14
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: efd731050566a0580800000000000000
+      internalID: -8860156821771158018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_87
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 99
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d282d2b05abe7850800000000000000
+      internalID: 6376738978163491544
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_88
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 99
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1075fd8daac2207e0800000000000000
+      internalID: -1800827788700199167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_89
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 99
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11f4ff812485553c0800000000000000
+      internalID: -4371490822382727407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_90
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 99
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72b5d8ce5cf478530800000000000000
+      internalID: 3857139317361957671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_91
+      rect:
+        serializedVersion: 2
+        x: 218
+        y: 99
+        width: 7
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3af1cac100c9c5f0800000000000000
+      internalID: -735845950169155012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_92
+      rect:
+        serializedVersion: 2
+        x: 234
+        y: 99
+        width: 10
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1a366c0d5c556b50800000000000000
+      internalID: 6585771584808958493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_93
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 99
+        width: 7
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0881f2a1dceba350800000000000000
+      internalID: 6029172911291598858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_94
+      rect:
+        serializedVersion: 2
+        x: 269
+        y: 99
+        width: 12
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 707ee9020ed1db5e0800000000000000
+      internalID: -1892323419968575737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_95
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 99
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41bbe3ab776a45180800000000000000
+      internalID: -9127487511617160428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_96
+      rect:
+        serializedVersion: 2
+        x: 308
+        y: 99
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ba304c0f61fe2fc0800000000000000
+      internalID: -3517608799680578887
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_97
+      rect:
+        serializedVersion: 2
+        x: 326
+        y: 99
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b33c07c3932993180800000000000000
+      internalID: -9135109594619526341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_98
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 99
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86bc66283ddffbc80800000000000000
+      internalID: -8304640102980203672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_99
+      rect:
+        serializedVersion: 2
+        x: 362
+        y: 99
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ffcbdd8568c6b9d20800000000000000
+      internalID: 3286339677369253119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_100
+      rect:
+        serializedVersion: 2
+        x: 380
+        y: 99
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5fa57c5f0463e1130800000000000000
+      internalID: 3539326009789078261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_101
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 99
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a7d1e27f6ed873c0800000000000000
+      internalID: -4361491668858185820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_102
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 99
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e5685fcc6c0754b0800000000000000
+      internalID: -5451875162434017824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_103
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 99
+        width: 15
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 935dc98650a3c9650800000000000000
+      internalID: 6240926978533020985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_104
+      rect:
+        serializedVersion: 2
+        x: 452
+        y: 99
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11ad722d0424a9080800000000000000
+      internalID: -9179952044270167535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_105
+      rect:
+        serializedVersion: 2
+        x: 470
+        y: 99
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b51d89cc89e297a90800000000000000
+      internalID: -7315764885884186277
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_106
+      rect:
+        serializedVersion: 2
+        x: 488
+        y: 99
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36ad38c57c47ede90800000000000000
+      internalID: -6999028371287713181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_107
+      rect:
+        serializedVersion: 2
+        x: 506
+        y: 99
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1aa0a2f247c225d30800000000000000
+      internalID: 4418643061922990753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_108
+      rect:
+        serializedVersion: 2
+        x: 524
+        y: 99
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ea11bc2674b9b510800000000000000
+      internalID: 1565480765136902884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_109
+      rect:
+        serializedVersion: 2
+        x: 542
+        y: 99
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 667b1315267fd7a70800000000000000
+      internalID: 8826482846357108582
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_110
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 99
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59a14256bb1d36410800000000000000
+      internalID: 1469248506238868117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_111
+      rect:
+        serializedVersion: 2
+        x: 575
+        y: 99
+        width: 17
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ff199422b8bf2790800000000000000
+      internalID: -7552614974819328007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_112
+      rect:
+        serializedVersion: 2
+        x: 596
+        y: 99
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1eb34e363334c3ab0800000000000000
+      internalID: -5027069196054021151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_113
+      rect:
+        serializedVersion: 2
+        x: 614
+        y: 97
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 194c58affb9c5e390800000000000000
+      internalID: -7789598154088397679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_114
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 66
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d6b618cbd1d42840800000000000000
+      internalID: 5198510611777369811
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_115
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 66
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a53d1ffa507512e0800000000000000
+      internalID: -2155693310497442392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_116
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 66
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3827a7bccd429cab0800000000000000
+      internalID: -4987414581610909053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_117
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 66
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c061a03b535ce4990800000000000000
+      internalID: -7399760303295425012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_118
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 66
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a03774999629ef10800000000000000
+      internalID: 2299411525812039846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_119
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 66
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46a5704a2d16f11a0800000000000000
+      internalID: -6836638152002151836
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_120
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 66
+        width: 15
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3d6e5b685b68d060800000000000000
+      internalID: 6978445650113228092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_121
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 63
+        width: 14
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac6be4edb5da89630800000000000000
+      internalID: 3934084884591457994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_122
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 66
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e46c07f09029dfea0800000000000000
+      internalID: -5837348974390884786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_123
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 66
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a9ccaaaee74080930800000000000000
+      internalID: 4109539603125030042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_124
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 66
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de671f133139aae80800000000000000
+      internalID: -8166553263631403283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_125
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 66
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66bd973a13e754170800000000000000
+      internalID: 8162068651340061542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_126
+      rect:
+        serializedVersion: 2
+        x: 218
+        y: 66
+        width: 7
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db2ce6a18cc5f7990800000000000000
+      internalID: -7386082849357643075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_127
+      rect:
+        serializedVersion: 2
+        x: 234
+        y: 66
+        width: 10
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c8a988cc497cc90c0800000000000000
+      internalID: -4567556480159933812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_128
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 66
+        width: 7
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15632785277b87fc0800000000000000
+      internalID: -3496843408915155375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_129
+      rect:
+        serializedVersion: 2
+        x: 269
+        y: 66
+        width: 12
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7953eea3a812f4100800000000000000
+      internalID: 94330994775963031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_130
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 66
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4cb5b282d9cee680800000000000000
+      internalID: -8723813522196808627
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_131
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 66
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e8fa6b3ca2b9da80800000000000000
+      internalID: -8441519573728298780
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_132
+      rect:
+        serializedVersion: 2
+        x: 326
+        y: 66
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d76a95e4190140a80800000000000000
+      internalID: -8501651980297853315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_133
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 66
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86bd5492a6ff54c10800000000000000
+      internalID: 2037315237879077736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_134
+      rect:
+        serializedVersion: 2
+        x: 362
+        y: 66
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1d62b92d1f7dd380800000000000000
+      internalID: -8944853521657598694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_135
+      rect:
+        serializedVersion: 2
+        x: 380
+        y: 66
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba2d30df7fb031810800000000000000
+      internalID: 1734743441197486763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_136
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 66
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c984b18d7f9571cd0800000000000000
+      internalID: -2587500539883599716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_137
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 66
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86f68137495ea3910800000000000000
+      internalID: 1818017825346318184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_138
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 66
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5278962f9fab43970800000000000000
+      internalID: 8733811160054859557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_139
+      rect:
+        serializedVersion: 2
+        x: 452
+        y: 66
+        width: 15
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 499c2bd3c8599c390800000000000000
+      internalID: -7797536850252215916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_140
+      rect:
+        serializedVersion: 2
+        x: 470
+        y: 66
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a55d0fd62b36a230800000000000000
+      internalID: 3649669586167354790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_141
+      rect:
+        serializedVersion: 2
+        x: 488
+        y: 66
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4e392c934e361ab0800000000000000
+      internalID: -5037770673063641524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_142
+      rect:
+        serializedVersion: 2
+        x: 506
+        y: 66
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bded341bb4e80dc80800000000000000
+      internalID: -8299977657496117541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_143
+      rect:
+        serializedVersion: 2
+        x: 524
+        y: 66
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 126a621232a6a1770800000000000000
+      internalID: 8582288739020482081
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_144
+      rect:
+        serializedVersion: 2
+        x: 542
+        y: 66
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8fc559793eeee6670800000000000000
+      internalID: 8534021005181803768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_145
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 66
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 608afff426f10ff90800000000000000
+      internalID: -6921998120159041530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_146
+      rect:
+        serializedVersion: 2
+        x: 578
+        y: 66
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f6f7c6b9686e3730800000000000000
+      internalID: 3980733923889510132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_147
+      rect:
+        serializedVersion: 2
+        x: 596
+        y: 66
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0c634a5aab020900800000000000000
+      internalID: 649094122581486604
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_148
+      rect:
+        serializedVersion: 2
+        x: 614
+        y: 66
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c431af7d11d7e0e60800000000000000
+      internalID: 7930413509437428556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_149
+      rect:
+        serializedVersion: 2
+        x: 632
+        y: 63
+        width: 14
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c9eecbaebc928c6d0800000000000000
+      internalID: -2970077998457491812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_150
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 50
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9ea790ac016670a0800000000000000
+      internalID: -6884208273527427426
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_151
+      rect:
+        serializedVersion: 2
+        x: 183
+        y: 50
+        width: 12
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8d2cc9d70b639860800000000000000
+      internalID: 7535484282983951758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_152
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 50
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3cb93418de244dbc0800000000000000
+      internalID: -3759306201104147517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_153
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 45
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e082537ae02a9cb30800000000000000
+      internalID: 4308152702375110670
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_154
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 45
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bcbc3144d1f3ced20800000000000000
+      internalID: 3309089221139221451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_155
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 45
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4657aae0cc1d34d30800000000000000
+      internalID: 4414602734102803812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_156
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 45
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66056db8ac09c7140800000000000000
+      internalID: 4718805709181309030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_157
+      rect:
+        serializedVersion: 2
+        x: 326
+        y: 45
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a9a40ede339b48e40800000000000000
+      internalID: 5657850664569555610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_158
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 45
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fbdee81cb8f1ca580800000000000000
+      internalID: -8814635685562618433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_159
+      rect:
+        serializedVersion: 2
+        x: 380
+        y: 45
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6469dc469ab0dee20800000000000000
+      internalID: 3381371717393684038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_160
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 45
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac5cd25e0434ce070800000000000000
+      internalID: 8136952572753593802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_161
+      rect:
+        serializedVersion: 2
+        x: 414
+        y: 39
+        width: 19
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3aa7d9312998f6030800000000000000
+      internalID: 3490159496722741923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_162
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 34
+        width: 11
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc24965289940e900800000000000000
+      internalID: 711649658936050383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_163
+      rect:
+        serializedVersion: 2
+        x: 455
+        y: 34
+        width: 11
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1fb5874f359cb7fa0800000000000000
+      internalID: -5801822332515755023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_164
+      rect:
+        serializedVersion: 2
+        x: 470
+        y: 34
+        width: 11
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1371a4a2c9a7bd7f0800000000000000
+      internalID: -586740515298732239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_165
+      rect:
+        serializedVersion: 2
+        x: 491
+        y: 34
+        width: 11
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47d4812315d2f4be0800000000000000
+      internalID: -1490923124880290444
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_166
+      rect:
+        serializedVersion: 2
+        x: 506
+        y: 34
+        width: 15
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cdd51a171d9543820800000000000000
+      internalID: 2897039216395509212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_167
+      rect:
+        serializedVersion: 2
+        x: 524
+        y: 34
+        width: 15
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47fb4fb10951e7d00800000000000000
+      internalID: 972238278247104372
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_168
+      rect:
+        serializedVersion: 2
+        x: 542
+        y: 36
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ce404a2681979980800000000000000
+      internalID: -8532190963609612608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_169
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 36
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b71901ff8887cb0f0800000000000000
+      internalID: -1099871679195082373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_170
+      rect:
+        serializedVersion: 2
+        x: 578
+        y: 34
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24249280dbbc47290800000000000000
+      internalID: -7893460234127457726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_171
+      rect:
+        serializedVersion: 2
+        x: 596
+        y: 34
+        width: 6
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1bedb2920b3d7d320800000000000000
+      internalID: 2582765664878714545
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_172
+      rect:
+        serializedVersion: 2
+        x: 614
+        y: 34
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b955fc9f6098dd20800000000000000
+      internalID: 3303549135725353395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_173
+      rect:
+        serializedVersion: 2
+        x: 632
+        y: 34
+        width: 6
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ca99aabb0d7fa610800000000000000
+      internalID: 1634662679088569032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_174
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 33
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57b6b72a3ce473d90800000000000000
+      internalID: -7118134083884192907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_175
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 34
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f245108932598e00800000000000000
+      internalID: 1047458795255841521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_176
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 33
+        width: 7
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db2ab85532f143570800000000000000
+      internalID: 8445409437846053565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_177
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 40
+        width: 11
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53d9484e5c9c6d4e0800000000000000
+      internalID: -1957155136266265291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_178
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 40
+        width: 12
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 723d6420af1868b50800000000000000
+      internalID: 6595101615110673191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_179
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 40
+        width: 14
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7beddabc81de54a50800000000000000
+      internalID: 6504865927558717111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_180
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 39
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 67397f19ea3033d10800000000000000
+      internalID: 2104029499220267894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_181
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 34
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06a015e824cefd550800000000000000
+      internalID: 6187924183630023264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_182
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 34
+        width: 15
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05968963df2c5a630800000000000000
+      internalID: 3937767842003839312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_183
+      rect:
+        serializedVersion: 2
+        x: 219
+        y: 40
+        width: 11
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 606f964d0ae373790800000000000000
+      internalID: -7550497389783943674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_184
+      rect:
+        serializedVersion: 2
+        x: 308
+        y: 33
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0bf298c2528432080800000000000000
+      internalID: -9213441088171724880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_185
+      rect:
+        serializedVersion: 2
+        x: 362
+        y: 33
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1752c91ee6cb15300800000000000000
+      internalID: 239179439644878193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_186
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 2
+        width: 10
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7aae1f12cc7a18a40800000000000000
+      internalID: 5368756725987011239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_187
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 2
+        width: 10
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 003e8d4253db5ff40800000000000000
+      internalID: 5761719334239527680
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_188
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 2
+        width: 10
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b2e5b4c0564487f10800000000000000
+      internalID: 2267637613169696299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_189
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 2
+        width: 10
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86e9bc3828aa15bc0800000000000000
+      internalID: -3796065533362987416
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_190
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 2
+        width: 12
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d67010ea8e5501d0800000000000000
+      internalID: -3385195594341386535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_191
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 2
+        width: 12
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed44770a7aeeaad50800000000000000
+      internalID: 6749469395287229662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_192
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 11
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 763f7d850936f0ec0800000000000000
+      internalID: -3598548105628748953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_193
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 11
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36e578891232a7ef0800000000000000
+      internalID: -109736613717254557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_194
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 13
+        width: 13
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 38317a3dc2bbb7bf0800000000000000
+      internalID: -325460746850331773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_195
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 4
+        width: 15
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e82152774dbfd770800000000000000
+      internalID: 8637830724878149856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_196
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 4
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba58bfe6ab65f1c90800000000000000
+      internalID: -7196938320788879957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_197
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 4
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc0bcc8073bd6af80800000000000000
+      internalID: -8095542250734571315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_198
+      rect:
+        serializedVersion: 2
+        x: 218
+        y: 4
+        width: 13
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 912d046dfba895a50800000000000000
+      internalID: 6510387292878721561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_199
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 6
+        width: 14
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d08abad7ec73cc790800000000000000
+      internalID: -7508565118722267123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_200
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 2
+        width: 14
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44c522d116330e0f0800000000000000
+      internalID: -1089814617630024636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_201
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 15
+        width: 14
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3501f8c4c283eca30800000000000000
+      internalID: 4237386062316376147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_202
+      rect:
+        serializedVersion: 2
+        x: 308
+        y: 12
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 544946ce615271890800000000000000
+      internalID: -7487475075094637499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_203
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 3
+        width: 16
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 564d730fcf978f350800000000000000
+      internalID: 6050720226641171557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_204
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 2
+        width: 6
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d0ddcec447f28410800000000000000
+      internalID: 1478015502630375639
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_205
+      rect:
+        serializedVersion: 2
+        x: 362
+        y: 5
+        width: 14
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c428c9b2e11698660800000000000000
+      internalID: 7388543445886599756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_206
+      rect:
+        serializedVersion: 2
+        x: 380
+        y: 2
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33c68b7f1b4524e60800000000000000
+      internalID: 7945005815976979507
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_207
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 2
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3f2d45c836331c70800000000000000
+      internalID: 8940549302716804922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_208
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 2
+        width: 14
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf61fed23a93f8c90800000000000000
+      internalID: -7165445109110073604
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DigitalOutlined_209
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 0
+        width: 10
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac7234ebd3a75f6a0800000000000000
+      internalID: -6416087688515737654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      DigitalOutlined_0: 2937417184597327463
+      DigitalOutlined_1: -6627818236102853266
+      DigitalOutlined_10: 943371005574323577
+      DigitalOutlined_100: 3539326009789078261
+      DigitalOutlined_101: -4361491668858185820
+      DigitalOutlined_102: -5451875162434017824
+      DigitalOutlined_103: 6240926978533020985
+      DigitalOutlined_104: -9179952044270167535
+      DigitalOutlined_105: -7315764885884186277
+      DigitalOutlined_106: -6999028371287713181
+      DigitalOutlined_107: 4418643061922990753
+      DigitalOutlined_108: 1565480765136902884
+      DigitalOutlined_109: 8826482846357108582
+      DigitalOutlined_11: -4176737628744477576
+      DigitalOutlined_110: 1469248506238868117
+      DigitalOutlined_111: -7552614974819328007
+      DigitalOutlined_112: -5027069196054021151
+      DigitalOutlined_113: -7789598154088397679
+      DigitalOutlined_114: 5198510611777369811
+      DigitalOutlined_115: -2155693310497442392
+      DigitalOutlined_116: -4987414581610909053
+      DigitalOutlined_117: -7399760303295425012
+      DigitalOutlined_118: 2299411525812039846
+      DigitalOutlined_119: -6836638152002151836
+      DigitalOutlined_12: -4059377564789510726
+      DigitalOutlined_120: 6978445650113228092
+      DigitalOutlined_121: 3934084884591457994
+      DigitalOutlined_122: -5837348974390884786
+      DigitalOutlined_123: 4109539603125030042
+      DigitalOutlined_124: -8166553263631403283
+      DigitalOutlined_125: 8162068651340061542
+      DigitalOutlined_126: -7386082849357643075
+      DigitalOutlined_127: -4567556480159933812
+      DigitalOutlined_128: -3496843408915155375
+      DigitalOutlined_129: 94330994775963031
+      DigitalOutlined_13: -499586170237206148
+      DigitalOutlined_130: -8723813522196808627
+      DigitalOutlined_131: -8441519573728298780
+      DigitalOutlined_132: -8501651980297853315
+      DigitalOutlined_133: 2037315237879077736
+      DigitalOutlined_134: -8944853521657598694
+      DigitalOutlined_135: 1734743441197486763
+      DigitalOutlined_136: -2587500539883599716
+      DigitalOutlined_137: 1818017825346318184
+      DigitalOutlined_138: 8733811160054859557
+      DigitalOutlined_139: -7797536850252215916
+      DigitalOutlined_14: 6243835102763559733
+      DigitalOutlined_140: 3649669586167354790
+      DigitalOutlined_141: -5037770673063641524
+      DigitalOutlined_142: -8299977657496117541
+      DigitalOutlined_143: 8582288739020482081
+      DigitalOutlined_144: 8534021005181803768
+      DigitalOutlined_145: -6921998120159041530
+      DigitalOutlined_146: 3980733923889510132
+      DigitalOutlined_147: 649094122581486604
+      DigitalOutlined_148: 7930413509437428556
+      DigitalOutlined_149: -2970077998457491812
+      DigitalOutlined_15: 3906783556490036314
+      DigitalOutlined_150: -6884208273527427426
+      DigitalOutlined_151: 7535484282983951758
+      DigitalOutlined_152: -3759306201104147517
+      DigitalOutlined_153: 4308152702375110670
+      DigitalOutlined_154: 3309089221139221451
+      DigitalOutlined_155: 4414602734102803812
+      DigitalOutlined_156: 4718805709181309030
+      DigitalOutlined_157: 5657850664569555610
+      DigitalOutlined_158: -8814635685562618433
+      DigitalOutlined_159: 3381371717393684038
+      DigitalOutlined_16: 3917234027072976123
+      DigitalOutlined_160: 8136952572753593802
+      DigitalOutlined_161: 3490159496722741923
+      DigitalOutlined_162: 711649658936050383
+      DigitalOutlined_163: -5801822332515755023
+      DigitalOutlined_164: -586740515298732239
+      DigitalOutlined_165: -1490923124880290444
+      DigitalOutlined_166: 2897039216395509212
+      DigitalOutlined_167: 972238278247104372
+      DigitalOutlined_168: -8532190963609612608
+      DigitalOutlined_169: -1099871679195082373
+      DigitalOutlined_17: -8802368179888557141
+      DigitalOutlined_170: -7893460234127457726
+      DigitalOutlined_171: 2582765664878714545
+      DigitalOutlined_172: 3303549135725353395
+      DigitalOutlined_173: 1634662679088569032
+      DigitalOutlined_174: -7118134083884192907
+      DigitalOutlined_175: 1047458795255841521
+      DigitalOutlined_176: 8445409437846053565
+      DigitalOutlined_177: -1957155136266265291
+      DigitalOutlined_178: 6595101615110673191
+      DigitalOutlined_179: 6504865927558717111
+      DigitalOutlined_18: -7916155162228526629
+      DigitalOutlined_180: 2104029499220267894
+      DigitalOutlined_181: 6187924183630023264
+      DigitalOutlined_182: 3937767842003839312
+      DigitalOutlined_183: -7550497389783943674
+      DigitalOutlined_184: -9213441088171724880
+      DigitalOutlined_185: 239179439644878193
+      DigitalOutlined_186: 5368756725987011239
+      DigitalOutlined_187: 5761719334239527680
+      DigitalOutlined_188: 2267637613169696299
+      DigitalOutlined_189: -3796065533362987416
+      DigitalOutlined_19: 6973798496867982516
+      DigitalOutlined_190: -3385195594341386535
+      DigitalOutlined_191: 6749469395287229662
+      DigitalOutlined_192: -3598548105628748953
+      DigitalOutlined_193: -109736613717254557
+      DigitalOutlined_194: -325460746850331773
+      DigitalOutlined_195: 8637830724878149856
+      DigitalOutlined_196: -7196938320788879957
+      DigitalOutlined_197: -8095542250734571315
+      DigitalOutlined_198: 6510387292878721561
+      DigitalOutlined_199: -7508565118722267123
+      DigitalOutlined_2: 4392514685172757798
+      DigitalOutlined_20: -269293688865805168
+      DigitalOutlined_200: -1089814617630024636
+      DigitalOutlined_201: 4237386062316376147
+      DigitalOutlined_202: -7487475075094637499
+      DigitalOutlined_203: 6050720226641171557
+      DigitalOutlined_204: 1478015502630375639
+      DigitalOutlined_205: 7388543445886599756
+      DigitalOutlined_206: 7945005815976979507
+      DigitalOutlined_207: 8940549302716804922
+      DigitalOutlined_208: -7165445109110073604
+      DigitalOutlined_209: -6416087688515737654
+      DigitalOutlined_21: -7818741739549884980
+      DigitalOutlined_22: 2652825142105459487
+      DigitalOutlined_23: -4785792017487582415
+      DigitalOutlined_24: -1304379582312766125
+      DigitalOutlined_25: 8529475287056442090
+      DigitalOutlined_26: 2148869093049115374
+      DigitalOutlined_27: 6680338857290606607
+      DigitalOutlined_28: -9164447321257045701
+      DigitalOutlined_29: -4214433286478449109
+      DigitalOutlined_3: -8183222108272116260
+      DigitalOutlined_30: 2569908332369279197
+      DigitalOutlined_31: -6435958080843248306
+      DigitalOutlined_32: -199958942448075864
+      DigitalOutlined_33: -2360659739995560644
+      DigitalOutlined_34: 144922606600052564
+      DigitalOutlined_35: 8705782930956493314
+      DigitalOutlined_36: -2093235976789003841
+      DigitalOutlined_37: 2858188858692816187
+      DigitalOutlined_38: -3742992171161716783
+      DigitalOutlined_39: -7993922107272120078
+      DigitalOutlined_4: 2785496338905799495
+      DigitalOutlined_40: 3958449247297416656
+      DigitalOutlined_41: -7924071211459197996
+      DigitalOutlined_42: 6171289482868590616
+      DigitalOutlined_43: -4727532775238212266
+      DigitalOutlined_44: 7911776249026831177
+      DigitalOutlined_45: 5816811265865082878
+      DigitalOutlined_46: 2309283446005488657
+      DigitalOutlined_47: -317809508893285637
+      DigitalOutlined_48: 6310780706633313368
+      DigitalOutlined_49: -2166189288363190148
+      DigitalOutlined_5: 3334672416288413241
+      DigitalOutlined_50: -1340732549512495093
+      DigitalOutlined_51: -7362217637910950662
+      DigitalOutlined_52: 3318958421826776380
+      DigitalOutlined_53: 1817126014381856411
+      DigitalOutlined_54: -7105591555137541540
+      DigitalOutlined_55: -966846111496854353
+      DigitalOutlined_56: -8073664608033140169
+      DigitalOutlined_57: 1341821686631008006
+      DigitalOutlined_58: -4687420360973217842
+      DigitalOutlined_59: 25547232273351897
+      DigitalOutlined_6: -8568033458545154306
+      DigitalOutlined_60: -6626169690107751997
+      DigitalOutlined_61: -3694044734106832505
+      DigitalOutlined_62: -7418830838795600164
+      DigitalOutlined_63: -1613015434839945029
+      DigitalOutlined_64: 602351254714534028
+      DigitalOutlined_65: 1018222722661968564
+      DigitalOutlined_66: -833929750599740573
+      DigitalOutlined_67: -8783055562363491962
+      DigitalOutlined_68: -8211345062920631511
+      DigitalOutlined_69: 7865418710711233314
+      DigitalOutlined_7: -5287435967051011857
+      DigitalOutlined_70: -4722260952358614340
+      DigitalOutlined_71: -4445001768751973514
+      DigitalOutlined_72: 3146662095184946026
+      DigitalOutlined_73: -7560853892317586227
+      DigitalOutlined_74: -6712641627700995665
+      DigitalOutlined_75: -8141744203653868753
+      DigitalOutlined_76: 5547536738575167995
+      DigitalOutlined_77: -578244532538880055
+      DigitalOutlined_78: 8504202200169934190
+      DigitalOutlined_79: -5812053213613445196
+      DigitalOutlined_8: -407770825930626086
+      DigitalOutlined_80: -4531423084995032808
+      DigitalOutlined_81: -3548002031063623497
+      DigitalOutlined_82: 7015485596297736713
+      DigitalOutlined_83: 5260546908019063568
+      DigitalOutlined_84: 3617617399975346121
+      DigitalOutlined_85: 397110876839255810
+      DigitalOutlined_86: -8860156821771158018
+      DigitalOutlined_87: 6376738978163491544
+      DigitalOutlined_88: -1800827788700199167
+      DigitalOutlined_89: -4371490822382727407
+      DigitalOutlined_9: 2728680534056263763
+      DigitalOutlined_90: 3857139317361957671
+      DigitalOutlined_91: -735845950169155012
+      DigitalOutlined_92: 6585771584808958493
+      DigitalOutlined_93: 6029172911291598858
+      DigitalOutlined_94: -1892323419968575737
+      DigitalOutlined_95: -9127487511617160428
+      DigitalOutlined_96: -3517608799680578887
+      DigitalOutlined_97: -9135109594619526341
+      DigitalOutlined_98: -8304640102980203672
+      DigitalOutlined_99: 3286339677369253119
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

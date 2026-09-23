@@ -1,0 +1,4474 @@
+fileFormatVersion: 2
+guid: c6a1abe5367089344aa9be2211c1cdfe
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5372141406374796359
+    second: ArcadeBlock_0
+  - first:
+      213: -4656334428641880431
+    second: ArcadeBlock_1
+  - first:
+      213: -6670683767059823812
+    second: ArcadeBlock_2
+  - first:
+      213: -1277736474167828987
+    second: ArcadeBlock_3
+  - first:
+      213: -6546351115204639490
+    second: ArcadeBlock_4
+  - first:
+      213: 4796245246122489193
+    second: ArcadeBlock_5
+  - first:
+      213: -3756459394494625274
+    second: ArcadeBlock_6
+  - first:
+      213: 8107249298156364536
+    second: ArcadeBlock_7
+  - first:
+      213: 7565658411889865842
+    second: ArcadeBlock_8
+  - first:
+      213: 7039264140039640309
+    second: ArcadeBlock_9
+  - first:
+      213: -5116109589211390805
+    second: ArcadeBlock_10
+  - first:
+      213: -2248329503892390637
+    second: ArcadeBlock_11
+  - first:
+      213: -840293388163689856
+    second: ArcadeBlock_12
+  - first:
+      213: -7584569803065719388
+    second: ArcadeBlock_13
+  - first:
+      213: 1906091835816213638
+    second: ArcadeBlock_14
+  - first:
+      213: -7084412248477060986
+    second: ArcadeBlock_15
+  - first:
+      213: -7798511311324846360
+    second: ArcadeBlock_16
+  - first:
+      213: 4141698084887075429
+    second: ArcadeBlock_17
+  - first:
+      213: 2520326246590481922
+    second: ArcadeBlock_18
+  - first:
+      213: 5831618849461446728
+    second: ArcadeBlock_19
+  - first:
+      213: -220916189942251956
+    second: ArcadeBlock_20
+  - first:
+      213: 5569614542830750341
+    second: ArcadeBlock_21
+  - first:
+      213: 3285822203120377018
+    second: ArcadeBlock_22
+  - first:
+      213: -6948990680152340583
+    second: ArcadeBlock_23
+  - first:
+      213: -7251468790904276806
+    second: ArcadeBlock_24
+  - first:
+      213: -8125294593091563671
+    second: ArcadeBlock_25
+  - first:
+      213: 4411955614017489164
+    second: ArcadeBlock_26
+  - first:
+      213: 570414681661947522
+    second: ArcadeBlock_27
+  - first:
+      213: 5205267716154833635
+    second: ArcadeBlock_28
+  - first:
+      213: -4140228841445216707
+    second: ArcadeBlock_29
+  - first:
+      213: 2825995472685969390
+    second: ArcadeBlock_30
+  - first:
+      213: -8222959533643142534
+    second: ArcadeBlock_31
+  - first:
+      213: 9074917361356538104
+    second: ArcadeBlock_32
+  - first:
+      213: -7704623589855812061
+    second: ArcadeBlock_33
+  - first:
+      213: 6397037239068240998
+    second: ArcadeBlock_34
+  - first:
+      213: 5325305240132755591
+    second: ArcadeBlock_35
+  - first:
+      213: -1109906640319874469
+    second: ArcadeBlock_36
+  - first:
+      213: -1947301392788550992
+    second: ArcadeBlock_37
+  - first:
+      213: 7680308399300506716
+    second: ArcadeBlock_38
+  - first:
+      213: -1427345244441078292
+    second: ArcadeBlock_39
+  - first:
+      213: -1946099040343550981
+    second: ArcadeBlock_40
+  - first:
+      213: 5753458231171838253
+    second: ArcadeBlock_41
+  - first:
+      213: -4427694411230756970
+    second: ArcadeBlock_42
+  - first:
+      213: 372981796924053430
+    second: ArcadeBlock_43
+  - first:
+      213: -3148339294004698409
+    second: ArcadeBlock_44
+  - first:
+      213: 7054975847035901685
+    second: ArcadeBlock_45
+  - first:
+      213: 4896195818092722565
+    second: ArcadeBlock_46
+  - first:
+      213: -2307606440613959501
+    second: ArcadeBlock_47
+  - first:
+      213: -4842832288161824312
+    second: ArcadeBlock_48
+  - first:
+      213: 4864413817709329567
+    second: ArcadeBlock_49
+  - first:
+      213: -664771056456961180
+    second: ArcadeBlock_50
+  - first:
+      213: 4171889174010456931
+    second: ArcadeBlock_51
+  - first:
+      213: -4150017183960977021
+    second: ArcadeBlock_52
+  - first:
+      213: 6874279863026327579
+    second: ArcadeBlock_53
+  - first:
+      213: 6738442211156053754
+    second: ArcadeBlock_54
+  - first:
+      213: 5350684701005037512
+    second: ArcadeBlock_55
+  - first:
+      213: 1743491337939815200
+    second: ArcadeBlock_56
+  - first:
+      213: -8026779851293098374
+    second: ArcadeBlock_57
+  - first:
+      213: 3975788270311892284
+    second: ArcadeBlock_58
+  - first:
+      213: -5812933253057470762
+    second: ArcadeBlock_59
+  - first:
+      213: 1318521020108528629
+    second: ArcadeBlock_60
+  - first:
+      213: 2386608164888498427
+    second: ArcadeBlock_61
+  - first:
+      213: 2570037231141406658
+    second: ArcadeBlock_62
+  - first:
+      213: -1320884544265929138
+    second: ArcadeBlock_63
+  - first:
+      213: -2308547277041812166
+    second: ArcadeBlock_64
+  - first:
+      213: 8820649944632970360
+    second: ArcadeBlock_65
+  - first:
+      213: 6870936254226844877
+    second: ArcadeBlock_66
+  - first:
+      213: 5589422058898376312
+    second: ArcadeBlock_67
+  - first:
+      213: -2616686556595023987
+    second: ArcadeBlock_68
+  - first:
+      213: -8820570936058783575
+    second: ArcadeBlock_69
+  - first:
+      213: 8164284972174848528
+    second: ArcadeBlock_70
+  - first:
+      213: -5516861691170546501
+    second: ArcadeBlock_71
+  - first:
+      213: -5893777684032864809
+    second: ArcadeBlock_72
+  - first:
+      213: 1900588332538440393
+    second: ArcadeBlock_73
+  - first:
+      213: -6502402914321774932
+    second: ArcadeBlock_74
+  - first:
+      213: 5431884288352214180
+    second: ArcadeBlock_75
+  - first:
+      213: 4271344510430502484
+    second: ArcadeBlock_76
+  - first:
+      213: 768454552484229984
+    second: ArcadeBlock_77
+  - first:
+      213: -2077828477872320494
+    second: ArcadeBlock_78
+  - first:
+      213: 6563620720616998365
+    second: ArcadeBlock_79
+  - first:
+      213: 8838499319241526644
+    second: ArcadeBlock_80
+  - first:
+      213: 5693332483383140333
+    second: ArcadeBlock_81
+  - first:
+      213: -503814097077007001
+    second: ArcadeBlock_82
+  - first:
+      213: -8354713748604157952
+    second: ArcadeBlock_83
+  - first:
+      213: -5978681103042940682
+    second: ArcadeBlock_84
+  - first:
+      213: 4447327483303566915
+    second: ArcadeBlock_85
+  - first:
+      213: 2608652344691677237
+    second: ArcadeBlock_86
+  - first:
+      213: 4812640146999036133
+    second: ArcadeBlock_87
+  - first:
+      213: 5863550669393095427
+    second: ArcadeBlock_88
+  - first:
+      213: -3838266482091204440
+    second: ArcadeBlock_89
+  - first:
+      213: -3725014914972100610
+    second: ArcadeBlock_90
+  - first:
+      213: -9003182967997550113
+    second: ArcadeBlock_91
+  - first:
+      213: 712563078544103704
+    second: ArcadeBlock_92
+  - first:
+      213: 5521011640941473743
+    second: ArcadeBlock_93
+  - first:
+      213: -2684469509250686944
+    second: ArcadeBlock_94
+  - first:
+      213: -7836235715787334119
+    second: ArcadeBlock_95
+  - first:
+      213: 4737622257428718531
+    second: ArcadeBlock_96
+  - first:
+      213: 1934027164373075030
+    second: ArcadeBlock_97
+  - first:
+      213: -2188207188779303893
+    second: ArcadeBlock_98
+  - first:
+      213: 4807612541460957989
+    second: ArcadeBlock_99
+  - first:
+      213: 953921599555708908
+    second: ArcadeBlock_100
+  - first:
+      213: 4081991819262927387
+    second: ArcadeBlock_101
+  - first:
+      213: -3685338092912629729
+    second: ArcadeBlock_102
+  - first:
+      213: 2610556985648580394
+    second: ArcadeBlock_103
+  - first:
+      213: 1329573886541241053
+    second: ArcadeBlock_104
+  - first:
+      213: 3336887742829924562
+    second: ArcadeBlock_105
+  - first:
+      213: 6843879775306117796
+    second: ArcadeBlock_106
+  - first:
+      213: 4339114810819317548
+    second: ArcadeBlock_107
+  - first:
+      213: 14016027509191940
+    second: ArcadeBlock_108
+  - first:
+      213: 8732281914314963371
+    second: ArcadeBlock_109
+  - first:
+      213: -963620845663567100
+    second: ArcadeBlock_110
+  - first:
+      213: 6344491357662705663
+    second: ArcadeBlock_111
+  - first:
+      213: 5623387291123182077
+    second: ArcadeBlock_112
+  - first:
+      213: -6214514057839977714
+    second: ArcadeBlock_113
+  - first:
+      213: -4547067210601211671
+    second: ArcadeBlock_114
+  - first:
+      213: -8401291692257256619
+    second: ArcadeBlock_115
+  - first:
+      213: 7817893474464177517
+    second: ArcadeBlock_116
+  - first:
+      213: 7060722219206836126
+    second: ArcadeBlock_117
+  - first:
+      213: 4066687937837112792
+    second: ArcadeBlock_118
+  - first:
+      213: -6127310889630356581
+    second: ArcadeBlock_119
+  - first:
+      213: -5488008511230191653
+    second: ArcadeBlock_120
+  - first:
+      213: -7409779662815184271
+    second: ArcadeBlock_121
+  - first:
+      213: 2364103083592466288
+    second: ArcadeBlock_122
+  - first:
+      213: 8901760589242674960
+    second: ArcadeBlock_123
+  - first:
+      213: -8740627284862647688
+    second: ArcadeBlock_124
+  - first:
+      213: -3514230880713182663
+    second: ArcadeBlock_125
+  - first:
+      213: -255056727312980959
+    second: ArcadeBlock_126
+  - first:
+      213: -1016243770277713483
+    second: ArcadeBlock_127
+  - first:
+      213: 1941048935766383429
+    second: ArcadeBlock_128
+  - first:
+      213: -8370895542994027780
+    second: ArcadeBlock_129
+  - first:
+      213: 1344841854519618320
+    second: ArcadeBlock_130
+  - first:
+      213: 4651254619168209671
+    second: ArcadeBlock_131
+  - first:
+      213: 2389994572019467230
+    second: ArcadeBlock_132
+  - first:
+      213: 7015936620560277649
+    second: ArcadeBlock_133
+  - first:
+      213: 7841067153886346210
+    second: ArcadeBlock_134
+  - first:
+      213: 3340544812536328676
+    second: ArcadeBlock_135
+  - first:
+      213: -1741268940694541228
+    second: ArcadeBlock_136
+  - first:
+      213: -6825214928928405436
+    second: ArcadeBlock_137
+  - first:
+      213: 7484045753724938427
+    second: ArcadeBlock_138
+  - first:
+      213: 4467897034054228630
+    second: ArcadeBlock_139
+  - first:
+      213: -2773426288013478913
+    second: ArcadeBlock_140
+  - first:
+      213: -2721480453199766831
+    second: ArcadeBlock_141
+  - first:
+      213: 6819504753077469753
+    second: ArcadeBlock_142
+  - first:
+      213: 6207309447180857178
+    second: ArcadeBlock_143
+  - first:
+      213: 6167982986307845087
+    second: ArcadeBlock_144
+  - first:
+      213: 261700571687030496
+    second: ArcadeBlock_145
+  - first:
+      213: -6281382660889834324
+    second: ArcadeBlock_146
+  - first:
+      213: 4507656760389040314
+    second: ArcadeBlock_147
+  - first:
+      213: -2238623588469234484
+    second: ArcadeBlock_148
+  - first:
+      213: 6264957844565889001
+    second: ArcadeBlock_149
+  - first:
+      213: 5895321031718677130
+    second: ArcadeBlock_150
+  - first:
+      213: -7206857414486397064
+    second: ArcadeBlock_151
+  - first:
+      213: 1555508593839229370
+    second: ArcadeBlock_152
+  - first:
+      213: -3893027575390451067
+    second: ArcadeBlock_153
+  - first:
+      213: 9109307125150468240
+    second: ArcadeBlock_154
+  - first:
+      213: 2959992007764519078
+    second: ArcadeBlock_155
+  - first:
+      213: -4118998614883505580
+    second: ArcadeBlock_156
+  - first:
+      213: -6711760410014420392
+    second: ArcadeBlock_157
+  - first:
+      213: -3706387599750106008
+    second: ArcadeBlock_158
+  - first:
+      213: -4132886373114333377
+    second: ArcadeBlock_159
+  - first:
+      213: -3872498737639840812
+    second: ArcadeBlock_160
+  - first:
+      213: -5195430276210865281
+    second: ArcadeBlock_161
+  - first:
+      213: -5660746496556865642
+    second: ArcadeBlock_162
+  - first:
+      213: 3074983435173064805
+    second: ArcadeBlock_163
+  - first:
+      213: 3279111662208796057
+    second: ArcadeBlock_164
+  - first:
+      213: -5298777503491404176
+    second: ArcadeBlock_165
+  - first:
+      213: 8474580342794056514
+    second: ArcadeBlock_166
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ArcadeBlock_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 196
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b3ecdd8ad15275b0800000000000000
+      internalID: -5372141406374796359
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_1
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 196
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1961169e180616fb0800000000000000
+      internalID: -4656334428641880431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_2
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 196
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c334f67e478fc63a0800000000000000
+      internalID: -6670683767059823812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_3
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 196
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50e9aac4271944ee0800000000000000
+      internalID: -1277736474167828987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_4
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 196
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef4ce334850b625a0800000000000000
+      internalID: -6546351115204639490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_5
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 196
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96579c6c3afaf8240800000000000000
+      internalID: 4796245246122489193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_6
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 196
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60a08f155106edbc0800000000000000
+      internalID: -3756459394494625274
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_7
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 196
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f2252a584cb28070800000000000000
+      internalID: 8107249298156364536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_8
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 196
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27434a4bd3e9ef860800000000000000
+      internalID: 7565658411889865842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_9
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 196
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f45533907d70b160800000000000000
+      internalID: 7039264140039640309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_10
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 196
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bacd5175f6deff8b0800000000000000
+      internalID: -5116109589211390805
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_11
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 196
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 31db6767a345cc0e0800000000000000
+      internalID: -2248329503892390637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_12
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 196
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 082d4639d9da654f0800000000000000
+      internalID: -840293388163689856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_13
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 196
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a50d1ae2f13eb690800000000000000
+      internalID: -7584569803065719388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_14
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 196
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 68cf81ffc6cc37a10800000000000000
+      internalID: 1906091835816213638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_15
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 196
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6803917489c1fad90800000000000000
+      internalID: -7084412248477060986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_16
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 196
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e6ed97d74f16c390800000000000000
+      internalID: -7798511311324846360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_17
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 196
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56a1c9ce6744a7930800000000000000
+      internalID: 4141698084887075429
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_18
+      rect:
+        serializedVersion: 2
+        x: 218
+        y: 196
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2068e163e5ff9f220800000000000000
+      internalID: 2520326246590481922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_19
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 196
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8482f9342721ee050800000000000000
+      internalID: 5831618849461446728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_20
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 196
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4efb5d45e52fecf0800000000000000
+      internalID: -220916189942251956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_21
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 196
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58ac649eaee3b4d40800000000000000
+      internalID: 5569614542830750341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_22
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 196
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: abcd41c72e5999d20800000000000000
+      internalID: 3285822203120377018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_23
+      rect:
+        serializedVersion: 2
+        x: 278
+        y: 196
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 99705023bc9309f90800000000000000
+      internalID: -6948990680152340583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_24
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 196
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab8b15afd8b9d5b90800000000000000
+      internalID: -7251468790904276806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_25
+      rect:
+        serializedVersion: 2
+        x: 302
+        y: 196
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96f00630e972d3f80800000000000000
+      internalID: -8125294593091563671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_26
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 164
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c098d42614a6a3d30800000000000000
+      internalID: 4411955614017489164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_27
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 164
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28eb02b71258ae700800000000000000
+      internalID: 570414681661947522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_28
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 164
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3eab73eb863dc3840800000000000000
+      internalID: 5205267716154833635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_29
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 164
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3ea4d8fdc3fa86c0800000000000000
+      internalID: -4140228841445216707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_30
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 164
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eef2f4ed8e3f73720800000000000000
+      internalID: 2825995472685969390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_31
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 164
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7ae9ca0fdd22ed80800000000000000
+      internalID: -8222959533643142534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_32
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 162
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f08ea9524590fd70800000000000000
+      internalID: 9074917361356538104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_33
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 164
+        width: 17
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 326ac867aada31590800000000000000
+      internalID: -7704623589855812061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_34
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 164
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66cab99d977d6c850800000000000000
+      internalID: 6397037239068240998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_35
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 164
+        width: 17
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 780a3a6b6e847e940800000000000000
+      internalID: 5325305240132755591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_36
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 164
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5af2e98ac1d890f0800000000000000
+      internalID: -1109906640319874469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_37
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 164
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ba073453bbc9f4e0800000000000000
+      internalID: -1947301392788550992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_38
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 164
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c5471c11ccfe59a60800000000000000
+      internalID: 7680308399300506716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_39
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 162
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce51f35001d013ce0800000000000000
+      internalID: -1427345244441078292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_40
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 162
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf31892db311ef4e0800000000000000
+      internalID: -1946099040343550981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_41
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 164
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d217b0337c368df40800000000000000
+      internalID: 5753458231171838253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_42
+      rect:
+        serializedVersion: 2
+        x: 218
+        y: 164
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69fbb94546bad82c0800000000000000
+      internalID: -4427694411230756970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_43
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 164
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b75859d7f81d2500800000000000000
+      internalID: 372981796924053430
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_44
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 164
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d2227cb71ade44d0800000000000000
+      internalID: -3148339294004698409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_45
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 164
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f6198d672f48e160800000000000000
+      internalID: 7054975847035901685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_46
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 164
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5897b28c728c2f340800000000000000
+      internalID: 4896195818092722565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_47
+      rect:
+        serializedVersion: 2
+        x: 278
+        y: 164
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b82dc12b2cb9ffd0800000000000000
+      internalID: -2307606440613959501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_48
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 162
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c1825d31bdcaccb0800000000000000
+      internalID: -4842832288161824312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_49
+      rect:
+        serializedVersion: 2
+        x: 302
+        y: 164
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9cf01d289ed18340800000000000000
+      internalID: 4864413817709329567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_50
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 132
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 463fbea0f3246c6f0800000000000000
+      internalID: -664771056456961180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_51
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 132
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36be033a91785e930800000000000000
+      internalID: 4171889174010456931
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_52
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 132
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3813d32eb5d2866c0800000000000000
+      internalID: -4150017183960977021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_53
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 132
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b102e4a2d19566f50800000000000000
+      internalID: 6874279863026327579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_54
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 132
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: afe447f3d71c38d50800000000000000
+      internalID: 6738442211156053754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_55
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 132
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8cfb58ce263714a40800000000000000
+      internalID: 5350684701005037512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_56
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 132
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02b8fda6220223810800000000000000
+      internalID: 1743491337939815200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_57
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 132
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7e7961c0462b9090800000000000000
+      internalID: -8026779851293098374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_58
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 132
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c35ea120e56dc2730800000000000000
+      internalID: 3975788270311892284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_59
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 132
+        width: 17
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6de147c2100545fa0800000000000000
+      internalID: -5812933253057470762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_60
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 137
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5fb5478c1e35c4210800000000000000
+      internalID: 1318521020108528629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_61
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 137
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf0d93e2b7fee1120800000000000000
+      internalID: 2386608164888498427
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_62
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 136
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c746bdbe3b9aa320800000000000000
+      internalID: 2570037231141406658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_63
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 137
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4eb9bd51864bade0800000000000000
+      internalID: -1320884544265929138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_64
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 137
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3d3ab49b7466ffd0800000000000000
+      internalID: -2308547277041812166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_65
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 132
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 87ccaed046e396a70800000000000000
+      internalID: 8820649944632970360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_66
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 131
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dcc4b839e187a5f50800000000000000
+      internalID: 6870936254226844877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_67
+      rect:
+        serializedVersion: 2
+        x: 218
+        y: 132
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 876ce50afbd919d40800000000000000
+      internalID: 5589422058898376312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_68
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 132
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d8f0d99c079afabd0800000000000000
+      internalID: -2616686556595023987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_69
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 132
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a8d4109779079580800000000000000
+      internalID: -8820570936058783575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_70
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 131
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 012ba8b0ded5d4170800000000000000
+      internalID: 8164284972174848528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_71
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 132
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bbc91de758b2073b0800000000000000
+      internalID: -5516861691170546501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_72
+      rect:
+        serializedVersion: 2
+        x: 278
+        y: 133
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ddb8164c68153ea0800000000000000
+      internalID: -5893777684032864809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_73
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 132
+        width: 11
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9caa439c40f306a10800000000000000
+      internalID: 1900588332538440393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_74
+      rect:
+        serializedVersion: 2
+        x: 302
+        y: 132
+        width: 17
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca6c2692003d2c5a0800000000000000
+      internalID: -6502402914321774932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_75
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 100
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ac524c1bfde16b40800000000000000
+      internalID: 5431884288352214180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_76
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 100
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45e5681a33dd64b30800000000000000
+      internalID: 4271344510430502484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_77
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 100
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 063bad218591aaa00800000000000000
+      internalID: 768454552484229984
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_78
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 100
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 210da3812021a23e0800000000000000
+      internalID: -2077828477872320494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_79
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 100
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd505c4154aa61b50800000000000000
+      internalID: 6563620720616998365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_80
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 100
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47d4cee6d48a8aa70800000000000000
+      internalID: 8838499319241526644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_81
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 100
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: def9e34aab7c20f40800000000000000
+      internalID: 5693332483383140333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_82
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 98
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76d04ee7fb71209f0800000000000000
+      internalID: -503814097077007001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_83
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 100
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 000806e5c181e0c80800000000000000
+      internalID: -8354713748604157952
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_84
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 100
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f0f8c39635770da0800000000000000
+      internalID: -5978681103042940682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_85
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 100
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 34e142a78c418bd30800000000000000
+      internalID: 4447327483303566915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_86
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 100
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53856db7c7bc33420800000000000000
+      internalID: 2608652344691677237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_87
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 100
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e849a917bee9c240800000000000000
+      internalID: 4812640146999036133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_88
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 100
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 30beda374448f5150800000000000000
+      internalID: 5863550669393095427
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_89
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 100
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a06aa578fcbbbac0800000000000000
+      internalID: -3838266482091204440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_90
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 100
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef75e0abba61e4cc0800000000000000
+      internalID: -3725014914972100610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_91
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 100
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd1b8a0aac44e0380800000000000000
+      internalID: -9003182967997550113
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_92
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 100
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8191ea8385883e900800000000000000
+      internalID: 712563078544103704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_93
+      rect:
+        serializedVersion: 2
+        x: 218
+        y: 100
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fcfec1bf5d29e9c40800000000000000
+      internalID: 5521011640941473743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_94
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 100
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 020eeba4439debad0800000000000000
+      internalID: -2684469509250686944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_95
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 100
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91e54487229104390800000000000000
+      internalID: -7836235715787334119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_96
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 100
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c3e506975a6fb140800000000000000
+      internalID: 4737622257428718531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_97
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 100
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 654c966857b07da10800000000000000
+      internalID: 1934027164373075030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_98
+      rect:
+        serializedVersion: 2
+        x: 277
+        y: 99
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b2c7ad9c72de1a1e0800000000000000
+      internalID: -2188207188779303893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_99
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 100
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52b4e77722218b240800000000000000
+      internalID: 4807612541460957989
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_100
+      rect:
+        serializedVersion: 2
+        x: 302
+        y: 100
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce7271504a20d3d00800000000000000
+      internalID: 953921599555708908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_101
+      rect:
+        serializedVersion: 2
+        x: 314
+        y: 100
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b12a73baee526a830800000000000000
+      internalID: 4081991819262927387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_102
+      rect:
+        serializedVersion: 2
+        x: 326
+        y: 100
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f182abeb78c0bdcc0800000000000000
+      internalID: -3685338092912629729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_103
+      rect:
+        serializedVersion: 2
+        x: 338
+        y: 100
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a278f734fbf8a3420800000000000000
+      internalID: 2610556985648580394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_104
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 100
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dda1de9c768937210800000000000000
+      internalID: 1329573886541241053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_105
+      rect:
+        serializedVersion: 2
+        x: 362
+        y: 100
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d09bb6f8b10f4e20800000000000000
+      internalID: 3336887742829924562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_106
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 100
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a2f99c25685afe50800000000000000
+      internalID: 6843879775306117796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_107
+      rect:
+        serializedVersion: 2
+        x: 385
+        y: 100
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2f858a4ee1a73c30800000000000000
+      internalID: 4339114810819317548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_108
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 100
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 405f8d4b08bc13000800000000000000
+      internalID: 14016027509191940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_109
+      rect:
+        serializedVersion: 2
+        x: 410
+        y: 98
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba9bf4da22c4f2970800000000000000
+      internalID: 8732281914314963371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_110
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 68
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 403cf0442f780a2f0800000000000000
+      internalID: -963620845663567100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_111
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 35
+        width: 43
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff7750676492c0850800000000000000
+      internalID: 6344491357662705663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_112
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 68
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df9e7d182f84a0e40800000000000000
+      internalID: 5623387291123182077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_113
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 68
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0bd6cae36c91c9a0800000000000000
+      internalID: -6214514057839977714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_114
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 68
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e8d94e967295e0c0800000000000000
+      internalID: -4547067210601211671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_115
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 68
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55bd094c7bd986b80800000000000000
+      internalID: -8401291692257256619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_116
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 68
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6d184da1bcbe7c60800000000000000
+      internalID: 7817893474464177517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_117
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 66
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9ff785f279bcf160800000000000000
+      internalID: 7060722219206836126
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_118
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 36
+        width: 57
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8dd952b1227cf6830800000000000000
+      internalID: 4066687937837112792
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_119
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 68
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9b2333b53b67faa0800000000000000
+      internalID: -6127310889630356581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_120
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 68
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd7ddc3f55da6d3b0800000000000000
+      internalID: -5488008511230191653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_121
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 68
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17abcf5c7ac2b2990800000000000000
+      internalID: -7409779662815184271
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_122
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 68
+        width: 57
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07f3fed9a3bfec020800000000000000
+      internalID: 2364103083592466288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_123
+      rect:
+        serializedVersion: 2
+        x: 218
+        y: 68
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01fa165a718698b70800000000000000
+      internalID: 8901760589242674960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_124
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 68
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 872cca35bcd03b680800000000000000
+      internalID: -8740627284862647688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_125
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 68
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 932f16812a1fa3fc0800000000000000
+      internalID: -3514230880713182663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_126
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 68
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 124afe2024bd57cf0800000000000000
+      internalID: -255056727312980959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_127
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 68
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b9a46bdca395e1f0800000000000000
+      internalID: -1016243770277713483
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_128
+      rect:
+        serializedVersion: 2
+        x: 278
+        y: 68
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54b510419bdffea10800000000000000
+      internalID: 1941048935766383429
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_129
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 67
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cfab0f3cada94db80800000000000000
+      internalID: -8370895542994027780
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_130
+      rect:
+        serializedVersion: 2
+        x: 301
+        y: 68
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01b28b99a86d9a210800000000000000
+      internalID: 1344841854519618320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_131
+      rect:
+        serializedVersion: 2
+        x: 314
+        y: 68
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70b7a67ce639c8040800000000000000
+      internalID: 4651254619168209671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_132
+      rect:
+        serializedVersion: 2
+        x: 326
+        y: 68
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed305588667fa2120800000000000000
+      internalID: 2389994572019467230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_133
+      rect:
+        serializedVersion: 2
+        x: 338
+        y: 68
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 19066233f2d9d5160800000000000000
+      internalID: 7015936620560277649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_134
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 68
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ebf06f580111dc60800000000000000
+      internalID: 7841067153886346210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_135
+      rect:
+        serializedVersion: 2
+        x: 362
+        y: 68
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e1708bdecffb5e20800000000000000
+      internalID: 3340544812536328676
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_136
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 68
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45c2b73cf15c5d7e0800000000000000
+      internalID: -1741268940694541228
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_137
+      rect:
+        serializedVersion: 2
+        x: 386
+        y: 66
+        width: 8
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44887850f27f741a0800000000000000
+      internalID: -6825214928928405436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_138
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 66
+        width: 8
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb8ab89f5fbacd760800000000000000
+      internalID: 7484045753724938427
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_139
+      rect:
+        serializedVersion: 2
+        x: 410
+        y: 68
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69ad2d73ea8210e30800000000000000
+      internalID: 4467897034054228630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_140
+      rect:
+        serializedVersion: 2
+        x: 422
+        y: 66
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff3f93c3c7fc289d0800000000000000
+      internalID: -2773426288013478913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_141
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 5
+        width: 40
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1dadbd362fb5b3ad0800000000000000
+      internalID: -2721480453199766831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_142
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 35
+        width: 129
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 932454f017fb3ae50800000000000000
+      internalID: 6819504753077469753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_143
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 36
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5f2422fd0bc42650800000000000000
+      internalID: 6207309447180857178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_144
+      rect:
+        serializedVersion: 2
+        x: 302
+        y: 36
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fdb388fb8d3199550800000000000000
+      internalID: 6167982986307845087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_145
+      rect:
+        serializedVersion: 2
+        x: 314
+        y: 36
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ee0cec884fb1a300800000000000000
+      internalID: 261700571687030496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_146
+      rect:
+        serializedVersion: 2
+        x: 326
+        y: 36
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cac0d5700cb04d8a0800000000000000
+      internalID: -6281382660889834324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_147
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 36
+        width: 12
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab87064e0f96e8e30800000000000000
+      internalID: 4507656760389040314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_148
+      rect:
+        serializedVersion: 2
+        x: 349
+        y: 36
+        width: 12
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc42b7ff4bfcee0e0800000000000000
+      internalID: -2238623588469234484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_149
+      rect:
+        serializedVersion: 2
+        x: 362
+        y: 36
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ef852a67f991f650800000000000000
+      internalID: 6264957844565889001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_150
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 36
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8a2b7c5e3360d150800000000000000
+      internalID: 5895321031718677130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_151
+      rect:
+        serializedVersion: 2
+        x: 386
+        y: 36
+        width: 17
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 87fe5a67d591cfb90800000000000000
+      internalID: -7206857414486397064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_152
+      rect:
+        serializedVersion: 2
+        x: 410
+        y: 32
+        width: 17
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab9cadc13d6469510800000000000000
+      internalID: 1555508593839229370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_153
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 4
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58a4d0cdb0039f9c0800000000000000
+      internalID: -3893027575390451067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_154
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 4
+        width: 18
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 09847803192ca6e70800000000000000
+      internalID: 9109307125150468240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_155
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 4
+        width: 20
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a8acc06c01041920800000000000000
+      internalID: 2959992007764519078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_156
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 4
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45aea89459066d6c0800000000000000
+      internalID: -4118998614883505580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_157
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 5
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8527f8fa7790bd2a0800000000000000
+      internalID: -6711760410014420392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_158
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 7
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8647bf48d14409cc0800000000000000
+      internalID: -3706387599750106008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_159
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 4
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f37b7799db905a6c0800000000000000
+      internalID: -4132886373114333377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_160
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 5
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d324dd5aee124ac0800000000000000
+      internalID: -3872498737639840812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_161
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 4
+        width: 20
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7b442bb0bf16e7b0800000000000000
+      internalID: -5195430276210865281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_162
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 4
+        width: 32
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 697e035ad0df071b0800000000000000
+      internalID: -5660746496556865642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_163
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 8
+        width: 19
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56073bf64298caa20800000000000000
+      internalID: 3074983435173064805
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_164
+      rect:
+        serializedVersion: 2
+        x: 218
+        y: 4
+        width: 16
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 995cbcceeaeb18d20800000000000000
+      internalID: 3279111662208796057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_165
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 2
+        width: 29
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07e40984fe5f676b0800000000000000
+      internalID: -5298777503491404176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeBlock_166
+      rect:
+        serializedVersion: 2
+        x: 278
+        y: 4
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2437fb8ebe1cb9570800000000000000
+      internalID: 8474580342794056514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      ArcadeBlock_0: -5372141406374796359
+      ArcadeBlock_1: -4656334428641880431
+      ArcadeBlock_10: -5116109589211390805
+      ArcadeBlock_100: 953921599555708908
+      ArcadeBlock_101: 4081991819262927387
+      ArcadeBlock_102: -3685338092912629729
+      ArcadeBlock_103: 2610556985648580394
+      ArcadeBlock_104: 1329573886541241053
+      ArcadeBlock_105: 3336887742829924562
+      ArcadeBlock_106: 6843879775306117796
+      ArcadeBlock_107: 4339114810819317548
+      ArcadeBlock_108: 14016027509191940
+      ArcadeBlock_109: 8732281914314963371
+      ArcadeBlock_11: -2248329503892390637
+      ArcadeBlock_110: -963620845663567100
+      ArcadeBlock_111: 6344491357662705663
+      ArcadeBlock_112: 5623387291123182077
+      ArcadeBlock_113: -6214514057839977714
+      ArcadeBlock_114: -4547067210601211671
+      ArcadeBlock_115: -8401291692257256619
+      ArcadeBlock_116: 7817893474464177517
+      ArcadeBlock_117: 7060722219206836126
+      ArcadeBlock_118: 4066687937837112792
+      ArcadeBlock_119: -6127310889630356581
+      ArcadeBlock_12: -840293388163689856
+      ArcadeBlock_120: -5488008511230191653
+      ArcadeBlock_121: -7409779662815184271
+      ArcadeBlock_122: 2364103083592466288
+      ArcadeBlock_123: 8901760589242674960
+      ArcadeBlock_124: -8740627284862647688
+      ArcadeBlock_125: -3514230880713182663
+      ArcadeBlock_126: -255056727312980959
+      ArcadeBlock_127: -1016243770277713483
+      ArcadeBlock_128: 1941048935766383429
+      ArcadeBlock_129: -8370895542994027780
+      ArcadeBlock_13: -7584569803065719388
+      ArcadeBlock_130: 1344841854519618320
+      ArcadeBlock_131: 4651254619168209671
+      ArcadeBlock_132: 2389994572019467230
+      ArcadeBlock_133: 7015936620560277649
+      ArcadeBlock_134: 7841067153886346210
+      ArcadeBlock_135: 3340544812536328676
+      ArcadeBlock_136: -1741268940694541228
+      ArcadeBlock_137: -6825214928928405436
+      ArcadeBlock_138: 7484045753724938427
+      ArcadeBlock_139: 4467897034054228630
+      ArcadeBlock_14: 1906091835816213638
+      ArcadeBlock_140: -2773426288013478913
+      ArcadeBlock_141: -2721480453199766831
+      ArcadeBlock_142: 6819504753077469753
+      ArcadeBlock_143: 6207309447180857178
+      ArcadeBlock_144: 6167982986307845087
+      ArcadeBlock_145: 261700571687030496
+      ArcadeBlock_146: -6281382660889834324
+      ArcadeBlock_147: 4507656760389040314
+      ArcadeBlock_148: -2238623588469234484
+      ArcadeBlock_149: 6264957844565889001
+      ArcadeBlock_15: -7084412248477060986
+      ArcadeBlock_150: 5895321031718677130
+      ArcadeBlock_151: -7206857414486397064
+      ArcadeBlock_152: 1555508593839229370
+      ArcadeBlock_153: -3893027575390451067
+      ArcadeBlock_154: 9109307125150468240
+      ArcadeBlock_155: 2959992007764519078
+      ArcadeBlock_156: -4118998614883505580
+      ArcadeBlock_157: -6711760410014420392
+      ArcadeBlock_158: -3706387599750106008
+      ArcadeBlock_159: -4132886373114333377
+      ArcadeBlock_16: -7798511311324846360
+      ArcadeBlock_160: -3872498737639840812
+      ArcadeBlock_161: -5195430276210865281
+      ArcadeBlock_162: -5660746496556865642
+      ArcadeBlock_163: 3074983435173064805
+      ArcadeBlock_164: 3279111662208796057
+      ArcadeBlock_165: -5298777503491404176
+      ArcadeBlock_166: 8474580342794056514
+      ArcadeBlock_17: 4141698084887075429
+      ArcadeBlock_18: 2520326246590481922
+      ArcadeBlock_19: 5831618849461446728
+      ArcadeBlock_2: -6670683767059823812
+      ArcadeBlock_20: -220916189942251956
+      ArcadeBlock_21: 5569614542830750341
+      ArcadeBlock_22: 3285822203120377018
+      ArcadeBlock_23: -6948990680152340583
+      ArcadeBlock_24: -7251468790904276806
+      ArcadeBlock_25: -8125294593091563671
+      ArcadeBlock_26: 4411955614017489164
+      ArcadeBlock_27: 570414681661947522
+      ArcadeBlock_28: 5205267716154833635
+      ArcadeBlock_29: -4140228841445216707
+      ArcadeBlock_3: -1277736474167828987
+      ArcadeBlock_30: 2825995472685969390
+      ArcadeBlock_31: -8222959533643142534
+      ArcadeBlock_32: 9074917361356538104
+      ArcadeBlock_33: -7704623589855812061
+      ArcadeBlock_34: 6397037239068240998
+      ArcadeBlock_35: 5325305240132755591
+      ArcadeBlock_36: -1109906640319874469
+      ArcadeBlock_37: -1947301392788550992
+      ArcadeBlock_38: 7680308399300506716
+      ArcadeBlock_39: -1427345244441078292
+      ArcadeBlock_4: -6546351115204639490
+      ArcadeBlock_40: -1946099040343550981
+      ArcadeBlock_41: 5753458231171838253
+      ArcadeBlock_42: -4427694411230756970
+      ArcadeBlock_43: 372981796924053430
+      ArcadeBlock_44: -3148339294004698409
+      ArcadeBlock_45: 7054975847035901685
+      ArcadeBlock_46: 4896195818092722565
+      ArcadeBlock_47: -2307606440613959501
+      ArcadeBlock_48: -4842832288161824312
+      ArcadeBlock_49: 4864413817709329567
+      ArcadeBlock_5: 4796245246122489193
+      ArcadeBlock_50: -664771056456961180
+      ArcadeBlock_51: 4171889174010456931
+      ArcadeBlock_52: -4150017183960977021
+      ArcadeBlock_53: 6874279863026327579
+      ArcadeBlock_54: 6738442211156053754
+      ArcadeBlock_55: 5350684701005037512
+      ArcadeBlock_56: 1743491337939815200
+      ArcadeBlock_57: -8026779851293098374
+      ArcadeBlock_58: 3975788270311892284
+      ArcadeBlock_59: -5812933253057470762
+      ArcadeBlock_6: -3756459394494625274
+      ArcadeBlock_60: 1318521020108528629
+      ArcadeBlock_61: 2386608164888498427
+      ArcadeBlock_62: 2570037231141406658
+      ArcadeBlock_63: -1320884544265929138
+      ArcadeBlock_64: -2308547277041812166
+      ArcadeBlock_65: 8820649944632970360
+      ArcadeBlock_66: 6870936254226844877
+      ArcadeBlock_67: 5589422058898376312
+      ArcadeBlock_68: -2616686556595023987
+      ArcadeBlock_69: -8820570936058783575
+      ArcadeBlock_7: 8107249298156364536
+      ArcadeBlock_70: 8164284972174848528
+      ArcadeBlock_71: -5516861691170546501
+      ArcadeBlock_72: -5893777684032864809
+      ArcadeBlock_73: 1900588332538440393
+      ArcadeBlock_74: -6502402914321774932
+      ArcadeBlock_75: 5431884288352214180
+      ArcadeBlock_76: 4271344510430502484
+      ArcadeBlock_77: 768454552484229984
+      ArcadeBlock_78: -2077828477872320494
+      ArcadeBlock_79: 6563620720616998365
+      ArcadeBlock_8: 7565658411889865842
+      ArcadeBlock_80: 8838499319241526644
+      ArcadeBlock_81: 5693332483383140333
+      ArcadeBlock_82: -503814097077007001
+      ArcadeBlock_83: -8354713748604157952
+      ArcadeBlock_84: -5978681103042940682
+      ArcadeBlock_85: 4447327483303566915
+      ArcadeBlock_86: 2608652344691677237
+      ArcadeBlock_87: 4812640146999036133
+      ArcadeBlock_88: 5863550669393095427
+      ArcadeBlock_89: -3838266482091204440
+      ArcadeBlock_9: 7039264140039640309
+      ArcadeBlock_90: -3725014914972100610
+      ArcadeBlock_91: -9003182967997550113
+      ArcadeBlock_92: 712563078544103704
+      ArcadeBlock_93: 5521011640941473743
+      ArcadeBlock_94: -2684469509250686944
+      ArcadeBlock_95: -7836235715787334119
+      ArcadeBlock_96: 4737622257428718531
+      ArcadeBlock_97: 1934027164373075030
+      ArcadeBlock_98: -2188207188779303893
+      ArcadeBlock_99: 4807612541460957989
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

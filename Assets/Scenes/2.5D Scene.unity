@@ -1134,8 +1134,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Enemy
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 5875dac0ba5bf5f4da9303480437a53e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 566c9319f9aed2e4f9ecf9065150e29d, type: 2}
+  m_sharedMaterial: {fileID: -7042892003106584813, guid: 566c9319f9aed2e4f9ecf9065150e29d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1550,6 +1550,7 @@ MonoBehaviour:
   musicDirector: {fileID: 0}
   startCombatWithLoop: 1
   windUpAfterIntro: 0
+  playerTurnDelay: 0.6
   showResultScreen: 1
   resultScreen: {fileID: 1501716357}
   resultGrading: {fileID: 0}
@@ -5444,7 +5445,7 @@ Transform:
   m_GameObject: {fileID: 691747960}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.58, y: 1.72, z: -26.64}
+  m_LocalPosition: {x: -0.58, y: 1.72, z: 0.133}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8307,8 +8308,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: MP
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 5875dac0ba5bf5f4da9303480437a53e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 97ed45ca12935bf4b8a8e3f64c4c5e52, type: 2}
+  m_sharedMaterial: {fileID: 295338606479088652, guid: 97ed45ca12935bf4b8a8e3f64c4c5e52, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -8649,8 +8650,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 500/500
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 5a833769613406e4083fe44d6e9f8b0e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b5c7d1abfc37ec947a13be78d65a3cde, type: 2}
+  m_sharedMaterial: {fileID: -2479235699823013517, guid: b5c7d1abfc37ec947a13be78d65a3cde, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -9871,8 +9872,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: HP
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 5875dac0ba5bf5f4da9303480437a53e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 97ed45ca12935bf4b8a8e3f64c4c5e52, type: 2}
+  m_sharedMaterial: {fileID: 295338606479088652, guid: 97ed45ca12935bf4b8a8e3f64c4c5e52, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -10265,8 +10266,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 1000/1000
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 5a833769613406e4083fe44d6e9f8b0e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b5c7d1abfc37ec947a13be78d65a3cde, type: 2}
+  m_sharedMaterial: {fileID: -2479235699823013517, guid: b5c7d1abfc37ec947a13be78d65a3cde, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -10950,7 +10951,7 @@ Transform:
   m_GameObject: {fileID: 1409756759}
   serializedVersion: 2
   m_LocalRotation: {x: 0.30070576, y: -0, z: -0, w: 0.953717}
-  m_LocalPosition: {x: -0.58, y: 11.03, z: -36.792}
+  m_LocalPosition: {x: -0.58, y: 11.03, z: -10.019}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14369,7 +14370,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
   m_UiScaleMode: 1
-  m_ReferencePixelsPerUnit: 100
+  m_ReferencePixelsPerUnit: 32
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
@@ -15935,7 +15936,7 @@ Transform:
   m_GameObject: {fileID: 1907834171}
   serializedVersion: 2
   m_LocalRotation: {x: 0.30070576, y: 0, z: 0, w: 0.953717}
-  m_LocalPosition: {x: -0.58, y: 11.03, z: -36.792}
+  m_LocalPosition: {x: -0.58, y: 11.03, z: -10.019}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -16856,8 +16857,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 100/100
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 5a833769613406e4083fe44d6e9f8b0e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b5c7d1abfc37ec947a13be78d65a3cde, type: 2}
+  m_sharedMaterial: {fileID: -2479235699823013517, guid: b5c7d1abfc37ec947a13be78d65a3cde, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

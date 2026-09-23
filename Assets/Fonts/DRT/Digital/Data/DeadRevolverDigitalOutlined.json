@@ -1,0 +1,52 @@
+{
+	"$baseURI": "https://yal.cc/r/20/pixelfont/",
+	"$version": "1.0",
+	"in-glyphs": [
+		"ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+		"abcdefghijklmnopqrstuvwxyz",
+		"0123456789¹²³⁴ªº%$€¥£¢&*@#|",
+		"ÁÂÀÃÄÅÆÇÉÊÈËÍÎÌÏĐÑÓÔÒÕÖØŒŠÛÙÜÝŸŁÞμ",
+		"áâàãäåæçéêèëíîìïıðñóôòõöøœšßúûùüýÿžþ",
+		",:;-–—•.…ˆ¨`~“‘’‘‚“”„\"'^<>‹›«»/\\?!¿¡",
+		"()[]{}©®™§+×÷=±_¯°¤¦¬¶∎¸"
+	],
+	"glyph-color": "auto",
+	"in-kerning": [
+		""
+	],
+	"glyph-width": 18,
+	"glyph-height": 25,
+	"glyph-ofs-x": 0,
+	"glyph-ofs-y": 0,
+	"glyph-sep-x": 0,
+	"glyph-sep-y": 7,
+	"glyph-base-x": 0,
+	"glyph-baseline": 12,
+	"glyph-spacing": 1,
+	"font-is-mono": false,
+	"font-em-square": 1792,
+	"font-line-gap": 0,
+	"font-ascend": 960,
+	"font-descend": -736,
+	"font-px-size": 96,
+	"contour-type": "pixel",
+	"font-type": "otf",
+	"font-name": "Dead Revolver Digital Outlined",
+	"font-author": "Dead Revolver",
+	"font-copy": "(c)",
+	"font-version": "Version 1.0",
+	"font-desc": "Dead Revolver Typeface - Display",
+	"font-license": "",
+	"font-license-url": "",
+	"font-sample-text": "The quick brown fox jumps over a lazy dog.",
+	"font-preview-text": [
+		"ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+		"abcdefghijklmnopqrstuvwxyz",
+		"0123456789¹²³⁴ªº%$€¥£¢&*@#|",
+		"ÁÂÀÃÄÅÆÇÉÊÈËÍÎÌÏĐÑÓÔÒÕÖØŒŠÛÙÜÝŸŁÞμ",
+		"áâàãäåæçéêèëíîìïıðñóôòõöøœšßúûùüýÿžþ",
+		",:;-–—•.…ˆ¨`~“‘’‘‚“”„\"'^<>‹›«»/\\?!¿¡",
+		"()[]{}©®™§+×÷=±_¯°¤¦¬¶∎¸",
+		"The quick brown fox jumps over the lazy cow."
+	]
+}

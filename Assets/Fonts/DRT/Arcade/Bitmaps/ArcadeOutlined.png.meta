@@ -1,0 +1,5566 @@
+fileFormatVersion: 2
+guid: 6eecfceb13f5c6b4f82e1da2ec85d2d5
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6845022259530100506
+    second: ArcadeOutlined_0
+  - first:
+      213: -446307065578723683
+    second: ArcadeOutlined_1
+  - first:
+      213: -2882164473372272186
+    second: ArcadeOutlined_2
+  - first:
+      213: 423726721550635615
+    second: ArcadeOutlined_3
+  - first:
+      213: 8595272983285590185
+    second: ArcadeOutlined_4
+  - first:
+      213: 7632192305957323058
+    second: ArcadeOutlined_5
+  - first:
+      213: 5639995417380630520
+    second: ArcadeOutlined_6
+  - first:
+      213: 1591415845205887570
+    second: ArcadeOutlined_7
+  - first:
+      213: 86370609816112714
+    second: ArcadeOutlined_8
+  - first:
+      213: 6805814308045522276
+    second: ArcadeOutlined_9
+  - first:
+      213: 6340501876064237949
+    second: ArcadeOutlined_10
+  - first:
+      213: 74126776823846721
+    second: ArcadeOutlined_11
+  - first:
+      213: -8657191857624110488
+    second: ArcadeOutlined_12
+  - first:
+      213: -6276744856279753772
+    second: ArcadeOutlined_13
+  - first:
+      213: -6972600613471835154
+    second: ArcadeOutlined_14
+  - first:
+      213: -2039574504237123419
+    second: ArcadeOutlined_15
+  - first:
+      213: -3254659403809486308
+    second: ArcadeOutlined_16
+  - first:
+      213: -9183358552462370423
+    second: ArcadeOutlined_17
+  - first:
+      213: 2054613677124084371
+    second: ArcadeOutlined_18
+  - first:
+      213: -2332835192382337310
+    second: ArcadeOutlined_19
+  - first:
+      213: -4946630247942802788
+    second: ArcadeOutlined_20
+  - first:
+      213: 8612154037014898802
+    second: ArcadeOutlined_21
+  - first:
+      213: 215195326567557391
+    second: ArcadeOutlined_22
+  - first:
+      213: 2501774194959611140
+    second: ArcadeOutlined_23
+  - first:
+      213: -9128501415877665094
+    second: ArcadeOutlined_24
+  - first:
+      213: 6155960473088881768
+    second: ArcadeOutlined_25
+  - first:
+      213: -3758902388372314927
+    second: ArcadeOutlined_26
+  - first:
+      213: 2773377015325179086
+    second: ArcadeOutlined_27
+  - first:
+      213: 7758510170991329257
+    second: ArcadeOutlined_28
+  - first:
+      213: 4870824143665137754
+    second: ArcadeOutlined_29
+  - first:
+      213: -2617249479040789477
+    second: ArcadeOutlined_30
+  - first:
+      213: -9101157770878580577
+    second: ArcadeOutlined_31
+  - first:
+      213: -2037279108855530596
+    second: ArcadeOutlined_32
+  - first:
+      213: 4438736603607532383
+    second: ArcadeOutlined_33
+  - first:
+      213: -7318344136492903704
+    second: ArcadeOutlined_34
+  - first:
+      213: 6391724507803316392
+    second: ArcadeOutlined_35
+  - first:
+      213: -4596330940524220291
+    second: ArcadeOutlined_36
+  - first:
+      213: -578168405275309346
+    second: ArcadeOutlined_37
+  - first:
+      213: 439300144339714004
+    second: ArcadeOutlined_38
+  - first:
+      213: -6431757935257047166
+    second: ArcadeOutlined_39
+  - first:
+      213: -2353799171938964288
+    second: ArcadeOutlined_40
+  - first:
+      213: 6086705162815005131
+    second: ArcadeOutlined_41
+  - first:
+      213: 812195864053780502
+    second: ArcadeOutlined_42
+  - first:
+      213: 781941638032593742
+    second: ArcadeOutlined_43
+  - first:
+      213: -8854253388121110841
+    second: ArcadeOutlined_44
+  - first:
+      213: -195835912888701670
+    second: ArcadeOutlined_45
+  - first:
+      213: 2265449411762792574
+    second: ArcadeOutlined_46
+  - first:
+      213: 3074484053896798827
+    second: ArcadeOutlined_47
+  - first:
+      213: 5428746519007164792
+    second: ArcadeOutlined_48
+  - first:
+      213: 8715500414698549637
+    second: ArcadeOutlined_49
+  - first:
+      213: 4834180959233363850
+    second: ArcadeOutlined_50
+  - first:
+      213: 8410112286310306376
+    second: ArcadeOutlined_51
+  - first:
+      213: 2047446130790209668
+    second: ArcadeOutlined_52
+  - first:
+      213: -70055773220788303
+    second: ArcadeOutlined_53
+  - first:
+      213: -5596592911162547303
+    second: ArcadeOutlined_54
+  - first:
+      213: -4923102332310592923
+    second: ArcadeOutlined_55
+  - first:
+      213: 6639675834647166004
+    second: ArcadeOutlined_56
+  - first:
+      213: -6710617305124867741
+    second: ArcadeOutlined_57
+  - first:
+      213: -842166703700606809
+    second: ArcadeOutlined_58
+  - first:
+      213: -2232511086945555322
+    second: ArcadeOutlined_59
+  - first:
+      213: -480856753305719291
+    second: ArcadeOutlined_60
+  - first:
+      213: -1821719903046700702
+    second: ArcadeOutlined_61
+  - first:
+      213: 3142187475816199745
+    second: ArcadeOutlined_62
+  - first:
+      213: -6759776325000117075
+    second: ArcadeOutlined_63
+  - first:
+      213: 3359629147616334530
+    second: ArcadeOutlined_64
+  - first:
+      213: 5301579343021017100
+    second: ArcadeOutlined_65
+  - first:
+      213: 6294531123460166636
+    second: ArcadeOutlined_66
+  - first:
+      213: 843567530369213748
+    second: ArcadeOutlined_67
+  - first:
+      213: 8901705707206305796
+    second: ArcadeOutlined_68
+  - first:
+      213: -7278328219503060873
+    second: ArcadeOutlined_69
+  - first:
+      213: -50905655535528533
+    second: ArcadeOutlined_70
+  - first:
+      213: -6017651448161874627
+    second: ArcadeOutlined_71
+  - first:
+      213: 803726454365148244
+    second: ArcadeOutlined_72
+  - first:
+      213: 1320142168137980436
+    second: ArcadeOutlined_73
+  - first:
+      213: 3152047610522664148
+    second: ArcadeOutlined_74
+  - first:
+      213: 2817779305235657638
+    second: ArcadeOutlined_75
+  - first:
+      213: -6999771463962319762
+    second: ArcadeOutlined_76
+  - first:
+      213: 25275302552164072
+    second: ArcadeOutlined_77
+  - first:
+      213: 6658843452274360997
+    second: ArcadeOutlined_78
+  - first:
+      213: 222248981027879242
+    second: ArcadeOutlined_79
+  - first:
+      213: -668681017206559724
+    second: ArcadeOutlined_80
+  - first:
+      213: -5867468625782088585
+    second: ArcadeOutlined_81
+  - first:
+      213: 1887674266771581434
+    second: ArcadeOutlined_82
+  - first:
+      213: -2125599460689301983
+    second: ArcadeOutlined_83
+  - first:
+      213: -4524806557929001772
+    second: ArcadeOutlined_84
+  - first:
+      213: -7595467699626199984
+    second: ArcadeOutlined_85
+  - first:
+      213: -270732971876946844
+    second: ArcadeOutlined_86
+  - first:
+      213: -1360421615236083648
+    second: ArcadeOutlined_87
+  - first:
+      213: 2936793949336122120
+    second: ArcadeOutlined_88
+  - first:
+      213: 7387129424460385718
+    second: ArcadeOutlined_89
+  - first:
+      213: 2569998086613807638
+    second: ArcadeOutlined_90
+  - first:
+      213: -5986693323240416109
+    second: ArcadeOutlined_91
+  - first:
+      213: 4950978113299021690
+    second: ArcadeOutlined_92
+  - first:
+      213: 6641128920263866664
+    second: ArcadeOutlined_93
+  - first:
+      213: 579135831447742497
+    second: ArcadeOutlined_94
+  - first:
+      213: -5498220965560668313
+    second: ArcadeOutlined_95
+  - first:
+      213: -8628523924430707575
+    second: ArcadeOutlined_96
+  - first:
+      213: -2878632475224013571
+    second: ArcadeOutlined_97
+  - first:
+      213: -1675058881463217636
+    second: ArcadeOutlined_98
+  - first:
+      213: -9083702255446898135
+    second: ArcadeOutlined_99
+  - first:
+      213: -8764666023162990608
+    second: ArcadeOutlined_100
+  - first:
+      213: -1472294794459041089
+    second: ArcadeOutlined_101
+  - first:
+      213: 8454148432530245900
+    second: ArcadeOutlined_102
+  - first:
+      213: -6198350019125645614
+    second: ArcadeOutlined_103
+  - first:
+      213: -1216839916404660404
+    second: ArcadeOutlined_104
+  - first:
+      213: 86492531182565808
+    second: ArcadeOutlined_105
+  - first:
+      213: -6776392003078999769
+    second: ArcadeOutlined_106
+  - first:
+      213: -319071261671484783
+    second: ArcadeOutlined_107
+  - first:
+      213: 6280678822454508246
+    second: ArcadeOutlined_108
+  - first:
+      213: -498261796976720611
+    second: ArcadeOutlined_109
+  - first:
+      213: 3108719145771153773
+    second: ArcadeOutlined_110
+  - first:
+      213: 3583852601515235700
+    second: ArcadeOutlined_111
+  - first:
+      213: 5752868246154184278
+    second: ArcadeOutlined_112
+  - first:
+      213: 51840842714302105
+    second: ArcadeOutlined_113
+  - first:
+      213: -7752470736655558628
+    second: ArcadeOutlined_114
+  - first:
+      213: 6969501804218132149
+    second: ArcadeOutlined_115
+  - first:
+      213: 662754299549209186
+    second: ArcadeOutlined_116
+  - first:
+      213: 2231971271124674735
+    second: ArcadeOutlined_117
+  - first:
+      213: 6818320815932166347
+    second: ArcadeOutlined_118
+  - first:
+      213: 4188622309451784981
+    second: ArcadeOutlined_119
+  - first:
+      213: -6652523713318427770
+    second: ArcadeOutlined_120
+  - first:
+      213: -7736720233630476776
+    second: ArcadeOutlined_121
+  - first:
+      213: 820067302524582850
+    second: ArcadeOutlined_122
+  - first:
+      213: -6337407621657057574
+    second: ArcadeOutlined_123
+  - first:
+      213: -6814089084034251588
+    second: ArcadeOutlined_124
+  - first:
+      213: 5918193669854515254
+    second: ArcadeOutlined_125
+  - first:
+      213: -5252074446480109485
+    second: ArcadeOutlined_126
+  - first:
+      213: 6801194288190977579
+    second: ArcadeOutlined_127
+  - first:
+      213: 6299012147281081895
+    second: ArcadeOutlined_128
+  - first:
+      213: -3719499056155077022
+    second: ArcadeOutlined_129
+  - first:
+      213: 6042849140552794930
+    second: ArcadeOutlined_130
+  - first:
+      213: 3682282959110815715
+    second: ArcadeOutlined_131
+  - first:
+      213: -5535719818438537447
+    second: ArcadeOutlined_132
+  - first:
+      213: -7007535088039024802
+    second: ArcadeOutlined_133
+  - first:
+      213: -3191571302055887904
+    second: ArcadeOutlined_134
+  - first:
+      213: 3306145166761348820
+    second: ArcadeOutlined_135
+  - first:
+      213: 1575899163492186221
+    second: ArcadeOutlined_136
+  - first:
+      213: -2884234359662860653
+    second: ArcadeOutlined_137
+  - first:
+      213: 8721540602820131189
+    second: ArcadeOutlined_138
+  - first:
+      213: -5667203980557554310
+    second: ArcadeOutlined_139
+  - first:
+      213: 2407228236718887357
+    second: ArcadeOutlined_140
+  - first:
+      213: -4508515651468674984
+    second: ArcadeOutlined_141
+  - first:
+      213: -3413798479430702870
+    second: ArcadeOutlined_142
+  - first:
+      213: 4862925146663639723
+    second: ArcadeOutlined_143
+  - first:
+      213: -1596477141559017702
+    second: ArcadeOutlined_144
+  - first:
+      213: -4321983137576504405
+    second: ArcadeOutlined_145
+  - first:
+      213: 1125774534646028655
+    second: ArcadeOutlined_146
+  - first:
+      213: 754905814819808545
+    second: ArcadeOutlined_147
+  - first:
+      213: -1714754700337633483
+    second: ArcadeOutlined_148
+  - first:
+      213: -4492401360524604290
+    second: ArcadeOutlined_149
+  - first:
+      213: 1979771302431399071
+    second: ArcadeOutlined_150
+  - first:
+      213: 6294840616240211325
+    second: ArcadeOutlined_151
+  - first:
+      213: 3192621989388066319
+    second: ArcadeOutlined_152
+  - first:
+      213: -8348387317322252208
+    second: ArcadeOutlined_153
+  - first:
+      213: 4298798931902362589
+    second: ArcadeOutlined_154
+  - first:
+      213: 4967382761746280078
+    second: ArcadeOutlined_155
+  - first:
+      213: 6777996038282755186
+    second: ArcadeOutlined_156
+  - first:
+      213: -5898531558112875338
+    second: ArcadeOutlined_157
+  - first:
+      213: -4538336844363970237
+    second: ArcadeOutlined_158
+  - first:
+      213: 4240659762317358057
+    second: ArcadeOutlined_159
+  - first:
+      213: -9108373661966305888
+    second: ArcadeOutlined_160
+  - first:
+      213: -2795417676819825442
+    second: ArcadeOutlined_161
+  - first:
+      213: 3809209905443725
+    second: ArcadeOutlined_162
+  - first:
+      213: 1587933419008752761
+    second: ArcadeOutlined_163
+  - first:
+      213: 6434000966253739149
+    second: ArcadeOutlined_164
+  - first:
+      213: 208203463003163025
+    second: ArcadeOutlined_165
+  - first:
+      213: -4446410293780139541
+    second: ArcadeOutlined_166
+  - first:
+      213: -6956887162170297808
+    second: ArcadeOutlined_167
+  - first:
+      213: 5831040717778078206
+    second: ArcadeOutlined_168
+  - first:
+      213: 6901792322072652746
+    second: ArcadeOutlined_169
+  - first:
+      213: 3802777824028699276
+    second: ArcadeOutlined_170
+  - first:
+      213: 3070587192966558053
+    second: ArcadeOutlined_171
+  - first:
+      213: 2231297337019800993
+    second: ArcadeOutlined_172
+  - first:
+      213: 3711208876039019353
+    second: ArcadeOutlined_173
+  - first:
+      213: 2247602633279614128
+    second: ArcadeOutlined_174
+  - first:
+      213: 4813383782056497276
+    second: ArcadeOutlined_175
+  - first:
+      213: -587337431578294867
+    second: ArcadeOutlined_176
+  - first:
+      213: -5000305974041748317
+    second: ArcadeOutlined_177
+  - first:
+      213: -8120880617298814587
+    second: ArcadeOutlined_178
+  - first:
+      213: 3835561166645496732
+    second: ArcadeOutlined_179
+  - first:
+      213: -1363542276254768486
+    second: ArcadeOutlined_180
+  - first:
+      213: 2569463092955378884
+    second: ArcadeOutlined_181
+  - first:
+      213: -8641080269434386578
+    second: ArcadeOutlined_182
+  - first:
+      213: 2035051492286995457
+    second: ArcadeOutlined_183
+  - first:
+      213: 8086579391757447227
+    second: ArcadeOutlined_184
+  - first:
+      213: -5229734153983354457
+    second: ArcadeOutlined_185
+  - first:
+      213: -3294807368608422068
+    second: ArcadeOutlined_186
+  - first:
+      213: -7482833319693804757
+    second: ArcadeOutlined_187
+  - first:
+      213: 8845555611992799705
+    second: ArcadeOutlined_188
+  - first:
+      213: -7736374213860017607
+    second: ArcadeOutlined_189
+  - first:
+      213: 9020747733639125837
+    second: ArcadeOutlined_190
+  - first:
+      213: -1937494593271274910
+    second: ArcadeOutlined_191
+  - first:
+      213: 472478435070444097
+    second: ArcadeOutlined_192
+  - first:
+      213: -5073607362687792758
+    second: ArcadeOutlined_193
+  - first:
+      213: 4229092731664341796
+    second: ArcadeOutlined_194
+  - first:
+      213: -7332925394519765440
+    second: ArcadeOutlined_195
+  - first:
+      213: -5732947021198247323
+    second: ArcadeOutlined_196
+  - first:
+      213: 1268528320161927537
+    second: ArcadeOutlined_197
+  - first:
+      213: 2927319071428215374
+    second: ArcadeOutlined_198
+  - first:
+      213: -1312339526880065689
+    second: ArcadeOutlined_199
+  - first:
+      213: -8463845140022226980
+    second: ArcadeOutlined_200
+  - first:
+      213: -562687931861548989
+    second: ArcadeOutlined_201
+  - first:
+      213: 4669714744833397283
+    second: ArcadeOutlined_202
+  - first:
+      213: -120428110053336746
+    second: ArcadeOutlined_203
+  - first:
+      213: -4892643580038292266
+    second: ArcadeOutlined_204
+  - first:
+      213: -5529413611255183297
+    second: ArcadeOutlined_205
+  - first:
+      213: -538316430711799500
+    second: ArcadeOutlined_206
+  - first:
+      213: 9079280982485607839
+    second: ArcadeOutlined_207
+  - first:
+      213: 1185997971763075395
+    second: ArcadeOutlined_208
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ArcadeOutlined_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 194
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1feee28a776efe50800000000000000
+      internalID: 6845022259530100506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_1
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 194
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d96ee67a6166ec9f0800000000000000
+      internalID: -446307065578723683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_2
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 194
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c9156c8eae7008d0800000000000000
+      internalID: -2882164473372272186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_3
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 194
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f52dddf453161e500800000000000000
+      internalID: 423726721550635615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_4
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 194
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a8ef341d3b884770800000000000000
+      internalID: 8595272983285590185
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_5
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 194
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2314e06177efae960800000000000000
+      internalID: 7632192305957323058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_6
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 194
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ffadcb33f9454e40800000000000000
+      internalID: 5639995417380630520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_7
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 194
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25acc6f8748d51610800000000000000
+      internalID: 1591415845205887570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_8
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 194
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4e8f1dac99d23100800000000000000
+      internalID: 86370609816112714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_9
+      rect:
+        serializedVersion: 2
+        x: 109
+        y: 194
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 465035eed0c137e50800000000000000
+      internalID: 6805814308045522276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_10
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 194
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d79b184ecdcfdf750800000000000000
+      internalID: 6340501876064237949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_11
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 194
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1471ee829e9570100800000000000000
+      internalID: 74126776823846721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_12
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 194
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86a29ed8fd97bd780800000000000000
+      internalID: -8657191857624110488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_13
+      rect:
+        serializedVersion: 2
+        x: 157
+        y: 194
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4db5faf0fc584e8a0800000000000000
+      internalID: -6276744856279753772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_14
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 194
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eeb27593fa85c3f90800000000000000
+      internalID: -6972600613471835154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_15
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 194
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5a8b0066bc9f1b3e0800000000000000
+      internalID: -2039574504237123419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_16
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 194
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1a0d03248025d2d0800000000000000
+      internalID: -3254659403809486308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_17
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 194
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9895f635d082e8080800000000000000
+      internalID: -9183358552462370423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_18
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 194
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 392e3a7e044738c10800000000000000
+      internalID: 2054613677124084371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_19
+      rect:
+        serializedVersion: 2
+        x: 229
+        y: 194
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ee458e90ca10afd0800000000000000
+      internalID: -2332835192382337310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_20
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 194
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c92ba247ff90a5bb0800000000000000
+      internalID: -4946630247942802788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_21
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 194
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 278283fa774848770800000000000000
+      internalID: 8612154037014898802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_22
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 194
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f09226562078cf200800000000000000
+      internalID: 215195326567557391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_23
+      rect:
+        serializedVersion: 2
+        x: 277
+        y: 194
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4057ec6106618b220800000000000000
+      internalID: 2501774194959611140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_24
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 194
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: abe16feb35c015180800000000000000
+      internalID: -9128501415877665094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_25
+      rect:
+        serializedVersion: 2
+        x: 301
+        y: 194
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 864fec14f6d5e6550800000000000000
+      internalID: 6155960473088881768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_26
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 162
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d463bb7132b5dbc0800000000000000
+      internalID: -3758902388372314927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_27
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 162
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eccb0b293b30d7620800000000000000
+      internalID: 2773377015325179086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_28
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 162
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ef7138e4e3cbab60800000000000000
+      internalID: 7758510170991329257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_29
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 162
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a588e8e70c4a89340800000000000000
+      internalID: 4870824143665137754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_30
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 162
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1492313779adabd0800000000000000
+      internalID: -2617249479040789477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_31
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 162
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f980ff53a3132b180800000000000000
+      internalID: -9101157770878580577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_32
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 160
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c9b7758c1712ab3e0800000000000000
+      internalID: -2037279108855530596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_33
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 162
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f530d8d6c6f899d30800000000000000
+      internalID: 4438736603607532383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_34
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 162
+        width: 6
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e2174838c4007a90800000000000000
+      internalID: -7318344136492903704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_35
+      rect:
+        serializedVersion: 2
+        x: 109
+        y: 162
+        width: 10
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a076c53397f3b850800000000000000
+      internalID: 6391724507803316392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_36
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 162
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d70baebac5d8630c0800000000000000
+      internalID: -4596330940524220291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_37
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 162
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eda063f06eee9f7f0800000000000000
+      internalID: -578168405275309346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_38
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 162
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4df752d5725b81600800000000000000
+      internalID: 439300144339714004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_39
+      rect:
+        serializedVersion: 2
+        x: 157
+        y: 162
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28f24bb1c3ecdb6a0800000000000000
+      internalID: -6431757935257047166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_40
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 162
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0cc28f3cf10a55fd0800000000000000
+      internalID: -2353799171938964288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_41
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 160
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc1ef1ac812587450800000000000000
+      internalID: 6086705162815005131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_42
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 160
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61097fcc5df754b00800000000000000
+      internalID: 812195864053780502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_43
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 162
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e431502e6c30ada00800000000000000
+      internalID: 781941638032593742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_44
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 162
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c60eb1947f5f1580800000000000000
+      internalID: -8854253388121110841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_45
+      rect:
+        serializedVersion: 2
+        x: 229
+        y: 162
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1d210a5640484df0800000000000000
+      internalID: -195835912888701670
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_46
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 162
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e782db4bc3e707f10800000000000000
+      internalID: 2265449411762792574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_47
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 162
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b622f1c25f2caaa20800000000000000
+      internalID: 3074484053896798827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_48
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 162
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8797f014238c65b40800000000000000
+      internalID: 5428746519007164792
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_49
+      rect:
+        serializedVersion: 2
+        x: 277
+        y: 162
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58170e1537da3f870800000000000000
+      internalID: 8715500414698549637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_50
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 160
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8fcf0748f5761340800000000000000
+      internalID: 4834180959233363850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_51
+      rect:
+        serializedVersion: 2
+        x: 301
+        y: 162
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8429ca2d098b6b470800000000000000
+      internalID: 8410112286310306376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_52
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 130
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4889f7a786df96c10800000000000000
+      internalID: 2047446130790209668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_53
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 130
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b7a5ba35ac170ff0800000000000000
+      internalID: -70055773220788303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_54
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 130
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 993efa93668e452b0800000000000000
+      internalID: -5596592911162547303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_55
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 130
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 562eab13380adabb0800000000000000
+      internalID: -4923102332310592923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_56
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 130
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 43cb3eb3efdd42c50800000000000000
+      internalID: 6639675834647166004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_57
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 130
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36171788d191fd2a0800000000000000
+      internalID: -6710617305124867741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_58
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 130
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a0834058d50054f0800000000000000
+      internalID: -842166703700606809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_59
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 130
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 68c2d79aef68401e0800000000000000
+      internalID: -2232511086945555322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_60
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 130
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50e6d5f9457a359f0800000000000000
+      internalID: -480856753305719291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_61
+      rect:
+        serializedVersion: 2
+        x: 109
+        y: 130
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26174aa6663f7b6e0800000000000000
+      internalID: -1821719903046700702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_62
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 135
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 146b4b97cda4b9b20800000000000000
+      internalID: 3142187475816199745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_63
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 135
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da4c54b4f337032a0800000000000000
+      internalID: -6759776325000117075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_64
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 135
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c258b0e8eccf9e20800000000000000
+      internalID: 3359629147616334530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_65
+      rect:
+        serializedVersion: 2
+        x: 157
+        y: 134
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c080151d25ef29940800000000000000
+      internalID: 5301579343021017100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_66
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 135
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce3db79f4baaa5750800000000000000
+      internalID: 6294531123460166636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_67
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 135
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 435e5bf0334f4bb00800000000000000
+      internalID: 843567530369213748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_68
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 130
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 408691d6d26398b70800000000000000
+      internalID: 8901705707206305796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_69
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 129
+        width: 10
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77891ddeb0f2efa90800000000000000
+      internalID: -7278328219503060873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_70
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 130
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba51fb473952b4ff0800000000000000
+      internalID: -50905655535528533
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_71
+      rect:
+        serializedVersion: 2
+        x: 229
+        y: 130
+        width: 10
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3d423a04e10d7ca0800000000000000
+      internalID: -6017651448161874627
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_72
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 130
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 454d401b3f8672b00800000000000000
+      internalID: 803726454365148244
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_73
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 129
+        width: 10
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41ad0e8be46125210800000000000000
+      internalID: 1320142168137980436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_74
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 130
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4dc725cf9925ebb20800000000000000
+      internalID: 3152047610522664148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_75
+      rect:
+        serializedVersion: 2
+        x: 277
+        y: 131
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a3b4005953ca1720800000000000000
+      internalID: 2817779305235657638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_76
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 130
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e642c9d90f0dbde90800000000000000
+      internalID: -6999771463962319762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_77
+      rect:
+        serializedVersion: 2
+        x: 301
+        y: 130
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e65636f0cbc95000800000000000000
+      internalID: 25275302552164072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_78
+      rect:
+        serializedVersion: 2
+        x: 313
+        y: 130
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5a2cfbbf6d6f86c50800000000000000
+      internalID: 6658843452274360997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_79
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 98
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a49fbdd4546951300800000000000000
+      internalID: 222248981027879242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_80
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 98
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41c2b5d582e58b6f0800000000000000
+      internalID: -668681017206559724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_81
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 98
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77c528d3f50929ea0800000000000000
+      internalID: -5867468625782088585
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_82
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 98
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af9e09a8ebd523a10800000000000000
+      internalID: 1887674266771581434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_83
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 98
+        width: 10
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12e2ada6d8a5082e0800000000000000
+      internalID: -2125599460689301983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_84
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 98
+        width: 10
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4dca845b868a431c0800000000000000
+      internalID: -4524806557929001772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_85
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 98
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 054b3d4ae5a779690800000000000000
+      internalID: -7595467699626199984
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_86
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 96
+        width: 10
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46ce946ebc92e3cf0800000000000000
+      internalID: -270732971876946844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_87
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 98
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 040171fafbfce1de0800000000000000
+      internalID: -1360421615236083648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_88
+      rect:
+        serializedVersion: 2
+        x: 109
+        y: 98
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80332b0898691c820800000000000000
+      internalID: 2936793949336122120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_89
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 98
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6bd0cc6a21b548660800000000000000
+      internalID: 7387129424460385718
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_90
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 98
+        width: 10
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 612bc02b4a77aa320800000000000000
+      internalID: 2569998086613807638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_91
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 98
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39c5d01342efaeca0800000000000000
+      internalID: -5986693323240416109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_92
+      rect:
+        serializedVersion: 2
+        x: 157
+        y: 98
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7ffbe5dc5865b440800000000000000
+      internalID: 4950978113299021690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_93
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 98
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 829b6e711970a2c50800000000000000
+      internalID: 6641128920263866664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_94
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 98
+        width: 10
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 128a42668f0890800800000000000000
+      internalID: 579135831447742497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_95
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 98
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76fa623a92562b3b0800000000000000
+      internalID: -5498220965560668313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_96
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 98
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9842954e433514880800000000000000
+      internalID: -8628523924430707575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_97
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 98
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df48e53f30b0d08d0800000000000000
+      internalID: -2878632475224013571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_98
+      rect:
+        serializedVersion: 2
+        x: 229
+        y: 98
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c12958872def0c8e0800000000000000
+      internalID: -1675058881463217636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_99
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 98
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92a4caa1de430f180800000000000000
+      internalID: -9083702255446898135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_100
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 98
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ff2f6a60b6ad5680800000000000000
+      internalID: -8764666023162990608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_101
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 98
+        width: 10
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb2bc9b5fab519be0800000000000000
+      internalID: -1472294794459041089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_102
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 97
+        width: 12
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c090467153b235570800000000000000
+      internalID: 8454148432530245900
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_103
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 98
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2deea747f790bf9a0800000000000000
+      internalID: -6198350019125645614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_104
+      rect:
+        serializedVersion: 2
+        x: 301
+        y: 98
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c472f2a0b8aec1fe0800000000000000
+      internalID: -1216839916404660404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_105
+      rect:
+        serializedVersion: 2
+        x: 313
+        y: 98
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b97cd4bf78433100800000000000000
+      internalID: 86492531182565808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_106
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 98
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 721bda5406b65f1a0800000000000000
+      internalID: -6776392003078999769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_107
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 98
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1921906c06e629bf0800000000000000
+      internalID: -319071261671484783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_108
+      rect:
+        serializedVersion: 2
+        x: 349
+        y: 98
+        width: 10
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6da38b0dc14792750800000000000000
+      internalID: 6280678822454508246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_109
+      rect:
+        serializedVersion: 2
+        x: 361
+        y: 98
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d150e0a1981d519f0800000000000000
+      internalID: -498261796976720611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_110
+      rect:
+        serializedVersion: 2
+        x: 373
+        y: 98
+        width: 10
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d693526a793642b20800000000000000
+      internalID: 3108719145771153773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_111
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 98
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 479dca8f3f66cb130800000000000000
+      internalID: 3583852601515235700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_112
+      rect:
+        serializedVersion: 2
+        x: 397
+        y: 98
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65605ab903b46df40800000000000000
+      internalID: 5752868246154184278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_113
+      rect:
+        serializedVersion: 2
+        x: 409
+        y: 96
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 996c7d6c8fc28b000800000000000000
+      internalID: 51840842714302105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_114
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 66
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c18d80a70f0b96490800000000000000
+      internalID: -7752470736655558628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_115
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 66
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b6add507f4a8b060800000000000000
+      internalID: 6969501804218132149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_116
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 66
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2625ef52683923900800000000000000
+      internalID: 662754299549209186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_117
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 66
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa8634cab0e89fe10800000000000000
+      internalID: 2231971271124674735
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_118
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 66
+        width: 10
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc0d94638aa8f9e50800000000000000
+      internalID: 6818320815932166347
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_119
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 66
+        width: 10
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51366255cc9f02a30800000000000000
+      internalID: 4188622309451784981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_120
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 66
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 683eac7edec7da3a0800000000000000
+      internalID: -6652523713318427770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_121
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 64
+        width: 10
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 816d0eb30f5a1a490800000000000000
+      internalID: -7736720233630476776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_122
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 66
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2cbf3e2edd6716b00800000000000000
+      internalID: 820067302524582850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_123
+      rect:
+        serializedVersion: 2
+        x: 109
+        y: 66
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad6274a58510d08a0800000000000000
+      internalID: -6337407621657057574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_124
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 66
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb48546a41e7f61a0800000000000000
+      internalID: -6814089084034251588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_125
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 66
+        width: 10
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 630d4ab69c5a12250800000000000000
+      internalID: 5918193669854515254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_126
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 66
+        width: 7
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35095ab1e12ec17b0800000000000000
+      internalID: -5252074446480109485
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_127
+      rect:
+        serializedVersion: 2
+        x: 157
+        y: 66
+        width: 9
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b26f90cbb22b26e50800000000000000
+      internalID: 6801194288190977579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_128
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 66
+        width: 7
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7263f82ac269a6750800000000000000
+      internalID: 6299012147281081895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_129
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 66
+        width: 10
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 266d97fa05fa16cc0800000000000000
+      internalID: -3719499056155077022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_130
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 66
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2338ce5e6438cd350800000000000000
+      internalID: 6042849140552794930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_131
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 66
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ef364c77d81a1330800000000000000
+      internalID: 3682282959110815715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_132
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 66
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91f81e5972c2d23b0800000000000000
+      internalID: -5535719818438537447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_133
+      rect:
+        serializedVersion: 2
+        x: 229
+        y: 66
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e57295607fb30ce90800000000000000
+      internalID: -7007535088039024802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_134
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 66
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ebb0a97fc245b3d0800000000000000
+      internalID: -3191571302055887904
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_135
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 66
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4de4fa03389c1ed20800000000000000
+      internalID: 3306145166761348820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_136
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 66
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6879c190f7bed510800000000000000
+      internalID: 1575899163492186221
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_137
+      rect:
+        serializedVersion: 2
+        x: 277
+        y: 66
+        width: 10
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 396a157912429f7d0800000000000000
+      internalID: -2884234359662860653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_138
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 65
+        width: 12
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5797d3538f2290970800000000000000
+      internalID: 8721540602820131189
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_139
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 66
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7def2d710c0a51b0800000000000000
+      internalID: -5667203980557554310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_140
+      rect:
+        serializedVersion: 2
+        x: 313
+        y: 66
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db15be6c351386120800000000000000
+      internalID: 2407228236718887357
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_141
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 66
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 858bbe1f6e88e61c0800000000000000
+      internalID: -4508515651468674984
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_142
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 66
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae8a3cabe50cf90d0800000000000000
+      internalID: -3413798479430702870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_143
+      rect:
+        serializedVersion: 2
+        x: 349
+        y: 66
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: baa5330f7a49c7340800000000000000
+      internalID: 4862925146663639723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_144
+      rect:
+        serializedVersion: 2
+        x: 361
+        y: 66
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1ff75d8f7c28d9e0800000000000000
+      internalID: -1596477141559017702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_145
+      rect:
+        serializedVersion: 2
+        x: 373
+        y: 66
+        width: 10
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba336873c3b3504c0800000000000000
+      internalID: -4321983137576504405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_146
+      rect:
+        serializedVersion: 2
+        x: 385
+        y: 64
+        width: 10
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f69d1c289fd8f9f00800000000000000
+      internalID: 1125774534646028655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_147
+      rect:
+        serializedVersion: 2
+        x: 397
+        y: 64
+        width: 10
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1252633c6d6f97a00800000000000000
+      internalID: 754905814819808545
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_148
+      rect:
+        serializedVersion: 2
+        x: 409
+        y: 66
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 537a1796fa7f338e0800000000000000
+      internalID: -1714754700337633483
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_149
+      rect:
+        serializedVersion: 2
+        x: 421
+        y: 64
+        width: 10
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7c037da3c8c7a1c0800000000000000
+      internalID: -4492401360524604290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_150
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 34
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9c9fe1a28f897b10800000000000000
+      internalID: 1979771302431399071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_151
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 33
+        width: 6
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d75e2b06034cb5750800000000000000
+      internalID: 6294840616240211325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_152
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 36
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0e939bb8c87e4c20800000000000000
+      internalID: 3192621989388066319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_153
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 36
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05081af67f1942c80800000000000000
+      internalID: -8348387317322252208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_154
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 36
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd37ed04ad668ab30800000000000000
+      internalID: 4298798931902362589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_155
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 36
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8e2941bd40bfe440800000000000000
+      internalID: 4967382761746280078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_156
+      rect:
+        serializedVersion: 2
+        x: 109
+        y: 42
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27c39d64c77401e50800000000000000
+      internalID: 6777996038282755186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_157
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 42
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6bc2046bcc4342ea0800000000000000
+      internalID: -5898531558112875338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_158
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 42
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3494e986fa69401c0800000000000000
+      internalID: -4538336844363970237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_159
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 36
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e3f73af599d9da30800000000000000
+      internalID: 4240659762317358057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_160
+      rect:
+        serializedVersion: 2
+        x: 157
+        y: 39
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a579f4a96e889180800000000000000
+      internalID: -9108373661966305888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_161
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 39
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: edc7e460f6ea439d0800000000000000
+      internalID: -2795417676819825442
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_162
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 39
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d83f94bc4788d0000800000000000000
+      internalID: 3809209905443725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_163
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 39
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97cfcf60809790610800000000000000
+      internalID: 1587933419008752761
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_164
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 39
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d8cf21e3ac92a4950800000000000000
+      internalID: 6434000966253739149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_165
+      rect:
+        serializedVersion: 2
+        x: 229
+        y: 39
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1994f4d42ffa3e200800000000000000
+      internalID: 208203463003163025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_166
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 39
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be13899556d2b42c0800000000000000
+      internalID: -4446410293780139541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_167
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 39
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0323d543cfb247f90800000000000000
+      internalID: -6956887162170297808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_168
+      rect:
+        serializedVersion: 2
+        x: 277
+        y: 36
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef9400e73a40ce050800000000000000
+      internalID: 5831040717778078206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_169
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 34
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: acba8a6bc8718cf50800000000000000
+      internalID: 6901792322072652746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_170
+      rect:
+        serializedVersion: 2
+        x: 301
+        y: 34
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c8aa6f0784e26c430800000000000000
+      internalID: 3802777824028699276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_171
+      rect:
+        serializedVersion: 2
+        x: 313
+        y: 34
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 561b2a888caec9a20800000000000000
+      internalID: 3070587192966558053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_172
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 34
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ad17592b1927fe10800000000000000
+      internalID: 2231297337019800993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_173
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 34
+        width: 26
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95b15975fccd08330800000000000000
+      internalID: 3711208876039019353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_174
+      rect:
+        serializedVersion: 2
+        x: 361
+        y: 34
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0bc2dd8cfa6113f10800000000000000
+      internalID: 2247602633279614128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_175
+      rect:
+        serializedVersion: 2
+        x: 373
+        y: 34
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c709a112c039cc240800000000000000
+      internalID: 4813383782056497276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_176
+      rect:
+        serializedVersion: 2
+        x: 385
+        y: 34
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da54c73c7bb59d7f0800000000000000
+      internalID: -587337431578294867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_177
+      rect:
+        serializedVersion: 2
+        x: 397
+        y: 34
+        width: 6
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ac5af895385b9ab0800000000000000
+      internalID: -5000305974041748317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_178
+      rect:
+        serializedVersion: 2
+        x: 409
+        y: 31
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5899c86da16dc4f80800000000000000
+      internalID: -8120880617298814587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_179
+      rect:
+        serializedVersion: 2
+        x: 421
+        y: 30
+        width: 6
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c9b00343f86aa3530800000000000000
+      internalID: 3835561166645496732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_180
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 33
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a926b9b2689b31de0800000000000000
+      internalID: -1363542276254768486
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_181
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 34
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c4f417c11198a320800000000000000
+      internalID: 2569463092955378884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_182
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 34
+        width: 12
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e670ab00747b41880800000000000000
+      internalID: -8641080269434386578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_183
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 33
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10c1561dc84fd3c10800000000000000
+      internalID: 2035051492286995457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_184
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 33
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3072bdbc1d493070800000000000000
+      internalID: 8086579391757447227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_185
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 2
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a9181ace704c67b0800000000000000
+      internalID: -5229734153983354457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_186
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 2
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4761c6a72e7642d0800000000000000
+      internalID: -3294807368608422068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_187
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 2
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b2b9132ddb2a72890800000000000000
+      internalID: -7482833319693804757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_188
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 2
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d93bcd96f9b1ca70800000000000000
+      internalID: 8845555611992799705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_189
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 2
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93ab16d34a0e2a490800000000000000
+      internalID: -7736374213860017607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_190
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 2
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4b58ff0542203d70800000000000000
+      internalID: 9020747733639125837
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_191
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 3
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26263d5cee2ac15e0800000000000000
+      internalID: -1937494593271274910
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_192
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 3
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 142086622a49e8600800000000000000
+      internalID: 472478435070444097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_193
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 5
+        width: 13
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8900391cfce699b0800000000000000
+      internalID: -5073607362687792758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_194
+      rect:
+        serializedVersion: 2
+        x: 109
+        y: 2
+        width: 10
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42b1a09ce61c0ba30800000000000000
+      internalID: 4229092731664341796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_195
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 3
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04e453784373c3a90800000000000000
+      internalID: -7332925394519765440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_196
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 2
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56a38550f0b7070b0800000000000000
+      internalID: -5732947021198247323
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_197
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 2
+        width: 10
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17156c649c7ba9110800000000000000
+      internalID: 1268528320161927537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_198
+      rect:
+        serializedVersion: 2
+        x: 157
+        y: 3
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4284b49f2def9820800000000000000
+      internalID: 2927319071428215374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_199
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 2
+        width: 10
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7670c934722a9cde0800000000000000
+      internalID: -1312339526880065689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_200
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 2
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cdf0f0340b16a8a80800000000000000
+      internalID: -8463845140022226980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_201
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 7
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3404ef5ae4ee038f0800000000000000
+      internalID: -562687931861548989
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_202
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 6
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 322d238b1d82ec040800000000000000
+      internalID: 4669714744833397283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_203
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 2
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6599c4f9547245ef0800000000000000
+      internalID: -120428110053336746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_204
+      rect:
+        serializedVersion: 2
+        x: 229
+        y: 2
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6dcd8371696d91cb0800000000000000
+      internalID: -4892643580038292266
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_205
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 4
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f38ccecdd939343b0800000000000000
+      internalID: -5529413611255183297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_206
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 2
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 431caa2fe048788f0800000000000000
+      internalID: -538316430711799500
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_207
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 0
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f95a30113f5100e70800000000000000
+      internalID: 9079280982485607839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcadeOutlined_208
+      rect:
+        serializedVersion: 2
+        x: 277
+        y: 2
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 34995432fd2857010800000000000000
+      internalID: 1185997971763075395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      ArcadeOutlined_0: 6845022259530100506
+      ArcadeOutlined_1: -446307065578723683
+      ArcadeOutlined_10: 6340501876064237949
+      ArcadeOutlined_100: -8764666023162990608
+      ArcadeOutlined_101: -1472294794459041089
+      ArcadeOutlined_102: 8454148432530245900
+      ArcadeOutlined_103: -6198350019125645614
+      ArcadeOutlined_104: -1216839916404660404
+      ArcadeOutlined_105: 86492531182565808
+      ArcadeOutlined_106: -6776392003078999769
+      ArcadeOutlined_107: -319071261671484783
+      ArcadeOutlined_108: 6280678822454508246
+      ArcadeOutlined_109: -498261796976720611
+      ArcadeOutlined_11: 74126776823846721
+      ArcadeOutlined_110: 3108719145771153773
+      ArcadeOutlined_111: 3583852601515235700
+      ArcadeOutlined_112: 5752868246154184278
+      ArcadeOutlined_113: 51840842714302105
+      ArcadeOutlined_114: -7752470736655558628
+      ArcadeOutlined_115: 6969501804218132149
+      ArcadeOutlined_116: 662754299549209186
+      ArcadeOutlined_117: 2231971271124674735
+      ArcadeOutlined_118: 6818320815932166347
+      ArcadeOutlined_119: 4188622309451784981
+      ArcadeOutlined_12: -8657191857624110488
+      ArcadeOutlined_120: -6652523713318427770
+      ArcadeOutlined_121: -7736720233630476776
+      ArcadeOutlined_122: 820067302524582850
+      ArcadeOutlined_123: -6337407621657057574
+      ArcadeOutlined_124: -6814089084034251588
+      ArcadeOutlined_125: 5918193669854515254
+      ArcadeOutlined_126: -5252074446480109485
+      ArcadeOutlined_127: 6801194288190977579
+      ArcadeOutlined_128: 6299012147281081895
+      ArcadeOutlined_129: -3719499056155077022
+      ArcadeOutlined_13: -6276744856279753772
+      ArcadeOutlined_130: 6042849140552794930
+      ArcadeOutlined_131: 3682282959110815715
+      ArcadeOutlined_132: -5535719818438537447
+      ArcadeOutlined_133: -7007535088039024802
+      ArcadeOutlined_134: -3191571302055887904
+      ArcadeOutlined_135: 3306145166761348820
+      ArcadeOutlined_136: 1575899163492186221
+      ArcadeOutlined_137: -2884234359662860653
+      ArcadeOutlined_138: 8721540602820131189
+      ArcadeOutlined_139: -5667203980557554310
+      ArcadeOutlined_14: -6972600613471835154
+      ArcadeOutlined_140: 2407228236718887357
+      ArcadeOutlined_141: -4508515651468674984
+      ArcadeOutlined_142: -3413798479430702870
+      ArcadeOutlined_143: 4862925146663639723
+      ArcadeOutlined_144: -1596477141559017702
+      ArcadeOutlined_145: -4321983137576504405
+      ArcadeOutlined_146: 1125774534646028655
+      ArcadeOutlined_147: 754905814819808545
+      ArcadeOutlined_148: -1714754700337633483
+      ArcadeOutlined_149: -4492401360524604290
+      ArcadeOutlined_15: -2039574504237123419
+      ArcadeOutlined_150: 1979771302431399071
+      ArcadeOutlined_151: 6294840616240211325
+      ArcadeOutlined_152: 3192621989388066319
+      ArcadeOutlined_153: -8348387317322252208
+      ArcadeOutlined_154: 4298798931902362589
+      ArcadeOutlined_155: 4967382761746280078
+      ArcadeOutlined_156: 6777996038282755186
+      ArcadeOutlined_157: -5898531558112875338
+      ArcadeOutlined_158: -4538336844363970237
+      ArcadeOutlined_159: 4240659762317358057
+      ArcadeOutlined_16: -3254659403809486308
+      ArcadeOutlined_160: -9108373661966305888
+      ArcadeOutlined_161: -2795417676819825442
+      ArcadeOutlined_162: 3809209905443725
+      ArcadeOutlined_163: 1587933419008752761
+      ArcadeOutlined_164: 6434000966253739149
+      ArcadeOutlined_165: 208203463003163025
+      ArcadeOutlined_166: -4446410293780139541
+      ArcadeOutlined_167: -6956887162170297808
+      ArcadeOutlined_168: 5831040717778078206
+      ArcadeOutlined_169: 6901792322072652746
+      ArcadeOutlined_17: -9183358552462370423
+      ArcadeOutlined_170: 3802777824028699276
+      ArcadeOutlined_171: 3070587192966558053
+      ArcadeOutlined_172: 2231297337019800993
+      ArcadeOutlined_173: 3711208876039019353
+      ArcadeOutlined_174: 2247602633279614128
+      ArcadeOutlined_175: 4813383782056497276
+      ArcadeOutlined_176: -587337431578294867
+      ArcadeOutlined_177: -5000305974041748317
+      ArcadeOutlined_178: -8120880617298814587
+      ArcadeOutlined_179: 3835561166645496732
+      ArcadeOutlined_18: 2054613677124084371
+      ArcadeOutlined_180: -1363542276254768486
+      ArcadeOutlined_181: 2569463092955378884
+      ArcadeOutlined_182: -8641080269434386578
+      ArcadeOutlined_183: 2035051492286995457
+      ArcadeOutlined_184: 8086579391757447227
+      ArcadeOutlined_185: -5229734153983354457
+      ArcadeOutlined_186: -3294807368608422068
+      ArcadeOutlined_187: -7482833319693804757
+      ArcadeOutlined_188: 8845555611992799705
+      ArcadeOutlined_189: -7736374213860017607
+      ArcadeOutlined_19: -2332835192382337310
+      ArcadeOutlined_190: 9020747733639125837
+      ArcadeOutlined_191: -1937494593271274910
+      ArcadeOutlined_192: 472478435070444097
+      ArcadeOutlined_193: -5073607362687792758
+      ArcadeOutlined_194: 4229092731664341796
+      ArcadeOutlined_195: -7332925394519765440
+      ArcadeOutlined_196: -5732947021198247323
+      ArcadeOutlined_197: 1268528320161927537
+      ArcadeOutlined_198: 2927319071428215374
+      ArcadeOutlined_199: -1312339526880065689
+      ArcadeOutlined_2: -2882164473372272186
+      ArcadeOutlined_20: -4946630247942802788
+      ArcadeOutlined_200: -8463845140022226980
+      ArcadeOutlined_201: -562687931861548989
+      ArcadeOutlined_202: 4669714744833397283
+      ArcadeOutlined_203: -120428110053336746
+      ArcadeOutlined_204: -4892643580038292266
+      ArcadeOutlined_205: -5529413611255183297
+      ArcadeOutlined_206: -538316430711799500
+      ArcadeOutlined_207: 9079280982485607839
+      ArcadeOutlined_208: 1185997971763075395
+      ArcadeOutlined_21: 8612154037014898802
+      ArcadeOutlined_22: 215195326567557391
+      ArcadeOutlined_23: 2501774194959611140
+      ArcadeOutlined_24: -9128501415877665094
+      ArcadeOutlined_25: 6155960473088881768
+      ArcadeOutlined_26: -3758902388372314927
+      ArcadeOutlined_27: 2773377015325179086
+      ArcadeOutlined_28: 7758510170991329257
+      ArcadeOutlined_29: 4870824143665137754
+      ArcadeOutlined_3: 423726721550635615
+      ArcadeOutlined_30: -2617249479040789477
+      ArcadeOutlined_31: -9101157770878580577
+      ArcadeOutlined_32: -2037279108855530596
+      ArcadeOutlined_33: 4438736603607532383
+      ArcadeOutlined_34: -7318344136492903704
+      ArcadeOutlined_35: 6391724507803316392
+      ArcadeOutlined_36: -4596330940524220291
+      ArcadeOutlined_37: -578168405275309346
+      ArcadeOutlined_38: 439300144339714004
+      ArcadeOutlined_39: -6431757935257047166
+      ArcadeOutlined_4: 8595272983285590185
+      ArcadeOutlined_40: -2353799171938964288
+      ArcadeOutlined_41: 6086705162815005131
+      ArcadeOutlined_42: 812195864053780502
+      ArcadeOutlined_43: 781941638032593742
+      ArcadeOutlined_44: -8854253388121110841
+      ArcadeOutlined_45: -195835912888701670
+      ArcadeOutlined_46: 2265449411762792574
+      ArcadeOutlined_47: 3074484053896798827
+      ArcadeOutlined_48: 5428746519007164792
+      ArcadeOutlined_49: 8715500414698549637
+      ArcadeOutlined_5: 7632192305957323058
+      ArcadeOutlined_50: 4834180959233363850
+      ArcadeOutlined_51: 8410112286310306376
+      ArcadeOutlined_52: 2047446130790209668
+      ArcadeOutlined_53: -70055773220788303
+      ArcadeOutlined_54: -5596592911162547303
+      ArcadeOutlined_55: -4923102332310592923
+      ArcadeOutlined_56: 6639675834647166004
+      ArcadeOutlined_57: -6710617305124867741
+      ArcadeOutlined_58: -842166703700606809
+      ArcadeOutlined_59: -2232511086945555322
+      ArcadeOutlined_6: 5639995417380630520
+      ArcadeOutlined_60: -480856753305719291
+      ArcadeOutlined_61: -1821719903046700702
+      ArcadeOutlined_62: 3142187475816199745
+      ArcadeOutlined_63: -6759776325000117075
+      ArcadeOutlined_64: 3359629147616334530
+      ArcadeOutlined_65: 5301579343021017100
+      ArcadeOutlined_66: 6294531123460166636
+      ArcadeOutlined_67: 843567530369213748
+      ArcadeOutlined_68: 8901705707206305796
+      ArcadeOutlined_69: -7278328219503060873
+      ArcadeOutlined_7: 1591415845205887570
+      ArcadeOutlined_70: -50905655535528533
+      ArcadeOutlined_71: -6017651448161874627
+      ArcadeOutlined_72: 803726454365148244
+      ArcadeOutlined_73: 1320142168137980436
+      ArcadeOutlined_74: 3152047610522664148
+      ArcadeOutlined_75: 2817779305235657638
+      ArcadeOutlined_76: -6999771463962319762
+      ArcadeOutlined_77: 25275302552164072
+      ArcadeOutlined_78: 6658843452274360997
+      ArcadeOutlined_79: 222248981027879242
+      ArcadeOutlined_8: 86370609816112714
+      ArcadeOutlined_80: -668681017206559724
+      ArcadeOutlined_81: -5867468625782088585
+      ArcadeOutlined_82: 1887674266771581434
+      ArcadeOutlined_83: -2125599460689301983
+      ArcadeOutlined_84: -4524806557929001772
+      ArcadeOutlined_85: -7595467699626199984
+      ArcadeOutlined_86: -270732971876946844
+      ArcadeOutlined_87: -1360421615236083648
+      ArcadeOutlined_88: 2936793949336122120
+      ArcadeOutlined_89: 7387129424460385718
+      ArcadeOutlined_9: 6805814308045522276
+      ArcadeOutlined_90: 2569998086613807638
+      ArcadeOutlined_91: -5986693323240416109
+      ArcadeOutlined_92: 4950978113299021690
+      ArcadeOutlined_93: 6641128920263866664
+      ArcadeOutlined_94: 579135831447742497
+      ArcadeOutlined_95: -5498220965560668313
+      ArcadeOutlined_96: -8628523924430707575
+      ArcadeOutlined_97: -2878632475224013571
+      ArcadeOutlined_98: -1675058881463217636
+      ArcadeOutlined_99: -9083702255446898135
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

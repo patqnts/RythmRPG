@@ -1,0 +1,52 @@
+{
+	"$baseURI": "https://yal.cc/r/20/pixelfont/",
+	"$version": "1.0",
+	"in-glyphs": [
+		"ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+		"abcdefghijklmnopqrstuvwxyz",
+		"0123456789¹²³⁴ªº%$€¥£¢&*@#|",
+		"ÁÂÀÃÄÅÆÇÉÊÈËÍÎÌÏĐÑÓÔÒÕÖØŒŠÛÙÜÝŸŁÞμ",
+		"áâàãäåæçéêèëíîìïıðñóôòõöøœšßúûùüýÿžþ",
+		",:;-–—•.…ˆ¨`~“‘’‘‚“”„\"'^<>‹›«»/\\?!¿¡",
+		"()[]{}©®™§+×÷=±_¯°¤¦¬¶∎¸"
+	],
+	"glyph-color": "auto",
+	"in-kerning": [
+		""
+	],
+	"glyph-width": 11,
+	"glyph-height": 13,
+	"glyph-ofs-x": 0,
+	"glyph-ofs-y": 0,
+	"glyph-sep-x": 0,
+	"glyph-sep-y": 3,
+	"glyph-base-x": 3,
+	"glyph-baseline": 8,
+	"glyph-spacing": 1,
+	"font-is-mono": false,
+	"font-em-square": 1024,
+	"font-line-gap": 0,
+	"font-ascend": 768,
+	"font-descend": -256,
+	"font-px-size": 128,
+	"contour-type": "pixel",
+	"font-type": "ttf",
+	"font-name": "Dead Revolver Game Outlined",
+	"font-author": "Dead Revolver",
+	"font-copy": "(c)",
+	"font-version": "Version 1.0",
+	"font-desc": "",
+	"font-license": "",
+	"font-license-url": "",
+	"font-sample-text": "Hello!",
+	"font-preview-text": [
+		"ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+		"abcdefghijklmnopqrstuvwxyz",
+		"0123456789¹²³⁴ªº%$€¥£¢&*@#|",
+		"ÁÂÀÃÄÅÆÇÉÊÈËÍÎÌÏĐÑÓÔÒÕÖØŒŠÛÙÜÝŸŁÞμ",
+		"áâàãäåæçéêèëíîìïıðñóôòõöøœšßúûùüýÿžþ",
+		",:;-–—•.…ˆ¨`~“‘’‘‚“”„\"'^<>‹›«»/\\?!¿¡",
+		"()[]{}©®™§+×÷=±_¯°¤¦¬¶∎¸",
+		"The quick brown fox jumps over the lazy cow."
+	]
+}

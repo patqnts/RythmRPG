@@ -201,6 +201,8 @@ namespace RythmRPG.Combat
         public Color PromptColor => promptColor;
         public Color OutlineColor => outlineColor;
         public TMP_FontAsset FontAsset => CombatText.ResolveFont(fontAsset, legacyFont);
+        /// <summary>True when a font is actually chosen (Font Asset, or a non-built-in Legacy Font).</summary>
+        public bool HasCustomFont => fontAsset != null || (legacyFont != null && !CombatText.IsBuiltinFont(legacyFont));
         public Font LegacyFont => legacyFont;
         public bool RankParagraphMapping => rankParagraphMapping;
 

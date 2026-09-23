@@ -14,6 +14,8 @@ public class HoldNoteParticleTailVisual : HoldNoteTailVisual
 {
     [Header("Shape")]
     [SerializeField] private HoldNoteTailAxis lengthAxis = HoldNoteTailAxis.Y;
+    [Tooltip("Which way the tail extends from the note. Along Lane lays it on the lane in world space, like the laser " +
+             "beam, so the note's rotation/tilt doesn't turn it. Left/Right/Up/Down are in the note's own (rotated) space.")]
     [SerializeField] private HoldNoteTailDirection tailDirection = HoldNoteTailDirection.Up;
     [SerializeField, Min(0f)] private float lengthScale = 1f;
 
@@ -63,6 +65,7 @@ public class HoldNoteParticleTailVisual : HoldNoteTailVisual
     private static Texture2D generatedBeamTexture;
 
     private Vector3 initialLocalPosition;
+    private Quaternion initialLocalRotation;
     private bool initialized;
 
     private GameObject beamObject;
@@ -70,6 +73,9 @@ public class HoldNoteParticleTailVisual : HoldNoteTailVisual
     private Material beamMaterial;
     private GameObject beamHead;
     private GameObject beamEnd;
+    // Along Lane: the head/end effects live outside the note, so its tilt and flattened (Z = 0) scale can't turn or
+    // squash them, the same as the laser's start/end effects.
+    private Transform beamEffectsRoot;
     private float currentLength;
     private float pulseTime;
     private float holdBlend;
@@ -118,8 +124,19 @@ public class HoldNoteParticleTailVisual : HoldNoteTailVisual
 
         if (useParticles && tailParticles != null)
         {
-            Vector3 direction = GetDirectionVector(tailDirection);
-            transform.localPosition = initialLocalPosition + direction * visualLength * 0.5f;
+            if (tailDirection == HoldNoteTailDirection.AlongLane)
+            {
+                Transform parent = transform.parent;
+                Vector3 direction = GetWorldDirection(tailDirection, parent);
+                Quaternion baseRotation = (parent != null ? parent.rotation : Quaternion.identity) * initialLocalRotation;
+                transform.rotation = AlignAxis(baseRotation, lengthAxis == HoldNoteTailAxis.X ? Vector3.right : Vector3.up, direction);
+                transform.localPosition = initialLocalPosition + WorldToParentVector(parent, direction * visualLength * 0.5f);
+            }
+            else
+            {
+                Vector3 direction = GetDirectionVector(tailDirection);
+                transform.localPosition = initialLocalPosition + direction * visualLength * 0.5f;
+            }
             ApplyParticleLength(visualLength, visible);
         }
         else if (tailParticles != null && tailParticles.isPlaying)
@@ -156,8 +173,19 @@ public class HoldNoteParticleTailVisual : HoldNoteTailVisual
         if (useBeam && beamLine != null && beamLine.enabled) UpdateBeam(Time.deltaTime);
     }
 
+    private void OnEnable()
+    {
+        if (beamEffectsRoot != null) beamEffectsRoot.gameObject.SetActive(true);
+    }
+
+    private void OnDisable()
+    {
+        if (beamEffectsRoot != null) beamEffectsRoot.gameObject.SetActive(false);
+    }
+
     private void OnDestroy()
     {
+        if (beamEffectsRoot != null) Destroy(beamEffectsRoot.gameObject);
         if (beamMaterial != null) Destroy(beamMaterial);
     }
 
@@ -203,8 +231,15 @@ public class HoldNoteParticleTailVisual : HoldNoteTailVisual
             beamLine.sharedMaterial = beamMaterial;
         }
 
-        if (beamHeadPrefab != null) beamHead = Instantiate(beamHeadPrefab, beamObject.transform);
-        if (beamEndPrefab != null) beamEnd = Instantiate(beamEndPrefab, beamObject.transform);
+        Transform effectsParent = beamObject.transform;
+        if (tailDirection == HoldNoteTailDirection.AlongLane && (beamHeadPrefab != null || beamEndPrefab != null))
+        {
+            // Scene root, identity rotation and scale: the effects keep their prefab look and only face along the beam.
+            if (beamEffectsRoot == null) beamEffectsRoot = new GameObject($"{name} Beam Ends").transform;
+            effectsParent = beamEffectsRoot;
+        }
+        if (beamHeadPrefab != null) beamHead = Instantiate(beamHeadPrefab, effectsParent);
+        if (beamEndPrefab != null) beamEnd = Instantiate(beamEndPrefab, effectsParent);
     }
 
     private void SetBeamVisible(bool visible)
@@ -220,9 +255,18 @@ public class HoldNoteParticleTailVisual : HoldNoteTailVisual
 
         Transform parent = transform.parent;
         Vector3 localStart = initialLocalPosition;
-        Vector3 localEnd = initialLocalPosition + GetDirectionVector(tailDirection) * currentLength;
         Vector3 start = parent != null ? parent.TransformPoint(localStart) : localStart;
-        Vector3 end = parent != null ? parent.TransformPoint(localEnd) : localEnd;
+        Vector3 end;
+        if (tailDirection == HoldNoteTailDirection.AlongLane)
+        {
+            // World space along the lane, like the laser (note -> target), so the note's tilt doesn't turn it.
+            end = start + GetWorldDirection(tailDirection, parent) * currentLength;
+        }
+        else
+        {
+            Vector3 localEnd = initialLocalPosition + GetDirectionVector(tailDirection) * currentLength;
+            end = parent != null ? parent.TransformPoint(localEnd) : localEnd;
+        }
         beamLine.SetPosition(0, start);
         beamLine.SetPosition(1, end);
 
@@ -241,15 +285,20 @@ public class HoldNoteParticleTailVisual : HoldNoteTailVisual
                 beamMaterial.mainTextureOffset -= new Vector2(deltaTime * textureScrollSpeed, 0f);
         }
 
+        // Head faces down the beam, end faces back at the head (like the laser's LookAt). Along Lane uses the lane
+        // direction even when the tail is still too short to have one of its own.
+        Vector3 along = end - start;
+        if (along.sqrMagnitude <= 0.0001f && tailDirection == HoldNoteTailDirection.AlongLane)
+            along = GetWorldDirection(tailDirection, parent);
         if (beamHead != null)
         {
             beamHead.transform.position = start;
-            if ((end - start).sqrMagnitude > 0.0001f) beamHead.transform.rotation = Quaternion.LookRotation(end - start);
+            if (along.sqrMagnitude > 0.0001f) beamHead.transform.rotation = Quaternion.LookRotation(along);
         }
         if (beamEnd != null)
         {
             beamEnd.transform.position = end;
-            if ((start - end).sqrMagnitude > 0.0001f) beamEnd.transform.rotation = Quaternion.LookRotation(start - end);
+            if (along.sqrMagnitude > 0.0001f) beamEnd.transform.rotation = Quaternion.LookRotation(-along);
         }
     }
 
@@ -327,6 +376,7 @@ public class HoldNoteParticleTailVisual : HoldNoteTailVisual
         }
 
         initialLocalPosition = transform.localPosition;
+        initialLocalRotation = transform.localRotation;
         initialized = true;
     }
 

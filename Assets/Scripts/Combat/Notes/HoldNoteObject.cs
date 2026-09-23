@@ -32,6 +32,12 @@ public class HoldNoteObject : Note
     private float clockDuration;
     private double pressedAtSeconds;
 
+    // The lane in its movement space (hit line and a point up the lane), for tails laid Along Lane.
+    private bool hasLane;
+    private Transform laneSpace;
+    private Vector3 laneLineLocal;
+    private Vector3 laneUpLocal;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +52,8 @@ public class HoldNoteObject : Note
     // Update is called once per frame
     void Update()
     {
+        PushLaneDirectionToTail();
+
         // Check for key hold event
         if (isHoldingKey)
         {
@@ -91,6 +99,7 @@ public class HoldNoteObject : Note
 
     private void LateUpdate()
     {
+        PushLaneDirectionToTail();
         if (!isHoldingKey && activeTailVisual != null)
         {
             SetTailLength(revealedTailLength);
@@ -116,6 +125,10 @@ public class HoldNoteObject : Note
         movementTweenStarted = true;
         movementTweenIdentity = currentIdentity;
 
+        if (TryGetLaneTravelPositions(currentIdentity, 3f, out Transform space, out Vector3 startLocal,
+                out Vector3 keyLocal, out _))
+            RememberLane(space, startLocal, keyLocal);
+
         StopMovementTweens();
         TweenLaneFall(currentIdentity, -3f, speed);
     }
@@ -131,6 +144,7 @@ public class HoldNoteObject : Note
                 out float worldSpeed, out float totalDuration)) return false;
 
         StopMovementTweens();
+        RememberLane(movementSpace, startLocal, keyLocal);
         clockDriven = true;
         clockSpace = movementSpace;
         clockStartLocal = startLocal;
@@ -148,6 +162,28 @@ public class HoldNoteObject : Note
             SetTailLength(revealedTailLength = Mathf.Min(revealedTailLength, length));
         }
         return true;
+    }
+
+    // The lane runs from its start (the spawn, slid over to the lane's X) down to the hit line.
+    private void RememberLane(Transform space, Vector3 startLocal, Vector3 keyLocal)
+    {
+        Vector3 laneStart = startLocal;
+        laneStart.x = keyLocal.x;
+        if ((laneStart - keyLocal).sqrMagnitude <= 0.000001f) laneStart = startLocal;
+        if ((laneStart - keyLocal).sqrMagnitude <= 0.000001f) return;
+        laneSpace = space;
+        laneLineLocal = keyLocal;
+        laneUpLocal = laneStart;
+        hasLane = true;
+    }
+
+    // Recomputed every frame: the lanes are re-projected from the camera, so their world direction can change.
+    private void PushLaneDirectionToTail()
+    {
+        if (!hasLane || activeTailVisual == null) return;
+        Vector3 up = FromMovementLocal(laneUpLocal, laneSpace);
+        Vector3 line = FromMovementLocal(laneLineLocal, laneSpace);
+        activeTailVisual.SetLaneDirection(up - line);
     }
 
     private void InitializeTailVisual()
