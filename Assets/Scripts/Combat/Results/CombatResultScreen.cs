@@ -10,12 +10,15 @@ namespace RythmRPG.Combat
     /// <summary>
     /// End-of-battle result screen: VICTORY/DEFEAT title, judgement breakdown with count-ups, max combo, accuracy,
     /// score, a grade letter that stamps down, badges (Full Combo, All Perfect, No Damage), combat details and a
-    /// continue prompt. The first key press skips the animation, the next one closes it.
+    /// prompt. A Close or Restart key (see the style) skips the animation; once finished, Close continues and Restart
+    /// asks for the battle to start over (<see cref="Choice"/>).
     ///
     /// Rows, wording, colors, timings and sounds come from <see cref="CombatResultStyle"/>; the grade ladder and
     /// scoring from <see cref="CombatResultGrading"/>. The parts below can be any uGUI objects, so a hand-made
     /// prefab works as long as its parts are assigned. <see cref="CreateTemplate"/> builds the default layout.
     /// </summary>
+    public enum CombatResultChoice { Continue, Restart }
+
     public sealed class CombatResultScreen : MonoBehaviour
     {
         [Tooltip("Empty = Resources/Combat/UI/CombatResultStyle (or built-in defaults).")]
@@ -47,6 +50,8 @@ namespace RythmRPG.Combat
         public event Action<CombatReport> Closed;
 
         public bool IsOpen { get; private set; }
+        /// <summary>What the player chose when the screen closed.</summary>
+        public CombatResultChoice Choice { get; private set; }
         public CombatReport Report { get; private set; }
 
         private sealed class Step
@@ -118,6 +123,7 @@ namespace RythmRPG.Combat
             gameObject.SetActive(true);
             closing = false;
             closed = false;
+            Choice = CombatResultChoice.Continue;
             stamped = false;
             promptVisible = false;
             skipping = false;
@@ -156,9 +162,12 @@ namespace RythmRPG.Combat
             shakeStart = -1f;
         }
 
-        public void Close()
+        public void Close() => Close(CombatResultChoice.Continue);
+
+        public void Close(CombatResultChoice choice)
         {
             if (!IsOpen || closing) return;
+            Choice = choice;
             SkipToEnd();
             closing = true;
             float from = group != null ? group.alpha : 1f;
@@ -433,12 +442,18 @@ namespace RythmRPG.Combat
 
             if (now >= openedAt + s.InputDelay && Input.anyKeyDown)
             {
-                if (!finished && s.PressToSkip) SkipToEnd();
-                else if (finished) Close();
+                bool closeKey = CombatResultStyle.AnyKeyDown(s.CloseKeys);
+                bool restartKey = s.AllowRestart && CombatResultStyle.AnyKeyDown(s.RestartKeys);
+                if (!finished)
+                {
+                    if (s.PressToSkip && (closeKey || restartKey || s.SkipWithAnyKey)) SkipToEnd();
+                }
+                else if (restartKey) Close(CombatResultChoice.Restart);
+                else if (closeKey) Close(CombatResultChoice.Continue);
             }
             else if (finished && s.AutoCloseSeconds > 0f && now >= finishedAt + s.AutoCloseSeconds)
             {
-                Close();
+                Close(CombatResultChoice.Continue);
             }
         }
 

@@ -225,7 +225,7 @@ MonoBehaviour:
     playerState: 0
     damage: 1
     speed: 8
-    travelTime: 1.0666666666666667
+    travelTime: 1.0666666666666669
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
@@ -259,7 +259,7 @@ MonoBehaviour:
     playerState: 0
     damage: 1
     speed: 8
-    travelTime: 1.0666666666666667
+    travelTime: 1.0666666666666664
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
@@ -276,7 +276,7 @@ MonoBehaviour:
     playerState: 0
     damage: 1
     speed: 8
-    travelTime: 1.0666666666666667
+    travelTime: 1.0666666666666664
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
@@ -293,7 +293,7 @@ MonoBehaviour:
     playerState: 0
     damage: 1
     speed: 8
-    travelTime: 1.0666666666666667
+    travelTime: 1.0666666666666664
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
@@ -310,7 +310,7 @@ MonoBehaviour:
     playerState: 0
     damage: 1
     speed: 8
-    travelTime: 1.0666666666666667
+    travelTime: 1.0666666666666669
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
@@ -327,7 +327,7 @@ MonoBehaviour:
     playerState: 0
     damage: 1
     speed: 8
-    travelTime: 1.0666666666666667
+    travelTime: 1.0666666666666664
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15

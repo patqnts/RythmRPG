@@ -25,7 +25,8 @@ namespace RythmRPG.Combat
         }
 
         public void Execute(AbilityRuntimeInstance ability, PlayerCombatant player, EnemyCombatant enemy,
-            RhythmPatternRunner patternRunner, Transform spawnOrigin = null, Transform impactOrigin = null, int selectedLane = -1)
+            RhythmPatternRunner patternRunner, Transform spawnOrigin = null, Transform impactOrigin = null, int selectedLane = -1,
+            double? plannedZeroDsp = null)
         {
             laneId = selectedLane;
             if (executor == null) executor = GetComponent<AbilityExecutor>();
@@ -40,8 +41,11 @@ namespace RythmRPG.Combat
             }
             runner.PatternCompleted += HandlePatternCompleted;
             ExecutionStarted?.Invoke(ability);
+            // plannedZeroDsp: the start planned before the cast animation (RhythmPatternRunner.PlanStart), so the first
+            // projectile appears right as the ability's wisp pops.
             runner.Run(ability.Definition.RhythmPattern,
-                new PatternRunContext(PatternRunMode.PlayerAbility, player, spawnOrigin != null ? spawnOrigin : player.transform));
+                new PatternRunContext(PatternRunMode.PlayerAbility, player, spawnOrigin != null ? spawnOrigin : player.transform),
+                plannedZeroDsp);
         }
 
         private void HandlePatternCompleted(PatternRunResult result)

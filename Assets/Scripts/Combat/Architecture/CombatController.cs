@@ -43,6 +43,9 @@ namespace RythmRPG.Combat
         private AbilityRuntimeInstance selectedAbility;
         private int selectedLane;
         private Coroutine stateRoutine;
+        // Set by a restart from the result screen: the player is already in place, so the next battle start skips
+        // the walk-in and only replays the music intro and the enemy's intro.
+        private bool restartInPlace;
         private CombatStatsTracker stats;
 
         /// <summary>The report of the last finished battle (null until one ends).</summary>
@@ -108,6 +111,7 @@ namespace RythmRPG.Combat
             runner?.CancelCurrentPattern(false);
             musicDirector?.Stop();
             abilitySlots.EndSelection();
+            vfxController?.ClearCastEffects();
             vfxController.SetAbilitySlotsVisible(false, false);
             stats?.Stop();
             if (resultScreen != null && resultScreen.IsOpen) resultScreen.Close();
@@ -199,7 +203,18 @@ namespace RythmRPG.Combat
             nextSequence = encounter.Enemy.SelectAttackSequence(UnityEngine.Random.value);
             CombatSong song = nextSequence != null ? nextSequence.Song : null;
             CombatMusicDirector.Preload(song); // load the audio while the player walks, not when a section starts
-            yield return encounterCoordinator.Prepare(encounter, () => musicDirector?.BeginEncounter(song));
+            if (restartInPlace)
+            {
+                restartInPlace = false;
+                musicDirector?.BeginEncounter(song);
+                lanePresentation?.RevealHitLine();
+                if (lanePresentation != null && lanePresentation.HitLineRevealSeconds > 0f)
+                    yield return new WaitForSeconds(lanePresentation.HitLineRevealSeconds);
+            }
+            else
+            {
+                yield return encounterCoordinator.Prepare(encounter, () => musicDirector?.BeginEncounter(song));
+            }
             yield return PlayEnemyBattleIntro();
             Transition(CombatState.EnemyTurnStart);
         }
@@ -319,16 +334,37 @@ namespace RythmRPG.Combat
             // The player finished choosing; back to the main loop and reveal the hit line before the chart starts.
             musicDirector?.SetPlayerTurn(false);
             lanePresentation?.RevealHitLine();
-            yield return vfxController.PlayAbilitySelected(selectedLane, selectedAbility);
+
+            // Plan the ability's pattern first, so the wisp pops at centre stage exactly when its first projectile
+            // appears (on the song's grid), and the projectiles burst out of the pop.
+            AbilityDefinition definition = selectedAbility?.Definition;
+            RhythmChart chart = definition != null ? definition.RhythmPattern : null;
+            double earliestPop = AudioSettings.dspTime + vfxController.MinimumCastSeconds(definition);
+            double popDsp = earliestPop;
+            double? plannedZero = null;
+            if (chart != null) plannedZero = runner.PlanStart(chart, earliestPop, out popDsp);
+            yield return vfxController.PlayAbilitySelected(selectedLane, selectedAbility, popDsp);
             vfxController.SetAbilitySlotsVisible(false, true);
+
             bool completed = false;
             void OnCompleted(AbilityRuntimeInstance _, RhythmPerformanceResult __) => completed = true;
             abilitySystem.ExecutionCompleted += OnCompleted;
+            runner.NoteSpawned -= HandleAbilityNoteSpawned;
+            runner.NoteSpawned += HandleAbilityNoteSpawned;
             abilitySystem.Execute(selectedAbility, encounter.Player, encounter.Enemy, runner,
-                vfxController.AbilityPatternSpawnOrigin, vfxController.GetCenterLaneViewTransform(), selectedLane);
+                vfxController.AbilityPatternSpawnOrigin, vfxController.GetCenterLaneViewTransform(), selectedLane, plannedZero);
             while (!completed) yield return null;
+            runner.NoteSpawned -= HandleAbilityNoteSpawned;
             abilitySystem.ExecutionCompleted -= OnCompleted;
             Transition(CombatState.PlayerTurnEnd);
+        }
+
+        // Each projectile of the player's ability sparks out of centre stage as it is thrown.
+        private void HandleAbilityNoteSpawned(Note note)
+        {
+            if (note == null || runner == null || runner.CurrentMode != PatternRunMode.PlayerAbility
+                || CurrentState != CombatState.PlayerAbilityExecuting) return;
+            vfxController?.PlayNoteSpark(note.transform.position, selectedAbility?.Definition);
         }
 
         private IEnumerator PlayerTurnEndRoutine()
@@ -397,6 +433,7 @@ namespace RythmRPG.Combat
             // The End clip plays out on its own (through the result screen); no End clip = fade out.
             musicDirector?.PlayEnd(victory);
             vfxController.SetAbilitySlotsVisible(false, true);
+            vfxController.ClearCastEffects();
             yield return new WaitForSecondsRealtime(vfxController.TerminalDelay);
 
             // Result: built before a defeat restores health, shown before the encounter is restored.
@@ -411,7 +448,16 @@ namespace RythmRPG.Combat
                 if (showResultScreen)
                 {
                     CombatResultScreen screen = ResolveResultScreen();
-                    if (screen != null) yield return screen.Show(LastReport);
+                    if (screen != null)
+                    {
+                        yield return screen.Show(LastReport);
+                        if (screen.Choice == CombatResultChoice.Restart)
+                        {
+                            // Start the next frame, outside this state routine (starting a battle replaces it).
+                            StartCoroutine(RestartNextFrame());
+                            yield break;
+                        }
+                    }
                 }
             }
 
@@ -424,6 +470,43 @@ namespace RythmRPG.Combat
             lanePresentation?.SetPresentationVisible(false);
             IsBattleActive = false;
             BattleEnded?.Invoke(terminalState);
+        }
+
+        private IEnumerator RestartNextFrame()
+        {
+            yield return null;
+            RestartBattle();
+        }
+
+        /// <summary>
+        /// Starts the same fight over (result screen's Restart): both sides back to their battle-start health and mana,
+        /// cooldowns reset, the enemy shown again, then a fresh battle in place (no walk-in; intro music and enemy intro
+        /// play again). The encounter's original world position is kept, so the final exit still returns there.
+        /// </summary>
+        public void RestartBattle()
+        {
+            if (!IsBattleActive || encounter.Player == null || encounter.Enemy == null) return;
+            StopStateRoutine();
+            runner?.CancelCurrentPattern(false);
+            abilitySlots.EndSelection();
+            vfxController?.ClearCastEffects();
+            if (resultScreen != null && resultScreen.IsOpen) resultScreen.Close();
+
+            encounter.Player.RestoreBattleStart();
+            encounter.Enemy.RestoreBattleStart();
+            abilitySlots.ResetRuntime();
+            Animator animator = encounter.Enemy.Animator;
+            if (animator != null)
+            {
+                // Back out of the death animation to the default state; the battle intro sets the battle pose again.
+                animator.Rebind();
+                animator.Update(0f);
+            }
+
+            CombatEncounterContext context = encounter;
+            IsBattleActive = false;
+            restartInPlace = true;
+            BeginBattle(context);
         }
 
         private void HandleModifierJudgement(RhythmJudgementResult result) => modifierSystem.OnJudgementResolved(result, runner);

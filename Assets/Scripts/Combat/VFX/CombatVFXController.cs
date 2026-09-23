@@ -29,6 +29,10 @@ namespace RythmRPG.Combat
         private Transform runtimeAbilitySelectionCenter;
         private Transform runtimeAbilityPatternSpawnOrigin;
         private bool abilitySlotsVisible;
+        private AbilityChargeEffect activeCharge;
+        private int chargeLane = -1;
+        private bool chargeCommitted;
+        private CombatLanePresentation3D lanePresentation;
 
         public float TerminalDelay => vfxTheme != null ? vfxTheme.TerminalStateDelay : 1f;
         public float SelectionHoldDuration => vfxTheme != null ? vfxTheme.SelectionHoldDuration : 0.75f;
@@ -69,6 +73,7 @@ namespace RythmRPG.Combat
                 slots.SelectionStarted += HandleSelectionStarted;
                 slots.SelectionProgressed += HandleSelectionProgressed;
                 slots.SelectionCancelled += HandleSelectionCancelled;
+                slots.SelectionCommitted += HandleSelectionCommitted;
                 RefreshSlots(slots.Slots);
             }
             SetAbilitySlotsVisible(false, false);
@@ -81,27 +86,120 @@ namespace RythmRPG.Combat
             }
         }
 
-        public IEnumerator PlayAbilitySelected(int laneId, AbilityRuntimeInstance ability)
+        public IEnumerator PlayAbilitySelected(int laneId, AbilityRuntimeInstance ability) =>
+            PlayAbilitySelected(laneId, ability, -1d);
+
+        /// <summary>
+        /// The chosen ability leaves the player: the charge is released, the ability forms into a wisp (from its icon),
+        /// arcs to centre stage, floats there and pops at <paramref name="popAtDspTime"/> (the moment its rhythm
+        /// pattern's first projectile appears; negative = as soon as it has arrived). The pattern then comes out of the
+        /// same point (see <see cref="AbilityPatternSpawnOrigin"/>).
+        /// </summary>
+        public IEnumerator PlayAbilitySelected(int laneId, AbilityRuntimeInstance ability, double popAtDspTime)
         {
-            if (!slotViews.TryGetValue(laneId, out AbilitySlotView slot) || ability?.Definition?.Icon == null) yield break;
-            // The held icon finishes its "charged" punch, then drops away as its copy flies to the centre.
-            slot.SetVisible(false, true, slotAnimation != null ? slotAnimation.ReadyPunchSeconds : 0.15f, 0f);
-            GameObject iconObject = new("Selected Ability Icon");
-            RhythmLaneTarget laneTarget = FindObjectsByType<RhythmLaneTarget>(FindObjectsInactive.Include).FirstOrDefault(target => target.LaneId == laneId);
-            iconObject.transform.position = laneTarget != null
-                ? laneTarget.transform.position + Vector3.up
-                : AbilitySelectionCenter.position;
-            SpriteRenderer renderer = iconObject.AddComponent<SpriteRenderer>();
-            renderer.sprite = ability.Definition.Icon;
-            renderer.sortingOrder = 500;
-            Vector3 destination = ResolveAbilitySelectionCenter().position;
-            float duration = ability.Definition.VFXProfile != null ? ability.Definition.VFXProfile.IconTravelDuration : 0.35f;
-            yield return Tween.Position(iconObject.transform, destination, Mathf.Max(0.01f, duration), Ease.InOutSine).ToYieldInstruction();
-            GameObject burstPrefab = ability.Definition.VFXProfile?.BurstPrefab;
-            if (burstPrefab != null) Instantiate(burstPrefab, destination, Quaternion.identity);
-            Tween.Scale(iconObject.transform, Vector3.one * 1.8f, 0.12f, Ease.OutBack);
-            yield return new WaitForSecondsRealtime(0.12f);
-            Destroy(iconObject);
+            AbilityDefinition definition = ability?.Definition;
+            AbilityVFXProfile profile = definition != null ? definition.VFXProfile : null;
+            Camera viewCamera = ResolveActiveCamera();
+            Color accent = profile != null ? profile.AccentColor : Color.white;
+
+            // The held icon finishes its "charged" punch, then drops away as the ability leaves as a wisp.
+            if (slotViews.TryGetValue(laneId, out AbilitySlotView slot))
+                slot.SetVisible(false, true, slotAnimation != null ? slotAnimation.ReadyPunchSeconds : 0.15f, 0f);
+
+            Vector3 start = activeCharge != null ? activeCharge.CorePosition : PlayerChargeCenter(profile);
+            if (activeCharge != null) activeCharge.Release();
+            activeCharge = null;
+            chargeLane = -1;
+            chargeCommitted = false;
+            CastVisuals.Burst(start, Pick(profile != null ? profile.ChargeReleasePrefab : null, vfxTheme != null ? vfxTheme.DefaultChargeReleasePrefab : null),
+                accent, ChargeSize(profile) * 0.6f, 8, 0.5f, viewCamera);
+
+            AbilityWisp wisp = AbilityWisp.Create(start,
+                Pick(profile != null ? profile.WispPrefab : null, vfxTheme != null ? vfxTheme.DefaultWispPrefab : null),
+                definition != null ? definition.Icon : null, profile == null || profile.IconMorphsIntoWisp, accent,
+                profile != null ? profile.WispSize : 0.6f, viewCamera);
+            Vector3 destination = CenterStagePoint();
+            yield return wisp.Fly(destination, profile != null ? profile.WispTravelSeconds : 0.45f,
+                profile != null ? profile.WispArcHeight : 0.8f);
+            yield return wisp.HoverUntil(popAtDspTime, profile != null ? profile.WispMinHoverSeconds : 0.1f);
+            wisp.Pop(Pick(profile != null ? profile.PopPrefab : null, vfxTheme != null ? vfxTheme.DefaultPopPrefab : null),
+                profile != null ? profile.PopSeconds : 0.25f);
+            CombatCameraShaker.Shake(viewCamera, profile != null ? profile.PopShake : 0.05f, 0.18f);
+        }
+
+        /// <summary>Removes a charge or wisp left over when a battle ends or is cancelled mid-cast.</summary>
+        public void ClearCastEffects()
+        {
+            if (activeCharge != null) activeCharge.Cancel();
+            activeCharge = null;
+            chargeLane = -1;
+            chargeCommitted = false;
+            foreach (AbilityWisp wisp in FindObjectsByType<AbilityWisp>(FindObjectsInactive.Include))
+                if (wisp != null) Destroy(wisp.gameObject);
+        }
+
+        /// <summary>Shortest time from selecting an ability to its wisp popping (flight + minimum hover).</summary>
+        public float MinimumCastSeconds(AbilityDefinition definition)
+        {
+            AbilityVFXProfile profile = definition != null ? definition.VFXProfile : null;
+            return profile != null ? profile.WispTravelSeconds + profile.WispMinHoverSeconds : 0.55f;
+        }
+
+        /// <summary>A small spark at <paramref name="position"/> as one of the ability's projectiles is thrown.</summary>
+        public void PlayNoteSpark(Vector3 position, AbilityDefinition definition)
+        {
+            AbilityVFXProfile profile = definition != null ? definition.VFXProfile : null;
+            if (profile != null && !profile.SparkOnEveryNote) return;
+            GameObject prefab = Pick(profile != null ? profile.NoteSparkPrefab : null,
+                vfxTheme != null ? vfxTheme.DefaultNoteSparkPrefab : null);
+            Color accent = profile != null ? profile.AccentColor : Color.white;
+            CastVisuals.Burst(position, prefab, accent, 0.35f, 6, 0.35f, ResolveActiveCamera());
+        }
+
+        /// <summary>Between the player and the enemy (theme: Centre Stage Bias / Height), on the note lanes' plane.</summary>
+        public Vector3 CenterStagePoint()
+        {
+            if (player == null || enemy == null) return ResolveAbilitySelectionCenter().position;
+            float bias = vfxTheme != null ? vfxTheme.CenterStageBias : 0.5f;
+            float height = vfxTheme != null ? vfxTheme.CenterStageHeight : 0f;
+            Vector3 point = Vector3.Lerp(player.transform.position, enemy.transform.position, bias);
+            CombatLanePresentation3D lanes = ResolveLanePresentation();
+            if (lanes != null && lanes.HorizontalGameplay) point.y = lanes.GameplayHeight + height;
+            else point += Vector3.up * height;
+            return point;
+        }
+
+        private void StartCharge(int lane, AbilityRuntimeInstance ability)
+        {
+            if (activeCharge != null) activeCharge.Cancel();
+            AbilityVFXProfile profile = ability?.Definition != null ? ability.Definition.VFXProfile : null;
+            Transform anchor = player != null ? player.transform : null;
+            Vector3 center = PlayerChargeCenter(profile);
+            activeCharge = AbilityChargeEffect.Create(anchor, anchor != null ? center - anchor.position : center,
+                Pick(profile != null ? profile.ChargePrefab : null, vfxTheme != null ? vfxTheme.DefaultChargePrefab : null),
+                profile != null ? profile.AccentColor : Color.white, ChargeSize(profile), ResolveActiveCamera());
+            chargeLane = lane;
+            chargeCommitted = false;
+        }
+
+        // Centre of the player's sprite (+ the profile's offset): the charge gathers "around the character".
+        private Vector3 PlayerChargeCenter(AbilityVFXProfile profile)
+        {
+            Vector3 offset = profile != null ? profile.ChargeOffset : Vector3.zero;
+            if (player == null) return ResolveAbilitySelectionCenter().position + offset;
+            SpriteRenderer body = player.GetComponentInChildren<SpriteRenderer>();
+            Vector3 center = body != null ? body.bounds.center : player.transform.position + Vector3.up;
+            return center + offset;
+        }
+
+        private static float ChargeSize(AbilityVFXProfile profile) => profile != null ? profile.ChargeSize : 1f;
+
+        private static GameObject Pick(GameObject preferred, GameObject fallback) => preferred != null ? preferred : fallback;
+
+        private CombatLanePresentation3D ResolveLanePresentation()
+        {
+            if (lanePresentation == null) lanePresentation = FindAnyObjectByType<CombatLanePresentation3D>();
+            return lanePresentation;
         }
 
         public IEnumerator PlayAbilityImpact(AbilityRuntimeInstance ability, Transform origin, Transform target)
@@ -214,16 +312,30 @@ namespace RythmRPG.Combat
         private void HandleSelectionStarted(int lane, AbilityRuntimeInstance ability)
         {
             if (slotViews.TryGetValue(lane, out AbilitySlotView view)) view.SetCharging(true);
+            StartCharge(lane, ability);
             CombatCameraShaker.Shake(ResolveActiveCamera(), 0.025f, 0.15f);
         }
 
         private void HandleSelectionProgressed(int lane, float progress)
         {
             if (slotViews.TryGetValue(lane, out AbilitySlotView view)) view.SetProgress(progress);
+            if (activeCharge != null && lane == chargeLane) activeCharge.SetProgress(progress);
+        }
+
+        // The hold completed: the charge stays up until PlayAbilitySelected turns it into the wisp.
+        private void HandleSelectionCommitted(int lane, AbilityRuntimeInstance ability)
+        {
+            if (lane == chargeLane) chargeCommitted = true;
         }
 
         private void HandleSelectionCancelled(int lane)
         {
+            if (activeCharge != null && lane == chargeLane && !chargeCommitted)
+            {
+                activeCharge.Cancel();
+                activeCharge = null;
+                chargeLane = -1;
+            }
             if (!slotViews.TryGetValue(lane, out AbilitySlotView view)) return;
             view.SetCharging(false);
             view.SetProgress(0f);
@@ -283,6 +395,7 @@ namespace RythmRPG.Combat
                 slots.SelectionStarted -= HandleSelectionStarted;
                 slots.SelectionProgressed -= HandleSelectionProgressed;
                 slots.SelectionCancelled -= HandleSelectionCancelled;
+                slots.SelectionCommitted -= HandleSelectionCommitted;
             }
             if (judgement != null) judgement.OnJudgementResolved -= PlayJudgement;
             if (enemy != null) enemy.Damaged -= HandleEnemyDamaged;
@@ -339,8 +452,18 @@ namespace RythmRPG.Combat
                 runtimeAbilityPatternSpawnOrigin = origin.transform;
             }
 
-            Vector3 position = AbilitySpawnOrigin != null ? AbilitySpawnOrigin.position : Vector3.zero;
-            position = ClampPresentationPointAboveLanes(position);
+            CombatLanePresentation3D lanes = ResolveLanePresentation();
+            Vector3 position;
+            if (lanes != null && lanes.HorizontalGameplay && player != null && enemy != null)
+            {
+                // 2.5D: the pattern bursts out of centre stage, where the ability's wisp pops.
+                position = CenterStagePoint();
+            }
+            else
+            {
+                position = AbilitySpawnOrigin != null ? AbilitySpawnOrigin.position : Vector3.zero;
+                position = ClampPresentationPointAboveLanes(position);
+            }
 
             runtimeAbilityPatternSpawnOrigin.position = position;
             return runtimeAbilityPatternSpawnOrigin;
@@ -387,7 +510,12 @@ namespace RythmRPG.Combat
                 .FirstOrDefault();
         }
 
-        private void OnDisable() => Unbind();
+        private void OnDisable()
+        {
+            Unbind();
+            if (activeCharge != null) activeCharge.Cancel();
+            activeCharge = null;
+        }
 
         private static Sprite fallbackProjectileSprite;
 

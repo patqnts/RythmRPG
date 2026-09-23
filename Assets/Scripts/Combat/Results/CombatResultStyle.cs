@@ -45,7 +45,11 @@ namespace RythmRPG.Combat
         [Tooltip("{0} = enemy name. Empty = no subtitle.")]
         [SerializeField] private string subtitleFormat = "vs {0}";
         [SerializeField] private string gradeCaption = "RANK";
-        [SerializeField] private string continuePrompt = "PRESS ANY KEY TO CONTINUE";
+        [Tooltip("{0} = the first Close key (e.g. ENTER).")]
+        [SerializeField] private string continuePromptFormat = "[{0}] CONTINUE";
+        [Tooltip("{0} = the first Restart key (e.g. R). Shown only when restart is allowed.")]
+        [SerializeField] private string restartPromptFormat = "[{0}] RETRY";
+        [SerializeField] private string promptSeparator = "        ";
         [SerializeField] private string fullComboBadge = "FULL COMBO";
         [SerializeField] private string allPerfectBadge = "ALL PERFECT";
         [SerializeField] private string noDamageBadge = "NO DAMAGE";
@@ -138,9 +142,16 @@ namespace RythmRPG.Combat
         [Header("Input")]
         [Tooltip("Ignore input for this long after the screen opens (so battle keys don't skip it).")]
         [SerializeField, Min(0f)] private float inputDelay = 0.5f;
-        [Tooltip("The first press skips the animation, the next one closes the screen.")]
+        [Tooltip("Keys that close the screen (continue). Only these close it, not any key.")]
+        [SerializeField] private KeyCode[] closeKeys = { KeyCode.Return, KeyCode.KeypadEnter };
+        [Tooltip("Offer a restart: the battle starts over against the same enemy with everyone's battle-start health.")]
+        [SerializeField] private bool allowRestart = true;
+        [SerializeField] private KeyCode[] restartKeys = { KeyCode.R };
+        [Tooltip("While the results animate, a Close or Restart key press skips to the end (the next press chooses).")]
         [SerializeField] private bool pressToSkip = true;
-        [Tooltip("Close automatically after this many seconds once finished (0 = wait for a key).")]
+        [Tooltip("Also let any other key skip the animation (never closes or restarts).")]
+        [SerializeField] private bool skipWithAnyKey;
+        [Tooltip("Close automatically (continue) after this many seconds once finished (0 = wait for a key).")]
         [SerializeField, Min(0f)] private float autoCloseSeconds;
 
         [Header("Sounds (optional)")]
@@ -156,7 +167,23 @@ namespace RythmRPG.Combat
         public string DefeatTitle => defeatTitle;
         public string SubtitleFormat => subtitleFormat;
         public string GradeCaption => gradeCaption;
-        public string ContinuePrompt => continuePrompt;
+        public string ContinuePromptFormat => continuePromptFormat;
+        public string RestartPromptFormat => restartPromptFormat;
+        /// <summary>Prompt line, e.g. "[ENTER] CONTINUE        [R] RETRY".</summary>
+        public string ContinuePrompt
+        {
+            get
+            {
+                string text = Format(continuePromptFormat, closeKeys);
+                if (allowRestart && restartKeys != null && restartKeys.Length > 0)
+                    text += promptSeparator + Format(restartPromptFormat, restartKeys);
+                return text;
+            }
+        }
+        public KeyCode[] CloseKeys => closeKeys;
+        public KeyCode[] RestartKeys => restartKeys;
+        public bool AllowRestart => allowRestart;
+        public bool SkipWithAnyKey => skipWithAnyKey;
         public string FullComboBadge => fullComboBadge;
         public string AllPerfectBadge => allPerfectBadge;
         public string NoDamageBadge => noDamageBadge;
@@ -243,6 +270,32 @@ namespace RythmRPG.Combat
         public float FadeOutSeconds => fadeOutSeconds;
         public float InputDelay => inputDelay;
         public bool PressToSkip => pressToSkip;
+
+        /// <summary>True on the frame one of <paramref name="keys"/> went down.</summary>
+        public static bool AnyKeyDown(KeyCode[] keys)
+        {
+            if (keys == null) return false;
+            foreach (KeyCode key in keys)
+                if (key != KeyCode.None && Input.GetKeyDown(key)) return true;
+            return false;
+        }
+
+        /// <summary>Short on-screen name of a key: ENTER, SPACE, ESC, R, 1...</summary>
+        public static string KeyName(KeyCode key) => key switch
+        {
+            KeyCode.Return or KeyCode.KeypadEnter => "ENTER",
+            KeyCode.Space => "SPACE",
+            KeyCode.Escape => "ESC",
+            KeyCode.Backspace => "BACKSPACE",
+            >= KeyCode.Alpha0 and <= KeyCode.Alpha9 => ((int)(key - KeyCode.Alpha0)).ToString(),
+            _ => key.ToString().ToUpperInvariant()
+        };
+
+        private static string Format(string format, KeyCode[] keys)
+        {
+            string name = keys != null && keys.Length > 0 ? KeyName(keys[0]) : "?";
+            return string.IsNullOrEmpty(format) ? string.Empty : string.Format(format, name);
+        }
         public float AutoCloseSeconds => autoCloseSeconds;
         public AudioClip VictoryJingle => victoryJingle;
         public AudioClip DefeatJingle => defeatJingle;

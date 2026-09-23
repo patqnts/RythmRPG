@@ -23,6 +23,8 @@ namespace RythmRPG.Combat
         public event Action<int, AbilityRuntimeInstance> SelectionStarted;
         public event Action<int, float> SelectionProgressed;
         public event Action<int> SelectionCancelled;
+        /// <summary>The hold on a lane completed and the ability was paid for; raised just before <see cref="AbilitySelected"/>.</summary>
+        public event Action<int, AbilityRuntimeInstance> SelectionCommitted;
         public event Action<int, AbilityRuntimeInstance> AbilitySelected;
 
         private void Update()
@@ -41,6 +43,7 @@ namespace RythmRPG.Combat
             }
             selecting = false;
             input.RequireRelease(candidateLane);
+            SelectionCommitted?.Invoke(candidateLane, selected);
             AbilitySelected?.Invoke(candidateLane, selected);
         }
 
