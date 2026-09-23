@@ -318,11 +318,15 @@ namespace RythmRPG.Combat
             }
             if (visible) RefreshUsability();
             AbilitySlotAnimationProfile profile = slotAnimation != null ? slotAnimation : AbilitySlotAnimationProfile.LoadOrDefault();
+            // The hit-line key markers fly up and warp into the frames: each icon pops in as its marker arrives.
+            bool morphing = visible && animate && selectionStage != null && selectionStage.MorphIn();
             int index = 0;
             foreach (KeyValuePair<int, AbilitySlotView> pair in slotViews.OrderBy(pair => pair.Key))
             {
                 if (pair.Value == null) continue;
-                float delay = visible ? profile.AppearDelay + index * profile.AppearStagger : index * profile.HideStagger;
+                float delay = !visible ? index * profile.HideStagger
+                    : morphing ? selectionStage.MorphArrival(index)
+                    : profile.AppearDelay + index * profile.AppearStagger;
                 pair.Value.SetVisible(visible, animate, delay, index * profile.FloatPhaseStep);
                 index++;
             }
@@ -378,13 +382,9 @@ namespace RythmRPG.Combat
             // chosen ability's charge turns into its wisp.
             selectionStage.CommitCharge(lane);
             selectionStage.ZoomOut();
-            AbilitySlotAnimationProfile profile = slotAnimation != null ? slotAnimation : AbilitySlotAnimationProfile.LoadOrDefault();
-            int index = 0;
-            foreach (KeyValuePair<int, AbilitySlotView> pair in slotViews.OrderBy(pair => pair.Key))
-            {
-                if (pair.Value != null && pair.Key != lane) pair.Value.SetVisible(false, true, index * profile.HideStagger, 0f);
-                index++;
-            }
+            // The other icons simply vanish (no animation); the key markers come back with the hit line.
+            foreach (KeyValuePair<int, AbilitySlotView> pair in slotViews)
+                if (pair.Value != null && pair.Key != lane) pair.Value.SetVisible(false, false);
         }
 
         private void HandleSelectionCancelled(int lane)

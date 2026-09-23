@@ -40,6 +40,23 @@ namespace RythmRPG.Combat
         [Tooltip("Circular frame, backdrop and hold-progress ring of the icons.")]
         [SerializeField] private AbilityIconFrameStyle iconFrame = new();
 
+        [Header("Ability selection: key markers become the slots")]
+        [Tooltip("On the player's turn each hit-line key marker flies up and warps into its ability frame.")]
+        [SerializeField] private bool morphMarkersIntoSlots = true;
+        [SerializeField, Min(0.05f)] private float morphSeconds = 0.45f;
+        [Tooltip("Delay between one lane's marker leaving and the next one's.")]
+        [SerializeField, Min(0f)] private float morphStagger = 0.05f;
+        [Tooltip("How high the markers arc on the way up, as a fraction of the player sprite's height.")]
+        [SerializeField, Range(0f, 1.5f)] private float morphArc = 0.3f;
+        [Tooltip("Squash & stretch in flight: the outline stretches with speed and squashes as it leaves the line and as it lands in the frame. 0 = rigid.")]
+        [SerializeField, Range(0f, 1f)] private float morphStretch = 0.3f;
+        [Tooltip("How much the outline ripples mid-flight, as a fraction of its size. 0 = none.")]
+        [SerializeField, Range(0f, 0.4f)] private float morphWobble = 0.08f;
+        [Tooltip("Number of bulges in the ripple.")]
+        [SerializeField, Range(2, 8)] private int morphWobbleLobes = 3;
+        [Tooltip("How fast the ripple travels around the outline (radians per second).")]
+        [SerializeField, Min(0f)] private float morphWobbleSpeed = 18f;
+
         [Header("Ability selection: holding an ability")]
         [Tooltip("The held icon is drawn down into the player while the hold fills, and swallowed when it is picked.")]
         [SerializeField] private bool pullIntoCharacter = true;
@@ -90,6 +107,14 @@ namespace RythmRPG.Combat
         public float IconsHeightAboveHead => iconsHeightAboveHead;
         public bool ShowKeysUnderIcons => showKeysUnderIcons;
         public float RowCurvature => rowCurvature;
+        public bool MorphMarkersIntoSlots => morphMarkersIntoSlots;
+        public float MorphSeconds => morphSeconds;
+        public float MorphStagger => morphStagger;
+        public float MorphArc => morphArc;
+        public float MorphStretch => morphStretch;
+        public float MorphWobble => morphWobble;
+        public int MorphWobbleLobes => morphWobbleLobes;
+        public float MorphWobbleSpeed => morphWobbleSpeed;
         public AbilityIconFrameStyle IconFrame => iconFrame;
         public bool PullIntoCharacter => pullIntoCharacter;
         public float PullDistance => pullDistance;

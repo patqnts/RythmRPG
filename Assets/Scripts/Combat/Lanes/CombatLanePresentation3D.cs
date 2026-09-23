@@ -628,6 +628,13 @@ namespace RythmRPG.Combat
             return pixels * unitsPerPixel / scale;
         }
 
+        /// <summary>The hit line key marker of a lane, if markers are shown (used to morph it into the ability frame).</summary>
+        public bool TryGetKeyMarker(int laneId, out LaneKeyMarker marker)
+        {
+            bool shown = theme == null || theme.ShowKeyMarkers;
+            return keyMarkers.TryGetValue(laneId, out marker) && marker != null && shown && marker.gameObject.activeInHierarchy;
+        }
+
         private void RefreshKeyMarkerLabels()
         {
             if (activeInput == null) return;

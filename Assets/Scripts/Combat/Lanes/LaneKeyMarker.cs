@@ -29,6 +29,19 @@ namespace RythmRPG.Combat
 
         public int LaneId { get; private set; }
 
+        // Last layout (hit line canvas units), for the morph into the ability frame.
+        private float layoutSize;
+        private float layoutOutline;
+
+        /// <summary>Centre of the marker in the world.</summary>
+        public Vector3 WorldCenter => transform.position;
+        /// <summary>Outer width of the drawn shape in world units (a diamond's square side, not its diagonal).</summary>
+        public float WorldShapeSize => layoutSize * Mathf.Abs(transform.lossyScale.x) * (Shape == KeyMarkerShape.Diamond ? 0.70710678f : 1f);
+        public float WorldOutline => layoutOutline * Mathf.Abs(transform.lossyScale.x);
+        public KeyMarkerShape Shape => theme != null && theme.KeyMarkerSprite == null ? theme.KeyMarkerShape : KeyMarkerShape.Square;
+        public Color IdleColor => theme != null ? theme.KeyMarkerColor : new Color(1f, 1f, 1f, 0.85f);
+        public string LabelText => label != null ? label.text : string.Empty;
+
         public static LaneKeyMarker Create(Transform parent, int laneId, CombatLanePresentationTheme theme)
         {
             var go = new GameObject($"Lane {laneId} Key Marker", typeof(RectTransform));
@@ -86,6 +99,8 @@ namespace RythmRPG.Combat
         /// <summary>Places the marker (canvas units of the hit line) and sizes the shape and outline.</summary>
         public void Layout(float localX, float size, float outlineThickness)
         {
+            layoutSize = size;
+            layoutOutline = outlineThickness;
             root.anchoredPosition3D = new Vector3(localX, 0f, 0f);
             root.localRotation = Quaternion.identity;
             bool diamond = theme != null && theme.KeyMarkerSprite == null && theme.KeyMarkerShape == KeyMarkerShape.Diamond;

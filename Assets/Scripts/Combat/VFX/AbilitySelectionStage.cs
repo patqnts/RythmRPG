@@ -59,6 +59,7 @@ namespace RythmRPG.Combat
         private float nameHoldUntil = -1f;
         private float namePunch;
         private float rowTop = IconCanvasUnits + 10f;
+        private KeyMarkerMorph morph;
 
         private static AbilitySelectionStage blendOwner;
         private static CinemachineCore.GetBlendOverrideDelegate previousBlendOverride;
@@ -219,6 +220,7 @@ namespace RythmRPG.Combat
             }
             if (zoomed) PlaceZoomCamera();
             UpdateCanvas();
+            morph?.Tick(Time.deltaTime, ViewCamera, spriteHeight * (theme != null ? theme.MorphArc : 0.3f), MorphDistortion);
         }
 
         private void UpdateCanvas()
@@ -262,7 +264,8 @@ namespace RythmRPG.Combat
                     * (1f + 0.3f * namePunch * namePunch);
             }
 
-            if (player == null || (!anyShown && !charging && !anyPulled && nameAlpha <= 0.01f)) return;
+            bool morphing = morph != null && morph.IsActive;
+            if (player == null || (!anyShown && !charging && !anyPulled && !morphing && nameAlpha <= 0.01f)) return;
 
             Camera view = ViewCamera;
             float iconWorld = spriteHeight * (theme != null ? theme.IconSize : 0.4f);
@@ -310,6 +313,79 @@ namespace RythmRPG.Combat
                 slot.Rect.anchoredPosition = Vector2.Lerp(slot.Rest, target, t);
                 slot.Rect.localScale = Vector3.one * Mathf.Lerp(1f, endScale, t);
             }
+        }
+
+        // ---------- Key markers <-> ability frames ----------
+
+        private bool MorphEnabled => theme == null || theme.MorphMarkersIntoSlots;
+        private float MorphSeconds => theme != null ? theme.MorphSeconds : 0.45f;
+        private float MorphStagger => theme != null ? theme.MorphStagger : 0.05f;
+        private KeyMarkerMorph.Distortion MorphDistortion => new()
+        {
+            Stretch = theme != null ? theme.MorphStretch : 0.3f,
+            Wobble = theme != null ? theme.MorphWobble : 0.08f,
+            Lobes = theme != null ? theme.MorphWobbleLobes : 3,
+            WobbleSpeed = theme != null ? theme.MorphWobbleSpeed : 18f
+        };
+
+        /// <summary>
+        /// Each hit-line key marker flies up and warps into its lane's ability frame (lanes in row order). Returns
+        /// true if any marker morphs; the frames should then appear at <see cref="MorphArrival"/>.
+        /// </summary>
+        public bool MorphIn()
+        {
+            if (!MorphEnabled || canvasRect == null) return false;
+            lanes ??= FindAnyObjectByType<CombatLanePresentation3D>();
+            if (lanes == null) return false;
+            morph ??= new KeyMarkerMorph(transform, SortingOrder - 1);
+            morph.Clear();
+
+            bool any = false;
+            int index = 0;
+            foreach (Slot slot in slots)
+            {
+                if (slot.Rect == null || !slot.Rect.gameObject.activeSelf) continue;
+                if (lanes.TryGetKeyMarker(slot.LaneId, out LaneKeyMarker marker))
+                {
+                    Slot target = slot;
+                    KeyMarkerMorph.Pose start = MarkerPose(marker);
+                    morph.Add(() => start, () => FramePose(target), index * MorphStagger, MorphSeconds, marker.LabelText, false);
+                    any = true;
+                }
+                index++;
+            }
+            return any;
+        }
+
+        /// <summary>When the frame of the <paramref name="rowIndex"/>-th lane should pop in (the ghost has just arrived).</summary>
+        public float MorphArrival(int rowIndex) => rowIndex * MorphStagger + MorphSeconds * 0.9f;
+
+        private static KeyMarkerMorph.Pose MarkerPose(LaneKeyMarker marker) => new()
+        {
+            Position = marker.WorldCenter,
+            Size = marker.WorldShapeSize,
+            Outline = Mathf.Max(0.0001f, marker.WorldOutline),
+            Roundness = marker.Shape == KeyMarkerShape.Circle ? 1f : 0f,
+            Angle = marker.Shape == KeyMarkerShape.Diamond ? 45f : 0f,
+            Color = marker.IdleColor
+        };
+
+        // The frame ring around the icon, where AbilitySlotView draws it (icon centre = 37 units above the slot).
+        private KeyMarkerMorph.Pose FramePose(Slot slot)
+        {
+            AbilityIconFrameStyle style = theme != null && theme.IconFrame != null ? theme.IconFrame : null;
+            float scale = Mathf.Abs(canvasRect.lossyScale.x) * slot.Rect.localScale.x;
+            float size = IconCanvasUnits * scale;
+            Vector3 center = canvasRect.TransformPoint(slot.Rect.anchoredPosition + new Vector2(0f, 10f + IconCanvasUnits * 0.5f));
+            return new KeyMarkerMorph.Pose
+            {
+                Position = center,
+                Size = size,
+                Outline = size * 0.5f * (style != null ? style.FrameThickness : 0.1f),
+                Roundness = 1f,
+                Angle = 0f,
+                Color = style != null ? style.FrameColor : new Color(1f, 0.86f, 0.5f, 1f)
+            };
         }
 
         // ---------- Camera zoom ----------
@@ -511,6 +587,7 @@ namespace RythmRPG.Combat
             StopCharge();
             ZoomOut(true);
             ResetRow();
+            morph?.Clear();
         }
 
         private void OnDisable()
