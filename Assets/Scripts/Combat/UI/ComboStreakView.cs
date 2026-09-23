@@ -91,9 +91,12 @@ namespace RythmRPG.Combat
             ComboStreakStyle s = Style;
             StopTweens();
             if (numberLabel != null) numberLabel.color = s.breakColor;
-            alphaTween = Tween.Alpha(group, 0f, s.hideSeconds, Ease.InQuad);
-            slideTween = Tween.UIAnchoredPosition(popupRoot, new Vector2(0f, -s.breakDrop), s.hideSeconds, Ease.InQuad);
-            if (numberLabel != null)
+            if (group.alpha > 0.001f)
+                alphaTween = Tween.Alpha(group, 0f, s.hideSeconds, Ease.InQuad);
+            var dropTo = new Vector2(0f, -s.breakDrop);
+            if ((popupRoot.anchoredPosition - dropTo).sqrMagnitude > 0.01f)
+                slideTween = Tween.UIAnchoredPosition(popupRoot, dropTo, s.hideSeconds, Ease.InQuad);
+            if (numberLabel != null && !Mathf.Approximately(numberLabel.rectTransform.localScale.x, 0.8f))
                 numberScaleTween = Tween.Scale(numberLabel.rectTransform, 0.8f, s.hideSeconds, Ease.InQuad);
         }
 
@@ -113,7 +116,8 @@ namespace RythmRPG.Combat
             group.alpha = 0f;
             popupRoot.anchoredPosition = new Vector2(s.slideInDistance, 0f);
             alphaTween = Tween.Alpha(group, 1f, s.appearSeconds * 0.6f, Ease.OutQuad);
-            slideTween = Tween.UIAnchoredPosition(popupRoot, Vector2.zero, s.appearSeconds, Ease.OutBack);
+            if (!Mathf.Approximately(s.slideInDistance, 0f))
+                slideTween = Tween.UIAnchoredPosition(popupRoot, Vector2.zero, s.appearSeconds, Ease.OutBack);
         }
 
         private void PlayHit(ComboStreakStyle s, Color heat, bool milestone)
@@ -127,16 +131,22 @@ namespace RythmRPG.Combat
             // Snap: jump up instantly, then settle fast.
             float peak = milestone ? s.milestoneScale : s.hitScale;
             float settle = s.hitSeconds * (milestone ? 1.7f : 1f);
+            // PrimeTween warns when a tween starts at its end value, so each one only runs when it has
+            // somewhere to go (e.g. below the warm threshold the flash color and the heat color are both white).
             number.localScale = Vector3.one * peak;
-            numberScaleTween = Tween.Scale(number, 1f, settle, Ease.OutQuad);
+            if (!Mathf.Approximately(peak, 1f))
+                numberScaleTween = Tween.Scale(number, 1f, settle, Ease.OutQuad);
 
             tiltSign = -tiltSign;
-            Quaternion kick = Quaternion.Euler(0f, 0f, s.hitTilt * tiltSign * (milestone ? 1.6f : 1f));
+            float tilt = s.hitTilt * tiltSign * (milestone ? 1.6f : 1f);
+            Quaternion kick = Quaternion.Euler(0f, 0f, tilt);
             number.localRotation = kick;
-            numberTiltTween = Tween.LocalRotation(number, kick, Quaternion.identity, settle * 1.4f, Ease.OutBack);
+            if (!Mathf.Approximately(tilt, 0f))
+                numberTiltTween = Tween.LocalRotation(number, kick, Quaternion.identity, settle * 1.4f, Ease.OutBack);
 
             numberLabel.color = s.flashColor;
-            numberColorTween = Tween.Color(numberLabel, heat, s.flashSeconds, Ease.OutQuad);
+            if (!SameColor(s.flashColor, heat))
+                numberColorTween = Tween.Color(numberLabel, heat, s.flashSeconds, Ease.OutQuad);
 
             if (comboLabel != null)
             {
@@ -154,6 +164,10 @@ namespace RythmRPG.Combat
                     0.25f, frequency: 30f);
             }
         }
+
+        private static bool SameColor(Color a, Color b) =>
+            Mathf.Approximately(a.r, b.r) && Mathf.Approximately(a.g, b.g) &&
+            Mathf.Approximately(a.b, b.b) && Mathf.Approximately(a.a, b.a);
 
         private void StopTweens()
         {

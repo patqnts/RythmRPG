@@ -1621,10 +1621,10 @@ MonoBehaviour:
   hitLineSortingOrder: 45
   hitLineAnchor: {fileID: 0}
   hitLinePlacement: 0
-  hitLineViewport: {x: 0.5, y: 0.3}
-  playerFeetViewportY: 0.22
+  hitLineViewport: {x: 0.5, y: 0.18}
+  playerFeetViewportY: 0.085
   extraPlayerEnemySeparation: 1.25
-  hitLineAtPlayerFeet: 1
+  hitLineAtPlayerFeet: 0
   hitLineRevealSeconds: 0.35
   enemyViewportY: 0.75
   laneSource: 0
@@ -8897,7 +8897,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!64 &1151120429
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -13239,7 +13239,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!156049354 &1611583152
 Grid:
   m_ObjectHideFlags: 0

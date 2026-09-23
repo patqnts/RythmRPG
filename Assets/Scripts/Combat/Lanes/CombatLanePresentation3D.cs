@@ -379,6 +379,7 @@ namespace RythmRPG.Combat
             Camera uiCamera = canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
             EnsureHitLine(plane, uiCamera, canvasScale);
             if (hitLineAnchor == null) return;
+            UpdateHitLineCaps();
 
             if (Time.frameCount % 120 == 0) PrepareHitLineMaterials(hitLineAnchor);
             Canvas lineCanvas = hitLineAnchor.GetComponent<Canvas>();
@@ -746,11 +747,82 @@ namespace RythmRPG.Combat
 
         private RectTransform materialPreparedFor;
         private Material hitLineMaterial;
+        private RectTransform lineCapLeft;
+        private RectTransform lineCapRight;
+        private const string LineCapLeftName = "Line Cap Left";
+        private const string LineCapRightName = "Line Cap Right";
 
-        // The Canvas system controls ZTest for graphics using the default UI material, so world geometry (ground, props)
-        // sitting on the gameplay plane can swallow a thin line. Graphics still on the default material are switched to
-        // "Hit Line UI", a UI shader with ZTest Always (Resources/Combat/VFX/HitLineUI.shader). Graphics with a
-        // material of your own are left alone.
+        // End caps (theme.LineCapSprite): extra art past both ends of the line, which itself stays as it is. They are
+        // children of the line, so they follow it, fade with it (CanvasGroup) and use the same material. Sized so the
+        // bar in the sprite (LineCapJoinHeight pixels) is exactly as thick as the line.
+        private void UpdateHitLineCaps()
+        {
+            Sprite sprite = theme != null ? theme.LineCapSprite : null;
+            if (sprite == null)
+            {
+                if (lineCapLeft != null) lineCapLeft.gameObject.SetActive(false);
+                if (lineCapRight != null) lineCapRight.gameObject.SetActive(false);
+                return;
+            }
+
+            bool created = false;
+            lineCapLeft = EnsureLineCap(lineCapLeft, LineCapLeftName, ref created);
+            lineCapRight = EnsureLineCap(lineCapRight, LineCapRightName, ref created);
+            if (created) PrepareHitLineMaterials(hitLineAnchor);
+
+            float unitsPerSpritePixel = Mathf.Max(0.0001f, hitLineAnchor.rect.height) / Mathf.Max(0.01f, theme.LineCapJoinHeight);
+            Vector2 size = sprite.rect.size * unitsPerSpritePixel;
+            float pivotY = sprite.rect.height > 0f ? sprite.pivot.y / sprite.rect.height : 0.5f;
+            float inset = theme.LineCapOverlap * unitsPerSpritePixel;
+            Color color = theme.LineCapColor;
+            if (color.a <= 0f)
+            {
+                Image line = hitLineAnchor.Find("Line") is Transform lineTransform ? lineTransform.GetComponent<Image>() : null;
+                color = line != null ? line.color : theme.LineColor;
+            }
+            LayoutLineCap(lineCapLeft, sprite, size, pivotY, color, new Vector2(0f, 0.5f), inset, 1f);
+            LayoutLineCap(lineCapRight, sprite, size, pivotY, color, new Vector2(1f, 0.5f), -inset, -1f);
+        }
+
+        private RectTransform EnsureLineCap(RectTransform cap, string objectName, ref bool created)
+        {
+            if (cap == null || cap.parent != hitLineAnchor)
+            {
+                cap = hitLineAnchor.Find(objectName) as RectTransform;
+                if (cap == null || cap.GetComponent<Image>() == null)
+                {
+                    var go = new GameObject(objectName, typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+                    go.transform.SetParent(hitLineAnchor, false);
+                    go.GetComponent<Image>().raycastTarget = false;
+                    cap = (RectTransform)go.transform;
+                    created = true;
+                }
+            }
+            if (!cap.gameObject.activeSelf) cap.gameObject.SetActive(true);
+            return cap;
+        }
+
+        // The cap's right edge sits on the line's end; the right-hand cap is the same art mirrored.
+        private static void LayoutLineCap(RectTransform cap, Sprite sprite, Vector2 size, float pivotY, Color color,
+            Vector2 anchor, float inset, float mirror)
+        {
+            cap.anchorMin = cap.anchorMax = anchor;
+            cap.pivot = new Vector2(1f, pivotY);
+            cap.sizeDelta = size;
+            cap.anchoredPosition = new Vector2(inset, 0f);
+            cap.localRotation = Quaternion.identity;
+            cap.localScale = new Vector3(mirror, 1f, 1f);
+            Image image = cap.GetComponent<Image>();
+            if (image.sprite != sprite) image.sprite = sprite;
+            image.type = Image.Type.Simple;
+            image.preserveAspect = false;
+            if (image.color != color) image.color = color;
+        }
+
+        // The Canvas system controls ZTest for graphics using the default UI material. Graphics still on the default
+        // material are switched to "Hit Line UI" (Resources/Combat/VFX/HitLineUI.shader): depth-tested with a small bias
+        // toward the camera, so a character standing in front of the line covers it while the ground under the line
+        // cannot swallow it. Graphics with a material of your own are left alone.
         private void PrepareHitLineMaterials(RectTransform root)
         {
             materialPreparedFor = root;

@@ -40,5 +40,15 @@ namespace RythmRPG.Combat
         [Min(0f)] public float LineGapAboveButtons = 8f;
         [Min(0f)] public float LineHorizontalPadding = 8f;
         public bool SnapToRenderTexturePixels = true;
+
+        [Header("Perfect Hit Line End Caps")]
+        [Tooltip("Art added past both ends of the hit line (the line itself is unchanged). Drawn for the LEFT end, facing outward; the right end uses a mirrored copy. The sprite's pivot row is lined up with the middle of the line, and its right edge touches the line's end. Empty = no caps.")]
+        public Sprite LineCapSprite;
+        [Tooltip("How many sprite pixels tall the bar is where the cap meets the line. The cap is scaled so that bar is exactly as thick as the line (3 for the default dragon cap, so 1 sprite pixel = 1 screen pixel).")]
+        [Min(0.01f)] public float LineCapJoinHeight = 3f;
+        [Tooltip("Tint of the caps. Alpha 0 = same color as the line.")]
+        public Color LineCapColor = new(1f, 1f, 1f, 0f);
+        [Tooltip("Sprite pixels the caps are pulled in over the line ends (negative leaves a gap).")]
+        public float LineCapOverlap;
     }
 }

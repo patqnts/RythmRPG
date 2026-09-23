@@ -1,11 +1,15 @@
-// UI shader for the world-space Perfect Hit Line canvas. Same as UI/Default but always drawn (ZTest Always),
-// so ground and props on the gameplay plane cannot hide the line. Ordering is controlled by the Canvas sorting order.
+// UI shader for the world-space Perfect Hit Line canvas. Same as UI/Default, but depth-tested against the scene so
+// characters (and anything else that writes depth) standing between the camera and the line cover it, like any other
+// object in the world. A small depth bias toward the camera keeps the ground or props right at the line from
+// swallowing it. Set Depth Test to Always to get the old draw-over-everything behaviour back.
 Shader "Rythm RPG/Combat/Hit Line UI"
 {
     Properties
     {
         [PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
         _Color ("Tint", Color) = (1,1,1,1)
+        [Enum(UnityEngine.Rendering.CompareFunction)] _ZTest ("Depth Test", Float) = 4
+        _DepthOffset ("Depth Offset (negative = toward camera)", Range(-8, 0)) = -1
     }
 
     SubShader
@@ -22,7 +26,8 @@ Shader "Rythm RPG/Combat/Hit Line UI"
         Cull Off
         Lighting Off
         ZWrite Off
-        ZTest Always
+        ZTest [_ZTest]
+        Offset [_DepthOffset], [_DepthOffset]
         Blend SrcAlpha OneMinusSrcAlpha
 
         Pass

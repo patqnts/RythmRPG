@@ -32,3 +32,7 @@ MonoBehaviour:
   LineGapAboveButtons: 8
   LineHorizontalPadding: 8
   SnapToRenderTexturePixels: 1
+  LineCapSprite: {fileID: 21300000, guid: da6e5d60e01a4882a55986abd5097357, type: 3}
+  LineCapJoinHeight: 3
+  LineCapColor: {r: 1, g: 1, b: 1, a: 0}
+  LineCapOverlap: 0
