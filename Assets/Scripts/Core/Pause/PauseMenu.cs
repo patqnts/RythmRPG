@@ -31,6 +31,7 @@ namespace RythmRPG.Core
         private ScrollRect scroll;
         private TMP_Text controlsStatus;
         private readonly Vector3[] corners = new Vector3[4];
+        private GameObject lastSelected;
 
         /// <summary>Space kept free above and below the Settings panel, in reference pixels (1920x1080).</summary>
         private const float ScreenMargin = 36f;
@@ -253,19 +254,26 @@ namespace RythmRPG.Core
                 PauseUi.Size(tabButtons[i], flexibleWidth: 1f);
             }
 
-            // Scrollable content: whatever does not fit scrolls (mouse wheel, or automatically to follow the
-            // keyboard / gamepad selection), so nothing is ever cut off.
-            RectTransform viewport = PauseUi.Rect("Viewport", settingsPage);
-            PauseUi.Size(viewport, flexibleHeight: 1f);
-            PauseUi.AddImage(viewport, Color.clear, true); // catches the mouse wheel
+            // Scrollable content: when the rows do not fit, a scrollbar appears on the right and the list scrolls
+            // (mouse wheel, dragging the bar, or automatically to follow the keyboard / gamepad selection).
+            RectTransform scrollArea = PauseUi.Rect("Scroll Area", settingsPage);
+            PauseUi.Size(scrollArea, flexibleHeight: 1f);
+            PauseUi.AddImage(scrollArea, Color.clear, true); // catches the mouse wheel over empty space
+
+            RectTransform viewport = PauseUi.Stretch(PauseUi.Rect("Viewport", scrollArea));
+            PauseUi.AddImage(viewport, Color.clear, true);
             viewport.gameObject.AddComponent<RectMask2D>();
-            scroll = viewport.gameObject.AddComponent<ScrollRect>();
+
+            scroll = scrollArea.gameObject.AddComponent<ScrollRect>();
             scroll.viewport = viewport;
             scroll.horizontal = false;
             scroll.vertical = true;
             scroll.movementType = ScrollRect.MovementType.Clamped;
             scroll.inertia = false;
-            scroll.scrollSensitivity = 40f;
+            scroll.scrollSensitivity = 45f;
+            scroll.verticalScrollbar = PauseUi.VerticalScrollbar(scrollArea, 14f);
+            scroll.verticalScrollbarVisibility = ScrollRect.ScrollbarVisibility.AutoHideAndExpandViewport;
+            scroll.verticalScrollbarSpacing = 10f;
 
             RectTransform footer = PauseUi.Rect("Footer", settingsPage);
             PauseUi.Size(footer, height: 60f);
@@ -304,8 +312,12 @@ namespace RythmRPG.Core
         private void KeepSelectionVisible()
         {
             if (scroll == null || scroll.content == null || EventSystem.current == null) return;
+            // Only when the selection moves with keyboard / gamepad, so the mouse wheel is never fought.
             GameObject selected = EventSystem.current.currentSelectedGameObject;
-            if (selected == null || !selected.transform.IsChildOf(scroll.content)) return;
+            if (selected == lastSelected) return;
+            lastSelected = selected;
+            if (selected == null || selected == PointerSelects.LastPointerSelection) return;
+            if (!selected.transform.IsChildOf(scroll.content)) return;
 
             RectTransform viewport = scroll.viewport;
             ((RectTransform)selected.transform).GetWorldCorners(corners);

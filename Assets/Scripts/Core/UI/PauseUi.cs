@@ -22,6 +22,7 @@ namespace RythmRPG.Core
         public static readonly Color ButtonDisabled = new(0.1f, 0.11f, 0.17f, 0.7f);
         public static readonly Color TabActive = new(0.42f, 0.33f, 0.16f, 1f);
         public static readonly Color RowStripe = new(1f, 1f, 1f, 0.03f);
+        public static readonly Color ScrollTrack = new(1f, 1f, 1f, 0.06f);
     }
 
     /// <summary>Small uGUI + TextMeshPro builders for the runtime-built pause menu.</summary>
@@ -155,6 +156,32 @@ namespace RythmRPG.Core
             return button;
         }
 
+        /// <summary>A slim vertical scrollbar docked to the right edge of <paramref name="parent"/>.</summary>
+        public static Scrollbar VerticalScrollbar(RectTransform parent, float width)
+        {
+            RectTransform bar = Rect("Scrollbar", parent);
+            bar.anchorMin = new Vector2(1f, 0f);
+            bar.anchorMax = Vector2.one;
+            bar.pivot = new Vector2(1f, 0.5f);
+            bar.sizeDelta = new Vector2(width, 0f);
+            bar.anchoredPosition = Vector2.zero;
+            AddImage(bar, PauseTheme.ScrollTrack, true);
+
+            RectTransform slidingArea = Stretch(Rect("Sliding Area", bar));
+            RectTransform handle = Stretch(Rect("Handle", slidingArea));
+            Image handleImage = AddImage(handle, Color.white, true);
+
+            Scrollbar scrollbar = bar.gameObject.AddComponent<Scrollbar>();
+            scrollbar.handleRect = handle;
+            scrollbar.targetGraphic = handleImage;
+            scrollbar.direction = Scrollbar.Direction.BottomToTop;
+            ColorBlock colors = Colors(PauseTheme.ButtonSelected);
+            colors.highlightedColor = colors.selectedColor = PauseTheme.Accent;
+            scrollbar.colors = colors;
+            scrollbar.navigation = new Navigation { mode = Navigation.Mode.None }; // keyboard / gamepad skip it
+            return scrollbar;
+        }
+
         public static TMP_Text ButtonLabel(Button button) => button.GetComponentInChildren<TMP_Text>(true);
 
         /// <summary>Explicit navigation (automatic navigation could wander into the game's own UI behind the menu).</summary>
@@ -182,11 +209,15 @@ namespace RythmRPG.Core
     /// <summary>Hovering with the mouse selects, so mouse, keyboard and gamepad share one highlight.</summary>
     internal sealed class PointerSelects : MonoBehaviour, IPointerEnterHandler
     {
+        /// <summary>The object the mouse selected last (auto-scrolling follows keyboard / gamepad selection only).</summary>
+        public static GameObject LastPointerSelection { get; private set; }
+
         public void OnPointerEnter(PointerEventData eventData)
         {
             Selectable selectable = GetComponent<Selectable>();
-            if (selectable != null && selectable.IsInteractable() && EventSystem.current != null)
-                EventSystem.current.SetSelectedGameObject(gameObject);
+            if (selectable == null || !selectable.IsInteractable() || EventSystem.current == null) return;
+            LastPointerSelection = gameObject;
+            EventSystem.current.SetSelectedGameObject(gameObject);
         }
     }
 

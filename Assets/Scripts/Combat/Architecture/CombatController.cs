@@ -26,6 +26,9 @@ namespace RythmRPG.Combat
         [SerializeField] private bool startCombatWithLoop = true;
         [Tooltip("Off (default): the enemy's first wind-up animation may begin in the last moments of the intro so its first projectile appears right as the loop starts. On: the wind-up also waits for the loop (the first projectile comes a bit later).")]
         [SerializeField] private bool windUpAfterIntro;
+        [Tooltip("Pause after the enemy's attack ends before the player's turn starts (zoom in, ability icons). " +
+                 "Gives the last hits, judgements and damage numbers time to land. 0 = straight away.")]
+        [SerializeField, Min(0f)] private float playerTurnDelay = 0.6f;
 
         [Header("Battle result")]
         [Tooltip("Show the result screen (grade, score, stats) when a battle ends.")]
@@ -305,6 +308,8 @@ namespace RythmRPG.Combat
 
         private IEnumerator PlayerTurnStartRoutine()
         {
+            // A beat of breathing room after the enemy's attack (game time: it holds still while paused).
+            if (playerTurnDelay > 0f) yield return new WaitForSeconds(playerTurnDelay);
             stats?.RecordTurn();
             abilitySlots.TickCooldowns();
             // Ability selection: player-turn stem (or low-pass). Casting brings the main loop back.
