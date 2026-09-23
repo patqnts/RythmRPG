@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using RythmRPG.Core;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -137,7 +138,7 @@ namespace RythmRPG.Combat
                 group.alpha = 0f;
                 group.blocksRaycasts = true;
             }
-            openedAt = Time.unscaledTime;
+            openedAt = GamePause.UnpausedRealtime;
             Build(report);
             Play(report.Victory ? Style.VictoryJingle : Style.DefeatJingle);
             Opened?.Invoke(report);
@@ -171,7 +172,7 @@ namespace RythmRPG.Combat
             SkipToEnd();
             closing = true;
             float from = group != null ? group.alpha : 1f;
-            Add(Time.unscaledTime, Style.FadeOutSeconds, t =>
+            Add(GamePause.UnpausedRealtime, Style.FadeOutSeconds, t =>
             {
                 if (group != null) group.alpha = Mathf.Lerp(from, 0f, t);
             });
@@ -192,7 +193,7 @@ namespace RythmRPG.Combat
         private void Build(CombatReport report)
         {
             CombatResultStyle s = Style;
-            float t0 = Time.unscaledTime;
+            float t0 = GamePause.UnpausedRealtime;
 
             if (dim != null) dim.color = s.DimColor;
             Add(t0, s.FadeInSeconds, t =>
@@ -256,7 +257,7 @@ namespace RythmRPG.Combat
                 stamped = true;
                 if (!skipping)
                 {
-                    shakeStart = Time.unscaledTime;
+                    shakeStart = GamePause.UnpausedRealtime;
                     Play(Style.GradeSlam);
                 }
             }, applyStart: false);
@@ -387,7 +388,7 @@ namespace RythmRPG.Combat
         {
             if (!IsOpen) return;
             CombatResultStyle s = Style;
-            float now = Time.unscaledTime;
+            float now = GamePause.UnpausedRealtime;
 
             foreach (Step step in steps.ToArray())
             {
@@ -440,10 +441,13 @@ namespace RythmRPG.Combat
             }
             if (finished && finishedAt < 0f) finishedAt = now;
 
-            if (now >= openedAt + s.InputDelay && Input.anyKeyDown)
+            if (!GamePause.IsPaused && now >= openedAt + s.InputDelay && LegacyKeys.AnyKeyDown())
             {
-                bool closeKey = CombatResultStyle.AnyKeyDown(s.CloseKeys);
-                bool restartKey = s.AllowRestart && CombatResultStyle.AnyKeyDown(s.RestartKeys);
+                // Gamepad: South (A / Cross) continues, North (Y / Triangle) restarts.
+                UnityEngine.InputSystem.Gamepad pad = UnityEngine.InputSystem.Gamepad.current;
+                bool closeKey = CombatResultStyle.AnyKeyDown(s.CloseKeys) || (pad != null && pad.buttonSouth.wasPressedThisFrame);
+                bool restartKey = s.AllowRestart && (CombatResultStyle.AnyKeyDown(s.RestartKeys)
+                    || (pad != null && pad.buttonNorth.wasPressedThisFrame));
                 if (!finished)
                 {
                     if (s.PressToSkip && (closeKey || restartKey || s.SkipWithAnyKey)) SkipToEnd();

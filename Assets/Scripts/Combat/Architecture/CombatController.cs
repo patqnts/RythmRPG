@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using RythmRPG.Core;
 using RythmRPG.Rhythm;
 using UnityEngine;
 
@@ -62,6 +63,11 @@ namespace RythmRPG.Combat
         public event Action<CombatState> StateChanged;
         public event Action<CombatEncounterContext> BattleStarted;
         public event Action<CombatState> BattleEnded;
+
+        // The resume countdown ("3, 2, 1") only runs while a battle is on.
+        private void OnEnable() => GamePause.AddCountdownCondition(IsInBattle);
+        private void OnDisable() => GamePause.RemoveCountdownCondition(IsInBattle);
+        private bool IsInBattle() => IsBattleActive;
 
         private void Awake()
         {
@@ -267,7 +273,7 @@ namespace RythmRPG.Combat
             // first projectile is at least one wind-up away (and not before the loop), and play the wind-up exactly
             // that long before the first projectile. The grid wait now overlaps the wind-up instead of adding to it.
             double anticipation = Math.Max(0f, anticipationDuration);
-            double earliestSpawn = AudioSettings.dspTime + anticipation;
+            double earliestSpawn = GameAudioClock.Now + anticipation;
             if (startCombatWithLoop && musicDirector != null && musicDirector.IsPlayingIntro)
             {
                 double loopStart = musicDirector.LoopStartDsp;
@@ -275,7 +281,7 @@ namespace RythmRPG.Combat
             }
             double zeroDsp = runner.PlanStart(chart, earliestSpawn, out double firstSpawnDsp);
             double windUpDsp = firstSpawnDsp - anticipation;
-            while (AudioSettings.dspTime < windUpDsp && !encounter.Player.IsDefeated) yield return null;
+            while (GameAudioClock.Now < windUpDsp && !encounter.Player.IsDefeated) yield return null;
             encounter.Enemy.PlayAnimation(animationName);
 
             bool completed = false;
@@ -339,7 +345,7 @@ namespace RythmRPG.Combat
             // appears (on the song's grid), and the projectiles burst out of the pop.
             AbilityDefinition definition = selectedAbility?.Definition;
             RhythmChart chart = definition != null ? definition.RhythmPattern : null;
-            double earliestPop = AudioSettings.dspTime + vfxController.MinimumCastSeconds(definition);
+            double earliestPop = GameAudioClock.Now + vfxController.MinimumCastSeconds(definition);
             double popDsp = earliestPop;
             double? plannedZero = null;
             if (chart != null) plannedZero = runner.PlanStart(chart, earliestPop, out popDsp);
@@ -434,7 +440,7 @@ namespace RythmRPG.Combat
             musicDirector?.PlayEnd(victory);
             vfxController.SetAbilitySlotsVisible(false, true);
             vfxController.ClearCastEffects();
-            yield return new WaitForSecondsRealtime(vfxController.TerminalDelay);
+            yield return GamePause.WaitUnpausedRealtime(vfxController.TerminalDelay);
 
             // Result: built before a defeat restores health, shown before the encounter is restored.
             if (stats != null)

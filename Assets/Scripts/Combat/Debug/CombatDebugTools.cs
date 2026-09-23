@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using RythmRPG.Core;
 using UnityEngine;
 
 namespace RythmRPG.Combat
@@ -119,13 +120,13 @@ namespace RythmRPG.Combat
 
         private void Update()
         {
-            bool modifierHeld = modifier == KeyCode.None || Input.GetKey(modifier);
+            bool modifierHeld = modifier == KeyCode.None || LegacyKeys.IsHeld(modifier);
             if (!modifierHeld) return;
-            if (Input.GetKeyDown(toggleOverlay)) overlayOpen = !overlayOpen;
+            if (LegacyKeys.WasPressed(toggleOverlay)) overlayOpen = !overlayOpen;
 
             foreach (Binding binding in bindings)
             {
-                if (!Input.GetKeyDown(binding.key)) continue;
+                if (!LegacyKeys.WasPressed(binding.key)) continue;
                 CombatController combat = Controller;
                 string result = combat == null ? "No CombatController in the scene"
                     : !combat.IsBattleActive ? "No battle running"

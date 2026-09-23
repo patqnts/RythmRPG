@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using RythmRPG.Core;
 using RythmRPG.Rhythm;
 using RythmRPG.Rhythm.Sequences;
 using UnityEngine;
@@ -86,7 +87,7 @@ namespace RythmRPG.Combat
         public float PressWindow => judgementConfig != null ? judgementConfig.MissWindow : 0.18f;
         public IReadOnlyList<Note> ActiveNotes => activeNotes;
 
-        /// <summary>Song clock of the running chart (AudioSettings.dspTime based); null when nothing has run yet.</summary>
+        /// <summary>Song clock of the running chart (GameAudioClock.Now based); null when nothing has run yet.</summary>
         public MusicClock Clock => clock;
         /// <summary>Fires beat callbacks while a chart runs (metronome pulses, enemy animation, WaitForBeat users).</summary>
         public BeatScheduler Scheduler => scheduler;
@@ -178,7 +179,7 @@ namespace RythmRPG.Combat
         /// </summary>
         public double PlanStart(RhythmChart chart, double earliestFirstSpawnDsp, out double firstSpawnDsp)
         {
-            double now = AudioSettings.dspTime;
+            double now = GameAudioClock.Now;
             if (chart == null)
             {
                 firstSpawnDsp = Math.Max(now, earliestFirstSpawnDsp);
@@ -328,11 +329,11 @@ namespace RythmRPG.Combat
 
             List<RhythmNoteData> notes = chart.GetNotesBySpawnTime().ToList();
             double playbackStart = RhythmTimingUtility.GetPlaybackStartTime(chart);
-            double zeroDspTime = AudioSettings.dspTime - playbackStart;
+            double zeroDspTime = GameAudioClock.Now - playbackStart;
             bool encounterMusic = musicDirector != null && musicDirector.HasSong;
             if (plannedZeroDsp.HasValue) zeroDspTime = plannedZeroDsp.Value;
-            else if (encounterMusic) zeroDspTime = PlanStart(chart, AudioSettings.dspTime, out _);
-            // Smoothed audio clock: notes glide instead of stepping once per audio buffer, same timeline as dspTime.
+            else if (encounterMusic) zeroDspTime = PlanStart(chart, GameAudioClock.Now, out _);
+            // Smoothed audio clock: notes glide instead of stepping once per audio buffer, same (pause-aware) timeline as GameAudioClock.
             clock = new MusicClock(() => SmoothedDspTime.Now, chart.CreateTempoMap());
             clock.StartAt(zeroDspTime);
             scheduler.Reposition(0d);
@@ -349,7 +350,7 @@ namespace RythmRPG.Combat
 
             while (!cancelled)
             {
-                double chartTime = AudioSettings.dspTime - zeroDspTime;
+                double chartTime = GameAudioClock.Now - zeroDspTime;
                 while (nextIndex < notes.Count && notes[nextIndex].SpawnTime <= chartTime)
                     Spawn(chart, notes[nextIndex++]);
 
@@ -607,12 +608,12 @@ namespace RythmRPG.Combat
         {
             if (!playChartAudio || chartAudioSource == null || chart.AudioClip == null) return;
             chartAudioSource.clip = chart.AudioClip;
-            chartAudioSource.PlayScheduled(Math.Max(AudioSettings.dspTime, zeroDspTime));
+            PausableAudio.PlayScheduled(chartAudioSource, Math.Max(GameAudioClock.Now, zeroDspTime));
         }
 
         private void StopAudio()
         {
-            if (chartAudioSource != null) chartAudioSource.Stop();
+            if (chartAudioSource != null) PausableAudio.Stop(chartAudioSource);
         }
 
         private static void ApplyInitializeMovement(Note note, NoteInitializeMovementType type)

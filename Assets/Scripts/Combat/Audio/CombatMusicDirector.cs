@@ -1,4 +1,5 @@
 using System;
+using RythmRPG.Core;
 using RythmRPG.Rhythm;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -14,6 +15,8 @@ namespace RythmRPG.Combat
     /// starts on the loop's next bar line, exactly when the loop stops. The loop is never restarted for a chart:
     /// charts start on the song's next bar line (<see cref="NextBarDsp"/>). Switching to a sequence with another song
     /// cross-fades to that song's loop on the next bar.
+    /// <para>All "Dsp" times here are on the pause-aware <see cref="GameAudioClock"/> timeline and every source goes
+    /// through <see cref="PausableAudio"/>, so pausing stops the music and resuming continues it on the exact sample.</para>
     /// </summary>
     public sealed class CombatMusicDirector : MonoBehaviour
     {
@@ -98,7 +101,7 @@ namespace RythmRPG.Combat
         public double LoopStartDsp => Current != null && Current.Alive ? Current.LoopStartDsp : 0d;
 
         /// <summary>True while the song's intro is (or is about to be) playing, i.e. before its loop has started.</summary>
-        public bool IsPlayingIntro => HasSong && AudioSettings.dspTime < Current.LoopStartDsp;
+        public bool IsPlayingIntro => HasSong && GameAudioClock.Now < Current.LoopStartDsp;
 
         /// <summary>Section the audio output is in right now.</summary>
         public Section CurrentSection
@@ -107,7 +110,7 @@ namespace RythmRPG.Combat
             {
                 Deck deck = Current;
                 if (deck == null || !deck.Alive) return Section.None;
-                double dsp = AudioSettings.dspTime;
+                double dsp = GameAudioClock.Now;
                 if (deck.Ending && dsp >= deck.EndDsp) return Section.End;
                 return deck.HasIntro && dsp < deck.LoopStartDsp ? Section.Intro : Section.Loop;
             }
@@ -145,10 +148,10 @@ namespace RythmRPG.Combat
             if (HasSong && Current.Song == song) return;
             EnsureDecks();
             foreach (Deck deck in decks)
-                if (deck.Alive) BeginFadeOut(deck, deck.Ending ? stopFadeSeconds : songChangeFadeSeconds, AudioSettings.dspTime);
+                if (deck.Alive) BeginFadeOut(deck, deck.Ending ? stopFadeSeconds : songChangeFadeSeconds, GameAudioClock.Now);
 
             int next = current < 0 ? 0 : 1 - current;
-            StartDeck(decks[next], song, AudioSettings.dspTime + leadInSeconds, withIntro: true);
+            StartDeck(decks[next], song, GameAudioClock.Now + leadInSeconds, withIntro: true);
             current = next;
             turnMix = turnTarget = 0f;
             ApplyAll();
@@ -170,7 +173,7 @@ namespace RythmRPG.Combat
 
             EnsureDecks();
             Deck previous = Current;
-            double startDsp = GridDsp(previous, AudioSettings.dspTime + MinLeadSeconds, MusicSync.NextBar, false);
+            double startDsp = GridDsp(previous, GameAudioClock.Now + MinLeadSeconds, MusicSync.NextBar, false);
             bool fade = songChangeFadeSeconds > 0f;
             BeginFadeOut(previous, songChangeFadeSeconds, startDsp);
 
@@ -193,7 +196,7 @@ namespace RythmRPG.Combat
         public double PlayEnd(bool victory)
         {
             Deck deck = Current;
-            double now = AudioSettings.dspTime;
+            double now = GameAudioClock.Now;
             if (deck == null || !deck.Alive || deck.FadingOut) return now;
             if (deck.Ending) return deck.EndDsp;
 
@@ -212,7 +215,7 @@ namespace RythmRPG.Combat
             deck.End.clip = endClip;
             deck.End.loop = false;
             deck.End.timeSamples = 0;
-            deck.End.PlayScheduled(endDsp);
+            PausableAudio.PlayScheduled(deck.End, endDsp);
             deck.EndDsp = endDsp;
             deck.EndSeconds = CombatSong.ExactSeconds(endClip);
             deck.Ending = true;
@@ -226,7 +229,7 @@ namespace RythmRPG.Combat
             float target = playerTurn ? 1f : 0f;
             if (Mathf.Approximately(target, turnTarget)) return;
             turnTarget = target;
-            double now = AudioSettings.dspTime;
+            double now = GameAudioClock.Now;
             turnSwitchDsp = HasSong ? GridDsp(Current, now, turnSwitchSync, false) : now;
         }
 
@@ -251,7 +254,7 @@ namespace RythmRPG.Combat
         /// <summary>Fades everything out and stops (battle cancelled, or it ended without an End clip).</summary>
         public void Stop()
         {
-            double now = AudioSettings.dspTime;
+            double now = GameAudioClock.Now;
             foreach (Deck deck in decks)
                 if (deck != null && deck.Alive) BeginFadeOut(deck, stopFadeSeconds, now);
             turnTarget = 0f;
@@ -286,7 +289,7 @@ namespace RythmRPG.Combat
             {
                 deck.Intro.loop = false;
                 deck.Intro.timeSamples = 0;
-                deck.Intro.PlayScheduled(startDsp);
+                PausableAudio.PlayScheduled(deck.Intro, startDsp);
                 loopStart = startDsp + CombatSong.ExactSeconds(intro);
             }
 
@@ -302,23 +305,23 @@ namespace RythmRPG.Combat
             source.clip = clip;
             source.loop = true;
             source.timeSamples = 0;
-            source.PlayScheduled(dsp);
+            PausableAudio.PlayScheduled(source, dsp);
         }
 
         /// <summary>Stops a source exactly at <paramref name="dsp"/>; if it has not started by then it never starts.</summary>
         private static void CutAt(AudioSource source, double dsp, double sourceStartDsp)
         {
             if (source.clip == null) return;
-            if (dsp <= sourceStartDsp) source.Stop();
-            else source.SetScheduledEndTime(dsp);
+            if (dsp <= sourceStartDsp) PausableAudio.Stop(source);
+            else PausableAudio.SetScheduledEndTime(source, dsp);
         }
 
         private static void StopDeck(Deck deck)
         {
-            deck.Intro.Stop();
-            deck.Main.Stop();
-            deck.Layer.Stop();
-            deck.End.Stop();
+            PausableAudio.Stop(deck.Intro);
+            PausableAudio.Stop(deck.Main);
+            PausableAudio.Stop(deck.Layer);
+            PausableAudio.Stop(deck.End);
             deck.Alive = false;
             deck.Ending = false;
             deck.FadingIn = deck.FadingOut = false;
@@ -341,8 +344,9 @@ namespace RythmRPG.Combat
 
         private void Update()
         {
+            if (GamePause.IsPaused) return; // fades and turn mixes hold still; the sources are stopped / re-scheduled
             float dt = Time.unscaledDeltaTime;
-            double dsp = AudioSettings.dspTime;
+            double dsp = GameAudioClock.Now;
             if (dsp >= turnSwitchDsp)
                 turnMix = Mathf.MoveTowards(turnMix, turnTarget, playerTurnFadeSeconds <= 0f ? 1f : dt / playerTurnFadeSeconds);
 

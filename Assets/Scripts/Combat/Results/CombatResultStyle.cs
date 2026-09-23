@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using RythmRPG.Core;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -276,7 +277,7 @@ namespace RythmRPG.Combat
         {
             if (keys == null) return false;
             foreach (KeyCode key in keys)
-                if (key != KeyCode.None && Input.GetKeyDown(key)) return true;
+                if (key != KeyCode.None && LegacyKeys.WasPressed(key)) return true;
             return false;
         }
 

@@ -79,6 +79,12 @@ public class KeyButton : MonoBehaviour
         if (uiLabel != null) uiLabelRestingColor = uiLabel.color;
     }
     
+    /// <summary>Shows the lane's current key on the button (called again after the player rebinds it).</summary>
+    public void SetKeyLabel(string text)
+    {
+        if (uiLabel != null && !string.IsNullOrEmpty(text)) uiLabel.text = text;
+    }
+
     public void SetInteractable(bool interactable)
     {
         this.interactable = interactable;

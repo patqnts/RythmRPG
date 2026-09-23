@@ -1,4 +1,5 @@
 using System.Collections;
+using RythmRPG.Core;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -28,7 +29,7 @@ public class HitStop : MonoBehaviour
         if (waiting)
             return;
 
-        Time.timeScale = timeScale;
+        GamePause.SetTimeScale(timeScale); // pause-safe: remembered and applied on resume while paused
         StartCoroutine(Wait(duration,collider));
     }
 
@@ -45,8 +46,8 @@ public class HitStop : MonoBehaviour
         {
             chromaticAberration.intensity.value = 1f;
         }
-        yield return new WaitForSecondsRealtime(duration);
-        Time.timeScale = 1.0f;
+        yield return GamePause.WaitUnpausedRealtime(duration);
+        GamePause.SetTimeScale(1.0f);
         waiting = false;
         collider.GetComponent<Collider2D>().enabled = true;
         if (chromaticAberration != null)

@@ -362,7 +362,7 @@ namespace RythmRPG.Combat
                 theme != null ? theme.ButtonTextColor : Color.white, TextAlignmentOptions.Center,
                 theme != null ? theme.ButtonTextOutline : Color.clear);
             label.fontStyle = CombatText.ToTmp(theme != null ? theme.ButtonFontStyle : FontStyle.Bold);
-            label.text = binding.KeyCode == KeyCode.None ? binding.LaneId.ToString() : binding.KeyCode.ToString();
+            label.text = binding.DisplayName;
             KeyButton view = buttonObject.GetComponent<KeyButton>();
             view.ConfigureUI(binding.LaneId, image, label,
                 theme != null ? theme.ButtonUnpressedSprite : null,

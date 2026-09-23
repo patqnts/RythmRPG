@@ -15,12 +15,12 @@ MonoBehaviour:
   ButtonUnpressedSprite: {fileID: 21300000, guid: dbaad250b49fbb947abd461eaf98cbc2, type: 3}
   ButtonPressedSprite: {fileID: 21300000, guid: f2478e00832815c4bb0f3d23c36db4a7, type: 3}
   ButtonImageType: 0
-  ButtonColor: {r: 1, g: 1, b: 1, a: 0.94}
+  ButtonColor: {r: 1, g: 1, b: 1, a: 1}
   ButtonSize: {x: 64, y: 64}
   ButtonSpacing: 15
   BottomOffset: 2
-  ButtonFontAsset: {fileID: 11400000, guid: 48c87fb84799300439e6bf99003e763a, type: 2}
-  ButtonFont: {fileID: 12800000, guid: 3c2172383277d46b697de74b6df875e5, type: 3}
+  ButtonFontAsset: {fileID: 11400000, guid: 11b93ff62af0a9f41923eaa3394f4c79, type: 2}
+  ButtonFont: {fileID: 12800000, guid: 80a0137e3d8f78f41bfdb2aca0cfac44, type: 3}
   ButtonFontSize: 28
   ButtonFontStyle: 1
   ButtonTextColor: {r: 1, g: 1, b: 1, a: 1}

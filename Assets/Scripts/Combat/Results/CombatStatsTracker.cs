@@ -1,3 +1,4 @@
+using RythmRPG.Core;
 using UnityEngine;
 
 namespace RythmRPG.Combat
@@ -27,7 +28,7 @@ namespace RythmRPG.Combat
             Stop();
             player = playerCombatant;
             enemy = enemyCombatant;
-            startTime = Time.unscaledTime;
+            startTime = GamePause.UnpausedRealtime;
             if (player != null)
             {
                 lastMana = player.CurrentMana;
@@ -77,7 +78,7 @@ namespace RythmRPG.Combat
         {
             report.Victory = victory;
             report.EnemyName = enemyName ?? string.Empty;
-            report.BattleSeconds = Time.unscaledTime - startTime;
+            report.BattleSeconds = GamePause.UnpausedRealtime - startTime;
             report.HealthLeft = player != null && player.MaxHealth > 0 ? (float)player.CurrentHealth / player.MaxHealth : 0f;
 
             var all = new int[4];

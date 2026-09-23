@@ -10,6 +10,7 @@
   <Project Path="ExternAttributes.Editor.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
   <Project Path="PrimeTween.Demo.csproj" />
+  <Project Path="RythmRPG.Core.csproj" />
   <Project Path="Assembly-CSharp-Editor.csproj" />
   <Project Path="RythmRPG.Rhythm.Tests.EditMode.csproj" />
   <Project Path="PrimeTween.Debug.csproj" />

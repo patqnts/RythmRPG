@@ -3,7 +3,9 @@
   "rootNamespace": "RythmRPG.Combat.Tests",
   "references": [
     "RythmRPG.Combat.Runtime",
-    "RythmRPG.Rhythm.Runtime"
+    "RythmRPG.Rhythm.Runtime",
+    "RythmRPG.Core",
+    "Unity.InputSystem"
   ],
   "includePlatforms": [
     "Editor"

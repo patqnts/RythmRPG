@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Linq;
+using RythmRPG.Core;
 using RythmRPG.Combat;
 using UnityEngine;
 
@@ -15,7 +16,7 @@ public sealed class PlayerEnemyInteractor3D : MonoBehaviour
     [SerializeField, Min(0.05f)] private float interactionRadius = 1.25f;
     [SerializeField] private LayerMask enemyLayers = ~0;
     [SerializeField] private QueryTriggerInteraction triggerInteraction = QueryTriggerInteraction.Collide;
-    [SerializeField] private KeyCode interactKey = KeyCode.Return;
+    [Tooltip("Needs the Interact control (Enter / gamepad South by default, rebindable in Settings > Controls).")]
     [SerializeField] private bool requireInteractKey = true;
     [SerializeField] private bool useOverlapCheck = true;
     [SerializeField] private bool beginBattleOnTriggerEnter;
@@ -54,7 +55,7 @@ public sealed class PlayerEnemyInteractor3D : MonoBehaviour
     private void Update()
     {
         if (!useOverlapCheck || encounterStarting || IsCombatBusy()) return;
-        if (requireInteractKey && !Input.GetKeyDown(interactKey)) return;
+        if (requireInteractKey && !GameInput.InteractPressed) return;
         TryBeginBattle(FindNearestEnemyInRange());
     }
 
@@ -62,7 +63,7 @@ public sealed class PlayerEnemyInteractor3D : MonoBehaviour
     {
         if (!beginBattleOnTriggerEnter || encounterStarting || IsCombatBusy()) return;
         if (!IsInEnemyLayer(other.gameObject.layer)) return;
-        if (requireInteractKey && !Input.GetKeyDown(interactKey)) return;
+        if (requireInteractKey && !GameInput.InteractPressed) return;
         TryBeginBattle(ResolveEnemy(other));
     }
 
@@ -70,7 +71,7 @@ public sealed class PlayerEnemyInteractor3D : MonoBehaviour
     {
         if (!beginBattleOnTriggerEnter || !requireInteractKey || encounterStarting || IsCombatBusy()) return;
         if (!IsInEnemyLayer(other.gameObject.layer)) return;
-        if (!Input.GetKeyDown(interactKey)) return;
+        if (!GameInput.InteractPressed) return;
         TryBeginBattle(ResolveEnemy(other));
     }
 

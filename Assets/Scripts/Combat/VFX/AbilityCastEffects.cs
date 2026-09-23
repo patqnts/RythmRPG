@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using RythmRPG.Core;
 using UnityEngine;
 
 namespace RythmRPG.Combat
@@ -406,10 +407,10 @@ namespace RythmRPG.Combat
             Vector3 anchor = transform.position;
             Vector3 up = CastVisuals.ScreenUp(viewCamera);
             float elapsed = 0f;
-            while (elapsed < minSeconds || (AudioSettings.dspTime < popDspTime && elapsed < 4f))
+            while (elapsed < minSeconds || (GameAudioClock.Now < popDspTime && elapsed < 4f))
             {
                 elapsed += Time.deltaTime;
-                float remaining = (float)(popDspTime - AudioSettings.dspTime);
+                float remaining = (float)(popDspTime - GameAudioClock.Now);
                 float urgency = 1f - Mathf.Clamp01(remaining / 0.6f);
                 pulse = 1f + Mathf.Sin(elapsed * Mathf.Lerp(10f, 30f, urgency)) * Mathf.Lerp(0.08f, 0.22f, urgency)
                         + urgency * 0.25f;

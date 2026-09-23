@@ -1,14 +1,10 @@
 {
-  "name": "RythmRPG.Combat.Runtime",
-  "rootNamespace": "RythmRPG.Combat",
+  "name": "RythmRPG.Core",
+  "rootNamespace": "RythmRPG.Core",
   "references": [
-    "RythmRPG.Rhythm.Runtime",
-    "PrimeTween.Runtime",
-    "Unity.Cinemachine",
-    "Unity.ugui",
-    "Unity.TextMeshPro",
     "Unity.InputSystem",
-    "RythmRPG.Core"
+    "Unity.ugui",
+    "Unity.TextMeshPro"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],

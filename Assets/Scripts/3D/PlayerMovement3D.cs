@@ -1,3 +1,4 @@
+using RythmRPG.Core;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
@@ -22,10 +23,8 @@ public class PlayerMovement3D : MonoBehaviour
             return;
         }
 
-        Vector2 input = new Vector2(
-            Input.GetAxisRaw("Horizontal"),
-            Input.GetAxisRaw("Vertical")
-        ).normalized;
+        Vector2 input = GameInput.MoveValue;
+        if (input.sqrMagnitude > 1f) input.Normalize();
 
         Vector3 movement = new Vector3(input.x, 0f, input.y);
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using RythmRPG.Core;
 using RythmRPG.Combat;
 using UnityEngine;
 
@@ -38,9 +39,10 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GamePause.IsPaused) return;
         if (isEnabled) 
         {
-            circleCollider.enabled = Input.GetKey(KeyCode.Return);
+            circleCollider.enabled = GameInput.InteractHeld;
 
             //float inputX = Input.GetAxis("Horizontal");
             //float inputY = Input.GetAxis("Vertical");
@@ -64,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
             //}
             //get direction of input
 
-            direction = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
+            direction = GameInput.MoveValue.normalized;
             //set walk based on direction
             body.linearVelocity = direction * walkSpeed;
             HandleSpriteFlip();

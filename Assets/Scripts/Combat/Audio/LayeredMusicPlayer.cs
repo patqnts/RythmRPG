@@ -1,4 +1,5 @@
 using System;
+using RythmRPG.Core;
 using RythmRPG.Rhythm.Audio;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ namespace RythmRPG.Combat
     /// Plays several music layers sample-locked (all scheduled for the same dsp time) and cross-fades between them,
     /// e.g. a calm "thinking" layer during ability selection and a driving "action" layer during rhythm sections.
     /// With a single layer it is just a scheduled looping player. Exposes <see cref="DspStartTime"/> so beat
-    /// logic can align to the same start.
+    /// logic can align to the same start (on the pause-aware <see cref="GameAudioClock"/> timeline).
     /// </summary>
     public sealed class LayeredMusicPlayer : MonoBehaviour
     {
@@ -42,7 +43,7 @@ namespace RythmRPG.Combat
             activeLayer = Mathf.Clamp(startLayer, 0, layers.Length - 1);
             weights[activeLayer] = 1f;
             fadeSeconds = defaultFadeSeconds;
-            DspStartTime = AudioSettings.dspTime + Math.Max(0.05d, leadInSeconds);
+            DspStartTime = GameAudioClock.Now + Math.Max(0.05d, leadInSeconds);
             for (int i = 0; i < layers.Length; i++)
             {
                 Layer layer = layers[i];
@@ -56,7 +57,7 @@ namespace RythmRPG.Combat
                 layer.source.clip = layer.clip;
                 layer.source.loop = loop;
                 layer.source.volume = weights[i] * layer.maxVolume;
-                layer.source.PlayScheduled(DspStartTime);
+                PausableAudio.PlayScheduled(layer.source, DspStartTime);
             }
 
             IsPlaying = true;
@@ -90,13 +91,13 @@ namespace RythmRPG.Combat
             if (layers == null) return;
             foreach (Layer layer in layers)
             {
-                if (layer != null && layer.source != null) layer.source.Stop();
+                if (layer != null && layer.source != null) PausableAudio.Stop(layer.source);
             }
         }
 
         private void Update()
         {
-            if (!IsPlaying) return;
+            if (!IsPlaying || GamePause.IsPaused) return;
             LayerMixer.Step(weights, activeLayer, Time.unscaledDeltaTime, fadeSeconds);
             for (int i = 0; i < layers.Length; i++)
             {

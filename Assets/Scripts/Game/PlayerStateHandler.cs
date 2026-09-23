@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using RythmRPG.Combat;
+using RythmRPG.Core;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,7 +32,7 @@ public class PlayerStateHandler : MonoBehaviour
             if (inputRouter == null) return;
             foreach (LaneKeyBinding binding in inputRouter.Bindings)
             {
-                if (Input.GetKeyDown(binding.KeyCode))
+                if (GameInput.LanePressed(binding.LaneId))
                 {
                     UpdatePressCount(1);
                 }
