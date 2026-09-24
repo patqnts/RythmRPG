@@ -10,10 +10,14 @@ The actions are built in code (see `GameInput.EnsureCreated`) and use the new In
 
 | Map | Action | Keyboard | Gamepad |
 |---|---|---|---|
-| Combat | Lane1–Lane4 | A S J K | D-pad Left / Down, South, East |
+| Combat | Lane Key 1–4 (left outer, left inner, right inner, right outer) | A S J K | D-pad Left / Down, South, East |
 | Explore | Move | WASD + arrows | Left stick, D-pad |
 | Explore | Interact | Enter | South |
 | System | Pause | Esc | Start |
+
+Each chart plays with 1-4 lanes (set per chart in the Rhythm Composer's Lanes menu). The combat shows only those lanes
+and maps them onto the lane keys with `GameInput.LaneKeySlot`: 1 lane = J, 2 = S J, 3 = S J K, 4 = A S J K (the
+lane keys as rebound). Ability selection uses one lane per ability slot.
 
 Players rebind them in **Pause > Settings > Controls**. Their changes are saved to PlayerPrefs (`RythmRPG.Input.BindingOverrides`).
 If a new key is already used by another action in the same context, the two actions swap keys.

@@ -87,6 +87,8 @@ namespace RythmRPG.Combat
             runner = context.Enemy.PatternRunner ?? context.Enemy.gameObject.AddComponent<RhythmPatternRunner>();
             runner.enabled = true;
             lanePresentation.ConfigureEncounter(context, runner.ProjectileObjectHolder);
+            // Every lane exists from the start (buttons, targets, ability slots); each chart then shows only its own.
+            inputRouter.SetActiveLaneCount(GameInput.LaneCount);
             lanePresentation.EnsurePresentation(inputRouter);
             lanePresentation.SetPresentationVisible(true);
             // Sequence: the player walks to its combat spot first; the coordinator reveals the hit line afterwards.
@@ -271,6 +273,7 @@ namespace RythmRPG.Combat
         private IEnumerator RunEnemyStep(RhythmChart chart, string animationName, float anticipationDuration,
             float duration, AttackStepEndPolicy policy)
         {
+            UseLanesOf(chart);
             // Plan first, then wind up: the chart's beat 0 has to land on the song's grid, so instead of
             // "wind-up, then wait for the next bar, then the notes' travel lead", pick the first grid-valid start whose
             // first projectile is at least one wind-up away (and not before the loop), and play the wind-up exactly
@@ -319,6 +322,8 @@ namespace RythmRPG.Combat
             // actually starts (see PlayerAbilityRoutine / EnemyTurnStartRoutine).
             lanePresentation?.HideHitLine();
             if (resourceRules != null && resourceRules.ManaPerPlayerTurn > 0) encounter.Player.GainMana(resourceRules.ManaPerPlayerTurn);
+            // Choosing an ability: one lane per ability slot (the ability icons and their keys).
+            UseLaneCount(abilitySlots.HighestLaneId > 0 ? abilitySlots.HighestLaneId : GameInput.LaneCount);
             vfxController.SetAbilitySlotsVisible(true, true);
             yield return null;
             Transition(CombatState.PlayerAbilitySelection);
@@ -350,6 +355,7 @@ namespace RythmRPG.Combat
             // appears (on the song's grid), and the projectiles burst out of the pop.
             AbilityDefinition definition = selectedAbility?.Definition;
             RhythmChart chart = definition != null ? definition.RhythmPattern : null;
+            UseLanesOf(chart);
             double earliestPop = GameAudioClock.Now + vfxController.MinimumCastSeconds(definition);
             double popDsp = earliestPop;
             double? plannedZero = null;
@@ -368,6 +374,32 @@ namespace RythmRPG.Combat
             runner.NoteSpawned -= HandleAbilityNoteSpawned;
             abilitySystem.ExecutionCompleted -= OnCompleted;
             Transition(CombatState.PlayerTurnEnd);
+        }
+
+        // ---------- Lanes ----------
+
+        private static readonly HashSet<RhythmChart> warnedLaneCharts = new();
+
+        /// <summary>Shows the chart's lanes (1-4, from its lanes in the Rhythm Composer) on their keys.</summary>
+        private void UseLanesOf(RhythmChart chart)
+        {
+            if (chart == null)
+            {
+                UseLaneCount(GameInput.LaneCount);
+                return;
+            }
+            if (chart.Lanes.Count > RhythmChart.MaxLanes && warnedLaneCharts.Add(chart))
+                Debug.LogWarning($"[Combat] Chart '{chart.name}' has {chart.Lanes.Count} lanes; only lanes 1-{RhythmChart.MaxLanes} " +
+                                 "can be played. Open it in the Rhythm Composer (it offers to fit it) or run Tools > Rhythm > " +
+                                 "Fit All Charts To 4 Lanes.", chart);
+            UseLaneCount(chart.GameplayLaneCount);
+        }
+
+        private void UseLaneCount(int count)
+        {
+            if (inputRouter == null) return;
+            inputRouter.SetActiveLaneCount(count);
+            lanePresentation?.EnsurePresentation(inputRouter);
         }
 
         // Each projectile of the player's ability sparks out of centre stage as it is thrown.

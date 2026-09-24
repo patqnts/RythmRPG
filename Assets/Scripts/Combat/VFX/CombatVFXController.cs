@@ -89,6 +89,9 @@ namespace RythmRPG.Combat
             }
             GameInput.BindingsChanged -= RefreshSelectionKeys;
             GameInput.BindingsChanged += RefreshSelectionKeys;
+            // The lane count (and so each lane's key) changes per chart.
+            input.LanesChanged -= RefreshSelectionKeys;
+            input.LanesChanged += RefreshSelectionKeys;
             if (slots != null)
             {
                 slots.SlotsChanged += RefreshSlots;
@@ -300,7 +303,7 @@ namespace RythmRPG.Combat
 
         public Transform GetCenterLaneViewTransform()
         {
-            List<RhythmLaneTarget> lanes = FindObjectsByType<RhythmLaneTarget>(FindObjectsInactive.Include).Where(target => target != null).OrderBy(target => target.LaneId).ToList();
+            List<RhythmLaneTarget> lanes = FindObjectsByType<RhythmLaneTarget>(FindObjectsInactive.Exclude).Where(target => target != null).OrderBy(target => target.LaneId).ToList();
             if (lanes.Count > 0) return lanes[lanes.Count / 2].transform;
             List<KeyValuePair<int, AbilitySlotView>> ordered = slotViews
                 .Where(pair => pair.Value != null).OrderBy(pair => pair.Key).ToList();
@@ -466,6 +469,7 @@ namespace RythmRPG.Combat
             if (judgement != null) judgement.OnJudgementResolved -= PlayJudgement;
             if (enemy != null) enemy.Damaged -= HandleEnemyDamaged;
             GameInput.BindingsChanged -= RefreshSelectionKeys;
+            if (boundInput != null) boundInput.LanesChanged -= RefreshSelectionKeys;
             if (player != null) player.ManaChanged -= HandlePlayerManaChanged;
         }
 
@@ -538,7 +542,7 @@ namespace RythmRPG.Combat
 
         private Vector3 ClampPresentationPointAboveLanes(Vector3 position)
         {
-            List<RhythmLaneTarget> lanes = FindObjectsByType<RhythmLaneTarget>(FindObjectsInactive.Include).Where(target => target != null).OrderBy(target => target.LaneId).ToList();
+            List<RhythmLaneTarget> lanes = FindObjectsByType<RhythmLaneTarget>(FindObjectsInactive.Exclude).Where(target => target != null).OrderBy(target => target.LaneId).ToList();
             if (lanes.Count > 0)
             {
                 float highestLaneY = lanes.Select(target => target.transform.position.y).Max();

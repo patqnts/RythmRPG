@@ -12,6 +12,7 @@ public class StationaryHoldNote : StationaryNote
     private float holdTimer;
 
     protected override bool ResolveImmediatelyOnPress => false;
+    protected override LaneAnticipationKind MarkerAnticipationKind => LaneAnticipationKind.ChargeFill;
 
     protected override void Update()
     {

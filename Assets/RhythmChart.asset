@@ -17,6 +17,8 @@ MonoBehaviour:
   beatsPerMeasure: 4
   compositionDuration: 10
   audioClip: {fileID: 0}
+  song: {fileID: 0}
+  songPreviewBar: 0
   audioOffsetSeconds: 0
   snapEnabled: 1
   snapDivision: 4
@@ -40,11 +42,6 @@ MonoBehaviour:
     displayName: Lane 4
     color: {r: 0.88, g: 0.38, b: 0.55, a: 1}
     keyIdentity: 4
-    keyType: 0
-  - id: 21228da8d42642cf82b3ca5c63644a75
-    displayName: Lane 5
-    color: {r: 0.62, g: 0.45, b: 0.92, a: 1}
-    keyIdentity: 5
     keyType: 0
   noteDefinitions:
   - noteType: 0
@@ -97,7 +94,7 @@ MonoBehaviour:
     defaultTravelTime: 2.5
   notes:
   - id: pat_4533580b9c4240d9bd48fac718e78086_0
-    laneId: 21228da8d42642cf82b3ca5c63644a75
+    laneId: ab2109e5f9f7470988013d8777d58b66
     hitTime: 0
     noteType: 0
     holdDuration: 0
@@ -135,7 +132,7 @@ MonoBehaviour:
     - key: pattern
       value: 4533580b9c4240d9bd48fac718e78086
   - id: pat_4533580b9c4240d9bd48fac718e78086_2
-    laneId: 21228da8d42642cf82b3ca5c63644a75
+    laneId: ab2109e5f9f7470988013d8777d58b66
     hitTime: 0.25
     noteType: 0
     holdDuration: 0
@@ -418,7 +415,7 @@ MonoBehaviour:
     prefabOverride: {fileID: 0}
     metadata: []
   - id: 8c823c0842ba40b58e917645fd07690b
-    laneId: 21228da8d42642cf82b3ca5c63644a75
+    laneId: ab2109e5f9f7470988013d8777d58b66
     hitTime: 2.875
     noteType: 1
     holdDuration: 1.125

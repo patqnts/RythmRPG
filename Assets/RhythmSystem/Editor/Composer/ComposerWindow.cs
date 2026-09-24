@@ -18,6 +18,7 @@ namespace RythmRPG.Rhythm.Editor.Composer
         private ChartSession session;
         private TimelineElement timeline;
         private ObjectField chartField;
+        private PopupField<int> laneCountField;
         private Label statusLabel;
         private Label inspectorHeader;
         private DoubleField beatField;
@@ -651,6 +652,17 @@ namespace RythmRPG.Rhythm.Editor.Composer
             });
             bar.Add(division);
 
+            // Lanes this chart plays with (1-4). Combat shows only these lanes, on the matching keys.
+            var laneCounts = new List<int>();
+            for (int i = 1; i <= RhythmChart.MaxLanes; i++) laneCounts.Add(i);
+            laneCountField = new PopupField<int>(laneCounts, laneCounts.Count - 1);
+            laneCountField.formatSelectedValueCallback = v => v == 1 ? "1 lane" : v + " lanes";
+            laneCountField.formatListItemCallback = v => v == 1 ? "1 lane" : v + " lanes";
+            laneCountField.tooltip = "How many lanes this chart uses (1-" + RhythmChart.MaxLanes + "). In combat only these " +
+                                     "lanes are shown, on the matching keys (1: J, 2: S J, 3: S J K, 4: A S J K).";
+            laneCountField.RegisterValueChangedCallback(e => OnLaneCountPicked(e.newValue));
+            bar.Add(laneCountField);
+
             var hint = new Label("  Ctrl+wheel zoom | wheel scroll | Ctrl+C/V/D/A/Z/Y | Del | Alt = no snap");
             hint.style.color = new Color(0.65f, 0.65f, 0.65f);
             hint.style.unityTextAlign = TextAnchor.MiddleLeft;
@@ -1054,6 +1066,8 @@ namespace RythmRPG.Rhythm.Editor.Composer
                 return;
             }
 
+            OfferFitToMaxLanes(target);
+            laneCountField?.SetValueWithoutNotify(Mathf.Clamp(target.Lanes.Count, 1, RhythmChart.MaxLanes));
             session = ChartSessionBridge.Load(target, msg => Debug.LogWarning("[Composer] " + msg));
             session.Changed += OnSessionChanged;
             timeline.PlayheadBeat = 0d;
@@ -1070,6 +1084,54 @@ namespace RythmRPG.Rhythm.Editor.Composer
             RunValidation();
             UpdateInspector();
             UpdateStatus();
+        }
+
+        // Charts from the old 5-lane layout: offer to fold the extra lanes into lane 4.
+        private static void OfferFitToMaxLanes(RhythmChart target)
+        {
+            if (!ChartLaneConverter.HasTooManyLanes(target)) return;
+            if (!EditorUtility.DisplayDialog("Too many lanes",
+                    $"'{target.name}' has {target.Lanes.Count} lanes; the game plays at most {RhythmChart.MaxLanes}.\n\n" +
+                    $"Fit it to {RhythmChart.MaxLanes} lanes now? Notes on the extra lanes move to lane {RhythmChart.MaxLanes} " +
+                    "(a note that would overlap one there is removed).", "Fit to " + RhythmChart.MaxLanes + " lanes", "Keep as is"))
+                return;
+            ApplyLaneCount(target, RhythmChart.MaxLanes);
+        }
+
+        private static void ApplyLaneCount(RhythmChart target, int count)
+        {
+            Undo.RecordObject(target, "Change Lane Count");
+            ChartLaneConverter.Result result = ChartLaneConverter.SetLaneCount(target, count);
+            EditorUtility.SetDirty(target);
+            AssetDatabase.SaveAssets();
+            ChartLaneConverter.UpdateGoldenBaseline(new Dictionary<string, ChartLaneConverter.Result>
+            {
+                [AssetDatabase.GetAssetPath(target)] = result
+            });
+            Debug.Log($"[Composer] {target.name}: {count} lane(s). {ChartLaneConverter.Describe(result)}");
+        }
+
+        private void OnLaneCountPicked(int count)
+        {
+            if (chart == null || session == null)
+            {
+                laneCountField.SetValueWithoutNotify(RhythmChart.MaxLanes);
+                return;
+            }
+            int current = chart.Lanes.Count;
+            if (count == current) return;
+            string message = count < current
+                ? $"Remove lane(s) {count + 1}-{current}? Their notes move to lane {count} (a note that would overlap one " +
+                  "there is removed).\n\nThe chart is saved first."
+                : $"Add {count - current} empty lane(s)?\n\nThe chart is saved first.";
+            if (!EditorUtility.DisplayDialog("Lanes", message, count < current ? "Remove" : "Add", "Cancel"))
+            {
+                laneCountField.SetValueWithoutNotify(Mathf.Clamp(current, 1, RhythmChart.MaxLanes));
+                return;
+            }
+            Save();
+            ApplyLaneCount(chart, count);
+            LoadChart(chart);
         }
 
         private void Save()

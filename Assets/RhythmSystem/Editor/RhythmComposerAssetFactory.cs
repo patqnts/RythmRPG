@@ -19,7 +19,8 @@ namespace RythmRPG.Rhythm.Editor
             { RhythmNoteType.Mash, "Assets/Prefab/Mash.prefab" }
         };
 
-        public const int DefaultLaneCount = 4;
+        /// <summary>Lanes a new chart starts with (change it per chart in the Rhythm Composer's Lanes menu).</summary>
+        public const int DefaultLaneCount = RhythmChart.MaxLanes;
 
         private static readonly Color[] LaneColors =
         {
@@ -29,6 +30,9 @@ namespace RythmRPG.Rhythm.Editor
             new Color(0.88f, 0.38f, 0.55f),
             new Color(0.62f, 0.45f, 0.92f)
         };
+
+        /// <summary>Default colour of lane <paramref name="index"/> (0-based).</summary>
+        public static Color LaneColor(int index) => LaneColors[Mathf.Abs(index) % LaneColors.Length];
 
         private static readonly Color[] NoteColors =
         {
@@ -95,7 +99,6 @@ namespace RythmRPG.Rhythm.Editor
             chart.NoteDefinitions.Clear();
             chart.Notes.Clear();
 
-            // Keep in step with GameInput.LaneCount (RythmRPG.Core; not referenced from the rhythm assemblies).
             for (int i = 0; i < DefaultLaneCount; i++)
             {
                 chart.Lanes.Add(new RhythmLaneData($"Lane {i + 1}", i + 1, LaneColors[i], KeyType.DEFAULT));

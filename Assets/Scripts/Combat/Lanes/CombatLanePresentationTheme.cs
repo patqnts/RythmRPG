@@ -39,7 +39,10 @@ namespace RythmRPG.Combat
         public Sprite LineSprite;
         public Material LineMaterial;
         public Color LineColor = Color.white;
-        [Min(0.25f)] public float LineThickness = 2f;
+        [Tooltip("Hit line thickness in pixels of a 270-row screen (1 = one pixel-art pixel = 4 screen pixels at 1080p). " +
+                 "Applied live to the hit line the combat builds. Drawn crisp (Crisp World UI camera) any value works, e.g. " +
+                 "0.25 = 1 screen pixel; inside the pixel render it is at least 3 so it does not flicker.")]
+        [Min(0.05f)] public float LineThickness = 2f;
         [Min(0f)] public float LineGapAboveButtons = 8f;
         [Min(0f)] public float LineHorizontalPadding = 8f;
         public bool SnapToRenderTexturePixels = true;
@@ -56,8 +59,9 @@ namespace RythmRPG.Combat
         [Tooltip("Marker size in pixels of a 270-row screen (same unit as Line Thickness). Shrinks automatically if the " +
                  "lanes are closer together.")]
         [Min(2f)] public float KeyMarkerSize = 20f;
-        [Tooltip("Outline thickness in pixels of a 270-row screen. Square / Diamond only.")]
-        [Min(0.25f)] public float KeyMarkerOutline = 1f;
+        [Tooltip("Outline thickness in pixels of a 270-row screen. Square / Diamond only. Rounded to whole pixel-art " +
+                 "pixels inside the pixel render; drawn crisp, fractions work (0.25 = 1 screen pixel at 1080p).")]
+        [Min(0.05f)] public float KeyMarkerOutline = 1f;
         public Color KeyMarkerColor = new(1f, 1f, 1f, 0.85f);
         public Color KeyMarkerPressedColor = new(1f, 0.85f, 0.35f, 1f);
         [Tooltip("Fill shown inside the outline while the key is held.")]
@@ -68,6 +72,19 @@ namespace RythmRPG.Combat
         public Color KeyMarkerLabelColor = new(1f, 1f, 1f, 0.9f);
         [Tooltip("Key label size relative to the marker.")]
         [Range(0.2f, 1f)] public float KeyMarkerLabelScale = 0.55f;
+
+        [Header("Key Marker Charge (Stationary Notes)")]
+        [Tooltip("Show a Stationary note's charge on its lane's key marker, in the marker's own shape: an outline " +
+                 "shrinks onto the marker (Stationary), or the marker fills up from the centre (Stationary Hold). " +
+                 "Both reach the marker exactly at the perfect hit time.")]
+        public bool ShowStationaryCharge = true;
+        [Tooltip("Size of the shrinking outline when the charge starts, relative to the marker.")]
+        [Range(1.1f, 4f)] public float ChargeOutlineStartScale = 2.2f;
+        public Color ChargeOutlineColor = new(1f, 1f, 1f, 0.9f);
+        [Tooltip("Colour of the fill that grows inside the marker (Stationary Hold).")]
+        public Color ChargeFillColor = new(0.55f, 0.85f, 1f, 0.65f);
+        [Tooltip("Part of the charge (0-0.5) over which the outline and the fill fade in.")]
+        [Range(0f, 0.5f)] public float ChargeFadeIn = 0.15f;
 
         [Header("Perfect Hit Line End Caps")]
         [Tooltip("Art added past both ends of the hit line (the line itself is unchanged). Drawn for the LEFT end, facing outward; the right end uses a mirrored copy. The sprite's pivot row is lined up with the middle of the line, and its right edge touches the line's end. Empty = no caps.")]

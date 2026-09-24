@@ -43,11 +43,6 @@ MonoBehaviour:
     color: {r: 0.88, g: 0.38, b: 0.55, a: 1}
     keyIdentity: 4
     keyType: 0
-  - id: basic_lane_5
-    displayName: Lane 5
-    color: {r: 0.62, g: 0.45, b: 0.92, a: 1}
-    keyIdentity: 5
-    keyType: 0
   noteDefinitions:
   - noteType: 0
     defaultPrefab: {fileID: 5029094789931625778, guid: fff99d626b5218741bf0c888080b7065, type: 3}
@@ -91,7 +86,7 @@ MonoBehaviour:
     prefabOverride: {fileID: 0}
     metadata: []
   - id: basic_note_3
-    laneId: basic_lane_5
+    laneId: basic_lane_4
     hitTime: 1
     noteType: 0
     holdDuration: 0

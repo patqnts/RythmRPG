@@ -44,7 +44,7 @@ namespace RythmRPG.Rhythm.Editing
         public float HandleWidth = 6f;
         public double PixelsPerBeat = 80d;
         public double ScrollBeat;
-        public int LaneCount = 4;
+        public int LaneCount = RhythmChart.MaxLanes;
         public float PatternTrackHeight = 34f;
 
         public float BeatToX(double beat)

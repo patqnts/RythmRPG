@@ -141,6 +141,12 @@ namespace RythmRPG.Combat
             KeyButton.JudgementFeedbackPlayed -= FlashKeyMarker;
         }
 
+        /// <summary>
+        /// Builds (or updates) the lanes for the router's active lanes: lane targets, button row and key markers. Call it
+        /// again after <see cref="LaneInputRouter.SetActiveLaneCount"/>: lanes that are no longer active are hidden
+        /// (kept for later), the rest are re-spread along the hit line. While the layout is frozen (camera zoomed on the
+        /// player) the re-spread waits until it unfreezes.
+        /// </summary>
         public void EnsurePresentation(LaneInputRouter input)
         {
             if (input == null || input.Bindings.Count == 0) return;
@@ -148,7 +154,32 @@ namespace RythmRPG.Combat
             theme ??= Resources.Load<CombatLanePresentationTheme>(DefaultThemePath);
             EnsureWorldTargets(input);
             EnsureButtonRow(input);
-            AlignWorldTargetsAndLine(input);
+            ApplyActiveLanes(input);
+            if (!LayoutFrozen) AlignWorldTargetsAndLine(input);
+            RefreshKeyMarkerLabels();
+        }
+
+        // Shows the targets, buttons and markers of the active lanes; hides the others.
+        private void ApplyActiveLanes(LaneInputRouter input)
+        {
+            var active = new HashSet<int>(input.Bindings.Where(binding => binding != null).Select(binding => binding.LaneId));
+            foreach (RhythmLaneTarget target in targets)
+            {
+                if (target == null) continue;
+                bool on = active.Contains(target.LaneId);
+                if (target.gameObject.activeSelf != on) target.gameObject.SetActive(on);
+            }
+            if (buttonRow != null)
+            {
+                foreach (KeyButton button in buttonRow.GetComponentsInChildren<KeyButton>(true))
+                {
+                    if (button == null || button.transform.parent != buttonRow) continue;
+                    bool on = active.Contains(button.keyIdentity);
+                    if (button.gameObject.activeSelf != on) button.gameObject.SetActive(on);
+                }
+            }
+            foreach ((int laneId, LaneKeyMarker marker) in keyMarkers)
+                if (marker != null && !active.Contains(laneId) && marker.gameObject.activeSelf) marker.gameObject.SetActive(false);
         }
 
         public void ConfigureEncounter(CombatEncounterContext context, Transform projectileHolder)
@@ -410,6 +441,7 @@ namespace RythmRPG.Combat
             if (hitLineAnchor == null) return;
             // Hit line, lane key markers and caps: crisp at screen resolution (also covers a hit line placed in the scene).
             CrispWorldUI.ApplyIfNeeded(hitLineAnchor.gameObject);
+            if (hitLineFollowsTheme) ApplyThemeLineThickness();
             UpdateHitLineCaps();
 
             if (Time.frameCount % 120 == 0) PrepareHitLineMaterials(hitLineAnchor);
@@ -538,7 +570,7 @@ namespace RythmRPG.Combat
             foreach ((int laneId, LaneKeyMarker marker) in keyMarkers)
             {
                 if (marker == null || !marker.gameObject.activeInHierarchy) continue;
-                bool held = !GamePause.IsPaused && (GameInput.Lane(laneId)?.IsPressed() ?? false);
+                bool held = !GamePause.IsPaused && activeInput != null && activeInput.IsHeld(laneId);
                 marker.Tick(held, deltaTime);
             }
         }
@@ -622,7 +654,8 @@ namespace RythmRPG.Combat
             if (!ResolveWorldCamera() || hitLineAnchor == null) return referencePixels;
             float rtHeight = worldCamera.targetTexture != null ? worldCamera.targetTexture.height : worldCamera.pixelHeight;
             float pixels = referencePixels * Mathf.Max(1f, rtHeight) / 270f;
-            if (snapToWholePixels) pixels = Mathf.Max(1f, Mathf.Round(pixels));
+            // Whole render-texture pixels only matter inside the pixel render; drawn crisp, fractions are fine.
+            if (snapToWholePixels && !CrispWorldUI.IsActive) pixels = Mathf.Max(1f, Mathf.Round(pixels));
             float unitsPerPixel = worldCamera.orthographic && rtHeight > 0f
                 ? 2f * worldCamera.orthographicSize / rtHeight
                 : 0.03f;
@@ -911,10 +944,12 @@ namespace RythmRPG.Combat
             if (existing is RectTransform existingRect && IsWorldSpace(existingRect))
             {
                 hitLineAnchor = existingRect;
+                hitLineFollowsTheme = true;
                 PrepareHitLineMaterials(hitLineAnchor);
                 return;
             }
             hitLineAnchor = CreateHitLine(parent, plane, uiCamera, canvasScale);
+            hitLineFollowsTheme = true;
             PrepareHitLineMaterials(hitLineAnchor);
         }
 
@@ -939,19 +974,36 @@ namespace RythmRPG.Combat
             return BuildHitLineObject(parent, widthWorld, Mathf.Max(0.02f, thicknessWorld));
         }
 
-        // Thickness (on the gameplay plane) that covers `pixels` render-texture rows on screen. A line thinner than
-        // ~2 render-texture pixels misses pixel centres as the camera moves and flickers or vanishes.
+        // Thickness (on the gameplay plane) that covers `pixels` render-texture rows on screen. Drawn inside the pixel
+        // render, a line thinner than ~3 render-texture rows misses pixel centres as the camera moves and flickers, so it
+        // is kept at least that thick. Drawn crisp (Crisp World UI camera, screen resolution) any thickness works, so the
+        // theme value is used as is (0.25 = one screen pixel at 1080p).
         private float ResolvePixelThickness(float pixels)
         {
             float rtHeight = worldCamera.targetTexture != null ? worldCamera.targetTexture.height : worldCamera.pixelHeight;
             // Theme thickness is in canvas pixels of a 270-row reference; convert to render-texture rows.
-            pixels = Mathf.Max(3f, pixels * Mathf.Max(1f, rtHeight) / 270f);
+            pixels *= Mathf.Max(1f, rtHeight) / 270f;
+            pixels = CrispWorldUI.IsActive ? Mathf.Max(0.05f, pixels) : Mathf.Max(3f, pixels);
             float unitsPerPixel = worldCamera.orthographic && rtHeight > 0f
                 ? 2f * worldCamera.orthographicSize / rtHeight
                 : 0.03f;
             float facing = Mathf.Abs(Vector3.Dot(worldCamera.transform.up, Vector3.up));
             float planar = horizontalGameplay && !hitLineAtNoteHeight ? Mathf.Max(0.2f, Mathf.Sqrt(Mathf.Max(0f, 1f - facing * facing))) : 1f;
             return pixels * unitsPerPixel / planar;
+        }
+
+        // True for the hit line this component built (not one assigned in the Inspector): it follows
+        // Theme > Line Thickness live. An assigned line keeps the height you gave it.
+        private bool hitLineFollowsTheme;
+
+        private void ApplyThemeLineThickness()
+        {
+            if (!ResolveWorldCamera()) return;
+            float world = ResolvePixelThickness(theme != null ? theme.LineThickness : 2f);
+            float scaleY = Mathf.Max(0.0001f, Mathf.Abs(hitLineAnchor.lossyScale.y));
+            float height = Mathf.Max(0.0001f, world / scaleY);
+            Vector2 size = hitLineAnchor.sizeDelta;
+            if (Mathf.Abs(size.y - height) > height * 0.001f) hitLineAnchor.sizeDelta = new Vector2(size.x, height);
         }
 
         private RectTransform materialPreparedFor;

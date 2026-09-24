@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: ba73a2ed8551e4e52abc93b14e2d7634, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -1622,7 +1622,7 @@ MonoBehaviour:
   hitLineSortingOrder: 45
   hitLineAnchor: {fileID: 0}
   hitLinePlacement: 0
-  hitLineViewport: {x: 0.5, y: 0.18}
+  hitLineViewport: {x: 0.5, y: 0.09}
   playerFeetViewportY: 0.085
   extraPlayerEnemySeparation: 1.25
   hitLineAtPlayerFeet: 0
@@ -1887,6 +1887,8 @@ MonoBehaviour:
   source: {fileID: 1907834173}
   output: {fileID: 1408529551}
   excludeLayerFromSource: 1
+  occlusion: 1
+  occlusionAlphaCutoff: 0.5
 --- !u!114 &279016480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6573,7 +6575,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &786148739
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8737,7 +8739,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1137619672
 SpriteRenderer:
   serializedVersion: 3
@@ -13415,7 +13417,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1589424909
 SpriteRenderer:
   serializedVersion: 3
@@ -13582,7 +13584,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!156049354 &1611583152
 Grid:
   m_ObjectHideFlags: 0
@@ -16228,7 +16230,7 @@ Camera:
   m_GameObject: {fileID: 1907834171}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
+  m_ClearFlags: 1
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -18741,10 +18743,10 @@ SceneRoots:
   - {fileID: 1284303158}
   - {fileID: 547951071}
   - {fileID: 786148742}
-  - {fileID: 35400296}
-  - {fileID: 691747961}
-  - {fileID: 1611583153}
-  - {fileID: 554633364}
   - {fileID: 1137619673}
   - {fileID: 1589424910}
   - {fileID: 1151120432}
+  - {fileID: 1611583153}
+  - {fileID: 35400296}
+  - {fileID: 691747961}
+  - {fileID: 554633364}

@@ -2,7 +2,7 @@ using RythmRPG.Combat;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class StationaryNote : Note
+public class StationaryNote : Note, ILaneAnticipation
 {
     [Header("Stationary Timing")]
     [FormerlySerializedAs("alignToKeyPosition")]
@@ -69,7 +69,19 @@ public class StationaryNote : Note
         SetPhaseVisuals(showAnticipation: true, showHitWindow: false, showHold: false, showEnd: false);
         PlayState(anticipationStateName, "Charge");
         UpdateAnticipationVisual();
+        LaneAnticipation.Register(this); // the lane's key marker shows the charge too
     }
+
+    protected virtual void OnDestroy() => LaneAnticipation.Unregister(this);
+
+    // ---------- Key marker charge (see LaneAnticipation / LaneKeyMarker) ----------
+
+    /// <summary>Stationary: an outline shrinks onto the lane's key marker. Stationary Hold: the marker fills up.</summary>
+    protected virtual LaneAnticipationKind MarkerAnticipationKind => LaneAnticipationKind.ApproachOutline;
+    int ILaneAnticipation.AnticipationLaneId => GetNoteIdentity();
+    LaneAnticipationKind ILaneAnticipation.AnticipationKind => MarkerAnticipationKind;
+    bool ILaneAnticipation.IsAnticipating => !IsResolved && !ending && !hitAccepted && desiredAnticipationVisible;
+    float ILaneAnticipation.AnticipationProgress => Mathf.Clamp01(ElapsedSinceSpawn / Mathf.Max(0.01f, anticipationDuration));
 
     protected virtual void Update()
     {

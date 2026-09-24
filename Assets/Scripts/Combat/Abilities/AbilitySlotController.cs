@@ -19,6 +19,8 @@ namespace RythmRPG.Combat
         private bool selecting;
 
         public IReadOnlyDictionary<int, AbilityRuntimeInstance> Slots => slots;
+        /// <summary>Highest lane with an ability (0 = none): how many lanes ability selection needs.</summary>
+        public int HighestLaneId => slots.Count == 0 ? 0 : slots.Keys.Max();
         public event Action<IReadOnlyDictionary<int, AbilityRuntimeInstance>> SlotsChanged;
         public event Action<int, AbilityRuntimeInstance> SelectionStarted;
         public event Action<int, float> SelectionProgressed;

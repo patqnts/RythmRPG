@@ -9,7 +9,9 @@ namespace RythmRPG.Combat
 
     /// <summary>
     /// Outline shape on the Perfect Hit Line that marks where a lane's notes land, with the lane's key inside. It lights
-    /// up while the key is held and flashes in the judgement colour on a hit. Built and positioned by
+    /// up while the key is held and flashes in the judgement colour on a hit. A Stationary note charging on the lane
+    /// shows as a copy of the outline shrinking onto the marker; a Stationary Hold note as a fill growing from the
+    /// centre (see <see cref="LaneAnticipation"/>). Both use the marker's shape (square, diamond, circle or custom art). Built and positioned by
     /// <see cref="CombatLanePresentation3D"/> as a child of the hit line's world-space canvas, so it shares the line's
     /// camera, sorting and fade. Styled from the <see cref="CombatLanePresentationTheme"/> (Hit Line Key Markers).
     /// </summary>
@@ -21,6 +23,10 @@ namespace RythmRPG.Combat
         private RectTransform shape;
         private readonly List<Image> outline = new();
         private Image fill;
+        private Image chargeFill;
+        private RectTransform chargeOutlineRoot;
+        private readonly List<Image> chargeOutline = new();
+        private float layoutSide;
         private TMP_Text label;
         private CombatLanePresentationTheme theme;
         private float pressBlend;
@@ -62,32 +68,35 @@ namespace RythmRPG.Combat
             shape = NewRect("Shape", root);
             fill = NewImage("Fill", shape);
             Stretch(fill.rectTransform, 0f);
+            // Stationary Hold charge: grows from the centre, under the outline.
+            chargeFill = NewImage("Charge Fill", shape);
+            Stretch(chargeFill.rectTransform, 0f);
+            chargeFill.enabled = false;
 
             Sprite custom = theme != null ? theme.KeyMarkerSprite : null;
             KeyMarkerShape kind = theme != null ? theme.KeyMarkerShape : KeyMarkerShape.Square;
+            BuildOutline(shape, "Outline", outline);
             if (custom != null)
             {
-                Image art = NewImage("Outline", shape);
-                art.sprite = custom;
-                art.preserveAspect = true;
-                Stretch(art.rectTransform, 0f);
-                outline.Add(art);
                 fill.sprite = custom; // the pressed glow takes the art's silhouette
+                chargeFill.sprite = custom;
+                chargeFill.preserveAspect = true;
             }
             else if (kind == KeyMarkerShape.Circle)
             {
-                Image ring = NewImage("Outline", shape);
-                ring.sprite = CircleSprites.Ring;
-                Stretch(ring.rectTransform, 0f);
-                outline.Add(ring);
                 fill.sprite = CircleSprites.Disc;
+                chargeFill.sprite = CircleSprites.Disc;
             }
-            else
+            else if (kind == KeyMarkerShape.Diamond)
             {
-                // Four bars: crisp at any size, and the thickness is exact render-texture pixels.
-                foreach (string side in new[] { "Top", "Bottom", "Left", "Right" }) outline.Add(NewImage(side, shape));
-                if (kind == KeyMarkerShape.Diamond) shape.localRotation = Quaternion.Euler(0f, 0f, 45f);
+                shape.localRotation = Quaternion.Euler(0f, 0f, 45f);
             }
+
+            // Stationary charge: the same outline, drawn bigger and shrinking onto the marker (not scaled by presses).
+            chargeOutlineRoot = NewRect("Charge Outline", root);
+            chargeOutlineRoot.localRotation = shape.localRotation;
+            BuildOutline(chargeOutlineRoot, "Charge", chargeOutline);
+            chargeOutlineRoot.gameObject.SetActive(false);
 
             label = CombatText.CreateUGUI("Key", root, CombatText.ResolveFont(theme != null ? theme.ButtonFontAsset : null,
                     theme != null ? theme.ButtonFont : null), 10f, Color.white, TextAlignmentOptions.Center, Color.clear);
@@ -109,15 +118,17 @@ namespace RythmRPG.Combat
             shape.anchorMin = shape.anchorMax = shape.pivot = new Vector2(0.5f, 0.5f);
             shape.sizeDelta = new Vector2(side, side);
             shape.anchoredPosition = Vector2.zero;
+            layoutSide = side;
+            chargeOutlineRoot.anchorMin = chargeOutlineRoot.anchorMax = chargeOutlineRoot.pivot = new Vector2(0.5f, 0.5f);
+            chargeOutlineRoot.anchoredPosition = Vector2.zero;
 
             if (outline.Count == 4)
             {
                 float t = Mathf.Clamp(outlineThickness, 0.0001f, side * 0.5f);
-                Bar(outline[0], new Vector2(0f, 1f), new Vector2(1f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, t));
-                Bar(outline[1], new Vector2(0f, 0f), new Vector2(1f, 0f), new Vector2(0.5f, 0f), new Vector2(0f, t));
-                Bar(outline[2], new Vector2(0f, 0f), new Vector2(0f, 1f), new Vector2(0f, 0.5f), new Vector2(t, 0f));
-                Bar(outline[3], new Vector2(1f, 0f), new Vector2(1f, 1f), new Vector2(1f, 0.5f), new Vector2(t, 0f));
+                LayoutBars(outline, t);
+                LayoutBars(chargeOutline, t);
                 Stretch(fill.rectTransform, t);
+                Stretch(chargeFill.rectTransform, t);
             }
 
             label.fontSize = size * (theme != null ? theme.KeyMarkerLabelScale : 0.55f);
@@ -164,6 +175,77 @@ namespace RythmRPG.Combat
 
             float pressedScale = theme != null ? theme.KeyMarkerPressedScale : 1.15f;
             shape.localScale = Vector3.one * (Mathf.Lerp(1f, pressedScale, pressBlend) + flash * 0.12f);
+            TickCharge();
+        }
+
+        // Stationary notes charging on this lane (the one closest to its hit time of each kind).
+        private void TickCharge()
+        {
+            bool show = theme == null || theme.ShowStationaryCharge;
+            float fadeIn = theme != null ? theme.ChargeFadeIn : 0.15f;
+
+            float approach = 0f;
+            bool approaching = show && LaneAnticipation.TryGet(LaneId, LaneAnticipationKind.ApproachOutline, out approach);
+            if (chargeOutlineRoot.gameObject.activeSelf != approaching) chargeOutlineRoot.gameObject.SetActive(approaching);
+            if (approaching)
+            {
+                float startScale = theme != null ? theme.ChargeOutlineStartScale : 2.2f;
+                float size = layoutSide * Mathf.Lerp(startScale, 1f, approach);
+                chargeOutlineRoot.sizeDelta = new Vector2(size, size);
+                Color color = theme != null ? theme.ChargeOutlineColor : new Color(1f, 1f, 1f, 0.9f);
+                color.a *= FadeIn(approach, fadeIn);
+                foreach (Image image in chargeOutline) image.color = color;
+            }
+
+            float charge = 0f;
+            bool charging = show && LaneAnticipation.TryGet(LaneId, LaneAnticipationKind.ChargeFill, out charge);
+            if (chargeFill.enabled != charging) chargeFill.enabled = charging;
+            if (charging)
+            {
+                chargeFill.rectTransform.localScale = Vector3.one * charge;
+                Color color = theme != null ? theme.ChargeFillColor : new Color(0.55f, 0.85f, 1f, 0.65f);
+                color.a *= FadeIn(charge, fadeIn);
+                chargeFill.color = color;
+            }
+        }
+
+        private static float FadeIn(float progress, float fadeIn) => fadeIn <= 0f ? 1f : Mathf.Clamp01(progress / fadeIn);
+
+        // The marker outline for the theme: custom art, a ring (Circle), or four bars (Square / Diamond).
+        private void BuildOutline(RectTransform parent, string prefix, List<Image> into)
+        {
+            Sprite custom = theme != null ? theme.KeyMarkerSprite : null;
+            KeyMarkerShape kind = theme != null ? theme.KeyMarkerShape : KeyMarkerShape.Square;
+            if (custom != null)
+            {
+                Image art = NewImage(prefix == "Outline" ? "Outline" : prefix + " Outline", parent);
+                art.sprite = custom;
+                art.preserveAspect = true;
+                Stretch(art.rectTransform, 0f);
+                into.Add(art);
+            }
+            else if (kind == KeyMarkerShape.Circle)
+            {
+                Image ring = NewImage(prefix == "Outline" ? "Outline" : prefix + " Outline", parent);
+                ring.sprite = CircleSprites.Ring;
+                Stretch(ring.rectTransform, 0f);
+                into.Add(ring);
+            }
+            else
+            {
+                // Four bars: crisp at any size, and the thickness is exact render-texture pixels.
+                foreach (string side in new[] { "Top", "Bottom", "Left", "Right" })
+                    into.Add(NewImage(prefix == "Outline" ? side : prefix + " " + side, parent));
+            }
+        }
+
+        private static void LayoutBars(List<Image> bars, float thickness)
+        {
+            if (bars.Count != 4) return;
+            Bar(bars[0], new Vector2(0f, 1f), new Vector2(1f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, thickness));
+            Bar(bars[1], new Vector2(0f, 0f), new Vector2(1f, 0f), new Vector2(0.5f, 0f), new Vector2(0f, thickness));
+            Bar(bars[2], new Vector2(0f, 0f), new Vector2(0f, 1f), new Vector2(0f, 0.5f), new Vector2(thickness, 0f));
+            Bar(bars[3], new Vector2(1f, 0f), new Vector2(1f, 1f), new Vector2(1f, 0.5f), new Vector2(thickness, 0f));
         }
 
         // ---------- Helpers ----------

@@ -9,7 +9,8 @@ namespace RythmRPG.Core
     /// The game's controls (new Input System), built in code so every scene and assembly shares one set of actions.
     /// Players can rebind them from the pause menu; overrides are saved to PlayerPrefs and loaded on start.
     /// <list type="bullet">
-    /// <item><b>Combat</b>: Lane1..Lane4 (keyboard A S J K by default).</item>
+    /// <item><b>Combat</b>: four lane keys, Lane1..Lane4 (keyboard A S J K by default). A chart plays with 1-4 lanes;
+    /// <see cref="LaneKeySlot"/> picks which of the four keys each active lane uses.</item>
     /// <item><b>Explore</b>: Move (WASD / arrows / left stick / d-pad) and Interact (Enter / south button).</item>
     /// <item><b>System</b>: Pause (Esc / Start). Always enabled.</item>
     /// </list>
@@ -18,8 +19,22 @@ namespace RythmRPG.Core
     /// </summary>
     public static class GameInput
     {
-        /// <summary>Number of rhythm lanes (and lane keys). Charts must not use lanes past this (Tools > Rhythm > Convert All Charts To 4 Lanes).</summary>
+        /// <summary>
+        /// Maximum number of rhythm lanes, and the number of lane keys (Lane1..Lane4 = left outer, left inner,
+        /// right inner, right outer). Each chart uses 1 to this many lanes (set in the Rhythm Composer).
+        /// </summary>
         public const int LaneCount = 4;
+
+        // Which lane key each lane uses, per active lane count: index fingers first, then outward, so both hands share
+        // the work. 1 lane: J. 2 lanes: S J. 3 lanes: S J K. 4 lanes: A S J K.
+        private static readonly int[][] LaneKeyLayouts =
+        {
+            new[] { 3 },
+            new[] { 2, 3 },
+            new[] { 2, 3, 4 },
+            new[] { 1, 2, 3, 4 },
+        };
+        private static readonly string[] LaneKeyNames = { "Left Outer", "Left Inner", "Right Inner", "Right Outer" };
         public const string KeyboardGroup = "Keyboard";
         public const string GamepadGroup = "Gamepad";
         private const string PrefsKey = "RythmRPG.Input.BindingOverrides";
@@ -61,7 +76,19 @@ namespace RythmRPG.Core
         public static bool InteractHeld => !GamePause.IsPaused && Interact.IsPressed();
         public static bool LanePressed(int laneId) => !GamePause.IsPaused && (Lane(laneId)?.WasPressedThisFrame() ?? false);
 
-        /// <summary>Lane action for a lane id (1-based, like <c>KeyButton.keyIdentity</c>); null past <see cref="LaneCount"/>.</summary>
+        /// <summary>
+        /// The lane key (1-based slot, see <see cref="LaneCount"/>) that gameplay lane <paramref name="laneId"/> uses when
+        /// <paramref name="activeLanes"/> lanes are active. Lanes past the active count fall back to their own slot.
+        /// </summary>
+        public static int LaneKeySlot(int activeLanes, int laneId)
+        {
+            int count = Mathf.Clamp(activeLanes, 1, LaneCount);
+            int[] layout = LaneKeyLayouts[count - 1];
+            return laneId >= 1 && laneId <= layout.Length ? layout[laneId - 1] : laneId;
+        }
+
+        /// <summary>Lane key action for a key slot (1-based, 1..<see cref="LaneCount"/>); null outside that range.
+        /// Gameplay lanes map to slots through <see cref="LaneKeySlot"/>.</summary>
         public static InputAction Lane(int laneId)
         {
             EnsureCreated();
@@ -154,7 +181,7 @@ namespace RythmRPG.Core
         {
             rows.Clear();
             for (int i = 0; i < LaneCount; i++)
-                rows.Add(new RebindRow($"Lane {i + 1}", RebindContext.Combat, lanes[i],
+                rows.Add(new RebindRow($"Lane Key {i + 1} ({LaneKeyNames[i]})", RebindContext.Combat, lanes[i],
                     FindBindingIndex(lanes[i], KeyboardGroup), FindBindingIndex(lanes[i], GamepadGroup)));
 
             foreach (string part in new[] { "Up", "Down", "Left", "Right" })

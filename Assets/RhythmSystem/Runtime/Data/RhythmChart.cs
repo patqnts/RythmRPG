@@ -189,6 +189,8 @@ namespace RythmRPG.Rhythm
     public sealed class RhythmChart : ScriptableObject
     {
         public const int CurrentSchemaVersion = 1;
+        /// <summary>Most lanes a chart can have: the game has four lane keys. Each chart uses 1 to this many.</summary>
+        public const int MaxLanes = 4;
 
         [SerializeField, HideInInspector] private int schemaVersion = CurrentSchemaVersion;
         [SerializeField, Min(0.01f)] private float bpm = 120f;
@@ -221,6 +223,17 @@ namespace RythmRPG.Rhythm
         public bool SnapEnabled { get => snapEnabled; set => snapEnabled = value; }
         public RhythmSnapDivision SnapDivision { get => snapDivision; set => snapDivision = value; }
         public List<RhythmLaneData> Lanes => lanes;
+        /// <summary>Lanes this chart plays with: its highest lane Key Identity, clamped to 1..<see cref="MaxLanes"/>.</summary>
+        public int GameplayLaneCount
+        {
+            get
+            {
+                int highest = 0;
+                foreach (RhythmLaneData lane in lanes)
+                    if (lane != null && lane.KeyIdentity > highest) highest = lane.KeyIdentity;
+                return Math.Max(1, Math.Min(MaxLanes, highest));
+            }
+        }
         public List<RhythmNoteDefinition> NoteDefinitions => noteDefinitions;
         public List<RhythmNoteData> Notes => notes;
         /// <summary>Programmed patterns placed in the composer. Their notes are also written into <see cref="Notes"/> (tagged with pattern metadata) on save.</summary>

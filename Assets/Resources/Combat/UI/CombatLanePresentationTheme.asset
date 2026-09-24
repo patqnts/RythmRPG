@@ -29,24 +29,29 @@ MonoBehaviour:
   LineSprite: {fileID: 0}
   LineMaterial: {fileID: 2100000, guid: 03bcabf8287c4daebc85e66d0092d1ed, type: 2}
   LineColor: {r: 1, g: 1, b: 1, a: 1}
-  LineThickness: 1
+  LineThickness: 0.82
   LineGapAboveButtons: 8
   LineHorizontalPadding: 8
   SnapToRenderTexturePixels: 1
   ShowKeyMarkers: 1
   KeyMarkersBreakLine: 1
-  KeyMarkerShape: 0
+  KeyMarkerShape: 1
   KeyMarkerSprite: {fileID: 0}
-  KeyMarkerSize: 21
-  KeyMarkerOutline: 0.25
-  KeyMarkerColor: {r: 1, g: 1, b: 1, a: 0.85}
-  KeyMarkerPressedColor: {r: 1, g: 0.85, b: 0.35, a: 1}
-  KeyMarkerPressedFill: {r: 1, g: 0.85, b: 0.35, a: 0.35}
-  KeyMarkerPressedScale: 1.15
+  KeyMarkerSize: 22.1
+  KeyMarkerOutline: 1.15
+  KeyMarkerColor: {r: 0.990566, g: 0.7375732, b: 0.36912602, a: 0.85}
+  KeyMarkerPressedColor: {r: 0.6509434, g: 0.5620514, b: 0.4267978, a: 1}
+  KeyMarkerPressedFill: {r: 1, g: 0.85, b: 0.35, a: 0}
+  KeyMarkerPressedScale: 1.115
   ShowKeyMarkerLabels: 0
   KeyMarkerLabelColor: {r: 1, g: 1, b: 1, a: 0.9}
   KeyMarkerLabelScale: 0.55
+  ShowStationaryCharge: 1
+  ChargeOutlineStartScale: 2.2
+  ChargeOutlineColor: {r: 1, g: 1, b: 1, a: 0.9}
+  ChargeFillColor: {r: 1, g: 1, b: 1, a: 0.65}
+  ChargeFadeIn: 0.15
   LineCapSprite: {fileID: 21300000, guid: da6e5d60e01a4882a55986abd5097357, type: 3}
-  LineCapJoinHeight: 3
+  LineCapJoinHeight: 4.77
   LineCapColor: {r: 1, g: 1, b: 1, a: 0}
   LineCapOverlap: 0

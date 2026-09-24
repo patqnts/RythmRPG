@@ -17,6 +17,9 @@ MonoBehaviour:
   beatsPerMeasure: 4
   compositionDuration: 10
   audioClip: {fileID: 0}
+  song: {fileID: 0}
+  songPreviewBar: 0
+  audioOffsetSeconds: 0
   snapEnabled: 1
   snapDivision: 4
   lanes:
@@ -39,11 +42,6 @@ MonoBehaviour:
     displayName: Lane 4
     color: {r: 0.88, g: 0.38, b: 0.55, a: 1}
     keyIdentity: 4
-    keyType: 0
-  - id: bf3f841d9bf74a79bf1a551dc17de2b4
-    displayName: Lane 5
-    color: {r: 0.62, g: 0.45, b: 0.92, a: 1}
-    keyIdentity: 5
     keyType: 0
   noteDefinitions:
   - noteType: 0
@@ -90,8 +88,8 @@ MonoBehaviour:
     defaultTravelTime: 2.5
   notes:
   - id: 957bf8ee9c9943d19b581fdf0e437275
-    laneId: bf3f841d9bf74a79bf1a551dc17de2b4
-    hitTime: 1
+    laneId: 0f9d6d04758e4477951024bd73d25a07
+    hitTime: 2.375
     noteType: 2
     holdDuration: 0
     initializeMovementType: 0
@@ -103,11 +101,12 @@ MonoBehaviour:
     stationaryBadWindow: 0.5
     stationaryGoodWindow: 0.3
     stationaryPerfectWindow: 0.2
+    mashRequiredPresses: 8
     prefabOverride: {fileID: 0}
     metadata: []
   - id: 524f53a8ec6e4d078e32b6307e9411af
     laneId: 18da989c9f5f4f07ae870d679a1d8dd1
-    hitTime: 1
+    hitTime: 2.375
     noteType: 2
     holdDuration: 0
     initializeMovementType: 0
@@ -119,11 +118,12 @@ MonoBehaviour:
     stationaryBadWindow: 0.5
     stationaryGoodWindow: 0.3
     stationaryPerfectWindow: 0.2
+    mashRequiredPresses: 8
     prefabOverride: {fileID: 0}
     metadata: []
   - id: fa9a6503a49a4ff194290aba1342c4d9
     laneId: 0f9d6d04758e4477951024bd73d25a07
-    hitTime: 5
+    hitTime: 6.375
     noteType: 2
     holdDuration: 0
     initializeMovementType: 0
@@ -135,11 +135,12 @@ MonoBehaviour:
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
     prefabOverride: {fileID: 0}
     metadata: []
   - id: 58ba7c5f5e7047e4abaa8ecc6ef70a03
     laneId: 2a029117b72641939d57fe4488a05ce1
-    hitTime: 5.125
+    hitTime: 6.5
     noteType: 2
     holdDuration: 0
     initializeMovementType: 0
@@ -151,11 +152,12 @@ MonoBehaviour:
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
     prefabOverride: {fileID: 0}
     metadata: []
   - id: c75d73b59354453987e4e3266984b5ed
-    laneId: bf3f841d9bf74a79bf1a551dc17de2b4
-    hitTime: 7.625
+    laneId: 0f9d6d04758e4477951024bd73d25a07
+    hitTime: 9
     noteType: 2
     holdDuration: 0
     initializeMovementType: 0
@@ -167,11 +169,12 @@ MonoBehaviour:
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
     prefabOverride: {fileID: 0}
     metadata: []
   - id: 6f30d7ab5cab49e78de2f36938046056
     laneId: 18da989c9f5f4f07ae870d679a1d8dd1
-    hitTime: 10.25
+    hitTime: 11.625
     noteType: 2
     holdDuration: 0
     initializeMovementType: 0
@@ -183,5 +186,8 @@ MonoBehaviour:
     stationaryBadWindow: 0.9
     stationaryGoodWindow: 0.45
     stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
     prefabOverride: {fileID: 0}
     metadata: []
+  patterns: []
+  sequences: []

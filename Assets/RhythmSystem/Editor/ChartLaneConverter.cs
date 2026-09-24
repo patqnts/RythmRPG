@@ -9,149 +9,154 @@ using UnityEngine;
 namespace RythmRPG.Rhythm.Editor
 {
     /// <summary>
-    /// One-off migration from the 5-lane layout to 4 lanes (GameInput.LaneCount = 4).
-    /// For every RhythmChart asset with lanes past lane 4:
+    /// Changes how many lanes a chart has (1 to <see cref="RhythmChart.MaxLanes"/>). Used by the Rhythm Composer's Lanes
+    /// menu, and by <c>Tools > Rhythm > Fit All Charts To 4 Lanes</c> for charts from the old 5-lane layout.
     /// <list type="bullet">
-    /// <item>Notes on those lanes move to lane 4. A moved note that would overlap a note already in lane 4 (same time
-    /// within 1 ms, or inside a hold) is removed instead.</item>
-    /// <item>Sequence attacks (Ping-Pong) that used a removed lane use lane 4 instead.</item>
-    /// <item>Pattern lane masks are remapped to the new lane order.</item>
-    /// <item>The extra lanes are deleted.</item>
+    /// <item>More lanes: empty lanes are added (Key Identity count+1.., default colours).</item>
+    /// <item>Fewer lanes: notes on removed lanes move to the new last lane. A moved note that would overlap a note
+    /// already there (same time within 1 ms, or inside a hold) is removed instead. Ping-Pong sequences that used a
+    /// removed lane use the last lane instead; pattern lane masks are remapped.</item>
     /// </list>
-    /// The golden test baseline (Tests/EditMode/Golden/schedule.txt) is updated to match (lane of moved notes,
-    /// removed notes). Undo reverts the charts; the baseline file is not covered by Undo.
-    /// Close the Rhythm Composer before running it, so an open session does not save the old lanes back.
+    /// Lanes end up ordered by Key Identity 1..count. The golden test baseline
+    /// (Tests/EditMode/Golden/schedule.txt) follows the moved and removed notes. Undo covers the charts, not that file.
     /// </summary>
     public static class ChartLaneConverter
     {
-        private const string MenuPath = "Tools/Rhythm/Convert All Charts To 4 Lanes";
+        private const string MenuPath = "Tools/Rhythm/Fit All Charts To 4 Lanes";
         private const string GoldenPath = "Assets/RhythmSystem/Tests/EditMode/Golden/schedule.txt";
         private const double SameTimeSeconds = 0.001d;
-
-        public const int TargetLaneCount = RhythmComposerAssetFactory.DefaultLaneCount;
 
         public sealed class Result
         {
             public int Moved;
             public int Removed;
             public int LanesDeleted;
+            public int LanesAdded;
             public readonly Dictionary<string, string> MovedNoteLanes = new();
             public readonly HashSet<string> RemovedNoteIds = new();
         }
 
         [MenuItem(MenuPath)]
-        private static void ConvertAll()
+        private static void FitAll()
         {
             List<RhythmChart> charts = AssetDatabase.FindAssets("t:" + nameof(RhythmChart))
                 .Select(AssetDatabase.GUIDToAssetPath)
                 .Select(AssetDatabase.LoadAssetAtPath<RhythmChart>)
                 .Where(chart => chart != null)
                 .ToList();
-            List<RhythmChart> needing = charts.Where(NeedsConversion).ToList();
+            List<RhythmChart> needing = charts.Where(HasTooManyLanes).ToList();
             if (needing.Count == 0)
             {
-                EditorUtility.DisplayDialog("Convert Charts To 4 Lanes",
-                    $"All {charts.Count} chart(s) already use lanes 1-{TargetLaneCount}.", "OK");
+                EditorUtility.DisplayDialog("Fit Charts To 4 Lanes",
+                    $"All {charts.Count} chart(s) already use at most {RhythmChart.MaxLanes} lanes.", "OK");
                 return;
             }
 
             string list = string.Join("\n", needing.Select(chart => "- " + chart.name));
-            if (!EditorUtility.DisplayDialog("Convert Charts To 4 Lanes",
-                    $"{needing.Count} chart(s) have lanes past lane {TargetLaneCount}:\n{list}\n\n" +
-                    $"Notes on those lanes move to lane {TargetLaneCount}. A note that would overlap a lane {TargetLaneCount} " +
-                    "note (same time, or inside a hold) is removed. Then the extra lanes are deleted.\n\n" +
+            if (!EditorUtility.DisplayDialog("Fit Charts To 4 Lanes",
+                    $"{needing.Count} chart(s) have more than {RhythmChart.MaxLanes} lanes:\n{list}\n\n" +
+                    $"Notes on the extra lanes move to lane {RhythmChart.MaxLanes}; a note that would overlap one there " +
+                    "(same time, or inside a hold) is removed. Then the extra lanes are deleted.\n\n" +
                     "Close the Rhythm Composer first. Edit > Undo reverts the charts.",
-                    "Convert", "Cancel"))
+                    "Fit", "Cancel"))
                 return;
 
-            Undo.RecordObjects(needing.Cast<UnityEngine.Object>().ToArray(), "Convert Charts To 4 Lanes");
-            var report = new StringBuilder("[Rhythm] Converted charts to 4 lanes:\n");
+            Undo.RecordObjects(needing.Cast<UnityEngine.Object>().ToArray(), "Fit Charts To 4 Lanes");
+            var report = new StringBuilder("[Rhythm] Fitted charts to 4 lanes:\n");
             var goldenChanges = new Dictionary<string, Result>();
             foreach (RhythmChart chart in needing)
             {
-                Result result = Convert(chart);
+                Result result = SetLaneCount(chart, RhythmChart.MaxLanes);
                 EditorUtility.SetDirty(chart);
                 goldenChanges[AssetDatabase.GetAssetPath(chart)] = result;
-                report.AppendLine($"  {chart.name}: {result.Moved} note(s) moved to lane {TargetLaneCount}, " +
-                                  $"{result.Removed} removed (overlap), {result.LanesDeleted} lane(s) deleted.");
+                report.AppendLine("  " + chart.name + ": " + Describe(result));
             }
             AssetDatabase.SaveAssets();
             if (UpdateGoldenBaseline(goldenChanges)) report.AppendLine("  Updated " + GoldenPath + ".");
             Debug.Log(report.ToString());
         }
 
-        public static bool NeedsConversion(RhythmChart chart) =>
-            chart != null && chart.Lanes.Any(lane => lane != null && lane.KeyIdentity > TargetLaneCount);
+        public static bool HasTooManyLanes(RhythmChart chart) =>
+            chart != null && chart.Lanes.Any(lane => lane != null && lane.KeyIdentity > RhythmChart.MaxLanes);
 
-        /// <summary>Converts one chart in place (no Undo, no saving).</summary>
-        public static Result Convert(RhythmChart chart)
+        public static string Describe(Result result) =>
+            $"{result.LanesAdded} lane(s) added, {result.LanesDeleted} deleted, {result.Moved} note(s) moved, " +
+            $"{result.Removed} removed (overlap).";
+
+        /// <summary>Gives <paramref name="chart"/> exactly <paramref name="count"/> lanes (in place; no Undo, no saving).</summary>
+        public static Result SetLaneCount(RhythmChart chart, int count)
         {
             var result = new Result();
-            if (!NeedsConversion(chart)) return result;
+            if (chart == null) return result;
+            count = Mathf.Clamp(count, 1, RhythmChart.MaxLanes);
 
             List<RhythmLaneData> oldLanes = chart.Lanes.ToList();
-            var extraIds = new HashSet<string>(oldLanes
-                .Where(lane => lane != null && lane.KeyIdentity > TargetLaneCount)
+
+            // Lanes 1..count must exist (the last one receives notes from removed lanes).
+            for (int identity = 1; identity <= count; identity++)
+            {
+                int id = identity;
+                if (chart.Lanes.Any(lane => lane != null && lane.KeyIdentity == id)) continue;
+                chart.Lanes.Add(new RhythmLaneData($"Lane {identity}", identity,
+                    RhythmComposerAssetFactory.LaneColor(identity - 1), KeyType.DEFAULT));
+                result.LanesAdded++;
+            }
+
+            var removedIds = new HashSet<string>(chart.Lanes
+                .Where(lane => lane != null && (lane.KeyIdentity < 1 || lane.KeyIdentity > count))
                 .Select(lane => lane.Id));
+            RhythmLaneData target = chart.Lanes.First(lane => lane != null && lane.KeyIdentity == count);
 
-            RhythmLaneData target = oldLanes
-                .Where(lane => lane != null && lane.KeyIdentity >= 1 && lane.KeyIdentity <= TargetLaneCount)
-                .OrderByDescending(lane => lane.KeyIdentity)
-                .FirstOrDefault();
-            if (target == null)
+            if (removedIds.Count > 0)
             {
-                RhythmLaneData template = oldLanes.First(lane => lane != null && extraIds.Contains(lane.Id));
-                target = new RhythmLaneData($"Lane {TargetLaneCount}", TargetLaneCount, template.Color, template.KeyType);
-                chart.Lanes.Add(target);
-                oldLanes.Add(target);
-            }
-
-            // Notes: move into the target lane unless they would overlap one already there.
-            List<RhythmNoteData> occupied = chart.Notes.Where(note => note != null && note.LaneId == target.Id).ToList();
-            List<RhythmNoteData> toMove = chart.Notes
-                .Where(note => note != null && extraIds.Contains(note.LaneId))
-                .OrderBy(note => note.HitTime)
-                .ToList();
-            foreach (RhythmNoteData note in toMove)
-            {
-                if (occupied.Any(other => Overlaps(other, note)))
+                // Notes: move into the target lane unless they would overlap one already there.
+                List<RhythmNoteData> occupied = chart.Notes.Where(note => note != null && note.LaneId == target.Id).ToList();
+                List<RhythmNoteData> toMove = chart.Notes
+                    .Where(note => note != null && removedIds.Contains(note.LaneId))
+                    .OrderBy(note => note.HitTime)
+                    .ToList();
+                foreach (RhythmNoteData note in toMove)
                 {
-                    chart.Notes.Remove(note);
-                    result.RemovedNoteIds.Add(note.Id);
-                    result.Removed++;
-                    continue;
+                    if (occupied.Any(other => Overlaps(other, note)))
+                    {
+                        chart.Notes.Remove(note);
+                        result.RemovedNoteIds.Add(note.Id);
+                        result.Removed++;
+                        continue;
+                    }
+                    note.LaneId = target.Id;
+                    occupied.Add(note);
+                    result.MovedNoteLanes[note.Id] = target.Id;
+                    result.Moved++;
                 }
-                note.LaneId = target.Id;
-                occupied.Add(note);
-                result.MovedNoteLanes[note.Id] = target.Id;
-                result.Moved++;
+
+                // Sequence attacks.
+                foreach (SequenceActivationData sequence in chart.Sequences.Where(sequence => sequence != null))
+                {
+                    if (sequence.LaneIds.RemoveAll(id => removedIds.Contains(id)) > 0 && !sequence.LaneIds.Contains(target.Id))
+                        sequence.LaneIds.Add(target.Id);
+                }
+
+                result.LanesDeleted = chart.Lanes.RemoveAll(lane => lane != null && removedIds.Contains(lane.Id));
             }
 
-            // Sequence attacks.
-            foreach (SequenceActivationData sequence in chart.Sequences.Where(sequence => sequence != null))
-            {
-                if (sequence.LaneIds.RemoveAll(id => extraIds.Contains(id)) > 0 && !sequence.LaneIds.Contains(target.Id))
-                    sequence.LaneIds.Add(target.Id);
-            }
+            chart.Lanes.RemoveAll(lane => lane == null);
+            chart.Lanes.Sort((a, b) => a.KeyIdentity.CompareTo(b.KeyIdentity));
 
-            // Patterns: bit i = lane index i. Re-index for the lanes that remain; removed lanes map to the target.
+            // Patterns: bit i = lane index i (in the lane list). Remap to the new order; removed lanes map to the target.
             var newIndex = new Dictionary<string, int>();
-            int next = 0;
-            foreach (RhythmLaneData lane in oldLanes)
-                if (lane != null && !extraIds.Contains(lane.Id)) newIndex[lane.Id] = next++;
+            for (int i = 0; i < chart.Lanes.Count; i++) newIndex[chart.Lanes[i].Id] = i;
             foreach (PatternInstance pattern in chart.Patterns.Where(pattern => pattern != null && pattern.LaneMask != 0))
             {
                 int mask = 0;
                 for (int i = 0; i < oldLanes.Count && i < 31; i++)
                 {
                     if ((pattern.LaneMask & (1 << i)) == 0 || oldLanes[i] == null) continue;
-                    string id = extraIds.Contains(oldLanes[i].Id) ? target.Id : oldLanes[i].Id;
+                    string id = removedIds.Contains(oldLanes[i].Id) ? target.Id : oldLanes[i].Id;
                     if (newIndex.TryGetValue(id, out int index)) mask |= 1 << index;
                 }
-                pattern.LaneMask = mask;
+                pattern.LaneMask = mask == 0 ? 1 << newIndex[target.Id] : mask;
             }
-
-            result.LanesDeleted = chart.Lanes.RemoveAll(lane => lane != null && extraIds.Contains(lane.Id));
             return result;
         }
 
@@ -162,10 +167,13 @@ namespace RythmRPG.Rhythm.Editor
             return a.HitTime <= bEnd + SameTimeSeconds && b.HitTime <= aEnd + SameTimeSeconds;
         }
 
-        // Golden format: "# <asset path>" headers, then id|lane|type|hit|travel|hold|speed|damage per note.
-        private static bool UpdateGoldenBaseline(Dictionary<string, Result> changes)
+        /// <summary>
+        /// Keeps the golden test baseline in step with charts whose notes moved or were removed. Keyed by asset path.
+        /// Format: "# &lt;asset path&gt;" headers, then id|lane|type|hit|travel|hold|speed|damage per note.
+        /// </summary>
+        public static bool UpdateGoldenBaseline(Dictionary<string, Result> changes)
         {
-            if (!File.Exists(GoldenPath)) return false;
+            if (changes == null || changes.Count == 0 || !File.Exists(GoldenPath)) return false;
             string text = File.ReadAllText(GoldenPath);
             string newline = text.Contains("\r\n") ? "\r\n" : "\n";
             string[] lines = text.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);

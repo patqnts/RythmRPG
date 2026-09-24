@@ -17,6 +17,8 @@ MonoBehaviour:
   beatsPerMeasure: 4
   compositionDuration: 10
   audioClip: {fileID: 8300000, guid: 78cb0fef327344e4ca877c293083380c, type: 3}
+  song: {fileID: 0}
+  songPreviewBar: 0
   audioOffsetSeconds: 0.41
   snapEnabled: 1
   snapDivision: 4
@@ -40,11 +42,6 @@ MonoBehaviour:
     displayName: Lane 4
     color: {r: 0.88, g: 0.38, b: 0.55, a: 1}
     keyIdentity: 4
-    keyType: 0
-  - id: bf3f841d9bf74a79bf1a551dc17de2b4
-    displayName: Lane 5
-    color: {r: 0.62, g: 0.45, b: 0.92, a: 1}
-    keyIdentity: 5
     keyType: 0
   noteDefinitions:
   - noteType: 0
