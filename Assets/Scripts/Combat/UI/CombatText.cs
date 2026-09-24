@@ -81,6 +81,7 @@ namespace RythmRPG.Combat
             TextAlignmentOptions alignment, Color outline, float outlineWidth = DefaultOutlineWidth)
         {
             var go = new GameObject(name, typeof(RectTransform));
+            if (parent != null) go.layer = parent.gameObject.layer;
             go.transform.SetParent(parent, false);
             TextMeshProUGUI text = go.AddComponent<TextMeshProUGUI>();
             Configure(text, font, size, color, alignment, outline, outlineWidth);

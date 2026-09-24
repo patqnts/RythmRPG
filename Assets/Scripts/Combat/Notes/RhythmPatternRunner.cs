@@ -411,6 +411,8 @@ namespace RythmRPG.Combat
             visualLayer.Configure();
             if (lanePresentation != null && lanePresentation.HorizontalGameplay)
                 visualLayer.FaceSpritesToCamera(lanePresentation.RenderCamera);
+            // Notes pass in front of the crisp hit line and key markers (they sorted above them in the pixel render).
+            CrispWorldUIOccluder.Ensure(instance);
             Note note = instance.GetComponent<Note>();
             if (note == null)
             {

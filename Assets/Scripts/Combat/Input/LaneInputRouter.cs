@@ -128,16 +128,19 @@ namespace RythmRPG.Combat
                 if (binding?.View != null) binding.View.SetKeyLabel(binding.DisplayName);
         }
 
+        // One binding per GameInput lane (1..LaneCount). Extra KeyButtons in the scene (e.g. a leftover 5th legacy
+        // button from the 5-lane layout) and serialized bindings past LaneCount are ignored.
         private void EnsureBindings()
         {
+            int removed = bindings.RemoveAll(binding => binding == null || binding.LaneId < 1 || binding.LaneId > GameInput.LaneCount);
+            if (removed > 0)
+                Debug.LogWarning($"[Input] Ignored {removed} lane binding(s) outside lanes 1-{GameInput.LaneCount}.", this);
             if (bindings.Count > 0) return;
-            KeyButton[] views = FindObjectsByType<KeyButton>(FindObjectsInactive.Include)
-                .OrderBy(view => view.keyIdentity).ToArray();
-            int laneCount = Mathf.Max(GameInput.LaneCount, views.Length);
-            for (int index = 0; index < laneCount; index++)
+            KeyButton[] views = FindObjectsByType<KeyButton>(FindObjectsInactive.Include);
+            for (int laneId = 1; laneId <= GameInput.LaneCount; laneId++)
             {
-                KeyButton view = index < views.Length ? views[index] : null;
-                int laneId = view != null && view.keyIdentity > 0 ? view.keyIdentity : index + 1;
+                int id = laneId;
+                KeyButton view = views.FirstOrDefault(candidate => candidate != null && candidate.keyIdentity == id);
                 bindings.Add(new LaneKeyBinding(laneId, KeyCode.None, view));
             }
         }

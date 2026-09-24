@@ -10,6 +10,14 @@ Shader "Rythm RPG/Combat/Hit Line UI"
         _Color ("Tint", Color) = (1,1,1,1)
         [Enum(UnityEngine.Rendering.CompareFunction)] _ZTest ("Depth Test", Float) = 4
         _DepthOffset ("Depth Offset (negative = toward camera)", Range(-8, 0)) = -1
+
+        // UI stencil (as in UI/Default). CrispWorldUI.MakeOccludable sets these so characters and notes, drawn
+        // into stencil bit 128 by the Crisp World UI Camera, cover the line. Defaults: no stencil test.
+        _StencilComp ("Stencil Comparison", Float) = 8
+        _Stencil ("Stencil ID", Float) = 0
+        _StencilOp ("Stencil Operation", Float) = 0
+        _StencilWriteMask ("Stencil Write Mask", Float) = 255
+        _StencilReadMask ("Stencil Read Mask", Float) = 255
     }
 
     SubShader
@@ -29,6 +37,15 @@ Shader "Rythm RPG/Combat/Hit Line UI"
         ZTest [_ZTest]
         Offset [_DepthOffset], [_DepthOffset]
         Blend SrcAlpha OneMinusSrcAlpha
+
+        Stencil
+        {
+            Ref [_Stencil]
+            Comp [_StencilComp]
+            Pass [_StencilOp]
+            ReadMask [_StencilReadMask]
+            WriteMask [_StencilWriteMask]
+        }
 
         Pass
         {

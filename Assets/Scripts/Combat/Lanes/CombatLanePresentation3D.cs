@@ -408,6 +408,8 @@ namespace RythmRPG.Combat
             Camera uiCamera = canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
             EnsureHitLine(plane, uiCamera, canvasScale);
             if (hitLineAnchor == null) return;
+            // Hit line, lane key markers and caps: crisp at screen resolution (also covers a hit line placed in the scene).
+            CrispWorldUI.ApplyIfNeeded(hitLineAnchor.gameObject);
             UpdateHitLineCaps();
 
             if (Time.frameCount % 120 == 0) PrepareHitLineMaterials(hitLineAnchor);
@@ -999,6 +1001,7 @@ namespace RythmRPG.Combat
                 if (cap == null || cap.GetComponent<Image>() == null)
                 {
                     var go = new GameObject(objectName, typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+                    go.layer = hitLineAnchor.gameObject.layer;
                     go.transform.SetParent(hitLineAnchor, false);
                     go.GetComponent<Image>().raycastTarget = false;
                     cap = (RectTransform)go.transform;
@@ -1039,13 +1042,31 @@ namespace RythmRPG.Combat
                 if (shader == null) shader = Shader.Find("Rythm RPG/Combat/Hit Line UI");
                 if (shader != null) hitLineMaterial = new Material(shader) { name = "Hit Line UI (runtime)" };
                 else Debug.LogWarning("[Combat] Hit Line UI shader not found (Assets/Resources/Combat/VFX/HitLineUI.shader). The hit line may be hidden by world geometry.", this);
+                // When the line is drawn crisp (separate camera), characters and notes cover it through the stencil.
+                CrispWorldUI.MakeOccludable(hitLineMaterial);
             }
             if (hitLineMaterial == null) return;
 
             Material defaultMaterial = Canvas.GetDefaultCanvasMaterial();
             foreach (Graphic graphic in root.GetComponentsInChildren<Graphic>(true))
                 if (graphic.material == defaultMaterial) graphic.material = hitLineMaterial;
+
+            // Key marker labels (TextMeshPro): same stencil test, on a per-font copy of their material.
+            foreach (TMP_Text text in root.GetComponentsInChildren<TMP_Text>(true))
+            {
+                Material shared = text.fontSharedMaterial;
+                if (shared == null || occludableTextMaterials.ContainsValue(shared)) continue;
+                if (!occludableTextMaterials.TryGetValue(shared, out Material occludable) || occludable == null)
+                {
+                    occludable = new Material(shared) { name = shared.name + " (Occludable)" };
+                    CrispWorldUI.MakeOccludable(occludable);
+                    occludableTextMaterials[shared] = occludable;
+                }
+                text.fontSharedMaterial = occludable;
+            }
         }
+
+        private readonly Dictionary<Material, Material> occludableTextMaterials = new();
 
         private RectTransform BuildHitLineObject(Transform parent, float widthWorld, float thicknessWorld)
         {
@@ -1071,6 +1092,7 @@ namespace RythmRPG.Combat
             image.sprite = theme != null ? theme.LineSprite : null;
             image.color = theme != null ? theme.LineColor : Color.white;
             image.raycastTarget = false;
+            CrispWorldUI.Apply(lineObject);
             return rect;
         }
 

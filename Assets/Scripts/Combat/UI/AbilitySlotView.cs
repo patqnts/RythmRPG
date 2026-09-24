@@ -352,6 +352,7 @@ namespace RythmRPG.Combat
                 if (icon == null)
                 {
                     icon = new GameObject("Ability Icon").transform;
+                    icon.gameObject.layer = gameObject.layer;
                     icon.SetParent(transform, false);
                     icon.localPosition = Vector3.up * 1.05f;
                 }
@@ -372,6 +373,7 @@ namespace RythmRPG.Combat
                 if (radial == null)
                 {
                     radial = new GameObject("Selection Radial Fill").transform;
+                    radial.gameObject.layer = gameObject.layer;
                     radial.SetParent(transform, false);
                     radial.localPosition = Vector3.up * 1.05f;
                 }
@@ -404,6 +406,7 @@ namespace RythmRPG.Combat
                 if (root == null)
                 {
                     root = new GameObject("Ability Icon", typeof(RectTransform)).transform;
+                    root.gameObject.layer = gameObject.layer;
                     root.SetParent(transform, false);
                 }
                 UnityEngine.UI.Image legacyImage = root.GetComponent<UnityEngine.UI.Image>();
@@ -439,6 +442,7 @@ namespace RythmRPG.Combat
                 {
                     GameObject radialObject = new("Selection Radial Fill", typeof(RectTransform), typeof(CanvasRenderer), typeof(UnityEngine.UI.Image));
                     radial = radialObject.transform;
+                    radialObject.layer = gameObject.layer;
                     radial.SetParent(transform, false);
                 }
                 RectTransform rect = radial as RectTransform;

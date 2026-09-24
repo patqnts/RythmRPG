@@ -62,6 +62,9 @@ namespace RythmRPG.Combat
             judgement = judgementSystem;
             enemy = enemyCombatant;
             player = playerCombatant;
+            // The player and the enemy stand in front of the crisp hit line and key markers.
+            if (player != null) CrispWorldUIOccluder.Ensure(player.gameObject);
+            if (enemy != null) CrispWorldUIOccluder.Ensure(enemy.gameObject);
             if (slotAnimation == null) slotAnimation = AbilitySlotAnimationProfile.LoadOrDefault();
             keyViews.Clear();
             boundInput = input;
@@ -281,6 +284,7 @@ namespace RythmRPG.Combat
                 RhythmNoteVisualLayer visualLayer = projectile.GetComponent<RhythmNoteVisualLayer>()
                     ?? projectile.AddComponent<RhythmNoteVisualLayer>();
                 visualLayer.FaceSpritesToCamera(lanePresentation.RenderCamera);
+                CrispWorldUIOccluder.Ensure(projectile);
             }
             else if (direction.sqrMagnitude > 0.001f)
             {
@@ -426,6 +430,8 @@ namespace RythmRPG.Combat
             label.transform.position = position;
             // World-space TextMeshPro (3D). Font size is in world units x10: 2.7 ~ the old TextMesh size.
             TextMeshPro mesh = label.AddComponent<TextMeshPro>();
+            // Drawn at screen resolution over the pixel render texture when the crisp camera is set up.
+            CrispWorldUI.Apply(label);
             CombatHudStyle hud = CombatHudStyle.LoadOrDefault();
             TMP_FontAsset font = hud.FontAsset;
             if (font != null) mesh.font = font;

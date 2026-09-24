@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using RythmRPG.Core;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -69,6 +70,7 @@ namespace RythmRPG.Combat
             canvasRect = (RectTransform)go.transform;
             canvasRect.sizeDelta = Vector2.one;
             canvasRect.localScale = Vector3.one * CanvasScale;
+            CrispWorldUI.Apply(go);
         }
 
         /// <summary>Starts a ghost after <paramref name="delay"/> seconds. Poses are read every frame (ends may move).</summary>

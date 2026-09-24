@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using RythmRPG.Core;
 using TMPro;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -141,6 +142,8 @@ namespace RythmRPG.Combat
             canvasRect = (RectTransform)go.transform;
             canvasRect.pivot = new Vector2(0.5f, 0f);
             canvasRect.sizeDelta = new Vector2(IconCanvasUnits, IconCanvasUnits);
+            // Ability slots, key labels and name: crisp at screen resolution (children copy the canvas layer).
+            CrispWorldUI.Apply(go);
 
             // Name of the ability being held, above the row.
             nameLabel = CombatText.CreateUGUI("Ability Name", canvasRect, null, 26f, Color.white,
@@ -226,6 +229,7 @@ namespace RythmRPG.Combat
         private void UpdateCanvas()
         {
             if (canvas == null) return;
+            CrispWorldUI.ApplyIfNeeded(canvas.gameObject);
             float dt = Time.unscaledDeltaTime;
             bool anyShown = false;
             bool anyPulled = false;
