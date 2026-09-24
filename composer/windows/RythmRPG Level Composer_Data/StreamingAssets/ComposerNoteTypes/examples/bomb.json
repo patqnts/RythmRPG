@@ -1,0 +1,35 @@
+// Example gimmick for the Level Composer. Files in this "examples" folder are NOT loaded.
+// To use it: copy it up one folder (ComposerNoteTypes/) or into your workspace NoteTypes folder,
+// make the prefab, then restart the composer (or Settings > Reload note types) and re-import levels in Unity.
+{
+  "noteTypes": [
+    {
+      "id": "bomb",
+      "name": "Bomb",
+      "category": "Special",
+      "description": "Do NOT press it: it explodes when hit. Let it pass.",
+      "color": "#FF4D4D",
+      "shape": "square",
+
+      // How the composer previews it: tap, hold, stationary, stationary_hold, mash, pingpong
+      // (or a custom behaviour registered in code with SimBehaviours.Register).
+      "archetype": "tap",
+
+      // What the game spawns: a RhythmNoteType value, plus an optional prefab override.
+      "output": "note",
+      "legacyType": "Normal",
+      "prefab": "Assets/Prefab/BombNote.prefab",
+
+      // "extends" copies another type's parameters (here: travel, damage, intro movement, hit effect...).
+      "extends": "normal",
+      "params": [
+        // No "bind": stored in RhythmNoteData.Metadata under the key, for the new note script to read.
+        { "key": "blastDamage", "label": "Blast damage", "kind": "int", "default": 2, "min": 0, "max": 99, "step": 1,
+          "tooltip": "Damage when the player presses it." },
+        { "key": "fuse", "label": "Fuse", "kind": "seconds", "default": 0.5, "min": 0, "max": 3, "step": 0.05 },
+        // Remove an inherited parameter:
+        { "key": "movement", "remove": true }
+      ]
+    }
+  ]
+}

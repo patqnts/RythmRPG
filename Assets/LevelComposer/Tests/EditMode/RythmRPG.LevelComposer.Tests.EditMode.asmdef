@@ -1,0 +1,23 @@
+{
+  "name": "RythmRPG.LevelComposer.Tests.EditMode",
+  "rootNamespace": "RythmRPG.LevelComposer.Tests",
+  "references": [
+    "RythmRPG.LevelComposer.Core"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": false,
+  "defineConstraints": [
+    "UNITY_INCLUDE_TESTS"
+  ],
+  "versionDefines": [],
+  "noEngineReferences": false,
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ]
+}

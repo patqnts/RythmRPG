@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a733d1f1ee894d04ebdb9638a1999587, type: 3}
+  m_Name: sample-1_Song
+  m_EditorClassIdentifier: RythmRPG.Rhythm.Runtime::RythmRPG.Rhythm.CombatSong
+  introClip: {fileID: 8300000, guid: 5086482d153d48d4894800999461af79, type: 3}
+  chartsWaitForLoop: 1
+  clip: {fileID: 8300000, guid: c587d842f719470489af71775c059629, type: 3}
+  bpm: 225
+  beatsPerMeasure: 4
+  audioOffsetSeconds: 0
+  volume: 1
+  chartSync: 2
+  playerTurnClip: {fileID: 8300000, guid: c587d842f719470489af71775c059629, type: 3}
+  playerTurnVolume: 1
+  mainVolumeOnPlayerTurn: 0
+  endClip: {fileID: 8300000, guid: 9fdde1bc1f183ef4cbb17316d2b28277, type: 3}
+  defeatEndClip: {fileID: 8300000, guid: 9fdde1bc1f183ef4cbb17316d2b28277, type: 3}
+  endSync: 2

@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.EnemyPhaseDefinition
   enterAtHealthPercent: 1
   attackSequences:
-  - {fileID: 11400000, guid: b1000000000000000000000000000107, type: 2}
+  - {fileID: 11400000, guid: 702572031ea54ae4f923b2096ca6bba1, type: 2}

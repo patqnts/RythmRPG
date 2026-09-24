@@ -1,0 +1,728 @@
+{
+  "format": "rythmrpg.combatlevel",
+  "version": 1,
+  "id": "sample-1",
+  "name": "New Level",
+  "author": "",
+  "description": "",
+  "selectionWeight": 1,
+  "music": {
+    "bpm": 225,
+    "beatsPerBar": 4,
+    "offsetSeconds": 0,
+    "volume": 1,
+    "chartSync": "NextBar",
+    "endSync": "NextBar",
+    "chartsWaitForLoop": true,
+    "playerTurnVolume": 1,
+    "mainVolumeOnPlayerTurn": 0,
+    "intro": "C:/Users/jayqu/Downloads/Separated Audio Files/Separated Audio Files/Separated Files/Prepare for Battle!/xDeviruchi - Prepare for Battle! (Intro).wav",
+    "loop": "C:/Users/jayqu/Downloads/Separated Audio Files/Separated Audio Files/Separated Files/Prepare for Battle!/xDeviruchi - Prepare for Battle! (Loop).wav",
+    "playerTurn": "C:/Users/jayqu/Downloads/Separated Audio Files/Separated Audio Files/Separated Files/Prepare for Battle!/xDeviruchi - Prepare for Battle! (Loop).wav",
+    "end": "C:/Users/jayqu/Downloads/Separated Audio Files/Separated Audio Files/Separated Files/Prepare for Battle!/xDeviruchi - Prepare for Battle! (End).wav",
+    "defeatEnd": "C:/Users/jayqu/Downloads/Separated Audio Files/Separated Audio Files/Separated Files/Prepare for Battle!/xDeviruchi - Prepare for Battle! (End).wav"
+  },
+  "preview": {
+    "playerTurnBars": 2,
+    "loopBar": 0
+  },
+  "steps": [
+    {
+      "id": "9fbad7a44142",
+      "name": "Step 1",
+      "animation": "",
+      "anticipation": 0.45,
+      "endPolicy": "WaitForResolvedNotes",
+      "lanes": 4,
+      "notes": [
+        {
+          "id": "34f195e073e4",
+          "type": "normal",
+          "lane": 1,
+          "beat": 2,
+          "params": {
+            "travel": 2
+          }
+        },
+        {
+          "id": "f77659a42d96",
+          "type": "normal",
+          "lane": 3,
+          "beat": 2,
+          "params": {
+            "travel": 2
+          }
+        },
+        {
+          "id": "a38fdcdfea14",
+          "type": "normal",
+          "lane": 2,
+          "beat": 2.5,
+          "params": {
+            "travel": 1.5
+          }
+        },
+        {
+          "id": "f5ce453b87e7",
+          "type": "normal",
+          "lane": 3,
+          "beat": 3,
+          "params": {
+            "travel": 1.5
+          }
+        },
+        {
+          "id": "88ecff6be964",
+          "type": "normal",
+          "lane": 1,
+          "beat": 4,
+          "params": {
+            "travel": 1.5
+          }
+        },
+        {
+          "id": "037bee0cdaac",
+          "type": "normal",
+          "lane": 1,
+          "beat": 5,
+          "params": {
+            "travel": 1.5
+          }
+        },
+        {
+          "id": "266f8f421e1e",
+          "type": "normal",
+          "lane": 2,
+          "beat": 6,
+          "params": {
+            "travel": 1.5
+          }
+        },
+        {
+          "id": "883e4c0ea372",
+          "type": "normal",
+          "lane": 2,
+          "beat": 7,
+          "params": {
+            "travel": 1.5
+          }
+        },
+        {
+          "id": "f80c27bd8ca9",
+          "type": "normal",
+          "lane": 1,
+          "beat": 8,
+          "params": {
+            "travel": 1.5
+          }
+        },
+        {
+          "id": "48421fc96f92",
+          "type": "normal",
+          "lane": 4,
+          "beat": 8,
+          "params": {
+            "travel": 1.5
+          }
+        },
+        {
+          "id": "2a8f726eb785",
+          "type": "normal",
+          "lane": 1,
+          "beat": 9,
+          "params": {
+            "travel": 1.5
+          }
+        },
+        {
+          "id": "06b68e97a630",
+          "type": "normal",
+          "lane": 4,
+          "beat": 9,
+          "params": {
+            "travel": 1.5
+          }
+        },
+        {
+          "id": "8e3abd4aaa92",
+          "type": "normal",
+          "lane": 2,
+          "beat": 10,
+          "params": {
+            "travel": 1.5
+          }
+        },
+        {
+          "id": "4a4f4293f627",
+          "type": "normal",
+          "lane": 3,
+          "beat": 10,
+          "params": {
+            "travel": 1.5
+          }
+        },
+        {
+          "id": "013b9b9577d2",
+          "type": "normal",
+          "lane": 2,
+          "beat": 11,
+          "params": {
+            "travel": 1.5
+          }
+        },
+        {
+          "id": "ba8cae2f504c",
+          "type": "normal",
+          "lane": 3,
+          "beat": 11,
+          "params": {
+            "travel": 1.5
+          }
+        },
+        {
+          "id": "5edf34a25702",
+          "type": "stationary",
+          "lane": 4,
+          "beat": 12,
+          "params": {
+            "travel": 1.75
+          }
+        },
+        {
+          "id": "ada3a609c389",
+          "type": "stationary",
+          "lane": 3,
+          "beat": 13,
+          "params": {
+            "travel": 1.75
+          }
+        },
+        {
+          "id": "bbb097efaba4",
+          "type": "stationary",
+          "lane": 2,
+          "beat": 14,
+          "params": {
+            "travel": 1.75
+          }
+        },
+        {
+          "id": "45366a3e9451",
+          "type": "stationary",
+          "lane": 1,
+          "beat": 15,
+          "params": {
+            "travel": 1.75
+          }
+        },
+        {
+          "id": "9063580a571c",
+          "type": "hold",
+          "lane": 2,
+          "beat": 16,
+          "length": 2,
+          "params": {
+            "travel": 2
+          }
+        },
+        {
+          "id": "52dae821f91a",
+          "type": "hold",
+          "lane": 3,
+          "beat": 18,
+          "length": 2,
+          "params": {
+            "travel": 2
+          }
+        },
+        {
+          "id": "cfe0536bd3b4",
+          "type": "hold",
+          "lane": 1,
+          "beat": 20,
+          "length": 2,
+          "params": {
+            "travel": 2
+          }
+        },
+        {
+          "id": "8475b63623e2",
+          "type": "hold",
+          "lane": 4,
+          "beat": 22,
+          "length": 2,
+          "params": {
+            "travel": 2
+          }
+        },
+        {
+          "id": "7f0854b14370",
+          "type": "normal",
+          "lane": 1,
+          "beat": 24,
+          "params": {
+            "travel": 1.5
+          }
+        },
+        {
+          "id": "1e127231e7ee",
+          "type": "normal",
+          "lane": 2,
+          "beat": 25,
+          "params": {
+            "travel": 1.5
+          }
+        },
+        {
+          "id": "c95c26eb946d",
+          "type": "normal",
+          "lane": 2,
+          "beat": 26,
+          "params": {
+            "travel": 1.5
+          }
+        },
+        {
+          "id": "a4663d11075e",
+          "type": "normal",
+          "lane": 3,
+          "beat": 26.5,
+          "params": {
+            "travel": 1.5
+          }
+        },
+        {
+          "id": "868f5038e052",
+          "type": "normal",
+          "lane": 4,
+          "beat": 27,
+          "params": {
+            "travel": 1.5
+          }
+        },
+        {
+          "id": "c7cc60fc4930",
+          "type": "hold",
+          "lane": 1,
+          "beat": 28,
+          "length": 4,
+          "params": {
+            "travel": 2.75
+          }
+        },
+        {
+          "id": "07e02fdf3933",
+          "type": "normal",
+          "lane": 1,
+          "beat": 32.5,
+          "params": {
+            "travel": 1.5
+          }
+        },
+        {
+          "id": "c93de2eb7a1a",
+          "type": "normal",
+          "lane": 3,
+          "beat": 33,
+          "params": {
+            "travel": 1.5
+          }
+        },
+        {
+          "id": "833f576ab7fb",
+          "type": "normal",
+          "lane": 4,
+          "beat": 33.5,
+          "params": {
+            "travel": 1.5
+          }
+        },
+        {
+          "id": "7beed6873fa7",
+          "type": "normal",
+          "lane": 3,
+          "beat": 34,
+          "params": {
+            "travel": 1.5
+          }
+        },
+        {
+          "id": "0c78be3ca452",
+          "type": "normal",
+          "lane": 2,
+          "beat": 34.5,
+          "params": {
+            "travel": 1.5
+          }
+        },
+        {
+          "id": "b8b89e452f3b",
+          "type": "normal",
+          "lane": 1,
+          "beat": 35,
+          "params": {
+            "travel": 1.5
+          }
+        },
+        {
+          "id": "b9383baa231a",
+          "type": "normal",
+          "lane": 3,
+          "beat": 35.5,
+          "params": {
+            "travel": 1.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "908c495a3b86",
+      "name": "Step 2",
+      "animation": "",
+      "anticipation": 0.45,
+      "endPolicy": "WaitForResolvedNotes",
+      "lanes": 4,
+      "notes": [
+        {
+          "id": "5cfb72b36a42",
+          "type": "normal",
+          "lane": 1,
+          "beat": 0,
+          "params": {
+            "travel": 4
+          }
+        },
+        {
+          "id": "094fa6762758",
+          "type": "normal",
+          "lane": 1,
+          "beat": 0.5,
+          "params": {
+            "travel": 4
+          }
+        },
+        {
+          "id": "febfe819bd99",
+          "type": "normal",
+          "lane": 1,
+          "beat": 1,
+          "params": {
+            "travel": 4
+          }
+        },
+        {
+          "id": "0c14ff14fc2a",
+          "type": "normal",
+          "lane": 2,
+          "beat": 2,
+          "params": {
+            "travel": 4
+          }
+        },
+        {
+          "id": "1912bc3e45ff",
+          "type": "normal",
+          "lane": 3,
+          "beat": 2,
+          "params": {
+            "travel": 4
+          }
+        },
+        {
+          "id": "3b8c62e51f5f",
+          "type": "normal",
+          "lane": 3,
+          "beat": 2.5,
+          "params": {
+            "travel": 4
+          }
+        },
+        {
+          "id": "fb3b08f4b1be",
+          "type": "normal",
+          "lane": 3,
+          "beat": 3,
+          "params": {
+            "travel": 4
+          }
+        },
+        {
+          "id": "da24c29dc8ad",
+          "type": "normal",
+          "lane": 1,
+          "beat": 4,
+          "params": {
+            "travel": 4
+          }
+        },
+        {
+          "id": "17829da942bd",
+          "type": "normal",
+          "lane": 2,
+          "beat": 5,
+          "params": {
+            "travel": 4
+          }
+        },
+        {
+          "id": "9632d71d63b7",
+          "type": "normal",
+          "lane": 1,
+          "beat": 6,
+          "params": {
+            "travel": 4
+          }
+        },
+        {
+          "id": "1ef9a5cbb163",
+          "type": "normal",
+          "lane": 3,
+          "beat": 7,
+          "params": {
+            "travel": 4
+          }
+        },
+        {
+          "id": "b92d5f51e5a8",
+          "type": "normal",
+          "lane": 4,
+          "beat": 8,
+          "params": {
+            "travel": 4
+          }
+        },
+        {
+          "id": "b4ccecf724ac",
+          "type": "normal",
+          "lane": 2,
+          "beat": 9,
+          "params": {
+            "travel": 4
+          }
+        },
+        {
+          "id": "49b8d4f8d851",
+          "type": "normal",
+          "lane": 4,
+          "beat": 10
+        },
+        {
+          "id": "542ad5c084ac",
+          "type": "normal",
+          "lane": 1,
+          "beat": 12,
+          "params": {
+            "travel": 5.25
+          }
+        },
+        {
+          "id": "f20b3de08a68",
+          "type": "normal",
+          "lane": 2,
+          "beat": 12.5,
+          "params": {
+            "travel": 5.25
+          }
+        },
+        {
+          "id": "341f4be0de98",
+          "type": "normal",
+          "lane": 1,
+          "beat": 13,
+          "params": {
+            "travel": 5.25
+          }
+        },
+        {
+          "id": "8529572d40d4",
+          "type": "normal",
+          "lane": 2,
+          "beat": 13.5,
+          "params": {
+            "travel": 5.25
+          }
+        },
+        {
+          "id": "d84933d27403",
+          "type": "normal",
+          "lane": 1,
+          "beat": 14,
+          "params": {
+            "travel": 5.25
+          }
+        },
+        {
+          "id": "e96544921582",
+          "type": "normal",
+          "lane": 2,
+          "beat": 14.5,
+          "params": {
+            "travel": 5.25
+          }
+        },
+        {
+          "id": "965f20d4fb0a",
+          "type": "normal",
+          "lane": 1,
+          "beat": 15,
+          "params": {
+            "travel": 5.25
+          }
+        },
+        {
+          "id": "fe876a697d03",
+          "type": "normal",
+          "lane": 2,
+          "beat": 15.5,
+          "params": {
+            "travel": 5.25
+          }
+        },
+        {
+          "id": "60b280ef8379",
+          "type": "normal",
+          "lane": 1,
+          "beat": 18,
+          "params": {
+            "travel": 3.5
+          }
+        },
+        {
+          "id": "42e9b923a551",
+          "type": "normal",
+          "lane": 2,
+          "beat": 18.5,
+          "params": {
+            "travel": 3.5
+          }
+        },
+        {
+          "id": "1744d1efb355",
+          "type": "normal",
+          "lane": 3,
+          "beat": 19,
+          "params": {
+            "travel": 3.5
+          }
+        },
+        {
+          "id": "fe32915262ad",
+          "type": "normal",
+          "lane": 4,
+          "beat": 19.5,
+          "params": {
+            "travel": 3.5
+          }
+        },
+        {
+          "id": "3891ded6668d",
+          "type": "normal",
+          "lane": 3,
+          "beat": 20,
+          "params": {
+            "travel": 3.5
+          }
+        },
+        {
+          "id": "43fea54b5fe4",
+          "type": "normal",
+          "lane": 2,
+          "beat": 20.5,
+          "params": {
+            "travel": 3.5
+          }
+        },
+        {
+          "id": "bdb018bf7c07",
+          "type": "normal",
+          "lane": 1,
+          "beat": 21,
+          "params": {
+            "travel": 3.5
+          }
+        },
+        {
+          "id": "51afb25897ab",
+          "type": "normal",
+          "lane": 2,
+          "beat": 21.5,
+          "params": {
+            "travel": 3.5
+          }
+        },
+        {
+          "id": "24995e95820c",
+          "type": "normal",
+          "lane": 1,
+          "beat": 24,
+          "params": {
+            "travel": 6
+          }
+        },
+        {
+          "id": "8c720abafd27",
+          "type": "normal",
+          "lane": 2,
+          "beat": 24.5,
+          "params": {
+            "travel": 6
+          }
+        },
+        {
+          "id": "cb7c9e3df179",
+          "type": "normal",
+          "lane": 3,
+          "beat": 25,
+          "params": {
+            "travel": 6
+          }
+        },
+        {
+          "id": "fe06c4d11d41",
+          "type": "normal",
+          "lane": 4,
+          "beat": 25.5,
+          "params": {
+            "travel": 6
+          }
+        },
+        {
+          "id": "87f283cd0ce0",
+          "type": "normal",
+          "lane": 1,
+          "beat": 26,
+          "params": {
+            "travel": 6
+          }
+        },
+        {
+          "id": "290819becc4b",
+          "type": "normal",
+          "lane": 2,
+          "beat": 26.5,
+          "params": {
+            "travel": 6
+          }
+        },
+        {
+          "id": "a7dd8c36c50a",
+          "type": "normal",
+          "lane": 3,
+          "beat": 27,
+          "params": {
+            "travel": 6
+          }
+        },
+        {
+          "id": "c9d2985d3745",
+          "type": "normal",
+          "lane": 4,
+          "beat": 27.5,
+          "params": {
+            "travel": 6
+          }
+        }
+      ]
+    }
+  ]
+}

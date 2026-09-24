@@ -1,0 +1,244 @@
+{
+  "format": "rythmrpg.combatlevel",
+  "version": 1,
+  "id": "example-prepare-for-battle",
+  "name": "Example: Prepare for Battle",
+  "author": "Level Composer",
+  "description": "Sample level showing every built-in note type. Open it in the Level Composer; import it in Unity with Tools > Rythm RPG > Level Composer > Import Combat Level.",
+  "selectionWeight": 1,
+  "music": {
+    "bpm": 225,
+    "beatsPerBar": 4,
+    "offsetSeconds": 0,
+    "volume": 0.72,
+    "chartSync": "NextBar",
+    "endSync": "NextBar",
+    "chartsWaitForLoop": true,
+    "playerTurnVolume": 1,
+    "mainVolumeOnPlayerTurn": 0,
+    "intro": "../Assets/Music/Prepare for Battle!/xDeviruchi - Prepare for Battle! (Intro).wav",
+    "loop": "../Assets/Music/Prepare for Battle!/xDeviruchi - Prepare for Battle! (Loop).wav",
+    "playerTurn": "",
+    "end": "../Assets/Music/Prepare for Battle!/xDeviruchi - Prepare for Battle! (End).wav",
+    "defeatEnd": ""
+  },
+  "preview": {
+    "playerTurnBars": 2,
+    "loopBar": 0
+  },
+  "steps": [
+    {
+      "id": "30cf6739cede",
+      "name": "Opening volley",
+      "animation": "Laser",
+      "anticipation": 1,
+      "endPolicy": "WaitForResolvedNotes",
+      "lanes": 3,
+      "notes": [
+        {
+          "id": "8b8507a8db6c",
+          "type": "normal",
+          "lane": 1,
+          "beat": 0,
+          "params": {
+            "travel": 8
+          }
+        },
+        {
+          "id": "d85cf1234b7f",
+          "type": "normal",
+          "lane": 2,
+          "beat": 1,
+          "params": {
+            "travel": 8
+          }
+        },
+        {
+          "id": "90dd8fb9d8bb",
+          "type": "normal",
+          "lane": 3,
+          "beat": 2,
+          "params": {
+            "travel": 8
+          }
+        },
+        {
+          "id": "6db2134b057c",
+          "type": "normal",
+          "lane": 2,
+          "beat": 3,
+          "params": {
+            "travel": 8
+          }
+        },
+        {
+          "id": "b13fefddb069",
+          "type": "normal",
+          "lane": 1,
+          "beat": 4,
+          "params": {
+            "travel": 8
+          }
+        },
+        {
+          "id": "111dcc7e9ae0",
+          "type": "normal",
+          "lane": 2,
+          "beat": 5,
+          "params": {
+            "travel": 8
+          }
+        },
+        {
+          "id": "3ec608644bd3",
+          "type": "normal",
+          "lane": 3,
+          "beat": 6,
+          "params": {
+            "travel": 8
+          }
+        },
+        {
+          "id": "4b592428fa9e",
+          "type": "normal",
+          "lane": 2,
+          "beat": 7,
+          "params": {
+            "travel": 8
+          }
+        },
+        {
+          "id": "5de6c94f7490",
+          "type": "hold",
+          "lane": 2,
+          "beat": 8,
+          "length": 2,
+          "params": {
+            "travel": 8
+          }
+        },
+        {
+          "id": "65a1800d11b0",
+          "type": "normal",
+          "lane": 1,
+          "beat": 11,
+          "params": {
+            "travel": 8
+          }
+        },
+        {
+          "id": "26200185b4e2",
+          "type": "normal",
+          "lane": 3,
+          "beat": 11.5,
+          "params": {
+            "travel": 8
+          }
+        },
+        {
+          "id": "c8e3fc6f4f8d",
+          "type": "stationary",
+          "lane": 2,
+          "beat": 14,
+          "params": {
+            "travel": 8
+          }
+        },
+        {
+          "id": "607167104033",
+          "type": "stationary",
+          "lane": 1,
+          "beat": 15,
+          "params": {
+            "travel": 8
+          }
+        },
+        {
+          "id": "d68b2e3c3679",
+          "type": "stationary",
+          "lane": 3,
+          "beat": 16,
+          "params": {
+            "travel": 8
+          }
+        }
+      ]
+    },
+    {
+      "id": "b9061412ec8b",
+      "name": "Mash and rally",
+      "animation": "Laser",
+      "anticipation": 1,
+      "endPolicy": "WaitForResolvedNotes",
+      "lanes": 4,
+      "notes": [
+        {
+          "id": "2bf8eb91e686",
+          "type": "mash",
+          "lane": 2,
+          "beat": 8,
+          "params": {
+            "presses": 10,
+            "travel": 8
+          }
+        },
+        {
+          "id": "478c260c4bbd",
+          "type": "stationary_hold",
+          "lane": 3,
+          "beat": 12,
+          "length": 4,
+          "params": {
+            "travel": 8
+          }
+        },
+        {
+          "id": "7b626facd82d",
+          "type": "pong",
+          "lane": 1,
+          "beat": 18,
+          "params": {
+            "travel": 8
+          }
+        },
+        {
+          "id": "94456d49a88f",
+          "type": "pong",
+          "lane": 2,
+          "beat": 19,
+          "params": {
+            "travel": 8
+          }
+        },
+        {
+          "id": "373d7d172b8c",
+          "type": "pong",
+          "lane": 1,
+          "beat": 20,
+          "params": {
+            "travel": 8
+          }
+        },
+        {
+          "id": "5b132f91eb6d",
+          "type": "pong",
+          "lane": 2,
+          "beat": 21,
+          "params": {
+            "travel": 8
+          }
+        },
+        {
+          "id": "c558e39fb8c2",
+          "type": "pingpong",
+          "lane": 2,
+          "beat": 24,
+          "params": {
+            "lanes": "2 3",
+            "volleys": 4
+          }
+        }
+      ]
+    }
+  ]
+}

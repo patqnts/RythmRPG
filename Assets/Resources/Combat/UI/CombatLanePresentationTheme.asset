@@ -36,7 +36,7 @@ MonoBehaviour:
   ShowKeyMarkers: 1
   KeyMarkersBreakLine: 1
   KeyMarkerShape: 1
-  KeyMarkerSprite: {fileID: 1076222015, guid: c8a0152b2ff9ce942b76c2f10ca43d89, type: 3}
+  KeyMarkerSprite: {fileID: 0}
   KeyMarkerSize: 22.1
   KeyMarkerOutline: 1.15
   KeyMarkerColor: {r: 0.990566, g: 0.7375732, b: 0.36912602, a: 0.85}

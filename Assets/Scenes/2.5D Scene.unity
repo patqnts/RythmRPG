@@ -1502,6 +1502,7 @@ GameObject:
   - component: {fileID: 218053030}
   - component: {fileID: 218053031}
   - component: {fileID: 218053032}
+  - component: {fileID: 218053033}
   m_Layer: 0
   m_Name: CombatManager
   m_TagString: Untagged
@@ -1633,6 +1634,56 @@ MonoBehaviour:
   hitLineAtNoteHeight: 1
   canvas: {fileID: 0}
   buttonRow: {fileID: 0}
+--- !u!114 &218053033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 218053026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26db1dd9e0ef2d5449620213ced4ffd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.SpaceCombatBackdrop
+  combat: {fileID: 218053029}
+  previewInEditMode: 0
+  topColor: {r: 0.02, g: 0.02, b: 0.07, a: 1}
+  bottomColor: {r: 0.06, g: 0.02, b: 0.11, a: 1}
+  nebulaColorA: {r: 0.1, g: 0.04, b: 0.22, a: 1}
+  nebulaColorB: {r: 0.10196078, g: 0.28906283, b: 0.4, a: 1}
+  nebulaScale: 70
+  nebulaStrength: 0.55
+  nebulaLevels: 4
+  nebulaSpeed: 0.35
+  motion: 0
+  vanishingPoint: {x: 0.5, y: 0.75}
+  forwardSpeed: 0.2
+  forwardCell: 7
+  forwardDensity: 0.095
+  forwardStreak: 0.025
+  forwardStarColor: {r: 0.5700427, g: 0.61521006, b: 0.6603774, a: 1}
+  layerSpeed: {x: 5, y: 16, z: 55}
+  layerCell: {x: 9, y: 16, z: 30}
+  layerDensity: {x: 0.55, y: 0.45, z: 0.35}
+  layerSize: {x: 1, y: 1, z: 1}
+  layerStreak: {x: 0, y: 1, z: 6}
+  farStarColor: {r: 0.55, g: 0.6, b: 0.85, a: 0.55}
+  midStarColor: {r: 0.8, g: 0.85, b: 1, a: 0.8}
+  nearStarColor: {r: 1, g: 1, b: 1, a: 1}
+  twinkle: 0.532
+  warpInSpeed: 7
+  warpInSeconds: 1.4
+  beatSurge: 0.473
+  rhythmSpeed: 1.3
+  selectionSpeed: 0.6
+  speedResponse: 2.5
+  hoverAmplitude: 0.06
+  hoverPeriod: 2.2
+  hideScene: 1
+  flashColor: {r: 1, g: 1, b: 1, a: 1}
+  flashInSeconds: 0.12
+  flashOutSeconds: 0.4
 --- !u!4 &226629866 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6191650215760293972, guid: d58b34d5ed044984296458a1502db568, type: 3}
@@ -16230,7 +16281,7 @@ Camera:
   m_GameObject: {fileID: 1907834171}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 2
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
