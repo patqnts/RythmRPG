@@ -62,6 +62,8 @@ namespace RythmRPG.Core
 
         public float FloorScale => floorScale;
         public float WallScale => wallScale;
+        /// <summary>World Y of the ground (the pixel grid of <see cref="PixelPerfectRig"/> is anchored on it).</summary>
+        public float GroundHeight => groundHeight;
 
         // ---------- Static helpers (fall back to plain camera maths when no oblique projection is active) ----------
 
