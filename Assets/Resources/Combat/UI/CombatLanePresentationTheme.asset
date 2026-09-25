@@ -20,7 +20,7 @@ MonoBehaviour:
   ButtonSize: {x: 64, y: 64}
   ButtonSpacing: 15
   BottomOffset: 2
-  ButtonFontAsset: {fileID: 11400000, guid: 9cdeccbcbadc8cf4fb32c2cd30dd1f83, type: 2}
+  ButtonFontAsset: {fileID: 11400000, guid: 523102994fdf0884f97b56f8c90f7022, type: 2}
   ButtonFont: {fileID: 12800000, guid: 80a0137e3d8f78f41bfdb2aca0cfac44, type: 3}
   ButtonFontSize: 28
   ButtonFontStyle: 1
@@ -51,6 +51,10 @@ MonoBehaviour:
   ChargeOutlineColor: {r: 1, g: 1, b: 1, a: 0.9}
   ChargeFillColor: {r: 1, g: 1, b: 1, a: 0.65}
   ChargeFadeIn: 0.15
+  ShowHoldFill: 1
+  HoldFillAlpha: 0.8
+  HoldFillPulse: 0.06
+  HoldOutlineTint: 0.6
   LineCapSprite: {fileID: 21300000, guid: da6e5d60e01a4882a55986abd5097357, type: 3}
   LineCapJoinHeight: 4.77
   LineCapColor: {r: 1, g: 1, b: 1, a: 0}

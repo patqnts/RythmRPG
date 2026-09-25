@@ -85,7 +85,7 @@ MonoBehaviour:
     pulseSeconds: 0.25
     lowPulseSpeed: 3
   introSeconds: 0.4
-  fontAsset: {fileID: 11400000, guid: 566c9319f9aed2e4f9ecf9065150e29d, type: 2}
+  fontAsset: {fileID: 11400000, guid: 523102994fdf0884f97b56f8c90f7022, type: 2}
   legacyFont: {fileID: 0}
   fontSize: 20
   textColor: {r: 1, g: 1, b: 1, a: 1}

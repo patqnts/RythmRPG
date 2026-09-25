@@ -1,0 +1,154 @@
+{
+  "A": {
+    "reference": 1,
+    "height": 990,
+    "components": [
+      [
+        113,
+        224
+      ]
+    ],
+    "cutPolygon": null,
+    "bottom": 0
+  },
+  "G": {
+    "reference": 0,
+    "height": 840,
+    "components": [
+      [
+        794,
+        661
+      ]
+    ],
+    "cutPolygon": null,
+    "bottom": 0
+  },
+  "P": {
+    "reference": 0,
+    "height": 835,
+    "components": [
+      [
+        570,
+        659
+      ]
+    ],
+    "cutPolygon": null,
+    "bottom": 0
+  },
+  "D": {
+    "reference": 1,
+    "height": 900,
+    "components": [
+      [
+        747,
+        688
+      ]
+    ],
+    "cutPolygon": null,
+    "bottom": 0
+  },
+  "C": {
+    "reference": 1,
+    "height": 795,
+    "components": [
+      [
+        462,
+        393
+      ]
+    ],
+    "cutPolygon": null,
+    "bottom": 0
+  },
+  "o": {
+    "reference": 1,
+    "height": 510,
+    "components": [
+      [
+        759,
+        461
+      ]
+    ],
+    "cutPolygon": null,
+    "bottom": 0
+  },
+  "d": {
+    "reference": 1,
+    "height": 805,
+    "components": [
+      [
+        891,
+        328
+      ]
+    ],
+    "cutPolygon": null,
+    "bottom": 0
+  },
+  "e": {
+    "reference": 1,
+    "height": 510,
+    "components": [
+      [
+        1092,
+        736
+      ]
+    ],
+    "cutPolygon": null,
+    "bottom": 0
+  },
+  "i": {
+    "reference": 1,
+    "height": 665,
+    "components": [
+      [
+        1008,
+        698
+      ],
+      [
+        980,
+        769
+      ]
+    ],
+    "cutPolygon": null,
+    "bottom": 0
+  },
+  "t": {
+    "reference": 0,
+    "height": 865,
+    "components": [
+      [
+        654,
+        271
+      ]
+    ],
+    "cutPolygon": null,
+    "bottom": 0
+  },
+  "R": {
+    "reference": 0,
+    "method": "contact edges redrawn from reference silhouette"
+  },
+  "h": {
+    "reference": 0,
+    "method": "contact edges redrawn from reference silhouette"
+  },
+  "m": {
+    "reference": 0,
+    "method": "contact edges redrawn from reference silhouette"
+  },
+  "y": {
+    "reference": 0,
+    "method": "contact edges redrawn from reference silhouette"
+  },
+  "M": {
+    "reference": 1,
+    "method": "contact edges redrawn from reference silhouette"
+  },
+  "u": {
+    "reference": 1,
+    "method": "contact edges redrawn from reference silhouette"
+  },
+  "s": {
+    "reference": 1,
+    "method": "contact edges redrawn from reference silhouette"
+  }
+}
