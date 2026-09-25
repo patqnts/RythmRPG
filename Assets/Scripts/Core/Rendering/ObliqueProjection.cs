@@ -32,19 +32,33 @@ namespace RythmRPG.Core
         [SerializeField] private float groundHeight;
 
         [Header("Play mode")]
-        [Tooltip("Find sprites that are tilted to face the camera and give them an ObliqueBillboard, which stands them " +
-                 "upright for rendering so they keep their size. Turning this off only stops new ones being added.")]
+        [Tooltip("Find sprites, meshes and local-space particle systems that are tilted to face the camera and give " +
+                 "them an ObliqueBillboard, which stands them upright for rendering so they keep their size. " +
+                 "Turning this off only stops new ones being added.")]
         [SerializeField] private bool autoUprightSprites = true;
-        [Tooltip("A sprite counts as camera-facing when its forward is within this angle of the camera's forward.")]
+        [Tooltip("Particle systems whose particles face the camera (Billboard or Mesh, Render Alignment View/Facing) " +
+                 "are switched to face the camera's direction upright instead, so they are not stretched. Restored when " +
+                 "this component is turned off.")]
+        [SerializeField] private bool fixCameraFacingParticles = true;
+        [Tooltip("An object counts as camera-facing when its forward is within this angle of the camera's forward.")]
         [SerializeField, Range(0.5f, 20f)] private float cameraFacingTolerance = 5f;
 
-        private const float ScanInterval = 0.5f;
+        private const float SeenResetInterval = 10f;
         private static readonly List<ObliqueProjection> Instances = new();
 
         private Camera cam;
-        private float nextScanTime;
+        private float nextSeenReset;
         private int preparedFrame = -1;
-        private readonly List<SpriteRenderer> scanBuffer = new();
+        private readonly List<Renderer> scanBuffer = new();
+        // Renderers already looked at (billboarded, fixed or left alone), so each frame only new ones cost anything.
+        private readonly HashSet<Renderer> seenRenderers = new();
+        private readonly Dictionary<ParticleSystemRenderer, ParticleSetup> fixedParticles = new();
+
+        private struct ParticleSetup
+        {
+            public ParticleSystemRenderMode RenderMode;
+            public ParticleSystemRenderSpace Alignment;
+        }
 
         public float FloorScale => floorScale;
         public float WallScale => wallScale;
@@ -212,7 +226,7 @@ namespace RythmRPG.Core
             cam = GetComponent<Camera>();
             if (!Instances.Contains(this)) Instances.Add(this);
             RenderPipelineManager.beginContextRendering += HandleBeginContextRendering;
-            nextScanTime = 0f;
+            seenRenderers.Clear();
             ApplyMatrix();
         }
 
@@ -221,6 +235,8 @@ namespace RythmRPG.Core
             RenderPipelineManager.beginContextRendering -= HandleBeginContextRendering;
             Instances.Remove(this);
             ObliqueBillboard.RestoreAll();
+            RestoreParticles();
+            seenRenderers.Clear();
             if (cam != null) cam.ResetProjectionMatrix();
         }
 
@@ -243,7 +259,7 @@ namespace RythmRPG.Core
             ApplyMatrix();
             if (!forRendering || !Application.isPlaying || preparedFrame == Time.frameCount) return;
             preparedFrame = Time.frameCount;
-            if (autoUprightSprites) ScanForCameraFacingSprites();
+            if (autoUprightSprites || fixCameraFacingParticles) ScanNewRenderers();
             ObliqueBillboard.ApplyAll(cam);
         }
 
@@ -316,34 +332,88 @@ namespace RythmRPG.Core
 
         // ---------- Camera-facing sprites ----------
 
-        private void ScanForCameraFacingSprites()
+        // Every rendered frame, before drawing: looks at renderers it has not seen yet (notes and effects spawned this
+        // frame included), so nothing is ever drawn stretched.
+        private void ScanNewRenderers()
         {
-            if (Time.unscaledTime < nextScanTime) return;
-            nextScanTime = Time.unscaledTime + ScanInterval;
+            if (Time.unscaledTime >= nextSeenReset)
+            {
+                // Forget destroyed objects now and then; survivors are just looked at again once.
+                nextSeenReset = Time.unscaledTime + SeenResetInterval;
+                seenRenderers.Clear();
+            }
 
             Vector3 cameraForward = transform.forward;
             float minDot = Mathf.Cos(cameraFacingTolerance * Mathf.Deg2Rad);
+            int crispLayer = CrispWorldUI.Layer;
             scanBuffer.Clear();
-            foreach (SpriteRenderer sprite in FindObjectsByType<SpriteRenderer>(FindObjectsInactive.Exclude))
+            foreach (Renderer candidate in FindObjectsByType<Renderer>(FindObjectsInactive.Exclude))
             {
-                if (sprite == null || sprite.sprite == null) continue;
-                Transform t = sprite.transform;
+                if (candidate == null || !seenRenderers.Add(candidate)) continue;
+                if (candidate.gameObject.layer == crispLayer && crispLayer >= 0) continue;
+                Transform t = candidate.transform;
+                // Camera children (the space backdrop, the occlusion quad) are laid out in screen space already.
+                if (t.GetComponentInParent<Camera>(true) != null) continue;
+
+                if (candidate is ParticleSystemRenderer particles)
+                {
+                    if (fixCameraFacingParticles) FixParticleFacing(particles);
+                    // Local-aligned particles turn with their transform: treat like a mesh.
+                    if (particles.alignment != ParticleSystemRenderSpace.Local) continue;
+                }
+                else if (!(candidate is SpriteRenderer || candidate is MeshRenderer || candidate is SkinnedMeshRenderer))
+                {
+                    continue; // trails and lines are built from world points
+                }
+
+                if (!autoUprightSprites) continue;
                 // Already upright (grass, props) or lying flat (shadows): leave alone.
                 if (Mathf.Abs(t.forward.y) < 0.02f) continue;
                 if (Vector3.Dot(t.forward, cameraForward) < minDot) continue;
                 if (t.GetComponentInParent<ObliqueBillboard>(true) != null) continue;
-                scanBuffer.Add(sprite);
+                scanBuffer.Add(candidate);
             }
             if (scanBuffer.Count == 0) return;
 
             // Parents first, so a child that just inherits its parent's tilt is not rotated twice.
             scanBuffer.Sort((a, b) => Depth(a.transform).CompareTo(Depth(b.transform)));
-            foreach (SpriteRenderer sprite in scanBuffer)
+            foreach (Renderer candidate in scanBuffer)
             {
-                if (sprite == null || sprite.transform.GetComponentInParent<ObliqueBillboard>(true) != null) continue;
-                sprite.gameObject.AddComponent<ObliqueBillboard>();
+                if (candidate == null || candidate.transform.GetComponentInParent<ObliqueBillboard>(true) != null) continue;
+                candidate.gameObject.AddComponent<ObliqueBillboard>();
             }
             scanBuffer.Clear();
+        }
+
+        // Billboard / mesh particles aligned to the view are built in the camera's tilted plane and would be drawn
+        // 1.39x taller (at 35 degrees). World alignment builds them upright, facing +Z, which is "upright toward the
+        // camera" when the camera is not turned sideways; otherwise vertical billboards do the same job.
+        private void FixParticleFacing(ParticleSystemRenderer particles)
+        {
+            if (fixedParticles.ContainsKey(particles)) return;
+            ParticleSystemRenderSpace alignment = particles.alignment;
+            if (alignment != ParticleSystemRenderSpace.View && alignment != ParticleSystemRenderSpace.Facing) return;
+            ParticleSystemRenderMode mode = particles.renderMode;
+            if (mode != ParticleSystemRenderMode.Billboard && mode != ParticleSystemRenderMode.Mesh) return;
+
+            Vector3 flat = Vector3.ProjectOnPlane(transform.forward, Vector3.up);
+            bool facingWorldZ = flat.sqrMagnitude > 0.000001f && Vector3.Angle(flat, Vector3.forward) < 1f;
+            if (!facingWorldZ && mode != ParticleSystemRenderMode.Billboard) return;
+
+            fixedParticles[particles] = new ParticleSetup { RenderMode = mode, Alignment = alignment };
+            if (facingWorldZ) particles.alignment = ParticleSystemRenderSpace.World;
+            else particles.renderMode = ParticleSystemRenderMode.VerticalBillboard;
+        }
+
+        private void RestoreParticles()
+        {
+            foreach (KeyValuePair<ParticleSystemRenderer, ParticleSetup> entry in fixedParticles)
+            {
+                if (entry.Key == null) continue;
+                entry.Key.renderMode = entry.Value.RenderMode;
+                entry.Key.alignment = entry.Value.Alignment;
+            }
+            fixedParticles.Clear();
         }
 
         private static int Depth(Transform t)
