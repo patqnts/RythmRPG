@@ -117,7 +117,7 @@ namespace RythmRPG.Combat
             if (ghosts.Count == 0) return;
             if (view != null)
             {
-                canvasRect.rotation = view.transform.rotation;
+                canvasRect.rotation = ObliqueProjection.BillboardRotation(view);
                 if (canvas.worldCamera != view) canvas.worldCamera = view;
             }
 

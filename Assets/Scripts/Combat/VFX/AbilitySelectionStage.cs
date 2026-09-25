@@ -275,9 +275,10 @@ namespace RythmRPG.Combat
             float iconWorld = spriteHeight * (theme != null ? theme.IconSize : 0.4f);
             float scale = iconWorld / IconCanvasUnits;
             Vector3 top = player.position + Vector3.up * (headOffset + spriteHeight * (theme != null ? theme.IconsHeightAboveHead : 0.12f));
-            Quaternion facing = view != null ? view.transform.rotation : Quaternion.identity;
-            // Pulled a little toward the camera so the player's own sprite never cuts through the icons.
-            Vector3 towardCamera = view != null ? -view.transform.forward * 0.5f : Vector3.zero;
+            Quaternion facing = view != null ? ObliqueProjection.BillboardRotation(view) : Quaternion.identity;
+            // Pulled a little toward the camera so the player's own sprite never cuts through the icons
+            // (along the view ray, so the icons keep their screen position).
+            Vector3 towardCamera = view != null ? -ObliqueProjection.ViewDirection(view) * 0.5f : Vector3.zero;
             canvasRect.SetPositionAndRotation(top + towardCamera, facing);
             canvasRect.localScale = Vector3.one * scale;
             if (view != null && canvas.worldCamera != view) canvas.worldCamera = view;
@@ -484,7 +485,9 @@ namespace RythmRPG.Combat
             float aspect = view != null && view.aspect > 0f ? view.aspect : 16f / 9f;
             float size = zoomCamera.Lens.OrthographicSize;
             Vector2 offset = theme != null ? theme.ZoomScreenPosition - new Vector2(0.5f, 0.5f) : new Vector2(0f, -0.12f);
-            Vector3 position = focus - forward * depth - right * (offset.x * 2f * size * aspect) - up * (offset.y * 2f * size);
+            // With an ObliqueProjection the focus' screen height is not simply its offset along the camera's up.
+            float upOffset = ObliqueProjection.CameraUpOffsetFor(view, rotation, focus.y, offset.y * 2f * size);
+            Vector3 position = focus - forward * depth - right * (offset.x * 2f * size * aspect) - up * upOffset;
             zoomCamera.transform.SetPositionAndRotation(position, rotation);
         }
 

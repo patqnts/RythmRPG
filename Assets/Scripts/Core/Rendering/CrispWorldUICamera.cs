@@ -98,6 +98,8 @@ namespace RythmRPG.Core
         // Runs after every LateUpdate (Cinemachine brain, CombatCameraShaker, note movement) and before any camera renders.
         private void HandleBeginContextRendering(ScriptableRenderContext context, List<Camera> cameras)
         {
+            // Oblique projection (if any) first: its matrix and upright sprites must be final before the copy and the occluder mask.
+            if (ResolveSource()) ObliqueProjection.Prepare(source, true);
             Sync();
             if (Application.isPlaying) RenderOcclusion(context);
         }
@@ -147,6 +149,7 @@ namespace RythmRPG.Core
             crisp.nearClipPlane = source.nearClipPlane;
             crisp.farClipPlane = source.farClipPlane;
 
+            ObliqueProjection.Prepare(source, false);
             Matrix4x4 projection = source.projectionMatrix;
             Rect rect = new(0f, 0f, 1f, 1f);
             if (TryGetOutputViewportRect(out Rect fitted))

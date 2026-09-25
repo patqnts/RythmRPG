@@ -113,10 +113,9 @@ namespace RythmRPG.Combat
         private float SeparationViewportShift()
         {
             if (extraPlayerEnemySeparation <= 0f || !ResolveWorldCamera() || !worldCamera.orthographic) return 0f;
-            Vector3 up = worldCamera.transform.up;
-            Vector3 groundUp = Vector3.ProjectOnPlane(up, Vector3.up);
-            if (groundUp.sqrMagnitude < 0.000001f) return 0f;
-            float foreshortening = Mathf.Abs(Vector3.Dot(groundUp.normalized, up));
+            // sin(pitch) for a plain ortho camera; the ObliqueProjection's floor scale when one is active.
+            float foreshortening = ObliqueProjection.GroundForeshortening(worldCamera);
+            if (foreshortening < 0.001f) return 0f;
             return extraPlayerEnemySeparation * foreshortening / (2f * Mathf.Max(0.01f, worldCamera.orthographicSize));
         }
         public float HitLineViewportY => hitLineViewport.y;
@@ -229,7 +228,7 @@ namespace RythmRPG.Combat
             if (UsesScreenLayout)
             {
                 // Screen-anchored layout: the feet stand at a fixed spot in the camera view, whatever the camera does.
-                Ray feetRay = worldCamera.ViewportPointToRay(new Vector3(
+                Ray feetRay = ObliqueProjection.ViewportPointToRay(worldCamera, new Vector3(
                     Mathf.Clamp01(hitLineViewport.x), PlayerFeetViewportY, 0f));
                 if (!feetPlane.Raycast(feetRay, out float feetDistance)) return false;
                 position = feetRay.GetPoint(feetDistance);
@@ -237,7 +236,8 @@ namespace RythmRPG.Combat
                 return true;
             }
             // Project the elevated line onto the feet plane through the actual output camera.
-            Ray ray = worldCamera.ViewportPointToRay(worldCamera.WorldToViewportPoint(center));
+            Ray ray = ObliqueProjection.ViewportPointToRay(worldCamera,
+                ObliqueProjection.WorldToViewportPoint(worldCamera, center));
             if (!feetPlane.Raycast(ray, out float distance)) return false;
             Vector3 screenUp = Vector3.ProjectOnPlane(worldCamera.transform.up, Vector3.up);
             position = HorizontalCombatGeometry.PositionBehindLine(ray.GetPoint(distance),
@@ -465,6 +465,10 @@ namespace RythmRPG.Combat
             {
                 right = Vector3.ProjectOnPlane(right, Vector3.up);
                 travel = Vector3.ProjectOnPlane(travel, Vector3.up);
+                // An upright line (ObliqueProjection billboard) has no ground component in its up: notes travel toward
+                // the camera along the ground, as they do for a camera-facing line.
+                if (travel.sqrMagnitude <= 0.0001f && worldCamera != null)
+                    travel = -Vector3.ProjectOnPlane(worldCamera.transform.forward, Vector3.up);
                 linePlane = new Plane(Vector3.up, origin);
             }
             right = right.sqrMagnitude > 0.0001f ? right.normalized : Vector3.right;
@@ -779,7 +783,7 @@ namespace RythmRPG.Combat
         {
             if (!ResolveWorldCamera()) { point.y = height; return point; }
             Vector3 direction = worldCamera.orthographic
-                ? worldCamera.transform.forward
+                ? ObliqueProjection.ViewDirection(worldCamera)
                 : (point - worldCamera.transform.position).normalized;
             if (Mathf.Abs(direction.y) < 0.0001f) { point.y = height; return point; }
             return point + direction * ((height - point.y) / direction.y);
@@ -790,12 +794,13 @@ namespace RythmRPG.Combat
             if (!hitLineAtPlayerFeet && hitLineViewport.y < 0f) SeedHitLineViewport(uiCamera, canvasScale);
             Vector2 viewport = new(Mathf.Clamp01(hitLineViewport.x),
                 Mathf.Clamp01(hitLineAtPlayerFeet ? PlayerFeetViewportY : hitLineViewport.y));
-            Ray ray = worldCamera.ViewportPointToRay(viewport);
+            Ray ray = ObliqueProjection.ViewportPointToRay(worldCamera, viewport);
             if (!plane.Raycast(ray, out float distance)) return;
             Vector3 point = ray.GetPoint(distance);
 
             Vector3 travel = Vector3.back;
-            Ray below = worldCamera.ViewportPointToRay(new Vector2(viewport.x, Mathf.Clamp01(viewport.y - 0.02f)));
+            Ray below = ObliqueProjection.ViewportPointToRay(worldCamera,
+                new Vector2(viewport.x, Mathf.Clamp01(viewport.y - 0.02f)));
             if (plane.Raycast(below, out float belowDistance))
             {
                 Vector3 direction = below.GetPoint(belowDistance) - point;
@@ -808,8 +813,7 @@ namespace RythmRPG.Combat
             {
                 // Stands facing the camera: reads as a flat 2D line on screen. Lane targets derive their direction
                 // from the line's up/right projected onto the gameplay plane, so note travel is unchanged.
-                hitLineAnchor.SetPositionAndRotation(point,
-                    Quaternion.LookRotation(worldCamera.transform.forward, worldCamera.transform.up));
+                hitLineAnchor.SetPositionAndRotation(point, ObliqueProjection.BillboardRotation(worldCamera));
                 return;
             }
             Vector3 forward = horizontalGameplay ? Vector3.down : worldCamera.transform.forward;
@@ -876,7 +880,7 @@ namespace RythmRPG.Combat
             }
             viewport.x = Mathf.Clamp01(viewport.x);
             viewport.y = Mathf.Clamp01(viewport.y);
-            Ray ray = worldCamera.ViewportPointToRay(viewport);
+            Ray ray = ObliqueProjection.ViewportPointToRay(worldCamera, viewport);
             if (plane.Raycast(ray, out float distance))
             {
                 worldPoint = ray.GetPoint(distance);
@@ -987,8 +991,9 @@ namespace RythmRPG.Combat
             float unitsPerPixel = worldCamera.orthographic && rtHeight > 0f
                 ? 2f * worldCamera.orthographicSize / rtHeight
                 : 0.03f;
-            float facing = Mathf.Abs(Vector3.Dot(worldCamera.transform.up, Vector3.up));
-            float planar = horizontalGameplay && !hitLineAtNoteHeight ? Mathf.Max(0.2f, Mathf.Sqrt(Mathf.Max(0f, 1f - facing * facing))) : 1f;
+            float planar = horizontalGameplay && !hitLineAtNoteHeight
+                ? Mathf.Max(0.2f, ObliqueProjection.GroundForeshortening(worldCamera))
+                : 1f;
             return pixels * unitsPerPixel / planar;
         }
 

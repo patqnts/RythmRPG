@@ -484,7 +484,7 @@ namespace RythmRPG.Combat
                 center.transform.SetParent(transform, false);
                 runtimeAbilityCenter = center.transform;
             }
-            Vector3 worldCenter = activeCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.55f,
+            Vector3 worldCenter = ObliqueProjection.ViewportToWorldPoint(activeCamera, new Vector3(0.5f, 0.55f,
                 Mathf.Abs(activeCamera.transform.position.z)));
             worldCenter.z = 0f;
             runtimeAbilityCenter.position = worldCenter;
@@ -504,7 +504,7 @@ namespace RythmRPG.Combat
             Vector3 position = Vector3.zero;
             if (activeCamera != null)
             {
-                position = activeCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.55f,
+                position = ObliqueProjection.ViewportToWorldPoint(activeCamera, new Vector3(0.5f, 0.55f,
                     Mathf.Abs(activeCamera.transform.position.z)));
             }
 

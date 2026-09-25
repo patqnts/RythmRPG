@@ -2,6 +2,7 @@ using System.Collections;
 using Unity.Cinemachine;
 using Unity.Cinemachine.TargetTracking;
 using PrimeTween;
+using RythmRPG.Core;
 using UnityEngine;
 
 namespace RythmRPG.Combat
@@ -282,8 +283,11 @@ namespace RythmRPG.Combat
             float orthographicSize = ResolveOrthographicSize();
             float aspect = ResolveCameraAspect();
             Vector2 normalizedOffset = CombatEnemyViewport - new Vector2(0.5f, 0.5f);
+            // With an ObliqueProjection the enemy's screen height is not simply its offset along the camera's up.
+            float upOffset = ObliqueProjection.CameraUpOffsetFor(Camera.main, cameraTransform.rotation,
+                enemyPosition.y, normalizedOffset.y * 2f * orthographicSize);
             Vector3 screenOffset = cameraTransform.right * (normalizedOffset.x * 2f * orthographicSize * aspect)
-                + cameraTransform.up * (normalizedOffset.y * 2f * orthographicSize);
+                + cameraTransform.up * upOffset;
             float depth = Mathf.Max(1f, Vector3.Dot(-ResolveFollowOffset(), cameraTransform.forward));
             return enemyPosition - screenOffset - cameraTransform.forward * depth;
         }
@@ -292,12 +296,23 @@ namespace RythmRPG.Combat
             Vector3 cameraPosition, out Vector3 worldPosition)
         {
             Transform cameraTransform = virtualCamera.transform;
-            float orthographicSize = ResolveOrthographicSize();
-            Vector2 normalizedOffset = viewportPosition - new Vector2(0.5f, 0.5f);
-            Vector3 rayOrigin = cameraPosition
-                + cameraTransform.right * (normalizedOffset.x * 2f * orthographicSize * ResolveCameraAspect())
-                + cameraTransform.up * (normalizedOffset.y * 2f * orthographicSize);
-            Ray ray = new(rayOrigin, cameraTransform.forward);
+            Ray ray;
+            Camera outputCamera = Camera.main;
+            if (ObliqueProjection.TryGet(outputCamera, out _))
+            {
+                // Exact ray of the oblique projection, for the camera standing at its combat position.
+                ray = ObliqueProjection.ViewportPointToRayAt(outputCamera, cameraPosition, cameraTransform.rotation,
+                    viewportPosition);
+            }
+            else
+            {
+                float orthographicSize = ResolveOrthographicSize();
+                Vector2 normalizedOffset = viewportPosition - new Vector2(0.5f, 0.5f);
+                Vector3 rayOrigin = cameraPosition
+                    + cameraTransform.right * (normalizedOffset.x * 2f * orthographicSize * ResolveCameraAspect())
+                    + cameraTransform.up * (normalizedOffset.y * 2f * orthographicSize);
+                ray = new Ray(rayOrigin, cameraTransform.forward);
+            }
             Plane plane = new(Vector3.up, new Vector3(0f, height, 0f));
             if (plane.Raycast(ray, out float distance))
             {

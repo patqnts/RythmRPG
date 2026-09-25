@@ -447,9 +447,11 @@ namespace RythmRPG.Combat
                 ? 2f * view.orthographicSize
                 : 2f * distance * Mathf.Tan(view.fieldOfView * 0.5f * Mathf.Deg2Rad);
             float width = height * Mathf.Max(0.01f, view.aspect);
-            quad.transform.localPosition = new Vector3(0f, 0f, distance);
+            // An oblique projection (ObliqueProjection) would slide this far plane off screen and stretch it; undo that.
+            ObliqueProjection.TryGetScreenPlane(view, distance, out float upOffset, out float heightScale);
+            quad.transform.localPosition = new Vector3(0f, upOffset, distance);
             quad.transform.localRotation = Quaternion.identity;
-            quad.transform.localScale = new Vector3(width * 1.15f, height * 1.15f, 1f);
+            quad.transform.localScale = new Vector3(width * 1.15f, height * heightScale * 1.15f, 1f);
         }
 
         private void ApplyProperties()
