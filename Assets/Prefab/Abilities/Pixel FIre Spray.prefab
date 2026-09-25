@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 400002}
   - component: {fileID: 19957796}
   - component: {fileID: 19898874}
+  - component: {fileID: 2234104836141947571}
+  - component: {fileID: 4656012983763867531}
   m_Layer: 9
   m_Name: Pixel FIre Spray
   m_TagString: Untagged
@@ -2710,6 +2712,60 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &2234104836141947571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100002}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 522b151ac99632040a0a28d392a605d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: RythmRPG.Core::RythmRPG.Core.GrassFire
+  action: 0
+  mode: 0
+  interval: 0.15
+  shape: 1
+  offset: {x: 0, y: 0, z: 0}
+  footprint: 1
+  radius: 0.5
+  length: 3.5
+  coneAngle: 20
+  coneStartRadius: 0
+  boxSize: {x: 1, y: 1, z: 3}
+  particles: {fileID: 0}
+  particleReach: 0.6
+  minParticleAge: 0.1
+  particlesPerCheck: 48
+  maxHeightAboveGrass: 1
+--- !u!114 &4656012983763867531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57b21263b52c154438bd63905fe4dd57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: RythmRPG.Core::RythmRPG.Core.GrassShockwaveEmitter
+  shape: 1
+  maxRadius: 5
+  coneAngle: 23
+  lineLength: 4
+  offset: {x: 0, y: 0, z: 0}
+  speed: 14.3
+  strength: 1.97
+  width: 0.9
+  effects: 2
+  effectRadius: -1
+  cutHeightMode: 3
+  cutHeight: 0.1
+  emitOnEnable: 1
+  repeatInterval: 0.18
 --- !u!1 &100004
 GameObject:
   m_ObjectHideFlags: 0
@@ -8246,7 +8302,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 3
       minMaxState: 0
-      scalar: 12.37
+      scalar: 3.73
       minScalar: 5
       maxCurve:
         serializedVersion: 2

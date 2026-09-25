@@ -8,6 +8,7 @@ namespace RythmRPG.Core
     /// amount (world XZ), B = how flattened. Every frame all <see cref="GrassInteractor"/>s are stamped into it on the
     /// GPU and the previous frame decays, so grass bends away instantly and springs back smoothly after you leave.
     /// The grass shader samples it at each blade's root: interaction costs the same for 10 or 100 000 blades.
+    /// Shockwaves (<see cref="Grass.Shockwave"/>) are stamped the same way, as expanding rings that push outward.
     /// Driven by the first active <see cref="GrassField"/>; nothing to set up.
     /// </summary>
     public static class GrassInteractionMap
@@ -26,6 +27,32 @@ namespace RythmRPG.Core
         private static readonly int ResolutionId = Shader.PropertyToID("_Resolution");
         private static readonly int GlobalTexId = Shader.PropertyToID("_GrassInteractionTex");
         private static readonly int GlobalParamsId = Shader.PropertyToID("_GrassInteractionParams");
+        private static readonly int ShockwavesId = Shader.PropertyToID("_Shockwaves");
+        private static readonly int ShockwaveShapeId = Shader.PropertyToID("_ShockwaveShape");
+        private static readonly int ShockwaveCountId = Shader.PropertyToID("_ShockwaveCount");
+        private static readonly int ShockwaveDirId = Shader.PropertyToID("_ShockwaveDir");
+
+        /// <summary>Most shockwaves at once (the oldest is dropped).</summary>
+        public const int MaxShockwaves = 8;
+
+        private struct Wave
+        {
+            public Vector2 Center;
+            public float Start;
+            public float MaxRadius;
+            public float Speed;
+            public float Strength;
+            public float Width;
+            public GrassShockwaveShape Shape;
+            public Vector2 Direction;
+            public float Angle;
+            public float LineLength;
+        }
+
+        private static readonly List<Wave> waves = new();
+        private static readonly Vector4[] waveData = new Vector4[MaxShockwaves];
+        private static readonly Vector4[] waveShape = new Vector4[MaxShockwaves];
+        private static readonly Vector4[] waveDirection = new Vector4[MaxShockwaves];
 
         private static readonly RenderTexture[] targets = new RenderTexture[2];
         private static readonly Vector4[] interactors = new Vector4[GrassInteractor.MaxActive];
@@ -45,6 +72,40 @@ namespace RythmRPG.Core
 
         /// <summary>The current map, or null when interaction is off (other shaders may read it too).</summary>
         public static Texture Texture => targets[current];
+
+        /// <summary>
+        /// Starts a ring at <paramref name="center"/> that grows at <paramref name="speed"/> up to
+        /// <paramref name="maxRadius"/>, pushing the grass outward with <paramref name="strength"/> (fading as it grows).
+        /// Use <see cref="Grass.Shockwave"/> to also cut or burn the grass.
+        /// </summary>
+        public static void AddShockwave(Vector3 center, float maxRadius, float speed, float strength, float width)
+        {
+            GrassShockwave wave = GrassShockwave.Ring(center, maxRadius);
+            wave.speed = speed;
+            wave.strength = strength;
+            wave.width = width;
+            AddShockwave(wave);
+        }
+
+        /// <summary>Starts a ring, cone or line shockwave (only its push; <see cref="Grass.Shockwave(GrassShockwave)"/>
+        /// also applies its cut / fire effects).</summary>
+        public static void AddShockwave(GrassShockwave wave)
+        {
+            if (waves.Count >= MaxShockwaves) waves.RemoveAt(0);
+            waves.Add(new Wave
+            {
+                Center = new Vector2(wave.origin.x, wave.origin.z),
+                Start = Time.time,
+                MaxRadius = Mathf.Max(0.1f, wave.distance),
+                Speed = Mathf.Max(0.1f, wave.speed),
+                Strength = Mathf.Clamp(wave.strength, 0f, 2f),
+                Width = Mathf.Max(0.05f, wave.width),
+                Shape = wave.shape,
+                Direction = wave.FlatDirection,
+                Angle = Mathf.Clamp(wave.angle, 1f, 360f),
+                LineLength = Mathf.Max(0.1f, wave.lineLength)
+            });
+        }
 
         /// <summary>Updates the map once per frame (called from the first <see cref="GrassField"/>'s LateUpdate).</summary>
         public static void Tick(GrassField settings, Camera camera)
@@ -77,6 +138,7 @@ namespace RythmRPG.Core
 
             float dt = Time.deltaTime;
             int count = CollectInteractors(focus, size, planeHeight, dt);
+            int waveCount = CollectShockwaves(Time.time);
 
             var mapParams = new Vector4(origin.x, origin.y, size, reset ? 0f : 1f);
             float pushDecay = Mathf.Exp(-settings.RecoverySpeed * dt);
@@ -91,6 +153,10 @@ namespace RythmRPG.Core
                 compute.SetVectorArray(InteractorsId, interactors);
                 compute.SetVectorArray(VelocitiesId, velocities);
                 compute.SetInt(CountId, count);
+                compute.SetVectorArray(ShockwavesId, waveData);
+                compute.SetVectorArray(ShockwaveShapeId, waveShape);
+                compute.SetVectorArray(ShockwaveDirId, waveDirection);
+                compute.SetInt(ShockwaveCountId, waveCount);
                 compute.SetInt(ResolutionId, resolution);
                 compute.SetTexture(kernel, PrevId, targets[current]);
                 compute.SetTexture(kernel, NextId, targets[next]);
@@ -105,6 +171,10 @@ namespace RythmRPG.Core
                 material.SetVectorArray(InteractorsId, interactors);
                 material.SetVectorArray(VelocitiesId, velocities);
                 material.SetFloat(CountId, count);
+                material.SetVectorArray(ShockwavesId, waveData);
+                material.SetVectorArray(ShockwaveShapeId, waveShape);
+                material.SetVectorArray(ShockwaveDirId, waveDirection);
+                material.SetFloat(ShockwaveCountId, waveCount);
                 material.SetTexture(PrevTexId, targets[current]);
                 Graphics.Blit(targets[current], targets[next], material, 0);
             }
@@ -130,6 +200,7 @@ namespace RythmRPG.Core
             compute = null;
             kernel = -1;
             hasOrigin = false;
+            waves.Clear();
             Shader.SetGlobalVector(GlobalParamsId, Vector4.zero);
         }
 
@@ -182,6 +253,43 @@ namespace RythmRPG.Core
                 velocities[i] = new Vector4(v.x, v.z, 0f, 0f);
             }
             candidates.Clear();
+            return count;
+        }
+
+        // Current waves: xy = centre XZ, z = distance travelled, w = strength now;
+        // shape: x = width, y = flatten, z = 0 ring / 1 cone / 2 line;
+        // direction: xy = travel direction, then cone: zw = cos(half angle), cos(half angle + soft edge);
+        // line: z = half its length, w = soft edge.
+        private static int CollectShockwaves(float now)
+        {
+            waves.RemoveAll(w => (now - w.Start) * w.Speed > w.MaxRadius + w.Width);
+            int count = 0;
+            foreach (Wave wave in waves)
+            {
+                if (count >= MaxShockwaves) break;
+                float radius = Mathf.Max(0f, (now - wave.Start) * wave.Speed);
+                float fade = 1f - Mathf.Clamp01(radius / wave.MaxRadius);
+                waveData[count] = new Vector4(wave.Center.x, wave.Center.y, radius, wave.Strength * fade * fade);
+                waveShape[count] = new Vector4(wave.Width, 0.8f, (float)wave.Shape, 0f);
+                if (wave.Shape == GrassShockwaveShape.Cone)
+                {
+                    float half = wave.Angle * 0.5f;
+                    waveDirection[count] = new Vector4(wave.Direction.x, wave.Direction.y,
+                        Mathf.Cos(half * Mathf.Deg2Rad), Mathf.Cos(Mathf.Min(half + 12f, 180f) * Mathf.Deg2Rad));
+                }
+                else
+                {
+                    waveDirection[count] = new Vector4(wave.Direction.x, wave.Direction.y, wave.LineLength * 0.5f,
+                        Mathf.Max(0.3f, wave.Width));
+                }
+                count++;
+            }
+            for (int i = count; i < MaxShockwaves; i++)
+            {
+                waveData[i] = Vector4.zero;
+                waveShape[i] = Vector4.zero;
+                waveDirection[i] = Vector4.zero;
+            }
             return count;
         }
 
@@ -246,6 +354,7 @@ namespace RythmRPG.Core
         {
             lastFrame = -1;
             hasOrigin = false;
+            waves.Clear();
         }
     }
 }

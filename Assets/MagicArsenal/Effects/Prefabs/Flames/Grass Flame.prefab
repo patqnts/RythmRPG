@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 430402}
   - component: {fileID: 19887762}
   - component: {fileID: 19946292}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Embers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,7 +98,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 3
       minMaxState: 3
-      scalar: 1.3
+      scalar: 0.47
       minScalar: 0.4
       maxCurve:
         serializedVersion: 2
@@ -267,7 +267,7 @@ ParticleSystem:
         m_RotationOrder: 0
     startSizeY:
       serializedVersion: 3
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -284,7 +284,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeZ:
       serializedVersion: 3
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -301,7 +301,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startRotationX:
       serializedVersion: 3
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 0
       maxCurve:
@@ -318,7 +318,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startRotationY:
       serializedVersion: 3
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 0
       maxCurve:
@@ -377,7 +377,7 @@ ParticleSystem:
     gravityModifier:
       serializedVersion: 3
       minMaxState: 0
-      scalar: -0.75
+      scalar: -0.29
       minScalar: -0.75
       maxCurve:
         serializedVersion: 2
@@ -2726,8 +2726,8 @@ GameObject:
   - component: {fileID: 478684}
   - component: {fileID: 19864882}
   - component: {fileID: 19972870}
-  m_Layer: 0
-  m_Name: FireFlame
+  m_Layer: 9
+  m_Name: Grass Flame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2758,7 +2758,7 @@ ParticleSystem:
   m_GameObject: {fileID: 174222}
   serializedVersion: 8
   lengthInSec: 1
-  simulationSpeed: 1
+  simulationSpeed: 0.96
   stopAction: 0
   cullingMode: 3
   ringBufferMode: 0
@@ -2768,7 +2768,7 @@ ParticleSystem:
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
-  autoRandomSeed: 1
+  autoRandomSeed: 0
   startDelay:
     serializedVersion: 3
     minMaxState: 0
@@ -5458,7 +5458,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7767ff6cb0f746b42b1f9621145ee0cf, type: 2}
+  - {fileID: 2100000, guid: 5daa80d5c645f8d45b2550329edcdf52, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

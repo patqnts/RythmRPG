@@ -20,12 +20,18 @@ namespace RythmRPG.Core
     /// with the rest of the world during space combat (<see cref="SceneVisibility"/>). Because it has no Renderer,
     /// the ObliqueBillboard scan and the space backdrop's renderer toggling do not touch it.
     /// </para>
+    /// <para>
+    /// Grass can be cut, burnt (fire spreads tuft to tuft, pushed by the wind) and pushed by shockwaves, and grows
+    /// back. Use the <see cref="Grass"/> API or the GrassCutter / GrassFire / GrassShockwaveEmitter components; the
+    /// per-tuft state lives in GrassField.Burning.cs.
+    /// </para>
     /// </summary>
     [ExecuteAlways, DisallowMultipleComponent]
     [AddComponentMenu("Rythm RPG/Environment/Grass Field")]
-    public sealed class GrassField : MonoBehaviour
+    public sealed partial class GrassField : MonoBehaviour
     {
         private const string ShaderPath = "Rendering/PixelGrass";
+        private const string FlameShaderPath = "Rendering/GrassFlame";
         private const int BladeStride = sizeof(float) * 8;
 
         [Serializable]
@@ -95,6 +101,101 @@ namespace RythmRPG.Core
         [Tooltip("In Play mode, give every CharacterController a GrassInteractor automatically.")]
         [SerializeField] private bool autoAddInteractors = true;
 
+        [Header("Cutting")]
+        [SerializeField] private bool cuttable = true;
+        [Tooltip("Height left after a cut when the cutter does not decide it, as a fraction of the tuft " +
+                 "(0 = down to the ground). A GrassCutter can cut at its own height instead.")]
+        [SerializeField, Range(0f, 1f)] private float stubbleHeight = 0.3f;
+        [Tooltip("The lowest any cut can go, as a fraction of the tuft (0 = cutters may mow it to the ground).")]
+        [SerializeField, Range(0f, 1f)] private float minStubble = 0.08f;
+
+        [Header("Cut Pieces")]
+        [Tooltip("The severed top of each tuft is thrown off, tumbles, lands flat and shrinks away.")]
+        [SerializeField] private bool cutPieces = true;
+        [Tooltip("Seconds a cut piece stays (flight + lying on the ground).")]
+        [SerializeField, Min(0.2f)] private float pieceLifetime = 1.8f;
+        [Tooltip("How fast pieces fly sideways, away from the cutter (units per second).")]
+        [SerializeField, Min(0f)] private float pieceSpeed = 1.3f;
+        [Tooltip("How fast pieces are tossed up (units per second).")]
+        [SerializeField, Min(0f)] private float pieceJump = 1.8f;
+        [SerializeField, Min(0.1f)] private float pieceGravity = 9f;
+        [Tooltip("How fast pieces tumble (radians per second).")]
+        [SerializeField, Min(0f)] private float pieceSpin = 4f;
+        [Tooltip("Pixel specks flying off each cut tuft (built-in effect; 0 = none). Ignored when Cut Effect is set.")]
+        [SerializeField, Range(0, 6)] private int clippingSpecks = 1;
+        [Tooltip("Colour of those specks.")]
+        [SerializeField] private Color clippingColor = new(0.42f, 0.7f, 0.28f, 1f);
+
+        [Header("Burning")]
+        [SerializeField] private bool burnable = true;
+        [Tooltip("Seconds for one tuft to burn down.")]
+        [SerializeField, Min(0.1f)] private float burnDuration = 1.6f;
+        [Tooltip("How far fire jumps from a burning tuft (world units). Should be more than the tuft spacing.")]
+        [SerializeField, Min(0.05f)] private float spreadRadius = 0.75f;
+        [Tooltip("How fast the fire front moves (world units per second, before wind).")]
+        [SerializeField, Min(0.01f)] private float spreadSpeed = 1.1f;
+        [Tooltip("Chance that a burning tuft lights each neighbour. Low values make fires die out on their own.")]
+        [SerializeField, Range(0f, 1f)] private float spreadChance = 0.8f;
+        [Tooltip("How much the wind pushes the fire (0 = spreads evenly in every direction).")]
+        [SerializeField, Range(0f, 1f)] private float windSpread = 0.6f;
+        [Tooltip("Height of the ash left behind, as a fraction of the tuft.")]
+        [SerializeField, Range(0f, 1f)] private float ashHeight = 0.12f;
+        [Tooltip("Seconds the embers keep glowing after a tuft has burnt out.")]
+        [SerializeField, Min(0f)] private float emberTime = 2.5f;
+        [Tooltip("Most tufts burning at once (a safety cap for very large fields).")]
+        [SerializeField, Min(1)] private int maxBurning = 4000;
+        [SerializeField, ColorUsage(false, true)] private Color flameColor = new(2f, 0.62f, 0.12f, 1f);
+        [SerializeField, ColorUsage(false, true)] private Color flameTipColor = new(2.2f, 1.8f, 0.6f, 1f);
+        [SerializeField] private Color charColor = new(0.13f, 0.1f, 0.09f, 1f);
+        [SerializeField] private Color ashColor = new(0.36f, 0.34f, 0.32f, 1f);
+        [Tooltip("Rows of sprite pixels of flame licking above the burning edge (0 = none, e.g. when using Flame Frames).")]
+        [SerializeField, Range(0, 8)] private int flameHeight = 3;
+        [Tooltip("Flame flicker frames per second (a pixel-art flicker rather than a smooth one).")]
+        [SerializeField, Range(1f, 30f)] private float flameFps = 12f;
+        [Tooltip("How far burning grass curls over and shrivels (0 = burns straight down).")]
+        [SerializeField, Range(0f, 2f)] private float curl = 1f;
+        [Tooltip("Intensity of a point light that follows the fire and lights its surroundings (0 = no light).")]
+        [SerializeField, Min(0f)] private float fireLightIntensity = 2.5f;
+
+        [Header("Fire Animation (optional)")]
+        [Tooltip("Sprite frames of a flame animation, played on every burning tuft (all frames from one texture). " +
+                 "Empty = only the pixel flames drawn into the grass.")]
+        [SerializeField] private Sprite[] flameFrames;
+        [SerializeField, Range(1f, 30f)] private float flameFrameRate = 10f;
+        [Tooltip("Size of the flame sprite (1 = its own pixel size).")]
+        [SerializeField, Min(0.05f)] private float flameScale = 1f;
+        [SerializeField, ColorUsage(true, true)] private Color flameTint = Color.white;
+        [Tooltip("Alpha below which flame sprite pixels are discarded.")]
+        [SerializeField, Range(0f, 1f)] private float flameCutoff = 0.1f;
+
+        [Header("Particle Effects (optional)")]
+        [Tooltip("Your particle system (prefab or scene object), emitted continuously from every burning tuft. " +
+                 "A private copy is used, with its own emission switched off; empty = built-in pixel embers and smoke.")]
+        [SerializeField] private ParticleSystem burningEffect;
+        [Tooltip("Particles per second per burning tuft.")]
+        [SerializeField, Min(0f)] private float burningEffectRate = 2f;
+        [Tooltip("Burst when a tuft catches fire.")]
+        [SerializeField] private ParticleSystem igniteEffect;
+        [Tooltip("Burst when a tuft burns out.")]
+        [SerializeField] private ParticleSystem burnOutEffect;
+        [Tooltip("Burst when a tuft is cut (replaces the built-in pixel specks).")]
+        [SerializeField] private ParticleSystem cutEffect;
+        [Tooltip("Particles per burst.")]
+        [SerializeField, Range(1, 20)] private int burstCount = 2;
+
+        [Header("Regrowth")]
+        [SerializeField] private bool regrow = true;
+        [Tooltip("Seconds before cut or burnt grass starts growing back.")]
+        [SerializeField, Min(0f)] private float regrowDelay = 25f;
+        [Tooltip("Seconds it takes to grow back to full height.")]
+        [SerializeField, Min(0.1f)] private float regrowDuration = 8f;
+
+        [Header("Built-in Effects")]
+        [Tooltip("Built-in pixel particles (clipping specks, embers, smoke) wherever no particle effect is assigned above.")]
+        [SerializeField] private bool particleEffects = true;
+        [Tooltip("Optional material for those particles. Empty = URP Particles/Unlit, or Sprites/Default.")]
+        [SerializeField] private Material effectMaterial;
+
         [Header("Pixel art")]
         [Tooltip("Move bent tips in whole render-texture pixels, so swaying grass stays crisp.")]
         [SerializeField] private bool snapBendToPixels = true;
@@ -134,6 +235,20 @@ namespace RythmRPG.Core
         private static readonly int ColorAId = Shader.PropertyToID("_ColorA");
         private static readonly int ColorBId = Shader.PropertyToID("_ColorB");
         private static readonly int PatchId = Shader.PropertyToID("_Patch");
+        private static readonly int StatesId = Shader.PropertyToID("_GrassStates");
+        private static readonly int SpriteExtraId = Shader.PropertyToID("_SpriteExtra");
+        private static readonly int GrassTimeId = Shader.PropertyToID("_GrassTime");
+        private static readonly int BurnId = Shader.PropertyToID("_Burn");
+        private static readonly int FireId = Shader.PropertyToID("_Fire");
+        private static readonly int RegrowId = Shader.PropertyToID("_Regrow");
+        private static readonly int FlameColorId = Shader.PropertyToID("_FlameColor");
+        private static readonly int FlameTipColorId = Shader.PropertyToID("_FlameTipColor");
+        private static readonly int CharColorId = Shader.PropertyToID("_CharColor");
+        private static readonly int AshColorId = Shader.PropertyToID("_AshColor");
+        private static readonly int CurlId = Shader.PropertyToID("_Curl");
+        private static readonly int CutsId = Shader.PropertyToID("_GrassCuts");
+        private static readonly int PiecesId = Shader.PropertyToID("_Pieces");
+        private static readonly int Pieces2Id = Shader.PropertyToID("_Pieces2");
 
         private readonly List<DrawGroup> groups = new();
         private GraphicsBuffer bladeBuffer;
@@ -151,6 +266,9 @@ namespace RythmRPG.Core
         public float InteractionMapSize => interactionMapSize;
         public int InteractionResolution => interactionResolution;
         public float PixelsPerUnit => pixelsPerUnit;
+        public bool Cuttable { get => cuttable; set => cuttable = value; }
+        public bool Burnable { get => burnable; set => burnable = value; }
+        public float StubbleHeight { get => stubbleHeight; set => stubbleHeight = Mathf.Clamp01(value); }
 
         /// <summary>Average height of the blade roots: the ground the grass stands on (used for interaction).</summary>
         public float GroundHeight { get; private set; }
@@ -175,6 +293,7 @@ namespace RythmRPG.Core
             RenderPipelineManager.beginContextRendering -= OnBeginContextRendering;
             activeFields.Remove(this);
             ReleaseGpu();
+            ReleaseStates();
             if (activeFields.Count == 0) GrassInteractionMap.Release();
         }
 
@@ -184,12 +303,14 @@ namespace RythmRPG.Core
             dirty = true;
         }
 
-        // The interaction map is updated here, outside rendering, after gameplay has moved everything this frame.
+        // Cut / fire / regrowth and the interaction map are updated here, outside rendering, after gameplay has
+        // moved everything this frame.
         private void LateUpdate()
         {
-            if (!Application.isPlaying || activeFields.Count == 0 || activeFields[0] != this) return;
+            if (!Application.isPlaying) return;
             if (dirty) Rebuild();
-            GrassInteractionMap.Tick(this, Camera.main);
+            SimulateStates(Time.time, Time.deltaTime);
+            if (activeFields.Count > 0 && activeFields[0] == this) GrassInteractionMap.Tick(this, Camera.main);
         }
 
         private void Update()
@@ -214,9 +335,16 @@ namespace RythmRPG.Core
             if (!EnsureMaterial()) return;
             if (dirty) Rebuild();
             if (bladeBuffer == null || groups.Count == 0) return;
+            UploadStates();
 
             Camera view = Camera.main;
-            ApplyMaterialSettings(view);
+            Vector3 right = Vector3.right;
+            if (view != null)
+            {
+                Vector3 flat = Vector3.ProjectOnPlane(view.transform.right, Vector3.up);
+                if (flat.sqrMagnitude > 0.0001f) right = flat.normalized;
+            }
+            ApplyMaterialSettings(material, right);
 
             if (bladeMesh == null) bladeMesh = CreateBladeMesh();
             var rp = new RenderParams(material)
@@ -233,28 +361,67 @@ namespace RythmRPG.Core
                 rp.matProps = group.Properties;
                 Graphics.RenderMeshPrimitives(rp, bladeMesh, 0, group.Count);
             }
+
+            if (!Application.isPlaying) return;
+            DrawCutPieces(rp, right);
+            DrawFlames(right);
         }
 
-        private void ApplyMaterialSettings(Camera view)
+        // The chunks where something was cut recently are drawn a second time, as flying / fallen pieces.
+        private void DrawCutPieces(RenderParams rp, Vector3 right)
         {
-            Vector3 right = Vector3.right;
-            if (view != null)
+            if (!cutPieces || groupPieceUntil == null) return;
+            float now = Time.time;
+            float reach = (pieceSpeed * 1.1f + 0.5f) * pieceLifetime;
+            bool any = false;
+            for (int g = 0; g < groups.Count && g < groupPieceUntil.Length; g++)
             {
-                Vector3 flat = Vector3.ProjectOnPlane(view.transform.right, Vector3.up);
-                if (flat.sqrMagnitude > 0.0001f) right = flat.normalized;
+                if (groupPieceUntil[g] < now) continue;
+                if (!any)
+                {
+                    if (pieceMaterial == null)
+                    {
+                        pieceMaterial = new Material(material) { name = "Pixel Grass Pieces (runtime)", hideFlags = HideFlags.HideAndDontSave };
+                        pieceMaterial.EnableKeyword("_GRASS_PIECES");
+                    }
+                    ApplyMaterialSettings(pieceMaterial, right);
+                    rp.material = pieceMaterial;
+                    any = true;
+                }
+                DrawGroup group = groups[g];
+                Bounds bounds = group.Bounds;
+                bounds.Expand(reach * 2f);
+                rp.worldBounds = bounds;
+                rp.matProps = group.Properties;
+                Graphics.RenderMeshPrimitives(rp, bladeMesh, 0, group.Count);
             }
+        }
+
+        private void ApplyMaterialSettings(Material target, Vector3 right)
+        {
             Vector2 wind = windDirection.sqrMagnitude > 0.0001f ? windDirection.normalized : Vector2.right;
 
-            material.SetFloat(CutoffId, alphaCutoff);
-            material.SetVector(RightId, right);
-            material.SetVector(WindId, new Vector4(wind.x, wind.y, windStrength, windSpeed));
-            material.SetVector(WindShapeId, new Vector4(windWaveFrequency, gustStrength, gustScale, bendHeight));
-            material.SetVector(PushId, new Vector4(interactive ? pushBend : 0f, interactive ? pushFlatten : 0f,
+            target.SetFloat(CutoffId, alphaCutoff);
+            target.SetVector(RightId, right);
+            target.SetVector(WindId, new Vector4(wind.x, wind.y, windStrength, windSpeed));
+            target.SetVector(WindShapeId, new Vector4(windWaveFrequency, gustStrength, gustScale, bendHeight));
+            target.SetVector(PushId, new Vector4(interactive ? pushBend : 0f, interactive ? pushFlatten : 0f,
                 trampleShade, pixelsPerUnit));
-            material.SetVector(PixelOptionsId, new Vector4(snapBendToPixels ? 1f : 0f, 0f, 0f, 0f));
-            material.SetColor(ColorAId, patchColorA);
-            material.SetColor(ColorBId, patchColorB);
-            material.SetVector(PatchId, new Vector4(patchScale, 0f, normalUp, lightBands));
+            target.SetVector(PixelOptionsId, new Vector4(snapBendToPixels ? 1f : 0f, 0f, 0f, 0f));
+            target.SetColor(ColorAId, patchColorA);
+            target.SetColor(ColorBId, patchColorB);
+            target.SetVector(PatchId, new Vector4(patchScale, 0f, normalUp, lightBands));
+            target.SetVector(GrassTimeId, new Vector4(Application.isPlaying ? Time.time : 0f, 0f, 0f, 0f));
+            target.SetVector(BurnId, new Vector4(burnDuration, ashHeight, emberTime, 0f));
+            target.SetVector(FireId, new Vector4(flameHeight, 2f, flameFps, 0.3f));
+            target.SetVector(RegrowId, new Vector4(regrowDuration, 0f, 0f, 0f));
+            target.SetColor(FlameColorId, flameColor);
+            target.SetColor(FlameTipColorId, flameTipColor);
+            target.SetColor(CharColorId, charColor);
+            target.SetColor(AshColorId, ashColor);
+            target.SetVector(CurlId, new Vector4(curl, 0f, 0f, 0f));
+            target.SetVector(PiecesId, new Vector4(pieceLifetime, pieceSpeed, pieceJump, pieceGravity));
+            target.SetVector(Pieces2Id, new Vector4(pieceSpin, 1.5f / Mathf.Max(1f, pixelsPerUnit), 0f, 0f));
         }
 
         private bool EnsureMaterial()
@@ -285,6 +452,8 @@ namespace RythmRPG.Core
         {
             dirty = false;
             ReleaseGpu();
+            ReleaseStateBuffer();
+            visibleRowsCache.Clear();
             GroundHeight = transform.position.y;
             if (blades.Count > 0)
             {
@@ -292,7 +461,11 @@ namespace RythmRPG.Core
                 foreach (Blade blade in blades) sum += blade.position.y;
                 GroundHeight = (float)(sum / blades.Count);
             }
-            if (blades.Count == 0 || variants.Count == 0) return;
+            if (blades.Count == 0 || variants.Count == 0)
+            {
+                ResetStates();
+                return;
+            }
 
             // Sort the kept blades by (chunk, variant) so each draw is one contiguous range.
             var order = new List<(long key, int index)>(blades.Count);
@@ -308,10 +481,17 @@ namespace RythmRPG.Core
                 long key = (((long)(cx + 32768) & 0xFFFF) << 40) | (((long)(cz + 32768) & 0xFFFF) << 24) | (uint)variant;
                 order.Add((key, i));
             }
-            if (order.Count == 0) return;
+            if (order.Count == 0)
+            {
+                ResetStates();
+                return;
+            }
             order.Sort((a, b) => a.key.CompareTo(b.key));
 
             var data = new GpuBlade[order.Count];
+            bladeTips = new float[order.Count];
+            bladeBases = new float[order.Count];
+            bladeGroups = new int[order.Count];
             groups.Clear();
             int start = 0;
             for (int n = 0; n < order.Count; n++)
@@ -332,7 +512,15 @@ namespace RythmRPG.Core
 
             bladeBuffer = new GraphicsBuffer(GraphicsBuffer.Target.Structured, data.Length, BladeStride);
             bladeBuffer.SetData(data);
-            foreach (DrawGroup group in groups) group.Properties.SetBuffer(BladesId, bladeBuffer);
+            var source = new int[order.Count];
+            for (int n = 0; n < order.Count; n++) source[n] = order[n].index;
+            BuildStates(data, source);
+            foreach (DrawGroup group in groups)
+            {
+                group.Properties.SetBuffer(BladesId, bladeBuffer);
+                group.Properties.SetBuffer(StatesId, stateBuffer);
+                group.Properties.SetBuffer(CutsId, cutBuffer);
+            }
         }
 
         private void AddGroup(GpuBlade[] data, int offset, int count, int variant)
@@ -357,12 +545,26 @@ namespace RythmRPG.Core
             var bounds = new Bounds((min + max) * 0.5f, max - min);
             bounds.Expand(reach * 2f);
 
+            // The part of the quad the grass actually covers (sprites often have empty rows): cuts and burns are
+            // measured on it.
+            Vector2 visible = VisibleRows(sprite);
+            float tip = (visible.y - pivot.y) * size.y;
+            float bottom = (visible.x - pivot.y) * size.y;
+            for (int i = offset; i < offset + count; i++)
+            {
+                float scale = data[i].PositionScale.w;
+                bladeTips[i] = Mathf.Max(bottom * scale + 0.02f, tip * scale);
+                bladeBases[i] = bottom * scale;
+                bladeGroups[i] = groups.Count;
+            }
+
             var properties = new MaterialPropertyBlock();
             properties.SetFloat(OffsetId, offset);
             properties.SetTexture(BaseMapId, texture);
             properties.SetVector(SpriteUVId, new Vector4(rect.x / texture.width, rect.y / texture.height,
                 rect.width / texture.width, rect.height / texture.height));
             properties.SetVector(SpriteSizeId, new Vector4(size.x, size.y, pivot.x, pivot.y));
+            properties.SetVector(SpriteExtraId, new Vector4(visible.x, visible.y, rect.height, rect.width));
 
             groups.Add(new DrawGroup { Bounds = bounds, Offset = offset, Count = count, Variant = variant, Properties = properties });
         }
@@ -380,9 +582,16 @@ namespace RythmRPG.Core
 
         private void OnDestroy()
         {
-            if (material == null) return;
-            if (Application.isPlaying) Destroy(material);
-            else DestroyImmediate(material);
+            DestroyMaterial(material);
+            DestroyMaterial(pieceMaterial);
+            DestroyMaterial(flameMaterial);
+        }
+
+        private static void DestroyMaterial(Material target)
+        {
+            if (target == null) return;
+            if (Application.isPlaying) Destroy(target);
+            else DestroyImmediate(target);
         }
 
         // Unit strip, 2 columns x 9 rows: uv is the corner in the sprite (the shader places and bends it).

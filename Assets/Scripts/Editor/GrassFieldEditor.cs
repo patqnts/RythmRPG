@@ -10,6 +10,7 @@ using UnityEngine;
 /// <item>Blades land on colliders under the brush (Paint Layers), otherwise on the field's height.</item>
 /// <item>Import: turns existing sprite grass (e.g. the "Medium Grass" objects) into GPU grass and switches the
 /// originals off, all undoable.</item>
+/// <item>Play mode: try cutting, burning and shockwaves by clicking in the Scene view.</item>
 /// </list>
 /// </summary>
 [CustomEditor(typeof(GrassField))]
@@ -27,6 +28,13 @@ public sealed class GrassFieldEditor : Editor
     private static int paintMask = ~(1 << 2);
     private static Transform importRoot;
     private static bool disableImported = true;
+
+    private enum TestTool { Off, Cut, Ignite, Extinguish, Shockwave, Explosion }
+    private static readonly string[] TestToolNames = { "Off", "Cut", "Ignite", "Put Out", "Shockwave", "Explosion" };
+    private static TestTool testTool;
+    private static float testRadius = 1f;
+    private static float testCutHeight;
+    private static GrassShockwaveShape testWaveShape;
 
     private readonly System.Random random = new();
     private GrassField field;
@@ -66,6 +74,7 @@ public sealed class GrassFieldEditor : Editor
             if (GUILayout.Button(painting ? "Painting (click to stop)" : "Paint Grass", GUILayout.Height(28)))
             {
                 painting = !painting;
+                if (painting) testTool = TestTool.Off;
                 SceneView.RepaintAll();
             }
             GUI.backgroundColor = previous;
@@ -106,6 +115,37 @@ public sealed class GrassFieldEditor : Editor
         EditorGUILayout.EndHorizontal();
 
         EditorGUILayout.Space(8);
+        EditorGUILayout.LabelField("Try it (Play mode)", EditorStyles.boldLabel);
+        using (new EditorGUILayout.VerticalScope(EditorStyles.helpBox))
+        {
+            if (!Application.isPlaying)
+            {
+                EditorGUILayout.HelpBox("Enter Play mode, pick a tool and click (or drag) in the Scene view to cut, burn " +
+                    "or shake the grass. From code: Grass.Cut / Ignite / Extinguish / Shockwave.", MessageType.None);
+            }
+            else
+            {
+                TestTool previousTool = testTool;
+                testTool = (TestTool)GUILayout.Toolbar((int)testTool, TestToolNames);
+                if (testTool != previousTool)
+                {
+                    painting = false;
+                    SceneView.RepaintAll();
+                }
+                testRadius = EditorGUILayout.Slider("Radius", testRadius, 0.1f, 8f);
+                if (testTool == TestTool.Shockwave || testTool == TestTool.Explosion)
+                    testWaveShape = (GrassShockwaveShape)EditorGUILayout.EnumPopup(new GUIContent("Wave Shape",
+                        "Cone and Line travel the way the Scene view camera looks."), testWaveShape);
+                if (testTool == TestTool.Cut || testTool == TestTool.Explosion)
+                    testCutHeight = EditorGUILayout.Slider(new GUIContent("Cut Height",
+                        "Fraction of the tuft the cut goes through (0 = the field's Stubble Height)."), testCutHeight, 0f, 1f);
+                EditorGUILayout.LabelField($"Burning: {field.BurningCount}", EditorStyles.miniLabel);
+                if (GUILayout.Button("Restore All Grass")) field.RestoreAll();
+                if (field.BurningCount > 0) Repaint();
+            }
+        }
+
+        EditorGUILayout.Space(8);
         EditorGUILayout.LabelField("Import sprite grass", EditorStyles.boldLabel);
         using (new EditorGUILayout.VerticalScope(EditorStyles.helpBox))
         {
@@ -121,6 +161,11 @@ public sealed class GrassFieldEditor : Editor
 
     private void OnSceneGUI()
     {
+        if (Application.isPlaying && testTool != TestTool.Off && field != null)
+        {
+            TestInScene();
+            return;
+        }
         if (!painting || field == null) return;
         Event e = Event.current;
         int controlId = GUIUtility.GetControlID(FocusType.Passive);
@@ -153,6 +198,69 @@ public sealed class GrassFieldEditor : Editor
             e.Use();
         }
         if (e.type == EventType.MouseMove || e.type == EventType.MouseDrag) SceneView.RepaintAll();
+    }
+
+    private void TestInScene()
+    {
+        Event e = Event.current;
+        int controlId = GUIUtility.GetControlID(FocusType.Passive);
+        HandleUtility.AddDefaultControl(controlId);
+
+        Ray ray = HandleUtility.GUIPointToWorldRay(e.mousePosition);
+        var plane = new Plane(Vector3.up, new Vector3(0f, field.GroundHeight, 0f));
+        Vector3 point;
+        if (Physics.Raycast(ray, out RaycastHit hit, 5000f, paintMask, QueryTriggerInteraction.Ignore)) point = hit.point;
+        else if (plane.Raycast(ray, out float distance)) point = ray.GetPoint(distance);
+        else return;
+
+        Handles.color = testTool == TestTool.Cut ? new Color(0.9f, 1f, 0.4f, 0.9f)
+            : testTool == TestTool.Ignite ? new Color(1f, 0.5f, 0.1f, 0.9f)
+            : testTool == TestTool.Extinguish ? new Color(0.3f, 0.6f, 1f, 0.9f)
+            : new Color(0.6f, 0.9f, 1f, 0.9f);
+        bool wave = testTool == TestTool.Shockwave || testTool == TestTool.Explosion;
+        Handles.DrawWireDisc(point, Vector3.up, wave ? testRadius * 4f : testRadius);
+
+        bool press = e.type == EventType.MouseDown && e.button == 0 && !e.alt;
+        bool drag = e.type == EventType.MouseDrag && e.button == 0 && !e.alt;
+        if (press || (drag && !wave))
+        {
+            switch (testTool)
+            {
+                case TestTool.Cut:
+                    Grass.Cut(point, testRadius, testCutHeight > 0f ? GrassCutHeight.AtFraction(testCutHeight) : GrassCutHeight.FieldDefault);
+                    break;
+                case TestTool.Ignite: Grass.Ignite(point, testRadius); break;
+                case TestTool.Extinguish: Grass.Extinguish(point, testRadius); break;
+                case TestTool.Shockwave:
+                    Grass.Shockwave(TestWave(point));
+                    break;
+                case TestTool.Explosion:
+                {
+                    GrassShockwave blast = TestWave(point);
+                    blast.speed = 16f;
+                    blast.strength = 2f;
+                    blast.effects = GrassShockwaveEffect.Cut | GrassShockwaveEffect.Ignite;
+                    blast.effectDistance = testRadius * 1.5f;
+                    blast.cutHeight = testCutHeight > 0f ? GrassCutHeight.AtFraction(testCutHeight) : GrassCutHeight.FieldDefault;
+                    Grass.Shockwave(blast);
+                    break;
+                }
+            }
+            e.Use();
+        }
+        if (e.type == EventType.MouseMove || e.type == EventType.MouseDrag) SceneView.RepaintAll();
+    }
+
+    private static GrassShockwave TestWave(Vector3 point)
+    {
+        SceneView view = SceneView.lastActiveSceneView;
+        Vector3 forward = view != null && view.camera != null ? view.camera.transform.forward : Vector3.forward;
+        GrassShockwave wave = GrassShockwave.Ring(point, testRadius * 4f);
+        wave.shape = testWaveShape;
+        wave.direction = new Vector3(forward.x, 0f, forward.z);
+        wave.angle = 70f;
+        wave.lineLength = testRadius * 3f;
+        return wave;
     }
 
     private void Paint(Vector3 center)

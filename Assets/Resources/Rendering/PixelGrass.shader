@@ -1,7 +1,11 @@
 // GPU grass for GrassField.cs. One procedural draw per (chunk, sprite variant); every blade is read from a
 // StructuredBuffer by SV_InstanceID, so there are no GameObjects, no per-blade CPU work and no matrices.
 // Blades are upright quads facing the camera's yaw (1:1 under the ObliqueProjection), bent by wind and by the
-// GrassInteractionMap (trampling), optionally in whole-pixel steps for crisp pixel art.
+// GrassInteractionMap (trampling, shockwaves), optionally in whole-pixel steps for crisp pixel art.
+// Cutting, burning and regrowth come from a per-blade state buffer (_GrassStates, see GrassField.Burning.cs):
+// the shader animates the fire, the curling and the regrowth from the times stored there, in whole sprite rows.
+// With _GRASS_PIECES (a second draw of the chunks where something was just cut) it draws the severed tops
+// instead: each piece is thrown off, tumbles, lands flat on the ground and shrinks away (_GrassCuts).
 Shader "Hidden/RythmRPG/PixelGrass"
 {
     Properties
@@ -44,6 +48,26 @@ Shader "Hidden/RythmRPG/PixelGrass"
     float4 _ColorB;
     float4 _Patch;            // x = patch scale, y = shade variation, z = normal up blend, w = light bands (0 = smooth)
 
+    // Cut / burn state, one per blade (same order as _GrassBlades):
+    // x = height left (0..1), y = ignite time (< 0 = none), z = regrow start time (< 0 = none), w = char (0..1).
+    StructuredBuffer<float4> _GrassStates;
+    float4 _SpriteExtra;      // per draw: x, y = lowest / highest row the grass covers (quad v), z = sprite height, w = width (texels)
+    float4 _GrassTime;        // x = the game time the states are written in
+    float4 _Burn;             // x = burn duration, y = ash height, z = ember time
+    float4 _Fire;             // x = flame rows above the edge, y = glowing rows below it, z = flicker fps, w = ember density
+    float4 _Regrow;           // x = regrow duration
+    float4 _FlameColor;
+    float4 _FlameTipColor;
+    float4 _CharColor;
+    float4 _AshColor;
+    float4 _Curl;             // x = how far burning grass curls over (0 = stays straight)
+
+    // Severed tops, one per blade: x = cut time (< 0 = none), y / z = bottom / top of the piece (0..1 of the tuft),
+    // w = flight direction (radians, world XZ).
+    StructuredBuffer<float4> _GrassCuts;
+    float4 _Pieces;           // x = lifetime, y = sideways speed, z = jump speed, w = gravity
+    float4 _Pieces2;          // x = spin (radians / s), y = height it lies at on the ground
+
     float GrassHash(float2 p)
     {
         p = frac(p * float2(123.34, 456.21));
@@ -68,17 +92,105 @@ Shader "Hidden/RythmRPG/PixelGrass"
         return _PixelOptions.x > 0.5 ? round(value * _Push.w) / _Push.w : value;
     }
 
+    struct GrassState
+    {
+        // x = top of what is left (quad v; 2 = whole), y = 0, or 1 + a per-blade seed while in flames,
+        // z = char (0..1), w = ember glow (0..1), or -1 - the lowest row kept (quad v) for a cut piece.
+        float4 burn;
+        float curl; // 0..1: how far the tuft has curled up from the heat
+    };
+
+    GrassState GrassEvaluate(uint index, float seed)
+    {
+        float4 s = _GrassStates[index];
+        float clock = _GrassTime.x;
+        float height = s.x;
+        float charAmount = s.w;
+        float flame = 0.0;
+        float ember = 0.0;
+        float curl = s.w; // ash stays curled until it grows back
+        if (s.y >= 0.0 && clock >= s.y)
+        {
+            float age = clock - s.y;
+            float p = saturate(age / max(_Burn.x, 0.001));
+            height = lerp(s.x, min(s.x, _Burn.y), p);
+            charAmount = max(charAmount, saturate(p * 3.0));
+            curl = max(curl, saturate(p * 1.4));
+            if (p < 1.0) flame = 1.0 + seed;
+            else ember = saturate(1.0 - (age - _Burn.x) / max(_Burn.z, 0.001));
+        }
+        if (s.z >= 0.0)
+        {
+            float r = saturate((clock - s.z) / max(_Regrow.x, 0.001));
+            height = lerp(height, 1.0, r);
+            charAmount *= 1.0 - r;
+            curl *= 1.0 - r;
+        }
+        GrassState o;
+        o.burn = float4(height >= 0.999 ? 2.0 : lerp(_SpriteExtra.x, _SpriteExtra.y, height), flame, charAmount, ember);
+        o.curl = curl;
+        return o;
+    }
+
+    // Bends a point of the tuft (x across, y up from the root) along an arc that tightens toward the tip, the way
+    // a blade of grass curls and shrivels in a fire. side = +1 / -1: which way it curls.
+    float2 GrassCurl(float2 local, float height, float amount, float side)
+    {
+        float theta = amount * 2.4;
+        float h = local.y;
+        float stepLength = h * 0.25;
+        float2 spine = float2(0, 0);
+        [unroll] for (int i = 0; i < 4; i++)
+        {
+            float s = (i + 0.5) * stepLength / height;
+            float a = theta * s * s;
+            spine += float2(sin(a), cos(a)) * stepLength;
+        }
+        float tipAngle = theta * (h / height) * (h / height);
+        float across = local.x * (1.0 - 0.3 * saturate(amount));
+        return float2(side * spine.x + across * cos(tipAngle), spine.y - side * across * sin(tipAngle));
+    }
+
+    // Sprite texel (column, row) under a uv.
+    float2 GrassTexel(float2 uv)
+    {
+        float2 corner = (uv - _SpriteUV.xy) / max(_SpriteUV.zw, 1e-6);
+        return floor(corner * _SpriteExtra.wz);
+    }
+
+    // Removes the cut or burnt-away part of a tuft in whole sprite rows, so the edge stays crisp. While the tuft
+    // burns, a few flickering rows of flame survive above the edge: returns 1 for those pixels.
+    float GrassBurnClip(float2 texel, float4 burn)
+    {
+        if (burn.w < 0.0) clip(texel.y - floor((-1.0 - burn.w) * _SpriteExtra.z + 0.5)); // a cut piece: rows below it are not part of it
+        float edgeRow = floor(burn.x * _SpriteExtra.z + 0.5);
+        float above = texel.y - edgeRow;
+        if (above < 0.0) return 0.0;
+        float tongue = 0.0;
+        if (burn.y > 0.5 && above < _Fire.x)
+        {
+            float seed = burn.y - 1.0;
+            float frame = floor(_GrassTime.x * _Fire.z + seed * 7.0);
+            float n = GrassHash(float2(texel.x * 0.73 + seed * 19.0 + above * 3.1, frame * 0.61 + seed));
+            tongue = n > (above + 1.0) / (_Fire.x + 1.0) ? 1.0 : 0.0;
+        }
+        clip(tongue - 0.5);
+        return tongue;
+    }
+
     struct GrassVertex
     {
         float3 positionWS;
         float2 uv;
         float shade;
         float3 rootWS;
+        float4 burn;
     };
 
     GrassVertex BuildGrassVertex(float2 corner, uint instanceID)
     {
-        GrassBlade blade = _GrassBlades[(uint)_GrassInstanceOffset + instanceID];
+        uint index = (uint)_GrassInstanceOffset + instanceID;
+        GrassBlade blade = _GrassBlades[index];
         float3 root = blade.positionScale.xyz;
         float scale = blade.positionScale.w;
 
@@ -87,6 +199,16 @@ Shader "Hidden/RythmRPG/PixelGrass"
         local.x *= blade.data.x;
         float3 right = _GrassRight.xyz;
         float heightAbove = max(local.y, 0.0);
+
+        // Burning grass curls over (whole pixels, so the sprite stays crisp).
+        GrassState state = GrassEvaluate(index, blade.data.z);
+        float curl = state.curl * _Curl.x;
+        if (curl > 0.001 && local.y > 0.0)
+        {
+            float visibleHeight = max((_SpriteExtra.y - _SpriteSize.w) * _SpriteSize.y * scale, 0.0001);
+            float2 curled = GrassCurl(local, visibleHeight, curl, blade.data.z > 0.5 ? 1.0 : -1.0);
+            local += float2(SnapToPixels(curled.x - local.x), SnapToPixels(curled.y - local.y));
+        }
 
         // 0 at the root, 1 at the bend height: the tip moves, the root stays planted.
         float bendHeight = max(_WindShape.w * scale, 0.0001);
@@ -127,7 +249,76 @@ Shader "Hidden/RythmRPG/PixelGrass"
         v.positionWS = root + right * local.x + float3(0, local.y, 0) + float3(offsetXZ.x, yOffset, offsetXZ.y);
         v.uv = _SpriteUV.xy + corner * _SpriteUV.zw;
         v.shade = blade.data.y * lerp(1.0, _Push.z, flatten);
+        v.burn = state.burn;
         return v;
+    }
+
+    // A severed top: thrown away from the cut, tumbling, then lying flat on the ground and shrinking away.
+    GrassVertex BuildPieceVertex(float2 corner, uint instanceID)
+    {
+        uint index = (uint)_GrassInstanceOffset + instanceID;
+        GrassBlade blade = _GrassBlades[index];
+        float4 cut = _GrassCuts[index];
+        float3 root = blade.positionScale.xyz;
+        float scale = blade.positionScale.w;
+        float seed = blade.data.z;
+        float age = _GrassTime.x - cut.x;
+
+        float bottomV = lerp(_SpriteExtra.x, _SpriteExtra.y, cut.y);
+        float topV = lerp(_SpriteExtra.x, _SpriteExtra.y, cut.z);
+        GrassVertex v;
+        v.rootWS = root;
+        v.uv = _SpriteUV.xy + corner * _SpriteUV.zw;
+        v.shade = blade.data.y;
+        v.burn = float4(topV, 0.0, 0.0, -1.0 - bottomV);
+        v.positionWS = root; // no piece: every corner on one point, nothing is drawn
+        if (cut.x < 0.0 || age < 0.0 || age > _Pieces.x) return v;
+
+        float centerV = 0.5 * (bottomV + topV);
+        float2 local = (corner - float2(_SpriteSize.z, centerV)) * _SpriteSize.xy * scale;
+        local.x *= blade.data.x;
+        float startHeight = (centerV - _SpriteSize.w) * _SpriteSize.y * scale;
+
+        float r1 = frac(seed * 17.13 + 0.21);
+        float r2 = frac(seed * 31.71 + 0.53);
+        float2 dir = float2(cos(cut.w), sin(cut.w));
+        float speed = _Pieces.y * (0.6 + 0.8 * r1);
+        float jump = _Pieces.z * (0.7 + 0.6 * r2);
+        float gravity = max(_Pieces.w, 0.01);
+        float rest = _Pieces2.y;
+        float landTime = (jump + sqrt(jump * jump + 2.0 * gravity * max(startHeight - rest, 0.0))) / gravity;
+        float t = min(age, landTime);
+        float travel = speed * t + speed * 0.05 * saturate((age - landTime) * 6.0);
+        float height = age < landTime ? startHeight + jump * t - 0.5 * gravity * t * t : rest;
+
+        // Tumble in the picture plane, and tip over to lie flat on the ground by the time it lands.
+        float3 right = _GrassRight.xyz;
+        float3 forward = float3(-right.z, 0.0, right.x);
+        float sideways = dot(dir, right.xz);
+        float spinSign = abs(sideways) > 0.2 ? -sign(sideways) : (r2 > 0.5 ? 1.0 : -1.0);
+        float angle = _Pieces2.x * (0.5 + r1) * spinSign * t;
+        float away = dot(dir, forward.xz);
+        float3 fallDir = forward * (abs(away) > 0.2 ? sign(away) : (r1 > 0.5 ? 1.0 : -1.0));
+        float tip = smoothstep(0.0, 1.0, saturate(age / max(landTime, 0.001))) * 1.5707963;
+        float3 up = float3(0, 1, 0) * cos(tip) + fallDir * sin(tip);
+
+        float shrink = saturate((_Pieces.x - age) / 0.35);
+        float sn, cs;
+        sincos(angle, sn, cs);
+        float2 rotated = float2(local.x * cs - local.y * sn, local.x * sn + local.y * cs) * shrink;
+        float3 offset = float3(dir.x * travel, height, dir.y * travel);
+        offset = float3(SnapToPixels(offset.x), SnapToPixels(offset.y), SnapToPixels(offset.z));
+        v.positionWS = root + offset + right * rotated.x + up * rotated.y;
+        return v;
+    }
+
+    GrassVertex BuildVertex(float2 corner, uint instanceID)
+    {
+        #if defined(_GRASS_PIECES)
+        return BuildPieceVertex(corner, instanceID);
+        #else
+        return BuildGrassVertex(corner, instanceID);
+        #endif
     }
 
     half3 GrassNormal()
@@ -162,6 +353,7 @@ Shader "Hidden/RythmRPG/PixelGrass"
             #pragma target 4.5
             #pragma vertex Vert
             #pragma fragment Frag
+            #pragma multi_compile_local _ _GRASS_PIECES
 
             #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE
             #pragma multi_compile _ _ADDITIONAL_LIGHTS
@@ -186,17 +378,19 @@ Shader "Hidden/RythmRPG/PixelGrass"
                 float3 positionWS : TEXCOORD1;
                 float3 rootWS : TEXCOORD2;
                 float2 shadeFog : TEXCOORD3;
+                nointerpolation float4 burn : TEXCOORD4;
             };
 
             Varyings Vert(Attributes input)
             {
-                GrassVertex g = BuildGrassVertex(input.uv, input.instanceID);
+                GrassVertex g = BuildVertex(input.uv, input.instanceID);
                 Varyings output;
                 output.positionWS = g.positionWS;
                 output.positionCS = TransformWorldToHClip(g.positionWS);
                 output.uv = g.uv;
                 output.rootWS = g.rootWS;
                 output.shadeFog = float2(g.shade, ComputeFogFactor(output.positionCS.z));
+                output.burn = g.burn;
                 return output;
             }
 
@@ -205,9 +399,48 @@ Shader "Hidden/RythmRPG/PixelGrass"
                 return _Patch.w > 0.5 ? floor(value * _Patch.w + 0.5) / _Patch.w : value;
             }
 
+            // Charring, flames and embers. Darkens the albedo where it burns; returns the glow (added unlit).
+            half3 GrassBurnColor(float2 texel, float4 burn, float3 rootWS, float tongue, inout half3 albedo)
+            {
+                float speck = GrassHash(texel * 0.37 + rootWS.xz * 5.3);
+                half3 burnt = speck > 0.6 ? (half3)_AshColor.rgb : (half3)_CharColor.rgb;
+                albedo = lerp(albedo, burnt, (half)burn.z);
+
+                half3 emission = half3(0, 0, 0);
+                if (burn.y > 0.5)
+                {
+                    float seed = burn.y - 1.0;
+                    float frame = floor(_GrassTime.x * _Fire.z + seed * 7.0);
+                    float edgeRow = floor(burn.x * _SpriteExtra.z + 0.5);
+                    float below = edgeRow - texel.y; // 1 = the row just under the burning edge
+                    float heat = tongue > 0.5 ? 1.0 : saturate(1.0 - (below - 1.0) / max(_Fire.y, 1.0));
+                    float flicker = GrassHash(float2(texel.x + seed * 13.0, frame * 0.37 + texel.y));
+                    heat *= 0.65 + 0.35 * flicker;
+                    heat = floor(heat * 3.0 + 0.5) / 3.0; // three flame shades, pixel-art style
+                    if (heat > 0.0)
+                    {
+                        float tip = tongue > 0.5 ? flicker : heat * 0.5;
+                        emission = (half3)(lerp(_FlameColor.rgb, _FlameTipColor.rgb, tip) * heat);
+                        albedo *= (half)(1.0 - heat);
+                    }
+                }
+                else if (burn.w > 0.0)
+                {
+                    float frame = floor(_GrassTime.x * 3.0);
+                    float n = GrassHash(texel * 0.53 + rootWS.xz * 7.1 + frame * 0.17);
+                    if (n > 1.0 - _Fire.w * burn.w) emission = (half3)(_FlameColor.rgb * (burn.w * 0.8));
+                }
+                return emission;
+            }
+
             half4 Frag(Varyings input) : SV_Target
             {
+                float2 texel = GrassTexel(input.uv);
+                float tongue = GrassBurnClip(texel, input.burn);
                 half4 albedo = SampleGrass(input.uv, input.rootWS, input.shadeFog.x);
+                half3 burnAlbedo = albedo.rgb;
+                half3 emission = GrassBurnColor(texel, input.burn, input.rootWS, tongue, burnAlbedo);
+                albedo.rgb = burnAlbedo;
                 half3 normalWS = GrassNormal();
 
                 InputData inputData = (InputData)0;
@@ -242,6 +475,7 @@ Shader "Hidden/RythmRPG/PixelGrass"
                 LIGHT_LOOP_END
                 #endif
 
+                color += emission;
                 color = MixFog(color, input.shadeFog.y);
                 return half4(color, 1);
             }
@@ -260,6 +494,7 @@ Shader "Hidden/RythmRPG/PixelGrass"
             #pragma target 4.5
             #pragma vertex Vert
             #pragma fragment Frag
+            #pragma multi_compile_local _ _GRASS_PIECES
             #pragma multi_compile_vertex _ _CASTING_PUNCTUAL_LIGHT_SHADOW
 
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Shadows.hlsl"
@@ -278,11 +513,12 @@ Shader "Hidden/RythmRPG/PixelGrass"
             {
                 float4 positionCS : SV_POSITION;
                 float2 uv : TEXCOORD0;
+                nointerpolation float4 burn : TEXCOORD1;
             };
 
             Varyings Vert(Attributes input)
             {
-                GrassVertex g = BuildGrassVertex(input.uv, input.instanceID);
+                GrassVertex g = BuildVertex(input.uv, input.instanceID);
                 float3 normalWS = (float3)GrassNormal();
                 #if _CASTING_PUNCTUAL_LIGHT_SHADOW
                 float3 lightDirectionWS = normalize(_LightPosition - g.positionWS);
@@ -292,11 +528,13 @@ Shader "Hidden/RythmRPG/PixelGrass"
                 Varyings output;
                 output.positionCS = ApplyShadowClamping(TransformWorldToHClip(ApplyShadowBias(g.positionWS, normalWS, lightDirectionWS)));
                 output.uv = g.uv;
+                output.burn = g.burn;
                 return output;
             }
 
             half4 Frag(Varyings input) : SV_Target
             {
+                GrassBurnClip(GrassTexel(input.uv), input.burn);
                 clip(SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, input.uv).a - _Cutoff);
                 return 0;
             }
@@ -314,6 +552,7 @@ Shader "Hidden/RythmRPG/PixelGrass"
             #pragma target 4.5
             #pragma vertex Vert
             #pragma fragment Frag
+            #pragma multi_compile_local _ _GRASS_PIECES
 
             struct Attributes
             {
@@ -326,19 +565,22 @@ Shader "Hidden/RythmRPG/PixelGrass"
             {
                 float4 positionCS : SV_POSITION;
                 float2 uv : TEXCOORD0;
+                nointerpolation float4 burn : TEXCOORD1;
             };
 
             Varyings Vert(Attributes input)
             {
-                GrassVertex g = BuildGrassVertex(input.uv, input.instanceID);
+                GrassVertex g = BuildVertex(input.uv, input.instanceID);
                 Varyings output;
                 output.positionCS = TransformWorldToHClip(g.positionWS);
                 output.uv = g.uv;
+                output.burn = g.burn;
                 return output;
             }
 
             half Frag(Varyings input) : SV_Target
             {
+                GrassBurnClip(GrassTexel(input.uv), input.burn);
                 clip(SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, input.uv).a - _Cutoff);
                 return input.positionCS.z;
             }
@@ -355,6 +597,7 @@ Shader "Hidden/RythmRPG/PixelGrass"
             #pragma target 4.5
             #pragma vertex Vert
             #pragma fragment Frag
+            #pragma multi_compile_local _ _GRASS_PIECES
             #pragma multi_compile_fragment _ _GBUFFER_NORMALS_OCT
 
             #if defined(_GBUFFER_NORMALS_OCT)
@@ -372,19 +615,22 @@ Shader "Hidden/RythmRPG/PixelGrass"
             {
                 float4 positionCS : SV_POSITION;
                 float2 uv : TEXCOORD0;
+                nointerpolation float4 burn : TEXCOORD1;
             };
 
             Varyings Vert(Attributes input)
             {
-                GrassVertex g = BuildGrassVertex(input.uv, input.instanceID);
+                GrassVertex g = BuildVertex(input.uv, input.instanceID);
                 Varyings output;
                 output.positionCS = TransformWorldToHClip(g.positionWS);
                 output.uv = g.uv;
+                output.burn = g.burn;
                 return output;
             }
 
             half4 Frag(Varyings input) : SV_Target
             {
+                GrassBurnClip(GrassTexel(input.uv), input.burn);
                 clip(SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, input.uv).a - _Cutoff);
                 float3 normalWS = (float3)GrassNormal();
                 #if defined(_GBUFFER_NORMALS_OCT)
