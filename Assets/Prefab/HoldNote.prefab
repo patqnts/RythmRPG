@@ -65,6 +65,15 @@ MonoBehaviour:
   - {fileID: 3237105755465327772}
   tailTransform: {fileID: 0}
   length: 1
+  pinTailToKeyMarker: 1
+  holdFx:
+    holdingEffectPrefab: {fileID: 139718, guid: 8b195ec44a587fa4f8c4522b0c09750f, type: 3}
+    builtInHoldingSparks: 1
+    completeEffectPrefab: {fileID: 0}
+    headHitEffectPrefab: {fileID: 0}
+    markerFillColor: {r: 1, g: 1, b: 1, a: 0}
+    oneShotLifetime: 2
+  releaseCollapseSeconds: 0.12
 --- !u!61 &3938753330650578465
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3350417154089914214
 Transform:
   m_ObjectHideFlags: 0
@@ -218,6 +218,13 @@ MonoBehaviour:
   missStateName: Miss
   damagePlayerOnEarlyRelease: 1
   length: 0
+  holdFx:
+    holdingEffectPrefab: {fileID: 0}
+    builtInHoldingSparks: 1
+    completeEffectPrefab: {fileID: 0}
+    headHitEffectPrefab: {fileID: 0}
+    markerFillColor: {r: 1, g: 1, b: 1, a: 0}
+    oneShotLifetime: 2
 --- !u!50 &676395023004352220
 Rigidbody2D:
   serializedVersion: 5
