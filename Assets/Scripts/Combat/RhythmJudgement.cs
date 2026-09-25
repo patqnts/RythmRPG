@@ -59,12 +59,16 @@ namespace RythmRPG.Combat
                 foreach (RhythmJudgementResult result in results)
                 {
                     if (result.Judgement == HitJudgement.Miss) missCount++;
-                    total += profile != null ? profile.GetWeight(result.Judgement) : DefaultWeight(result.Judgement);
+                    total += Weight(result.Judgement, profile);
                 }
             }
             float average = safeExpectedCount == 0 ? 0f : total / safeExpectedCount;
             return new RhythmPerformanceResult(safeExpectedCount, resolvedCount, missCount, average, results);
         }
+
+        /// <summary>Weight of one judgement: the Outcome Profile's, or the defaults (Miss 0, Bad 0.5, Good 0.8, Perfect 1).</summary>
+        public static float Weight(HitJudgement judgement, AbilityOutcomeProfile profile) =>
+            profile != null ? profile.GetWeight(judgement) : DefaultWeight(judgement);
 
         public static int CalculatePower(int basePower, RhythmPerformanceResult performance) =>
             Mathf.Max(0, Mathf.RoundToInt(Mathf.Max(0, basePower) * performance.AverageWeight));

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using PrimeTween;
+using RythmRPG.Rhythm;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -35,6 +36,13 @@ namespace RythmRPG.Combat
         [Tooltip("Empty = created from the style.")]
         [SerializeField] private ComboStreakView comboStreak;
 
+        [Header("Power gauge (while the player plays an ability's pattern)")]
+        [SerializeField] private bool showPowerGauge = true;
+        [Tooltip("Empty = Resources/Combat/UI/PowerGaugeStyle (or built-in defaults).")]
+        [SerializeField] private PowerGaugeStyle powerGaugeStyle;
+        [Tooltip("Empty = created from the style.")]
+        [SerializeField] private PowerGaugeView powerGauge;
+
         [Header("Old number labels (optional)")]
         [FormerlySerializedAs("PlayerHealth"), SerializeField] private TMP_Text playerHealth;
         [FormerlySerializedAs("EnemyHealth"), SerializeField] private TMP_Text enemyHealth;
@@ -51,6 +59,9 @@ namespace RythmRPG.Combat
         private float hudAlpha;
         private bool battleShown;
         private readonly List<SlideTarget> slideTargets = new();
+        private RhythmPatternRunner gaugeRunner;
+        private RhythmAbilitySystem gaugeAbilities;
+        private AbilityOutcomeProfile pendingOutcome;
 
         private struct SlideTarget
         {
@@ -110,18 +121,21 @@ namespace RythmRPG.Combat
             EnsureOptionalLabels();
             EnsureBars();
             EnsureComboStreak();
+            EnsurePowerGauge();
             RegisterAssignedBars();
             Unbind();
             controller = combatController;
             player = playerCombatant;
             enemy = enemyCombatant;
             comboStreak?.ResetImmediate();
+            powerGauge?.ResetImmediate();
             if (controller != null)
             {
                 controller.StateChanged += HandleStateChanged;
                 controller.BattleEnded += HandleBattleEnded;
                 controller.ComboChanged += HandleComboChanged;
             }
+            SubscribePowerGauge();
             if (player != null)
             {
                 player.HealthChanged += HandlePlayerHealth;
@@ -184,11 +198,13 @@ namespace RythmRPG.Combat
         {
             battleShown = false;
             comboStreak?.Hide(true);
+            powerGauge?.Hide(true);
             if (hideOnBattleEnd) ShowHud(false, slideInOnBattleStart);
         }
 
         private void Unbind()
         {
+            UnsubscribePowerGauge();
             if (controller != null)
             {
                 controller.StateChanged -= HandleStateChanged;
@@ -219,6 +235,115 @@ namespace RythmRPG.Combat
             RectTransform root = EnsureHudRoot();
             if (root == null) return;
             comboStreak = ComboStreakView.CreateTemplate(root, ComboStyle, Style);
+        }
+
+        private void EnsurePowerGauge()
+        {
+            if (powerGauge != null || !showPowerGauge) return;
+            RectTransform root = EnsureHudRoot();
+            if (root == null) return;
+            if (powerGaugeStyle == null) powerGaugeStyle = PowerGaugeStyle.LoadOrDefault();
+            powerGauge = PowerGaugeView.CreateTemplate(root, powerGaugeStyle, Style);
+        }
+
+        // ---------- power gauge ----------
+
+        private void SubscribePowerGauge()
+        {
+            UnsubscribePowerGauge();
+            if (!showPowerGauge || powerGauge == null || controller == null) return;
+            powerGauge.SetLaneAnchor(TryFirstLaneEdge);
+            gaugeRunner = controller.PatternRunner;
+            gaugeAbilities = controller.AbilitySystem;
+            if (gaugeRunner != null)
+            {
+                gaugeRunner.PatternStarted += HandlePatternStarted;
+                gaugeRunner.NoteResolved += HandleNoteResolved;
+            }
+            if (gaugeAbilities != null)
+            {
+                gaugeAbilities.ExecutionStarted += HandleAbilityStarted;
+                gaugeAbilities.ImpactAnticipationStarted += HandleImpactAnticipation;
+                gaugeAbilities.ImpactResolved += HandleImpactResolved;
+                gaugeAbilities.ExecutionCompleted += HandleAbilityCompleted;
+            }
+        }
+
+        private void UnsubscribePowerGauge()
+        {
+            if (gaugeRunner != null)
+            {
+                gaugeRunner.PatternStarted -= HandlePatternStarted;
+                gaugeRunner.NoteResolved -= HandleNoteResolved;
+            }
+            if (gaugeAbilities != null)
+            {
+                gaugeAbilities.ExecutionStarted -= HandleAbilityStarted;
+                gaugeAbilities.ImpactAnticipationStarted -= HandleImpactAnticipation;
+                gaugeAbilities.ImpactResolved -= HandleImpactResolved;
+                gaugeAbilities.ExecutionCompleted -= HandleAbilityCompleted;
+            }
+            gaugeRunner = null;
+            gaugeAbilities = null;
+        }
+
+        // Viewport point of the leftmost lane's left edge on the hit line (half a lane spacing left of its target).
+        private bool TryFirstLaneEdge(out Vector2 viewport)
+        {
+            viewport = default;
+            CombatLanePresentation3D lanes = controller != null ? controller.LanePresentation : null;
+            Camera view = lanes != null ? lanes.RenderCamera : null;
+            if (view == null) return false;
+            bool found = false;
+            Vector3 first = default;
+            float second = float.MaxValue;
+            foreach (RhythmLaneTarget target in lanes.Targets)
+            {
+                if (target == null || !target.isActiveAndEnabled) continue;
+                Vector3 point = view.WorldToViewportPoint(target.transform.position);
+                if (point.z <= 0f) continue;
+                if (!found || point.x < first.x)
+                {
+                    if (found) second = Mathf.Min(second, first.x);
+                    first = point;
+                    found = true;
+                }
+                else second = Mathf.Min(second, point.x);
+            }
+            if (!found) return false;
+            float halfLane = second < float.MaxValue ? (second - first.x) * 0.5f : 0.03f;
+            viewport = new Vector2(first.x - halfLane, first.y);
+            return true;
+        }
+
+        // The ability starts just before its pattern: remember its Outcome Profile (the note weights).
+        private void HandleAbilityStarted(AbilityRuntimeInstance ability) =>
+            pendingOutcome = ability?.Definition != null ? ability.Definition.OutcomeProfile : null;
+
+        private void HandlePatternStarted(RhythmChart chart, PatternRunContext context)
+        {
+            if (powerGauge == null || context.Mode != PatternRunMode.PlayerAbility) return;
+            RhythmPatternRunner runner = gaugeRunner;
+            int expected = runner != null ? runner.ExpectedNoteCount : 0;
+            if (expected <= 0 && chart == null) return;
+            powerGauge.Begin(pendingOutcome, expected, runner != null ? () => runner.ExpectedNoteCount : null);
+        }
+
+        private void HandleNoteResolved(RhythmJudgementResult result)
+        {
+            if (powerGauge == null || gaugeRunner == null || gaugeRunner.CurrentMode != PatternRunMode.PlayerAbility) return;
+            powerGauge.Add(result.Judgement);
+        }
+
+        private void HandleImpactAnticipation(AbilityExecutionContext _, RhythmPerformanceResult performance) =>
+            powerGauge?.Finish(performance);
+
+        private void HandleImpactResolved(AbilityExecutionContext _, RhythmPerformanceResult __) => powerGauge?.HideAfterImpact();
+
+        private void HandleAbilityCompleted(AbilityRuntimeInstance _, RhythmPerformanceResult __)
+        {
+            // Normally already fading after the impact; covers abilities with no pattern or no impact.
+            if (powerGauge != null && powerGauge.IsActive && !powerGauge.IsFinished) powerGauge.Hide(true);
         }
 
         private ResourceBarView CreateBar(string barName, ResourceBarView prefab, ResourceBarStyle barStyle, HudBarLayout layout)
@@ -373,6 +498,7 @@ namespace RythmRPG.Combat
                 player.HealthChanged += HandlePlayerHealth;
                 player.ManaChanged += HandlePlayerMana;
                 enemy.HealthChanged += HandleEnemyHealth;
+                SubscribePowerGauge();
             }
             Refresh(false);
             // A slide cut short by the object being switched off would leave the bars half faded.

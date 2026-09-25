@@ -614,6 +614,10 @@ namespace RythmRPG.Combat
 
         public CombatEncounterContext Encounter => encounter;
         public AbilitySlotController AbilitySlots => abilitySlots;
+        public RhythmAbilitySystem AbilitySystem => abilitySystem;
+        public CombatLanePresentation3D LanePresentation => lanePresentation;
+        /// <summary>The runner playing both the enemy's and the player's patterns (set when the battle begins).</summary>
+        public RhythmPatternRunner PatternRunner => runner;
 
         /// <summary>Dev tool: enemy notes deal no damage while true.</summary>
         public bool DebugInvulnerable { get; set; }

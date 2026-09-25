@@ -49,6 +49,8 @@ namespace RythmRPG.Combat
         [SerializeField] private bool sparkOnEveryNote = true;
 
         [Header("Impact (after the rhythm part, when there is no Attack Sequence)")]
+        [Tooltip("Pause after the last note of the ability's pattern is judged, before the attack (Attack Sequence or "+
+                 "impact projectile) starts. The power gauge stamps its result during it.")]
         [SerializeField, Min(0f)] private float impactAnticipationDuration = 0.25f;
         [SerializeField] private GameObject impactProjectilePrefab;
         [SerializeField, Min(0.01f)] private float impactProjectileSpeed = 14f;

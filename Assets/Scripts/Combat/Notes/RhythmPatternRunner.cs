@@ -79,6 +79,8 @@ namespace RythmRPG.Combat
         private readonly HashSet<PongNote> rallyShots = new();
 
         public bool IsRunning => runCoroutine != null;
+        /// <summary>Notes the running pattern expects (grows during Ping-Pong volleys).</summary>
+        public int ExpectedNoteCount => expectedNoteCount;
         public bool HorizontalGameplay => lanePresentation != null && lanePresentation.HorizontalGameplay;
         public RhythmChart FallbackChart => fallbackChart;
         /// <summary>Seconds. Past this a note that was not pressed is a Miss.</summary>
