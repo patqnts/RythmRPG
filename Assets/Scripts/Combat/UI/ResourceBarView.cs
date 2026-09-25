@@ -127,7 +127,7 @@ namespace RythmRPG.Combat
                 fillTween = Tween.Custom(this, shownFill, after, motion.lossSeconds, (view, v) => view.SetFill(v), Ease.OutCubic);
                 // The lost chunk waits, then drains. Keep the highest trail if losses stack up.
                 trailTween.Stop();
-                trailTween = Tween.Custom(this, shownTrail, after, new TweenSettings(motion.trailSeconds, Ease.OutCubic, startDelay: motion.trailDelay),
+                trailTween = Tween.Custom(this, new TweenSettings<float>(shownTrail, after, new TweenSettings(motion.trailSeconds, Ease.OutCubic, startDelay: motion.trailDelay)),
                     (view, v) => view.SetTrail(v));
                 if (trailGraphic != null) trailGraphic.color = loseTrailColor;
                 PlayLossEffects(before, after);
@@ -286,7 +286,7 @@ namespace RythmRPG.Combat
                 return;
             }
             float halfPeriod = 1f / Mathf.Max(0.01f, motion.lowPulseSpeed * 2f);
-            lowPulseTween = Tween.Custom(this, 0f, 1f, new TweenSettings(halfPeriod, Ease.InOutSine, cycles: -1, cycleMode: CycleMode.Yoyo),
+            lowPulseTween = Tween.Custom(this, new TweenSettings<float>(0f, 1f, new TweenSettings(halfPeriod, Ease.InOutSine, cycles: -1, cycleMode: CycleMode.Yoyo)),
                 (view, v) =>
                 {
                     if (view.fillGraphic != null) view.fillGraphic.color = Color.Lerp(view.fillColor, view.lowFillColor, v);

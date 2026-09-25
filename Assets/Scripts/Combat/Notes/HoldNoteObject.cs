@@ -12,6 +12,25 @@ public class HoldNoteObject : Note
     public Transform tailTransform; // Legacy fallback. Prefer assigning HoldNoteTailVisual components.
     public float length; // Length of the tail in units
 
+    [Header("On Hit")]
+    [Tooltip("When hit, the head bursts and disappears and the tail is pinned to the lane's key marker: it is drawn " +
+             "from the marker up the lane and shortens as the hold runs out, so an early or late press still looks right.")]
+    [SerializeField] private bool pinTailToKeyMarker = true;
+    [Tooltip("Holding effect, completion / head-burst effects and the key marker's fill colour.")]
+    [SerializeField] private HoldFxSettings holdFx = new();
+    [Tooltip("Seconds the tail takes to retract into the key marker when the hold is released early or missed " +
+             "(0 = vanish at once). The note is removed 0.25 s after the release.")]
+    [SerializeField, Range(0f, 0.25f)] private float releaseCollapseSeconds = 0.12f;
+
+    private readonly HoldFeedback holdFeedback = new();
+    private readonly List<Renderer> hiddenHead = new();
+    private bool pinned;
+    private bool tailEnding;   // the hold is over: the tail only collapses, nothing else redraws it
+    private bool tailHidden;
+    private float shownTailLength;
+    private float collapseFrom;
+    private float collapseTimer;
+
     private bool isHoldingKey = false; // Track if the key is being held
     private float holdTime; // Total time the note should be held
     private float holdTimer; // Timer to track how long the key has been held
@@ -53,6 +72,11 @@ public class HoldNoteObject : Note
     void Update()
     {
         PushLaneDirectionToTail();
+        if (tailEnding)
+        {
+            CollapseTail(Time.deltaTime);
+            return;
+        }
 
         // Check for key hold event
         if (isHoldingKey)
@@ -60,6 +84,7 @@ public class HoldNoteObject : Note
             if (activeKeyButton != null && activeKeyButton.GetInteractable())
             {
                 isMoving = false;
+                KeepPinned();
                 holdTimer = clockDriven && UsesChartClock
                     ? (float)(ChartSeconds - pressedAtSeconds)
                     : holdTimer + Time.deltaTime;
@@ -100,7 +125,7 @@ public class HoldNoteObject : Note
     private void LateUpdate()
     {
         PushLaneDirectionToTail();
-        if (!isHoldingKey && activeTailVisual != null)
+        if (!isHoldingKey && !tailEnding && activeTailVisual != null)
         {
             SetTailLength(revealedTailLength);
         }
@@ -207,8 +232,20 @@ public class HoldNoteObject : Note
             return;
         }
 
+        if (pinned && clockDriven && UsesChartClock)
+        {
+            // Pinned to the key marker: the tail's end keeps travelling at the note's speed and reaches the marker at
+            // EndTime, whatever the press timing, so it is simply the time left times the speed.
+            float remaining = Mathf.Max(0f, (float)(Data.EndTime - ChartSeconds)) * Mathf.Max(0f, speed);
+            remaining = Mathf.Min(remaining, length);
+            shownTailLength = remaining;
+            activeTailVisual.SetRemainingLength(remaining, length <= 0f ? 0f : Mathf.Clamp01(remaining / length));
+            return;
+        }
+
         float normalizedRemaining = holdTime <= 0f ? 0f : Mathf.Clamp01(1f - holdTimer / holdTime);
         float remainingLength = Mathf.Max(0f, holdStartTailLength * normalizedRemaining);
+        shownTailLength = remainingLength;
         activeTailVisual.SetRemainingLength(remainingLength, normalizedRemaining);
     }
 
@@ -225,6 +262,7 @@ public class HoldNoteObject : Note
 
     private void SetTailLength(float tailLength)
     {
+        shownTailLength = tailLength;
         float normalizedTailLength = length <= 0f ? 0f : Mathf.Clamp01(tailLength / length);
         activeTailVisual.SetRemainingLength(tailLength, normalizedTailLength);
     }
@@ -307,7 +345,8 @@ public class HoldNoteObject : Note
     private void CompleteHoldNote()
     {
         completed = true;
-        HideTailVisual();
+        holdFeedback.End(true, MarkerPosition());
+        EndTail(false);
         CompleteHeldHit();
         DestroyObject();
     }
@@ -325,6 +364,64 @@ public class HoldNoteObject : Note
         isMoving = false;
         holdStartTailLength = Mathf.Max(0f, revealedTailLength);
         StopMovementTweens();
+
+        // The colour is read before the head is hidden.
+        Color color = ProjectileColor.Resolve(this, TailRenderers(), holdFx.markerFillColor, new Color(1f, 0.85f, 0.35f, 1f));
+        RhythmLaneTarget target = GetLaneTarget();
+        if (pinTailToKeyMarker && target != null)
+        {
+            pinned = true;
+            KeepPinned();
+            BreakHead(color);
+        }
+        holdFeedback.Begin(this, GetNoteIdentity(), target != null ? target.transform : null, MarkerPosition(), holdFx, color);
+    }
+
+    private Vector3 MarkerPosition()
+    {
+        RhythmLaneTarget target = GetLaneTarget();
+        return target != null ? target.transform.position : transform.position;
+    }
+
+    // The note sits on the lane target (the key marker), so the tail starts there. Re-applied every frame because the
+    // lane targets follow the camera.
+    private void KeepPinned()
+    {
+        if (!pinned) return;
+        RhythmLaneTarget target = GetLaneTarget();
+        if (target != null) transform.position = target.transform.position;
+    }
+
+    // The head bursts on the key marker and disappears; the tail stays.
+    private void BreakHead(Color color)
+    {
+        HashSet<Renderer> tail = new(TailRenderers());
+        foreach (Renderer part in GetComponentsInChildren<Renderer>(true))
+        {
+            if (part == null || tail.Contains(part) || !part.enabled) continue;
+            part.enabled = false;
+            hiddenHead.Add(part);
+        }
+        foreach (ParticleSystem system in GetComponentsInChildren<ParticleSystem>(true))
+        {
+            Renderer systemRenderer = system.GetComponent<Renderer>();
+            if (systemRenderer != null && tail.Contains(systemRenderer)) continue;
+            system.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+        }
+        HoldFeedback.OneShot(holdFx.headHitEffectPrefab, MarkerPosition(), color, 0.45f, 10, holdFx);
+    }
+
+    // Renderers that belong to the tail (every tail visual and the legacy tail transform), which stay visible.
+    private IEnumerable<Renderer> TailRenderers()
+    {
+        if (tailVisuals != null)
+            foreach (HoldNoteTailVisual tail in tailVisuals)
+                if (tail != null)
+                    foreach (Renderer part in tail.GetComponentsInChildren<Renderer>(true)) yield return part;
+        if (activeTailVisual != null)
+            foreach (Renderer part in activeTailVisual.GetComponentsInChildren<Renderer>(true)) yield return part;
+        if (tailTransform != null)
+            foreach (Renderer part in tailTransform.GetComponentsInChildren<Renderer>(true)) yield return part;
     }
 
     public override bool IsUsingKey(KeyButton keyButton)
@@ -339,6 +436,7 @@ public class HoldNoteObject : Note
             return;
         }
 
+        holdFeedback.End(false, MarkerPosition());
         DestroyObject();
         if (!completed)
         {
@@ -350,8 +448,46 @@ public class HoldNoteObject : Note
 
     public override void DestroyObject()
     {
-        HideTailVisual();
+        holdFeedback.End(false, MarkerPosition());
+        EndTail(!completed);
         base.DestroyObject();
+    }
+
+    // The hold is over (completed, released early or missed). From now on only the collapse touches the tail, so it
+    // cannot grow back to its pre-hit length while the note waits to be destroyed.
+    private void EndTail(bool collapse)
+    {
+        if (tailEnding) return;
+        tailEnding = true;
+        collapseFrom = shownTailLength;
+        collapseTimer = 0f;
+        if (!collapse || releaseCollapseSeconds <= 0f || collapseFrom <= 0.01f || activeTailVisual == null)
+        {
+            tailHidden = true;
+            HideTailVisual();
+        }
+    }
+
+    // Retracts the tail into the key marker, accelerating, then hides it.
+    private void CollapseTail(float deltaTime)
+    {
+        if (tailHidden) return;
+        KeepPinned();
+        collapseTimer += deltaTime;
+        float t = Mathf.Clamp01(collapseTimer / Mathf.Max(0.0001f, releaseCollapseSeconds));
+        if (t >= 1f)
+        {
+            tailHidden = true;
+            HideTailVisual();
+            return;
+        }
+        SetTailLength(collapseFrom * (1f - t * t));
+    }
+
+    private void OnDestroy()
+    {
+        holdFeedback.End(false, transform.position);
+        LaneHold.End(this);
     }
 
     private void HideTailVisual()

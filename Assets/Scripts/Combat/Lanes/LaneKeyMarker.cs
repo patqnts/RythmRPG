@@ -24,6 +24,10 @@ namespace RythmRPG.Combat
         private readonly List<Image> outline = new();
         private Image fill;
         private Image chargeFill;
+        private Image holdFill;
+        private float holdBlend;
+        private Color holdColor = Color.white;
+        private float holdSeconds;
         private RectTransform chargeOutlineRoot;
         private readonly List<Image> chargeOutline = new();
         private float layoutSide;
@@ -72,6 +76,10 @@ namespace RythmRPG.Combat
             chargeFill = NewImage("Charge Fill", shape);
             Stretch(chargeFill.rectTransform, 0f);
             chargeFill.enabled = false;
+            // Hold notes: fills the marker in the note's colour while held.
+            holdFill = NewImage("Hold Fill", shape);
+            Stretch(holdFill.rectTransform, 0f);
+            holdFill.enabled = false;
 
             Sprite custom = theme != null ? theme.KeyMarkerSprite : null;
             KeyMarkerShape kind = theme != null ? theme.KeyMarkerShape : KeyMarkerShape.Square;
@@ -81,11 +89,14 @@ namespace RythmRPG.Combat
                 fill.sprite = custom; // the pressed glow takes the art's silhouette
                 chargeFill.sprite = custom;
                 chargeFill.preserveAspect = true;
+                holdFill.sprite = custom;
+                holdFill.preserveAspect = true;
             }
             else if (kind == KeyMarkerShape.Circle)
             {
                 fill.sprite = CircleSprites.Disc;
                 chargeFill.sprite = CircleSprites.Disc;
+                holdFill.sprite = CircleSprites.Disc;
             }
             else if (kind == KeyMarkerShape.Diamond)
             {
@@ -129,6 +140,7 @@ namespace RythmRPG.Combat
                 LayoutBars(chargeOutline, t);
                 Stretch(fill.rectTransform, t);
                 Stretch(chargeFill.rectTransform, t);
+                Stretch(holdFill.rectTransform, t);
             }
 
             label.fontSize = size * (theme != null ? theme.KeyMarkerLabelScale : 0.55f);
@@ -161,9 +173,13 @@ namespace RythmRPG.Combat
             Color idle = theme != null ? theme.KeyMarkerColor : new Color(1f, 1f, 1f, 0.85f);
             Color held = theme != null ? theme.KeyMarkerPressedColor : new Color(1f, 0.85f, 0.35f, 1f);
             Color heldFill = theme != null ? theme.KeyMarkerPressedFill : new Color(1f, 0.85f, 0.35f, 0.35f);
+            TickHold(deltaTime);
             Color line = Color.Lerp(Color.Lerp(idle, held, pressBlend), flashColor, flash);
+            float outlineTint = (theme != null ? theme.HoldOutlineTint : 0.6f) * holdBlend * (1f - flash);
+            line = Color.Lerp(line, new Color(holdColor.r, holdColor.g, holdColor.b, line.a), outlineTint);
             Color inside = Color.Lerp(heldFill, flashColor, flash);
-            inside.a *= Mathf.Max(pressBlend, flash);
+            // While a hold note is held its own colour fills the marker instead of the pressed fill.
+            inside.a *= Mathf.Max(pressBlend * (1f - holdBlend), flash);
 
             foreach (Image image in outline) image.color = line;
             fill.color = inside;
@@ -207,6 +223,30 @@ namespace RythmRPG.Combat
                 color.a *= FadeIn(charge, fadeIn);
                 chargeFill.color = color;
             }
+        }
+
+        // A hold note being held on this lane: the marker fills with its colour, breathing a little.
+        private void TickHold(float deltaTime)
+        {
+            bool show = theme == null || theme.ShowHoldFill;
+            Color color = Color.white;
+            float seconds = 0f;
+            bool holding = show && LaneHold.TryGet(LaneId, out color, out seconds);
+            if (holding)
+            {
+                holdColor = color;
+                holdSeconds = seconds;
+            }
+            holdBlend = Mathf.MoveTowards(holdBlend, holding ? 1f : 0f, deltaTime / (holding ? 0.06f : 0.18f));
+            bool visible = holdBlend > 0.001f;
+            if (holdFill.enabled != visible) holdFill.enabled = visible;
+            if (!visible) return;
+
+            float pulse = holding ? Mathf.Sin(holdSeconds * Mathf.PI * 2f * 2.5f) * (theme != null ? theme.HoldFillPulse : 0.06f) : 0f;
+            float pop = Mathf.Lerp(0.55f, 1f, 1f - (1f - holdBlend) * (1f - holdBlend));
+            holdFill.rectTransform.localScale = Vector3.one * (pop + pulse);
+            float alpha = (theme != null ? theme.HoldFillAlpha : 0.8f) * holdBlend;
+            holdFill.color = new Color(holdColor.r, holdColor.g, holdColor.b, alpha);
         }
 
         private static float FadeIn(float progress, float fadeIn) => fadeIn <= 0f ? 1f : Mathf.Clamp01(progress / fadeIn);

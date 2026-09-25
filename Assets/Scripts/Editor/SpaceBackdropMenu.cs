@@ -9,7 +9,7 @@ public static class SpaceBackdropMenu
     [MenuItem("Tools/Rythm RPG/Combat/Add Space Backdrop To Scene")]
     private static void AddToScene()
     {
-        SpaceCombatBackdrop existing = Object.FindFirstObjectByType<SpaceCombatBackdrop>(FindObjectsInactive.Include);
+        SpaceCombatBackdrop existing = Object.FindAnyObjectByType<SpaceCombatBackdrop>(FindObjectsInactive.Include);
         if (existing != null)
         {
             Selection.activeObject = existing;
@@ -18,7 +18,7 @@ public static class SpaceBackdropMenu
             return;
         }
 
-        CombatController combat = Object.FindFirstObjectByType<CombatController>(FindObjectsInactive.Include);
+        CombatController combat = Object.FindAnyObjectByType<CombatController>(FindObjectsInactive.Include);
         if (combat == null)
         {
             EditorUtility.DisplayDialog("Space Backdrop", "No CombatController in the open scene.", "OK");

@@ -86,6 +86,16 @@ namespace RythmRPG.Combat
         [Tooltip("Part of the charge (0-0.5) over which the outline and the fill fade in.")]
         [Range(0f, 0.5f)] public float ChargeFadeIn = 0.15f;
 
+        [Header("Key Marker Hold (Hold / Stationary Hold notes)")]
+        [Tooltip("While a hold note is held, its lane's key marker fills with the note's colour (the note's Marker Fill " +
+                 "Color, or automatically the projectile's own colour).")]
+        public bool ShowHoldFill = true;
+        [Range(0f, 1f)] public float HoldFillAlpha = 0.8f;
+        [Tooltip("How much the fill breathes while held (scale).")]
+        [Range(0f, 0.3f)] public float HoldFillPulse = 0.06f;
+        [Tooltip("How much the marker outline takes on the hold colour while held.")]
+        [Range(0f, 1f)] public float HoldOutlineTint = 0.6f;
+
         [Header("Perfect Hit Line End Caps")]
         [Tooltip("Art added past both ends of the hit line (the line itself is unchanged). Drawn for the LEFT end, facing outward; the right end uses a mirrored copy. The sprite's pivot row is lined up with the middle of the line, and its right edge touches the line's end. Empty = no caps.")]
         public Sprite LineCapSprite;

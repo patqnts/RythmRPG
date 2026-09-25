@@ -6,6 +6,10 @@ public class StationaryHoldNote : StationaryNote
     [Header("Stationary Hold")]
     [SerializeField] private bool damagePlayerOnEarlyRelease = true;
     public float length;
+    [Tooltip("Holding effect, completion effect and the key marker's fill colour while held.")]
+    [SerializeField] private HoldFxSettings holdFx = new();
+
+    private readonly HoldFeedback holdFeedback = new();
 
     private bool isHolding;
     private bool earlyReleased;
@@ -36,7 +40,11 @@ public class StationaryHoldNote : StationaryNote
     {
         isHolding = true;
         holdTimer = 0f;
+        Color color = ProjectileColor.Resolve(this, null, holdFx.markerFillColor, new Color(0.55f, 0.85f, 1f, 1f));
         EnterHoldPhase();
+        RhythmLaneTarget target = GetLaneTarget();
+        holdFeedback.Begin(this, GetNoteIdentity(), target != null ? target.transform : null, GetJudgementWorldPosition(),
+            holdFx, color);
     }
 
     public override bool IsUsingKey(KeyButton keyButton)
@@ -53,6 +61,7 @@ public class StationaryHoldNote : StationaryNote
 
         earlyReleased = true;
         isHolding = false;
+        holdFeedback.End(false, GetJudgementWorldPosition());
         PlayEndPhase(true);
         RhythmJudgementResult press = GetPressJudgement();
         ForceResolve(new RhythmJudgementResult(press.NoteId, press.LaneId, HitJudgement.Bad,
@@ -73,8 +82,22 @@ public class StationaryHoldNote : StationaryNote
         }
 
         isHolding = false;
+        holdFeedback.End(true, GetJudgementWorldPosition());
         PlayEndPhase(false);
         ForceResolve(ClampCompletedHoldJudgement(GetPressJudgement()));
+    }
+
+    public override void DestroyObject()
+    {
+        holdFeedback.End(false, GetJudgementWorldPosition());
+        base.DestroyObject();
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        holdFeedback.End(false, transform.position);
+        LaneHold.End(this);
     }
 
     private float GetHoldDuration()

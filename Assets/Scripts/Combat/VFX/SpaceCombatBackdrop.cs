@@ -157,7 +157,7 @@ namespace RythmRPG.Combat
         private void OnEnable()
         {
             if (combat == null) combat = GetComponent<CombatController>();
-            if (combat == null) combat = FindFirstObjectByType<CombatController>();
+            if (combat == null) combat = FindAnyObjectByType<CombatController>();
             if (!Application.isPlaying) return;
             if (combat != null)
             {
@@ -375,7 +375,7 @@ namespace RythmRPG.Combat
         private float BeatPulse()
         {
             if (!Application.isPlaying || beatSurge <= 0f) return 0f;
-            if (music == null) music = FindFirstObjectByType<CombatMusicDirector>();
+            if (music == null) music = FindAnyObjectByType<CombatMusicDirector>();
             if (music == null || !music.HasSong) return 0f;
             double now = GameAudioClock.Now;
             double next = music.NextGridDsp(now, RythmRPG.Rhythm.MusicSync.NextBeat);
@@ -424,7 +424,7 @@ namespace RythmRPG.Combat
                 quad = GameObject.CreatePrimitive(PrimitiveType.Quad);
                 quad.name = "Space Backdrop";
                 quad.hideFlags = HideFlags.DontSave;
-                if (quad.TryGetComponent(out Collider collider)) DestroyObject(collider);
+                if (quad.TryGetComponent(out Collider collider)) DestroySafe(collider);
                 quadRenderer = quad.GetComponent<MeshRenderer>();
                 quadRenderer.sharedMaterial = material;
                 quadRenderer.shadowCastingMode = ShadowCastingMode.Off;
@@ -491,14 +491,14 @@ namespace RythmRPG.Combat
 
         private void DestroyQuad()
         {
-            if (quad != null) DestroyObject(quad);
-            if (material != null) DestroyObject(material);
+            if (quad != null) DestroySafe(quad);
+            if (material != null) DestroySafe(material);
             quad = null;
             quadRenderer = null;
             material = null;
         }
 
-        private static void DestroyObject(Object target)
+        private static void DestroySafe(Object target)
         {
             if (target == null) return;
             if (Application.isPlaying) Destroy(target);

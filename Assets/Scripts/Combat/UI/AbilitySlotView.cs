@@ -152,8 +152,8 @@ namespace RythmRPG.Combat
             floatTween.Stop();
             float half = Mathf.Max(0.01f, p.FloatPeriod * 0.5f);
             float phaseDelay = Mathf.Repeat(floatPhase, 1f) * p.FloatPeriod;
-            floatTween = Tween.Custom(this, -1f, 1f,
-                new TweenSettings(half, Ease.InOutSine, cycles: -1, cycleMode: CycleMode.Yoyo, startDelay: phaseDelay),
+            floatTween = Tween.Custom(this, new TweenSettings<float>(-1f, 1f,
+                new TweenSettings(half, Ease.InOutSine, cycles: -1, cycleMode: CycleMode.Yoyo, startDelay: phaseDelay)),
                 (view, v) => view.floatLift = v);
         }
 
@@ -164,8 +164,8 @@ namespace RythmRPG.Combat
             appearT = 0f;
             phase = animate ? Phase.Appearing : Phase.Shown;
             if (!animate) return;
-            appearTween = Tween.Custom(this, 0f, 1f,
-                new TweenSettings(Mathf.Max(0.0001f, p.AppearSeconds), Ease.Linear, startDelay: Mathf.Max(0f, delay)),
+            appearTween = Tween.Custom(this, new TweenSettings<float>(0f, 1f,
+                new TweenSettings(Mathf.Max(0.0001f, p.AppearSeconds), Ease.Linear, startDelay: Mathf.Max(0f, delay))),
                 (view, t) => view.appearT = t);
             appearTween.OnComplete(this, view => view.phase = Phase.Shown);
         }
@@ -176,8 +176,8 @@ namespace RythmRPG.Combat
             hideTween.Stop();
             hideT = 0f;
             phase = Phase.Hiding;
-            hideTween = Tween.Custom(this, 0f, 1f,
-                new TweenSettings(Mathf.Max(0.0001f, p.HideSeconds), Ease.Linear, startDelay: Mathf.Max(0f, delay)),
+            hideTween = Tween.Custom(this, new TweenSettings<float>(0f, 1f,
+                new TweenSettings(Mathf.Max(0.0001f, p.HideSeconds), Ease.Linear, startDelay: Mathf.Max(0f, delay))),
                 (view, t) => view.hideT = t);
             hideTween.OnComplete(this, view => view.phase = Phase.Hidden);
         }
