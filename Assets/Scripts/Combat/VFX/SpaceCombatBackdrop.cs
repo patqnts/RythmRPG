@@ -265,6 +265,8 @@ namespace RythmRPG.Combat
             warpStartTime = immediate ? -100f : Time.time;
             speed = targetSpeed = 1f;
             if (hideScene) HideScene();
+            // GPU grass and other Renderer-less effects hide through this.
+            if (hideScene && Application.isPlaying) SceneVisibility.SetWorldHidden(true);
         }
 
         private void LeaveSpace()
@@ -274,6 +276,7 @@ namespace RythmRPG.Combat
             foreach (Renderer hidden in hiddenRenderers)
                 if (hidden != null) hidden.enabled = true;
             hiddenRenderers.Clear();
+            SceneVisibility.SetWorldHidden(false);
             if (quad != null) quad.SetActive(false);
         }
 

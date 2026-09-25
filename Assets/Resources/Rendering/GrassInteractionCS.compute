@@ -1,0 +1,61 @@
+// Updates the grass interaction map (see GrassInteractionMap.cs): scroll with the view, decay (grass springs
+// back), then stamp every GrassInteractor. RG = push direction * amount (world XZ, signed), B = flattened amount.
+// A compute shader addresses texels directly, so the map has the same orientation on every graphics API.
+#pragma kernel UpdateMap
+
+#define MAX_INTERACTORS 16
+
+Texture2D<float4> _Prev;
+RWTexture2D<float4> _Next;
+
+float4 _MapParams;      // xy = world XZ of the map's corner, z = world size, w = 0 on reset
+float4 _Decay;          // x = push decay, y = flatten decay, zw = scroll in whole texels
+float4 _Interactors[MAX_INTERACTORS];          // xy = world XZ, z = radius, w = strength
+float4 _InteractorVelocities[MAX_INTERACTORS]; // xy = world XZ velocity
+int _InteractorCount;
+int _Resolution;
+
+[numthreads(8, 8, 1)]
+void UpdateMap(uint3 id : SV_DispatchThreadID)
+{
+    int resolution = _Resolution;
+    if ((int)id.x >= resolution || (int)id.y >= resolution) return;
+
+    // Previous frame, scrolled so each texel keeps the same world spot.
+    float4 state = 0;
+    int2 source = int2(id.xy) + int2(_Decay.zw);
+    if (_MapParams.w > 0.5 && all(source >= 0) && all(source < resolution))
+        state = _Prev.Load(int3(source, 0));
+
+    // Spring back.
+    state.xy *= _Decay.x;
+    state.z *= _Decay.y;
+
+    float2 uv = (float2(id.xy) + 0.5) / resolution;
+    float2 world = _MapParams.xy + uv * _MapParams.z;
+    [loop] for (int i = 0; i < _InteractorCount; i++)
+    {
+        float4 it = _Interactors[i];
+        float2 d = world - it.xy;
+        float dist = length(d);
+        float k = saturate(1.0 - dist / max(it.z, 0.0001));
+        k = k * k * (3.0 - 2.0 * k) * it.w;
+        if (k <= 0.0) continue;
+
+        // Away from the centre, leaning with the direction of travel.
+        float2 dir = dist > 0.0001 ? d / dist : float2(0, 0);
+        float2 velocity = _InteractorVelocities[i].xy;
+        float speed = length(velocity);
+        if (speed > 0.01)
+        {
+            float2 lean = dir + (velocity / speed) * saturate(speed * 0.25) * 0.6;
+            float leanLength = length(lean);
+            dir = leanLength > 0.0001 ? lean / leanLength : dir;
+        }
+
+        // Strongest push wins, so standing still keeps the grass down without it piling up.
+        if (k > length(state.xy)) state.xy = dir * k;
+        state.z = max(state.z, k);
+    }
+    _Next[id.xy] = state;
+}
