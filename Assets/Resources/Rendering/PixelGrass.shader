@@ -5,7 +5,9 @@
 // Cutting, burning and regrowth come from a per-blade state buffer (_GrassStates, see GrassField.Burning.cs):
 // the shader animates the fire, the curling and the regrowth from the times stored there, in whole sprite rows.
 // With _GRASS_PIECES (a second draw of the chunks where something was just cut) it draws the severed tops
-// instead: each piece is thrown off, tumbles, lands flat on the ground and shrinks away (_GrassCuts).
+// instead (_GrassCuts): each severed top is broken into up to 4 x 2 fragments by its size, and every fragment
+// is thrown off, flutters, tumbles and dissolves pixel by pixel in mid-air. Each blade is drawn
+// GRASS_PIECE_FRAGMENTS times in that draw; the fragments a small piece does not need collapse to nothing.
 Shader "Hidden/RythmRPG/PixelGrass"
 {
     Properties
@@ -66,7 +68,9 @@ Shader "Hidden/RythmRPG/PixelGrass"
     // w = flight direction (radians, world XZ).
     StructuredBuffer<float4> _GrassCuts;
     float4 _Pieces;           // x = lifetime, y = sideways speed, z = jump speed, w = gravity
-    float4 _Pieces2;          // x = spin (radians / s), y = height it lies at on the ground
+    float4 _Pieces2;          // x = spin (radians / s), y = ground height offset, z = air drag, w = when fading starts (0..1)
+    float4 _Pieces3;          // x = fragment size (world units)
+    #define GRASS_PIECE_FRAGMENTS 8 // 4 rows x 2 columns
 
     float GrassHash(float2 p)
     {
@@ -162,7 +166,8 @@ Shader "Hidden/RythmRPG/PixelGrass"
     // burns, a few flickering rows of flame survive above the edge: returns 1 for those pixels.
     float GrassBurnClip(float2 texel, float4 burn)
     {
-        if (burn.w < 0.0) clip(texel.y - floor((-1.0 - burn.w) * _SpriteExtra.z + 0.5)); // a cut piece: rows below it are not part of it
+        // A cut piece fading away: pixels dissolve in a random order (w = -1 - dissolve, x = 2 + seed).
+        if (burn.w < 0.0) clip(GrassHash(texel * 0.61 + frac(burn.x * 7.31) * 53.0) - (-1.0 - burn.w));
         float edgeRow = floor(burn.x * _SpriteExtra.z + 0.5);
         float above = texel.y - edgeRow;
         if (above < 0.0) return 0.0;
@@ -253,10 +258,21 @@ Shader "Hidden/RythmRPG/PixelGrass"
         return v;
     }
 
-    // A severed top: thrown away from the cut, tumbling, then lying flat on the ground and shrinking away.
+    // Where fragment edge k (0..count) of a piece lies, between lo and hi: inner edges wander a little per tuft,
+    // snapped to whole sprite pixels so fragments stay crisp.
+    float GrassFragmentEdge(float lo, float hi, float k, float count, float seed, float pixels)
+    {
+        float t = k / count;
+        if (k > 0.5 && k < count - 0.5) t += (GrassHash(float2(seed * 91.7, k * 3.3)) - 0.5) * 0.35 / count;
+        return round(lerp(lo, hi, t) * pixels) / pixels;
+    }
+
+    // One fragment of a severed top: thrown away from the cut, fluttering and tumbling, dissolving in mid-air.
     GrassVertex BuildPieceVertex(float2 corner, uint instanceID)
     {
-        uint index = (uint)_GrassInstanceOffset + instanceID;
+        uint bladeInstance = instanceID / GRASS_PIECE_FRAGMENTS;
+        uint fragment = instanceID - bladeInstance * GRASS_PIECE_FRAGMENTS;
+        uint index = (uint)_GrassInstanceOffset + bladeInstance;
         GrassBlade blade = _GrassBlades[index];
         float4 cut = _GrassCuts[index];
         float3 root = blade.positionScale.xyz;
@@ -264,51 +280,76 @@ Shader "Hidden/RythmRPG/PixelGrass"
         float seed = blade.data.z;
         float age = _GrassTime.x - cut.x;
 
-        float bottomV = lerp(_SpriteExtra.x, _SpriteExtra.y, cut.y);
-        float topV = lerp(_SpriteExtra.x, _SpriteExtra.y, cut.z);
         GrassVertex v;
         v.rootWS = root;
         v.uv = _SpriteUV.xy + corner * _SpriteUV.zw;
         v.shade = blade.data.y;
-        v.burn = float4(topV, 0.0, 0.0, -1.0 - bottomV);
-        v.positionWS = root; // no piece: every corner on one point, nothing is drawn
+        v.burn = float4(2.0 + seed, 0.0, 0.0, -1.0);
+        v.positionWS = root; // unused fragment: every corner on one point, nothing is drawn
         if (cut.x < 0.0 || age < 0.0 || age > _Pieces.x) return v;
 
-        float centerV = 0.5 * (bottomV + topV);
-        float2 local = (corner - float2(_SpriteSize.z, centerV)) * _SpriteSize.xy * scale;
-        local.x *= blade.data.x;
-        float startHeight = (centerV - _SpriteSize.w) * _SpriteSize.y * scale;
+        // How many fragments this piece breaks into: rows by its height, two columns when it is wide.
+        float bottomV = lerp(_SpriteExtra.x, _SpriteExtra.y, cut.y);
+        float topV = lerp(_SpriteExtra.x, _SpriteExtra.y, cut.z);
+        float fragmentSize = max(_Pieces3.x, 0.01);
+        float rows = clamp(ceil((topV - bottomV) * _SpriteSize.y * scale / fragmentSize - 0.05), 1.0, 4.0);
+        float columns = _SpriteSize.x * scale > fragmentSize * 1.5 ? 2.0 : 1.0;
+        float row = floor(fragment / 2.0);
+        float column = fragment - row * 2.0;
+        if (row >= rows || column >= columns) return v;
 
-        float r1 = frac(seed * 17.13 + 0.21);
-        float r2 = frac(seed * 31.71 + 0.53);
-        float2 dir = float2(cos(cut.w), sin(cut.w));
-        float speed = _Pieces.y * (0.6 + 0.8 * r1);
-        float jump = _Pieces.z * (0.7 + 0.6 * r2);
-        float gravity = max(_Pieces.w, 0.01);
-        float rest = _Pieces2.y;
-        float landTime = (jump + sqrt(jump * jump + 2.0 * gravity * max(startHeight - rest, 0.0))) / gravity;
-        float t = min(age, landTime);
-        float travel = speed * t + speed * 0.05 * saturate((age - landTime) * 6.0);
-        float height = age < landTime ? startHeight + jump * t - 0.5 * gravity * t * t : rest;
+        float2 rectMin = float2(GrassFragmentEdge(0.0, 1.0, column, columns, seed + 0.37, _SpriteExtra.w),
+                                GrassFragmentEdge(bottomV, topV, row, rows, seed, _SpriteExtra.z));
+        float2 rectMax = float2(GrassFragmentEdge(0.0, 1.0, column + 1.0, columns, seed + 0.37, _SpriteExtra.w),
+                                GrassFragmentEdge(bottomV, topV, row + 1.0, rows, seed, _SpriteExtra.z));
+        if (rectMax.y - rectMin.y <= 0.0 || rectMax.x - rectMin.x <= 0.0) return v;
+        float2 cornerF = lerp(rectMin, rectMax, corner);
+        float2 center = 0.5 * (rectMin + rectMax);
+        v.uv = _SpriteUV.xy + cornerF * _SpriteUV.zw;
 
-        // Tumble in the picture plane, and tip over to lie flat on the ground by the time it lands.
+        float flip = blade.data.x;
+        float2 local = (cornerF - center) * _SpriteSize.xy * scale;
+        local.x *= flip;
+        float2 start = (center - _SpriteSize.zw) * _SpriteSize.xy * scale;
+        start.x *= flip;
+
+        // Every fragment gets its own throw; higher fragments fly higher, outer columns fly further out.
+        float fragmentSeed = frac(seed * 7.13 + fragment * 0.618 + 0.11);
+        float r1 = GrassHash(float2(fragmentSeed * 43.1, 1.7));
+        float r2 = GrassHash(float2(fragmentSeed * 17.9, 5.3));
+        float r3 = GrassHash(float2(fragmentSeed * 29.3, 9.1));
         float3 right = _GrassRight.xyz;
-        float3 forward = float3(-right.z, 0.0, right.x);
-        float sideways = dot(dir, right.xz);
-        float spinSign = abs(sideways) > 0.2 ? -sign(sideways) : (r2 > 0.5 ? 1.0 : -1.0);
-        float angle = _Pieces2.x * (0.5 + r1) * spinSign * t;
-        float away = dot(dir, forward.xz);
-        float3 fallDir = forward * (abs(away) > 0.2 ? sign(away) : (r1 > 0.5 ? 1.0 : -1.0));
-        float tip = smoothstep(0.0, 1.0, saturate(age / max(landTime, 0.001))) * 1.5707963;
-        float3 up = float3(0, 1, 0) * cos(tip) + fallDir * sin(tip);
+        float spread = (r3 - 0.5) * 1.4 + (columns > 1.5 ? (column - 0.5) * 0.9 : 0.0);
+        float heading = cut.w + spread;
+        float2 dir = float2(cos(heading), sin(heading));
+        float speed = _Pieces.y * (0.45 + 0.9 * r1);
+        float jump = _Pieces.z * (0.5 + 0.7 * r2) * (0.8 + 0.25 * row);
 
-        float shrink = saturate((_Pieces.x - age) / 0.35);
+        // Air drag makes pieces float and flutter instead of flying like stones.
+        float drag = max(_Pieces2.z, 0.01);
+        float travelTime = (1.0 - exp(-drag * age)) / drag;
+        float gravity = _Pieces.w;
+        float fall = gravity * (age - travelTime) / drag;
+        float height = start.y + jump * travelTime - fall;
+        float flutter = sin(age * (7.0 + 5.0 * r2) + fragmentSeed * 31.0) * 0.06 * saturate(age * 3.0);
+        float2 travel = dir * (speed * travelTime) + float2(right.x, right.z) * flutter;
+        height = max(height, _Pieces2.y);
+
+        float spinSign = r3 > 0.5 ? 1.0 : -1.0;
+        float angle = _Pieces2.x * (0.5 + r1) * spinSign * travelTime + sin(age * 9.0 + r1 * 20.0) * 0.25;
+
+        // Dissolve pixel by pixel from the fade start to the end of the lifetime (and shrink a touch).
+        float life = saturate(age / _Pieces.x);
+        float dissolve = smoothstep(_Pieces2.w, 1.0, life);
+        v.burn.w = -1.0 - dissolve;
+        float shrink = 1.0 - 0.3 * dissolve;
+
         float sn, cs;
         sincos(angle, sn, cs);
         float2 rotated = float2(local.x * cs - local.y * sn, local.x * sn + local.y * cs) * shrink;
-        float3 offset = float3(dir.x * travel, height, dir.y * travel);
+        float3 offset = float3(travel.x, height, travel.y) + right * start.x;
         offset = float3(SnapToPixels(offset.x), SnapToPixels(offset.y), SnapToPixels(offset.z));
-        v.positionWS = root + offset + right * rotated.x + up * rotated.y;
+        v.positionWS = root + offset + right * rotated.x + float3(0, rotated.y, 0);
         return v;
     }
 

@@ -30,6 +30,7 @@ namespace RythmRPG.Core
         private static bool listening;
         private static GameObject customRoot;
         private static readonly Dictionary<ParticleSystem, ParticleSystem[]> customCopies = new Dictionary<ParticleSystem, ParticleSystem[]>();
+        private static readonly Dictionary<ParticleSystem, float[]> customWeights = new Dictionary<ParticleSystem, float[]>();
 
         /// <summary>Emits one particle. Returns false when this frame's budget is used up.</summary>
         public static bool Emit(Kind kind, Vector3 position, Vector3 velocity, float size, float lifetime, Color color,
@@ -66,16 +67,21 @@ namespace RythmRPG.Core
             ParticleSystem[] layers = CustomCopy(source);
             if (layers == null) return false;
             budget -= count;
-            foreach (ParticleSystem layer in layers)
+            float[] weights = customWeights[source];
+            for (int l = 0; l < layers.Length; l++)
             {
+                ParticleSystem layer = layers[l];
                 if (layer == null) continue;
+                // Each layer keeps the prefab's own emission ratio to the first layer (e.g. fewer embers than flames).
+                int layerCount = Mathf.FloorToInt(count * weights[l] + Random.value);
+                if (layerCount <= 0) continue;
                 bool world = layer.main.simulationSpace == ParticleSystemSimulationSpace.World;
                 var emit = new ParticleSystem.EmitParams
                 {
                     position = world ? position : layer.transform.InverseTransformPoint(position),
                     applyShapeToPosition = true
                 };
-                layer.Emit(emit, count);
+                layer.Emit(emit, layerCount);
             }
             return true;
         }
@@ -104,6 +110,11 @@ namespace RythmRPG.Core
             copy.gameObject.SetActive(true);
             layers = copy.GetComponentsInChildren<ParticleSystem>(true);
             copy.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            var weights = new float[layers.Length];
+            float baseRate = EmissionRate(layers[0]);
+            for (int l = 0; l < layers.Length; l++)
+                weights[l] = baseRate > 0.0001f ? Mathf.Clamp(EmissionRate(layers[l]) / baseRate, 0f, 8f) : 1f;
+            customWeights[source] = weights;
             foreach (ParticleSystem layer in layers)
             {
                 // Only our Emit calls spawn particles; the copy keeps running so they live out their lifetime.
@@ -112,10 +123,20 @@ namespace RythmRPG.Core
                 ParticleSystem.MainModule main = layer.main;
                 main.loop = true;
                 main.playOnAwake = false;
+                main.maxParticles = Mathf.Max(main.maxParticles, 4000); // one copy serves every burning tuft
             }
             copy.Play(true);
             customCopies[source] = layers;
             return layers;
+        }
+
+        private static float EmissionRate(ParticleSystem system)
+        {
+            ParticleSystem.EmissionModule emission = system.emission;
+            if (!emission.enabled) return 0f;
+            ParticleSystem.MinMaxCurve rate = emission.rateOverTime;
+            return rate.mode == ParticleSystemCurveMode.TwoConstants ? (rate.constantMin + rate.constantMax) * 0.5f
+                : rate.mode == ParticleSystemCurveMode.Constant ? rate.constant : rate.curveMultiplier;
         }
 
         private static void Listen()
@@ -237,6 +258,7 @@ namespace RythmRPG.Core
             listening = false;
             customRoot = null;
             customCopies.Clear();
+            customWeights.Clear();
         }
     }
 }

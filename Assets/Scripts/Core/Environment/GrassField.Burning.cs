@@ -37,6 +37,9 @@ namespace RythmRPG.Core
         private Vector3[] roots;
         private float[] bladeTips; // world height of each tuft's visible tip above its root, uncut
         private float[] bladeBases; // world height of each tuft's lowest visible row above its root
+        private float[] bladeHalfWidths; // half the width of each tuft's quad (world units)
+        private Vector3 effectRight = Vector3.right;   // camera right, flattened (this frame)
+        private Vector3 effectToCamera = Vector3.zero; // toward the camera along the view ray (this frame)
         private int[] bladeGroups; // draw group of each tuft
         private float[] groupPieceUntil; // per draw group: until when cut pieces are in flight / on the ground
         private GraphicsBuffer cutBuffer;
@@ -308,6 +311,7 @@ namespace RythmRPG.Core
             roots = null;
             bladeTips = null;
             bladeBases = null;
+            bladeHalfWidths = null;
             bladeGroups = null;
             groupPieceUntil = null;
             cuts = null;
@@ -354,8 +358,8 @@ namespace RythmRPG.Core
                 // Pieces still in flight keep being drawn.
                 float now = Application.isPlaying ? Time.time : 0f;
                 for (int i = 0; i < count; i++)
-                    if (cuts[i].x >= 0f && now - cuts[i].x < pieceLifetime)
-                        groupPieceUntil[bladeGroups[i]] = Mathf.Max(groupPieceUntil[bladeGroups[i]], cuts[i].x + pieceLifetime);
+                    if (cuts[i].x >= 0f && now - cuts[i].x < fragmentLifetime)
+                        groupPieceUntil[bladeGroups[i]] = Mathf.Max(groupPieceUntil[bladeGroups[i]], cuts[i].x + fragmentLifetime);
             }
             stateSource = source;
             roots = new Vector3[count];
@@ -557,7 +561,7 @@ namespace RythmRPG.Core
                 cuts[i] = new Vector4(now, target, height, flightAngle);
                 MarkCut(i);
                 int group = bladeGroups[i];
-                groupPieceUntil[group] = Mathf.Max(groupPieceUntil[group], now + pieceLifetime);
+                groupPieceUntil[group] = Mathf.Max(groupPieceUntil[group], now + fragmentLifetime);
             }
 
             cutsThisFrame++;
@@ -598,7 +602,7 @@ namespace RythmRPG.Core
             burning.Add(i);
             Push(e.Time + burnDuration + emberTime, i, EventKind.BurnOut, e.Stamp);
             Spread(i, e.Time, now);
-            if (igniteEffect != null) GrassEffects.EmitCustom(igniteEffect, FlamePoint(i, now), burstCount);
+            if (igniteEffect != null) GrassEffects.EmitCustom(igniteEffect, EffectPoint(i, now), burstCount);
             else if (particleEffects && burningEffect == null) EmitFireParticle(i, now, true);
         }
 
@@ -673,6 +677,7 @@ namespace RythmRPG.Core
             bool custom = effects && burningEffect != null && burningEffectRate > 0f;
             bool sprites = HasFlameFrames();
             flameCount = 0;
+            if (burning.Count > 0) UpdateEffectFrame();
             foreach (int i in burning)
             {
                 Vector4 s = states[i];
@@ -684,8 +689,11 @@ namespace RythmRPG.Core
                     min = Vector3.Min(min, roots[i]);
                     max = Vector3.Max(max, roots[i]);
                     if (sprites) AddFlame(i, now, s);
-                    if (custom && Random.value < deltaTime * burningEffectRate)
-                        GrassEffects.EmitCustom(burningEffect, FlamePoint(i, now), 1);
+                    if (custom)
+                    {
+                        int count = Mathf.FloorToInt(deltaTime * burningEffectRate + Random.value);
+                        if (count > 0) GrassEffects.EmitCustom(burningEffect, EffectPoint(i, now), count);
+                    }
                 }
                 if (!builtIn) continue;
                 if (flaming && Random.value < deltaTime * 5f) EmitFireParticle(i, now, false);
@@ -701,6 +709,27 @@ namespace RythmRPG.Core
             return roots[i] + Vector3.up * HeightOf(i, height);
         }
 
+        // The camera's right and the way toward it, once per frame, for placing fire particles.
+        private void UpdateEffectFrame()
+        {
+            Camera view = Camera.main;
+            if (view == null) return;
+            Vector3 flat = Vector3.ProjectOnPlane(view.transform.right, Vector3.up);
+            effectRight = flat.sqrMagnitude > 0.0001f ? flat.normalized : Vector3.right;
+            effectToCamera = -ObliqueProjection.ViewDirection(view).normalized;
+        }
+
+        // Where a particle of the burning effect starts: low inside the burning tuft, somewhere across its width,
+        // pulled toward the camera so it draws in front of its own tuft (same place on screen).
+        private Vector3 EffectPoint(int i, float now)
+        {
+            Evaluate(i, now, out float height, out _);
+            float bottom = bladeBases != null ? bladeBases[i] : 0f;
+            float y = Mathf.Lerp(bottom, HeightOf(i, height), burningEffectHeight);
+            float across = bladeHalfWidths != null ? bladeHalfWidths[i] * burningEffectSpread * Random.Range(-1f, 1f) : 0f;
+            return roots[i] + Vector3.up * y + effectRight * across + effectToCamera * burningEffectDepthBias;
+        }
+
         private bool HasFlameFrames() =>
             flameFrames != null && flameFrames.Length > 0 && flameFrames[0] != null && flameFrames[0].texture != null;
 
@@ -710,7 +739,7 @@ namespace RythmRPG.Core
             float progress = Mathf.Clamp01((now - s.y) / Mathf.Max(0.001f, burnDuration));
             float size = flameScale * Mathf.SmoothStep(0.35f, 1f, Mathf.Clamp01(progress / 0.15f))
                          * (1f - 0.6f * Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(0.65f, 1f, progress)));
-            Vector3 p = FlamePoint(i, now) - Vector3.up * (1f / Mathf.Max(1f, pixelsPerUnit));
+            Vector3 p = FlamePoint(i, now) - Vector3.up * (1f / Mathf.Max(1f, pixelsPerUnit)) + effectToCamera * burningEffectDepthBias;
             if (flameData.Length <= flameCount) System.Array.Resize(ref flameData, Mathf.Max(64, flameData.Length * 2));
             float seed = Mathf.Repeat(i * 0.6180339f, 1f);
             flameData[flameCount] = new GpuFlame

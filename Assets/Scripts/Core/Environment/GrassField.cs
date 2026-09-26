@@ -110,17 +110,24 @@ namespace RythmRPG.Core
         [SerializeField, Range(0f, 1f)] private float minStubble = 0.08f;
 
         [Header("Cut Pieces")]
-        [Tooltip("The severed top of each tuft is thrown off, tumbles, lands flat and shrinks away.")]
+        [Tooltip("The severed top of each tuft breaks into fragments that fly off, flutter and dissolve in mid-air.")]
         [SerializeField] private bool cutPieces = true;
-        [Tooltip("Seconds a cut piece stays (flight + lying on the ground).")]
-        [SerializeField, Min(0.2f)] private float pieceLifetime = 1.8f;
-        [Tooltip("How fast pieces fly sideways, away from the cutter (units per second).")]
-        [SerializeField, Min(0f)] private float pieceSpeed = 1.3f;
-        [Tooltip("How fast pieces are tossed up (units per second).")]
-        [SerializeField, Min(0f)] private float pieceJump = 1.8f;
-        [SerializeField, Min(0.1f)] private float pieceGravity = 9f;
-        [Tooltip("How fast pieces tumble (radians per second).")]
-        [SerializeField, Min(0f)] private float pieceSpin = 4f;
+        [Tooltip("Size of one fragment (world units): a severed top taller than this breaks into several rows " +
+                 "(up to 4), and a wide one into two columns. Smaller = more, smaller bits.")]
+        [SerializeField, Min(0.03f)] private float fragmentSize = 0.22f;
+        [Tooltip("Seconds until a fragment has fully dissolved.")]
+        [SerializeField, Min(0.2f)] private float fragmentLifetime = 1.1f;
+        [Tooltip("When fragments start dissolving, as a share of their lifetime.")]
+        [SerializeField, Range(0f, 0.95f)] private float fragmentFadeStart = 0.3f;
+        [Tooltip("How fast fragments fly sideways, away from the cutter (units per second).")]
+        [SerializeField, Min(0f)] private float fragmentSpeed = 1.6f;
+        [Tooltip("How fast fragments are tossed up (units per second).")]
+        [SerializeField, Min(0f)] private float fragmentJump = 1.6f;
+        [SerializeField, Min(0f)] private float fragmentGravity = 6f;
+        [Tooltip("Air resistance: higher = fragments slow down and float like leaves.")]
+        [SerializeField, Min(0.01f)] private float fragmentDrag = 2.2f;
+        [Tooltip("How fast fragments tumble (radians per second).")]
+        [SerializeField, Min(0f)] private float fragmentSpin = 6f;
         [Tooltip("Pixel specks flying off each cut tuft (built-in effect; 0 = none). Ignored when Cut Effect is set.")]
         [SerializeField, Range(0, 6)] private int clippingSpecks = 1;
         [Tooltip("Colour of those specks.")]
@@ -172,8 +179,16 @@ namespace RythmRPG.Core
         [Tooltip("Your particle system (prefab or scene object), emitted continuously from every burning tuft. " +
                  "A private copy is used, with its own emission switched off; empty = built-in pixel embers and smoke.")]
         [SerializeField] private ParticleSystem burningEffect;
-        [Tooltip("Particles per second per burning tuft.")]
+        [Tooltip("Particles per second per burning tuft (the prefab's layers keep their own ratios).")]
         [SerializeField, Min(0f)] private float burningEffectRate = 2f;
+        [Tooltip("Where in a burning tuft the particles start: 0 = at its root, 1 = at the burning edge. " +
+                 "Low values make the fire sit in the grass instead of floating above it.")]
+        [SerializeField, Range(0f, 1f)] private float burningEffectHeight = 0.2f;
+        [Tooltip("How far across the tuft's width particles start (0 = its centre line, 1 = its full width).")]
+        [SerializeField, Range(0f, 1f)] private float burningEffectSpread = 0.5f;
+        [Tooltip("Moves the particles this far toward the camera (world units, along the view) so they are drawn in " +
+                 "front of their own tuft rather than hidden behind it. Their place on screen does not change.")]
+        [SerializeField, Min(0f)] private float burningEffectDepthBias = 0.12f;
         [Tooltip("Burst when a tuft catches fire.")]
         [SerializeField] private ParticleSystem igniteEffect;
         [Tooltip("Burst when a tuft burns out.")]
@@ -249,6 +264,8 @@ namespace RythmRPG.Core
         private static readonly int CutsId = Shader.PropertyToID("_GrassCuts");
         private static readonly int PiecesId = Shader.PropertyToID("_Pieces");
         private static readonly int Pieces2Id = Shader.PropertyToID("_Pieces2");
+        private static readonly int Pieces3Id = Shader.PropertyToID("_Pieces3");
+        private const int PieceFragments = 8; // GRASS_PIECE_FRAGMENTS in PixelGrass.shader
 
         private readonly List<DrawGroup> groups = new();
         private GraphicsBuffer bladeBuffer;
@@ -372,7 +389,7 @@ namespace RythmRPG.Core
         {
             if (!cutPieces || groupPieceUntil == null) return;
             float now = Time.time;
-            float reach = (pieceSpeed * 1.1f + 0.5f) * pieceLifetime;
+            float reach = (fragmentSpeed * 1.5f + fragmentJump + 0.5f) / Mathf.Max(0.5f, fragmentDrag) + 0.5f;
             bool any = false;
             for (int g = 0; g < groups.Count && g < groupPieceUntil.Length; g++)
             {
@@ -393,7 +410,7 @@ namespace RythmRPG.Core
                 bounds.Expand(reach * 2f);
                 rp.worldBounds = bounds;
                 rp.matProps = group.Properties;
-                Graphics.RenderMeshPrimitives(rp, bladeMesh, 0, group.Count);
+                Graphics.RenderMeshPrimitives(rp, bladeMesh, 0, group.Count * PieceFragments);
             }
         }
 
@@ -420,8 +437,9 @@ namespace RythmRPG.Core
             target.SetColor(CharColorId, charColor);
             target.SetColor(AshColorId, ashColor);
             target.SetVector(CurlId, new Vector4(curl, 0f, 0f, 0f));
-            target.SetVector(PiecesId, new Vector4(pieceLifetime, pieceSpeed, pieceJump, pieceGravity));
-            target.SetVector(Pieces2Id, new Vector4(pieceSpin, 1.5f / Mathf.Max(1f, pixelsPerUnit), 0f, 0f));
+            target.SetVector(PiecesId, new Vector4(fragmentLifetime, fragmentSpeed, fragmentJump, fragmentGravity));
+            target.SetVector(Pieces2Id, new Vector4(fragmentSpin, 1.5f / Mathf.Max(1f, pixelsPerUnit), fragmentDrag, fragmentFadeStart));
+            target.SetVector(Pieces3Id, new Vector4(fragmentSize, 0f, 0f, 0f));
         }
 
         private bool EnsureMaterial()
@@ -491,6 +509,7 @@ namespace RythmRPG.Core
             var data = new GpuBlade[order.Count];
             bladeTips = new float[order.Count];
             bladeBases = new float[order.Count];
+            bladeHalfWidths = new float[order.Count];
             bladeGroups = new int[order.Count];
             groups.Clear();
             int start = 0;
@@ -555,6 +574,7 @@ namespace RythmRPG.Core
                 float scale = data[i].PositionScale.w;
                 bladeTips[i] = Mathf.Max(bottom * scale + 0.02f, tip * scale);
                 bladeBases[i] = bottom * scale;
+                bladeHalfWidths[i] = size.x * 0.5f * scale;
                 bladeGroups[i] = groups.Count;
             }
 

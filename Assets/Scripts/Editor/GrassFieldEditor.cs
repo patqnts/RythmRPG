@@ -65,6 +65,20 @@ public sealed class GrassFieldEditor : Editor
     {
         DrawDefaultInspector();
 
+        EditorGUILayout.Space(4);
+        using (new EditorGUILayout.VerticalScope(EditorStyles.helpBox))
+        {
+            EditorGUILayout.LabelField("Fire effect", EditorStyles.boldLabel);
+            EditorGUILayout.HelpBox("Builds \"Grass Fire (Pixel)\" (flames that lick up from the base of each tuft, a bright " +
+                "core, smoke and embers, with your pixel flame material) and sets it as this field's Burning Effect.",
+                MessageType.None);
+            if (GUILayout.Button("Create Pixel Fire Effect & Use It"))
+            {
+                ParticleSystem effect = GrassFireEffectBuilder.CreatePrefab();
+                if (effect != null) GrassFireEffectBuilder.Assign(field, effect);
+            }
+        }
+
         EditorGUILayout.Space(8);
         EditorGUILayout.LabelField("Brush", EditorStyles.boldLabel);
         using (new EditorGUILayout.VerticalScope(EditorStyles.helpBox))

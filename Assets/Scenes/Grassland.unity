@@ -8170,9 +8170,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Core::RythmRPG.Core.GrassFire
   action: 0
   mode: 0
-  radius: 0.5
-  offset: {x: 0, y: 0, z: 0}
   interval: 0.25
+  shape: 0
+  offset: {x: 0, y: 0, z: 0}
+  footprint: 1
+  radius: 0.5
+  length: 3.5
+  coneAngle: 28
+  coneStartRadius: 0.15
+  boxSize: {x: 1, y: 1, z: 3}
+  particles: {fileID: 0}
+  particleReach: 0.6
+  minParticleAge: 0.1
+  particlesPerCheck: 48
   maxHeightAboveGrass: 1
 --- !u!114 &1953005476
 MonoBehaviour:
@@ -8181,20 +8191,25 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1953005467}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 57b21263b52c154438bd63905fe4dd57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: RythmRPG.Core::RythmRPG.Core.GrassShockwaveEmitter
+  shape: 1
   maxRadius: 5
+  coneAngle: 70
+  lineLength: 4
+  offset: {x: 0, y: 0, z: 0}
   speed: 14
   strength: 1.477
   width: 2.01
   effects: 1
   effectRadius: -1
-  offset: {x: 0, y: 0, z: 0}
+  cutHeightMode: 0
+  cutHeight: 0.1
   emitOnEnable: 0
-  repeatInterval: 0
+  repeatInterval: 1.66
 --- !u!114 &1953005477
 MonoBehaviour:
   m_ObjectHideFlags: 0
