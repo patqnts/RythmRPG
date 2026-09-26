@@ -66,13 +66,23 @@ namespace RythmRPG.Combat
         private System.Collections.IEnumerator FinishRoutine(RhythmPerformanceResult performance)
         {
             if (vfxController == null) vfxController = GetComponent<CombatVFXController>();
+            if (vfxController == null) vfxController = FindAnyObjectByType<CombatVFXController>();
             AbilityVFXProfile vfxProfile = context.Ability?.Definition?.VFXProfile;
+            AbilityDefinition definition = context.Ability?.Definition;
+            CharacterAttackSequence sequence = definition?.AttackSequence;
+            // The character is the hit line during the chart; for its attack animation it takes its own form again
+            // (the line and markers pull back into it), and becomes the line again afterwards.
+            bool steppedOut = sequence != null && vfxController != null;
+            if (steppedOut) vfxController.StepOutOfHitLine();
             ImpactAnticipationStarted?.Invoke(context, performance);
             if (vfxProfile != null && vfxProfile.ImpactAnticipationDuration > 0f)
                 yield return new WaitForSeconds(vfxProfile.ImpactAnticipationDuration);
+            if (steppedOut)
+            {
+                float waitUntil = Time.time + 2f; // failsafe
+                while (vfxController.CharacterMorphing && Time.time < waitUntil) yield return null;
+            }
 
-            AbilityDefinition definition = context.Ability?.Definition;
-            CharacterAttackSequence sequence = definition?.AttackSequence;
             var effectContext = new AbilityEffectContext
             {
                 Player = context.Player,
@@ -112,6 +122,8 @@ namespace RythmRPG.Combat
 
             resolution.Finish();
             if (!announced) ImpactResolved?.Invoke(context, performance);
+            // Back into the hit line (not after the finishing blow: the character stays for the victory).
+            if (steppedOut && (context.Enemy == null || !context.Enemy.IsDefeated)) vfxController.StepBackIntoHitLine();
             if (vfxProfile != null && vfxProfile.ImpactSettleDuration > 0f)
                 yield return new WaitForSeconds(vfxProfile.ImpactSettleDuration);
 

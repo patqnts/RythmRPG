@@ -349,6 +349,7 @@ namespace RythmRPG.Combat
             if (lanes == null) return false;
             morph ??= new KeyMarkerMorph(transform, SortingOrder - 1);
             morph.Clear();
+            morph.GhostMaterial = lanes.GhostMaterial; // the markers leave shimmering like the line
 
             bool any = false;
             int index = 0;

@@ -50,7 +50,11 @@ namespace RythmRPG.Combat
         public float WorldOutline => layoutOutline * Mathf.Abs(transform.lossyScale.x);
         public KeyMarkerShape Shape => theme != null && theme.KeyMarkerSprite == null ? theme.KeyMarkerShape : KeyMarkerShape.Square;
         public Color IdleColor => theme != null ? theme.KeyMarkerColor : new Color(1f, 1f, 1f, 0.85f);
-        public string LabelText => label != null ? label.text : string.Empty;
+        /// <summary>The key letter, or empty when labels are turned off (Show Key Marker Labels), so the morph ghosts
+        /// that copy it do not show a letter either.</summary>
+        public string LabelText => label != null && label.gameObject.activeSelf && (theme == null || theme.ShowKeyMarkerLabels)
+            ? label.text
+            : string.Empty;
 
         public static LaneKeyMarker Create(Transform parent, int laneId, CombatLanePresentationTheme theme)
         {

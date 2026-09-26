@@ -10,6 +10,44 @@ namespace RythmRPG.Combat
         private const int Size = 128;
         private static Sprite disc;
         private static readonly Dictionary<int, Sprite> rings = new();
+        private static readonly Dictionary<int, Sprite> pixelCircles = new();
+
+        /// <summary>
+        /// Pixel-art circle exactly <paramref name="diameter"/> texels wide, point-filtered with hard edges, so each
+        /// texel reads as one pixel-art pixel. <paramref name="band"/> = ring thickness in texels (0 = filled disc).
+        /// </summary>
+        public static Sprite PixelCircle(int diameter, int band)
+        {
+            diameter = Mathf.Clamp(diameter, 3, 256);
+            band = Mathf.Clamp(band, 0, diameter / 2);
+            int key = diameter * 1000 + band;
+            if (pixelCircles.TryGetValue(key, out Sprite cached) && cached != null) return cached;
+            var texture = new Texture2D(diameter, diameter, TextureFormat.RGBA32, false)
+            {
+                name = band > 0 ? $"UI Pixel Ring {diameter}/{band}" : $"UI Pixel Disc {diameter}",
+                filterMode = FilterMode.Point,
+                wrapMode = TextureWrapMode.Clamp
+            };
+            var pixels = new Color32[diameter * diameter];
+            float center = diameter * 0.5f;
+            float outer = diameter * 0.5f;
+            float inner = band > 0 ? outer - band : -1f;
+            for (int y = 0; y < diameter; y++)
+            for (int x = 0; x < diameter; x++)
+            {
+                // Texel centre inside the circle (and outside the hole): hard pixel-art edge, no anti-aliasing.
+                float dx = x + 0.5f - center, dy = y + 0.5f - center;
+                float d = Mathf.Sqrt(dx * dx + dy * dy);
+                bool on = d <= outer - 0.25f && (inner < 0f || d >= inner - 0.25f);
+                pixels[y * diameter + x] = on ? new Color32(255, 255, 255, 255) : new Color32(255, 255, 255, 0);
+            }
+            texture.SetPixels32(pixels);
+            texture.Apply(false, true);
+            Sprite sprite = Sprite.Create(texture, new Rect(0f, 0f, diameter, diameter), new Vector2(0.5f, 0.5f), 100f);
+            sprite.name = texture.name;
+            pixelCircles[key] = sprite;
+            return sprite;
+        }
 
         public static Sprite Disc => disc != null ? disc : disc = Make(0f, "UI Circle Disc");
 
@@ -28,6 +66,7 @@ namespace RythmRPG.Combat
         {
             disc = null;
             rings.Clear();
+            pixelCircles.Clear();
         }
 
         private static Sprite Make(float band, string name)
@@ -69,6 +108,13 @@ namespace RythmRPG.Combat
         public Color BackdropColor = new(0.07f, 0.08f, 0.13f, 0.85f);
         [Tooltip("Icon size inside the frame (fraction of the frame's size).")]
         [Range(0.3f, 1f)] public float IconInset = 0.74f;
+        [Tooltip("Draw the frame, backdrop and hold-progress ring as pixel-art circles whose pixels are as big as the " +
+                 "sprites' pixels (see Pixels Per Unit), instead of smooth circles.")]
+        public bool PixelFrame = true;
+        [Tooltip("Pixel size of the pixel frame: world units per pixel = 1 / this. Match the sprites' Pixels Per Unit (32).")]
+        [Min(1f)] public float PixelsPerUnit = 32f;
+        [Tooltip("Pixel frame ring thickness in pixels. 0 = from Frame Thickness.")]
+        [Range(0, 8)] public int FramePixels = 1;
 
         [Header("Hold progress")]
         [Tooltip("A ring that fills around the icon while it is held.")]

@@ -60,6 +60,9 @@ namespace RythmRPG.Combat
 
         public bool IsActive => ghosts.Count > 0;
 
+        /// <summary>Material for new ghost outlines (e.g. the iridescent hit line material). Null = default UI.</summary>
+        public Material GhostMaterial { get; set; }
+
         public KeyMarkerMorph(Transform parent, int sortingOrder)
         {
             var go = new GameObject("Key Marker Morph Canvas", typeof(RectTransform));
@@ -83,6 +86,7 @@ namespace RythmRPG.Combat
             rect.anchorMin = rect.anchorMax = rect.pivot = new Vector2(0.5f, 0.5f);
             Image image = go.AddComponent<Image>();
             image.raycastTarget = false;
+            if (GhostMaterial != null) image.material = GhostMaterial;
             MorphDistortEffect distort = go.AddComponent<MorphDistortEffect>();
 
             TMP_Text text = CombatText.CreateUGUI("Key", rect, null, 10f, Color.white, TextAlignmentOptions.Center,

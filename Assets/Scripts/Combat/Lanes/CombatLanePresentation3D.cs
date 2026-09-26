@@ -445,6 +445,7 @@ namespace RythmRPG.Combat
             UpdateHitLineCaps();
 
             if (Time.frameCount % 120 == 0) PrepareHitLineMaterials(hitLineAnchor);
+            ApplyIridescence();
             Canvas lineCanvas = hitLineAnchor.GetComponent<Canvas>();
             if (lineCanvas != null)
             {
@@ -692,18 +693,91 @@ namespace RythmRPG.Combat
 
         public float HitLineRevealSeconds => hitLineRevealSeconds;
 
+        /// <summary>The combat lane presentation is up (a battle is running), whether or not the hit line is showing.</summary>
+        public bool PresentationActive => presentationVisible && hitLineAnchor != null && hitLineAnchor.gameObject.activeInHierarchy;
+
+        /// <summary>The hit line is shown (revealed and not hidden for ability selection).</summary>
+        public bool HitLineRevealed => hitLineRevealed && PresentationActive;
+
+        /// <summary>Raised by <see cref="RevealHitLine"/> (true) and <see cref="HideHitLine"/> (false).</summary>
+        public event System.Action<bool> HitLineShownChanged;
+
+        /// <summary>
+        /// While true, <see cref="RevealHitLine"/> keeps the line invisible instead of fading it in: a transition
+        /// (<see cref="CharacterHitLineMorph"/>) animates it and then calls <see cref="ShowHitLineNow"/>.
+        /// </summary>
+        public bool RevealHandledExternally { get; set; }
+
+        /// <summary>Shows the (revealed) hit line at once, without the fade.</summary>
+        public void ShowHitLineNow()
+        {
+            if (hitLineRevealed) AnimateHitLineAlpha(1f, 0f);
+        }
+
+        /// <summary>The runtime "Hit Line UI" material of the line and markers (iridescent, occludable). May be null.</summary>
+        public Material HitLineMaterial => hitLineMaterial;
+
+        private Material ghostMaterial;
+
+        /// <summary>
+        /// A copy of the hit line material without the occlusion stencil, for things that morph into or out of the
+        /// line and markers (so they shimmer the same way). Null until the line exists.
+        /// </summary>
+        public Material GhostMaterial
+        {
+            get
+            {
+                if (hitLineMaterial == null) return null;
+                if (ghostMaterial == null)
+                {
+                    ghostMaterial = new Material(hitLineMaterial) { name = "Hit Line UI Ghost (runtime)" };
+                    ghostMaterial.SetFloat("_StencilComp", (float)UnityEngine.Rendering.CompareFunction.Always);
+                    ghostMaterial.SetFloat("_StencilReadMask", 255f);
+                    ghostMaterial.SetFloat("_Stencil", 0f);
+                    ghostMaterial.SetFloat("_ZTest", (float)UnityEngine.Rendering.CompareFunction.Always);
+                }
+                ghostMaterial.SetFloat(IridescenceId, hitLineMaterial.GetFloat(IridescenceId));
+                return ghostMaterial;
+            }
+        }
+
+        private static readonly int IridescenceId = Shader.PropertyToID("_Iridescence");
+        private static readonly int IriAId = Shader.PropertyToID("_HitLineIriA");
+        private static readonly int IriBId = Shader.PropertyToID("_HitLineIriB");
+        private static readonly int IriCId = Shader.PropertyToID("_HitLineIriC");
+        private static readonly int IriDId = Shader.PropertyToID("_HitLineIriD");
+        private static readonly int IriParamsId = Shader.PropertyToID("_HitLineIriParams");
+
+        // Theme -> shader globals (shared with the character morph sprite) and the line material's strength.
+        private void ApplyIridescence()
+        {
+            bool on = theme == null || theme.Iridescent;
+            float strength = on ? (theme != null ? theme.IridescentStrength : 1f) : 0f;
+            if (hitLineMaterial != null && hitLineMaterial.HasProperty(IridescenceId)) hitLineMaterial.SetFloat(IridescenceId, strength);
+            if (theme == null) return;
+            Shader.SetGlobalColor(IriAId, theme.IridescentEmber);
+            Shader.SetGlobalColor(IriBId, theme.IridescentEmberHot);
+            Shader.SetGlobalColor(IriCId, theme.IridescentAsh);
+            Shader.SetGlobalColor(IriDId, theme.IridescentAccent);
+            Shader.SetGlobalVector(IriParamsId, new Vector4(theme.IridescentScale, theme.IridescentSpeed,
+                theme.IridescentSteps, theme.IridescentKeepSaturated));
+        }
+
         /// <summary>Hides the hit line (it keeps tracking the camera and player so the lanes stay valid). Instant - no notes should be landing while it's hidden.</summary>
         public void HideHitLine()
         {
             hitLineRevealed = false;
             AnimateHitLineAlpha(0f, 0f);
+            HitLineShownChanged?.Invoke(false);
         }
 
         /// <summary>Fades the hit line in over Hit Line Reveal Seconds (PrimeTween).</summary>
         public void RevealHitLine()
         {
             hitLineRevealed = true;
-            AnimateHitLineAlpha(1f, hitLineRevealSeconds);
+            if (RevealHandledExternally) AnimateHitLineAlpha(0f, 0f);
+            else AnimateHitLineAlpha(1f, hitLineRevealSeconds);
+            HitLineShownChanged?.Invoke(true);
         }
 
         private void AnimateHitLineAlpha(float target, float seconds)

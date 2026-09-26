@@ -23,6 +23,7 @@ namespace RythmRPG.Combat
         private readonly Dictionary<int, AbilitySlotView> slotViews = new();
         private readonly Dictionary<int, KeyButton> keyViews = new();
         private AbilitySelectionStage selectionStage;
+        private CharacterHitLineMorph characterMorph;
         private LaneInputRouter boundInput;
         private AbilitySlotController slots;
         private RhythmJudgementSystem judgement;
@@ -70,6 +71,10 @@ namespace RythmRPG.Combat
             boundInput = input;
 
             // Ability icons: in a row above the player's head (world-space canvas), or above the lane buttons.
+            // The character is the hit line: it morphs into the line and key markers whenever they show.
+            if (player != null && (vfxTheme == null || vfxTheme.CharacterBecomesHitLine)) EnsureCharacterMorph().Bind(player, ResolveLanePresentation());
+            else if (characterMorph != null) characterMorph.Bind(null, null);
+
             IReadOnlyDictionary<int, RectTransform> headSlots = null;
             if ((vfxTheme == null || vfxTheme.AbilityIconsAbovePlayer) && player != null)
                 headSlots = EnsureSelectionStage().BuildSlots(player.transform, input.Bindings);
@@ -174,6 +179,36 @@ namespace RythmRPG.Combat
             float cast = profile != null ? profile.WispTravelSeconds + profile.WispMinHoverSeconds : 0.55f;
             float zoomOut = selectionStage != null ? selectionStage.ZoomOutSeconds + 0.05f : 0f;
             return Mathf.Max(cast, zoomOut);
+        }
+
+        private bool characterSteppedOut;
+
+        /// <summary>
+        /// The character steps out of the hit line for its attack animation: the line and markers pull back into it
+        /// and it pops up. Wait on <see cref="CharacterMorphing"/> before moving it. No-op if it is not the line.
+        /// </summary>
+        public void StepOutOfHitLine()
+        {
+            characterSteppedOut = characterMorph != null && characterMorph.isActiveAndEnabled && characterMorph.ReturnToCharacter();
+        }
+
+        /// <summary>After the attack animation: the character morphs back into the hit line and key markers.</summary>
+        public void StepBackIntoHitLine()
+        {
+            if (!characterSteppedOut) return;
+            characterSteppedOut = false;
+            ResolveLanePresentation()?.RevealHitLine();
+        }
+
+        /// <summary>The character is still morphing into or out of the hit line.</summary>
+        public bool CharacterMorphing => characterMorph != null && characterMorph.isActiveAndEnabled && characterMorph.IsMorphing;
+
+        private CharacterHitLineMorph EnsureCharacterMorph()
+        {
+            if (characterMorph == null) characterMorph = GetComponent<CharacterHitLineMorph>();
+            if (characterMorph == null) characterMorph = gameObject.AddComponent<CharacterHitLineMorph>();
+            characterMorph.Configure(vfxTheme);
+            return characterMorph;
         }
 
         private AbilitySelectionStage EnsureSelectionStage()

@@ -2,6 +2,8 @@
 // characters (and anything else that writes depth) standing between the camera and the line cover it, like any other
 // object in the world. A small depth bias toward the camera keeps the ground or props right at the line from
 // swallowing it. Set Depth Test to Always to get the old draw-over-everything behaviour back.
+// Iridescence (0-1): white / grey parts shimmer through the ember yellow -> ember hot green -> ash pink -> accent cycle
+// (IridescentCommon.cginc; colours set by CombatLanePresentation3D from the lane theme). Saturated colours are kept.
 Shader "Rythm RPG/Combat/Hit Line UI"
 {
     Properties
@@ -10,6 +12,7 @@ Shader "Rythm RPG/Combat/Hit Line UI"
         _Color ("Tint", Color) = (1,1,1,1)
         [Enum(UnityEngine.Rendering.CompareFunction)] _ZTest ("Depth Test", Float) = 4
         _DepthOffset ("Depth Offset (negative = toward camera)", Range(-8, 0)) = -1
+        _Iridescence ("Iridescence", Range(0, 1)) = 0
 
         // UI stencil (as in UI/Default). CrispWorldUI.MakeOccludable sets these so characters and notes, drawn
         // into stencil bit 128 by the Crisp World UI Camera, cover the line. Defaults: no stencil test.
@@ -54,6 +57,7 @@ Shader "Rythm RPG/Combat/Hit Line UI"
             #pragma vertex vert
             #pragma fragment frag
             #include "UnityCG.cginc"
+            #include "IridescentCommon.cginc"
 
             struct appdata_t
             {
@@ -71,6 +75,7 @@ Shader "Rythm RPG/Combat/Hit Line UI"
 
             sampler2D _MainTex;
             fixed4 _Color;
+            float _Iridescence;
 
             v2f vert(appdata_t v)
             {
@@ -83,7 +88,10 @@ Shader "Rythm RPG/Combat/Hit Line UI"
 
             fixed4 frag(v2f i) : SV_Target
             {
-                return tex2D(_MainTex, i.texcoord) * i.color;
+                fixed4 color = tex2D(_MainTex, i.texcoord) * i.color;
+                if (_Iridescence > 0.0)
+                    color.rgb = ApplyIridescence(color.rgb, i.color.rgb, i.vertex.xy / _ScreenParams.xy, _Iridescence);
+                return color;
             }
             ENDCG
         }

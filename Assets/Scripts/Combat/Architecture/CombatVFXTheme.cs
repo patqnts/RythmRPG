@@ -57,6 +57,27 @@ namespace RythmRPG.Combat
         [Tooltip("How fast the ripple travels around the outline (radians per second).")]
         [SerializeField, Min(0f)] private float morphWobbleSpeed = 18f;
 
+        [Header("Character becomes the hit line")]
+        [Tooltip("On: whenever the hit line appears (enemy turn, the player's ability chart) the character morphs into it " +
+                 "- squashes flat into the line, the line spreads out from it and the key markers slide out along it - " +
+                 "and is not shown while the line is up. When the line hides for ability selection, the line pulls back " +
+                 "into the character (the markers still fly up into the ability frames).")]
+        [SerializeField] private bool characterBecomesHitLine = true;
+        [Tooltip("Character -> hit line and key markers.")]
+        [SerializeField, Min(0.1f)] private float becomeLineSeconds = 0.55f;
+        [Tooltip("Hit line -> character.")]
+        [SerializeField, Min(0.1f)] private float becomeCharacterSeconds = 0.4f;
+        [Tooltip("Width of the character when squashed flat, relative to its normal width.")]
+        [SerializeField, Range(1f, 3f)] private float flatWidth = 1.5f;
+        [Tooltip("Height of the character when squashed flat, relative to its normal height.")]
+        [SerializeField, Range(0.02f, 0.5f)] private float flatHeight = 0.1f;
+        [Tooltip("Stretch up before squashing (anticipation), fraction of its height.")]
+        [SerializeField, Range(0f, 0.5f)] private float anticipationStretch = 0.15f;
+        [Tooltip("Overshoot when the character pops back up out of the line.")]
+        [SerializeField, Range(0f, 3f)] private float reformOvershoot = 1.7f;
+        [Tooltip("Delay between key markers sliding out (nearest to the character first).")]
+        [SerializeField, Min(0f)] private float markerSlideStagger = 0.04f;
+
         [Header("Ability selection: holding an ability")]
         [Tooltip("The held icon is drawn down into the player while the hold fills, and swallowed when it is picked.")]
         [SerializeField] private bool pullIntoCharacter = true;
@@ -116,6 +137,14 @@ namespace RythmRPG.Combat
         public int MorphWobbleLobes => morphWobbleLobes;
         public float MorphWobbleSpeed => morphWobbleSpeed;
         public AbilityIconFrameStyle IconFrame => iconFrame;
+        public bool CharacterBecomesHitLine => characterBecomesHitLine;
+        public float BecomeLineSeconds => becomeLineSeconds;
+        public float BecomeCharacterSeconds => becomeCharacterSeconds;
+        public float FlatWidth => flatWidth;
+        public float FlatHeight => flatHeight;
+        public float AnticipationStretch => anticipationStretch;
+        public float ReformOvershoot => reformOvershoot;
+        public float MarkerSlideStagger => markerSlideStagger;
         public bool PullIntoCharacter => pullIntoCharacter;
         public float PullDistance => pullDistance;
         public float PullCurve => pullCurve;

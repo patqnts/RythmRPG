@@ -65,6 +65,7 @@ namespace RythmRPG.Combat
             if (prefab != null)
             {
                 GameObject instance = Object.Instantiate(prefab, position, prefab.transform.rotation);
+                CastEffectTint.Apply(instance, color);
                 Object.Destroy(instance, Mathf.Max(0.5f, lifetime));
                 return;
             }
@@ -186,6 +187,7 @@ namespace RythmRPG.Combat
                 GameObject instance = Instantiate(prefab, go.transform);
                 instance.transform.localPosition = Vector3.zero;
                 instance.transform.localScale = prefab.transform.localScale * effect.size;
+                CastEffectTint.Apply(instance, color);
                 effect.systems = instance.GetComponentsInChildren<ParticleSystem>(true);
                 effect.baseRates = new float[effect.systems.Length];
                 for (int i = 0; i < effect.systems.Length; i++)
@@ -363,6 +365,7 @@ namespace RythmRPG.Combat
             {
                 wisp.instance = Instantiate(prefab, go.transform);
                 wisp.instance.transform.localPosition = Vector3.zero;
+                CastEffectTint.Apply(wisp.instance, color);
             }
             else
             {

@@ -17,16 +17,16 @@ MonoBehaviour:
   hitFlashDuration: 0.12
   hitShakeStrength: 0.12
   defaultChargePrefab: {fileID: 0}
-  defaultChargeReleasePrefab: {fileID: 0}
-  defaultWispPrefab: {fileID: 0}
-  defaultPopPrefab: {fileID: 0}
+  defaultChargeReleasePrefab: {fileID: 7846278365680987802, guid: 117eec51e1fce914a9d0c704ca00f986, type: 3}
+  defaultWispPrefab: {fileID: 5908964444340382658, guid: 70f8d8a29ce1f7841b3d5a4f8b663bb8, type: 3}
+  defaultPopPrefab: {fileID: 8466280184740519819, guid: 57dc6df80a767ab4589ee728188a32de, type: 3}
   defaultNoteSparkPrefab: {fileID: 0}
   centerStageBias: 0.5
   centerStageHeight: 0
   abilityIconsAbovePlayer: 1
-  iconSize: 0.463
+  iconSize: 0.671
   iconSpacing: 1.145
-  iconsHeightAboveHead: 0.579
+  iconsHeightAboveHead: 0.881
   showKeysUnderIcons: 0
   rowCurvature: 1.06
   iconFrame:
@@ -35,6 +35,9 @@ MonoBehaviour:
     FrameThickness: 0.1
     BackdropColor: {r: 0.07, g: 0.08, b: 0.13, a: 0.85}
     IconInset: 0.74
+    PixelFrame: 1
+    PixelsPerUnit: 32
+    FramePixels: 1
     ShowHoldProgress: 1
     ProgressThickness: 0.12
     UseAbilityAccent: 1
@@ -47,6 +50,14 @@ MonoBehaviour:
   morphWobble: 0.102
   morphWobbleLobes: 4
   morphWobbleSpeed: 18
+  characterBecomesHitLine: 1
+  becomeLineSeconds: 1.09
+  becomeCharacterSeconds: 0.82
+  flatWidth: 1.5
+  flatHeight: 0.345
+  anticipationStretch: 0.15
+  reformOvershoot: 2.87
+  markerSlideStagger: 0.04
   pullIntoCharacter: 1
   pullDistance: 0.55
   pullCurve: 2.42

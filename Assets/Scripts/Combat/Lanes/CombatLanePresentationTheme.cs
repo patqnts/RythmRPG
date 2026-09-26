@@ -73,6 +73,30 @@ namespace RythmRPG.Combat
         [Tooltip("Key label size relative to the marker.")]
         [Range(0.2f, 1f)] public float KeyMarkerLabelScale = 0.55f;
 
+        [Header("Iridescence (Hit Line and Key Markers)")]
+        [Tooltip("The white / grey parts of the hit line and key marker outlines shimmer through the colours below (the " +
+                 "title logo's burn colours). Pressed, judgement flash and hold colours keep their own colour. The " +
+                 "character's morph into the line uses the same colours.")]
+        public bool Iridescent = true;
+        [Range(0f, 1f)] public float IridescentStrength = 1f;
+        [Tooltip("Ember colour.")]
+        public Color IridescentEmber = new(0.9696f, 1f, 0.1255f, 1f);
+        [Tooltip("Ember hot colour.")]
+        public Color IridescentEmberHot = new(0.0613f, 1f, 0.1251f, 1f);
+        [Tooltip("Ash colour.")]
+        public Color IridescentAsh = new(1f, 0.7594f, 0.9603f, 1f);
+        [Tooltip("Fourth colour of the cycle (the accent ramp's highlight).")]
+        public Color IridescentAccent = new(0.42f, 1f, 0.51f, 1f);
+        [Tooltip("How many times the colour cycle repeats across the screen.")]
+        [Range(0f, 8f)] public float IridescentScale = 1.5f;
+        [Tooltip("Cycles per second (negative = the other way).")]
+        [Range(-4f, 4f)] public float IridescentSpeed = 0.35f;
+        [Tooltip("Posterise the cycle into this many colour steps. 0 = smooth.")]
+        [Range(0, 16)] public int IridescentSteps = 0;
+        [Tooltip("Colours more saturated than this keep their own colour instead of shimmering (0.3 keeps the pressed " +
+                 "yellow and the judgement flashes).")]
+        [Range(0.05f, 1f)] public float IridescentKeepSaturated = 0.3f;
+
         [Header("Key Marker Charge (Stationary Notes)")]
         [Tooltip("Show a Stationary note's charge on its lane's key marker, in the marker's own shape: an outline " +
                  "shrinks onto the marker (Stationary), or the marker fills up from the centre (Stationary Hold). " +

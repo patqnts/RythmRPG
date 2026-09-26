@@ -488,6 +488,7 @@ namespace RythmRPG.Combat
         {
             AbilityIconFrameStyle style = Style;
             bool framed = style.Enabled;
+            pixelDiameter = pixelRadialDiameter = -1; // re-rasterise the pixel frame with the new style
             if (uiFrame != null) uiFrame.sprite = UiCircleSprites.Ring(style.FrameThickness);
             if (uiMaskRect != null)
             {
@@ -506,11 +507,52 @@ namespace RythmRPG.Combat
             }
         }
 
+        // Pixel frame: circles rasterised at the sprites' pixel size for the frame's current world size.
+        private int pixelDiameter = -1;
+        private int pixelRadialDiameter = -1;
+
+        private void ApplyPixelFrame(AbilityIconFrameStyle style)
+        {
+            if (!style.PixelFrame)
+            {
+                if (pixelDiameter < 0) return;
+                pixelDiameter = pixelRadialDiameter = -1;
+                ApplyFrameStyle(); // back to the smooth circles
+                if (uiBackdrop != null) uiBackdrop.sprite = UiCircleSprites.Disc;
+                if (uiMaskImage != null) uiMaskImage.sprite = UiCircleSprites.Disc;
+                return;
+            }
+            float worldPerUnit = Mathf.Abs(transform.lossyScale.x);
+            if (worldPerUnit <= 0f) return;
+            float ppu = Mathf.Max(1f, style.PixelsPerUnit);
+            int diameter = Mathf.Max(5, Mathf.RoundToInt(54f * worldPerUnit * ppu));
+            if (diameter != pixelDiameter)
+            {
+                pixelDiameter = diameter;
+                int band = style.FramePixels > 0
+                    ? style.FramePixels
+                    : Mathf.Max(1, Mathf.RoundToInt(diameter * 0.5f * style.FrameThickness));
+                if (uiFrame != null) uiFrame.sprite = UiCircleSprites.PixelCircle(diameter, band);
+                if (uiBackdrop != null) uiBackdrop.sprite = UiCircleSprites.PixelCircle(diameter, 0);
+                // The icon's round clip gets the same stair-stepped edge.
+                if (uiMaskImage != null)
+                    uiMaskImage.sprite = UiCircleSprites.PixelCircle(Mathf.Max(3, Mathf.RoundToInt(diameter * style.IconInset)), 0);
+            }
+            int radialDiameter = Mathf.Max(5, Mathf.RoundToInt(62f * worldPerUnit * ppu));
+            if (uiRadialFill != null && radialDiameter != pixelRadialDiameter)
+            {
+                pixelRadialDiameter = radialDiameter;
+                int band = Mathf.Max(1, Mathf.RoundToInt(radialDiameter * 0.5f * style.ProgressThickness));
+                uiRadialFill.sprite = UiCircleSprites.PixelCircle(radialDiameter, band);
+            }
+        }
+
         private void ApplyFrameColors(bool active, float alpha, Color tint)
         {
             if (uiFrame == null && uiBackdrop == null) return;
             AbilityIconFrameStyle style = Style;
             bool framed = style.Enabled && active;
+            if (framed) ApplyPixelFrame(style);
             if (uiFrame != null)
             {
                 uiFrame.enabled = framed;
