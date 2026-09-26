@@ -86,7 +86,8 @@ namespace RythmRPG.Combat
         [SerializeField] private Color valueColor = Color.white;
         [SerializeField] private Color badgeColor = new(1f, 0.9f, 0.4f);
         [SerializeField] private Color promptColor = new(1f, 1f, 1f, 0.85f);
-        [SerializeField] private Color outlineColor = new(0f, 0f, 0f, 0.9f);
+        [Tooltip("Outline around the result texts (and the ability selection texts). Alpha 0 = no outline.")]
+        [SerializeField] private Color outlineColor = new(0f, 0f, 0f, 0f);
 
         [Header("Font (TextMeshPro)")]
         [Tooltip("TextMeshPro font for every result-screen text except the rank letter. Empty = generated from Legacy Font, else TMP's default font.")]

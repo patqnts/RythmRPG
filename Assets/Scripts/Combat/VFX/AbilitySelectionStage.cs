@@ -71,6 +71,13 @@ namespace RythmRPG.Combat
 
         public void Configure(CombatVFXTheme vfxTheme) => theme = vfxTheme;
 
+        // The ability name and key labels use the combat result screen's font and outline (Combat Result Style),
+        // so the combat texts match.
+        private static CombatResultStyle textStyle;
+        private static CombatResultStyle TextStyle => textStyle != null ? textStyle : textStyle = CombatResultStyle.LoadOrDefault();
+        private static TMP_FontAsset TextFont => TextStyle != null ? TextStyle.FontAsset : null;
+        private static Color TextOutline => TextStyle != null ? TextStyle.OutlineColor : Color.clear;
+
         // ---------- Slots above the head ----------
 
         /// <summary>Builds (or reuses) one slot per lane above <paramref name="playerTransform"/>. Returns them by lane.</summary>
@@ -102,9 +109,8 @@ namespace RythmRPG.Combat
                     slot.Group.interactable = false;
                     slot.Group.blocksRaycasts = false;
 
-                    slot.Key = CombatText.CreateUGUI("Key", slot.Rect, null, 22f, Color.white, TextAlignmentOptions.Center,
-                        new Color(0f, 0f, 0f, 0.8f));
-                    slot.Key.fontStyle = FontStyles.Bold;
+                    slot.Key = CombatText.CreateUGUI("Key", slot.Rect, TextFont, 22f, Color.white, TextAlignmentOptions.Center,
+                        TextOutline);
                     RectTransform keyRect = slot.Key.rectTransform;
                     keyRect.anchorMin = keyRect.anchorMax = new Vector2(0.5f, 0f);
                     keyRect.pivot = new Vector2(0.5f, 1f);
@@ -146,9 +152,8 @@ namespace RythmRPG.Combat
             CrispWorldUI.Apply(go);
 
             // Name of the ability being held, above the row.
-            nameLabel = CombatText.CreateUGUI("Ability Name", canvasRect, null, 26f, Color.white,
-                TextAlignmentOptions.Center, new Color(0f, 0f, 0f, 0.85f));
-            nameLabel.fontStyle = FontStyles.Bold;
+            nameLabel = CombatText.CreateUGUI("Ability Name", canvasRect, TextFont, 26f, Color.white,
+                TextAlignmentOptions.Center, TextOutline);
             RectTransform nameRect = nameLabel.rectTransform;
             nameRect.anchorMin = nameRect.anchorMax = new Vector2(0.5f, 0f);
             nameRect.pivot = new Vector2(0.5f, 0f);

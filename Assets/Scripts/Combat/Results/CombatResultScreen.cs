@@ -207,8 +207,9 @@ namespace RythmRPG.Combat
             if (badgeTemplate != null) texts.Add(badgeTemplate);
             foreach (TMP_Text text in texts)
             {
-                if (text == null || (text == gradeLetter && letterUsesRankFont) || text.font == font) continue;
-                text.font = font;
+                if (text == null || (text == gradeLetter && letterUsesRankFont)) continue;
+                if (text.font != font) text.font = font;
+                // Also when the font is already right: a screen saved with an outline loses it once the style has none.
                 CombatText.ApplyOutline(text, s.OutlineColor, CombatText.OutlineWidthFromPixels(3f, text.fontSize) + 0.1f);
             }
         }
