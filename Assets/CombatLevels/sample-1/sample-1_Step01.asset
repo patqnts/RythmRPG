@@ -45,7 +45,7 @@ MonoBehaviour:
     keyType: 0
   noteDefinitions:
   - noteType: 0
-    defaultPrefab: {fileID: 5029094789931625778, guid: fff99d626b5218741bf0c888080b7065, type: 3}
+    defaultPrefab: {fileID: 5029094789931625778, guid: a59b88daa346d4049b9bd879b8ee7b08, type: 3}
     displayColor: {r: 0.2, g: 0.68, b: 1, a: 1}
     defaultSpeed: 8
     defaultDamage: 1

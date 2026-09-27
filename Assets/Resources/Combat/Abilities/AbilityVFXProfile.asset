@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: AbilityVFXProfile
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.AbilityVFXProfile
   accentColor: {r: 1, g: 0.85, b: 0.25, a: 1}
-  chargePrefab: {fileID: 0}
+  chargePrefab: {fileID: 193998, guid: be9c49d40577af94fa21cbb1dc0dc38d, type: 3}
   chargeOffset: {x: 0, y: 0, z: 0}
-  chargeSize: 1
+  chargeSize: 0.43
   chargeReleasePrefab: {fileID: 0}
   wispPrefab: {fileID: 0}
   iconMorphsIntoWisp: 1

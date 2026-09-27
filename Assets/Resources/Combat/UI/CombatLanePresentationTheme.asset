@@ -46,6 +46,16 @@ MonoBehaviour:
   ShowKeyMarkerLabels: 0
   KeyMarkerLabelColor: {r: 1, g: 1, b: 1, a: 0.9}
   KeyMarkerLabelScale: 0.55
+  Iridescent: 1
+  IridescentStrength: 1
+  IridescentEmber: {r: 0.9696, g: 1, b: 0.1255, a: 1}
+  IridescentEmberHot: {r: 0.0613, g: 1, b: 0.1251, a: 1}
+  IridescentAsh: {r: 1, g: 0.7594, b: 0.9603, a: 1}
+  IridescentAccent: {r: 0.42, g: 1, b: 0.51, a: 1}
+  IridescentScale: 1.5
+  IridescentSpeed: 0.35
+  IridescentSteps: 0
+  IridescentKeepSaturated: 0.3
   ShowStationaryCharge: 1
   ChargeOutlineStartScale: 2.2
   ChargeOutlineColor: {r: 1, g: 1, b: 1, a: 0.9}

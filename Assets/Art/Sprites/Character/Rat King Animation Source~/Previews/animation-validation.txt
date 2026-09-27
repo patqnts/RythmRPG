@@ -1,0 +1,4 @@
+24 frames; 100 ms each; total 2.4 seconds.
+Four visible source layers animated; hidden reference preserved.
+First and last composite frames match exactly.
+All pixels in rows 60..72 remain identical across the loop.
