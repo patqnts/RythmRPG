@@ -1,0 +1,18 @@
+.game-data { flex-grow: 1; }
+.game-data-search { flex-grow: 1; margin-left: 12px; }
+.game-data-body { flex-grow: 1; flex-basis: 0; min-height: 0; }
+.game-data-library { min-width: 250px; padding: 8px; }
+.game-data-library > .unity-toggle { margin-top: 5px; }
+.game-data-library .unity-base-field__label { min-width: 36px; }
+.game-data-count { margin-top: 10px; margin-bottom: 6px; -unity-font-style: bold; }
+.game-data-list { flex-grow: 1; min-height: 0; }
+.game-data-row { padding: 5px 8px; }
+.game-data-row-name { -unity-font-style: bold; overflow: hidden; text-overflow: ellipsis; }
+.game-data-row-type { font-size: 10px; overflow: hidden; text-overflow: ellipsis; }
+.game-data-inspector { flex-grow: 1; min-width: 350px; }
+.game-data-title { font-size: 18px; -unity-font-style: bold; margin: 12px 12px 4px 12px; }
+.game-data-path { white-space: normal; margin: 0 12px 10px 12px; }
+.game-data-properties { flex-grow: 1; min-height: 0; padding: 8px; }
+.game-data-empty { white-space: normal; padding: 12px; }
+.game-data-footer { flex-shrink: 0; white-space: normal; padding: 6px 10px; font-size: 11px; }
+.game-data-hidden { display: none; }
