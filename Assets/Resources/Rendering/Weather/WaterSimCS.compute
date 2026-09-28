@@ -1,0 +1,67 @@
+// One step of the Pixel Water ripple simulation (see WaterSimulation in Water.cs): the classic two-buffer wave
+// equation on a height field around the view. R = height now, G = height one step ago.
+// Waves are held at zero outside the water surfaces, so they bounce off the shores.
+#pragma kernel Step
+
+#define MAX_DROPS 64
+#define MAX_BODIES 8
+
+Texture2D<float2> _Prev;
+RWTexture2D<float2> _Next;
+
+float4 _SimParams;          // xy = world XZ of the corner, z = world size, w = damping (0 = reset)
+int4 _Shift;                // xy = view scroll in whole texels since the last step
+float4 _Drops[MAX_DROPS];   // xy = world XZ, z = radius, w = strength
+int _DropCount;
+float4 _Bodies[MAX_BODIES]; // min x, min z, max x, max z
+int _BodyCount;
+int _Resolution;
+
+float2 LoadState(int2 p)
+{
+    int2 source = p + _Shift.xy;
+    if (any(source < 0) || any(source >= _Resolution)) return 0;
+    return _Prev.Load(int3(source, 0));
+}
+
+[numthreads(8, 8, 1)]
+void Step(uint3 id : SV_DispatchThreadID)
+{
+    int resolution = _Resolution;
+    if ((int)id.x >= resolution || (int)id.y >= resolution) return;
+    int2 p = int2(id.xy);
+
+    if (_SimParams.w <= 0.0)
+    {
+        _Next[id.xy] = 0;
+        return;
+    }
+
+    float2 c = LoadState(p);
+    float neighbours = LoadState(p + int2(1, 0)).x + LoadState(p - int2(1, 0)).x
+                     + LoadState(p + int2(0, 1)).x + LoadState(p - int2(0, 1)).x;
+    float height = (neighbours * 0.5 - c.y) * _SimParams.w;
+
+    float texel = _SimParams.z / resolution;
+    float2 world = _SimParams.xy + (float2(p) + 0.5) * texel;
+
+    bool inside = false;
+    [loop] for (int b = 0; b < _BodyCount; b++)
+    {
+        float4 r = _Bodies[b];
+        if (world.x >= r.x && world.x <= r.z && world.y >= r.y && world.y <= r.w) { inside = true; break; }
+    }
+    if (!inside) height = 0;
+
+    // Drops push the surface down in a smooth dimple; the wave equation turns that into rings.
+    [loop] for (int i = 0; i < _DropCount; i++)
+    {
+        float4 drop = _Drops[i];
+        float d = length(world - drop.xy);
+        float radius = max(drop.z, texel);
+        if (d < radius && inside)
+            height -= drop.w * (cos(d / radius * 3.14159265) * 0.5 + 0.5) * 0.5;
+    }
+
+    _Next[id.xy] = float2(clamp(height, -2.0, 2.0), c.x);
+}

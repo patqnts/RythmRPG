@@ -8,11 +8,11 @@
   <Project Path="RythmRPG.Combat.Tests.EditMode.csproj" />
   <Project Path="FlatKit.Utils.Editor.csproj" />
   <Project Path="RythmRPG.Rhythm.Editor.csproj" />
+  <Project Path="RythmRPG.Core.csproj" />
   <Project Path="RythmRPG.LevelComposer.csproj" />
   <Project Path="ExternAttributes.Editor.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
   <Project Path="PrimeTween.Demo.csproj" />
-  <Project Path="RythmRPG.Core.csproj" />
   <Project Path="Assembly-CSharp-Editor.csproj" />
   <Project Path="RythmRPG.Rhythm.Tests.EditMode.csproj" />
   <Project Path="RythmRPG.LevelComposer.Editor.csproj" />

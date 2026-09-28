@@ -1,0 +1,83 @@
+// Updates the weather interaction map (see WeatherInteractionMap.cs): scroll with the view, let snow refill and
+// mist flow back, then press footprints / furrows into the snow and part the mist around moving characters.
+//   R  = packed snow (0..1)          GB = mist push (world XZ units, signed)          A = mist cleared (0..1)
+#pragma kernel UpdateMap
+
+#define MAX_STAMPS 32
+#define MAX_MOVERS 16
+
+Texture2D<float4> _Prev;
+RWTexture2D<float4> _Next;
+
+float4 _MapParams;          // xy = world XZ of the map corner, z = world size, w = 0 on reset
+float4 _Decay;              // x = snow keep, y = mist push keep, z = mist clear keep (per frame)
+int4 _Shift;                // xy = scroll in whole texels
+float4 _SnowStamps[MAX_STAMPS];       // capsule: xy = start XZ, zw = end XZ
+float4 _SnowStampParams[MAX_STAMPS];  // x = radius, y = strength
+int _SnowStampCount;
+float4 _Movers[MAX_MOVERS];           // xy = XZ, z = radius, w = strength
+float4 _MoverVelocities[MAX_MOVERS];  // xy = XZ velocity
+int _MoverCount;
+int _Resolution;
+
+float SegmentDistance(float2 p, float2 a, float2 b)
+{
+    float2 ab = b - a;
+    float t = saturate(dot(p - a, ab) / max(dot(ab, ab), 1e-6));
+    return length(p - (a + ab * t));
+}
+
+[numthreads(8, 8, 1)]
+void UpdateMap(uint3 id : SV_DispatchThreadID)
+{
+    int resolution = _Resolution;
+    if ((int)id.x >= resolution || (int)id.y >= resolution) return;
+
+    float4 state = 0;
+    int2 source = int2(id.xy) + _Shift.xy;
+    if (_MapParams.w > 0.5 && all(source >= 0) && all(source < resolution))
+        state = _Prev.Load(int3(source, 0));
+
+    state.r *= _Decay.x;
+    state.gb *= _Decay.y;
+    state.a *= _Decay.z;
+    // Refilled snow snaps back to untouched instead of lingering as a faint tint.
+    if (state.r < 0.02) state.r = 0;
+
+    float texel = _MapParams.z / resolution;
+    float2 world = _MapParams.xy + (float2(id.xy) + 0.5) * texel;
+
+    // Footprints / furrows: hard-edged (pixel art), strongest press wins.
+    [loop] for (int i = 0; i < _SnowStampCount; i++)
+    {
+        float4 s = _SnowStamps[i];
+        float2 p = _SnowStampParams[i].xy;
+        float d = SegmentDistance(world, s.xy, s.zw);
+        if (d <= p.x) state.r = max(state.r, p.y);
+    }
+
+    // Moving characters part the mist: push it away (leaning with their motion) and thin it.
+    [loop] for (int m = 0; m < _MoverCount; m++)
+    {
+        float4 it = _Movers[m];
+        float2 d = world - it.xy;
+        float dist = length(d);
+        float k = saturate(1.0 - dist / max(it.z, 0.0001));
+        k = k * k * (3.0 - 2.0 * k) * it.w;
+        if (k <= 0.0) continue;
+        float2 dir = dist > 0.0001 ? d / dist : float2(0, 0);
+        float2 velocity = _MoverVelocities[m].xy;
+        float speed = length(velocity);
+        if (speed > 0.05)
+        {
+            float2 lean = dir + (velocity / speed) * saturate(speed * 0.3) * 0.8;
+            float leanLength = length(lean);
+            dir = leanLength > 0.0001 ? lean / leanLength : dir;
+        }
+        float2 push = dir * k * it.z * 0.6;
+        if (dot(push, push) > dot(state.gb, state.gb)) state.gb = push;
+        state.a = max(state.a, k * saturate(0.55 + speed * 0.25));
+    }
+
+    _Next[id.xy] = state;
+}

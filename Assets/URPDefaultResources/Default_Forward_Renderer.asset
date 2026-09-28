@@ -27,9 +27,7 @@ MonoBehaviour:
     layers:
       serializedVersion: 2
       m_Bits: 4294967295
-    fill: 0.35
-    ditheredFill: 1
-    outlineOpacity: 1
+    strength: 1
     depthBias: 0.1
     injectionPoint: 500
   showInSceneView: 1
@@ -60,7 +58,8 @@ MonoBehaviour:
     probeVolumeBlendStatesCS: {fileID: 0}
   m_RendererFeatures:
   - {fileID: -5122641935105023312}
-  m_RendererFeatureMap: b0a28b0a4db8e8b8l
+  - {fileID: 8551024270970359101}
+  m_RendererFeatureMap: b0a28b0a4db8e8b83d8deee84457ab76l
   xrSystemData: {fileID: 0}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   m_AssetVersion: 3
@@ -89,3 +88,24 @@ MonoBehaviour:
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 1
   m_TileOnlyMode: 0
+--- !u!114 &8551024270970359101
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaef1cc43c2e8ea489f0ae822a2e4b25, type: 3}
+  m_Name: Weather (Snow Cover, Fog, Mist, Heat)
+  m_EditorClassIdentifier: RythmRPG.Core::RythmRPG.Core.WeatherRendererFeature
+  m_Active: 1
+  surfaceCover: 1
+  surfaceEvent: 450
+  air: 1
+  heatShimmer: 1
+  airEvent: 550
+  pixelsPerUnit: 32
+  showInSceneView: 1
+  shader: {fileID: 4800000, guid: 175593fcf71b6f84ab55677064785a52, type: 3}
