@@ -52,7 +52,9 @@ Shader "RythmRPG/Pixel Sprite"
         _XRayPulseSpeed ("X-Ray Pulse Speed", Range(0, 10)) = 3
 
         [Header(Advanced)]
-        [Enum(UnityEngine.Rendering.CullMode)] _Cull ("Cull", Float) = 0
+        // Sprites are always drawn from both sides: flipX / flipY mirror the quad, which reverses its winding, so
+        // any culling would make flipped sprites vanish. (Kept as a hidden property for the shared material layout.)
+        [HideInInspector] _Cull ("Cull", Float) = 0
         [HideInInspector] _SrcBlend ("__src", Float) = 1
         [HideInInspector] _DstBlend ("__dst", Float) = 0
         [HideInInspector] _ZWrite ("__zw", Float) = 1
@@ -76,7 +78,7 @@ Shader "RythmRPG/Pixel Sprite"
             Tags { "LightMode" = "UniversalForward" }
             Blend [_SrcBlend] [_DstBlend]
             ZWrite [_ZWrite]
-            Cull [_Cull]
+            Cull Off
 
             HLSLPROGRAM
             #pragma target 3.5
@@ -105,7 +107,7 @@ Shader "RythmRPG/Pixel Sprite"
             ZWrite On
             ZTest LEqual
             ColorMask 0
-            Cull [_Cull]
+            Cull Off
 
             HLSLPROGRAM
             #pragma target 3.5
@@ -125,7 +127,7 @@ Shader "RythmRPG/Pixel Sprite"
             Tags { "LightMode" = "DepthOnly" }
             ZWrite On
             ColorMask R
-            Cull [_Cull]
+            Cull Off
 
             HLSLPROGRAM
             #pragma target 3.5
@@ -143,7 +145,7 @@ Shader "RythmRPG/Pixel Sprite"
             Name "DepthNormals"
             Tags { "LightMode" = "DepthNormals" }
             ZWrite On
-            Cull [_Cull]
+            Cull Off
 
             HLSLPROGRAM
             #pragma target 3.5
@@ -163,7 +165,7 @@ Shader "RythmRPG/Pixel Sprite"
             Tags { "LightMode" = "PixelOutlineMask" }
             ZWrite Off
             ZTest LEqual
-            Cull [_Cull]
+            Cull Off
             Blend Off
 
             HLSLPROGRAM
@@ -183,7 +185,7 @@ Shader "RythmRPG/Pixel Sprite"
             Tags { "LightMode" = "PixelXRay" }
             ZWrite Off
             ZTest Always
-            Cull [_Cull]
+            Cull Off
             Blend Off
 
             HLSLPROGRAM

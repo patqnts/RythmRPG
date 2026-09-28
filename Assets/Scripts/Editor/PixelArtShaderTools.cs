@@ -99,6 +99,9 @@ public static class PixelArtMaterials
     {
         if (!IsPixelArt(m)) return;
         bool transparent = m.GetFloat("_Surface") > 0.5f;
+        // Sprites never cull (a flipped sprite is a mirrored quad); clear old values carried over from Lit materials.
+        if (m.shader.name == SpriteShaderName && m.HasProperty("_Cull") && m.GetFloat("_Cull") != 0f)
+            m.SetFloat("_Cull", 0f);
         m.SetFloat("_SrcBlend", transparent ? (float)BlendMode.SrcAlpha : (float)BlendMode.One);
         m.SetFloat("_DstBlend", transparent ? (float)BlendMode.OneMinusSrcAlpha : (float)BlendMode.Zero);
         m.SetFloat("_ZWrite", transparent ? 0f : 1f);

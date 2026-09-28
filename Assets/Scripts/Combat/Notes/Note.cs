@@ -74,6 +74,32 @@ public class Note : MonoBehaviour
     public virtual Vector3 GetJudgementWorldPosition() => transform.position;
 
     /// <summary>
+    /// Seconds until this note is on the hit line (negative once it has passed). Uses the chart clock while a chart
+    /// runs, otherwise the distance to the lane target at the travel speed. NaN when neither is known.
+    /// </summary>
+    public float SecondsUntilHit
+    {
+        get
+        {
+            if (UsesChartClock) return (float)(Data.HitTime - ChartSeconds);
+            RhythmLaneTarget target = GetLaneTarget();
+            if (target == null) return float.NaN;
+            return -target.GetSignedProgressPastLine(GetJudgementWorldPosition()) / TravelSpeed;
+        }
+    }
+
+    /// <summary>Length of one beat at the chart's current tempo (0.5 s, i.e. 120 BPM, when no chart is running).</summary>
+    public float SecondsPerBeat
+    {
+        get
+        {
+            if (!UsesChartClock || runner.Clock.Tempo == null) return 0.5f;
+            double bpm = runner.Clock.Tempo.BpmAtBeat(runner.ChartBeat);
+            return bpm > 0.001d ? (float)(60d / bpm) : 0.5f;
+        }
+    }
+
+    /// <summary>
     /// Seconds between now and the moment this note is on the hit line (always positive). Measured from where the
     /// note is and how fast it moves, so it matches what the player sees; compared with the JudgementConfig windows.
     /// </summary>
