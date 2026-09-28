@@ -18,6 +18,16 @@ public class StationaryHoldNote : StationaryNote
     protected override bool ResolveImmediatelyOnPress => false;
     protected override LaneAnticipationKind MarkerAnticipationKind => LaneAnticipationKind.ChargeFill;
 
+    // A late press must still leave part of the hold to do: at most half the hold, never past the Bad window.
+    protected override float LatePressWindow => Mathf.Min(base.LatePressWindow, GetHoldSpan() * 0.5f);
+
+    /// <summary>Hold length in seconds from the beat to its end (the authored EndTime while a chart runs).</summary>
+    private float GetHoldSpan()
+    {
+        if (UsesChartClock) return Mathf.Max(0f, (float)(Data.EndTime - Data.HitTime));
+        return GetHoldDuration();
+    }
+
     protected override void Update()
     {
         base.Update();

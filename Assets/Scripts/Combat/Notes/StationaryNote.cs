@@ -13,6 +13,9 @@ public class StationaryNote : Note, ILaneAnticipation
     [SerializeField, Min(0f)] private float badWindow = 0.9f;
     [SerializeField, Min(0f)] private float goodWindow = 0.45f;
     [SerializeField, Min(0f)] private float perfectWindow = 0.15f;
+    [Tooltip("Presses after the beat are judged too (Perfect / Good / Bad by the same windows as early presses), " +
+             "until the Bad window has passed; then the note is a Miss. Off = only early or exact presses count.")]
+    [SerializeField] private bool allowLatePress = true;
 
     [Header("Stationary Visuals")]
     [SerializeField] private Transform anticipationRootVisual;
@@ -50,6 +53,12 @@ public class StationaryNote : Note, ILaneAnticipation
     protected float SecondsUntilAnticipationComplete => anticipationDuration - ElapsedSinceSpawn;
     protected bool IsInsideAnticipationWindow => ElapsedSinceSpawn <= anticipationDuration;
     protected bool HasPassedAnticipationWindow => ElapsedSinceSpawn > anticipationDuration;
+
+    /// <summary>How long after the beat a press still counts (seconds): the Bad window, or 0 with late presses off.</summary>
+    protected virtual float LatePressWindow => allowLatePress ? badWindow : 0f;
+    /// <summary>From spawn until the late window after the beat has passed: presses are judged in here.</summary>
+    protected bool IsInsidePressWindow => ElapsedSinceSpawn <= anticipationDuration + LatePressWindow;
+    protected bool HasPassedLatePressWindow => ElapsedSinceSpawn > anticipationDuration + LatePressWindow;
 
     public override void Initialize(RhythmNoteSpawnContext context)
     {
@@ -91,7 +100,8 @@ public class StationaryNote : Note, ILaneAnticipation
         }
 
         UpdateAnticipationVisual();
-        if (!hitAccepted && HasPassedAnticipationWindow)
+        // Not pressed by the end of the late window: Miss. (Before: as soon as the beat passed, so late presses never counted.)
+        if (!hitAccepted && HasPassedLatePressWindow)
         {
             ForceMiss(GetIdentityButton());
         }
@@ -106,6 +116,7 @@ public class StationaryNote : Note, ILaneAnticipation
         }
     }
 
+    // Seconds from the beat, early or late alike.
     public override float GetTimingError(KeyButton keyButton)
     {
         return Mathf.Abs(SecondsUntilAnticipationComplete);
@@ -113,7 +124,7 @@ public class StationaryNote : Note, ILaneAnticipation
 
     public override HitJudgement AdjustJudgement(HitJudgement judgement, float timingError)
     {
-        if (HasPassedAnticipationWindow) return HitJudgement.Miss;
+        if (HasPassedLatePressWindow) return HitJudgement.Miss;
         if (timingError <= perfectWindow) return HitJudgement.Perfect;
         if (timingError <= goodWindow) return HitJudgement.Good;
         if (timingError <= badWindow) return HitJudgement.Bad;
@@ -130,7 +141,7 @@ public class StationaryNote : Note, ILaneAnticipation
 
     protected override bool IsWithinPressWindow(KeyButton keyButton)
     {
-        return IsInsideAnticipationWindow;
+        return IsInsidePressWindow;
     }
 
     protected override void OnHit(KeyButton keyButton, RhythmJudgementResult result)
