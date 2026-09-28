@@ -5,7 +5,9 @@
     "Unity.InputSystem",
     "Unity.ugui",
     "Unity.TextMeshPro",
-    "Unity.Cinemachine"
+    "Unity.Cinemachine",
+    "Unity.RenderPipelines.Core.Runtime",
+    "Unity.RenderPipelines.Universal.Runtime"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],

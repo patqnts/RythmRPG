@@ -368,6 +368,9 @@ namespace RythmRPG.Core
                     continue; // trails and lines are built from world points
                 }
 
+                // Light/shadow projector boxes are world-space volumes, not camera-facing art.
+                if (candidate.TryGetComponent(out RythmRPG.Core.LightShadowProjector _)) continue;
+
                 if (!autoUprightSprites) continue;
                 // Already upright (grass, props) or lying flat (shadows): leave alone.
                 if (Mathf.Abs(t.forward.y) < 0.02f) continue;
