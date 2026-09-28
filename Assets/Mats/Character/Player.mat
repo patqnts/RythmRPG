@@ -110,7 +110,7 @@ Material:
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
-    - _Cull: 2
+    - _Cull: 0
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
@@ -151,9 +151,9 @@ Material:
     - _Wrap: 0.5
     - _XRMotionVectorsPass: 1
     - _XRay: 1
-    - _XRayFill: 0.871
+    - _XRayFill: 0.5
     - _XRayFillStyle: 1
-    - _XRayOutlineOpacity: 0.57
+    - _XRayOutlineOpacity: 0
     - _XRayOutlineWidth: 1
     - _XRayPulse: 0
     - _XRayPulseSpeed: 0

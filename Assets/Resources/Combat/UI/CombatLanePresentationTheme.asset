@@ -37,16 +37,16 @@ MonoBehaviour:
   KeyMarkersBreakLine: 1
   KeyMarkerShape: 1
   KeyMarkerSprite: {fileID: 0}
-  KeyMarkerSize: 22.1
+  KeyMarkerSize: 32
   KeyMarkerOutline: 1.15
   KeyMarkerColor: {r: 0.990566, g: 0.7375732, b: 0.36912602, a: 0.85}
   KeyMarkerPressedColor: {r: 0.6509434, g: 0.5620514, b: 0.4267978, a: 1}
   KeyMarkerPressedFill: {r: 1, g: 0.85, b: 0.35, a: 0}
-  KeyMarkerPressedScale: 1.115
+  KeyMarkerPressedScale: 1.183
   ShowKeyMarkerLabels: 0
   KeyMarkerLabelColor: {r: 1, g: 1, b: 1, a: 0.9}
   KeyMarkerLabelScale: 0.55
-  Iridescent: 1
+  Iridescent: 0
   IridescentStrength: 1
   IridescentEmber: {r: 0.9696, g: 1, b: 0.1255, a: 1}
   IridescentEmberHot: {r: 0.0613, g: 1, b: 0.1251, a: 1}

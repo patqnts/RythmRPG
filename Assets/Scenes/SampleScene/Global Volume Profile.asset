@@ -228,10 +228,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81180773991d8724ab7f2d216912b564, type: 3}
   m_Name: ChromaticAberration
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.ChromaticAberration
-  active: 1
+  active: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 0.3
+    m_Value: 0.362
 --- !u!114 &-6856255231834882889
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -244,31 +244,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b2db86121404754db890f4c8dfe81b2, type: 3}
   m_Name: Bloom
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.Bloom
-  active: 0
+  active: 1
   skipIterations:
     m_OverrideState: 1
     m_Value: 1
   threshold:
     m_OverrideState: 1
-    m_Value: 0.42
+    m_Value: 0.49
   intensity:
     m_OverrideState: 1
-    m_Value: 0.03
+    m_Value: 1
   scatter:
     m_OverrideState: 1
-    m_Value: 0.818
+    m_Value: 0.397
   clamp:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 65472
   tint:
     m_OverrideState: 1
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    m_Value: {r: 0.38781592, g: 0.74527204, b: 0.990566, a: 1}
   highQualityFiltering:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 0
   filter:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 2
   downscale:
     m_OverrideState: 0
     m_Value: 0
@@ -276,11 +276,11 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 6
   dirtTexture:
-    m_OverrideState: 1
-    m_Value: {fileID: 8400000, guid: 31a7389bf54b437f38d08597e96626ba, type: 2}
+    m_OverrideState: 0
+    m_Value: {fileID: 0}
     dimension: 1
   dirtIntensity:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 0.19
 --- !u!114 &-6060609362277783751
 MonoBehaviour:

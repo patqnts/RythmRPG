@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 982767855231154240}
   - component: {fileID: 2469873050620738886}
+  - component: {fileID: 7485266056382898305}
   m_Layer: 3
   m_Name: Square
   m_TagString: Untagged
@@ -93,6 +94,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!95 &7485266056382898305
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4011519402592091254}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e96722e071819a9438745c7417b52895, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5029094789931625778
 GameObject:
   m_ObjectHideFlags: 0
@@ -148,7 +171,7 @@ MonoBehaviour:
   speed: 1
   damage: 1
   keys: []
-  animator: {fileID: 0}
+  animator: {fileID: 7485266056382898305}
   isMoving: 0
   canBePressed: 0
   keyCode: 49
@@ -397,14 +420,14 @@ MonoBehaviour:
   dropIn: 1
   dropInSeconds: 0.22
   dropInHeight: -1
-  bounceBeats: 1
+  bounceBeats: 0.125
   bounceHeight: 1.1
-  earlierBounceGrowth: 1.12
+  earlierBounceGrowth: 1
   maxBounceHeight: 2.5
-  squash: 0.25
+  squash: 0.247
   squashSeconds: 0.09
   faceTravel: 1
-  spriteFacesRight: 1
+  spriteFacesRight: 0
   bobPixels: 1
   stepsPerUnit: 5
   roll: 0
@@ -418,7 +441,7 @@ MonoBehaviour:
   shadowAspect: 0.816
   shadowColor: {r: 0.05, g: 0.04, b: 0.1, a: 0.38}
   shadowFadeHeight: 2.5
-  shadowMinScale: 0.45
+  shadowMinScale: 0.821
   shadowMinAlpha: 0.25
   pixelsPerUnit: 32
   dustPrefab: {fileID: 0}
