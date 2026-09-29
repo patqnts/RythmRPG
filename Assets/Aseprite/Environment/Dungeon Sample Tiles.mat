@@ -51,13 +51,13 @@ Material:
     - _LightBands: 4
     - _LightDither: 0
     - _Lit: 1
-    - _MaxLight: 2
+    - _MaxLight: 2.03
     - _NormalInfluence: 1
-    - _NormalStrength: 0.09
+    - _NormalStrength: 0.48
     - _Outline: 0
     - _OutlineWidth: 1
     - _SceneAmbient: 1
-    - _ShadowStrength: 1
+    - _ShadowStrength: 0.047
     - _SrcBlend: 1
     - _Surface: 0
     - _TexelSnap: 1

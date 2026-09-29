@@ -33,7 +33,7 @@ Material:
     - _CrestThreshold: 0.164
     - _DeepDistance: 2.54
     - _DepthDistance: 1.5
-    - _DistortPixels: 2.34
+    - _DistortPixels: 2.4
     - _DistortScale: 1.11
     - _DistortSpeed: 3.65
     - _DitherSeam: 0
@@ -62,24 +62,24 @@ Material:
     - _SunInfluence: 0.185
     - _TrailMerge: 1
     - _WaveAmplitude: 0.125
-    - _WaveBreakup: 0.793
-    - _WaveDirection: 30
-    - _WaveHeight: 0.088
-    - _WaveLength: 0.49
-    - _WaveLines: 0.022
-    - _WaveSpeed: 0.8
-    - _WindInfluence: 0
+    - _WaveBreakup: 0.916
+    - _WaveDirection: 257
+    - _WaveHeight: 0.059
+    - _WaveLength: 1.36
+    - _WaveLines: 1
+    - _WaveSpeed: 1.27
+    - _WindInfluence: 0.275
     - _ZWrite: 1
     m_Colors:
     - _CrestColor: {r: 0.9, g: 0.96999997, b: 1, a: 0.55}
-    - _DeepColor: {r: 0.10194909, g: 0.2214424, b: 0.2735849, a: 0.7294118}
+    - _DeepColor: {r: 0.101960786, g: 0.22219145, b: 0.27450982, a: 0.7294118}
     - _FoamColor: {r: 0.86, g: 0.96, b: 1, a: 0.9}
     - _GlintColor: {r: 1, g: 1, b: 0.95, a: 1}
     - _LineColor: {r: 0.92, g: 0.97999996, b: 1, a: 1}
     - _OutlineColor: {r: 1, g: 1, b: 1, a: 1}
     - _PatternColor: {r: 0.72, g: 0.92, b: 1, a: 0.45}
     - _RippleColor: {r: 1, g: 1, b: 1, a: 1}
-    - _ShallowColor: {r: 0.2774564, g: 0.39275336, b: 0.4056604, a: 0.59607846}
-    - _WaveLineColor: {r: 0.86, g: 0.96, b: 1, a: 0.55}
+    - _ShallowColor: {r: 0.2784314, g: 0.32693857, b: 0.40392157, a: 0.59607846}
+    - _WaveLineColor: {r: 0.28644535, g: 0.35891825, b: 0.38679245, a: 0.3529412}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
