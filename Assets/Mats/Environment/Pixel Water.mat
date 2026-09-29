@@ -58,8 +58,8 @@ Material:
     - _RippleSpeed: 1.09
     - _RippleStrength: 1.33
     - _RippleThreshold: 0.018
-    - _ShadowStrength: 0.253
-    - _SunInfluence: 0.663
+    - _ShadowStrength: 0.208
+    - _SunInfluence: 0.185
     - _TrailMerge: 1
     - _WaveAmplitude: 0.125
     - _WaveBreakup: 0.793

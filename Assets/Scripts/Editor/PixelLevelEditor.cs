@@ -32,7 +32,7 @@ internal sealed class PixelLevelEditor : Editor
     private static int setHeightValue = 1;
     private static int direction;
     private static int floorRotation;
-    private static bool wallTopTarget;
+    private static bool wholeWallHeight;
     private static int floorTile, wallTile = 1, wallTopTile = -1;
     private static float zoom = 1.5f;
     private static Vector2 scroll;
@@ -117,14 +117,16 @@ internal sealed class PixelLevelEditor : Editor
                                             "neighbour that is one level higher by itself. Shift + click makes it flat again.", MessageType.None);
                     break;
                 case Tool.Wall:
-                    wallTopTarget = EditorGUILayout.Toggle(new GUIContent("Paint Wall Top", "Paint the top-row tile instead of the wall tile."), wallTopTarget);
-                    EditorGUILayout.HelpBox("Click cells (or their walls) to give their walls the Wall / Wall Top tile.", MessageType.None);
+                    wholeWallHeight = EditorGUILayout.Toggle(new GUIContent("Whole Wall Height", "Paint every level of the wall under the cursor, top to bottom."), wholeWallHeight);
+                    EditorGUILayout.HelpBox("Point at a wall and click: the tile under the cursor gets the Wall tile (or the Wall Top tile " +
+                                            "while that slot is selected). Brush Size paints the tiles around it. Shift + click puts the " +
+                                            "cell's normal wall tile back.", MessageType.None);
                     break;
                 case Tool.Erase:
                     EditorGUILayout.HelpBox("Removes cells.", MessageType.None);
                     break;
                 case Tool.Pick:
-                    EditorGUILayout.HelpBox("Click a cell to take its tiles, rotation and height.", MessageType.None);
+                    EditorGUILayout.HelpBox("Click a cell to take its tiles, rotation and height, or a wall to take that wall tile.", MessageType.None);
                     break;
             }
         }
@@ -226,25 +228,30 @@ internal sealed class PixelLevelEditor : Editor
         {
             stroking = true;
             strokeCells.Clear();
+            strokeFaces.Clear();
             Undo.IncrementCurrentGroup();
             if (hoverValid)
             {
                 rectStart = hoverHit.cell;
-                if (!rectangle || tool == Tool.Pick) Apply(Footprint(hoverHit.cell), e);
+                if (tool == Tool.Wall) ApplyWall(e);
+                else if (tool == Tool.Pick && hoverHit.exists && hoverHit.side >= 0) PickWall();
+                else if (!rectangle || tool == Tool.Pick) Apply(Footprint(hoverHit.cell), e);
             }
             GUIUtility.hotControl = id;
             e.Use();
         }
         else if (e.type == EventType.MouseDrag && e.button == 0 && stroking)
         {
-            if (hoverValid && !rectangle && tool != Tool.Pick) Apply(Footprint(hoverHit.cell), e);
+            if (hoverValid && tool == Tool.Wall) ApplyWall(e);
+            else if (hoverValid && !rectangle && tool != Tool.Pick) Apply(Footprint(hoverHit.cell), e);
             e.Use();
         }
         else if (e.type == EventType.MouseUp && e.button == 0 && stroking)
         {
-            if (hoverValid && rectangle && tool != Tool.Pick) Apply(RectCells(rectStart, hoverHit.cell), e);
+            if (hoverValid && rectangle && tool != Tool.Pick && tool != Tool.Wall) Apply(RectCells(rectStart, hoverHit.cell), e);
             stroking = false;
             strokeCells.Clear();
+            strokeFaces.Clear();
             if (GUIUtility.hotControl == id) GUIUtility.hotControl = 0;
             e.Use();
         }
@@ -253,7 +260,119 @@ internal sealed class PixelLevelEditor : Editor
             SceneView.RepaintAll();
         }
 
-        if (e.type == EventType.Repaint && hoverValid) DrawPreview(e);
+        if (e.type == EventType.Repaint && hoverValid)
+        {
+            if (tool == Tool.Wall || (tool == Tool.Pick && hoverHit.side >= 0)) DrawWallPreview();
+            else DrawPreview(e);
+        }
+    }
+
+    // ------------------------------------------------------------------ walls (per tile, under the cursor)
+
+    private readonly HashSet<(int, int, int, int)> strokeFaces = new();
+
+    /// <summary>Wall levels of a cell's side that actually have a wall: [bottom, top).</summary>
+    private void WallRange(PixelCell cell, int side, out int bottom, out int top)
+    {
+        top = cell.height + (cell.shape == PixelCellShape.Flat ? 0 : 1);
+        Vector2Int o = PixelLevel.SideOffset(side);
+        bottom = level.TryGetCell(cell.x + o.x, cell.z + o.y, out PixelCell n) ? n.height : level.BaseHeight;
+    }
+
+    private int HoverBand() => Mathf.FloorToInt(hoverHit.localPoint.y / level.StepHeight - 1e-4f);
+
+    /// <summary>The wall tiles the brush covers: along the wall and up / down around the one under the cursor.</summary>
+    private List<(int x, int z, int side, int band)> WallFaces()
+    {
+        var faces = new List<(int, int, int, int)>();
+        if (!hoverHit.exists || hoverHit.side < 0) return faces;
+        int side = hoverHit.side;
+        int band = HoverBand();
+        int size = tool == Tool.Pick ? 1 : brushSize;
+        int lo = -(size - 1) / 2;
+        bool alongX = side == 0 || side == 2;
+        for (int i = 0; i < size; i++)
+        {
+            int x = hoverHit.cell.x + (alongX ? lo + i : 0);
+            int z = hoverHit.cell.y + (alongX ? 0 : lo + i);
+            if (!level.TryGetCell(x, z, out PixelCell cell)) continue;
+            WallRange(cell, side, out int bottom, out int top);
+            if (top <= bottom) continue;
+            int from = wholeWallHeight ? bottom : Mathf.Max(bottom, band + lo);
+            int to = wholeWallHeight ? top - 1 : Mathf.Min(top - 1, band + lo + size - 1);
+            for (int k = from; k <= to; k++) faces.Add((x, z, side, k));
+        }
+        return faces;
+    }
+
+    private void ApplyWall(Event e)
+    {
+        List<(int x, int z, int side, int band)> faces = WallFaces();
+        if (faces.Count == 0) return;
+        int tile = slot == Slot.WallTop && wallTopTile >= 0 ? wallTopTile : wallTile;
+        Undo.RecordObject(level, "Paint Wall Tile");
+        bool changed = false;
+        foreach ((int x, int z, int side, int band) f in faces)
+        {
+            if (!strokeFaces.Add(f)) continue;
+            if (e.shift) changed |= level.ClearWallTile(f.x, f.z, f.side, f.band);
+            else
+            {
+                level.SetWallTile(f.x, f.z, f.side, f.band, tile);
+                changed = true;
+            }
+        }
+        if (!changed) return;
+        level.RebuildDirty();
+        EditorUtility.SetDirty(level);
+    }
+
+    private void PickWall()
+    {
+        if (!level.TryGetCell(hoverHit.cell.x, hoverHit.cell.y, out PixelCell cell)) return;
+        int band = HoverBand();
+        if (!level.TryGetWallTile(cell.x, cell.z, hoverHit.side, band, out int tile))
+        {
+            WallRange(cell, hoverHit.side, out _, out int top);
+            tile = band + 1 >= top && cell.wallTop >= 0 ? cell.wallTop : cell.wall;
+        }
+        wallTile = tile;
+        slot = Slot.Wall;
+        Repaint();
+    }
+
+    private void DrawWallPreview()
+    {
+        Color color = ToolColors[(int)tool];
+        List<(int x, int z, int side, int band)> faces = WallFaces();
+        Handles.matrix = level.transform.localToWorldMatrix;
+        float size = level.CellSize, step = level.StepHeight;
+        foreach ((int x, int z, int side, int band) f in faces)
+        {
+            Vector3 a, b;
+            switch (f.side)
+            {
+                case 0: a = new Vector3(f.x, 0, f.z + 1); b = new Vector3(f.x + 1, 0, f.z + 1); break;
+                case 1: a = new Vector3(f.x + 1, 0, f.z); b = new Vector3(f.x + 1, 0, f.z + 1); break;
+                case 2: a = new Vector3(f.x, 0, f.z); b = new Vector3(f.x + 1, 0, f.z); break;
+                default: a = new Vector3(f.x, 0, f.z); b = new Vector3(f.x, 0, f.z + 1); break;
+            }
+            Vector2Int o = PixelLevel.SideOffset(f.side);
+            Vector3 push = new Vector3(o.x, 0f, o.y) * 0.01f;
+            a = a * size + push;
+            b = b * size + push;
+            var corners = new[]
+            {
+                a + Vector3.up * (f.band * step), b + Vector3.up * (f.band * step),
+                b + Vector3.up * ((f.band + 1) * step), a + Vector3.up * ((f.band + 1) * step)
+            };
+            Handles.DrawSolidRectangleWithOutline(corners, new Color(color.r, color.g, color.b, 0.22f), color);
+        }
+        Handles.matrix = Matrix4x4.identity;
+        string text = faces.Count > 0
+            ? (tool == Tool.Pick ? "Pick wall tile" : Event.current.shift ? "Reset wall tile" : "Paint wall tile")
+            : "Point at a wall";
+        Handles.Label(level.transform.TransformPoint(hoverHit.localPoint) + Vector3.up * 0.3f, text, EditorStyles.whiteMiniLabel);
     }
 
     private IEnumerable<Vector2Int> Footprint(Vector2Int center)
@@ -331,14 +450,6 @@ internal sealed class PixelLevelEditor : Editor
                         cell.shape = tool == Tool.Ramp ? PixelCellShape.Ramp : PixelCellShape.Stairs;
                         cell.direction = (byte)AutoDirection(cell);
                     }
-                    level.SetCell(cell);
-                    changed = true;
-                    break;
-
-                case Tool.Wall:
-                    if (!exists) break;
-                    if (wallTopTarget) cell.wallTop = wallTopTile;
-                    else cell.wall = wallTile;
                     level.SetCell(cell);
                     changed = true;
                     break;

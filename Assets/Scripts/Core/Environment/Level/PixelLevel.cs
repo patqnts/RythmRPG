@@ -34,6 +34,18 @@ namespace RythmRPG.Core
         public byte rotation;
     }
 
+    /// <summary>A tile painted on one wall face: the wall of cell (x, z) on a side, one level (band) tall.</summary>
+    [Serializable]
+    public struct PixelWallTile
+    {
+        public int x, z;
+        /// <summary>0 = north, 1 = east, 2 = south, 3 = west.</summary>
+        public int side;
+        /// <summary>Which level of the wall (0 = from height 0 to 1).</summary>
+        public int band;
+        public int tile;
+    }
+
     /// <summary>Result of <see cref="PixelLevel.Raycast"/>.</summary>
     public struct PixelLevelHit
     {
@@ -78,6 +90,7 @@ namespace RythmRPG.Core
         [Tooltip("Cells per chunk side (only the chunks you edit are rebuilt).")]
         [SerializeField, Range(4, 64)] private int chunkSize = 16;
         [SerializeField, HideInInspector] private List<PixelCell> cells = new();
+        [SerializeField, HideInInspector] private List<PixelWallTile> wallTiles = new();
 
         private sealed class Chunk
         {
@@ -90,6 +103,8 @@ namespace RythmRPG.Core
         private readonly HashSet<Vector2Int> dirtyChunks = new();
         private readonly Dictionary<Vector2Int, Chunk> chunks = new();
         private bool lookupDirty = true;
+        private readonly Dictionary<(int, int, int, int), int> wallLookup = new();
+        private bool wallLookupDirty = true;
         private bool allDirty = true;
 
         public PixelTileset Tileset { get => tileset; set { tileset = value; MarkAllDirty(); } }
@@ -131,6 +146,7 @@ namespace RythmRPG.Core
         {
             // Undo / redo / inspector edits replace the list: rebuild everything.
             lookupDirty = true;
+            wallLookupDirty = true;
             allDirty = true;
         }
 
@@ -189,6 +205,7 @@ namespace RythmRPG.Core
             }
             cells.RemoveAt(last);
             lookup.Remove(key);
+            if (wallTiles.RemoveAll(w => w.x == x && w.z == z) > 0) wallLookupDirty = true;
             MarkCellDirty(x, z);
             return true;
         }
@@ -196,11 +213,65 @@ namespace RythmRPG.Core
         public void ClearAll()
         {
             cells.Clear();
+            wallTiles.Clear();
             lookupDirty = true;
+            wallLookupDirty = true;
             MarkAllDirty();
         }
 
         public void MarkAllDirty() => allDirty = true;
+
+        // ------------------------------------------------------------------ wall tiles (per face)
+
+        private void EnsureWallLookup()
+        {
+            if (!wallLookupDirty) return;
+            wallLookup.Clear();
+            for (int i = 0; i < wallTiles.Count; i++)
+            {
+                PixelWallTile w = wallTiles[i];
+                wallLookup[(w.x, w.z, w.side, w.band)] = i;
+            }
+            wallLookupDirty = false;
+        }
+
+        /// <summary>The tile painted on one wall face, if any (else the cell's Wall / Wall Top tile is used).</summary>
+        public bool TryGetWallTile(int x, int z, int side, int band, out int tile)
+        {
+            EnsureWallLookup();
+            if (wallLookup.TryGetValue((x, z, side, band), out int index))
+            {
+                tile = wallTiles[index].tile;
+                return true;
+            }
+            tile = -1;
+            return false;
+        }
+
+        /// <summary>Paints one wall face (the wall of cell x, z on a side, one level tall).</summary>
+        public void SetWallTile(int x, int z, int side, int band, int tile)
+        {
+            EnsureWallLookup();
+            var entry = new PixelWallTile { x = x, z = z, side = side, band = band, tile = tile };
+            if (wallLookup.TryGetValue((x, z, side, band), out int index)) wallTiles[index] = entry;
+            else
+            {
+                wallLookup[(x, z, side, band)] = wallTiles.Count;
+                wallTiles.Add(entry);
+            }
+            MarkCellDirty(x, z);
+        }
+
+        /// <summary>Removes a painted wall face (it goes back to the cell's Wall / Wall Top tile).</summary>
+        public bool ClearWallTile(int x, int z, int side, int band)
+        {
+            EnsureWallLookup();
+            if (!wallLookup.ContainsKey((x, z, side, band))) return false;
+            wallTiles.RemoveAll(w => w.x == x && w.z == z && w.side == side && w.band == band);
+            wallLookupDirty = true;
+            MarkCellDirty(x, z);
+            return true;
+        }
 
         private Vector2Int ChunkOf(int x, int z) =>
             new(Mathf.FloorToInt(x / (float)chunkSize), Mathf.FloorToInt(z / (float)chunkSize));

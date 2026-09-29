@@ -194,7 +194,8 @@ namespace RythmRPG.Core
                 band = PixelMeshBuffer.Clip(band, 1, k + 1, false);
                 if (band.Count < 3) continue;
 
-                int tile = k + 1 >= top - Eps && cell.wallTop >= 0 ? cell.wallTop : cell.wall;
+                if (!level.TryGetWallTile(cell.x, cell.z, side, k, out int tile))
+                    tile = k + 1 >= top - Eps && cell.wallTop >= 0 ? cell.wallTop : cell.wall;
                 Rect rect = tileset.TileUV(tile);
                 points.Clear();
                 uvs.Clear();
