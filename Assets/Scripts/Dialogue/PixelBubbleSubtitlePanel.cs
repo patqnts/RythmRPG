@@ -60,6 +60,9 @@ namespace RythmRPG.Dialogue
         [Min(0f)] public float continueInputDelay = 0.12f;
 
         private PixelDialogueSpace space;
+        private PixelDialogueTheme theme;
+        private PixelDialoguePalette appliedPalette;
+        private int appliedThemeVersion = int.MinValue;
         private AbstractTypewriterEffect typewriter;
         private string laidOutText;
         private string laidOutName;
@@ -119,7 +122,29 @@ namespace RythmRPG.Dialogue
                 sideSpeaker = speaker;
                 sideDirty = false;
             }
+            ApplyPalette(speaker);
             frame.PlaceOn(pixelSpace, speaker, fallbackHeadHeight, side);
+        }
+
+        // ---------- Palette ----------
+
+        private void ApplyPalette(Transform speaker)
+        {
+            if (theme == null) theme = PixelDialogueTheme.For(this);
+            if (theme == null) return;
+            PixelDialoguePalette wanted = theme.Resolve(speaker);
+            int version = theme.Version + (wanted != null ? wanted.Revision : 0);
+            if (wanted == appliedPalette && version == appliedThemeVersion) return;
+            theme.Apply(transform, wanted);
+            if (wanted != null)
+            {
+                // The Dialogue System remembers the text colour it first saw (the prefab's dark blue) and puts it back
+                // on every line, which made light palettes (Night) unreadable. Make the palette's colour the one it keeps.
+                originalColor = wanted.bodyText;
+                haveSavedOriginalColor = true;
+            }
+            appliedPalette = wanted;
+            appliedThemeVersion = version;
         }
 
         // ---------- Layout ----------

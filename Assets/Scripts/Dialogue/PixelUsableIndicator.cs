@@ -42,6 +42,9 @@ namespace RythmRPG.Dialogue
         public Selector selector;
 
         private PixelDialogueSpace space;
+        private PixelDialogueTheme theme;
+        private PixelDialoguePalette appliedPalette;
+        private int appliedThemeVersion = int.MinValue;
         private Usable shownTarget;
         private float shownSince;
         private float nextSearch;
@@ -70,6 +73,7 @@ namespace RythmRPG.Dialogue
 
             SetVisible(show);
             if (!show) return;
+            ApplyPalette(target.transform);
 
             float t = Time.unscaledTime - shownSince;
             float drop = t < dropInDuration ? Mathf.Round(dropInPixels * (1f - t / dropInDuration)) : 0f;
@@ -84,6 +88,18 @@ namespace RythmRPG.Dialogue
             rect.anchoredPosition = space.SnapToScreenPixels(tip - new Vector2(halfWidth, 0f));
             Place(arrow, Vector2.zero);
             Place(arrowShadow, shadowOffset);
+        }
+
+        private void ApplyPalette(Transform target)
+        {
+            if (theme == null) theme = PixelDialogueTheme.For(this);
+            if (theme == null) return;
+            PixelDialoguePalette wanted = theme.Resolve(target);
+            int version = theme.Version + (wanted != null ? wanted.Revision : 0);
+            if (wanted == appliedPalette && version == appliedThemeVersion) return;
+            theme.Apply(transform, wanted);
+            appliedPalette = wanted;
+            appliedThemeVersion = version;
         }
 
         private Usable CurrentTarget()

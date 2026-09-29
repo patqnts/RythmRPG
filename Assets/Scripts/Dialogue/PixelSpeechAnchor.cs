@@ -22,6 +22,10 @@ namespace RythmRPG.Dialogue
         [Tooltip("Ignore Anchor/World Offset and use the top of this character's renderers.")]
         public bool useRendererTop;
 
+        [Header("Look")]
+        [Tooltip("This character's bubbles use this palette instead of the Dialogue UI's default. Empty = default.")]
+        public PixelDialoguePalette bubblePalette;
+
         [Header("Feet (bubble below)")]
         [Tooltip("Empty = the bottom of this character's renderers.")]
         public Transform footAnchor;

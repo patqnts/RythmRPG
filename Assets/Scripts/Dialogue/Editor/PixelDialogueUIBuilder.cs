@@ -27,6 +27,9 @@ namespace RythmRPG.Dialogue.EditorTools
         public const string SourceFontPath = "Assets/Fonts/Monogram/monogram.ttf";
         public const string PixelFontPath = "Assets/Fonts/Monogram/monogram Pixel.asset";
         public const string FallbackFontPath = "Assets/Fonts/Monogram/monogram SDF.asset";
+        public const string PalettesFolder = ArtFolder + "/Palettes";
+        public const string DefaultPalettePath = PalettesFolder + "/Default Bubble Palette.asset";
+        public const string PaletteShaderPath = "Assets/Shader/UI/Dialogue/PixelPalette.shader";
 
         // monogram is drawn on a 16 px em (1 font pixel = 64 units). Its real ascender is 10.66 px, which would put the
         // first baseline between screen pixels, so the pixel font asset uses whole-pixel metrics instead.
@@ -206,6 +209,15 @@ namespace RythmRPG.Dialogue.EditorTools
                 newMenu.placement = oldMenu.placement;
             }
 
+            var oldTheme = existing.GetComponent<PixelDialogueTheme>();
+            var newTheme = root.GetComponent<PixelDialogueTheme>();
+            if (oldTheme != null && newTheme != null && oldTheme.Palette != null)
+            {
+                var themeData = new SerializedObject(newTheme);
+                themeData.FindProperty("palette").objectReferenceValue = oldTheme.Palette;
+                themeData.ApplyModifiedPropertiesWithoutUndo();
+            }
+
             var oldArrow = existing.GetComponentInChildren<PixelUsableIndicator>(true);
             var newArrow = root.GetComponentInChildren<PixelUsableIndicator>(true);
             if (oldArrow != null && newArrow != null) newArrow.headGap = oldArrow.headGap;
@@ -236,6 +248,11 @@ namespace RythmRPG.Dialogue.EditorTools
             var dialogueUI = root.AddComponent<StandardDialogueUI>();
             dialogueUI.addEventSystemIfNeeded = true;
             root.AddComponent<PixelDialoguePlayerLock>();
+            var theme = root.AddComponent<PixelDialogueTheme>();
+            var themeData = new SerializedObject(theme);
+            themeData.FindProperty("palette").objectReferenceValue = EnsurePalettes();
+            themeData.FindProperty("paletteShader").objectReferenceValue = AssetDatabase.LoadAssetAtPath<Shader>(PaletteShaderPath);
+            themeData.ApplyModifiedPropertiesWithoutUndo();
             root.AddComponent<PixelDialogueInputBridge>();
 
             RectTransform pixelSpace = NewRect("Pixel Space", root.transform);
@@ -294,6 +311,8 @@ namespace RythmRPG.Dialogue.EditorTools
 
             TextMeshProUGUI nameLabel = NewLabel("Name", frame.body, font, NameColor);
             TextMeshProUGUI bodyLabel = NewLabel("Text", frame.body, font, TextColor);
+            Tag(nameLabel, PixelPaletteGraphic.Role.NameText);
+            Tag(bodyLabel, PixelPaletteGraphic.Role.BodyText);
             var typewriter = bodyLabel.gameObject.AddComponent<TextMeshProTypewriterEffect>();
             typewriter.charactersPerSecond = 40f;
             typewriter.fullPauseCharacters = ".!?";
@@ -304,7 +323,7 @@ namespace RythmRPG.Dialogue.EditorTools
             fastForward.typewriterEffect = typewriter;
 
             RectTransform arrowRect = NewRect("Continue Arrow", frame.body);
-            AddImage(arrowRect, arrowSprite, Color.white, Image.Type.Simple, false);
+            Tag(AddImage(arrowRect, arrowSprite, Color.white, Image.Type.Simple, false), PixelPaletteGraphic.Role.Art);
             arrowRect.anchorMin = arrowRect.anchorMax = arrowRect.pivot = new Vector2(1f, 0f);
             arrowRect.sizeDelta = SpriteSize(arrowSprite);
             arrowRect.anchoredPosition = new Vector2(-5f, 3f);
@@ -354,6 +373,7 @@ namespace RythmRPG.Dialogue.EditorTools
 
             RectTransform cursorRect = NewRect("Cursor", template);
             Image cursorImage = AddImage(cursorRect, cursorSprite, Color.white, Image.Type.Simple, false);
+            Tag(cursorImage, PixelPaletteGraphic.Role.Art);
             cursorRect.anchorMin = cursorRect.anchorMax = cursorRect.pivot = new Vector2(0f, 1f);
             cursorRect.sizeDelta = SpriteSize(cursorSprite);
             cursorRect.anchoredPosition = new Vector2(0f, -(Ascent - 7)); // top of the cursor = cap height of the label
@@ -396,10 +416,11 @@ namespace RythmRPG.Dialogue.EditorTools
         {
             RectTransform rect = NewRect("Alert Panel", parent);
             RectTransform shadow = NewRect("Shadow", rect);
-            AddImage(shadow, bodySprite, ShadowColor, Image.Type.Sliced, false);
+            Tag(AddImage(shadow, bodySprite, ShadowColor, Image.Type.Sliced, false), PixelPaletteGraphic.Role.Shadow);
             RectTransform body = NewRect("Body", rect);
-            AddImage(body, bodySprite, Color.white, Image.Type.Sliced, false);
+            Tag(AddImage(body, bodySprite, Color.white, Image.Type.Sliced, false), PixelPaletteGraphic.Role.Art);
             TextMeshProUGUI text = NewLabel("Text", body, font, TextColor);
+            Tag(text, PixelPaletteGraphic.Role.BodyText);
 
             var box = rect.gameObject.AddComponent<PixelAlertBox>();
             box.body = body;
@@ -417,9 +438,9 @@ namespace RythmRPG.Dialogue.EditorTools
         {
             RectTransform rect = NewRect("Usable Indicator", parent);
             RectTransform shadow = NewRect("Shadow", rect);
-            AddImage(shadow, usableSprite, ShadowColor, Image.Type.Simple, false);
+            Tag(AddImage(shadow, usableSprite, ShadowColor, Image.Type.Simple, false), PixelPaletteGraphic.Role.Shadow);
             RectTransform arrow = NewRect("Arrow", rect);
-            AddImage(arrow, usableSprite, Color.white, Image.Type.Simple, false);
+            Tag(AddImage(arrow, usableSprite, Color.white, Image.Type.Simple, false), PixelPaletteGraphic.Role.Art);
             var indicator = rect.gameObject.AddComponent<PixelUsableIndicator>();
             indicator.arrow = arrow;
             indicator.arrowShadow = shadow;
@@ -432,13 +453,13 @@ namespace RythmRPG.Dialogue.EditorTools
             Sprite bodySprite = sprites.Body;
             Sprite tailSprite = sprites.TailDown;
             RectTransform bodyShadow = NewRect("Shadow", root);
-            AddImage(bodyShadow, bodySprite, ShadowColor, Image.Type.Sliced, false);
+            Tag(AddImage(bodyShadow, bodySprite, ShadowColor, Image.Type.Sliced, false), PixelPaletteGraphic.Role.Shadow);
             RectTransform tailShadow = NewRect("Tail Shadow", root);
-            AddImage(tailShadow, tailSprite, ShadowColor, Image.Type.Simple, false);
+            Tag(AddImage(tailShadow, tailSprite, ShadowColor, Image.Type.Simple, false), PixelPaletteGraphic.Role.Shadow);
             RectTransform body = NewRect("Body", root);
-            AddImage(body, bodySprite, Color.white, Image.Type.Sliced, false);
+            Tag(AddImage(body, bodySprite, Color.white, Image.Type.Sliced, false), PixelPaletteGraphic.Role.Art);
             RectTransform tail = NewRect("Tail", root);
-            AddImage(tail, tailSprite, Color.white, Image.Type.Simple, false);
+            Tag(AddImage(tail, tailSprite, Color.white, Image.Type.Simple, false), PixelPaletteGraphic.Role.Art);
 
             Vector2 tailSize = SpriteSize(tailSprite);
             return new PixelBubbleFrame
@@ -586,6 +607,47 @@ namespace RythmRPG.Dialogue.EditorTools
             label.extraPadding = false;
             label.text = string.Empty;
             return label;
+        }
+
+        private static void Tag(Component target, PixelPaletteGraphic.Role role)
+        {
+            if (target == null) return;
+            target.gameObject.AddComponent<PixelPaletteGraphic>().role = role;
+        }
+
+        // ---------------------------------------------------------------- palettes
+
+        /// <summary>Creates the default palette and two examples (only the missing ones); returns the default.</summary>
+        private static PixelDialoguePalette EnsurePalettes()
+        {
+            EnsureFolder(PalettesFolder);
+            PixelDialoguePalette defaults = EnsurePalette(DefaultPalettePath, _ => { });
+            EnsurePalette(PalettesFolder + "/Night Bubble Palette.asset", p =>
+            {
+                p.outline = Hex("0F0E17"); p.fill = Hex("2A2740"); p.shade = Hex("1E1B30");
+                p.shadow = new Color(0f, 0f, 0f, 0.5f);
+                p.accent = Hex("8FA3FF"); p.accentDark = Hex("5C6BC0");
+                p.nameText = Hex("9A94B8"); p.bodyText = Hex("F2EEE3");
+                p.choiceText = Hex("F2EEE3"); p.choiceDim = Hex("8A84A8"); p.choiceDisabled = Hex("55506E");
+            });
+            EnsurePalette(PalettesFolder + "/Crimson Bubble Palette.asset", p =>
+            {
+                p.outline = Hex("2B0F14"); p.fill = Hex("F3E0D8"); p.shade = Hex("D9B3A8");
+                p.accent = Hex("B83A3A"); p.accentDark = Hex("7A2020");
+                p.nameText = Hex("A0606A"); p.bodyText = Hex("5A1620");
+                p.choiceText = Hex("5A1620"); p.choiceDim = Hex("9A7078"); p.choiceDisabled = Hex("C8A8A0");
+            });
+            return defaults;
+        }
+
+        private static PixelDialoguePalette EnsurePalette(string path, System.Action<PixelDialoguePalette> setup)
+        {
+            var palette = AssetDatabase.LoadAssetAtPath<PixelDialoguePalette>(path);
+            if (palette != null) return palette;
+            palette = ScriptableObject.CreateInstance<PixelDialoguePalette>();
+            setup(palette);
+            AssetDatabase.CreateAsset(palette, path);
+            return palette;
         }
 
         private static Vector2 SpriteSize(Sprite sprite) =>

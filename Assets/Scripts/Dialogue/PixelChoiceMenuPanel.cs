@@ -41,6 +41,9 @@ namespace RythmRPG.Dialogue
         private readonly List<StandardUIResponseButton> visibleButtons = new();
         private readonly StringBuilder keyBuilder = new();
         private PixelDialogueSpace space;
+        private PixelDialogueTheme theme;
+        private PixelDialoguePalette appliedPalette;
+        private int appliedThemeVersion = int.MinValue;
         private Transform responder;
         private Transform addressee;
         private string layoutKey;
@@ -82,6 +85,7 @@ namespace RythmRPG.Dialogue
             {
                 layoutKey = key;
                 Layout();
+                appliedPalette = null; // new buttons need colours
             }
             if (keepSelection) KeepSelection();
 
@@ -91,6 +95,7 @@ namespace RythmRPG.Dialogue
                 side = frame.ChooseSide(pixelSpace, placement, who, addressee, fallbackHeadHeight);
                 sideDirty = false;
             }
+            ApplyPalette(who);
             frame.PlaceOn(pixelSpace, who, fallbackHeadHeight, side);
         }
 
@@ -158,6 +163,20 @@ namespace RythmRPG.Dialogue
 
         private static TextMeshProUGUI LabelOf(StandardUIResponseButton button) =>
             button != null && button.label != null ? button.label.textMeshProUGUI : null;
+
+        // ---------- Palette ----------
+
+        private void ApplyPalette(Transform responderTransform)
+        {
+            if (theme == null) theme = PixelDialogueTheme.For(this);
+            if (theme == null) return;
+            PixelDialoguePalette wanted = theme.Resolve(responderTransform);
+            int version = theme.Version + (wanted != null ? wanted.Revision : 0);
+            if (wanted == appliedPalette && version == appliedThemeVersion) return;
+            theme.Apply(transform, wanted);
+            appliedPalette = wanted;
+            appliedThemeVersion = version;
+        }
 
         // ---------- Selection ----------
 

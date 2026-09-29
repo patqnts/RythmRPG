@@ -106,4 +106,30 @@ namespace PixelCrushers.DialogueSystem.SequencerCommands
             if (DialogueTime.time >= endTime) Stop();
         }
     }
+
+    /// <summary>
+    /// PixelBubblePalette(paletteName) — swap the default bubble palette (e.g. "Night Bubble Palette"); "default" or no
+    /// parameter goes back to the prefab's palette. The palette must be loaded: referenced by the Dialogue UI, a
+    /// character's PixelSpeechAnchor, or anything else in the scene. Characters with their own palette keep it.
+    /// </summary>
+    public class SequencerCommandPixelBubblePalette : SequencerCommand
+    {
+        public void Start()
+        {
+            PixelDialogueTheme theme = FindAnyObjectByType<PixelDialogueTheme>();
+            string paletteName = GetParameter(0, "default");
+            if (theme != null)
+            {
+                if (string.Equals(paletteName, "default", System.StringComparison.OrdinalIgnoreCase)) theme.ResetPalette();
+                else
+                {
+                    PixelDialoguePalette palette = PixelDialogueTheme.FindLoaded(paletteName);
+                    if (palette != null) theme.SetPalette(palette);
+                    else if (DialogueDebug.logWarnings)
+                        Debug.LogWarning($"Dialogue System: Sequencer: PixelBubblePalette({paletteName}): no loaded palette with that name.");
+                }
+            }
+            Stop();
+        }
+    }
 }

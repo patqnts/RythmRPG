@@ -22,6 +22,8 @@ namespace RythmRPG.Dialogue
         public Vector2Int shadowOffset = new(0, -1);
 
         private PixelDialogueSpace space;
+        private PixelDialogueTheme theme;
+        private int appliedThemeVersion = int.MinValue;
         private string laidOutText;
         private Vector2Int bodySize;
 
@@ -31,6 +33,16 @@ namespace RythmRPG.Dialogue
         {
             if (space == null) space = PixelDialogueSpace.For(this);
             if (space == null || label == null || body == null) return;
+            if (theme == null) theme = PixelDialogueTheme.For(this);
+            if (theme != null && theme.Palette != null)
+            {
+                int version = theme.Version + theme.Palette.Revision;
+                if (version != appliedThemeVersion)
+                {
+                    theme.Apply(transform, theme.Palette);
+                    appliedThemeVersion = version;
+                }
+            }
 
             if (laidOutText != label.text)
             {
