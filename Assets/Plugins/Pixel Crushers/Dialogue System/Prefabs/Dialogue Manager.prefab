@@ -32,7 +32,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 425660}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -57,6 +56,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
+  m_UseReflectionProbes: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -128,6 +128,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 125852}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -135,7 +136,6 @@ Transform:
   m_Children:
   - {fileID: 22425850}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &11426072
 MonoBehaviour:
@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab8b685e62a9aeb4a9472b30ec2d86d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialDatabase: {fileID: 0}
+  initialDatabase: {fileID: 11400000, guid: c1cc03cd82f6cdb40afbc0575be25564, type: 2}
   displaySettings:
     conversationOverrideSettings:
       useOverrides: 0
@@ -174,9 +174,11 @@ MonoBehaviour:
       cancelSubtitle:
         key: 27
         buttonName: 
+        inputAction: {fileID: 0}
       cancelConversation:
         key: 27
         buttonName: 
+        inputAction: {fileID: 0}
       actorSubtitlePanelOverrides: []
     dialogueUI: {fileID: 101180, guid: 5ba51781a19f8a843abeb2d304d0d26e, type: 3}
     defaultCanvas: {fileID: 22325660}
@@ -224,9 +226,11 @@ MonoBehaviour:
       cancel:
         key: 0
         buttonName: 
+        inputAction: {fileID: 0}
       cancelConversation:
         key: 0
         buttonName: 
+        inputAction: {fileID: 0}
     barkSettings:
       allowBarksDuringConversations: 1
       barkCharsPerSecond: 0
@@ -298,12 +302,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputDevice: 0
-  joystickKeyCodesToCheck: 4a0100004b0100004c01000051010000
+  joystickKeyCodesToCheck: 4a0100004b0100004c01000051010000i
   joystickButtonsToCheck: []
   joystickAxesToCheck: []
   joystickAxisThreshold: 0.5
   keyButtonsToCheck: []
-  keyCodesToCheck: 1b000000
+  keyCodesToCheck: 1b000000i
   keyInputSwitchesModeTo: 1
   alwaysAutoFocus: 0
   detectMouseControl: 1
@@ -311,7 +315,7 @@ MonoBehaviour:
   controlCursorState: 1
   enforceCursorOnPause: 0
   controlGraphicRaycasters: 0
-  backKeyCodes: 4b010000
+  backKeyCodes: 4b010000i
   backButtons:
   - Cancel
   submitButton: Submit
