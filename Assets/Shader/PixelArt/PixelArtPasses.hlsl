@@ -130,6 +130,7 @@ struct PixelDepthVaryings
     float2 uv : TEXCOORD0;
     half4 color : COLOR;
     half3 normalWS : TEXCOORD1;
+    float3 positionWS : TEXCOORD2;
     UNITY_VERTEX_INPUT_INSTANCE_ID
     UNITY_VERTEX_OUTPUT_STEREO
 };
@@ -144,7 +145,9 @@ PixelDepthVaryings VertDepth(PixelAttributes input)
     float3 normalOS;
     float4 tangentOS;
     PixelObjectNormal(input, normalOS, tangentOS);
-    output.positionCS = TransformObjectToHClip(PixelObjectPosition(input.positionOS.xyz));
+    float3 positionWS = TransformObjectToWorld(PixelObjectPosition(input.positionOS.xyz));
+    output.positionCS = TransformWorldToHClip(positionWS);
+    output.positionWS = positionWS;
     output.normalWS = (half3)TransformObjectToWorldNormal(normalOS);
     output.uv = TRANSFORM_TEX(input.uv, _MainTex);
     output.color = PixelVertexColor(input.color);
@@ -246,6 +249,50 @@ PixelOutlineMaskOutput FragOutlineMask(PixelDepthVaryings input)
 
 float _PixelXRayDepthBias;
 
+// Pixel Water surfaces (published by PixelWater): xy = min XZ, zw = max XZ; level x = surface height.
+float4 _PixelWaterRects[8];
+float4 _PixelWaterLevels[8];
+float _PixelWaterCount;
+
+// True when this point is under a Pixel Water surface as seen from the camera: the line from the point back to the
+// camera crosses a water surface (so the water hides it, like a wall would).
+bool PixelUnderWater(float3 positionWS)
+{
+    int count = min((int)_PixelWaterCount, 8);
+    if (count <= 0)
+        return false;
+
+    float3 toCamera;
+    if (unity_OrthoParams.w > 0.5)
+    {
+        // Orthographic (also sheared / oblique): the view direction both screen rows ignore.
+        float3 v = cross(UNITY_MATRIX_P[0].xyz, UNITY_MATRIX_P[1].xyz);
+        v = dot(v, v) > 1e-10 ? normalize(v) : float3(0, 0, -1);
+        if (v.z > 0.0) v = -v;                       // view space looks down -z
+        toCamera = -normalize(mul((float3x3)UNITY_MATRIX_I_V, v));
+    }
+    else
+    {
+        toCamera = normalize(_WorldSpaceCameraPos - positionWS);
+    }
+    if (toCamera.y <= 1e-3)
+        return false;
+
+    float bias = max(_PixelXRayDepthBias, 0.001);
+    [loop] for (int i = 0; i < count; i++)
+    {
+        float level = _PixelWaterLevels[i].x;
+        if (positionWS.y > level - bias)
+            continue;
+        float s = (level - positionWS.y) / toCamera.y;
+        float2 crossing = positionWS.xz + toCamera.xz * s;
+        float4 r = _PixelWaterRects[i];
+        if (crossing.x >= r.x && crossing.x <= r.z && crossing.y >= r.y && crossing.y <= r.w)
+            return true;
+    }
+    return false;
+}
+
 struct PixelXRayOutput
 {
     half4 state : SV_Target0;   // rgb = x-ray outline colour, a = 1 hidden here / 0.5 visible here
@@ -263,7 +310,7 @@ PixelXRayOutput FragXRay(PixelDepthVaryings input)
     float2 screenUV = GetNormalizedScreenSpaceUV(input.positionCS);
     float sceneEye = PixelEyeDepth(SampleSceneDepth(screenUV));
     float selfEye = PixelEyeDepth(input.positionCS.z);
-    bool hidden = sceneEye < selfEye - max(_PixelXRayDepthBias, 0.001);
+    bool hidden = sceneEye < selfEye - max(_PixelXRayDepthBias, 0.001) || PixelUnderWater(input.positionWS);
 
     half3 texel = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, input.uv).rgb * input.color.rgb * _BaseColor.rgb;
     half3 fillColor = lerp(_XRayColor.rgb, texel * _XRayColor.rgb * 1.6h, _XRaySpriteDetail);

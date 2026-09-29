@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Pixel Water
+  m_Name: Pixel Water 1
   m_Shader: {fileID: 4800000, guid: 3026ac5e23284f64cbc35936d040a0cc, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -72,7 +72,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _CrestColor: {r: 0.9, g: 0.96999997, b: 1, a: 0.55}
-    - _DeepColor: {r: 0.10194909, g: 0.2214424, b: 0.2735849, a: 0.7294118}
+    - _DeepColor: {r: 0.09376113, g: 0.30845705, b: 0.4056604, a: 0.7294118}
     - _FoamColor: {r: 0.86, g: 0.96, b: 1, a: 0.9}
     - _GlintColor: {r: 1, g: 1, b: 0.95, a: 1}
     - _LineColor: {r: 0.92, g: 0.97999996, b: 1, a: 1}

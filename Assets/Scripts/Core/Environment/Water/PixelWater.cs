@@ -74,6 +74,12 @@ namespace RythmRPG.Core
         private Vector2 builtSize;
         private float builtDensity;
         private static float nextScan;
+        private static int publishedFrame = -1;
+        private static readonly int WaterRectsId = Shader.PropertyToID("_PixelWaterRects");
+        private static readonly int WaterLevelsId = Shader.PropertyToID("_PixelWaterLevels");
+        private static readonly int WaterCountId = Shader.PropertyToID("_PixelWaterCount");
+        private static readonly Vector4[] waterRects = new Vector4[8];
+        private static readonly Vector4[] waterLevels = new Vector4[8];
 
         public bool Interactive => interactive;
         public float SplashStrength => splashStrength;
@@ -129,11 +135,13 @@ namespace RythmRPG.Core
             meshRenderer = GetComponent<MeshRenderer>();
             if (!bodies.Contains(this)) bodies.Add(this);
             RebuildMesh();
+            PublishSurfaces(true);
         }
 
         private void OnDisable()
         {
             bodies.Remove(this);
+            PublishSurfaces(true);
             if (bodies.Count == 0) WaterSimulation.Release();
         }
 
@@ -150,6 +158,7 @@ namespace RythmRPG.Core
 
         private void LateUpdate()
         {
+            PublishSurfaces(false);
             if (!Application.isPlaying) return;
             if (bodies.Count == 0 || bodies[0] != this) return;
             if (autoAddInteractors && Time.unscaledTime >= nextScan)
@@ -160,6 +169,26 @@ namespace RythmRPG.Core
                         controller.gameObject.AddComponent<GrassInteractor>();
             }
             WaterSimulation.Tick(Camera.main);
+        }
+
+        // Water surfaces for the pixel-art x-ray (a character under the surface shows its x-ray outline).
+        private static void PublishSurfaces(bool force)
+        {
+            if (!force && Time.frameCount == publishedFrame) return;
+            publishedFrame = Time.frameCount;
+            int count = 0;
+            foreach (PixelWater water in bodies)
+            {
+                if (count >= waterRects.Length) break;
+                if (water == null || !water.isActiveAndEnabled) continue;
+                Rect r = water.SurfaceRect;
+                waterRects[count] = new Vector4(r.xMin, r.yMin, r.xMax, r.yMax);
+                waterLevels[count] = new Vector4(water.SurfaceHeight, 0f, 0f, 0f);
+                count++;
+            }
+            Shader.SetGlobalVectorArray(WaterRectsId, waterRects);
+            Shader.SetGlobalVectorArray(WaterLevelsId, waterLevels);
+            Shader.SetGlobalFloat(WaterCountId, count);
         }
 
         private void RebuildMesh()

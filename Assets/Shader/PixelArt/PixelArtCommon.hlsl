@@ -163,7 +163,9 @@ half PixelDiffuse(half3 normalWS, half3 lightDirection)
     return lerp(1.0h, wrapped, _NormalInfluence);
 }
 
-// Posterise the summed light by its brightest channel (the hue is kept), with ordered dithering on the texel grid.
+// Posterise the summed light by its brightest channel (the hue is kept) into flat, hard-edged steps.
+// No dithering (Step Dither is ignored). Light dimmer than half the first step is kept as it is instead of being
+// rounded down to black, so unlit sprites stay dark but readable.
 half3 PixelPosterize(half3 light, float2 ditherCell)
 {
     if (_LightBands < 0.5h)
@@ -171,8 +173,9 @@ half3 PixelPosterize(half3 light, float2 ditherCell)
     half level = max(max(light.r, light.g), light.b);
     if (level <= 1e-4h)
         return light;
-    half threshold = 0.5h + (PixelBayer4(ditherCell) - 0.5h) * _LightDither;
-    half stepped = floor(level * _LightBands + threshold) / _LightBands;
+    half stepped = floor(level * _LightBands + 0.5h) / _LightBands;
+    if (stepped <= 0.0h)
+        return light;
     return light * (stepped / level);
 }
 
