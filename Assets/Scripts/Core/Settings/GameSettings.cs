@@ -14,6 +14,14 @@ namespace RythmRPG.Core
     {
         private const string CountdownKey = "RythmRPG.Settings.ResumeCountdown";
         private const string FocusPauseKey = "RythmRPG.Settings.PauseOnFocusLoss";
+        private const string FrameRateKey = "RythmRPG.Settings.FrameRateLimit";
+        private const string VSyncKey = "RythmRPG.Settings.VSync";
+
+        /// <summary>Frame rate cap used until the player picks another one. 0 = unlimited.</summary>
+        public const int DefaultFrameRateLimit = 60;
+
+        /// <summary>Choices for a settings menu (0 = unlimited).</summary>
+        public static readonly int[] FrameRateOptions = { 30, 60, 120, 144, 165, 240, 0 };
 
         public const int MaxResumeCountdown = 5;
 
@@ -38,6 +46,56 @@ namespace RythmRPG.Core
                 PlayerPrefs.Save();
             }
         }
+
+        // ---------- Frame rate ----------
+
+        /// <summary>
+        /// Most frames per second the game renders (0 = unlimited). Saved between launches and applied at startup.
+        /// Ignored while <see cref="VSync"/> is on (then the monitor's refresh rate sets the pace).
+        /// </summary>
+        public static int FrameRateLimit
+        {
+            get => Mathf.Max(0, PlayerPrefs.GetInt(FrameRateKey, DefaultFrameRateLimit));
+            set
+            {
+                PlayerPrefs.SetInt(FrameRateKey, Mathf.Max(0, value));
+                PlayerPrefs.Save();
+                ApplyFrameRate();
+            }
+        }
+
+        /// <summary>Sync to the monitor's refresh rate (no tearing). Overrides <see cref="FrameRateLimit"/>.</summary>
+        public static bool VSync
+        {
+            get => PlayerPrefs.GetInt(VSyncKey, 0) != 0;
+            set
+            {
+                PlayerPrefs.SetInt(VSyncKey, value ? 1 : 0);
+                PlayerPrefs.Save();
+                ApplyFrameRate();
+            }
+        }
+
+        /// <summary>Applies the saved frame rate limit / VSync (done automatically at startup).</summary>
+        public static void ApplyFrameRate()
+        {
+            if (VSync)
+            {
+                QualitySettings.vSyncCount = 1;
+                Application.targetFrameRate = -1;
+            }
+            else
+            {
+                QualitySettings.vSyncCount = 0;
+                int limit = FrameRateLimit;
+                Application.targetFrameRate = limit > 0 ? limit : -1;
+            }
+        }
+
+        public static string DescribeFrameRate(int limit) => limit > 0 ? $"{limit} FPS" : "Unlimited";
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        private static void ApplyAtStartup() => ApplyFrameRate();
 
         // ---------- Display ----------
 

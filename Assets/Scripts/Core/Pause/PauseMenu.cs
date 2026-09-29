@@ -44,6 +44,7 @@ namespace RythmRPG.Core
         private Coroutine rebindStart;
 
         private PauseSelector displayModeSelector, resolutionSelector, countdownSelector, focusSelector;
+        private PauseSelector frameRateSelector, vSyncSelector;
         private List<Vector2Int> resolutions = new();
 
         private RectTransform countdownRoot;
@@ -467,6 +468,22 @@ namespace RythmRPG.Core
             nav.Add(new Selectable[] { displayModeSelector });
             nav.Add(new Selectable[] { resolutionSelector });
 
+            // Frame rate and VSync apply right away (no Apply needed).
+            frameRateSelector = PauseSelector.Create(page, "Frame Rate Limit");
+            frameRateSelector.Changed += index =>
+            {
+                if (index >= 0 && index < GameSettings.FrameRateOptions.Length)
+                    GameSettings.FrameRateLimit = GameSettings.FrameRateOptions[index];
+            };
+            vSyncSelector = PauseSelector.Create(page, "VSync");
+            vSyncSelector.Changed += index =>
+            {
+                GameSettings.VSync = index == 1;
+                frameRateSelector.SetInteractableState(index != 1);
+            };
+            nav.Add(new Selectable[] { frameRateSelector });
+            nav.Add(new Selectable[] { vSyncSelector });
+
             if (Application.isEditor)
             {
                 TMP_Text note = PauseUi.Label(page, "Display changes only take effect in a build, not in the Editor's Game view.",
@@ -493,6 +510,13 @@ namespace RythmRPG.Core
             int index = Mathf.Max(0, resolutions.IndexOf(current));
             resolutionSelector.SetOptions(resolutions.Select(size => $"{size.x} x {size.y}").ToArray(), index);
             UpdateResolutionAvailability();
+
+            int[] rates = GameSettings.FrameRateOptions;
+            int rateIndex = System.Array.IndexOf(rates, GameSettings.FrameRateLimit);
+            if (rateIndex < 0) rateIndex = System.Array.IndexOf(rates, GameSettings.DefaultFrameRateLimit);
+            frameRateSelector.SetOptions(rates.Select(GameSettings.DescribeFrameRate).ToArray(), Mathf.Max(0, rateIndex));
+            vSyncSelector.SetOptions(new[] { "Off", "On" }, GameSettings.VSync ? 1 : 0);
+            frameRateSelector.SetInteractableState(!GameSettings.VSync);
         }
 
         private void UpdateResolutionAvailability()
