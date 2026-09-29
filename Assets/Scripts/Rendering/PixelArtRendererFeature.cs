@@ -40,6 +40,10 @@ namespace RythmRPG.Rendering
             [Range(0f, 1f)] public float opacity = 1f;
             [Tooltip("Off = diamond (classic pixel-art corners, no diagonal pixel at 1 px). On = square corners.")]
             public bool squareCorners;
+            [Tooltip("Outline pixels take the depth of the object they belong to, so transparent things drawn later " +
+                     "behind it (Pixel Water, particles, transparent sprites) don't paint over the outline. Things in " +
+                     "front of it (water over a submerged leg) still cover it.")]
+            public bool occludeTransparentsBehind = true;
             public RenderPassEvent injectionPoint = RenderPassEvent.BeforeRenderingTransparents;
         }
 
@@ -161,7 +165,7 @@ namespace RythmRPG.Rendering
         }
 
         private static void AddComposite(RenderGraph renderGraph, UniversalResourceData resources, Material material,
-                                         int pass, string name, int[] textureIds, bool needsDepth)
+                                         int pass, string name, int[] textureIds, bool needsDepth, bool writeDepth = false)
         {
             using IRasterRenderGraphBuilder builder = renderGraph.AddRasterRenderPass(name, out CompositeData data);
             data.material = material;
@@ -170,6 +174,10 @@ namespace RythmRPG.Rendering
             if (needsDepth && resources.cameraDepthTexture.IsValid())
                 builder.UseGlobalTexture(CameraDepthTextureId, AccessFlags.Read);
             builder.SetRenderAttachment(resources.activeColorTexture, 0, AccessFlags.ReadWrite);
+            // The pass writes SV_Depth; without a depth attachment those writes simply go nowhere.
+            if (writeDepth && resources.activeDepthTexture.IsValid()
+                && !(needsDepth && resources.activeDepthTexture.Equals(resources.cameraDepthTexture)))
+                builder.SetRenderAttachmentDepth(resources.activeDepthTexture, AccessFlags.ReadWrite);
             builder.SetRenderFunc(static (CompositeData d, RasterGraphContext context) =>
             {
                 Blitter.BlitTexture(context.cmd, new Vector4(1f, 1f, 0f, 0f), d.material, d.pass);
@@ -231,7 +239,7 @@ namespace RythmRPG.Rendering
                 material.SetVector(TargetSizeId, TargetSize(colorDesc));
                 material.SetVector(OutlineParamsId, new Vector4(s.depthStep, s.opacity, s.squareCorners ? 1f : 0f, 0f));
                 AddComposite(renderGraph, resources, material, 0, "Pixel Outline Composite",
-                             new[] { OutlineMaskId, OutlineDepthId }, true);
+                             new[] { OutlineMaskId, OutlineDepthId }, true, s.occludeTransparentsBehind);
             }
         }
 

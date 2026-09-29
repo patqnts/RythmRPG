@@ -2,6 +2,9 @@
 //   Pass 0 "PixelOutline": pixel outlines around everything that drew into _PixelOutlineMask (rgb = colour,
 //          a = width / 3) with eye depth in _PixelOutlineDepth. A pixel gets the outline colour of the nearest
 //          outlined surface within its width (diamond = classic pixel-art corners) that is in front of what is here.
+//          It also writes that surface's depth (when the feature binds the depth buffer), so transparent things
+//          drawn later behind the object (Pixel Water, particles) don't paint over its outline, while things in
+//          front of it (water over a submerged leg) still do.
 //   Pass 1 "PixelXRay": for parts of x-ray objects hidden behind something (_PixelXRayMask a = 1; 0.5 = visible),
 //          an ordered-dither fill inside and a solid 1 px outline around the hidden shape.
 // Everything is read with pixel loads: the pass runs at the camera's own resolution (480x270 for the pixel camera).
@@ -54,17 +57,38 @@ Shader "Hidden/RythmRPG/PixelArtComposite"
         {
             return clamp(p, int2(0, 0), int2(_PixelTargetSize.xy) - 1);
         }
+
+        // Inverse of CompositeEyeDepth / PixelEyeDepth: eye depth -> depth buffer value.
+        float CompositeDeviceDepth(float eyeDepth)
+        {
+            if (unity_OrthoParams.w > 0.5)
+            {
+                float raw = (eyeDepth - _ProjectionParams.y) / max(1e-5, _ProjectionParams.z - _ProjectionParams.y);
+                #if UNITY_REVERSED_Z
+                    raw = 1.0 - raw;
+                #endif
+                return saturate(raw);
+            }
+            return (1.0 / max(eyeDepth, 1e-5) - _ZBufferParams.w) / _ZBufferParams.z;
+        }
         ENDHLSL
 
         Pass
         {
             Name "PixelOutline"
+            ZWrite On
 
             HLSLPROGRAM
             #pragma vertex Vert
             #pragma fragment FragOutline
 
-            half4 FragOutline(Varyings input) : SV_Target
+            struct OutlineOutput
+            {
+                half4 color : SV_Target;
+                float depth : SV_Depth;
+            };
+
+            OutlineOutput FragOutline(Varyings input)
             {
                 int2 p = ClampPixel(int2(input.positionCS.xy));
                 half4 self = LOAD_TEXTURE2D(_PixelOutlineMask, p);
@@ -96,7 +120,10 @@ Shader "Hidden/RythmRPG/PixelArtComposite"
                     }
                 }
                 clip(1e19 - bestDepth);
-                return half4(bestColor, _PixelOutlineParams.y);
+                OutlineOutput output;
+                output.color = half4(bestColor, _PixelOutlineParams.y);
+                output.depth = CompositeDeviceDepth(bestDepth);
+                return output;
             }
             ENDHLSL
         }
