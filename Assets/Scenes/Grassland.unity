@@ -3693,7 +3693,7 @@ Transform:
   m_GameObject: {fileID: 795951500}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.54, y: 0, z: 1.73}
+  m_LocalPosition: {x: -0.54, y: 0.53, z: 1.73}
   m_LocalScale: {x: 5.2364, y: 1, z: 5.5859}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3743,6 +3743,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1278f8de79506f0594b484a40fafc6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaterRippleManager
+  nextRippleIndex: 0
+  rippleCount: 0
 --- !u!1 &839894165
 GameObject:
   m_ObjectHideFlags: 0
@@ -4058,7 +4060,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 1bf39e608231b6e48b561cf9f534e606, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.734
+  m_Volume: 0.469
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -4102,7 +4104,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.624
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -4151,7 +4153,7 @@ Transform:
   m_GameObject: {fileID: 877332902}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.72791, y: 1.72572, z: -0.64587}
+  m_LocalPosition: {x: -0.72791, y: 1.72572, z: 3.03}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4376,6 +4378,10 @@ MonoBehaviour:
   idleInterval: 0.33
   idleStrength: 1.62
   onlyWhenInWater: 1
+  previousPosition: {x: 0, y: 0, z: 0}
+  lastRipplePosition: {x: 0, y: 0, z: 0}
+  nextIdleRipple: 0
+  isInWater: 0
 --- !u!136 &904121795
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -6959,8 +6965,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalCameraData
   m_RenderShadows: 1
-  m_RequiresDepthTextureOption: 1
-  m_RequiresOpaqueTextureOption: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
   m_Cameras: []
   m_RendererIndex: -1
@@ -7742,7 +7748,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1808121799
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7759,12 +7765,21 @@ MonoBehaviour:
   size: {x: 8, y: 6}
   vertexDensity: 2
   interactive: 1
+  trailStrength: 0.6
+  trailSpacing: 0.258
+  trailStartSize: 0.45
+  trailSpreadSpeed: 0.3
+  trailSpeedBoost: 0.06
+  trailLifetime: 0.67
   splashStrength: 1.2
-  wakeStrength: 0.6
+  splashSize: 1
   idleRippleSeconds: 1.4
   contactDepth: 0.02
   splashEffect: {fileID: 0}
   rainDropsPerUnit: 1.2
+  rainRingSize: 0.22
+  rainRingLifetime: 0.55
+  autoAddInteractors: 1
 --- !u!23 &1808121800
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7831,7 +7846,7 @@ Transform:
   m_GameObject: {fileID: 1808121798}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.7194, y: 0.24, z: 3.9299}
+  m_LocalPosition: {x: 0.7194, y: 1.45, z: 3.9299}
   m_LocalScale: {x: 2.1596093, y: 1, z: 2.6260982}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9472,7 +9487,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2125903569
 MonoBehaviour:
   m_ObjectHideFlags: 0

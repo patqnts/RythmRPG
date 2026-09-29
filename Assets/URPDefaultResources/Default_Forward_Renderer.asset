@@ -59,7 +59,9 @@ MonoBehaviour:
   m_RendererFeatures:
   - {fileID: -5122641935105023312}
   - {fileID: 8551024270970359101}
-  m_RendererFeatureMap: b0a28b0a4db8e8b83d8deee84457ab76l
+  - {fileID: 3268343464776629368}
+  - {fileID: 7963876414149222956}
+  m_RendererFeatureMap: b0a28b0a4db8e8b83d8deee84457ab7678fcfa95107d5b2d2ce2797c675f856el
   xrSystemData: {fileID: 0}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   m_AssetVersion: 3
@@ -82,12 +84,56 @@ MonoBehaviour:
   m_ShadowTransparentReceive: 1
   m_RenderingMode: 0
   m_DepthPrimingMode: 0
-  m_CopyDepthMode: 1
+  m_CopyDepthMode: 0
   m_DepthAttachmentFormat: 0
   m_DepthTextureFormat: 0
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 1
   m_TileOnlyMode: 0
+--- !u!114 &3268343464776629368
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 635390e9244d2e98f874be3fd7fce646, type: 3}
+  m_Name: MergedParticleOutlineRendererFeature
+  m_EditorClassIdentifier: Assembly-CSharp::PixelMetaballParticles.MergedParticleOutlineRendererFeature
+  m_Active: 1
+  settings:
+    outlineGroups:
+    - name: Pixel Particles
+      enabled: 1
+      particleLayers:
+        serializedVersion: 2
+        m_Bits: 512
+      outlineColor: {r: 1, g: 1, b: 1, a: 1}
+      outlinePixels: 0.8
+      outlineSoftness: 0.05
+      metaballThreshold: 0.35
+    respectSceneDepth: 1
+    showInSceneView: 1
+    debugView: 0
+    injectionPoint: 500
+--- !u!114 &7963876414149222956
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4032e97a87c4c0c8586065ce882722d, type: 3}
+  m_Name: PixelToonOutlineFeature
+  m_EditorClassIdentifier: Assembly-CSharp::RythmRPG.Rendering.PixelToonOutlineFeature
+  m_Active: 1
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!114 &8551024270970359101
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -101,11 +147,8 @@ MonoBehaviour:
   m_Name: Weather (Snow Cover, Fog, Mist, Heat)
   m_EditorClassIdentifier: RythmRPG.Core::RythmRPG.Core.WeatherRendererFeature
   m_Active: 1
-  surfaceCover: 1
-  surfaceEvent: 450
-  air: 1
+  tintAndFlash: 1
   heatShimmer: 1
-  airEvent: 550
-  pixelsPerUnit: 32
+  skyEvent: 550
   showInSceneView: 1
   shader: {fileID: 4800000, guid: 175593fcf71b6f84ab55677064785a52, type: 3}
