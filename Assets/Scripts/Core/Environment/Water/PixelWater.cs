@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace RythmRPG.Core
 {
     /// <summary>
     /// A body of Pixel Water (use a material with the "RythmRPG/Pixel Water" shader). Registers the surface so
-    /// characters make ripples, wakes and splashes in it (every <see cref="GrassInteractor"/> counts, the Weather
-    /// Controller gives one to each CharacterController), rain rings it, and ground snow / puddles skip it.
+    /// characters make ripples, wakes and splashes in it (every <see cref="GrassInteractor"/> counts; Terrain
+    /// Weather adds one to each CharacterController), rain rings it. The shader draws the ripples as pixel-outline
+    /// rings, outlines the shore / anything standing in the water and wobbles the see-through image.
     /// It can generate a flat grid mesh with enough vertices for the waves.
     /// </summary>
     [ExecuteAlways]
@@ -25,18 +27,44 @@ namespace RythmRPG.Core
 
         [Header("Interaction")]
         [SerializeField] private bool interactive = true;
-        [Tooltip("Ripple strength when something enters or leaves the water.")]
+
+        [Header("Trail (rings left behind while moving)")]
+        [Tooltip("How visible the trail rings are (0 = no trail). Faster movement makes them a bit stronger.")]
+        [FormerlySerializedAs("wakeStrength")]
+        [SerializeField, Range(0f, 3f)] private float trailStrength = 0.6f;
+        [Tooltip("Distance moved between two trail rings (world units). Smaller = denser trail.")]
+        [SerializeField, Range(0.04f, 1.5f)] private float trailSpacing = 0.18f;
+        [Tooltip("Size of a trail ring when it appears (× the character's radius).")]
+        [SerializeField, Range(0f, 2f)] private float trailStartSize = 0.45f;
+        [Tooltip("How fast trail rings grow (world units per second).")]
+        [SerializeField, Range(0f, 3f)] private float trailSpreadSpeed = 0.3f;
+        [Tooltip("Extra growth speed per unit of the character's speed (fast movement throws wider rings).")]
+        [SerializeField, Range(0f, 0.5f)] private float trailSpeedBoost = 0.06f;
+        [Tooltip("Seconds a trail ring lives (it fades out over this time). Longer = longer trail.")]
+        [SerializeField, Range(0.1f, 5f)] private float trailLifetime = 1.1f;
+
+        [Header("Splash (falling in / Water.Splash)")]
+        [Tooltip("How strong the splash rings and droplets are when something enters the water.")]
         [SerializeField, Range(0f, 3f)] private float splashStrength = 1.2f;
-        [Tooltip("Wake strength while moving through the water (scaled by speed).")]
-        [SerializeField, Range(0f, 3f)] private float wakeStrength = 0.6f;
+        [Tooltip("Splash size (× the character's radius; falling faster adds more).")]
+        [SerializeField, Range(0.2f, 4f)] private float splashSize = 1f;
+
+        [Header("Other")]
         [Tooltip("Seconds between small ripples while standing still in the water (0 = off).")]
         [SerializeField, Min(0f)] private float idleRippleSeconds = 1.4f;
         [Tooltip("How deep an interactor's feet must be under the surface to count as in the water.")]
         [SerializeField, Min(0f)] private float contactDepth = 0.02f;
         [Tooltip("Optional effect spawned where something enters / leaves the water (e.g. a splash particle).")]
         [SerializeField] private GameObject splashEffect;
+        [Header("Rain")]
         [Tooltip("Rain drops per second per square unit at full rain (rings on the water).")]
         [SerializeField, Min(0f)] private float rainDropsPerUnit = 1.2f;
+        [Tooltip("How big a rain ring grows before it fades (world units).")]
+        [SerializeField, Range(0.05f, 1f)] private float rainRingSize = 0.22f;
+        [Tooltip("Seconds a rain ring lives.")]
+        [SerializeField, Range(0.1f, 2f)] private float rainRingLifetime = 0.55f;
+        [Tooltip("Adds a Grass Interactor to every CharacterController so they make ripples.")]
+        [SerializeField] private bool autoAddInteractors = true;
 
         private static readonly List<PixelWater> bodies = new();
         public static IReadOnlyList<PixelWater> All => bodies;
@@ -45,10 +73,20 @@ namespace RythmRPG.Core
         private Mesh generated;
         private Vector2 builtSize;
         private float builtDensity;
+        private static float nextScan;
 
         public bool Interactive => interactive;
         public float SplashStrength => splashStrength;
-        public float WakeStrength => wakeStrength;
+        public float WakeStrength => trailStrength;
+        public float TrailStrength => trailStrength;
+        public float TrailSpacing => trailSpacing;
+        public float TrailStartSize => trailStartSize;
+        public float TrailSpreadSpeed => trailSpreadSpeed;
+        public float TrailSpeedBoost => trailSpeedBoost;
+        public float TrailLifetime => trailLifetime;
+        public float SplashSize => splashSize;
+        public float RainRingSize => rainRingSize;
+        public float RainRingLifetime => rainRingLifetime;
         public float IdleRippleSeconds => idleRippleSeconds;
         public float ContactDepth => contactDepth;
         public GameObject SplashEffect => splashEffect;
@@ -113,7 +151,15 @@ namespace RythmRPG.Core
         private void LateUpdate()
         {
             if (!Application.isPlaying) return;
-            if (bodies.Count > 0 && bodies[0] == this) WaterSimulation.Tick(Camera.main);
+            if (bodies.Count == 0 || bodies[0] != this) return;
+            if (autoAddInteractors && Time.unscaledTime >= nextScan)
+            {
+                nextScan = Time.unscaledTime + 2f;
+                foreach (CharacterController controller in FindObjectsByType<CharacterController>(FindObjectsInactive.Exclude))
+                    if (controller != null && controller.GetComponent<GrassInteractor>() == null)
+                        controller.gameObject.AddComponent<GrassInteractor>();
+            }
+            WaterSimulation.Tick(Camera.main);
         }
 
         private void RebuildMesh()
@@ -174,7 +220,11 @@ namespace RythmRPG.Core
         }
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-        private static void ResetOnPlay() => bodies.Clear();
+        private static void ResetOnPlay()
+        {
+            bodies.Clear();
+            nextScan = 0f;
+        }
 
         private void OnDrawGizmosSelected()
         {

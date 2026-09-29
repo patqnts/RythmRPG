@@ -24,6 +24,7 @@ namespace RythmRPG.Core
         {
             if (!TryGetBody(point, 0.5f, out _)) return;
             WaterSimulation.AddDrop(point, radius, strength);
+            WaterSimulation.AddSplash(point, radius, strength);
         }
 
         /// <summary>The water body under / at <paramref name="point"/> (XZ inside it and not higher than
@@ -104,6 +105,91 @@ namespace RythmRPG.Core
         private static readonly int GlobalTexId = Shader.PropertyToID("_WaterSimTex");
         private static readonly int GlobalParamsId = Shader.PropertyToID("_WaterSimParams");
         private static readonly int GlobalTexelId = Shader.PropertyToID("_WaterSimTexel");
+        private static readonly int MoversId = Shader.PropertyToID("_WaterMovers");
+        private static readonly int MoverVelocitiesId = Shader.PropertyToID("_WaterMoverVelocities");
+        private static readonly int MoverCountId = Shader.PropertyToID("_WaterMoverCount");
+
+        private static readonly int RingsId = Shader.PropertyToID("_WaterRings");
+        private static readonly int RingShapesId = Shader.PropertyToID("_WaterRingShapes");
+        private static readonly int RingCountId = Shader.PropertyToID("_WaterRingCount");
+        private static readonly int WaterTimeId = Shader.PropertyToID("_WaterTime");
+
+        /// <summary>Most ring events (trail rings, splashes, rain drops) alive at once.</summary>
+        public const int MaxRings = 128;
+        /// <summary>Of those, at most this many rain drops (so rain never crowds out splashes and trails).</summary>
+        public const int MaxRainRings = 72;
+
+        private struct Ring
+        {
+            public Vector4 where;   // x, z, start time, type (0 ring, 1 splash, 2 rain)
+            public Vector4 shape;   // start radius, speed, lifetime, strength
+        }
+
+        private static readonly List<Ring> rings = new();
+        private static readonly Vector4[] ringData = new Vector4[MaxRings];
+        private static readonly Vector4[] ringShapes = new Vector4[MaxRings];
+        private static int rainRings;
+
+        /// <summary>A ring of 1-pixel lines spreading out on the water (drawn by the Pixel Water shader).</summary>
+        public static void AddRing(Vector3 point, float startRadius, float speed, float lifetime, float strength,
+            float delay = 0f) => PushRing(point, startRadius, speed, lifetime, strength, delay, 0f);
+
+        /// <summary>A splash: a double ring plus pixel droplets thrown out (drawn by the Pixel Water shader).</summary>
+        public static void AddSplash(Vector3 point, float radius, float strength)
+        {
+            radius = Mathf.Max(0.05f, radius);
+            PushRing(point, radius * 0.5f, 0.55f + radius * 0.8f, 0.9f, Mathf.Clamp(strength, 0.3f, 1.5f), 0f, 1f);
+            PushRing(point, radius * 0.4f, 0.45f + radius * 0.6f, 1.0f, Mathf.Clamp(strength * 0.7f, 0.2f, 1f), 0.18f, 0f);
+        }
+
+        private static void PushRing(Vector3 point, float startRadius, float speed, float lifetime, float strength,
+            float delay, float type)
+        {
+            bool rain = type > 1.5f;
+            if (rain && rainRings >= MaxRainRings) return;
+            if (rings.Count >= MaxRings)
+            {
+                // Drop the oldest (rain first).
+                int drop = rings.FindIndex(r => r.where.w > 1.5f);
+                if (drop < 0) drop = 0;
+                if (rings[drop].where.w > 1.5f) rainRings--;
+                rings.RemoveAt(drop);
+            }
+            rings.Add(new Ring
+            {
+                where = new Vector4(point.x, point.z, Time.time + delay, type),
+                shape = new Vector4(Mathf.Max(0f, startRadius), Mathf.Max(0f, speed), Mathf.Max(0.05f, lifetime), strength)
+            });
+            if (rain) rainRings++;
+        }
+
+        private static void PublishRings()
+        {
+            float now = Time.time;
+            for (int i = rings.Count - 1; i >= 0; i--)
+            {
+                Ring r = rings[i];
+                if (now - r.where.z <= r.shape.z) continue;
+                if (r.where.w > 1.5f) rainRings--;
+                rings.RemoveAt(i);
+            }
+            int count = Mathf.Min(rings.Count, MaxRings);
+            for (int i = 0; i < count; i++)
+            {
+                ringData[i] = rings[i].where;
+                ringShapes[i] = rings[i].shape;
+            }
+            Shader.SetGlobalVectorArray(RingsId, ringData);
+            Shader.SetGlobalVectorArray(RingShapesId, ringShapes);
+            Shader.SetGlobalFloat(RingCountId, count);
+            Shader.SetGlobalFloat(WaterTimeId, now);
+        }
+
+        /// <summary>Most characters in water that draw contact ripples at once.</summary>
+        public const int MaxMovers = 16;
+        private static readonly Vector4[] movers = new Vector4[MaxMovers];
+        private static readonly Vector4[] moverVelocities = new Vector4[MaxMovers];
+        private static int moverCount;
 
         private sealed class Contact
         {
@@ -111,6 +197,7 @@ namespace RythmRPG.Core
             public Vector3 last;
             public float nextIdle;
             public float wakeDistance;
+            public float trailDistance;
             public int seenFrame;
         }
 
@@ -143,15 +230,21 @@ namespace RythmRPG.Core
         {
             if (Time.frameCount == lastFrame) return;
             lastFrame = Time.frameCount;
+
+            float dt = Time.deltaTime;
+            UpdateContacts(dt);
+            AddRain(dt, camera);
+            // Characters standing in water: the water shader draws rings spreading out from their contact outline.
+            Shader.SetGlobalVectorArray(MoversId, movers);
+            Shader.SetGlobalVectorArray(MoverVelocitiesId, moverVelocities);
+            Shader.SetGlobalFloat(MoverCountId, moverCount);
+            PublishRings();
+
             if (camera == null || !EnsureResources())
             {
                 Shader.SetGlobalVector(GlobalParamsId, Vector4.zero);
                 return;
             }
-
-            float dt = Time.deltaTime;
-            UpdateContacts(dt);
-            AddRain(dt);
 
             int resolution = targets[0].width;
             float size = Mathf.Max(2f, Size);
@@ -233,6 +326,7 @@ namespace RythmRPG.Core
         {
             int frame = Time.frameCount;
             float now = Time.time;
+            moverCount = 0;
             foreach (GrassInteractor interactor in GrassInteractor.Active)
             {
                 if (interactor == null) continue;
@@ -260,6 +354,15 @@ namespace RythmRPG.Core
                 }
 
                 float radius = interactor.Radius;
+                if (inWater && body != null && moverCount < MaxMovers)
+                {
+                    Vector3 step = feet - contact.last;
+                    Vector2 velocity = dt > 0.0001f && step.sqrMagnitude < 9f ? new Vector2(step.x, step.z) / dt : Vector2.zero;
+                    movers[moverCount] = new Vector4(feet.x, body.SurfaceHeight, feet.z, radius);
+                    moverVelocities[moverCount] = new Vector4(velocity.x, velocity.y, velocity.magnitude, 0f);
+                    moverCount++;
+                }
+
                 if (inWater != contact.inWater)
                 {
                     PixelWater at = body;
@@ -268,6 +371,12 @@ namespace RythmRPG.Core
                     Vector3 point = new(feet.x, surface, feet.z);
                     float strength = at != null ? at.SplashStrength : 1f;
                     AddDrop(point, radius * 0.8f, strength);
+                    // Falling in makes a bigger splash (the faster, the bigger); walking out a small ring.
+                    float fall = dt > 0.0001f ? Mathf.Max(0f, (contact.last.y - feet.y) / dt) : 0f;
+                    float splashSize = at != null ? at.SplashSize : 1f;
+                    if (inWater && strength > 0f)
+                        AddSplash(point, radius * splashSize * (1f + Mathf.Min(fall * 0.08f, 1f)), strength * (0.7f + Mathf.Min(fall * 0.1f, 0.8f)));
+                    else AddRing(point, radius * 0.5f, 0.5f, 0.7f, strength * 0.5f);
                     if (at != null && at.SplashEffect != null)
                         UnityEngine.Object.Instantiate(at.SplashEffect, point, Quaternion.identity);
                     if (inWater) Water.RaiseEntered(interactor.gameObject, point);
@@ -284,6 +393,15 @@ namespace RythmRPG.Core
                     {
                         float speed = dt > 0.0001f ? distance / dt : 0f;
                         contact.wakeDistance += distance;
+                        contact.trailDistance += distance;
+                        // Trail: a ring left behind every short step, spreading out and fading.
+                        if (contact.trailDistance >= body.TrailSpacing && body.TrailStrength > 0f)
+                        {
+                            contact.trailDistance = 0f;
+                            AddRing(new Vector3(feet.x, body.SurfaceHeight, feet.z), radius * body.TrailStartSize,
+                                body.TrailSpreadSpeed + Mathf.Min(speed, 4f) * body.TrailSpeedBoost, body.TrailLifetime,
+                                Mathf.Clamp(body.TrailStrength * (0.6f + speed * 0.15f), 0.05f, 1f));
+                        }
                         // A wake ring every short distance, stronger when faster.
                         float spacing = Mathf.Max(0.08f, radius * 0.35f);
                         if (contact.wakeDistance >= spacing)
@@ -310,12 +428,19 @@ namespace RythmRPG.Core
         }
 
         // Rain rings: random drops inside the water surfaces that overlap the simulated square.
-        private static void AddRain(float dt)
+        private static void AddRain(float dt, Camera camera)
         {
             float rain = Weather.Current.rain;
-            if (rain <= 0.01f || !hasOrigin) return;
+            if (rain <= 0.01f) return;
             float size = Mathf.Max(2f, Size);
-            Rect square = new(origin.x, origin.y, size, size);
+            Vector2 corner = origin;
+            if (!hasOrigin)
+            {
+                if (camera == null) return;
+                Vector3 focus = Weather.Controller != null ? Weather.ViewFocus : ViewGroundPoint(camera);
+                corner = new Vector2(focus.x - size * 0.5f, focus.z - size * 0.5f);
+            }
+            Rect square = new(corner.x, corner.y, size, size);
             foreach (PixelWater water in PixelWater.All)
             {
                 if (water == null || !water.isActiveAndEnabled || !water.Interactive) continue;
@@ -331,6 +456,9 @@ namespace RythmRPG.Core
                 {
                     Vector3 p = new(UnityEngine.Random.Range(xMin, xMax), water.SurfaceHeight, UnityEngine.Random.Range(zMin, zMax));
                     AddDrop(p, UnityEngine.Random.Range(0.06f, 0.12f), UnityEngine.Random.Range(0.25f, 0.5f));
+                    float life = water.RainRingLifetime * UnityEngine.Random.Range(0.8f, 1.2f);
+                    float grow = water.RainRingSize * UnityEngine.Random.Range(0.75f, 1.2f) / Mathf.Max(0.05f, life);
+                    PushRing(p, 0.01f, grow, life, UnityEngine.Random.Range(0.55f, 0.9f), 0f, 2f);
                 }
             }
             rainCarry = Mathf.Min(rainCarry, 4f);
@@ -405,7 +533,12 @@ namespace RythmRPG.Core
             hasOrigin = false;
             contacts.Clear();
             pending.Clear();
+            moverCount = 0;
+            rings.Clear();
+            rainRings = 0;
             Shader.SetGlobalVector(GlobalParamsId, Vector4.zero);
+            Shader.SetGlobalFloat(MoverCountId, 0f);
+            Shader.SetGlobalFloat(RingCountId, 0f);
         }
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
@@ -414,6 +547,8 @@ namespace RythmRPG.Core
             hasOrigin = false;
             contacts.Clear();
             pending.Clear();
+            rings.Clear();
+            rainRings = 0;
             lastFrame = -1;
             accumulator = 0f;
             pendingShift = Vector2.zero;

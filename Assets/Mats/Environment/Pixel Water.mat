@@ -25,33 +25,33 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _Clarity: 1
-    - _ColorBands: 1
-    - _CrestThreshold: 0.8
+    - _Clarity: 0.55
+    - _ColorBands: 2.35
+    - _CrestThreshold: 0.164
     - _DepthDistance: 1.5
     - _DitherSeam: 0
-    - _FoamBands: 1.09
-    - _FoamBreakup: 0.365
+    - _FoamBands: 2.75
+    - _FoamBreakup: 0.386
     - _FoamDistance: 0.35
     - _FoamSpeed: 0.7
-    - _GlintAmount: 0.35
-    - _LightInfluence: 0.344
-    - _LineWidth: 0.43
+    - _GlintAmount: 0.564
+    - _LightInfluence: 1
+    - _LineWidth: 1.05
     - _PatternScale: 1.1
     - _PatternSpeed: 0.25
     - _PatternWidth: 0
     - _PixelsPerUnit: 32
-    - _RefractionPixels: 1.85
+    - _RefractionPixels: 0.21
     - _RefractionScale: 1.4
     - _RefractionSpeed: 0.5
-    - _RippleStrength: 0.82
-    - _RippleThreshold: 0.03
-    - _ShadowStrength: 0.074
-    - _WaveAmplitude: 0.035
-    - _WaveDirection: 30
-    - _WaveLength: 2.5
+    - _RippleStrength: 1.43
+    - _RippleThreshold: 0.007
+    - _ShadowStrength: 1
+    - _WaveAmplitude: 0.014
+    - _WaveDirection: 141
+    - _WaveLength: 3.76
     - _WaveSpeed: 0.8
-    - _WindInfluence: 0.5
+    - _WindInfluence: 0.957
     - _ZWrite: 1
     m_Colors:
     - _CrestColor: {r: 0.9, g: 0.96999997, b: 1, a: 0.55}

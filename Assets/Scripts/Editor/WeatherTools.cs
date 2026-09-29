@@ -300,35 +300,30 @@ public static class WeatherTools
         float Get(string name, float fallback) => fk.HasProperty(name) ? fk.GetFloat(name) : fallback;
         Color GetColor(string name, Color fallback) => fk.HasProperty(name) ? fk.GetColor(name) : fallback;
 
-        // FlatKit mixes the scene in by (transparency * colour alpha); here alpha is opacity and See-Through scales it.
+        // FlatKit's colour alpha is how much of the scene shows through; here alpha is how much the water covers.
         Color shallow = GetColor("_ColorShallow", new Color(0.35f, 0.6f, 0.75f, 0.8f));
         Color deep = GetColor("_ColorDeep", new Color(0.65f, 0.9f, 1f, 1f));
-        shallow.a = 1f - shallow.a;
-        deep.a = 1f - deep.a;
+        float clearness = Mathf.Clamp01(Get("_WaterClearness", 0.3f));
+        shallow.a = (1f - shallow.a) * (1f - clearness * 0.6f);
+        deep.a = Mathf.Max(shallow.a, 1f - deep.a);
         m.SetColor("_ShallowColor", shallow);
         m.SetColor("_DeepColor", deep);
-        m.SetFloat("_Clarity", Mathf.Clamp01(Get("_WaterClearness", 0.3f)));
-        m.SetFloat("_DepthDistance", Mathf.Max(0.05f, Get("_FadeDistance", 0.5f) + Get("_WaterDepth", 5f)));
+        m.SetFloat("_DeepDistance", Mathf.Max(0.05f, Get("_FadeDistance", 0.5f) + Get("_WaterDepth", 5f)));
         m.SetFloat("_ShadowStrength", Get("_ShadowStrength", 0.35f));
-        m.SetFloat("_LightInfluence", Get("_LightContribution", 0f));
-
-        m.SetColor("_CrestColor", GetColor("_CrestColor", Color.white));
-        m.SetFloat("_CrestThreshold", 1f - Mathf.Clamp01(Get("_CrestSize", 0.1f)));
+        m.SetFloat("_SunInfluence", Mathf.Max(0.3f, Get("_LightContribution", 0f)));
 
         bool wavesOff = fk.IsKeywordEnabled("_WAVEMODE_NONE");
         float frequency = Mathf.Max(0.05f, Get("_WaveFrequency", 1f));
-        m.SetFloat("_WaveAmplitude", wavesOff ? 0f : Mathf.Clamp(Get("_WaveAmplitude", 0.25f), 0f, 0.5f));
+        m.SetFloat("_WaveHeight", wavesOff ? 0f : Mathf.Clamp(Get("_WaveAmplitude", 0.25f) * 0.2f, 0f, 0.3f));
         m.SetFloat("_WaveLength", 2f * Mathf.PI / frequency);
         m.SetFloat("_WaveSpeed", 2f * Get("_WaveSpeed", 0.5f) / frequency);
         m.SetFloat("_WaveDirection", Mathf.Repeat(Get("_WaveDirection", 0f) * 180f, 360f));
+        m.SetColor("_WaveLineColor", GetColor("_CrestColor", Color.white) * new Color(1f, 1f, 1f, 0.55f));
+        m.SetColor("_OutlineColor", GetColor("_FoamColor", Color.white));
 
-        m.SetColor("_FoamColor", GetColor("_FoamColor", Color.white));
-        m.SetFloat("_FoamDistance", Mathf.Max(0.05f, Get("_FoamDepth", 0.5f)));
-        if (fk.IsKeywordEnabled("_FOAMMODE_NONE")) m.SetFloat("_FoamBands", 0f);
-
-        m.SetFloat("_RefractionPixels", Mathf.Clamp(Mathf.Round(Get("_RefractionAmplitude", 0.01f) * 270f), 0f, 6f));
-        m.SetFloat("_RefractionSpeed", Get("_RefractionSpeed", 0.1f) * 4f);
-        m.SetFloat("_RefractionScale", Mathf.Max(0.1f, Get("_RefractionScale", 1f)));
+        m.SetFloat("_DistortPixels", Mathf.Clamp(Mathf.Round(Get("_RefractionAmplitude", 0.01f) * 150f), 0f, 2f));
+        m.SetFloat("_DistortSpeed", Get("_RefractionSpeed", 0.1f) * 4f);
+        m.SetFloat("_DistortScale", Mathf.Max(0.1f, Get("_RefractionScale", 1f)));
         m.renderQueue = -1;
     }
 }

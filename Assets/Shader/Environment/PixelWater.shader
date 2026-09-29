@@ -1,66 +1,59 @@
-// Pixel-art water in the Eastward style, made for the 480x270 pixel camera and the oblique projection.
-//   - See-through: the scene below is refracted in whole pixels (read from the camera's opaque texture) and tinted
-//     by depth in flat stepped colour bands (no dithering).
-//   - A crisp 1-pixel line where the water touches the shore and anything standing in it, plus stepped foam bands
-//     that pulse toward the shore.
-//   - Gentle vertex waves with crest highlights (stronger in windy weather), and a wobbling light pattern.
-//   - Interactive: ripples, wakes, splashes and rain rings from the shared ripple simulation (PixelWater /
-//     WaterSimulation) bend the refraction and the pattern and draw bright rings.
-//   - Receives the sun's shadows; sparkling sun glints.
-// Everything is snapped to the art-pixel grid in world space, so the patterns never swim when the camera moves.
-// Needs the URP asset's Depth Texture and Opaque Texture (both on in this project).
+// Pixel water for the 480x270 pixel camera and the oblique projection. Deliberately simple:
+//   1. See-through: the scene under the water, shifted by whole pixels (distortion) and tinted from Shallow to Deep
+//      by how deep the ground is below the surface.
+//   2. A crisp pixel outline where the water meets the shore or anything standing in it (legs, rocks, posts).
+//   3. Waves: gentle up / down motion plus thin pixel outlines around the moving wave crests.
+//   4. Interaction: every character standing in the water gets rings of 1-pixel lines spreading out from its
+//      contact outline (the same waterline outline as above, so the rings follow the shape of the legs / body),
+//      stretched behind it while it moves. Ring events from WaterSimulation add the rest, in the same 1-pixel style:
+//      a trail of rings behind a moving character, a splash (double ring + pixel droplets) when something falls in or
+//      Water.Splash is called, and small rings where rain drops land. They also bend the distortion.
+//   5. Tinted by the sun's colour (and its shadows).
+// No dithering, no noise grain: every effect is a flat colour or a 1-pixel line.
+// Needs the URP asset's Depth Texture and Opaque Texture.
 Shader "RythmRPG/Pixel Water"
 {
     Properties
     {
         [Header(Colour)]
-        _ShallowColor ("Shallow", Color) = (0.36, 0.74, 0.82, 0.45)
-        _DeepColor ("Deep", Color) = (0.1, 0.32, 0.55, 0.92)
-        _DepthDistance ("Depth For Deep Colour", Float) = 1.5
-        _ColorBands ("Depth Colour Bands", Range(1, 8)) = 4
-        _Clarity ("See-Through", Range(0, 1)) = 0.75
-        _LightInfluence ("Sun Colour Influence", Range(0, 1)) = 0.5
-        _ShadowStrength ("Shadow Strength", Range(0, 1)) = 0.45
+        _ShallowColor ("Shallow (alpha = cover)", Color) = (0.36, 0.74, 0.84, 0.3)
+        _DeepColor ("Deep (alpha = cover)", Color) = (0.1, 0.33, 0.56, 0.9)
+        _DeepDistance ("Depth For Deep Colour", Float) = 1.2
+        _ColorSteps ("Colour Steps (0 = smooth)", Range(0, 8)) = 0
 
-        [Header(Refraction)]
-        _RefractionPixels ("Refraction (pixels)", Range(0, 6)) = 2
-        _RefractionScale ("Refraction Scale", Float) = 1.4
-        _RefractionSpeed ("Refraction Speed", Float) = 0.5
+        [Header(Distortion)]
+        _DistortPixels ("Distortion (pixels)", Range(0, 4)) = 1
+        _DistortScale ("Distortion Size", Float) = 1.6
+        _DistortSpeed ("Distortion Speed", Float) = 0.6
+
+        [Header(Outline)]
+        _OutlineColor ("Outline", Color) = (0.93, 0.98, 1, 1)
+        _OutlineWidth ("Outline Pixels", Range(0, 2)) = 1
+        _ContactHeight ("Contact Height", Range(0.01, 1)) = 0.2
 
         [Header(Waves)]
-        _WaveAmplitude ("Wave Height", Range(0, 0.5)) = 0.035
-        _WaveLength ("Wave Length", Float) = 2.5
-        _WaveSpeed ("Wave Speed", Float) = 0.8
+        _WaveHeight ("Wave Height", Range(0, 0.3)) = 0.03
+        _WaveLength ("Wave Length", Float) = 2.4
+        _WaveSpeed ("Wave Speed", Float) = 0.6
         _WaveDirection ("Wave Direction (degrees)", Range(0, 360)) = 30
         _WindInfluence ("Weather Wind Influence", Range(0, 1)) = 0.5
-        _CrestColor ("Crest Colour", Color) = (0.9, 0.97, 1, 0.55)
-        _CrestThreshold ("Crest Threshold", Range(0, 1)) = 0.8
-
-        [Header(Light Pattern)]
-        _PatternColor ("Pattern Colour", Color) = (0.72, 0.92, 1, 0.45)
-        _PatternScale ("Pattern Scale", Float) = 1.1
-        _PatternSpeed ("Pattern Speed", Float) = 0.25
-        _PatternWidth ("Pattern Line Width", Range(0, 0.3)) = 0.07
-
-        [Header(Shore)]
-        _LineColor ("Shore Line", Color) = (0.92, 0.98, 1, 1)
-        _LineWidth ("Shore Line Pixels", Range(0, 3)) = 1
-        _FoamColor ("Foam", Color) = (0.86, 0.96, 1, 0.9)
-        _FoamDistance ("Foam Width (depth)", Float) = 0.35
-        _FoamBands ("Foam Bands", Range(0, 4)) = 2
-        _FoamSpeed ("Foam Pulse Speed", Float) = 0.7
-        _FoamBreakup ("Foam Breakup", Range(0, 1)) = 0.5
+        _WaveLineColor ("Wave Lines", Color) = (0.86, 0.96, 1, 0.55)
+        _WaveLines ("Wave Line Amount", Range(0, 1)) = 0.45
+        _WaveBreakup ("Wave Line Breakup", Range(0, 1)) = 0.6
 
         [Header(Interaction)]
-        _RippleStrength ("Ripple Strength", Range(0, 4)) = 1
-        _RippleColor ("Ripple Highlight", Color) = (0.92, 0.98, 1, 0.8)
-        _RippleThreshold ("Ripple Highlight Threshold", Range(0.001, 0.3)) = 0.03
+        _RippleColor ("Ripple Lines", Color) = (0.95, 1, 1, 0.85)
+        _RippleSpacing ("Ripple Spacing", Range(0.05, 1)) = 0.16
+        _RippleSpeed ("Ripple Speed", Range(0, 2)) = 0.3
+        _RippleRange ("Ripple Reach", Range(0.1, 3)) = 0.7
+        _RippleFootprint ("Contact Search Size (x character radius)", Range(0.5, 3)) = 1.5
+        _RippleStrength ("Splash Distortion", Range(0, 4)) = 1
 
-        [Header(Sparkle)]
-        _GlintColor ("Sun Glints", Color) = (1, 1, 0.95, 1)
-        _GlintAmount ("Glint Amount", Range(0, 1)) = 0.35
+        [Header(Light)]
+        _SunInfluence ("Sun Colour Influence", Range(0, 1)) = 0.6
+        _ShadowStrength ("Shadow Strength", Range(0, 1)) = 0.35
 
-        [Header(Pixel)]
+        [Header(Other)]
         _PixelsPerUnit ("Pixels Per Unit", Float) = 32
         [Enum(Off, 0, On, 1)] _ZWrite ("Hide Submerged Parts (Depth Write)", Float) = 1
     }
@@ -83,7 +76,7 @@ Shader "RythmRPG/Pixel Water"
             #pragma vertex Vert
             #pragma fragment Frag
             #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
-            #pragma multi_compile_fragment _ _SHADOWS_SOFT _SHADOWS_SOFT_LOW _SHADOWS_SOFT_MEDIUM _SHADOWS_SOFT_HIGH
+            #pragma multi_compile_fragment _ _SHADOWS_SOFT
             #pragma multi_compile_fog
             #pragma multi_compile_instancing
 
@@ -95,37 +88,30 @@ Shader "RythmRPG/Pixel Water"
             CBUFFER_START(UnityPerMaterial)
                 half4 _ShallowColor;
                 half4 _DeepColor;
-                float _DepthDistance;
-                float _ColorBands;
-                half _Clarity;
-                half _LightInfluence;
-                half _ShadowStrength;
-                float _RefractionPixels;
-                float _RefractionScale;
-                float _RefractionSpeed;
-                float _WaveAmplitude;
+                float _DeepDistance;
+                float _ColorSteps;
+                float _DistortPixels;
+                float _DistortScale;
+                float _DistortSpeed;
+                half4 _OutlineColor;
+                float _OutlineWidth;
+                float _ContactHeight;
+                float _WaveHeight;
                 float _WaveLength;
                 float _WaveSpeed;
                 float _WaveDirection;
                 float _WindInfluence;
-                half4 _CrestColor;
-                float _CrestThreshold;
-                half4 _PatternColor;
-                float _PatternScale;
-                float _PatternSpeed;
-                float _PatternWidth;
-                half4 _LineColor;
-                float _LineWidth;
-                half4 _FoamColor;
-                float _FoamDistance;
-                float _FoamBands;
-                float _FoamSpeed;
-                float _FoamBreakup;
-                float _RippleStrength;
+                half4 _WaveLineColor;
+                float _WaveLines;
+                float _WaveBreakup;
                 half4 _RippleColor;
-                float _RippleThreshold;
-                half4 _GlintColor;
-                float _GlintAmount;
+                float _RippleSpacing;
+                float _RippleSpeed;
+                float _RippleRange;
+                float _RippleFootprint;
+                float _RippleStrength;
+                half _SunInfluence;
+                half _ShadowStrength;
                 float _PixelsPerUnit;
                 float _ZWrite;
             CBUFFER_END
@@ -134,13 +120,21 @@ Shader "RythmRPG/Pixel Water"
             TEXTURE2D(_WaterSimTex);
             SAMPLER(sampler_WaterSimTex);
             float4 _WaterSimParams;   // origin x, origin z, 1 / size, on
-            float4 _WaterSimTexel;    // x = 1 / resolution (uv), y = world size of a texel
             float4 _WeatherWind;      // wind x, wind z, speed, time
+            // Characters in water (WaterSimulation): xyz = feet on the surface, w = radius; velocity xz, speed.
+            float4 _WaterMovers[16];
+            float4 _WaterMoverVelocities[16];
+            float _WaterMoverCount;
+            // Ring events (WaterSimulation): xy = world XZ, z = start time, w = type (0 ring, 1 splash, 2 rain drop);
+            // shape: x = start radius, y = speed, z = lifetime, w = strength.
+            float4 _WaterRings[128];
+            float4 _WaterRingShapes[128];
+            float _WaterRingCount;
+            float _WaterTime;
 
             struct Attributes
             {
                 float4 positionOS : POSITION;
-                float2 uv : TEXCOORD0;
                 UNITY_VERTEX_INPUT_INSTANCE_ID
             };
 
@@ -148,18 +142,24 @@ Shader "RythmRPG/Pixel Water"
             {
                 float4 positionCS : SV_POSITION;
                 float3 positionWS : TEXCOORD0;
-                float2 waveFog : TEXCOORD1; // x = wave 0..1, y = fog factor
+                float fogFactor : TEXCOORD1;
                 UNITY_VERTEX_OUTPUT_STEREO
             };
 
-            float WaveValue(float2 xz, float time)
+            float WindAmount()
+            {
+                return saturate(_WeatherWind.z / 8.0) * _WindInfluence;
+            }
+
+            // Two crossing swells, -1..1.
+            float Swell(float2 xz, float time)
             {
                 float a = radians(_WaveDirection);
                 float2 d1 = float2(cos(a), sin(a));
-                float2 d2 = float2(cos(a + 0.87), sin(a + 0.87));
+                float2 d2 = float2(cos(a + 0.9), sin(a + 0.9));
                 float k = 6.2831853 / max(_WaveLength, 0.05);
-                float w = k * _WaveSpeed;
-                return sin(dot(d1, xz) * k - time * w) * 0.65 + sin(dot(d2, xz) * k * 1.73 - time * w * 1.2 + 1.3) * 0.35;
+                float w = k * _WaveSpeed * (1.0 + WindAmount());
+                return sin(dot(d1, xz) * k - time * w) * 0.65 + sin(dot(d2, xz) * k * 1.7 - time * w * 1.15 + 1.3) * 0.35;
             }
 
             Varyings Vert(Attributes input)
@@ -168,12 +168,10 @@ Shader "RythmRPG/Pixel Water"
                 UNITY_SETUP_INSTANCE_ID(input);
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
                 float3 positionWS = TransformObjectToWorld(input.positionOS.xyz);
-                float wave = WaveValue(positionWS.xz, _Time.y);
-                float wind = saturate(_WeatherWind.z / 8.0) * _WindInfluence;
-                positionWS.y += wave * _WaveAmplitude * (1.0 + wind * 2.0);
+                positionWS.y += Swell(positionWS.xz, _Time.y) * _WaveHeight * (1.0 + WindAmount() * 2.0);
                 o.positionWS = positionWS;
                 o.positionCS = TransformWorldToHClip(positionWS);
-                o.waveFog = float2(wave * 0.5 + 0.5, ComputeFogFactor(o.positionCS.z));
+                o.fogFactor = ComputeFogFactor(o.positionCS.z);
                 return o;
             }
 
@@ -182,11 +180,6 @@ Shader "RythmRPG/Pixel Water"
                 p = frac(p * float2(123.34, 456.21));
                 p += dot(p, p + 45.32);
                 return frac(p.x * p.y);
-            }
-
-            float2 Hash22(float2 p)
-            {
-                return float2(Hash21(p), Hash21(p + 19.19));
             }
 
             float Noise(float2 p)
@@ -198,28 +191,7 @@ Shader "RythmRPG/Pixel Water"
                             lerp(Hash21(i + float2(0, 1)), Hash21(i + float2(1, 1)), f.x), f.y);
             }
 
-            // Distance to the nearest border between cells (thin wobbly light lines).
-            float CellEdge(float2 p, float time)
-            {
-                float2 cell = floor(p);
-                float2 f = frac(p);
-                float best = 8.0, second = 8.0;
-                [unroll] for (int y = -1; y <= 1; y++)
-                {
-                    [unroll] for (int x = -1; x <= 1; x++)
-                    {
-                        float2 o = float2(x, y);
-                        float2 h = Hash22(cell + o);
-                        float2 site = o + 0.5 + 0.35 * sin(time + h * 6.2831853);
-                        float d = length(site - f);
-                        if (d < best) { second = best; best = d; }
-                        else if (d < second) second = d;
-                    }
-                }
-                return second - best;
-            }
-
-            float EyeDepthFromRaw(float raw)
+            float EyeDepth(float raw)
             {
                 if (unity_OrthoParams.w > 0.5)
                 {
@@ -231,120 +203,293 @@ Shader "RythmRPG/Pixel Water"
                 return LinearEyeDepth(raw, _ZBufferParams);
             }
 
+            // View ray direction (exact for the sheared / oblique orthographic camera).
+            float3 RayDirection(float3 positionWS)
+            {
+                if (unity_OrthoParams.w > 0.5)
+                {
+                    float3 v = cross(UNITY_MATRIX_P[0].xyz, UNITY_MATRIX_P[1].xyz);
+                    if (dot(v, v) < 1e-10) return -UNITY_MATRIX_V[2].xyz;
+                    v = normalize(v);
+                    if (v.z > 0.0) v = -v;
+                    return normalize(mul((float3x3)UNITY_MATRIX_I_V, v));
+                }
+                return normalize(positionWS - _WorldSpaceCameraPos);
+            }
+
+            // Wave-crest value with breakup, so the crest outlines become short drifting dashes.
+            float CrestValue(float2 xz, float time)
+            {
+                float swell = Swell(xz, time);
+                float breakup = Noise(xz * 1.3 + time * float2(0.11, 0.07)) - 0.5;
+                return swell + breakup * _WaveBreakup * 1.6;
+            }
+
+            float Ripple(float2 xz)
+            {
+                if (_WaterSimParams.w < 0.5) return 0;
+                float2 uv = (xz - _WaterSimParams.xy) * _WaterSimParams.z;
+                if (any(uv <= 0.0) || any(uv >= 1.0)) return 0;
+                return SAMPLE_TEXTURE2D_LOD(_WaterSimTex, sampler_WaterSimTex, uv, 0).r * _RippleStrength;
+            }
+
+            struct DepthContext
+            {
+                int2 pixel;
+                int2 maxPixel;
+                float surfaceEye;
+                float2 surfaceEyeStep;   // change of the water surface's eye depth per screen pixel (x, y)
+                float toVertical;        // eye depth difference -> vertical world units
+            };
+
+            // How far below the water surface the scene is at pixel + o (vertical world units, < 0 = above it).
+            float DepthAt(DepthContext c, int2 o)
+            {
+                uint2 p = uint2(clamp(c.pixel + o, int2(0, 0), c.maxPixel));
+                float sceneEye = EyeDepth(LoadSceneDepth(p));
+                float surfaceEye = c.surfaceEye + dot(float2(o), c.surfaceEyeStep);
+                return (sceneEye - surfaceEye) * c.toVertical;
+            }
+
             half4 Frag(Varyings input) : SV_Target
             {
                 UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
-                float ppu = max(_PixelsPerUnit, 1.0);
-                int2 pixel = int2(input.positionCS.xy);
-                int2 maxPixel = int2(_ScaledScreenParams.xy) - 1;
-                float3 positionWS = input.positionWS;
-                float2 cellPx = floor(positionWS.xz * ppu);
-                float2 xz = (cellPx + 0.5) / ppu;          // world XZ snapped to the art pixel
+                float3 P = input.positionWS;
                 float time = _Time.y;
 
-                float surfaceEye = -TransformWorldToView(positionWS).z;
-                float2 surfaceSlope = float2(ddx(surfaceEye), ddy(surfaceEye));
+                // One screen pixel over, on the water surface (the surface is a plane, so these are exact).
+                float3 stepX = ddx(P);
+                float3 stepY = ddy(P);
+
+                DepthContext dc;
+                dc.pixel = int2(input.positionCS.xy);
+                dc.maxPixel = int2(_ScaledScreenParams.xy) - 1;
+                dc.surfaceEye = EyeDepth(input.positionCS.z);
+                dc.surfaceEyeStep = float2(ddx(dc.surfaceEye), ddy(dc.surfaceEye));
+                float3 D = RayDirection(P);
+                float3 forward = -UNITY_MATRIX_V[2].xyz;
+                dc.toVertical = max(-D.y, 0.05) / max(dot(D, forward), 0.05);
 
                 // ---------- ripples from the simulation
-                float ripple = 0;
-                float2 slope = 0;
-                if (_WaterSimParams.w > 0.5)
+                float ripple = Ripple(P.xz);
+                float rippleX = Ripple(P.xz + stepX.xz);
+                float rippleY = Ripple(P.xz + stepY.xz);
+
+                // ---------- see-through with whole-pixel distortion
+                float2 flow = P.xz * _DistortScale + time * _DistortSpeed * float2(0.35, 0.22);
+                float2 nudge = float2(Noise(flow) - 0.5, Noise(flow + 17.3) - 0.5) * 2.0
+                             + float2(rippleX - ripple, rippleY - ripple) * 5.0;
+                int2 offset = int2(round(clamp(nudge, -1.0, 1.0) * _DistortPixels));
+                float depthHere = DepthAt(dc, int2(0, 0));
+                float depth = DepthAt(dc, offset);
+                int2 source = dc.pixel + offset;
+                if (depth <= 0.0)
                 {
-                    float2 suv = (xz - _WaterSimParams.xy) * _WaterSimParams.z;
-                    if (all(suv > 0.0) && all(suv < 1.0))
+                    // That pixel is something above the water (a leg, the shore): don't pull it under.
+                    source = dc.pixel;
+                    depth = depthHere;
+                }
+                source = clamp(source, int2(0, 0), dc.maxPixel);
+                // Sampled by UV (at the pixel's centre) so it also works if the Opaque Texture is downsampled.
+                half3 scene = SampleSceneColor((float2(source) + 0.5) / _ScaledScreenParams.xy);
+
+                float t = saturate(max(depth, 0.0) / max(_DeepDistance, 0.01));
+                if (_ColorSteps >= 1.0) t = saturate(floor(t * _ColorSteps + 0.5) / _ColorSteps);
+                half4 water = lerp(_ShallowColor, _DeepColor, t);
+                half3 color = lerp(scene, water.rgb, water.a);
+
+                // ---------- wave crest outlines (1 pixel, on the inside of each crest)
+                if (_WaveLines > 0.0 && _WaveLineColor.a > 0.0)
+                {
+                    float threshold = lerp(1.0, 0.35, _WaveLines);
+                    float c = CrestValue(P.xz, time);
+                    if (c >= threshold)
                     {
-                        float t = max(_WaterSimTexel.x, 1e-4);
-                        ripple = SAMPLE_TEXTURE2D_LOD(_WaterSimTex, sampler_WaterSimTex, suv, 0).r;
-                        float hx = SAMPLE_TEXTURE2D_LOD(_WaterSimTex, sampler_WaterSimTex, suv + float2(t, 0), 0).r
-                                 - SAMPLE_TEXTURE2D_LOD(_WaterSimTex, sampler_WaterSimTex, suv - float2(t, 0), 0).r;
-                        float hz = SAMPLE_TEXTURE2D_LOD(_WaterSimTex, sampler_WaterSimTex, suv + float2(0, t), 0).r
-                                 - SAMPLE_TEXTURE2D_LOD(_WaterSimTex, sampler_WaterSimTex, suv - float2(0, t), 0).r;
-                        slope = float2(hx, hz) * _RippleStrength;
-                        ripple *= _RippleStrength;
+                        float c1 = CrestValue(P.xz + stepX.xz, time);
+                        float c2 = CrestValue(P.xz - stepX.xz, time);
+                        float c3 = CrestValue(P.xz + stepY.xz, time);
+                        float c4 = CrestValue(P.xz - stepY.xz, time);
+                        if (min(min(c1, c2), min(c3, c4)) < threshold)
+                            color = lerp(color, _WaveLineColor.rgb, _WaveLineColor.a);
                     }
                 }
 
-                // ---------- refraction in whole pixels
-                float2 flow = xz * _RefractionScale + time * _RefractionSpeed * float2(0.3, 0.2);
-                float2 nudge = float2(Noise(flow) - 0.5, Noise(flow + 13.1) - 0.5) * 2.0 + slope * 6.0;
-                int2 offset = int2(round(clamp(nudge, -1.5, 1.5) * _RefractionPixels));
-                float sceneEye = EyeDepthFromRaw(LoadSceneDepth(uint2(pixel)));
-                int2 source = clamp(pixel + offset, int2(0, 0), maxPixel);
-                float sourceEye = EyeDepthFromRaw(LoadSceneDepth(uint2(source)));
-                if (sourceEye < surfaceEye)
+                float eps = 0.5 / max(_PixelsPerUnit, 1.0);
+                float lo = -_ContactHeight;
+                // Screen pixel offset <-> world XZ offset on the water: world = ax * o.x + ay * o.y.
+                float2 ax = stepX.xz, ay = stepY.xz;
+                float det = ax.x * ay.y - ay.x * ax.y;
+                bool canMap = abs(det) > 1e-10;
+                #define TO_PIXELS(w) (float2(ay.y * (w).x - ay.x * (w).y, -ax.y * (w).x + ax.x * (w).y) / det)
+
+                // ---------- ring events: trails, splashes, rain
+                if (_WaterRingCount > 0.5 && _RippleColor.a > 0.0 && depthHere > 0.0 && canMap)
                 {
-                    // That pixel is in front of the water (a rock, a leg): don't pull it under.
-                    source = pixel;
-                    sourceEye = sceneEye;
-                }
-                float depth = max(0.0, sourceEye - surfaceEye);
-                float shoreDepth = max(0.0, sceneEye - surfaceEye);
-                half3 scene = LOAD_TEXTURE2D_X(_CameraOpaqueTexture, source).rgb;
-
-                // ---------- depth colour in stepped bands
-                float bands = max(_ColorBands, 1.0);
-                float d = saturate(depth / max(_DepthDistance, 0.01));
-                // Flat bands with hard edges.
-                d = saturate(floor(d * bands + 0.5) / bands);
-                half4 water = lerp(_ShallowColor, _DeepColor, d);
-                half cover = lerp(1.0, water.a, _Clarity);
-                half3 under = scene * lerp(half3(1, 1, 1), saturate(water.rgb * 1.4), 0.35);
-                half3 color = lerp(under, water.rgb, cover);
-
-                // ---------- light pattern, crests, ripples
-                float2 patternPos = xz * _PatternScale + slope * 2.0 + time * _PatternSpeed * float2(0.2, 0.12);
-                float edge = CellEdge(patternPos, time * _PatternSpeed * 2.0);
-                bool pattern = edge < _PatternWidth;
-                if (pattern) color = lerp(color, _PatternColor.rgb, _PatternColor.a);
-                if (input.waveFog.x > _CrestThreshold) color = lerp(color, _CrestColor.rgb, _CrestColor.a);
-                if (ripple > _RippleThreshold) color = lerp(color, _RippleColor.rgb, _RippleColor.a);
-                else if (ripple < -_RippleThreshold * 1.5) color *= 0.86;
-
-                // ---------- foam bands toward the shore
-                if (_FoamBands > 0.5 && shoreDepth < _FoamDistance)
-                {
-                    float f = shoreDepth / max(_FoamDistance, 0.001);
-                    float pulse = frac(f * _FoamBands - time * _FoamSpeed);
-                    float breakup = Noise(xz * 3.0 + time * 0.2);
-                    bool foam = f < 0.22 || (pulse < 0.3 && breakup > _FoamBreakup * f);
-                    if (foam) color = lerp(color, _FoamColor.rgb, _FoamColor.a);
-                }
-
-                // ---------- 1-pixel shore line: any neighbour where something stands in front of the water
-                if (_LineWidth > 0.5)
-                {
-                    bool onLine = shoreDepth < 0.5 / ppu;
-                    int width = (int)round(_LineWidth);
-                    [unroll] for (int w = 1; w <= 3; w++)
+                    float ringAlpha = 0.0;
+                    int ringCount = min((int)_WaterRingCount, 128);
+                    [loop] for (int e = 0; e < ringCount; e++)
                     {
-                        if (w > width) continue;
-                        int2 o0 = int2(w, 0), o1 = int2(-w, 0), o2 = int2(0, w), o3 = int2(0, -w);
-                        float e0 = EyeDepthFromRaw(LoadSceneDepth(uint2(clamp(pixel + o0, int2(0, 0), maxPixel))));
-                        float e1 = EyeDepthFromRaw(LoadSceneDepth(uint2(clamp(pixel + o1, int2(0, 0), maxPixel))));
-                        float e2 = EyeDepthFromRaw(LoadSceneDepth(uint2(clamp(pixel + o2, int2(0, 0), maxPixel))));
-                        float e3 = EyeDepthFromRaw(LoadSceneDepth(uint2(clamp(pixel + o3, int2(0, 0), maxPixel))));
-                        float s0 = surfaceEye + dot(float2(o0), surfaceSlope);
-                        float s1 = surfaceEye + dot(float2(o1), surfaceSlope);
-                        float s2 = surfaceEye + dot(float2(o2), surfaceSlope);
-                        float s3 = surfaceEye + dot(float2(o3), surfaceSlope);
-                        float eps = 0.5 / ppu;
-                        onLine = onLine || e0 < s0 - eps || e1 < s1 - eps || e2 < s2 - eps || e3 < s3 - eps;
+                        float4 ev = _WaterRings[e];
+                        float4 shape = _WaterRingShapes[e];
+                        float age = _WaterTime - ev.z;
+                        if (age < 0.0 || age > shape.z) continue;
+                        float2 dv = P.xz - ev.xy;
+                        float dist = length(dv);
+                        float radius = shape.x + shape.y * age;
+                        if (dist > radius + 0.6) continue;
+                        float life = 1.0 - age / shape.z;
+                        float strength = saturate(shape.w) * life;
+
+                        // One screen pixel along the ring's radius, in world units.
+                        float2 radial = dist > 1e-4 ? dv / dist : float2(1, 0);
+                        float width = 1.0 / max(length(TO_PIXELS(radial)), 1e-4);
+                        if (abs(dist - radius) < width * 0.5) ringAlpha = max(ringAlpha, strength);
+
+                        if (ev.w > 0.5 && ev.w < 1.5)
+                        {
+                            // Splash: a second, inner ring and pixel droplets thrown out and falling back.
+                            float inner = radius * 0.55;
+                            if (age > 0.1 && abs(dist - inner) < width * 0.5) ringAlpha = max(ringAlpha, strength * 0.8);
+                            float flight = age * 1.8 - age * age * 7.0;   // height of the droplets, up then down
+                            if (flight > 0.0)
+                            {
+                                float seed = frac(sin(dot(ev.xy, float2(12.9898, 78.233))) * 43758.5453);
+                                float reachOut = shape.x + age * shape.y * 1.4;
+                                float lift = flight * (1.0 + shape.w * 0.5) / max(-RayDirection(P).y, 0.05);
+                                [unroll] for (int k = 0; k < 8; k++)
+                                {
+                                    float angle = (k + seed) * 0.785398;
+                                    float spread = 0.75 + 0.5 * frac(seed * 7.0 + k * 0.37);
+                                    float2 drop = ev.xy + float2(cos(angle), sin(angle)) * reachOut * spread
+                                                + RayDirection(P).xz * lift * spread;
+                                    float2 o = TO_PIXELS(P.xz - drop);
+                                    if (max(abs(o.x), abs(o.y)) < 0.5) ringAlpha = 1.0;
+                                }
+                            }
+                        }
+                        else if (ev.w > 1.5 && age < 0.07)
+                        {
+                            // Rain: the drop itself, one pixel, the moment it lands.
+                            float2 o = TO_PIXELS(dv);
+                            if (max(abs(o.x), abs(o.y)) < 0.5) ringAlpha = max(ringAlpha, 1.0);
+                        }
                     }
-                    if (onLine) color = lerp(color, _LineColor.rgb, _LineColor.a);
+                    if (ringAlpha > 0.0) color = lerp(color, _RippleColor.rgb, _RippleColor.a * ringAlpha);
                 }
 
-                // ---------- light and shadow
-                Light sun = GetMainLight(TransformWorldToShadowCoord(positionWS));
-                half3 light = lerp(half3(1, 1, 1), saturate(sun.color), _LightInfluence);
-                light *= lerp(1.0, sun.shadowAttenuation, _ShadowStrength);
+                // ---------- contact ripples: rings of 1-pixel lines spreading out from a character's waterline
+                if (_WaterMoverCount > 0.5 && _RippleColor.a > 0.0 && depthHere > 0.0)
+                {
+                    // The nearest character in the water.
+                    int nearest = -1;
+                    float nearestGap = 1e9;
+                    int count = min((int)_WaterMoverCount, 16);
+                    [loop] for (int i = 0; i < count; i++)
+                    {
+                        float4 m = _WaterMovers[i];
+                        float gap = length(P.xz - m.xz) - m.w * _RippleFootprint;
+                        if (gap < nearestGap) { nearestGap = gap; nearest = i; }
+                    }
+
+                    if (nearest >= 0 && nearestGap < _RippleRange * 1.6 && canMap)
+                    {
+                        float4 mover = _WaterMovers[nearest];
+                        float4 velocity = _WaterMoverVelocities[nearest];
+                        float footprint = mover.w * _RippleFootprint;
+                        float2 toMover = mover.xz - P.xz;
+                        float rStep = 1.0 / max(_PixelsPerUnit, 1.0);
+
+                        // Distance (world, on the water) to the nearest waterline pixel of this character: rays in
+                        // 32 directions, marched one art pixel at a time only where they cross its footprint.
+                        float contact = 1e9;
+                        [loop] for (int k = 0; k < 32; k++)
+                        {
+                            float angle = k * (6.2831853 / 32.0);
+                            float2 u = float2(cos(angle), sin(angle));
+                            float b = dot(u, toMover);
+                            float disc = b * b - (dot(toMover, toMover) - footprint * footprint);
+                            if (disc <= 0.0) continue;
+                            float root = sqrt(disc);
+                            float t0 = max(b - root, rStep);
+                            float t1 = min(b + root, contact);
+                            [loop] for (int n = 0; n < 48; n++)
+                            {
+                                float tt = t0 + n * rStep;
+                                if (tt > t1) break;
+                                float2 w = u * tt;
+                                int2 o = int2(round(float2(ay.y * w.x - ay.x * w.y, -ax.y * w.x + ax.x * w.y) / det));
+                                if (o.x == 0 && o.y == 0) continue;
+                                float nd = DepthAt(dc, o);
+                                if (nd < eps && nd > lo)
+                                {
+                                    // Refine between the last miss and this hit, so the rings come out smooth.
+                                    float a0 = tt - rStep, a1 = tt;
+                                    [unroll] for (int r = 0; r < 3; r++)
+                                    {
+                                        float mid = (a0 + a1) * 0.5;
+                                        float2 wm = u * mid;
+                                        int2 om = int2(round(float2(ay.y * wm.x - ay.x * wm.y, -ax.y * wm.x + ax.x * wm.y) / det));
+                                        float md = DepthAt(dc, om);
+                                        if ((om.x != 0 || om.y != 0) && md < eps && md > lo) a1 = mid;
+                                        else a0 = mid;
+                                    }
+                                    contact = a1;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (contact < 1e8)
+                        {
+                            // Moving: rings bunch up in front and trail out behind.
+                            float2 away = -toMover;
+                            float awayLength = length(away);
+                            float2 heading = velocity.z > 0.01 ? velocity.xy / velocity.z : float2(0, 0);
+                            float stretch = awayLength > 1e-4 ? dot(away / awayLength, heading) * saturate(velocity.z * 0.5) * 0.5 : 0.0;
+                            float d = contact * (1.0 + stretch);
+                            float reach = _RippleRange * (1.0 - stretch);
+                            if (d > rStep * 1.5 && d < reach)
+                            {
+                                // Line width = one screen pixel along the ring's radius.
+                                float2 radial = awayLength > 1e-4 ? away / awayLength : float2(1, 0);
+                                float2 radialPixels = float2(ay.y * radial.x - ay.x * radial.y, -ax.y * radial.x + ax.x * radial.y) / det;
+                                float width = 1.0 / max(length(radialPixels), 1e-4);
+                                float spacing = max(_RippleSpacing, width * 3.0);
+                                float band = frac(d / spacing - time * _RippleSpeed / spacing);
+                                if (band * spacing < width)
+                                    color = lerp(color, _RippleColor.rgb, _RippleColor.a * saturate(1.0 - d / reach));
+                            }
+                        }
+                    }
+                }
+
+                // ---------- outline where the water meets the shore / anything standing in it:
+                // this pixel is water, and a neighbour is a surface right at the waterline.
+                if (_OutlineWidth >= 0.5 && depthHere > 0.0)
+                {
+                    bool onLine = depthHere < eps;
+                    int width = (int)round(_OutlineWidth);
+                    [unroll] for (int w = 1; w <= 2; w++)
+                    {
+                        if (w > width) break;
+                        float n0 = DepthAt(dc, int2(w, 0));
+                        float n1 = DepthAt(dc, int2(-w, 0));
+                        float n2 = DepthAt(dc, int2(0, w));
+                        float n3 = DepthAt(dc, int2(0, -w));
+                        onLine = onLine || (n0 < eps && n0 > lo) || (n1 < eps && n1 > lo)
+                                        || (n2 < eps && n2 > lo) || (n3 < eps && n3 > lo);
+                    }
+                    if (onLine) color = lerp(color, _OutlineColor.rgb, _OutlineColor.a);
+                }
+
+                // ---------- sun colour and shadow
+                Light sun = GetMainLight(TransformWorldToShadowCoord(P));
+                half3 sunColor = sun.color / max(max(sun.color.r, max(sun.color.g, sun.color.b)), 1.0h);
+                half3 light = lerp(half3(1, 1, 1), sunColor, _SunInfluence);
+                light *= lerp(1.0h, (half)sun.shadowAttenuation, _ShadowStrength);
                 color *= light;
 
-                // ---------- sun glints (twinkle on the pattern where the sun is not shadowed)
-                float glint = Hash21(cellPx + floor(time * 5.0) * 7.31);
-                if (_GlintAmount > 0.0 && pattern && sun.shadowAttenuation > 0.5 && glint > 1.0 - _GlintAmount * 0.12)
-                    color = _GlintColor.rgb * max(light, 0.6);
-
-                color = MixFog(color, input.waveFog.y);
+                color = MixFog(color, input.fogFactor);
                 return half4(color, 1.0);
             }
             ENDHLSL
