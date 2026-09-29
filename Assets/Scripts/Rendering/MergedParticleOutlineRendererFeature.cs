@@ -85,13 +85,35 @@ namespace PixelMetaballParticles
 
         public Settings settings = new Settings();
 
+        public const string CompositeShaderName = "Hidden/PixelMetaballParticles/MergedOutlineComposite";
+
+        [Tooltip("The merged outline composite shader. Filled in automatically in the Editor. It must be referenced " +
+                 "here: a Hidden shader that is only looked up by name (Shader.Find) is stripped from player builds, " +
+                 "and then the metaball particles don't show in the build.")]
+        public Shader compositeShader;
+
         private Material[] _compositeMaterials;
         private MergedParticleOutlinePass _pass;
 
         public override void Create()
         {
+#if UNITY_EDITOR
+            AssignCompositeShader();
+#endif
             RebuildCompositeMaterials();
         }
+
+#if UNITY_EDITOR
+        private void OnValidate() => AssignCompositeShader();
+
+        // Store a real reference to the shader in the renderer asset, so the build includes it.
+        private void AssignCompositeShader()
+        {
+            if (compositeShader != null) return;
+            compositeShader = Shader.Find(CompositeShaderName);
+            if (compositeShader != null) UnityEditor.EditorUtility.SetDirty(this);
+        }
+#endif
 
         private void RebuildCompositeMaterials()
         {
@@ -104,13 +126,18 @@ namespace PixelMetaballParticles
 
             _compositeMaterials = new Material[groupCount];
 
-            Shader compositeShader =
-                Shader.Find("Hidden/PixelMetaballParticles/MergedOutlineComposite");
+            Shader shader = compositeShader != null ? compositeShader : Shader.Find(CompositeShaderName);
 
-            if (compositeShader != null)
+            if (shader != null)
             {
                 for (int i = 0; i < _compositeMaterials.Length; i++)
-                    _compositeMaterials[i] = CoreUtils.CreateEngineMaterial(compositeShader);
+                    _compositeMaterials[i] = CoreUtils.CreateEngineMaterial(shader);
+            }
+            else if (Application.isPlaying)
+            {
+                Debug.LogError("[Merged Particle Outline] The composite shader '" + CompositeShaderName + "' is missing " +
+                               "from this build, so metaball particles can't be drawn. Assign it on the renderer " +
+                               "feature (Composite Shader) or add it to Project Settings > Graphics > Always Included Shaders.");
             }
 
             _pass = new MergedParticleOutlinePass(settings, _compositeMaterials)
