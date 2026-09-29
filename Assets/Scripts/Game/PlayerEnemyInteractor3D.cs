@@ -25,6 +25,8 @@ public sealed class PlayerEnemyInteractor3D : MonoBehaviour
     [SerializeField] private GameObject noticePrefab;
     [SerializeField] private GameObject battleBackground;
     [SerializeField, Min(0f)] private float encounterDelay = 1.5f;
+    [Tooltip("Delay before a battle started by a conversation (no '!' notice), e.g. StartBattle() in the Dialogue System.")]
+    [SerializeField, Min(0f)] private float dialogueEncounterDelay = 0.35f;
 
     [Header("Movement Control")]
     [SerializeField] private bool sendMovementMessages = true;
@@ -34,6 +36,9 @@ public sealed class PlayerEnemyInteractor3D : MonoBehaviour
     private bool encounterStarting;
 
     private Transform DetectionOrigin => detectionOrigin != null ? detectionOrigin : transform;
+
+    /// <summary>Between the start of the encounter transition (sound, notice, background) and the battle beginning.</summary>
+    public bool IsEncounterStarting => encounterStarting;
 
     private void Awake()
     {
@@ -75,10 +80,14 @@ public sealed class PlayerEnemyInteractor3D : MonoBehaviour
         TryBeginBattle(ResolveEnemy(other));
     }
 
-    public bool TryBeginBattle(EnemyCombatant enemy)
+    public bool TryBeginBattle(EnemyCombatant enemy) => TryBeginBattle(enemy, true);
+
+    /// <param name="showNotice">False for battles a conversation started: no "!" notice, and the shorter
+    /// dialogue encounter delay.</param>
+    public bool TryBeginBattle(EnemyCombatant enemy, bool showNotice)
     {
         if (enemy == null || !isActiveAndEnabled || encounterStarting || IsCombatBusy()) return false;
-        StartCoroutine(EncounterTransition(enemy));
+        StartCoroutine(EncounterTransition(enemy, showNotice));
         return true;
     }
 
@@ -103,7 +112,7 @@ public sealed class PlayerEnemyInteractor3D : MonoBehaviour
         return (enemyLayers.value & (1 << layer)) != 0;
     }
 
-    private IEnumerator EncounterTransition(EnemyCombatant enemy)
+    private IEnumerator EncounterTransition(EnemyCombatant enemy, bool showNotice)
     {
         encounterStarting = true;
 
@@ -116,12 +125,13 @@ public sealed class PlayerEnemyInteractor3D : MonoBehaviour
         SendMovementMessage(disableMovementMessage);
 
         GameObject notice = null;
-        if (noticePrefab != null && enemy != null)
+        if (showNotice && noticePrefab != null && enemy != null)
         {
             notice = Instantiate(noticePrefab, enemy.transform);
         }
 
-        if (encounterDelay > 0f) yield return new WaitForSeconds(encounterDelay);
+        float delay = showNotice ? encounterDelay : dialogueEncounterDelay;
+        if (delay > 0f) yield return new WaitForSeconds(delay);
         if (notice != null) Destroy(notice);
 
         combatController ??= FindAnyObjectByType<CombatController>();

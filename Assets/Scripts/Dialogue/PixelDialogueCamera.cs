@@ -1,3 +1,4 @@
+using System.Collections;
 using PixelCrushers.DialogueSystem;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -61,6 +62,24 @@ namespace RythmRPG.Dialogue
 
         /// <summary>True while the gameplay camera is borrowed.</summary>
         public bool IsEngaged => engaged;
+        /// <summary>True while gliding back to the camera's own Follow target.</summary>
+        public bool IsReturning => engaged && returning;
+
+        /// <summary>The dialogue camera if one exists (doesn't create one, unlike <see cref="Instance"/>).</summary>
+        public static PixelDialogueCamera Existing => instance != null ? instance : FindAnyObjectByType<PixelDialogueCamera>();
+
+        /// <summary>
+        /// Glides back (unless already on the way) and waits until the camera is handed back. Battle scenes use this so
+        /// the fight doesn't carry on (and take over the camera) while the dialogue camera still has it.
+        /// </summary>
+        public IEnumerator ReturnAndWait()
+        {
+            if (!engaged) yield break;
+            if (!returning) Return(returnDuration);
+            float giveUpAt = Time.unscaledTime + returnDuration + 1f;
+            while (engaged && Time.unscaledTime < giveUpAt) yield return null;
+            if (engaged) Release();
+        }
 
         private void Awake()
         {
@@ -127,6 +146,12 @@ namespace RythmRPG.Dialogue
                 Release();
                 return;
             }
+            if (vcam.Follow != focus)
+            {
+                // Something else (e.g. the battle framing the enemy) retargeted the camera: let go and leave its choice.
+                Release();
+                return;
+            }
 
             bool inConversation = DialogueManager.hasInstance && DialogueManager.isConversationActive;
             if (returnWhenConversationEnds && startedInConversation && !inConversation && !returning)
@@ -151,7 +176,6 @@ namespace RythmRPG.Dialogue
             }
 
             focus.position = basePosition + ShakeOffset(now);
-            if (vcam.Follow != focus) vcam.Follow = focus;
         }
 
         private bool Engage()

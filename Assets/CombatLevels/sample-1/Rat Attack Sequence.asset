@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a1000000000000000000000000000060, type: 3}
-  m_Name: sample-1_Sequence
+  m_Name: Rat Attack Sequence
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.EnemyAttackSequenceDefinition
   id: sample-1
   selectionWeight: 1
@@ -19,6 +19,12 @@ MonoBehaviour:
   - animationName: 
     anticipationDuration: 0.45
     rhythmPattern: {fileID: 11400000, guid: 69e00c1ed3ffe8849b2b592a7d09231d, type: 2}
+    durationOverride: 0
+    endPolicy: 0
+    modifiers: []
+  - animationName: 
+    anticipationDuration: 0.45
+    rhythmPattern: {fileID: 11400000, guid: a6b05199ab05abf42a1d3f3aa5e4958a, type: 2}
     durationOverride: 0
     endPolicy: 0
     modifiers: []

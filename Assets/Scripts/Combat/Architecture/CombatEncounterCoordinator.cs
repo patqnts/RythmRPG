@@ -72,6 +72,10 @@ namespace RythmRPG.Combat
             if (combatCameraTarget != null && combatEnemy != null)
                 combatCameraTarget.position = ResolveCombatCameraTarget(combatEnemy.position);
             if (alignedPlayer == null || lanePresentation == null) return;
+            // Story scene (battle dialogue): its camera may pan to a character. The player's spot is taken from the
+            // screen, so following the camera here would drag the player along (or chase it forever when the camera
+            // focuses on the player). Keep the stage where it is until the scene and its camera are done.
+            if (CombatStoryHooks.IsPlaying) return;
             // Ability-selection zoom: the layout is frozen, so the player stays put while the camera moves.
             if (lanePresentation.LayoutFrozen) return;
             // Cinemachine and the render camera must finish before sampling the screen-anchored line.

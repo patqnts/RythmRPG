@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Reflection;
 using PixelCrushers.DialogueSystem;
-using RythmRPG.Combat;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,16 +8,21 @@ namespace RythmRPG.Dialogue
 {
     /// <summary>
     /// Freezes the player while a conversation is running: stops <see cref="PlayerMovement3D"/> /
-    /// <see cref="PlayerMovement"/>, and turns off the Proximity Selector (so the interact key can't restart the
-    /// conversation) and <see cref="PlayerEnemyInteractor3D"/> (so talking next to an enemy can't start a battle).
-    /// Everything is put back the way it was a moment after the conversation ends, so the key press that closed
-    /// the last line isn't also read as "interact again".
+    /// <see cref="PlayerMovement"/>, and turns off <see cref="PlayerEnemyInteractor3D"/> (so talking next to an enemy
+    /// can't start a touch battle). Everything is put back the way it was a moment after the conversation ends, so the
+    /// key press that closed the last line isn't also read as "interact again". When the conversation ends by starting
+    /// a battle (StartBattle()), movement stays frozen: the battle gives it back when it's over.
+    /// <para>
+    /// Proximity Selectors (talk / use) are also off during conversations, battles and while a battle is about to
+    /// start, so Interact can't start a conversation in the middle of a fight.
+    /// </para>
     /// <para>Lives on the Pixel Bubble Dialogue UI prefab, so it works in every scene that uses that UI.</para>
     /// </summary>
     [DisallowMultipleComponent]
     public sealed class PixelDialoguePlayerLock : MonoBehaviour
     {
         public bool freezePlayerMovement = true;
+        [Tooltip("Turn off Proximity Selectors during conversations and battles.")]
         public bool disableProximitySelectors = true;
         public bool disableEnemyEncounters = true;
         [Tooltip("Seconds after the conversation ends before control comes back.")]
@@ -32,7 +36,9 @@ namespace RythmRPG.Dialogue
         private readonly List<PlayerMovement3D> frozen3D = new();
         private readonly List<PlayerMovement> frozen2D = new();
         private readonly List<Behaviour> disabledBehaviours = new();
+        private readonly List<Behaviour> blockedSelectors = new();
         private bool locked;
+        private bool selectorsBlocked;
         private float endedAt = -1f;
 
         public bool IsLocked => locked;
@@ -43,16 +49,21 @@ namespace RythmRPG.Dialogue
             {
                 endedAt = -1f;
                 if (!locked) Lock();
-                return;
             }
-            if (!locked) return;
-            if (endedAt < 0f) endedAt = Time.unscaledTime;
-            if (Time.unscaledTime - endedAt >= unlockDelay) Unlock();
+            else if (locked)
+            {
+                if (endedAt < 0f) endedAt = Time.unscaledTime;
+                if (Time.unscaledTime - endedAt >= unlockDelay) Unlock();
+            }
+
+            BlockSelectors(disableProximitySelectors
+                           && (locked || DialogueBattleStarter.IsPending || DialogueBattleStarter.AnyBattleActive()));
         }
 
         private void OnDisable()
         {
             if (locked) Unlock();
+            BlockSelectors(false);
         }
 
         private void Lock()
@@ -77,13 +88,9 @@ namespace RythmRPG.Dialogue
                 }
             }
 
-            if (disableProximitySelectors)
-            {
-                foreach (ProximitySelector selector in FindObjectsByType<ProximitySelector>(FindObjectsInactive.Exclude))
-                    Disable(selector);
-            }
-
-            if (disableEnemyEncounters)
+            // Not during a battle (story scenes in combat): the interactor must stay subscribed to BattleEnded, which
+            // gives movement back and closes the battle background when the fight is over.
+            if (disableEnemyEncounters && !DialogueBattleStarter.AnyBattleActive())
             {
                 foreach (PlayerEnemyInteractor3D interactor in FindObjectsByType<PlayerEnemyInteractor3D>(FindObjectsInactive.Exclude))
                     Disable(interactor);
@@ -98,9 +105,7 @@ namespace RythmRPG.Dialogue
             endedAt = -1f;
 
             // A conversation may end by starting a battle; the battle gives movement back itself when it's over.
-            bool battle = false;
-            foreach (CombatController combat in FindObjectsByType<CombatController>(FindObjectsInactive.Exclude))
-                battle |= combat.IsBattleActive;
+            bool battle = DialogueBattleStarter.AnyBattleActive() || DialogueBattleStarter.IsPending;
 
             if (!battle)
             {
@@ -117,6 +122,25 @@ namespace RythmRPG.Dialogue
             disabledBehaviours.Clear();
 
             onUnlocked.Invoke();
+        }
+
+        private void BlockSelectors(bool block)
+        {
+            if (block == selectorsBlocked) return;
+            selectorsBlocked = block;
+            if (block)
+            {
+                foreach (ProximitySelector selector in FindObjectsByType<ProximitySelector>(FindObjectsInactive.Exclude))
+                {
+                    if (!selector.enabled) continue;
+                    selector.enabled = false;
+                    blockedSelectors.Add(selector);
+                }
+                return;
+            }
+            foreach (Behaviour selector in blockedSelectors)
+                if (selector != null) selector.enabled = true;
+            blockedSelectors.Clear();
         }
 
         private void Disable(Behaviour behaviour)

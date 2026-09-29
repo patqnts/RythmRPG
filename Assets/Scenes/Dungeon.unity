@@ -266,6 +266,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 981119264847977830, guid: f7f0e2fb64c91048f95737efd90f6baf, type: 3}
+      propertyPath: m_Radius
+      value: 2.84
+      objectReference: {fileID: 0}
+    - target: {fileID: 981119264847977830, guid: f7f0e2fb64c91048f95737efd90f6baf, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
@@ -290,6 +294,10 @@ PrefabInstance:
       value: -2.178
       objectReference: {fileID: 0}
     - target: {fileID: 4997207318476253371, guid: f7f0e2fb64c91048f95737efd90f6baf, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4997207318476253371, guid: f7f0e2fb64c91048f95737efd90f6baf, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
@@ -307,7 +315,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5566301694207399182, guid: f7f0e2fb64c91048f95737efd90f6baf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.587
+      value: -0.069
       objectReference: {fileID: 0}
     - target: {fileID: 5566301694207399182, guid: f7f0e2fb64c91048f95737efd90f6baf, type: 3}
       propertyPath: m_LocalPosition.z
@@ -347,12 +355,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9076793075719362696, guid: f7f0e2fb64c91048f95737efd90f6baf, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 5566301694207399182, guid: f7f0e2fb64c91048f95737efd90f6baf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1043203072}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9076793075719362696, guid: f7f0e2fb64c91048f95737efd90f6baf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1043043170}
+    - targetCorrespondingSourceObject: {fileID: 9076793075719362696, guid: f7f0e2fb64c91048f95737efd90f6baf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1043043172}
+    - targetCorrespondingSourceObject: {fileID: 9076793075719362696, guid: f7f0e2fb64c91048f95737efd90f6baf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1043043171}
   m_SourcePrefab: {fileID: 100100000, guid: f7f0e2fb64c91048f95737efd90f6baf, type: 3}
 --- !u!1 &86827496
 GameObject:
@@ -930,7 +950,7 @@ Transform:
   m_GameObject: {fileID: 206291240}
   serializedVersion: 2
   m_LocalRotation: {x: 0.30070576, y: 0, z: 0, w: 0.953717}
-  m_LocalPosition: {x: -0.58, y: 11.18, z: -10}
+  m_LocalPosition: {x: -0.58, y: 11.18, z: -19}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4656,6 +4676,186 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 9076793075719362696, guid: f7f0e2fb64c91048f95737efd90f6baf, type: 3}
   m_PrefabInstance: {fileID: 72165873}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1043043169 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5566301694207399182, guid: f7f0e2fb64c91048f95737efd90f6baf, type: 3}
+  m_PrefabInstance: {fileID: 72165873}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1043043170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1043043165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 274b80ab5b659c646ba9338870d14625, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp-firstpass::PixelCrushers.DialogueSystem.Wrappers.Usable
+  m_overrideName: 
+  m_overrideUseMessage: 
+  maxUseDistance: 5
+  events:
+    onSelect:
+      m_PersistentCalls:
+        m_Calls: []
+    onDeselect:
+      m_PersistentCalls:
+        m_Calls: []
+    onUse:
+      m_PersistentCalls:
+        m_Calls: []
+--- !u!114 &1043043171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1043043165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5d812595c4fb814fac75e2c67f09d74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RythmRPG.Dialogue.DialogueEncounter
+  mode: 1
+  battleWhenTriggered: 1
+  showNotice: 0
+  rearmDelay: 1
+--- !u!114 &1043043172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1043043165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c593457cd8105e148906690e1707c592, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp-firstpass::PixelCrushers.DialogueSystem.Wrappers.DialogueSystemTrigger
+  trigger: 32
+  delayOneFrame: 0
+  condition:
+    luaConditions: []
+    luaElementsMustBeTrue: 0
+    questConditions: []
+    acceptedTags: []
+    acceptedGameObjects: []
+    luaWizardIndex: -1
+    lastEvaluationValue: 0
+  setQuestState: 1
+  questName: 
+  questState: 0
+  setQuestEntryState: 0
+  questEntryNumber: 1
+  questEntryState: 0
+  setAnotherQuestEntryState: 0
+  anotherQuestEntryNumber: 1
+  anotherQuestEntryState: 0
+  luaCode: 
+  sequence: 
+  sequenceSpeaker: {fileID: 0}
+  sequenceListener: {fileID: 0}
+  waitOneFrameOnStartOrEnable: 1
+  alertMessage: 
+  textTable: {fileID: 0}
+  alertDuration: 0
+  sendMessages: []
+  barkSource: 0
+  barkConversation: 
+  barkEntryID: -1
+  barkEntryTitle: 
+  barkText: 
+  barkTextSequence: 
+  barker: {fileID: 0}
+  barkTarget: {fileID: 0}
+  barkOrder: 0
+  allowBarksDuringConversations: 0
+  skipBarkIfNoValidEntries: 0
+  cacheBarkLines: 0
+  conversation: Rat King Convo
+  conversationConversant: {fileID: 1043043169}
+  conversationActor: {fileID: 0}
+  startConversationEntryID: -1
+  startConversationEntryTitle: 
+  overrideDialogueUI: {fileID: 0}
+  additionalActorOverrides: []
+  exclusive: 0
+  replace: 0
+  queue: 0
+  skipIfNoValidEntries: 0
+  preventRestartOnSameFrameEnded: 0
+  stopConversationOnTriggerExit: 0
+  marginToAllowTriggerExit: 0.2
+  stopConversationIfTooFar: 0
+  maxConversationDistance: 5
+  monitorConversationDistanceFrequency: 1
+  showCursorDuringConversation: 0
+  pauseGameDuringConversation: 0
+  setActiveActions: []
+  setEnabledActions: []
+  setAnimatorStateActions: []
+  onExecute:
+    m_PersistentCalls:
+      m_Calls: []
+  useConversationTitlePicker: 1
+  useBarkTitlePicker: 1
+  useQuestNamePicker: 1
+  selectedDatabase: {fileID: 11400000, guid: c1cc03cd82f6cdb40afbc0575be25564, type: 2}
+--- !u!1 &1043203071
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1043203072}
+  - component: {fileID: 1043203073}
+  m_Layer: 8
+  m_Name: Cube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1043203072
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1043203071}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.0000000037253, y: 0.904, z: 0.343}
+  m_LocalScale: {x: 2.3922, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1043043169}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1043203073
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1043203071}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1043263627
 GameObject:
   m_ObjectHideFlags: 0
@@ -4821,7 +5021,7 @@ Transform:
   m_GameObject: {fileID: 1043333259}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.6, y: 0.96, z: 3.6}
+  m_LocalPosition: {x: -3.56, y: 1.95, z: 7.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5379,7 +5579,7 @@ Transform:
   m_GameObject: {fileID: 1138906539}
   serializedVersion: 2
   m_LocalRotation: {x: 0.30070576, y: -0, z: -0, w: 0.953717}
-  m_LocalPosition: {x: -0.58, y: 5011.18, z: -10}
+  m_LocalPosition: {x: -0.58, y: 5011.18, z: -19}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6131,11 +6331,15 @@ PrefabInstance:
       objectReference: {fileID: 3036683754309368320, guid: 5251bb267be24694590654c6c49ccd31, type: 3}
     - target: {fileID: 11426072, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       propertyPath: displaySettings.subtitleSettings.continueButton
-      value: 4
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 11426072, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       propertyPath: displaySettings.subtitleSettings.showPCSubtitlesDuringLine
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11426072, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
+      propertyPath: displaySettings.subtitleSettings.skipPCSubtitleAfterResponseMenu
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6193717574850487428, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       propertyPath: m_UiScaleMode
@@ -6590,7 +6794,7 @@ MonoBehaviour:
   hitLinePlacement: 0
   hitLineViewport: {x: 0.5, y: 0.09}
   playerFeetViewportY: 0.085
-  extraPlayerEnemySeparation: 1.25
+  extraPlayerEnemySeparation: 0
   hitLineAtPlayerFeet: 0
   hitLineRevealSeconds: 0.35
   enemyViewportY: 0.75
@@ -9223,7 +9427,7 @@ Transform:
   m_GameObject: {fileID: 1646746425}
   serializedVersion: 2
   m_LocalRotation: {x: 0.30070576, y: 0, z: 0, w: 0.953717}
-  m_LocalPosition: {x: -0.58, y: 11.18, z: -10}
+  m_LocalPosition: {x: -0.58, y: 11.18, z: -19}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10735,7 +10939,7 @@ Transform:
   m_GameObject: {fileID: 1953005467}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.58, y: 1.72, z: 0}
+  m_LocalPosition: {x: -0.58, y: 1.72, z: -9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10780,13 +10984,14 @@ MonoBehaviour:
   enemyLayers:
     serializedVersion: 2
     m_Bits: 256
-  triggerInteraction: 2
+  triggerInteraction: 1
   requireInteractKey: 0
-  useOverlapCheck: 1
-  beginBattleOnTriggerEnter: 1
+  useOverlapCheck: 0
+  beginBattleOnTriggerEnter: 0
   noticePrefab: {fileID: 2334334490853633406, guid: 7c110aebfcce39c4eb33b75f700a1771, type: 3}
   battleBackground: {fileID: 0}
   encounterDelay: 1.5
+  dialogueEncounterDelay: 0.35
   sendMovementMessages: 1
   disableMovementMessage: DisableMovement
   enableMovementMessage: EnableMovement
@@ -11243,6 +11448,22 @@ MonoBehaviour:
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: 
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - guid: 64eb8b6f-600b-453f-8a99-55b20ef823f8
+    onExecute:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 548514307}
+          m_TargetAssemblyTypeName: RythmRPG.Core.WeatherController, RythmRPG.Core
+          m_MethodName: StrikeLightning
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 

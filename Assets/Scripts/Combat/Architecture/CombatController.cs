@@ -52,6 +52,16 @@ namespace RythmRPG.Combat
         private bool restartInPlace;
         private CombatStatsTracker stats;
 
+        // Story scenes (see CombatStoryHooks): round / serial counters and the numbers a scene may react to.
+        private int round;
+        private int battleSerial;
+        private int encounterSerial;
+        private bool battleIsRetry;
+        private bool encounterPrepared;
+        private int playerHealthAtEnemyTurn;
+        private int enemyHealthAtPlayerAttack;
+        private EnemyPhaseDefinition lastPhase;
+
         /// <summary>The report of the last finished battle (null until one ends).</summary>
         public CombatReport LastReport { get; private set; }
         /// <summary>Raised when a battle ends, before the result screen opens.</summary>
@@ -111,6 +121,13 @@ namespace RythmRPG.Combat
             uiController?.Bind(this, encounter.Player, encounter.Enemy);
             vfxController.Bind(abilitySlots, inputRouter, judgementSystem, encounter.Enemy, encounter.Player);
             abilitySlots.SetHoldDuration(vfxController.SelectionHoldDuration);
+            battleSerial++;
+            battleIsRetry = restartInPlace;
+            if (!battleIsRetry) encounterSerial++;
+            round = 0;
+            encounterPrepared = false;
+            lastPhase = encounter.Enemy.ResolvePhase();
+            CombatStoryHooks.ClearRequests();
             BattleStarted?.Invoke(encounter);
             stateMachine.Start();
         }
@@ -211,6 +228,7 @@ namespace RythmRPG.Combat
             // has moved into place and hands over to the Loop on its last sample. The enemy turn starts right after
             // the intro animation, but its first projectile is planned for the Loop (see RunEnemyStep), so the intro
             // always plays out in full and the attack lands as the Loop begins.
+            if (!restartInPlace) yield return StoryBeat(CombatStoryMoment.EncounterStart);
             nextSequence = encounter.Enemy.SelectAttackSequence(UnityEngine.Random.value);
             CombatSong song = nextSequence != null ? nextSequence.Song : null;
             CombatMusicDirector.Preload(song); // load the audio while the player walks, not when a section starts
@@ -226,7 +244,9 @@ namespace RythmRPG.Combat
             {
                 yield return encounterCoordinator.Prepare(encounter, () => musicDirector?.BeginEncounter(song));
             }
+            encounterPrepared = true;
             yield return PlayEnemyBattleIntro();
+            yield return StoryBeat(CombatStoryMoment.BattleIntro);
             Transition(CombatState.EnemyTurnStart);
         }
 
@@ -234,6 +254,8 @@ namespace RythmRPG.Combat
         {
             // Defensive: guarantees the hit line is back even if the player skipped ability selection
             // (DebugSkipPlayerTurn) without ever reaching PlayerAbilityExecuting.
+            round++;
+            playerHealthAtEnemyTurn = encounter.Player.CurrentHealth;
             lanePresentation?.RevealHitLine();
             vfxController.SetAbilitySlotsVisible(false, true);
             musicDirector?.SetPlayerTurn(false);
@@ -246,6 +268,8 @@ namespace RythmRPG.Combat
         {
             EnemyAttackSequenceDefinition sequence = nextSequence ?? encounter.Enemy.SelectAttackSequence(UnityEngine.Random.value);
             nextSequence = null;
+            string sequenceId = SequenceKey(sequence);
+            yield return StoryBeat(CombatStoryMoment.EnemyTurnStart, sequenceId);
             // The sequence's song keeps looping across steps and turns; only a different song cross-fades in
             // (on the next bar, loop only, no intro).
             if (sequence != null) musicDirector?.PlaySong(sequence.Song);
@@ -258,15 +282,22 @@ namespace RythmRPG.Combat
             }
             else
             {
+                int stepNumber = 0;
                 foreach (EnemyAttackStepDefinition step in steps.Where(step => step != null))
                 {
+                    stepNumber++;
+                    yield return StoryBeat(CombatStoryMoment.EnemyAttackStep, sequenceId, stepNumber);
                     yield return RunEnemyStep(step.RhythmPattern, step.AnimationName,
                         step.AnticipationDuration, step.DurationOverride, step.EndPolicy);
                     if (encounter.Player.IsDefeated) break;
                 }
             }
             // Player death: the End section starts now (on the next bar), not after the turn bookkeeping.
-            if (encounter.Player.IsDefeated) musicDirector?.PlayEnd(false);
+            if (encounter.Player.IsDefeated)
+            {
+                yield return StoryBeat(CombatStoryMoment.PlayerDefeated);
+                musicDirector?.PlayEnd(false);
+            }
             Transition(CombatState.EnemyTurnEnd);
         }
 
@@ -306,6 +337,8 @@ namespace RythmRPG.Combat
         {
             modifierSystem.OnEnemyTurnEnded();
             yield return null;
+            if (!encounter.Player.IsDefeated)
+                yield return StoryBeat(CombatStoryMoment.EnemyTurnEnd, amount: Mathf.Max(0, playerHealthAtEnemyTurn - encounter.Player.CurrentHealth));
             Transition(encounter.Player.IsDefeated ? CombatState.Defeat : CombatState.PlayerTurnStart);
         }
 
@@ -313,6 +346,7 @@ namespace RythmRPG.Combat
         {
             // A beat of breathing room after the enemy's attack (game time: it holds still while paused).
             if (playerTurnDelay > 0f) yield return new WaitForSeconds(playerTurnDelay);
+            yield return StoryBeat(CombatStoryMoment.PlayerTurnStart);
             stats?.RecordTurn();
             abilitySlots.TickCooldowns();
             // Ability selection: player-turn stem (or low-pass). Casting brings the main loop back.
@@ -348,6 +382,7 @@ namespace RythmRPG.Combat
         private IEnumerator PlayerAbilityRoutine()
         {
             // The player finished choosing; back to the main loop and reveal the hit line before the chart starts.
+            enemyHealthAtPlayerAttack = encounter.Enemy.CurrentHealth;
             musicDirector?.SetPlayerTurn(false);
             lanePresentation?.RevealHitLine();
 
@@ -414,15 +449,24 @@ namespace RythmRPG.Combat
         {
             vfxController.SetAbilitySlotsVisible(false, true);
             yield return null;
+            int dealt = Mathf.Max(0, enemyHealthAtPlayerAttack - encounter.Enemy.CurrentHealth);
             if (encounter.Enemy.IsDefeated)
             {
-                // Enemy death: the End section starts with the death animation.
+                // Last words first; the End section then starts with the death animation.
+                yield return StoryBeat(CombatStoryMoment.EnemyDefeated, amount: dealt);
                 musicDirector?.PlayEnd(true);
                 yield return PlayEnemyDefeat();
                 Transition(CombatState.Victory);
             }
             else
             {
+                yield return StoryBeat(CombatStoryMoment.PlayerAttackEnd, amount: dealt);
+                EnemyPhaseDefinition phase = encounter.Enemy.ResolvePhase();
+                if (phase != lastPhase)
+                {
+                    lastPhase = phase;
+                    yield return StoryBeat(CombatStoryMoment.EnemyPhaseChanged, phaseName: phase != null ? phase.name : string.Empty);
+                }
                 Transition(CombatState.EnemyTurnStart);
             }
         }
@@ -478,6 +522,7 @@ namespace RythmRPG.Combat
             vfxController.SetAbilitySlotsVisible(false, true);
             vfxController.ClearCastEffects();
             yield return GamePause.WaitUnpausedRealtime(vfxController.TerminalDelay);
+            yield return StoryBeat(victory ? CombatStoryMoment.Victory : CombatStoryMoment.Defeat);
 
             // Result: built before a defeat restores health, shown before the encounter is restored.
             if (stats != null)
@@ -511,6 +556,8 @@ namespace RythmRPG.Combat
             }
             encounterCoordinator.Restore(encounter, victory);
             lanePresentation?.SetPresentationVisible(false);
+            // Back in the world; the battle still counts as active, so the player can't move or start another one yet.
+            yield return StoryBeat(CombatStoryMoment.AfterBattle);
             IsBattleActive = false;
             BattleEnded?.Invoke(terminalState);
         }
@@ -683,6 +730,71 @@ namespace RythmRPG.Combat
             if (stateRoutine == null) return;
             StopCoroutine(stateRoutine);
             stateRoutine = null;
+            CombatStoryHooks.Stop(); // a scene may have been holding that routine
+        }
+
+        // ---------- Story scenes ----------
+
+        /// <summary>
+        /// Lets <see cref="CombatStoryHooks.Handler"/> play a scene for this moment and waits for it. If the scene asked
+        /// to end the battle, the ending starts next frame and this routine is stopped by it.
+        /// </summary>
+        private IEnumerator StoryBeat(CombatStoryMoment moment, string sequenceId = null, int stepNumber = 0,
+            int amount = 0, string phaseName = null)
+        {
+            if (CombatStoryHooks.Handler != null)
+            {
+                var request = new CombatStoryRequest
+                {
+                    Moment = moment,
+                    Controller = this,
+                    Player = encounter.Player,
+                    Enemy = encounter.Enemy,
+                    Round = round,
+                    BattleSerial = battleSerial,
+                    EncounterSerial = encounterSerial,
+                    IsRetry = battleIsRetry,
+                    SequenceId = sequenceId ?? string.Empty,
+                    StepNumber = stepNumber,
+                    Amount = amount,
+                    PhaseName = phaseName ?? string.Empty,
+                    Combo = CurrentCombo,
+                };
+                yield return CombatStoryHooks.Play(request);
+            }
+
+            bool terminal = CurrentState == CombatState.Victory || CurrentState == CombatState.Defeat;
+            if (!encounterPrepared || terminal || !CombatStoryHooks.TryConsumeEndRequest(out bool victory)) yield break;
+            StartCoroutine(EndFromStoryNextFrame(victory));
+            while (true) yield return null; // stopped by the ending
+        }
+
+        private IEnumerator EndFromStoryNextFrame(bool victory)
+        {
+            yield return null;
+            EndBattleFromStory(victory);
+        }
+
+        /// <summary>
+        /// Ends the battle now from a story scene or script: victory (the enemy is defeated, death animation, result)
+        /// or defeat. Works in any state except the result itself.
+        /// </summary>
+        public bool EndBattleFromStory(bool victory)
+        {
+            if (!IsBattleActive || CurrentState == CombatState.Victory || CurrentState == CombatState.Defeat) return false;
+            StopStateRoutine();
+            runner?.CancelCurrentPattern(false);
+            abilitySlots.EndSelection();
+            if (victory) encounter.Enemy.ApplyDamage(encounter.Enemy.CurrentHealth);
+            else encounter.Player.ApplyDamage(encounter.Player.CurrentHealth);
+            stateRoutine = StartCoroutine(DebugFinishRoutine(victory));
+            return true;
+        }
+
+        private static string SequenceKey(EnemyAttackSequenceDefinition sequence)
+        {
+            if (sequence == null) return string.Empty;
+            return string.IsNullOrWhiteSpace(sequence.Id) ? sequence.name : sequence.Id;
         }
 
         private static void SetAnimatorBoolIfPresent(Animator animator, string parameterName, bool value)
