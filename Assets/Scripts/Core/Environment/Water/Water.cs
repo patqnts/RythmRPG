@@ -121,7 +121,7 @@ namespace RythmRPG.Core
 
         private struct Ring
         {
-            public Vector4 where;   // x, z, start time, type (0 ring, 1 splash, 2 rain)
+            public Vector4 where;   // x, z, start time, type (0 ring, 1 splash, 2 rain, 3 trail)
             public Vector4 shape;   // start radius, speed, lifetime, strength
         }
 
@@ -142,17 +142,23 @@ namespace RythmRPG.Core
             PushRing(point, radius * 0.4f, 0.45f + radius * 0.6f, 1.0f, Mathf.Clamp(strength * 0.7f, 0.2f, 1f), 0.18f, 0f);
         }
 
+        private static bool IsRain(float type) => type > 1.5f && type < 2.5f;
+
+        /// <summary>A trail ring (merged with the other trail rings into one outline by the Pixel Water shader).</summary>
+        public static void AddTrailRing(Vector3 point, float startRadius, float speed, float lifetime, float strength) =>
+            PushRing(point, startRadius, speed, lifetime, strength, 0f, 3f);
+
         private static void PushRing(Vector3 point, float startRadius, float speed, float lifetime, float strength,
             float delay, float type)
         {
-            bool rain = type > 1.5f;
+            bool rain = IsRain(type);
             if (rain && rainRings >= MaxRainRings) return;
             if (rings.Count >= MaxRings)
             {
                 // Drop the oldest (rain first).
-                int drop = rings.FindIndex(r => r.where.w > 1.5f);
+                int drop = rings.FindIndex(r => IsRain(r.where.w));
                 if (drop < 0) drop = 0;
-                if (rings[drop].where.w > 1.5f) rainRings--;
+                if (IsRain(rings[drop].where.w)) rainRings--;
                 rings.RemoveAt(drop);
             }
             rings.Add(new Ring
@@ -170,7 +176,7 @@ namespace RythmRPG.Core
             {
                 Ring r = rings[i];
                 if (now - r.where.z <= r.shape.z) continue;
-                if (r.where.w > 1.5f) rainRings--;
+                if (IsRain(r.where.w)) rainRings--;
                 rings.RemoveAt(i);
             }
             int count = Mathf.Min(rings.Count, MaxRings);
@@ -199,6 +205,31 @@ namespace RythmRPG.Core
             public float wakeDistance;
             public float trailDistance;
             public int seenFrame;
+            public Renderer[] renderers;
+            public Collider collider;
+            public float nextRendererScan;
+        }
+
+        // Top of the interactor's visible mesh (renderers in it and its children), else its collider, else pivot + radius.
+        private static float TopHeight(GrassInteractor interactor, Contact contact)
+        {
+            float now = Time.unscaledTime;
+            if (contact.renderers == null || now >= contact.nextRendererScan)
+            {
+                contact.renderers = interactor.GetComponentsInChildren<Renderer>();
+                contact.collider = interactor.GetComponent<Collider>();
+                contact.nextRendererScan = now + 2f;   // characters can swap meshes / sprites
+            }
+            float top = float.NegativeInfinity;
+            foreach (Renderer r in contact.renderers)
+            {
+                if (r == null || !r.enabled || !r.gameObject.activeInHierarchy) continue;
+                if (r is ParticleSystemRenderer || r is TrailRenderer || r is LineRenderer) continue;
+                top = Mathf.Max(top, r.bounds.max.y);
+            }
+            if (!float.IsNegativeInfinity(top)) return top;
+            if (contact.collider != null && contact.collider.enabled) return contact.collider.bounds.max.y;
+            return interactor.Position.y + interactor.Radius;
         }
 
         private static readonly RenderTexture[] targets = new RenderTexture[2];
@@ -354,7 +385,9 @@ namespace RythmRPG.Core
                 }
 
                 float radius = interactor.Radius;
-                if (inWater && body != null && moverCount < MaxMovers)
+                // Only something that sticks out of the water makes a trail / contact rings (fully under = nothing).
+                bool crossing = inWater && body != null && TopHeight(interactor, contact) > body.SurfaceHeight + 0.02f;
+                if (crossing && moverCount < MaxMovers)
                 {
                     Vector3 step = feet - contact.last;
                     Vector2 velocity = dt > 0.0001f && step.sqrMagnitude < 9f ? new Vector2(step.x, step.z) / dt : Vector2.zero;
@@ -395,16 +428,17 @@ namespace RythmRPG.Core
                         contact.wakeDistance += distance;
                         contact.trailDistance += distance;
                         // Trail: a ring left behind every short step, spreading out and fading.
-                        if (contact.trailDistance >= body.TrailSpacing && body.TrailStrength > 0f)
+                        if (!crossing) contact.trailDistance = 0f;
+                        if (crossing && contact.trailDistance >= body.TrailSpacing && body.TrailStrength > 0f)
                         {
                             contact.trailDistance = 0f;
-                            AddRing(new Vector3(feet.x, body.SurfaceHeight, feet.z), radius * body.TrailStartSize,
+                            AddTrailRing(new Vector3(feet.x, body.SurfaceHeight, feet.z), radius * body.TrailStartSize,
                                 body.TrailSpreadSpeed + Mathf.Min(speed, 4f) * body.TrailSpeedBoost, body.TrailLifetime,
                                 Mathf.Clamp(body.TrailStrength * (0.6f + speed * 0.15f), 0.05f, 1f));
                         }
                         // A wake ring every short distance, stronger when faster.
                         float spacing = Mathf.Max(0.08f, radius * 0.35f);
-                        if (contact.wakeDistance >= spacing)
+                        if (crossing && contact.wakeDistance >= spacing)
                         {
                             contact.wakeDistance = 0f;
                             AddDrop(new Vector3(feet.x, body.SurfaceHeight, feet.z), radius * 0.55f,
@@ -412,7 +446,7 @@ namespace RythmRPG.Core
                         }
                         contact.nextIdle = now + body.IdleRippleSeconds;
                     }
-                    else if (body.IdleRippleSeconds > 0f && now >= contact.nextIdle)
+                    else if (crossing && body.IdleRippleSeconds > 0f && now >= contact.nextIdle)
                     {
                         contact.nextIdle = now + body.IdleRippleSeconds;
                         AddDrop(new Vector3(feet.x, body.SurfaceHeight, feet.z), radius * 0.5f, 0.25f);

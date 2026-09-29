@@ -48,6 +48,7 @@ Shader "RythmRPG/Pixel Water"
         _RippleRange ("Ripple Reach", Range(0.1, 3)) = 0.7
         _RippleFootprint ("Contact Search Size (x character radius)", Range(0.5, 3)) = 1.5
         _RippleStrength ("Splash Distortion", Range(0, 4)) = 1
+        [Toggle] _TrailMerge ("Trail: Outline Only (merge rings)", Float) = 1
 
         [Header(Light)]
         _SunInfluence ("Sun Colour Influence", Range(0, 1)) = 0.6
@@ -110,6 +111,7 @@ Shader "RythmRPG/Pixel Water"
                 float _RippleRange;
                 float _RippleFootprint;
                 float _RippleStrength;
+                float _TrailMerge;
                 half _SunInfluence;
                 half _ShadowStrength;
                 float _PixelsPerUnit;
@@ -125,7 +127,8 @@ Shader "RythmRPG/Pixel Water"
             float4 _WaterMovers[16];
             float4 _WaterMoverVelocities[16];
             float _WaterMoverCount;
-            // Ring events (WaterSimulation): xy = world XZ, z = start time, w = type (0 ring, 1 splash, 2 rain drop);
+            // Ring events (WaterSimulation): xy = world XZ, z = start time, w = type (0 ring, 1 splash, 2 rain drop,
+            // 3 trail);
             // shape: x = start radius, y = speed, z = lifetime, w = strength.
             float4 _WaterRings[128];
             float4 _WaterRingShapes[128];
@@ -326,6 +329,9 @@ Shader "RythmRPG/Pixel Water"
                 if (_WaterRingCount > 0.5 && _RippleColor.a > 0.0 && depthHere > 0.0 && canMap)
                 {
                     float ringAlpha = 0.0;
+                    float trailAlpha = 0.0;   // trail rings
+                    float trailHidden = 0.0;  // inside another trail ring (merged: only the outer outline shows)
+                    bool mergeTrail = _TrailMerge > 0.5;
                     int ringCount = min((int)_WaterRingCount, 128);
                     [loop] for (int e = 0; e < ringCount; e++)
                     {
@@ -343,7 +349,16 @@ Shader "RythmRPG/Pixel Water"
                         // One screen pixel along the ring's radius, in world units.
                         float2 radial = dist > 1e-4 ? dv / dist : float2(1, 0);
                         float width = 1.0 / max(length(TO_PIXELS(radial)), 1e-4);
-                        if (abs(dist - radius) < width * 0.5) ringAlpha = max(ringAlpha, strength);
+                        bool onRing = abs(dist - radius) < width * 0.5;
+                        if (ev.w > 2.5 && mergeTrail)
+                        {
+                            // Trail ring: keep its line, but hide every other trail line that falls inside it.
+                            if (onRing) trailAlpha = max(trailAlpha, strength);
+                            // (inset by 1.5 pixels, so where two rings meet the outline stays unbroken)
+                            else if (dist < radius - width * 1.5) trailHidden = max(trailHidden, saturate(life * 10.0));
+                            continue;
+                        }
+                        if (onRing) ringAlpha = max(ringAlpha, strength);
 
                         if (ev.w > 0.5 && ev.w < 1.5)
                         {
@@ -367,13 +382,14 @@ Shader "RythmRPG/Pixel Water"
                                 }
                             }
                         }
-                        else if (ev.w > 1.5 && age < 0.07)
+                        else if (ev.w > 1.5 && ev.w < 2.5 && age < 0.07)
                         {
                             // Rain: the drop itself, one pixel, the moment it lands.
                             float2 o = TO_PIXELS(dv);
                             if (max(abs(o.x), abs(o.y)) < 0.5) ringAlpha = max(ringAlpha, 1.0);
                         }
                     }
+                    ringAlpha = max(ringAlpha, trailAlpha * (1.0 - trailHidden));
                     if (ringAlpha > 0.0) color = lerp(color, _RippleColor.rgb, _RippleColor.a * ringAlpha);
                 }
 
