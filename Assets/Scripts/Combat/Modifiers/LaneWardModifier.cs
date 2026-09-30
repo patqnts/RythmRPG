@@ -12,7 +12,7 @@ namespace RythmRPG.Combat
     /// Lanes become invulnerable: Bad / Miss notes in them deal no damage. Lasts a number of enemy turns (counted
     /// when an enemy turn ends). lanes == null means every lane.
     /// </summary>
-    public sealed class LaneWardModifier : ICombatModifierRuntime, IDamageBlockingModifier
+    public sealed class LaneWardModifier : ICombatModifierRuntime, IDamageBlockingModifier, ICombatEffectIcon
     {
         private readonly HashSet<int> lanes;
         private readonly bool blockBad;
@@ -21,6 +21,14 @@ namespace RythmRPG.Combat
         public int EnemyTurnsRemaining { get; private set; }
         public IReadOnlyCollection<int> Lanes => lanes;
         public bool IsExpired => EnemyTurnsRemaining <= 0;
+
+        /// <summary>HUD icon (the ability that cast the ward) and label.</summary>
+        public UnityEngine.Sprite Icon { get; set; }
+        public string Label { get; set; } = "Ward";
+        public string IconLabel => Label;
+        public int IconCount => EnemyTurnsRemaining;
+        public bool IconOnEnemy => false;
+        public bool IconIsDebuff => false;
 
         public LaneWardModifier(HashSet<int> lanes, int enemyTurns, bool blockBad = true, bool blockMiss = true)
         {

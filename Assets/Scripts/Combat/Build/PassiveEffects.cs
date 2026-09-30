@@ -287,7 +287,8 @@ namespace RythmRPG.Combat
                 Strength = LevelValue(bonus, bonusPerLevel, hook.Level),
                 Turns = playerTurns,
                 SourceId = hook.SourceId,
-                Label = hook.Label
+                Label = hook.Label,
+                Icon = hook.Definition != null ? hook.Definition.Icon : null
             }, cast.CastId);
         }
     }
@@ -385,7 +386,8 @@ namespace RythmRPG.Combat
         {
             if (heal.Secondary || heal.Overheal <= 0) return;
             int amount = Mathf.RoundToInt(heal.Overheal * Mathf.Clamp01(LevelValue(fraction, fractionPerLevel, hook.Level)));
-            if (amount > 0) hook.Runtime.Damage.AddShield(amount, enemyTurns, hook.SourceId, heal.RootCauseId, secondary: true, label: hook.Label);
+            if (amount > 0) hook.Runtime.Damage.AddShield(amount, enemyTurns, hook.SourceId, heal.RootCauseId, secondary: true, label: hook.Label,
+                icon: hook.Definition != null ? hook.Definition.Icon : null);
         }
     }
 
@@ -505,7 +507,7 @@ namespace RythmRPG.Combat
             if (!summary.Eligible || summary.Misses > allowedMisses) return;
             if (!hook.Runtime.Events.TryClaim($"steady-guard:{hook.Runtime.EncounterId}:{summary.EnemyTurn}")) return;
             hook.Runtime.Damage.AddShield(LevelValue(shield, shieldPerLevel, hook.Level), enemyTurns, hook.SourceId,
-                "enemy-turn:" + summary.EnemyTurn, secondary: true, label: hook.Label);
+                "enemy-turn:" + summary.EnemyTurn, secondary: true, label: hook.Label, icon: hook.Definition != null ? hook.Definition.Icon : null);
         }
     }
 }

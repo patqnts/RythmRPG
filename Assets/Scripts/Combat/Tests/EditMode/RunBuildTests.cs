@@ -487,6 +487,57 @@ namespace RythmRPG.Combat.Tests
         }
 
         [Test]
+        public void EffectIcons_ShowTheSourceAbility_AndItsTurnsLeft()
+        {
+            var texture = new Texture2D(2, 2);
+            Sprite icon = Sprite.Create(texture, new Rect(0f, 0f, 2f, 2f), new Vector2(0.5f, 0.5f));
+            created.Add(texture);
+            created.Add(icon);
+            var spec = new StatusSpec { statusId = "burn", displayName = "Burn", element = ElementType.Fire, powerScalePerTick = 0.1f, ticks = 3 };
+            AbilityDefinition inferno = Ability("inferno", AbilityRole.Damage, AbilityDelivery.Spell, 0, 100, ElementType.Fire, new ApplyStatusEffect(spec));
+            AbilityDefinition guard = Ability("guard", AbilityRole.Defense, AbilityDelivery.Spell, 0, 40, ElementType.None, new GainShieldEffect(1f, 2));
+            SetField(inferno, "icon", icon);
+            SetField(guard, "icon", icon);
+            var build = new RunBuildState();
+            AbilityInstance burnCast = build.AddAbility(inferno);
+            AbilityInstance guardCast = build.AddAbility(guard);
+            Rig rig = CreateRig(build);
+            Cast(rig, burnCast, AllPerfect());
+            Cast(rig, guardCast, AllPerfect());
+
+            ICombatEffectIcon burn = rig.Modifiers.ActiveModifiers.OfType<StatusInstance>().Single();
+            Assert.That(burn.Icon, Is.SameAs(icon));
+            Assert.IsTrue(burn.IconOnEnemy && burn.IconIsDebuff, "statuses sit on the enemy");
+            Assert.That(burn.IconCount, Is.EqualTo(3));
+            Assert.That(burn.IconLabel, Is.EqualTo("Burn"));
+
+            ICombatEffectIcon shield = rig.Modifiers.Find<ShieldBuff>(ShieldBuff.Key);
+            Assert.That(shield.Icon, Is.SameAs(icon));
+            Assert.IsFalse(shield.IconOnEnemy);
+            Assert.That(shield.IconCount, Is.EqualTo(2));
+            EnemyTurn(rig);
+            Assert.That(shield.IconCount, Is.EqualTo(1), "counts down at enemy turn end");
+            Assert.That(burn.IconCount, Is.EqualTo(2), "ticked once at enemy turn start");
+        }
+
+        [Test]
+        public void LoadoutProblem_KeepsAnAbilityAndA0MpActionEquipped()
+        {
+            var build = new RunBuildState();
+            build.AddAbility(Ability("strike", AbilityRole.Damage, AbilityDelivery.Melee, 0, 50));
+            build.AddAbility(Ability("bolt", AbilityRole.Damage, AbilityDelivery.Spell, 10, 90));
+            Assert.IsNull(build.LoadoutProblem());
+            Assert.IsTrue(build.Equip(build.GetSlot(1), 0), "slots swap");
+            Assert.That(build.GetSlot(0).Definition.Id, Is.EqualTo("bolt"));
+            Assert.IsNull(build.LoadoutProblem(), "order does not matter");
+            build.Unequip(1);
+            Assert.That(build.LoadoutProblem(), Does.Contain("0 MP"));
+            build.Unequip(0);
+            Assert.That(build.LoadoutProblem(), Does.Contain("at least one"));
+            Assert.That(build.Reserve.Count(), Is.EqualTo(2), "unequipped abilities stay owned");
+        }
+
+        [Test]
         public void NextAttackBonus_IsReservedAtCommit_AndConsumedOnce()
         {
             AbilityDefinition focus = Ability("focus", AbilityRole.Buff, AbilityDelivery.Technique, 0, 0, ElementType.None,

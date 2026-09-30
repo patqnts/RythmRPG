@@ -13,6 +13,20 @@ namespace RythmRPG.Combat
         DamageReduction
     }
 
+    /// <summary>
+    /// Something in effect that the HUD shows as an icon with a number (turns left, charges...): buffs, statuses, wards.
+    /// </summary>
+    public interface ICombatEffectIcon
+    {
+        Sprite Icon { get; }
+        string IconLabel { get; }
+        /// <summary>Number drawn on the icon (turns remaining). 0 or less = no number.</summary>
+        int IconCount { get; }
+        /// <summary>True for effects that sit on the enemy (statuses); false for the player's buffs.</summary>
+        bool IconOnEnemy { get; }
+        bool IconIsDebuff { get; }
+    }
+
     /// <summary>A buff about to be applied. Passives (buff mastery) may change its named parameters before it lands.</summary>
     public sealed class BuffSpec
     {
@@ -26,6 +40,8 @@ namespace RythmRPG.Combat
         public int PerTurnCap;
         public string SourceId;
         public string Label;
+        /// <summary>Icon of the ability / passive that applied it (HUD).</summary>
+        public Sprite Icon;
     }
 
     /// <summary>Serialized status application data (content): e.g. Burn = fire damage each enemy turn start.</summary>
@@ -45,7 +61,7 @@ namespace RythmRPG.Combat
     }
 
     /// <summary>Base for build buffs: counts down at one declared boundary and reports its state for the dev panel.</summary>
-    public abstract class TimedBuff : ICombatModifierRuntime, ITurnBoundaryModifier
+    public abstract class TimedBuff : ICombatModifierRuntime, ITurnBoundaryModifier, ICombatEffectIcon
     {
         protected TimedBuff(string stackKey, string label, int turns, TurnBoundary countdownAt)
         {
@@ -75,6 +91,13 @@ namespace RythmRPG.Combat
         }
 
         public void Refresh(int turns) => TurnsRemaining = Mathf.Max(TurnsRemaining, turns);
+
+        /// <summary>Icon of the ability / passive that applied it (the latest one for shared effects like the shield).</summary>
+        public Sprite Icon { get; set; }
+        public virtual string IconLabel => Label;
+        public virtual int IconCount => TurnsRemaining;
+        public virtual bool IconOnEnemy => false;
+        public virtual bool IconIsDebuff => false;
         public void Expire() => TurnsRemaining = 0;
         public abstract string Describe();
         public virtual void OnEnemyTurnStarted() { }
@@ -241,5 +264,8 @@ namespace RythmRPG.Combat
 
         public override string Describe() =>
             $"{Label} x{Stacks}: {DamagePerTick * Stacks} {BuildTagUtility.ElementName(Spec.element)} at {Spec.tickAt} ({TurnsRemaining} ticks left)";
+
+        public override bool IconOnEnemy => true;
+        public override bool IconIsDebuff => true;
     }
 }

@@ -26,7 +26,8 @@ namespace RythmRPG.Combat
             int raw = context.ScaledPower(powerScale);
             int amount = Mathf.RoundToInt(raw * context.Multiplier(EffectKind.Shield, ElementType.None));
             context.Cast?.Attribute(EffectKind.Shield, ElementType.None, raw, amount);
-            int added = context.Build.Damage.AddShield(amount, enemyTurns, context.Cast?.CastId ?? "cast", context.Cast?.CastId, secondary: false);
+            int added = context.Build.Damage.AddShield(amount, enemyTurns, context.Cast?.CastId ?? "cast", context.Cast?.CastId, secondary: false,
+                icon: context.Ability != null ? context.Ability.Icon : null);
             if (context.Cast != null) context.Cast.ShieldGained += added;
         }
 
@@ -75,7 +76,8 @@ namespace RythmRPG.Combat
                 Turns = turns,
                 PerTurnCap = reflectCapPerTurn,
                 SourceId = context.Cast?.AbilityInstanceId ?? context.Ability?.Id ?? "ability",
-                Label = context.Ability != null ? context.Ability.DisplayName : kind.ToString()
+                Label = context.Ability != null ? context.Ability.DisplayName : kind.ToString(),
+                Icon = context.Ability != null ? context.Ability.Icon : null
             };
             context.Build.ApplyBuff(spec, context.Cast?.CastId);
         }
@@ -110,7 +112,7 @@ namespace RythmRPG.Combat
             if (context.Build == null || spec == null) return;
             if (context.Performance.AverageWeight < minimumPerformance) return;
             int perTick = context.ScaledPower(spec.powerScalePerTick);
-            context.Build.ApplyStatus(spec, perTick, context.Cast?.CastId);
+            context.Build.ApplyStatus(spec, perTick, context.Cast?.CastId, context.Ability != null ? context.Ability.Icon : null);
         }
 
         public override string Describe(AbilityDefinition ability) =>

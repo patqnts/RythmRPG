@@ -91,11 +91,40 @@ Also:
 - `Scripts/Editor/BuildSampleExporter.cs`:
   - *Tools > Rythm RPG > Combat > Build > Export Sample Build Content* saves the samples as editable assets in `Resources/Combat/Build/Samples`. Exported assets win over the code definitions with the same ids.
   - *Create Build Balance Rules Asset* creates the rules asset.
-- `Combat/Tests/EditMode/RunBuildTests.cs`: 27 tests covering the acceptance criteria.
+- `Combat/Tests/EditMode/RunBuildTests.cs`: 29 tests covering the acceptance criteria, effect icons and loadout validation.
 
 ### Reward selection screen
 
 `Build/UI/`: `RewardSelectionScreen` (code-generated uGUI + TMP, overlay canvas above the result screen, same pattern as `CombatResultScreen`), `RewardCardView`, `RewardChoiceButton` (mouse), `RewardSelectionStyle` (texts, colours per reward kind, sizes, motion, keys, sounds; font falls back to the result style's). `CombatController.TerminalRoutine` shows it after a victory when a run build is active (`showRewardScreen`, optional scene/prefab screen). Menus: *Tools > Rythm RPG > Combat > Build > Create Reward Selection Style Asset* / *Create Reward Selection Screen In Scene* (editable copy the controller will find).
+
+### Build HUD and loadout panel
+
+- **Passive column** (`Build/UI/PassiveIconColumnView`): every owned passive as a framed icon down the left side during battle, in acquisition order. The level shows in the corner (I, II, III). Inactive passives (no compatible ability equipped) are dimmed. A tile flashes when its passive triggers: any combat event it sources, or a modifier it added to a cast.
+- **In-effect icons** (`Build/UI/CombatEffectIconsView`):
+  - Above the player's health bar: shield, buffs, lane wards and counter charges.
+  - Under the enemy's bar: statuses such as Burn.
+  - Each icon is the ability or passive that applied the effect, with its turns left in the corner. The number turns red on the last turn. Anything in the `CombatModifierSystem` that implements `ICombatEffectIcon` shows up.
+- **Shield barrier** (`ResourceBarView.SetBarrier`): the shield is a white segment right after the health fill, like League of Legends. When health + shield is more than max HP, the whole bar rescales so both fit. The number reads `80/100 +25`. Bars placed in a scene before this change get the barrier part automatically.
+- **Loadout panel** (`Build/UI/LoadoutPanel`): toggle it with **Tab** (keyboard) or **Select / View** (gamepad). The key is rebindable as *Loadout* on the Controls page.
+  - **Outside battle** you can rearrange:
+    - Arrows / WASD / d-pad / stick move the cursor.
+    - Enter / South picks an ability, then places it on a slot. Slots swap; a reserve ability replaces the slot's occupant, which goes to reserve.
+    - X / West sends a slot to reserve.
+    - Backspace / East cancels a pick or closes the panel.
+    - A change that would leave no ability, or no 0 MP ability, is refused and undone (`RunBuildState.LoadoutProblem`).
+    - Movement and Interact are held while it is open (`GameInput.BlockGameplay`).
+  - **During ability selection** it is view only. It shows cooldowns and whether you can afford each ability. It only uses keyboard arrows and the right stick, so it never takes input the lanes use. It closes itself when you choose an ability.
+  - It is created automatically in every scene. A panel placed in a scene takes over.
+- **Style**: `BuildHudStyle` (*Create > Rythm RPG > Combat > Build > Build HUD Style*, saved as `Resources/Combat/UI/BuildHudStyle`). Every tile look (column, effect row, panel) has these settings:
+  - **Frame sprite**: 9-sliced when the sprite has borders. When empty, the frame is a plain colour.
+  - **Frame colour** and **frame thickness**.
+  - **Frame on top**: for ornate frames with a transparent centre.
+  - **Background sprite** and **background colour**.
+  - **Icon inset**.
+  - **Size**.
+
+  The style also sets the column's position, spacing and maximum height, the category colours, the trigger flash, the effect-row offsets and colours, and the panel's texts, colours and keys.
+- **Icons**: `PassiveDefinition` has a new `icon` field. With no icon, the tile shows the passive's first letter on its category colour. Buffs, statuses, shields and wards now remember the icon of the ability or passive that applied them. The reward cards use passive icons too.
 
 ### Play mode without domain reload
 
@@ -141,6 +170,10 @@ All changes are additive. Serialized enum values, asset fields and numbers are u
   - `OfType` / `Find` / `Remove` / `NotifyChanged`.
 - **`PlayerCombatant`:** `BaseMaxHealth` + `SetMaxHealthOverride` (build max-HP changes).
 - **`EnemyDefinition` / `EnemyCombatant`:** `responses` profile, `AffinityFor`, runtime `SetResponseOverride`.
+- **`GameInput`:** `Loadout` action (Tab / gamepad Select) with a Controls row, `LoadoutPressed`, and `BlockGameplay` / `UnblockGameplay`. While blocked, `MoveValue` / `InteractPressed` / `InteractHeld` read as idle.
+- **`CombatUIController`:** creates and binds the passive column and both effect rows, and draws the shield as a barrier on the player's health bar. It has new optional scene slots for all three.
+- **`ResourceBarView` / `CombatHudStyle`:** barrier segment (`SetBarrier`, `Barrier`), plus `barrier` colour / `barrierSprite` on each bar style.
+- **`LaneWardModifier`:** implements `ICombatEffectIcon`. Ward effects set the ability's icon and name.
 - **`CombatReport`:** build attribution fields (contributions, reflected, status, resisted, absorbed, prevented, overheal, MP restored, unused benefits).
 
 ## Resolution order (as implemented)
@@ -173,9 +206,10 @@ All changes are additive. Serialized enum values, asset fields and numbers are u
 
 ## Not done yet / open
 
+- The HUD, barrier and loadout panel compile against stubs but have not been seen on screen yet. Check the layout in play mode and tune `BuildHudStyle`.
 - The ability icons don't show mana cost. The panel shows the effective cost, and usability dimming uses it.
 - The result screen doesn't show the new build attribution rows yet. The data is on `CombatReport`.
 - `RunBuild.Current` is held in memory for the session. The panel saves it to PlayerPrefs. It is not wired into a game save.
 - Only one sample status (Burn). Interrupt / control effects and boss control limits (spec 9.1, 9.2) have data hooks (status responses) but no control effect yet.
-- None of this has been run in Unity yet. Everything compiles against Unity API stubs, and the 27 new EditMode tests pass there, together with the existing `AbilityResolutionTests`. Run the EditMode tests in Unity and a play session per build.
+- None of this has been run in Unity yet. Everything compiles against Unity API stubs, and the 29 new EditMode tests pass there, together with the existing `AbilityResolutionTests`. Run the EditMode tests in Unity and a play session per build.
 - The numbers are placeholders. Evaluate per the spec's §13 (mana economy, turns survived, passive contribution) after playtesting.

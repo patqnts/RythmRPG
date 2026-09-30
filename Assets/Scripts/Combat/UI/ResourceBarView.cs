@@ -36,6 +36,13 @@ namespace RythmRPG.Combat
         [SerializeField] private Color loseTrailColor = new(1f, 0.93f, 0.62f);
         [SerializeField] private Color gainTrailColor = new(0.75f, 1f, 0.8f);
 
+        [Header("Barrier (shield)")]
+        [Tooltip("White segment after the fill showing a shield. Created automatically next to the fill when empty.")]
+        [SerializeField] private RectTransform barrier;
+        [SerializeField] private Color barrierColor = new(1f, 1f, 1f, 0.95f);
+        [Tooltip("Appended to the value text while a barrier is up. {0} = barrier amount. Empty = nothing.")]
+        [SerializeField] private string barrierValueFormat = " <color=#FFFFFFCC>+{0}</color>";
+
         [Header("Text")]
         [Tooltip("{0} = current, {1} = maximum.")]
         [SerializeField] private string valueFormat = "{0}/{1}";
@@ -49,10 +56,22 @@ namespace RythmRPG.Combat
         public int Current { get; private set; }
         public int Maximum { get; private set; } = 1;
         public float Normalized => Maximum <= 0 ? 0f : Mathf.Clamp01((float)Current / Maximum);
+        /// <summary>Barrier (shield) amount shown after the fill.</summary>
+        public int Barrier => barrierTarget;
+
+        /// <summary>
+        /// Width of the bar per point when a barrier pushes health + barrier past the maximum: the bar then shows
+        /// max(maximum, current + barrier) so both fit (League of Legends style). 1 when there is room.
+        /// </summary>
+        private float DisplayScale => Maximum <= 0 ? 1f : Maximum / Mathf.Max(Maximum, Current + barrierShown);
 
         private Graphic fillGraphic;
         private Graphic trailGraphic;
+        private Graphic barrierGraphic;
         private bool initialized;
+        private int barrierTarget;
+        private float barrierShown;
+        private Tween barrierTween;
 
         // PrimeTween-driven values. fillValue/trailValue/countValue are pushed to the visuals from each
         // tween's onValueChange, so nothing needs to be re-evaluated every frame.
@@ -157,14 +176,88 @@ namespace RythmRPG.Combat
         private void SetFill(float value)
         {
             fillValue = value;
-            SetAmount(fill, fillValue);
-            if (trailValue < fillValue) SetTrail(fillValue);
+            if (trailValue < fillValue) trailValue = fillValue;
+            ApplyGeometry();
         }
 
         private void SetTrail(float value)
         {
             trailValue = Mathf.Max(fillValue, value);
-            SetAmount(trail, trailValue);
+            ApplyGeometry();
+        }
+
+        /// <summary>
+        /// Shows a barrier (shield) segment after the fill. The segment eases to the new size; a barrier that would
+        /// overflow the bar rescales health and barrier together.
+        /// </summary>
+        public void SetBarrier(int amount, bool animate = true)
+        {
+            EnsureBarrierPart();
+            amount = Mathf.Max(0, amount);
+            if (amount == barrierTarget && initialized) return;
+            barrierTarget = amount;
+            barrierTween.Stop();
+            if (!animate || !isActiveAndEnabled || !initialized)
+            {
+                SetBarrierShown(amount);
+                return;
+            }
+            float seconds = amount > barrierShown ? motion.gainSeconds * 0.6f : motion.lossSeconds * 1.5f;
+            barrierTween = Tween.Custom(this, barrierShown, amount, Mathf.Max(0.01f, seconds), (view, v) => view.SetBarrierShown(v), Ease.OutCubic);
+        }
+
+        private void SetBarrierShown(float value)
+        {
+            barrierShown = Mathf.Max(0f, value);
+            ApplyGeometry();
+            lastShownNumber = int.MinValue;
+            SetCount(countValue);
+        }
+
+        private void ApplyGeometry()
+        {
+            float scale = DisplayScale;
+            SetAmount(fill, fillValue * scale);
+            SetAmount(trail, trailValue * scale);
+            if (barrier == null) return;
+            bool visible = barrierShown > 0.5f && Maximum > 0;
+            if (barrierGraphic != null) barrierGraphic.enabled = visible;
+            if (!visible) return;
+            float start = Mathf.Clamp01(fillValue * scale);
+            float end = Mathf.Clamp01((fillValue + barrierShown / Maximum) * scale);
+            barrier.anchorMin = new Vector2(start, barrier.anchorMin.y);
+            barrier.anchorMax = new Vector2(Mathf.Max(start, end), barrier.anchorMax.y);
+        }
+
+        /// <summary>Scene / prefab bars made before barriers existed get a barrier part next to their fill.</summary>
+        private void EnsureBarrierPart()
+        {
+            if (barrier == null && fill != null && fill.parent != null)
+            {
+                var go = new GameObject("Barrier", typeof(RectTransform));
+                go.layer = fill.gameObject.layer;
+                barrier = (RectTransform)go.transform;
+                barrier.SetParent(fill.parent, false);
+                barrier.SetSiblingIndex(fill.GetSiblingIndex() + 1);
+                barrier.anchorMin = new Vector2(0f, fill.anchorMin.y);
+                barrier.anchorMax = new Vector2(0f, fill.anchorMax.y);
+                barrier.pivot = new Vector2(0f, 0.5f);
+                barrier.offsetMin = new Vector2(0f, fill.offsetMin.y);
+                barrier.offsetMax = new Vector2(0f, fill.offsetMax.y);
+                Image image = go.AddComponent<Image>();
+                image.raycastTarget = false;
+                if (fill.TryGetComponent(out Image fillImage) && fillImage.sprite != null && fillImage.type != Image.Type.Filled)
+                    SetSprite(image, fillImage.sprite);
+            }
+            if (barrier != null && barrierGraphic == null)
+            {
+                barrierGraphic = barrier.GetComponent<Graphic>();
+                if (barrierGraphic != null)
+                {
+                    barrierGraphic.color = barrierColor;
+                    barrierGraphic.enabled = barrierShown > 0.5f;
+                }
+            }
         }
 
         private void SetCount(float value)
@@ -173,13 +266,14 @@ namespace RythmRPG.Combat
             int number = Mathf.RoundToInt(value);
             if (valueLabel == null || number == lastShownNumber) return;
             lastShownNumber = number;
-            valueLabel.text = string.Format(valueFormat, number, Maximum);
+            string text = string.Format(valueFormat, number, Maximum);
+            if (barrierTarget > 0 && !string.IsNullOrEmpty(barrierValueFormat)) text += string.Format(barrierValueFormat, barrierTarget);
+            valueLabel.text = text;
         }
 
         private void PushValuesToVisuals()
         {
-            SetAmount(fill, fillValue);
-            SetAmount(trail, trailValue);
+            ApplyGeometry();
             lastShownNumber = int.MinValue;
             SetCount(countValue);
             if (fillGraphic != null) fillGraphic.color = fillColor;
@@ -197,6 +291,11 @@ namespace RythmRPG.Combat
             gainTrailColor = style.gainTrail;
             if (fillGraphic is Image fillImage && style.fillSprite != null) SetSprite(fillImage, style.fillSprite);
             if (trailGraphic is Image trailImage && style.fillSprite != null) SetSprite(trailImage, style.fillSprite);
+            barrierColor = style.barrier;
+            EnsureBarrierPart();
+            if (barrierGraphic != null) barrierGraphic.color = barrierColor;
+            Sprite barrierSprite = style.barrierSprite != null ? style.barrierSprite : style.fillSprite;
+            if (barrierGraphic is Image barrierImage && barrierSprite != null) SetSprite(barrierImage, barrierSprite);
             if (valueLabel != null) valueLabel.enabled = style.showNumbers;
             Title = style.title;
             PushValuesToVisuals();
@@ -358,6 +457,10 @@ namespace RythmRPG.Combat
             Stretch(trailImage.rectTransform, 0f);
             Image fillImage = NewImage("Fill", background.rectTransform, style.fill, style.fillSprite);
             Stretch(fillImage.rectTransform, 0f);
+            Image barrierImage = NewImage("Barrier", background.rectTransform, style.barrier,
+                style.barrierSprite != null ? style.barrierSprite : style.fillSprite);
+            Stretch(barrierImage.rectTransform, 0f);
+            barrierImage.enabled = false;
             // Child of the fill so only the remaining bar flashes.
             Image flashImage = NewImage("Flash", fillImage.rectTransform, new Color(1f, 1f, 1f, 0f), null);
             Stretch(flashImage.rectTransform, 0f);
@@ -384,6 +487,8 @@ namespace RythmRPG.Combat
             titleRect.sizeDelta = new Vector2(0f, fontSize + 8f);
 
             view.AssignParts(bodyRoot, fillImage.rectTransform, trailImage.rectTransform, flashImage, value, title);
+            view.barrier = barrierImage.rectTransform;
+            view.barrierGraphic = null;
             view.ApplyStyle(style);
             if (hud != null) view.Motion = hud.Motion.Clone();
             return view;

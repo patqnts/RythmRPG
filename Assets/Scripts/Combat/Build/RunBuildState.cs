@@ -198,6 +198,17 @@ namespace RythmRPG.Combat
         /// <summary>At least one equipped ability costs no mana (the affordable basic action rule).</summary>
         public bool HasAffordableBasicAction() => EquippedQuotes().Any(quote => quote.ManaCost == 0);
 
+        /// <summary>
+        /// Why this loadout can't be taken into battle, or null when it can: at least one ability and one 0 MP action
+        /// must stay equipped. The loadout panel refuses (and undoes) changes that break this.
+        /// </summary>
+        public string LoadoutProblem()
+        {
+            if (!Equipped.Any()) return "Keep at least one ability equipped.";
+            if (!HasAffordableBasicAction()) return "Keep a 0 MP ability equipped: it is your basic action.";
+            return null;
+        }
+
         // ---------- Offers ----------
 
         public RewardOfferData FindOffer(string sourceKey) => offers.FirstOrDefault(offer => offer.sourceKey == sourceKey);

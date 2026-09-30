@@ -270,7 +270,11 @@ namespace RythmRPG.Combat
                 LaneScope.SpecificLanes => new HashSet<int>(laneIds),
                 _ => context.LaneId >= 0 ? new HashSet<int> { context.LaneId } : null
             };
-            context.Modifiers.Add(new LaneWardModifier(set, turns, blockBad, blockMiss));
+            context.Modifiers.Add(new LaneWardModifier(set, turns, blockBad, blockMiss)
+            {
+                Icon = context.Ability != null ? context.Ability.Icon : null,
+                Label = context.Ability != null ? context.Ability.DisplayName : "Ward"
+            });
             string where = set == null ? "ALL LANES" : "LANE " + string.Join(",", set);
             context.ShowText?.Invoke("WARD " + where + " x" + turns, at, new Color(0.6f, 0.8f, 1f));
         }

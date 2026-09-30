@@ -69,6 +69,8 @@ namespace RythmRPG.Combat
     {
         [SerializeField] private string id = "passive";
         [SerializeField] private string displayName = "Passive";
+        [Tooltip("Shown in the passive column, the loadout panel and reward cards. Empty = the name's first letter on a category-coloured tile.")]
+        [SerializeField] private Sprite icon;
         [SerializeField, TextArea(2, 4)] private string description = string.Empty;
         [SerializeField] private PassiveCategory category = PassiveCategory.DamageEnhancement;
         [SerializeField, Min(1)] private int maxLevel = 3;
@@ -88,6 +90,7 @@ namespace RythmRPG.Combat
 
         public string Id => id;
         public string DisplayName => displayName;
+        public Sprite Icon => icon;
         public string Description => description;
         public PassiveCategory Category => category;
         public int MaxLevel => Mathf.Max(1, maxLevel);
@@ -122,6 +125,7 @@ namespace RythmRPG.Combat
             }
 
             public Builder Describe(string text) { definition.description = text; return this; }
+            public Builder Icon(Sprite sprite) { definition.icon = sprite; return this; }
             public Builder Requires(AbilityRequirement requirement) { definition.requirement = requirement; return this; }
             public Builder Exclusive(string group) { definition.exclusivityGroup = group; return this; }
             public Builder Stacking(string group, float cap) { definition.stackingGroup = group; definition.stackingCap = cap; return this; }

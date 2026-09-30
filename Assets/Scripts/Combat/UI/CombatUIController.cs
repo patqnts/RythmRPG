@@ -43,6 +43,18 @@ namespace RythmRPG.Combat
         [Tooltip("Empty = created from the style.")]
         [SerializeField] private PowerGaugeView powerGauge;
 
+        [Header("Build HUD (passives, in-effect icons, shield barrier)")]
+        [Tooltip("Empty = Resources/Combat/UI/BuildHudStyle (or built-in defaults).")]
+        [SerializeField] private BuildHudStyle buildHudStyle;
+        [Tooltip("Passive icons down the left side. Empty = created from the style.")]
+        [SerializeField] private PassiveIconColumnView passiveColumn;
+        [Tooltip("In-effect icons above the player's health bar. Empty = created from the style.")]
+        [SerializeField] private CombatEffectIconsView playerEffects;
+        [Tooltip("Enemy statuses under the enemy's health bar. Empty = created from the style.")]
+        [SerializeField] private CombatEffectIconsView enemyEffects;
+        [Tooltip("Show the shield as a white barrier segment on the player's health bar.")]
+        [SerializeField] private bool showShieldBarrier = true;
+
         [Header("Old number labels (optional)")]
         [FormerlySerializedAs("PlayerHealth"), SerializeField] private TMP_Text playerHealth;
         [FormerlySerializedAs("EnemyHealth"), SerializeField] private TMP_Text enemyHealth;
@@ -62,6 +74,7 @@ namespace RythmRPG.Combat
         private RhythmPatternRunner gaugeRunner;
         private RhythmAbilitySystem gaugeAbilities;
         private AbilityOutcomeProfile pendingOutcome;
+        private CombatModifierSystem boundModifiers;
 
         private struct SlideTarget
         {
@@ -122,6 +135,7 @@ namespace RythmRPG.Combat
             EnsureBars();
             EnsureComboStreak();
             EnsurePowerGauge();
+            EnsureBuildHud();
             RegisterAssignedBars();
             Unbind();
             controller = combatController;
@@ -142,6 +156,7 @@ namespace RythmRPG.Combat
                 player.ManaChanged += HandlePlayerMana;
             }
             if (enemy != null) enemy.HealthChanged += HandleEnemyHealth;
+            BindBuildHud();
             if (enemyHealthBar != null)
                 enemyHealthBar.Title = showEnemyName && enemy != null
                     ? enemy.Definition != null ? enemy.Definition.DisplayName : enemy.name
@@ -162,6 +177,7 @@ namespace RythmRPG.Combat
                 SetPlayerMana(player.CurrentMana, player.MaxMana, animate);
             }
             if (enemy != null) SetEnemyHealth(enemy.CurrentHealth, enemy.MaxHealth, animate);
+            UpdateBarrier(animate);
             if (controller != null) HandleStateChanged(controller.CurrentState);
         }
 
@@ -205,6 +221,7 @@ namespace RythmRPG.Combat
         private void Unbind()
         {
             UnsubscribePowerGauge();
+            UnbindBuildHud();
             if (controller != null)
             {
                 controller.StateChanged -= HandleStateChanged;
@@ -244,6 +261,69 @@ namespace RythmRPG.Combat
             if (root == null) return;
             if (powerGaugeStyle == null) powerGaugeStyle = PowerGaugeStyle.LoadOrDefault();
             powerGauge = PowerGaugeView.CreateTemplate(root, powerGaugeStyle, Style);
+        }
+
+        // ---------- build HUD ----------
+
+        private BuildHudStyle BuildStyle
+        {
+            get
+            {
+                if (buildHudStyle == null) buildHudStyle = BuildHudStyle.LoadOrDefault();
+                return buildHudStyle;
+            }
+        }
+
+        private void EnsureBuildHud()
+        {
+            BuildHudStyle style = BuildStyle;
+            if (passiveColumn == null && style.ShowPassiveColumn)
+            {
+                RectTransform root = EnsureHudRoot();
+                if (root != null)
+                {
+                    passiveColumn = PassiveIconColumnView.Create(root, buildHudStyle);
+                    RegisterSlide(passiveColumn.gameObject, style.PassiveIntroOffset);
+                }
+            }
+            // The effect rows are children of their bars, so they move and fade with them.
+            if (playerEffects == null && playerHealthBar != null && style.ShowEffectIcons)
+                playerEffects = CombatEffectIconsView.Create((RectTransform)playerHealthBar.transform, false, buildHudStyle);
+            if (enemyEffects == null && enemyHealthBar != null && style.ShowEffectIcons && style.ShowEnemyEffects)
+                enemyEffects = CombatEffectIconsView.Create((RectTransform)enemyHealthBar.transform, true, buildHudStyle);
+        }
+
+        private void BindBuildHud()
+        {
+            UnbindBuildHud();
+            CombatModifierSystem modifiers = controller != null ? controller.Modifiers : null;
+            CombatBuildRuntime runtime = controller != null ? controller.BuildRuntime : null;
+            // The run build drives the passive column; the encounter runtime says which passives are live this fight.
+            RunBuildState build = runtime != null && runtime.Build != null ? runtime.Build : RunBuild.Current;
+            passiveColumn?.Bind(runtime, build);
+            playerEffects?.Bind(modifiers, runtime);
+            enemyEffects?.Bind(modifiers, runtime);
+            boundModifiers = modifiers;
+            if (boundModifiers != null) boundModifiers.Changed += HandleModifiersChanged;
+        }
+
+        private void UnbindBuildHud()
+        {
+            if (boundModifiers != null) boundModifiers.Changed -= HandleModifiersChanged;
+            boundModifiers = null;
+            passiveColumn?.Unbind();
+            playerEffects?.Unbind();
+            enemyEffects?.Unbind();
+        }
+
+        private void HandleModifiersChanged() => UpdateBarrier(true);
+
+        // Shield capacity as a white segment after the health fill (League-style barrier).
+        private void UpdateBarrier(bool animate)
+        {
+            if (playerHealthBar == null) return;
+            ShieldBuff shield = showShieldBarrier && boundModifiers != null ? boundModifiers.Find<ShieldBuff>(ShieldBuff.Key) : null;
+            playerHealthBar.SetBarrier(shield != null ? shield.Capacity : 0, animate);
         }
 
         // ---------- power gauge ----------
@@ -499,6 +579,7 @@ namespace RythmRPG.Combat
                 player.ManaChanged += HandlePlayerMana;
                 enemy.HealthChanged += HandleEnemyHealth;
                 SubscribePowerGauge();
+                BindBuildHud();
             }
             Refresh(false);
             // A slide cut short by the object being switched off would leave the bars half faded.

@@ -137,7 +137,7 @@ namespace RythmRPG.Combat
         }
 
         /// <summary>Adds shield capacity (all sources share one capped shield). Returns the capacity actually added.</summary>
-        public int AddShield(int amount, int enemyTurns, string sourceId, string rootId, bool secondary, string label = null)
+        public int AddShield(int amount, int enemyTurns, string sourceId, string rootId, bool secondary, string label = null, Sprite icon = null)
         {
             PlayerCombatant player = runtime.Player;
             CombatModifierSystem modifiers = runtime.Modifiers;
@@ -157,6 +157,7 @@ namespace RythmRPG.Combat
                 added = shield.Add(amount, enemyTurns, cap);
                 modifiers.NotifyChanged();
             }
+            if (icon != null) shield.Icon = icon;
             runtime.Record(new CombatEvent
             {
                 Kind = CombatEventKind.ShieldGained, SourceId = sourceId, RootCauseId = rootId, Secondary = secondary,

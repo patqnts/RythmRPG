@@ -183,7 +183,7 @@ namespace RythmRPG.Combat
         {
             RewardKind.NewAbility => registry.Ability(option.contentId)?.Icon,
             RewardKind.AbilityUpgrade => build.FindInstance(option.targetInstanceId)?.Definition?.Icon,
-            _ => null
+            _ => registry.Passive(option.contentId) is PassiveDefinition passive && passive != null ? passive.Icon : null
         };
 
         private string GlyphFor(RewardOptionData option)

@@ -26,6 +26,11 @@ namespace RythmRPG.Combat
         public Sprite frameSprite;
         [Min(0f)] public float frameThickness = 3f;
         public bool showNumbers = true;
+        [Tooltip("Barrier (shield) segment drawn right after the fill, like a League of Legends shield. When health + barrier " +
+                 "exceed the maximum, the bar rescales so both fit.")]
+        public Color barrier = new(1f, 1f, 1f, 0.95f);
+        [Tooltip("Optional barrier sprite. Empty = the fill sprite (or a flat rectangle).")]
+        public Sprite barrierSprite;
     }
 
     /// <summary>Where a bar sits on the 1920x1080 reference canvas.</summary>

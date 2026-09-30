@@ -407,16 +407,20 @@ namespace RythmRPG.Combat
             {
                 case BuffKind.NextAttackBonus:
                     NextAttackBonusBuff pending = Modifiers.Find<NextAttackBonusBuff>("next-attack:" + spec.SourceId);
-                    if (pending != null) pending.Replace(spec);
-                    else Modifiers.Add(new NextAttackBonusBuff(spec));
+                    if (pending != null)
+                    {
+                        pending.Replace(spec);
+                        if (spec.Icon != null) pending.Icon = spec.Icon;
+                    }
+                    else Modifiers.Add(new NextAttackBonusBuff(spec) { Icon = spec.Icon });
                     break;
                 case BuffKind.Reflect:
                     Modifiers.Find<ReflectBuff>("reflect:" + spec.SourceId)?.Expire();
-                    Modifiers.Add(new ReflectBuff(spec));
+                    Modifiers.Add(new ReflectBuff(spec) { Icon = spec.Icon });
                     break;
                 case BuffKind.DamageReduction:
                     Modifiers.Find<DamageReductionBuff>("reduction:" + spec.SourceId)?.Expire();
-                    Modifiers.Add(new DamageReductionBuff(spec));
+                    Modifiers.Add(new DamageReductionBuff(spec) { Icon = spec.Icon });
                     break;
             }
             Modifiers.NotifyChanged();
@@ -429,7 +433,7 @@ namespace RythmRPG.Combat
             }, new Color(1f, 0.9f, 0.5f));
         }
 
-        public void ApplyStatus(StatusSpec spec, int damagePerTick, string rootId)
+        public void ApplyStatus(StatusSpec spec, int damagePerTick, string rootId, Sprite icon = null)
         {
             if (spec == null || Modifiers == null || Enemy == null || CombatOver) return;
             StatusResponse response = Enemy.Responses?.Status(spec.statusId);
@@ -452,8 +456,12 @@ namespace RythmRPG.Combat
             }
             ticks = Mathf.Max(1, ticks);
             StatusInstance existing = Modifiers.Find<StatusInstance>("status:" + spec.statusId);
-            if (existing != null) existing.Reapply(damagePerTick, ticks, rootId);
-            else Modifiers.Add(new StatusInstance(this, spec, damagePerTick, ticks, maxStacks, rootId));
+            if (existing != null)
+            {
+                existing.Reapply(damagePerTick, ticks, rootId);
+                if (icon != null) existing.Icon = icon;
+            }
+            else Modifiers.Add(new StatusInstance(this, spec, damagePerTick, ticks, maxStacks, rootId) { Icon = icon });
             Modifiers.NotifyChanged();
             Record(new CombatEvent
             {

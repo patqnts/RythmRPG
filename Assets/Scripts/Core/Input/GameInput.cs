@@ -12,7 +12,7 @@ namespace RythmRPG.Core
     /// <item><b>Combat</b>: four lane keys, Lane1..Lane4 (keyboard A S J K by default). A chart plays with 1-4 lanes;
     /// <see cref="LaneKeySlot"/> picks which of the four keys each active lane uses.</item>
     /// <item><b>Explore</b>: Move (WASD / arrows / left stick / d-pad) and Interact (Enter / south button).</item>
-    /// <item><b>System</b>: Pause (Esc / Start). Always enabled.</item>
+    /// <item><b>System</b>: Pause (Esc / Start) and Loadout (Tab / Select: the ability slot + passive panel). Always enabled.</item>
     /// </list>
     /// Gameplay helpers (<see cref="MoveValue"/>, <see cref="InteractPressed"/>, <see cref="LanePressed"/>...) read as
     /// "no input" while the game is paused, so gameplay scripts do not have to check the pause state themselves.
@@ -56,7 +56,12 @@ namespace RythmRPG.Core
         public static InputAction Move { get { EnsureCreated(); return move; } }
         public static InputAction Interact { get { EnsureCreated(); return interact; } }
         public static InputAction Pause { get { EnsureCreated(); return pause; } }
-        private static InputAction move, interact, pause;
+        /// <summary>Opens / closes the loadout panel (ability slots + passives). Tab / gamepad Select by default.</summary>
+        public static InputAction Loadout { get { EnsureCreated(); return loadout; } }
+        private static InputAction move, interact, pause, loadout;
+
+        // Menus that take over exploration input (the loadout panel...). Movement and Interact read as idle while any is set.
+        private static readonly HashSet<object> gameplayBlockers = new();
 
         /// <summary>True while the player is choosing a new key for a binding.</summary>
         public static bool IsRebinding => activeRebind != null;
@@ -71,9 +76,24 @@ namespace RythmRPG.Core
 
         // ---------- Gameplay helpers (read as "no input" while paused) ----------
 
-        public static Vector2 MoveValue => GamePause.IsPaused ? Vector2.zero : Move.ReadValue<Vector2>();
-        public static bool InteractPressed => !GamePause.IsPaused && Interact.WasPressedThisFrame();
-        public static bool InteractHeld => !GamePause.IsPaused && Interact.IsPressed();
+        public static Vector2 MoveValue => GamePause.IsPaused || IsGameplayBlocked ? Vector2.zero : Move.ReadValue<Vector2>();
+        public static bool InteractPressed => !GamePause.IsPaused && !IsGameplayBlocked && Interact.WasPressedThisFrame();
+        public static bool InteractHeld => !GamePause.IsPaused && !IsGameplayBlocked && Interact.IsPressed();
+        public static bool LoadoutPressed => !GamePause.IsPaused && Loadout.WasPressedThisFrame();
+
+        /// <summary>True while a menu (e.g. the loadout panel) holds exploration input: Move / Interact read as idle.</summary>
+        public static bool IsGameplayBlocked => gameplayBlockers.Count > 0;
+
+        /// <summary>Stops exploration input (Move / Interact) until <see cref="UnblockGameplay"/> with the same owner.</summary>
+        public static void BlockGameplay(object owner)
+        {
+            if (owner != null) gameplayBlockers.Add(owner);
+        }
+
+        public static void UnblockGameplay(object owner)
+        {
+            if (owner != null) gameplayBlockers.Remove(owner);
+        }
         public static bool LanePressed(int laneId) => !GamePause.IsPaused && (Lane(laneId)?.WasPressedThisFrame() ?? false);
 
         /// <summary>
@@ -124,7 +144,8 @@ namespace RythmRPG.Core
             if (asset != null) asset.Disable();
             asset = null;
             lanes = null;
-            move = interact = pause = null;
+            move = interact = pause = loadout = null;
+            gameplayBlockers.Clear();
             rows.Clear();
             LastSwappedRow = null;
             BindingsChanged = null;
@@ -171,6 +192,9 @@ namespace RythmRPG.Core
             pause = system.AddAction("Pause", InputActionType.Button);
             pause.AddBinding("<Keyboard>/escape", groups: KeyboardGroup);
             pause.AddBinding("<Gamepad>/start", groups: GamepadGroup);
+            loadout = system.AddAction("Loadout", InputActionType.Button);
+            loadout.AddBinding("<Keyboard>/tab", groups: KeyboardGroup);
+            loadout.AddBinding("<Gamepad>/select", groups: GamepadGroup);
 
             BuildRows();
             LoadOverrides();
@@ -192,6 +216,8 @@ namespace RythmRPG.Core
                 FindBindingIndex(interact, KeyboardGroup), FindBindingIndex(interact, GamepadGroup)));
             rows.Add(new RebindRow("Pause", RebindContext.System, pause,
                 FindBindingIndex(pause, KeyboardGroup), FindBindingIndex(pause, GamepadGroup)));
+            rows.Add(new RebindRow("Loadout", RebindContext.System, loadout,
+                FindBindingIndex(loadout, KeyboardGroup), FindBindingIndex(loadout, GamepadGroup)));
         }
 
         /// <summary>First binding of <paramref name="action"/> in <paramref name="group"/> (optionally a composite part).</summary>
