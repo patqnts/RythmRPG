@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dcaf364c3488584aa4b23882270f869, type: 3}
+  m_Name: preset-adaptable
+  m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.BuildPreset
+  id: preset-adaptable
+  displayName: Wanderer (Adaptable)
+  playstyle: adaptable
+  description: 'Objective: value from switching tools. Versatility: +20% when your action''s role differs from the last one. Follow-Through: a good Rally gives the next attack +25%. Measured Execution: +15% damage at 85%+ charts. Arcane Thrift: spells cost 20% less. Strike has Searing Edge (extra Fire component); Frost Lance answers fire resistance.
+
+    Trade-off: lower peaks than the specialists; needs sequencing.'
+  slots:
+  - ability: {fileID: 11400000, guid: 0c049a7a0d1c15f449dcf2af22931dd1, type: 2}
+    upgrades:
+    - {fileID: 11400000, guid: ff62dce0316c6194fa8af75f7104a3e7, type: 2}
+  - ability: {fileID: 11400000, guid: 862ffed2a0484444bae3a36ced1583d8, type: 2}
+    upgrades: []
+  - ability: {fileID: 11400000, guid: 8e59e2adbd505b1418bfb53d07d36082, type: 2}
+    upgrades: []
+  - ability: {fileID: 11400000, guid: ac7fd0438ad1dff4d9fb07e85f1a09f6, type: 2}
+    upgrades: []
+  reserve: []
+  passives:
+  - passive: {fileID: 11400000, guid: c74fdc383979b154f86b48b5079261c9, type: 2}
+    level: 1
+  - passive: {fileID: 11400000, guid: 8f7db45957ef1c34b9adbfcf3a36b946, type: 2}
+    level: 1
+  - passive: {fileID: 11400000, guid: 6d6877995d86b1e448df6938263fc85e, type: 2}
+    level: 1
+  - passive: {fileID: 11400000, guid: 5543ab0525c59a646b4d6aad6c157ff3, type: 2}
+    level: 1

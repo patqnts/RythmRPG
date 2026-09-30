@@ -17,6 +17,8 @@ namespace RythmRPG.Combat
         [SerializeField] private AbilityExecutor abilityExecutor;
         [SerializeField] private RhythmJudgementSystem judgementSystem;
         [SerializeField] private CombatModifierSystem modifierSystem;
+        [Tooltip("Run build inside the encounter (passives, damage service, buffs). Added automatically.")]
+        [SerializeField] private CombatBuildRuntime buildRuntime;
         [SerializeField] private CombatVFXController vfxController;
         [SerializeField] private CombatUIController uiController;
         [SerializeField] private CombatLanePresentation3D lanePresentation;
@@ -59,6 +61,8 @@ namespace RythmRPG.Combat
         private bool battleIsRetry;
         private bool encounterPrepared;
         private int playerHealthAtEnemyTurn;
+        private bool enemyTurnInterrupted;
+        private EnemyCombatant defeatWatchedEnemy;
         private int enemyHealthAtPlayerAttack;
         private EnemyPhaseDefinition lastPhase;
 
@@ -104,12 +108,18 @@ namespace RythmRPG.Combat
             // Sequence: the player walks to its combat spot first; the coordinator reveals the hit line afterwards.
             lanePresentation.HideHitLine();
             encounter = context;
+            // The build is reconstructed from the run state before the combatants capture their battle-start state
+            // (passives may change max health). Acquired passives live on RunBuild, so this survives restarts.
+            buildRuntime.BeginEncounter(context.Player, context.Enemy, modifierSystem, RunBuild.Current,
+                vfxController != null ? vfxController.ShowFloatingText : null);
+            WatchEnemyDefeat(context.Enemy);
             encounter.Player.CaptureBattleStart();
             encounter.Enemy.CaptureBattleStart();
             runner.ConfigurePresentation(lanePresentation);
             runner.ConfigureMusic(musicDirector);
             resourceRules = CombatResourceRules.Load();
             runner.DefenseDamageResolver = ResolveDefenseDamage;
+            runner.DefenseDamageApplier = ApplyDefenseDamage;
             modifierSystem.Clear();
             manaCarry = 0f;
             BindRuntime();
@@ -142,6 +152,8 @@ namespace RythmRPG.Combat
             vfxController?.ClearCastEffects();
             vfxController.SetAbilitySlotsVisible(false, false);
             stats?.Stop();
+            buildRuntime?.EndEncounter(false);
+            WatchEnemyDefeat(null);
             if (resultScreen != null && resultScreen.IsOpen) resultScreen.Close();
             encounterCoordinator.Restore(encounter, false);
             lanePresentation?.SetPresentationVisible(false);
@@ -155,6 +167,7 @@ namespace RythmRPG.Combat
             inputRouter ??= GetComponent<LaneInputRouter>() ?? gameObject.AddComponent<LaneInputRouter>();
             abilitySlots ??= GetComponent<AbilitySlotController>() ?? gameObject.AddComponent<AbilitySlotController>();
             modifierSystem ??= GetComponent<CombatModifierSystem>() ?? gameObject.AddComponent<CombatModifierSystem>();
+            buildRuntime ??= GetComponent<CombatBuildRuntime>() ?? gameObject.AddComponent<CombatBuildRuntime>();
             judgementSystem ??= GetComponent<RhythmJudgementSystem>() ?? gameObject.AddComponent<RhythmJudgementSystem>();
             if (GetComponent<BasicAttackExecutor>() == null) gameObject.AddComponent<BasicAttackExecutor>();
             abilityExecutor ??= GetComponent<AbilityExecutor>() ?? gameObject.AddComponent<AbilityExecutor>();
@@ -186,6 +199,8 @@ namespace RythmRPG.Combat
             judgementSystem.OnJudgementResolved += HandleStatsJudgement;
             modifierSystem.DamageBlocked -= HandleDamageBlocked;
             modifierSystem.DamageBlocked += HandleDamageBlocked;
+            runner.DefenseNoteSettled -= HandleDefenseNoteSettled;
+            runner.DefenseNoteSettled += HandleDefenseNoteSettled;
             abilitySlots.Initialize(inputRouter, encounter.Player);
             abilitySlots.AbilitySelected -= HandleAbilitySelected;
             abilitySlots.AbilitySelected += HandleAbilitySelected;
@@ -198,6 +213,7 @@ namespace RythmRPG.Combat
                 stateMachine.Register(new CallbackCombatState(state, () => EnterState(state), null, null));
             stateMachine.StateChanged += (_, next) =>
             {
+                if (buildRuntime != null) buildRuntime.Phase = next;
                 inputRouter.SetState(next);
                 StateChanged?.Invoke(next);
             };
@@ -259,7 +275,15 @@ namespace RythmRPG.Combat
             lanePresentation?.RevealHitLine();
             vfxController.SetAbilitySlotsVisible(false, true);
             musicDirector?.SetPlayerTurn(false);
+            enemyTurnInterrupted = false;
+            // Passive per-turn budgets reset, then buffs / statuses tick (a status may defeat the enemy here).
+            buildRuntime.OnEnemyTurnStarted();
             modifierSystem.OnEnemyTurnStarted();
+            if (encounter.Enemy.IsDefeated)
+            {
+                yield return EnemyDefeatedRoutine();
+                yield break;
+            }
             yield return null;
             Transition(CombatState.EnemyTurnExecuting);
         }
@@ -289,8 +313,14 @@ namespace RythmRPG.Combat
                     yield return StoryBeat(CombatStoryMoment.EnemyAttackStep, sequenceId, stepNumber);
                     yield return RunEnemyStep(step.RhythmPattern, step.AnimationName,
                         step.AnticipationDuration, step.DurationOverride, step.EndPolicy);
-                    if (encounter.Player.IsDefeated) break;
+                    if (encounter.Player.IsDefeated || encounter.Enemy.IsDefeated) break;
                 }
+            }
+            // Enemy defeated on its own turn (reflection, status damage): the victory path runs once, from here.
+            if (encounter.Enemy.IsDefeated && !encounter.Player.IsDefeated)
+            {
+                yield return EnemyDefeatedRoutine();
+                yield break;
             }
             // Player death: the End section starts now (on the next bar), not after the turn bookkeeping.
             if (encounter.Player.IsDefeated)
@@ -318,7 +348,8 @@ namespace RythmRPG.Combat
             }
             double zeroDsp = runner.PlanStart(chart, earliestSpawn, out double firstSpawnDsp);
             double windUpDsp = firstSpawnDsp - anticipation;
-            while (GameAudioClock.Now < windUpDsp && !encounter.Player.IsDefeated) yield return null;
+            while (GameAudioClock.Now < windUpDsp && !encounter.Player.IsDefeated && !encounter.Enemy.IsDefeated) yield return null;
+            if (encounter.Enemy.IsDefeated) yield break;
             encounter.Enemy.PlayAnimation(animationName);
 
             bool completed = false;
@@ -329,13 +360,21 @@ namespace RythmRPG.Combat
             runner.PatternCompleted += OnCompleted;
             runner.Run(chart, new PatternRunContext(PatternRunMode.EnemyDefense, encounter.Player,
                 encounter.Enemy.transform, duration, policy), zeroDsp);
-            while (!completed && !encounter.Player.IsDefeated) yield return null;
+            while (!completed && !encounter.Player.IsDefeated && !encounter.Enemy.IsDefeated) yield return null;
             runner.PatternCompleted -= OnCompleted;
         }
 
         private IEnumerator EnemyTurnEndRoutine()
         {
+            // Stable order: whole-enemy-turn passive triggers (once, spanning every step), then buff / status
+            // countdowns and expiry.
+            buildRuntime.OnEnemyTurnEnded(enemyTurnInterrupted);
             modifierSystem.OnEnemyTurnEnded();
+            if (encounter.Enemy.IsDefeated && !encounter.Player.IsDefeated)
+            {
+                yield return EnemyDefeatedRoutine();
+                yield break;
+            }
             yield return null;
             if (!encounter.Player.IsDefeated)
                 yield return StoryBeat(CombatStoryMoment.EnemyTurnEnd, amount: Mathf.Max(0, playerHealthAtEnemyTurn - encounter.Player.CurrentHealth));
@@ -349,6 +388,14 @@ namespace RythmRPG.Combat
             yield return StoryBeat(CombatStoryMoment.PlayerTurnStart);
             stats?.RecordTurn();
             abilitySlots.TickCooldowns();
+            // Build turn boundary: passive per-turn state, then buff / status ticks (may defeat the enemy).
+            buildRuntime.OnPlayerTurnStarted();
+            modifierSystem.OnPlayerTurnStarted();
+            if (encounter.Enemy.IsDefeated)
+            {
+                yield return EnemyDefeatedRoutine();
+                yield break;
+            }
             // Ability selection: player-turn stem (or low-pass). Casting brings the main loop back.
             musicDirector?.SetPlayerTurn(true);
             // The hit line is only meaningful while notes are on it; hide it while the player is just
@@ -374,6 +421,8 @@ namespace RythmRPG.Combat
             if (CurrentState != CombatState.PlayerAbilitySelection) return;
             selectedLane = laneId;
             selectedAbility = ability;
+            // Cost was paid once by the slot; snapshot it (and reserve pending next-attack bonuses) for this cast.
+            buildRuntime.BeginCast(laneId, abilitySlots.SlotIndexOfLane(laneId), ability);
             stats?.RecordAbility(ability);
             abilitySlots.EndSelection();
             Transition(CombatState.PlayerAbilityExecuting);
@@ -448,6 +497,8 @@ namespace RythmRPG.Combat
         private IEnumerator PlayerTurnEndRoutine()
         {
             vfxController.SetAbilitySlotsVisible(false, true);
+            buildRuntime.OnPlayerTurnEnded();
+            modifierSystem.OnPlayerTurnEnded();
             yield return null;
             int dealt = Mathf.Max(0, enemyHealthAtPlayerAttack - encounter.Enemy.CurrentHealth);
             if (encounter.Enemy.IsDefeated)
@@ -469,6 +520,19 @@ namespace RythmRPG.Combat
                 }
                 Transition(CombatState.EnemyTurnStart);
             }
+        }
+
+        /// <summary>
+        /// Victory reached outside the player's attack (enemy turn, turn boundary): the same ending as a killing blow,
+        /// entered exactly once. The pattern was already cancelled without creating misses.
+        /// </summary>
+        private IEnumerator EnemyDefeatedRoutine()
+        {
+            runner?.CancelCurrentPattern(false);
+            yield return StoryBeat(CombatStoryMoment.EnemyDefeated);
+            musicDirector?.PlayEnd(true);
+            yield return PlayEnemyDefeat();
+            Transition(CombatState.Victory);
         }
 
         private IEnumerator PlayEnemyDefeat()
@@ -516,6 +580,8 @@ namespace RythmRPG.Combat
         {
             bool victory = terminalState == CombatState.Victory;
             runner?.CancelCurrentPattern(false);
+            buildRuntime?.EndEncounter(victory);
+            WatchEnemyDefeat(null);
             // Usually already triggered on the death itself; PlayEnd does nothing if the ending is scheduled.
             // The End clip plays out on its own (through the result screen); no End clip = fade out.
             musicDirector?.PlayEnd(victory);
@@ -531,6 +597,7 @@ namespace RythmRPG.Combat
                 string enemyName = enemy == null ? string.Empty
                     : enemy.Definition != null ? enemy.Definition.DisplayName : enemy.name;
                 LastReport = stats.Finish(victory, enemyName);
+                buildRuntime?.WriteTo(LastReport);
                 stats.Stop();
                 ResultReady?.Invoke(LastReport);
                 if (showResultScreen)
@@ -610,6 +677,35 @@ namespace RythmRPG.Combat
             return amount;
         }
 
+        // The damage transaction itself: passive mitigation, damage reduction, shields, then health (build runtime).
+        private int ApplyDefenseDamage(Note note, RhythmJudgementResult result, int amount) =>
+            buildRuntime != null ? buildRuntime.ApplyDefenseDamage(result, note != null ? note.damage : 0, amount)
+                : encounter.Player.ApplyDamage(amount);
+
+        // After the damage transaction: counters, reflection, whole-turn tallies.
+        private void HandleDefenseNoteSettled(Note note, RhythmJudgementResult result, int attempted, int actual)
+        {
+            if (!IsBattleActive || buildRuntime == null) return;
+            buildRuntime.DefenseNoteSettled(result, note != null ? note.damage : 0, attempted, actual);
+        }
+
+        private void WatchEnemyDefeat(EnemyCombatant enemy)
+        {
+            if (defeatWatchedEnemy != null) defeatWatchedEnemy.Defeated -= HandleEnemyDefeated;
+            defeatWatchedEnemy = enemy;
+            if (defeatWatchedEnemy != null) defeatWatchedEnemy.Defeated += HandleEnemyDefeated;
+        }
+
+        // The enemy can die during its own turn (reflection, status damage): stop its pattern now. Remaining notes are
+        // cleared without results, so they create no misses, no damage and no completion rewards.
+        private void HandleEnemyDefeated()
+        {
+            if (!IsBattleActive || runner == null) return;
+            if (CurrentState != CombatState.EnemyTurnStart && CurrentState != CombatState.EnemyTurnExecuting) return;
+            enemyTurnInterrupted = true;
+            if (runner.IsRunning && runner.CurrentMode == PatternRunMode.EnemyDefense) runner.CancelCurrentPattern(true);
+        }
+
         // Mana builds up from good play: Perfect / Good hits (player input only), weighted by judgement.
         private void HandleManaJudgement(RhythmJudgementResult result)
         {
@@ -661,6 +757,12 @@ namespace RythmRPG.Combat
 
         public CombatEncounterContext Encounter => encounter;
         public AbilitySlotController AbilitySlots => abilitySlots;
+        public CombatBuildRuntime BuildRuntime => buildRuntime;
+        public CombatModifierSystem Modifiers => modifierSystem;
+        /// <summary>Stable key of the current encounter (same across restarts of the same fight): used for reward offers.</summary>
+        public string EncounterKey => $"{SessionKey}:enc{encounterSerial}:" + (encounter.Enemy != null && encounter.Enemy.Definition != null
+            ? encounter.Enemy.Definition.Id : encounter.Enemy != null ? encounter.Enemy.name : "enemy");
+        private static readonly string SessionKey = Guid.NewGuid().ToString("N").Substring(0, 8);
         public RhythmAbilitySystem AbilitySystem => abilitySystem;
         public CombatLanePresentation3D LanePresentation => lanePresentation;
         /// <summary>The runner playing both the enemy's and the player's patterns (set when the battle begins).</summary>
@@ -680,6 +782,7 @@ namespace RythmRPG.Combat
             }
             if (CurrentState != CombatState.EnemyTurnExecuting) return false;
             StopStateRoutine();
+            enemyTurnInterrupted = true;
             runner?.CancelCurrentPattern(false);
             Transition(CombatState.EnemyTurnEnd);
             return true;

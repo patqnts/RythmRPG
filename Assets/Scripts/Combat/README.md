@@ -30,3 +30,13 @@ The 2.5D lane presentation uses a level X/Z gameplay plane. At encounter start, 
 world height just above their ground-contact bounds. The player is positioned a short distance past
 the judgement line in the notes' direction of travel,
 which keeps the line between the enemy and player while the A/S/D/J/K controls remain screen UI.
+
+## Run builds (abilities, passives, upgrades, affinities)
+
+`Build/` implements `docs/design/run-resonance-architecture.md`: a run-owned `RunBuildState`
+(`RunBuild.Current`) holds four ability slots + reserve, dedicated upgrades and passives.
+`AbilitySlotController` builds its slots from it when one is active (otherwise the old
+`DefaultLoadout`). Each encounter `CombatBuildRuntime` is rebuilt from the build; every damage,
+heal, mana and shield transaction goes through its `CombatDamageService`. In play mode press **F11**
+for the Run Build panel (sample builds, rewards, enemy affinity profiles). Details and the
+sample-build test guide: `docs/design/run-resonance-implementation.md`.

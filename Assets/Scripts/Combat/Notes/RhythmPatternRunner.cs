@@ -72,6 +72,17 @@ namespace RythmRPG.Combat
 
         /// <summary>Damage the player takes when an enemy note resolves (set by the combat controller).</summary>
         public Func<Note, RhythmJudgementResult, int> DefenseDamageResolver { get; set; }
+        /// <summary>
+        /// Applies an enemy note's damage (shields, mitigation...) and returns the HP actually lost. Null = the player
+        /// takes the resolved amount directly.
+        /// </summary>
+        public Func<Note, RhythmJudgementResult, int, int> DefenseDamageApplier { get; set; }
+        /// <summary>
+        /// Raised for every enemy-defense note after its damage transaction: (note, raw judgement, attempted damage,
+        /// actual HP lost). Unlike <see cref="NoteResolved"/> (raised before damage), damage-triggered effects use this.
+        /// Not raised once the player is defeated.
+        /// </summary>
+        public event Action<Note, RhythmJudgementResult, int, int> DefenseNoteSettled;
         /// <summary>Mode of the running (or last) pattern.</summary>
         public PatternRunMode CurrentMode => currentContext.Mode;
         // Ping-Pong: the shot deflected during the current ResolveNote call, and shots kept alive between volleys.
@@ -264,11 +275,19 @@ namespace RythmRPG.Combat
                 int amount = DefenseDamageResolver != null
                     ? DefenseDamageResolver(note, result)
                     : note.ShouldDamagePlayerOnResolve(result) ? note.damage : 0;
+                int actual = 0;
                 if (amount > 0)
+                    actual = DefenseDamageApplier != null
+                        ? DefenseDamageApplier(note, result, amount)
+                        : currentContext.Player.ApplyDamage(amount);
+                if (currentContext.Player.IsDefeated)
                 {
-                    currentContext.Player.ApplyDamage(amount);
-                    if (currentContext.Player.IsDefeated) CancelCurrentPattern(true);
+                    CancelCurrentPattern(true);
+                    return;
                 }
+                // Post-transaction: reflection / counters may defeat the enemy here; the controller then cancels
+                // the pattern (remaining notes are cleared without creating misses).
+                DefenseNoteSettled?.Invoke(note, result, amount, actual);
             }
         }
 

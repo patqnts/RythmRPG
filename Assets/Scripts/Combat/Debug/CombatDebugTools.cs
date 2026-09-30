@@ -195,6 +195,7 @@ namespace RythmRPG.Combat
                 else lines.Add("No battle running");
                 lines.Add("");
                 foreach (Binding binding in bindings) lines.Add($"{KeyName(binding.key)}  {binding.label}");
+                lines.Add("F11  Run build panel (builds, rewards, affinities)");
 
                 float height = lines.Count * 22f + 16f;
                 Rect box = new(width - 380f, 12f, 368f, height);

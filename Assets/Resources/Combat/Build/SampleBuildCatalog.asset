@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68dd47a18162ec3488e86d19b27dea47, type: 3}
+  m_Name: SampleBuildCatalog
+  m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.BuildContentCatalog
+  abilities:
+  - {fileID: 11400000, guid: 0c049a7a0d1c15f449dcf2af22931dd1, type: 2}
+  - {fileID: 11400000, guid: f5df705ba42ee5740be7ccdec128227e, type: 2}
+  - {fileID: 11400000, guid: 3e20ee05d9458e44e8c1e9ff870274e8, type: 2}
+  - {fileID: 11400000, guid: f610a72877f364b4b9fdd82d6d9e9bbc, type: 2}
+  - {fileID: 11400000, guid: 1fa77056bb7e25f42924738abd04cdb4, type: 2}
+  - {fileID: 11400000, guid: 94e905c645c82f744b13cc4c2b5a22b4, type: 2}
+  - {fileID: 11400000, guid: 90ed19cc03baa1d4ab0bf4d48f3e9492, type: 2}
+  - {fileID: 11400000, guid: af67410db4a055349aa1955af25e470e, type: 2}
+  - {fileID: 11400000, guid: 1ddb3dc687b961243a974e3092ba2465, type: 2}
+  - {fileID: 11400000, guid: 862ffed2a0484444bae3a36ced1583d8, type: 2}
+  - {fileID: 11400000, guid: 8e59e2adbd505b1418bfb53d07d36082, type: 2}
+  - {fileID: 11400000, guid: ac7fd0438ad1dff4d9fb07e85f1a09f6, type: 2}
+  - {fileID: 11400000, guid: 1e387f37f3f7d7d448ab2448795615df, type: 2}
+  - {fileID: 11400000, guid: d2bf8ee080793a14687f76cc6fc5be09, type: 2}
+  upgrades:
+  - {fileID: 11400000, guid: 27866706b9138254ca64528a553e203b, type: 2}
+  - {fileID: 11400000, guid: 4c104975b5147084598be1af71d17854, type: 2}
+  - {fileID: 11400000, guid: 64f92c19340f357409d234720fd6f6a3, type: 2}
+  - {fileID: 11400000, guid: 1d4eef9ae2a935344a27d432657ef412, type: 2}
+  - {fileID: 11400000, guid: 625a8ca821af64548a40bc81396597ac, type: 2}
+  - {fileID: 11400000, guid: ff62dce0316c6194fa8af75f7104a3e7, type: 2}
+  - {fileID: 11400000, guid: 7342155a6d26bce40a4b7723fbfa5b7e, type: 2}
+  - {fileID: 11400000, guid: 81f3455d643f2b64eb78524cb660d660, type: 2}
+  - {fileID: 11400000, guid: 0b781eb4469cb47469a50df43f669f63, type: 2}
+  passives:
+  - {fileID: 11400000, guid: 2f331df8ae8d646479d478408edc0e47, type: 2}
+  - {fileID: 11400000, guid: f7187bea2b3652f41962661de08a9aef, type: 2}
+  - {fileID: 11400000, guid: db0cd3b0e18782344bd1afec5bf581e4, type: 2}
+  - {fileID: 11400000, guid: 595246fe885ebcb47902ac78339097ab, type: 2}
+  - {fileID: 11400000, guid: 13a4b04163da5cd4bbdf0a23c6595c29, type: 2}
+  - {fileID: 11400000, guid: 9296b0305cec95c47be1cac35dbbb34d, type: 2}
+  - {fileID: 11400000, guid: 9686a7c67ffd8a64eb081fc594aa7adf, type: 2}
+  - {fileID: 11400000, guid: 8ea0dec854ff5364ab17a1cb6df44809, type: 2}
+  - {fileID: 11400000, guid: 58827f3eee11fd64aa68a389d7cac9f5, type: 2}
+  - {fileID: 11400000, guid: 8b8c19bdceb9bfd4890d2d678b9492e3, type: 2}
+  - {fileID: 11400000, guid: 15117d29a4786e44fbaf40ffe7de683d, type: 2}
+  - {fileID: 11400000, guid: 5eab541f58f0c1d49ad62ec959f35039, type: 2}
+  - {fileID: 11400000, guid: a6560e916e520a94aa906a5ae4daae4d, type: 2}
+  - {fileID: 11400000, guid: f5b59396d60db0947bafd35d79781637, type: 2}
+  - {fileID: 11400000, guid: c74fdc383979b154f86b48b5079261c9, type: 2}
+  - {fileID: 11400000, guid: 8f7db45957ef1c34b9adbfcf3a36b946, type: 2}
+  - {fileID: 11400000, guid: 6d6877995d86b1e448df6938263fc85e, type: 2}
+  - {fileID: 11400000, guid: 5543ab0525c59a646b4d6aad6c157ff3, type: 2}
+  - {fileID: 11400000, guid: 98ee37e53ba661c429ecdb7972bc79c8, type: 2}
+  - {fileID: 11400000, guid: 95462328731b77d4e8fdcceb336b9523, type: 2}
+  presets:
+  - {fileID: 11400000, guid: 7b53b46fcf20a4c44b5421b35e7b6b17, type: 2}
+  - {fileID: 11400000, guid: 58f879130c6459d45a48f5316826579d, type: 2}
+  - {fileID: 11400000, guid: c7e82e49a64303644bdefd00c6dd98fd, type: 2}
+  - {fileID: 11400000, guid: 7f1d6bda48ae2e44c98c8ebaf21fdfa4, type: 2}
+  - {fileID: 11400000, guid: f467d1b05ca1b2d4face47faa03fe2e7, type: 2}
+  - {fileID: 11400000, guid: 4b28966f75d94ce4396d0f90334d6f7d, type: 2}

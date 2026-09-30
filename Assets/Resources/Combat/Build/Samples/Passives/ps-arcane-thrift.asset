@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f071840deecc95c4e81596bafe4d19e5, type: 3}
+  m_Name: ps-arcane-thrift
+  m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.PassiveDefinition
+  id: ps-arcane-thrift
+  displayName: Arcane Thrift
+  description: 
+  category: 2
+  maxLevel: 3
+  requirement:
+    delivery: 4
+    role: 0
+    requireElement: 0
+    element: 0
+    requireEffectType: 
+  exclusivityGroup: 
+  stackingGroup: 
+  stackingCap: 0
+  styleTags:
+  - adaptable
+  - glass-cannon
+  isFallback: 0
+  effects:
+  - rid: 2956268597364391978
+  references:
+    version: 2
+    RefIds:
+    - rid: 2956268597364391978
+      type: {class: ManaCostPassive, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
+      data:
+        filter:
+          delivery: 4
+          role: 0
+          matchElement: 0
+          element: 0
+        reduction: 0.2
+        reductionPerLevel: 0.05
+        minimumCost: 1

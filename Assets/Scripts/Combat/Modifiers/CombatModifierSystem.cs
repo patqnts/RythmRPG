@@ -13,6 +13,19 @@ namespace RythmRPG.Combat
         void OnJudgementResolved(RhythmJudgementResult result, RhythmPatternRunner runner);
     }
 
+    /// <summary>
+    /// A temporary effect (buff, status, shield...) that counts down at declared turn boundaries. Boundaries are raised
+    /// by the combat controller; time spent choosing an ability never consumes a duration.
+    /// </summary>
+    public interface ITurnBoundaryModifier
+    {
+        /// <summary>Stable key used for refresh / replace stacking (e.g. "shield", "burn").</summary>
+        string StackKey { get; }
+        string Label { get; }
+        void OnTurnBoundary(TurnBoundary boundary);
+        string Describe();
+    }
+
     public sealed class CombatModifierSystem : MonoBehaviour
     {
         private readonly List<ICombatModifierRuntime> activeModifiers = new();
@@ -47,14 +60,45 @@ namespace RythmRPG.Combat
         public void OnEnemyTurnStarted()
         {
             foreach (ICombatModifierRuntime modifier in activeModifiers.ToArray()) modifier.OnEnemyTurnStarted();
-            RemoveExpired();
+            RaiseBoundary(TurnBoundary.EnemyTurnStart);
         }
 
         public void OnEnemyTurnEnded()
         {
             foreach (ICombatModifierRuntime modifier in activeModifiers.ToArray()) modifier.OnEnemyTurnEnded();
-            RemoveExpired();
+            RaiseBoundary(TurnBoundary.EnemyTurnEnd);
         }
+
+        public void OnPlayerTurnStarted() => RaiseBoundary(TurnBoundary.PlayerTurnStart);
+        public void OnPlayerTurnEnded() => RaiseBoundary(TurnBoundary.PlayerTurnEnd);
+
+        /// <summary>
+        /// Ticks every boundary-aware modifier in the order they were added (stable), then removes expired ones.
+        /// A tick can end the battle (damage over time); later modifiers still count down but deal no payouts
+        /// because the build runtime stops payouts once combat is over.
+        /// </summary>
+        private void RaiseBoundary(TurnBoundary boundary)
+        {
+            foreach (ICombatModifierRuntime modifier in activeModifiers.ToArray())
+                if (modifier is ITurnBoundaryModifier timed && !modifier.IsExpired) timed.OnTurnBoundary(boundary);
+            RemoveExpired();
+            Changed?.Invoke();
+        }
+
+        public IEnumerable<T> OfType<T>() => activeModifiers.Where(modifier => modifier != null && !modifier.IsExpired).OfType<T>();
+
+        public T Find<T>(string stackKey) where T : class, ITurnBoundaryModifier =>
+            OfType<T>().FirstOrDefault(modifier => modifier.StackKey == stackKey);
+
+        public bool Remove(ICombatModifierRuntime modifier)
+        {
+            if (modifier == null || !activeModifiers.Remove(modifier)) return false;
+            Changed?.Invoke();
+            return true;
+        }
+
+        /// <summary>Raise <see cref="Changed"/> after a modifier changed its own state (a shield absorbed damage...).</summary>
+        public void NotifyChanged() => Changed?.Invoke();
 
         public void OnJudgementResolved(RhythmJudgementResult result, RhythmPatternRunner runner)
         {

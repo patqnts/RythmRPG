@@ -17,6 +17,7 @@ namespace RythmRPG.Combat
 
         private bool defeatRaised;
         private int battleStartHealth;
+        private EnemyResponseProfile responseOverride;
 
         public EnemyDefinition Definition => definition;
         public int MaxHealth => definition != null ? definition.MaxHealth : Mathf.Max(1, fallbackMaxHealth);
@@ -25,6 +26,9 @@ namespace RythmRPG.Combat
         public Animator Animator => animator;
         public SpriteRenderer SpriteRenderer => spriteRenderer;
         public RhythmPatternRunner PatternRunner => patternRunner;
+        /// <summary>Active affinities / status responses: a runtime override (dev tools) or the definition's.</summary>
+        public EnemyResponseProfile Responses => responseOverride ?? definition?.Responses;
+        public bool HasResponseOverride => responseOverride != null;
         public event Action<int, int> HealthChanged;
         public event Action<int> Damaged;
         public event Action Defeated;
@@ -70,6 +74,12 @@ namespace RythmRPG.Combat
             }
             return applied;
         }
+
+        /// <summary>Test / dev tool: replace the definition's affinities for this combatant (null = back to the definition's).</summary>
+        public void SetResponseOverride(EnemyResponseProfile profile) => responseOverride = profile;
+
+        /// <summary>Raw affinity multiplier for incoming damage of this element (1 = neutral).</summary>
+        public float AffinityFor(ElementType element) => Responses?.Affinity(element) ?? 1f;
 
         public EnemyPhaseDefinition ResolvePhase()
         {

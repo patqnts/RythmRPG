@@ -10,6 +10,8 @@ namespace RythmRPG.Combat
         [SerializeField] private string displayName = "Enemy";
         [SerializeField, Min(1)] private int maxHealth = 100;
         [SerializeField] private List<EnemyPhaseDefinition> phases = new();
+        [Tooltip("Damage affinities and status responses (independent of the attack sequences). Empty = neutral to everything.")]
+        [SerializeField] private EnemyResponseProfile responses = new();
         [Header("Animation")]
         [SerializeField] private string introAnimationName = string.Empty;
         [SerializeField, Min(0f)] private float introAnimationFallbackDuration = 0f;
@@ -22,6 +24,7 @@ namespace RythmRPG.Combat
         public string DisplayName => displayName;
         public int MaxHealth => Mathf.Max(1, maxHealth);
         public IReadOnlyList<EnemyPhaseDefinition> Phases => phases;
+        public EnemyResponseProfile Responses => responses ??= new EnemyResponseProfile();
         public string IntroAnimationName => introAnimationName;
         public float IntroAnimationFallbackDuration => introAnimationFallbackDuration;
         public string BattleAnimatorBoolParameter => battleAnimatorBoolParameter;

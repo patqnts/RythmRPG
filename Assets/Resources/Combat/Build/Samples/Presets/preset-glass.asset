@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dcaf364c3488584aa4b23882270f869, type: 3}
+  m_Name: preset-glass
+  m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.BuildPreset
+  id: preset-glass
+  displayName: Pyromancer (Glass Cannon)
+  playstyle: glass-cannon
+  description: 'Objective: spend mana on huge fire damage. Glass Heart: -35% max HP, +30% spell damage. Mana Surge: +20% on casts paying 30+ MP. Pyromancy: +25% Fire components. Conservation: a well-played Strike restores 5 MP. Focus primes the next attack by +60%.
+
+    Trade-off: 650 HP; Inferno (45 MP) competes with survival; conservation turns are weak.'
+  slots:
+  - ability: {fileID: 11400000, guid: 0c049a7a0d1c15f449dcf2af22931dd1, type: 2}
+    upgrades: []
+  - ability: {fileID: 11400000, guid: 1fa77056bb7e25f42924738abd04cdb4, type: 2}
+    upgrades: []
+  - ability: {fileID: 11400000, guid: 94e905c645c82f744b13cc4c2b5a22b4, type: 2}
+    upgrades: []
+  - ability: {fileID: 11400000, guid: 90ed19cc03baa1d4ab0bf4d48f3e9492, type: 2}
+    upgrades: []
+  reserve: []
+  passives:
+  - passive: {fileID: 11400000, guid: 595246fe885ebcb47902ac78339097ab, type: 2}
+    level: 1
+  - passive: {fileID: 11400000, guid: 13a4b04163da5cd4bbdf0a23c6595c29, type: 2}
+    level: 1
+  - passive: {fileID: 11400000, guid: 9296b0305cec95c47be1cac35dbbb34d, type: 2}
+    level: 1
+  - passive: {fileID: 11400000, guid: 9686a7c67ffd8a64eb081fc594aa7adf, type: 2}
+    level: 1

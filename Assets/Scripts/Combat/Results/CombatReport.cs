@@ -59,6 +59,19 @@ namespace RythmRPG.Combat
         public float HealthLeft;        // 0-1 of max health at the end (before a defeat restores it)
         public readonly Dictionary<string, int> AbilityUses = new();
 
+        // Build attribution (filled by CombatBuildRuntime.WriteTo): what passives, buffs and statuses contributed.
+        public string BuildName = string.Empty;
+        public readonly Dictionary<string, int> BuildContributions = new();
+        public readonly List<string> UnusedBenefits = new();
+        public int DamageReflected;
+        public int StatusDamage;
+        public int DamageResisted;
+        public int DamageAbsorbed;
+        public int DamagePrevented;
+        public int Overheal;
+        public int ManaRestoredByBuild;
+        public int CounterChargesSpent;
+
         public int Count(HitJudgement judgement) => DefenseJudgements[(int)judgement] + AbilityJudgements[(int)judgement];
         public int TotalNotes => DefenseJudgements.Sum() + AbilityJudgements.Sum();
         public int AbilitiesUsed => AbilityUses.Values.Sum();

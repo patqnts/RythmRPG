@@ -12,6 +12,7 @@ namespace RythmRPG.Combat
         [SerializeField, Min(0.05f)] private float holdDuration = 0.75f;
 
         private readonly Dictionary<int, AbilityRuntimeInstance> slots = new();
+        private readonly Dictionary<int, int> slotIndexByLane = new();
         private LaneInputRouter input;
         private PlayerCombatant player;
         private int candidateLane = -1;
@@ -19,6 +20,10 @@ namespace RythmRPG.Combat
         private bool selecting;
 
         public IReadOnlyDictionary<int, AbilityRuntimeInstance> Slots => slots;
+        /// <summary>The build the slots were made from (null = scene assignments / DefaultLoadout).</summary>
+        public RunBuildState SourceBuild { get; private set; }
+        /// <summary>Ability slot index (0-3) of the slot selected on this input lane; -1 if none.</summary>
+        public int SlotIndexOfLane(int laneId) => slotIndexByLane.TryGetValue(laneId, out int index) ? index : -1;
         /// <summary>Highest lane with an ability (0 = none): how many lanes ability selection needs.</summary>
         public int HighestLaneId => slots.Count == 0 ? 0 : slots.Keys.Max();
         public event Action<IReadOnlyDictionary<int, AbilityRuntimeInstance>> SlotsChanged;
@@ -103,6 +108,26 @@ namespace RythmRPG.Combat
         private void BuildSlots()
         {
             slots.Clear();
+            slotIndexByLane.Clear();
+            SourceBuild = null;
+            // A run build owns the loadout: slot i is selected with input lane i + 1. Ability runtimes are rebuilt
+            // for each encounter from the retained instances, so upgrades and ownership survive encounter resets.
+            RunBuildState build = RunBuild.Current;
+            if (build != null && build.Equipped.Any())
+            {
+                SourceBuild = build;
+                for (int index = 0; index < RunBuildState.SlotCount; index++)
+                {
+                    AbilityInstance instance = build.GetSlot(index);
+                    if (instance?.Definition == null) continue;
+                    int lane = index + 1;
+                    slots[lane] = new AbilityRuntimeInstance(instance, runtime => AbilityResolver.Resolve(runtime.Definition, runtime.BuildInstance, build));
+                    slotIndexByLane[lane] = index;
+                }
+                SlotsChanged?.Invoke(slots);
+                return;
+            }
+
             IEnumerable<AbilitySlotAssignment> source = assignments;
             if (assignments.All(assignment => assignment?.Ability == null))
             {
@@ -110,7 +135,10 @@ namespace RythmRPG.Combat
                 if (loadout != null) source = loadout.Slots;
             }
             foreach (AbilitySlotAssignment assignment in source.Where(assignment => assignment?.Ability != null))
+            {
                 slots[assignment.LaneId] = new AbilityRuntimeInstance(assignment.Ability);
+                slotIndexByLane[assignment.LaneId] = slotIndexByLane.Count;
+            }
 
             if (slots.Count == 0 && defaultAbility == null)
                 defaultAbility = Resources.Load<AbilityDefinition>("Combat/Abilities/BasicAttack");
@@ -118,6 +146,7 @@ namespace RythmRPG.Combat
             {
                 int firstLane = input?.Bindings.FirstOrDefault()?.LaneId ?? 1;
                 slots[firstLane] = new AbilityRuntimeInstance(defaultAbility);
+                slotIndexByLane[firstLane] = 0;
             }
             SlotsChanged?.Invoke(slots);
         }

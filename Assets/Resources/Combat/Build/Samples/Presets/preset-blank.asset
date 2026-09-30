@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dcaf364c3488584aa4b23882270f869, type: 3}
+  m_Name: preset-blank
+  m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.BuildPreset
+  id: preset-blank
+  displayName: Blank Slate (reward progression)
+  playstyle: 
+  description: Strike + Mend and no passives. Win fights and claim rewards (Rewards tab) to grow a build from scratch.
+  slots:
+  - ability: {fileID: 11400000, guid: 0c049a7a0d1c15f449dcf2af22931dd1, type: 2}
+    upgrades: []
+  - ability: {fileID: 11400000, guid: f5df705ba42ee5740be7ccdec128227e, type: 2}
+    upgrades: []
+  reserve: []
+  passives: []

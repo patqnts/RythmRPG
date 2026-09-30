@@ -13,8 +13,12 @@ namespace RythmRPG.Combat
 
         private bool defeatRaised;
         private Snapshot battleStartSnapshot;
+        private int maxHealthOverride;
 
-        public int MaxHealth => maxHealth;
+        /// <summary>Max health as authored on the component (before build passives).</summary>
+        public int BaseMaxHealth => maxHealth;
+        /// <summary>Effective max health (a build may raise or lower it; see <see cref="SetMaxHealthOverride"/>).</summary>
+        public int MaxHealth => maxHealthOverride > 0 ? maxHealthOverride : maxHealth;
         public int CurrentHealth => currentHealth;
         public int MaxMana => maxMana;
         public int CurrentMana => currentMana;
@@ -35,22 +39,22 @@ namespace RythmRPG.Combat
 
         public void RestoreBattleStart()
         {
-            currentHealth = Mathf.Clamp(battleStartSnapshot.Health, 0, maxHealth);
+            currentHealth = Mathf.Clamp(battleStartSnapshot.Health, 0, MaxHealth);
             currentMana = Mathf.Clamp(battleStartSnapshot.Mana, 0, maxMana);
             defeatRaised = false;
-            HealthChanged?.Invoke(currentHealth, maxHealth);
+            HealthChanged?.Invoke(currentHealth, MaxHealth);
             ManaChanged?.Invoke(currentMana, maxMana);
         }
 
         public int ApplyDamage(int amount)
         {
             int previous = currentHealth;
-            currentHealth = Mathf.Clamp(currentHealth - Mathf.Max(0, amount), 0, maxHealth);
+            currentHealth = Mathf.Clamp(currentHealth - Mathf.Max(0, amount), 0, MaxHealth);
             int applied = previous - currentHealth;
             if (applied > 0)
             {
                 Damaged?.Invoke(applied);
-                HealthChanged?.Invoke(currentHealth, maxHealth);
+                HealthChanged?.Invoke(currentHealth, MaxHealth);
             }
             if (IsDefeated && !defeatRaised)
             {
@@ -63,14 +67,29 @@ namespace RythmRPG.Combat
         public int Heal(int amount)
         {
             int previous = currentHealth;
-            currentHealth = Mathf.Clamp(currentHealth + Mathf.Max(0, amount), 0, maxHealth);
+            currentHealth = Mathf.Clamp(currentHealth + Mathf.Max(0, amount), 0, MaxHealth);
             int applied = currentHealth - previous;
             if (applied > 0)
             {
                 Healed?.Invoke(applied);
-                HealthChanged?.Invoke(currentHealth, maxHealth);
+                HealthChanged?.Invoke(currentHealth, MaxHealth);
             }
             return applied;
+        }
+
+        /// <summary>
+        /// Build max health (0 = back to the authored value). Current health keeps its missing amount when the max
+        /// grows and is clamped when it shrinks; <paramref name="fill"/> restores to full.
+        /// </summary>
+        public void SetMaxHealthOverride(int value, bool fill = false)
+        {
+            int previousMax = MaxHealth;
+            maxHealthOverride = Mathf.Max(0, value);
+            int newMax = MaxHealth;
+            if (fill) currentHealth = newMax;
+            else if (newMax > previousMax && currentHealth > 0) currentHealth = Mathf.Min(newMax, currentHealth + (newMax - previousMax));
+            currentHealth = Mathf.Clamp(currentHealth, 0, newMax);
+            if (previousMax != newMax || fill) HealthChanged?.Invoke(currentHealth, newMax);
         }
 
         public bool SpendMana(int amount)
@@ -94,10 +113,10 @@ namespace RythmRPG.Combat
 
         public void ResetToMaximum()
         {
-            currentHealth = maxHealth;
+            currentHealth = MaxHealth;
             currentMana = maxMana;
             defeatRaised = false;
-            HealthChanged?.Invoke(currentHealth, maxHealth);
+            HealthChanged?.Invoke(currentHealth, MaxHealth);
             ManaChanged?.Invoke(currentMana, maxMana);
         }
 
@@ -105,7 +124,7 @@ namespace RythmRPG.Combat
         {
             maxHealth = Mathf.Max(1, maxHealth);
             maxMana = Mathf.Max(0, maxMana);
-            currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+            currentHealth = Mathf.Clamp(currentHealth, 0, MaxHealth);
             currentMana = Mathf.Clamp(currentMana, 0, maxMana);
         }
 

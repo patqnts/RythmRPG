@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace RythmRPG.Combat
@@ -36,7 +37,8 @@ namespace RythmRPG.Combat
             abilityImpactOrigin = impactOrigin != null ? impactOrigin : spawnOrigin != null ? spawnOrigin : player != null ? player.transform : null;
             if (runner == null || ability?.Definition?.RhythmPattern == null)
             {
-                Finish(new RhythmPerformanceResult(0, 0, 0, 0f, Array.Empty<RhythmJudgementResult>()));
+                // Zero-opportunity chart: never counts as a completed / flawless execution.
+                Finish(new RhythmPerformanceResult(0, 0, 0, 0f, Array.Empty<RhythmJudgementResult>()), false);
                 return;
             }
             runner.PatternCompleted += HandlePatternCompleted;
@@ -55,15 +57,15 @@ namespace RythmRPG.Combat
             AbilityOutcomeProfile profile = context.Ability.Definition.OutcomeProfile;
             RhythmPerformanceResult performance = RhythmPerformanceCalculator.Calculate(
                 result.Performance.ExpectedNoteCount, result.Performance.Judgements, profile);
-            Finish(performance);
+            Finish(performance, !result.WasCancelled);
         }
 
-        private void Finish(RhythmPerformanceResult performance)
+        private void Finish(RhythmPerformanceResult performance, bool completed)
         {
-            StartCoroutine(FinishRoutine(performance));
+            StartCoroutine(FinishRoutine(performance, completed));
         }
 
-        private System.Collections.IEnumerator FinishRoutine(RhythmPerformanceResult performance)
+        private System.Collections.IEnumerator FinishRoutine(RhythmPerformanceResult performance, bool completed)
         {
             if (vfxController == null) vfxController = GetComponent<CombatVFXController>();
             if (vfxController == null) vfxController = FindAnyObjectByType<CombatVFXController>();
@@ -83,6 +85,14 @@ namespace RythmRPG.Combat
                 while (vfxController.CharacterMorphing && Time.time < waitUntil) yield return null;
             }
 
+            // Build: the cast snapshot made at commitment (frozen cost, reserved bonuses). Performance is final now, so
+            // conditional pre-outcome bonuses resolve before any total is frozen.
+            CombatBuildRuntime build = GetComponent<CombatBuildRuntime>();
+            if (build != null && !build.IsActive) build = null;
+            CastSnapshot cast = build != null && build.CurrentCast != null && build.CurrentCast.Ability == context.Ability
+                ? build.CurrentCast : null;
+            if (cast != null) build.PreOutcome(cast, performance, completed);
+
             var effectContext = new AbilityEffectContext
             {
                 Player = context.Player,
@@ -92,12 +102,16 @@ namespace RythmRPG.Combat
                 LaneId = laneId,
                 Modifiers = GetComponent<CombatModifierSystem>(),
                 Rules = CombatResourceRules.Load(),
-                ShowText = vfxController != null ? new Action<string, Vector3, Color>(vfxController.ShowFloatingText) : null
+                ShowText = vfxController != null ? new Action<string, Vector3, Color>(vfxController.ShowFloatingText) : null,
+                Build = build,
+                Cast = cast
             };
             // The ability's effects land as the attack's hits land: split by hit weight (multi-hit, damage over
-            // time), once-effects on their chosen hit. Whatever is left lands when the sequence ends.
-            var resolution = new AbilityResolution(effectContext, definition != null ? definition.Effects : null,
-                sequence != null ? sequence.TotalHitWeight : 0f);
+            // time), once-effects on their chosen hit. Whatever is left lands when the sequence ends. Totals are
+            // frozen when the resolution is created. The committed quote includes dedicated-upgrade effects.
+            IReadOnlyList<AbilityEffect> effects = cast?.Quote != null ? (IReadOnlyList<AbilityEffect>)cast.Quote.Effects
+                : definition != null ? definition.Effects : null;
+            var resolution = new AbilityResolution(effectContext, effects, sequence != null ? sequence.TotalHitWeight : 0f);
             bool announced = false;
             void Hit(float weight)
             {
@@ -122,6 +136,7 @@ namespace RythmRPG.Combat
 
             resolution.Finish();
             if (!announced) ImpactResolved?.Invoke(context, performance);
+            if (cast != null) build.CastResolved(cast);
             // Back into the hit line (not after the finishing blow: the character stays for the victory).
             if (steppedOut && (context.Enemy == null || !context.Enemy.IsDefeated)) vfxController.StepBackIntoHitLine();
             if (vfxProfile != null && vfxProfile.ImpactSettleDuration > 0f)

@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dcaf364c3488584aa4b23882270f869, type: 3}
+  m_Name: preset-hybrid
+  m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.BuildPreset
+  id: preset-hybrid
+  displayName: Riposte Mage (Parry + Glass hybrid)
+  playstyle: parry
+  description: 'Hybrid: counter charges feed a melee payoff while Fire Bolt carries spell damage. Glass Heart''s -35% HP still applies and counters only come from Perfect defense, so neither trade-off disappears.'
+  slots:
+  - ability: {fileID: 11400000, guid: 0c049a7a0d1c15f449dcf2af22931dd1, type: 2}
+    upgrades: []
+  - ability: {fileID: 11400000, guid: 3e20ee05d9458e44e8c1e9ff870274e8, type: 2}
+    upgrades:
+    - {fileID: 11400000, guid: 27866706b9138254ca64528a553e203b, type: 2}
+  - ability: {fileID: 11400000, guid: 1fa77056bb7e25f42924738abd04cdb4, type: 2}
+    upgrades:
+    - {fileID: 11400000, guid: 64f92c19340f357409d234720fd6f6a3, type: 2}
+  - ability: {fileID: 11400000, guid: d2bf8ee080793a14687f76cc6fc5be09, type: 2}
+    upgrades: []
+  reserve: []
+  passives:
+  - passive: {fileID: 11400000, guid: 2f331df8ae8d646479d478408edc0e47, type: 2}
+    level: 1
+  - passive: {fileID: 11400000, guid: 595246fe885ebcb47902ac78339097ab, type: 2}
+    level: 1

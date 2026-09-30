@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dcaf364c3488584aa4b23882270f869, type: 3}
+  m_Name: preset-tank
+  m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.BuildPreset
+  id: preset-tank
+  displayName: Bulwark (Tank)
+  playstyle: tank
+  description: 'Objective: outlast the enemy with steady offense. Fortitude +30% HP, Iron Skin -25% note damage (max 40 prevented per enemy turn), Second Wind turns overheal into shield, Tidal Healing +25% Water healing. Shield Bash hits and shields; Bulwark cuts damage 35% for 2 turns.
+
+    Trade-off: low damage, long fights; shields are capped (30% max HP) and expire.'
+  slots:
+  - ability: {fileID: 11400000, guid: af67410db4a055349aa1955af25e470e, type: 2}
+    upgrades: []
+  - ability: {fileID: 11400000, guid: 0c049a7a0d1c15f449dcf2af22931dd1, type: 2}
+    upgrades: []
+  - ability: {fileID: 11400000, guid: 1ddb3dc687b961243a974e3092ba2465, type: 2}
+    upgrades: []
+  - ability: {fileID: 11400000, guid: f5df705ba42ee5740be7ccdec128227e, type: 2}
+    upgrades: []
+  reserve: []
+  passives:
+  - passive: {fileID: 11400000, guid: 58827f3eee11fd64aa68a389d7cac9f5, type: 2}
+    level: 1
+  - passive: {fileID: 11400000, guid: 8b8c19bdceb9bfd4890d2d678b9492e3, type: 2}
+    level: 1
+  - passive: {fileID: 11400000, guid: 15117d29a4786e44fbaf40ffe7de683d, type: 2}
+    level: 1
+  - passive: {fileID: 11400000, guid: 5eab541f58f0c1d49ad62ec959f35039, type: 2}
+    level: 1

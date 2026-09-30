@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c905625f03bf5148b7ab30842d6f523, type: 3}
+  m_Name: up-strike-searing
+  m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.AbilityUpgradeDefinition
+  id: up-strike-searing
+  displayName: Searing Edge
+  description: Strike gains a separate Fire damage component.
+  abilityIds:
+  - sample-strike
+  requirement:
+    delivery: 0
+    role: 0
+    requireElement: 0
+    element: 0
+    requireEffectType: 
+  powerBonus: 0
+  manaCostDelta: 0
+  cooldownDelta: 0
+  addedEffects:
+  - rid: 2956268597364391958
+  styleTags:
+  - adaptable
+  references:
+    version: 2
+    RefIds:
+    - rid: 2956268597364391958
+      type: {class: DealDamageEffect, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
+      data:
+        timing: 0
+        powerScale: 0.4
+        elementSource: 2
+        specificElement: 1
