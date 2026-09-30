@@ -420,9 +420,7 @@ namespace RythmRPG.Combat
             if (lane == null || prefab == null) return false;
             Transform origin = currentContext.SpawnOrigin != null ? currentContext.SpawnOrigin : transform;
             ResolveProjectileHolder();
-            Vector3 spawnPosition = lanePresentation != null
-                ? lanePresentation.ProjectToGameplayPlane(origin.position)
-                : origin.position;
+            Vector3 spawnPosition = ResolveSpawnPoint(prefab, lane.KeyIdentity, origin, currentContext.Mode, out _);
             Quaternion rotation = lanePresentation != null && lanePresentation.HorizontalGameplay
                 ? prefab.transform.rotation
                 : projectileObjectHolder != null ? projectileObjectHolder.rotation : Quaternion.identity;
@@ -501,7 +499,12 @@ namespace RythmRPG.Combat
             RhythmNoteDefinition definition = currentChart.FindDefinition(RhythmNoteType.Pong);
             if (definition != null) data.Speed = definition.DefaultSpeed;
             RhythmLaneData lane = currentChart.FindLane(laneId);
-            Vector3 spawnPosition = ResolveSpawnPosition();
+            // Same point Spawn uses for the first shot (with the prefab's Note Spawn Offset), so the rally returns there.
+            GameObject offsetSource = reuse != null ? reuse.gameObject
+                : currentChart.ResolvePrefab(data) != null ? currentChart.ResolvePrefab(data) : sequenceNotePrefab;
+            Vector3 spawnPosition = lane != null
+                ? ResolveSpawnPoint(offsetSource, lane.KeyIdentity, SpawnOriginTransform, currentContext.Mode, out _)
+                : ResolveSpawnPosition();
 
             // Same object for the whole rally: re-fire the shot that was just deflected back to the enemy.
             if (reuse != null && lane != null)
@@ -536,10 +539,45 @@ namespace RythmRPG.Combat
             return true;
         }
 
+        private Transform SpawnOriginTransform => currentContext.SpawnOrigin != null ? currentContext.SpawnOrigin : transform;
+
         private Vector3 ResolveSpawnPosition()
         {
-            Transform origin = currentContext.SpawnOrigin != null ? currentContext.SpawnOrigin : transform;
+            Transform origin = SpawnOriginTransform;
             return lanePresentation != null ? lanePresentation.ProjectToGameplayPlane(origin.position) : origin.position;
+        }
+
+        /// <summary>
+        /// Where a note of <paramref name="prefab"/> spawns for a lane: the origin (enemy or centre stage) on the gameplay
+        /// plane, plus the prefab's <see cref="NoteSpawnOffset"/> for this mode. <paramref name="basePoint"/> is the point
+        /// without the offset. Used by Spawn and by the Combat Preview window's spawn handles.
+        /// </summary>
+        public Vector3 ResolveSpawnPoint(GameObject prefab, int laneKeyIdentity, Transform origin, PatternRunMode mode,
+            out Vector3 basePoint)
+        {
+            if (origin == null) origin = transform;
+            basePoint = lanePresentation != null ? lanePresentation.ProjectToGameplayPlane(origin.position) : origin.position;
+            return NoteSpawnOffset.Apply(prefab, basePoint, LaneForward(laneKeyIdentity), mode);
+        }
+
+        private readonly Dictionary<int, RhythmLaneTarget> laneTargets = new();
+
+        /// <summary>Direction notes travel along a lane (toward the hit line); world forward when the lane has no target.</summary>
+        public Vector3 LaneForward(int laneKeyIdentity)
+        {
+            if (!laneTargets.TryGetValue(laneKeyIdentity, out RhythmLaneTarget target) || target == null
+                || target.LaneId != laneKeyIdentity)
+            {
+                target = null;
+                foreach (RhythmLaneTarget candidate in FindObjectsByType<RhythmLaneTarget>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+                    if (candidate != null && candidate.LaneId == laneKeyIdentity)
+                    {
+                        target = candidate;
+                        break;
+                    }
+                laneTargets[laneKeyIdentity] = target;
+            }
+            return target != null ? target.WorldTravelDirection : Vector3.forward;
         }
 
         // The deflected shot flies back and waits for the next volley; picked up by the Ping-Pong host.

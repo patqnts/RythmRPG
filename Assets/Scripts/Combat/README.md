@@ -40,3 +40,17 @@ which keeps the line between the enemy and player while the A/S/D/J/K controls r
 heal, mana and shield transaction goes through its `CombatDamageService`. In play mode press **F11**
 for the Run Build panel (sample builds, rewards, enemy affinity profiles). Details and the
 sample-build test guide: `docs/design/run-resonance-implementation.md`.
+
+## Combat Preview (attacks and note prefabs)
+
+**Tools > Rythm RPG > Combat > Combat Preview** sets up how the player's attack sequences and note /
+projectile prefabs look in combat. In Play mode it starts a preview battle against a scene enemy
+(`CombatController.BeginPreview`): staged like a real battle, but it waits in Battle Start, notes deal
+no damage, no mana is gained and the run build is left out. `Debug/CombatPreviewDriver` then plays a
+`CharacterAttackSequence` (hits flash the enemy and show their share) or spawns note prefabs through the
+real `RhythmPatternRunner` from a throwaway chart (lanes, count, travel time, auto-play / miss / play
+yourself). The sequence can be edited inside the window; asset and prefab edits made in Play mode are kept.
+
+Where a note spawns can be moved per prefab with a `NoteSpawnOffset` component (lane space: X side, Y up, Z forward
+toward the hit line, or world space; separately for enemy attacks and player ability charts). `RhythmPatternRunner`
+adds it to the spawn point in combat; the Combat Preview window edits it and shows a draggable handle in the Scene view.

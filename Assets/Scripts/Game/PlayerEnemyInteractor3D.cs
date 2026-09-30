@@ -157,6 +157,16 @@ public sealed class PlayerEnemyInteractor3D : MonoBehaviour
         SendMovementMessage(enableMovementMessage);
     }
 
+    /// <summary>
+    /// Combat Preview: the battle background and the movement lock of an encounter, without the notice or the delay.
+    /// Ending the preview battle undoes both (the same as any battle ending).
+    /// </summary>
+    public void SetBattlePresentation(bool active)
+    {
+        if (battleBackground != null) battleBackground.SetActive(active);
+        SendMovementMessage(active ? disableMovementMessage : enableMovementMessage);
+    }
+
     private void SendMovementMessage(string message)
     {
         if (!sendMovementMessages || string.IsNullOrWhiteSpace(message)) return;

@@ -34,10 +34,10 @@ MonoBehaviour:
         delay: 0
         prefab: {fileID: 194652, guid: 661fccf75b4fb6b46bbb67fe443d907c, type: 3}
         at: 0
-        offset: {x: 0, y: 0.6, z: 1}
+        offset: {x: 0, y: 1, z: 0}
         attachToAnchor: 0
         scale: 1
-        lifetime: 2
+        lifetime: 1.5
         holdSeconds: 1
         faceCamera: 0
     - rid: 2956268411002028131

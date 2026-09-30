@@ -461,6 +461,15 @@ namespace RythmRPG.Combat
                 key.PlayJudgementFeedback(result.Judgement, color);
         }
 
+        /// <summary>Combat Preview: the enemy's hit flash and shake with a label, without any damage.</summary>
+        public void PreviewEnemyHit(string label)
+        {
+            hitReaction?.Play(vfxTheme != null ? vfxTheme.HitFlashDuration : 0.12f,
+                vfxTheme != null ? vfxTheme.HitShakeStrength : 0.12f);
+            if (enemy != null && !string.IsNullOrEmpty(label))
+                CreateFloatingText(label, enemy.transform.position + Vector3.up, Color.white);
+        }
+
         /// <summary>Floating combat text (heal numbers, WARD, GUARD...).</summary>
         public void ShowFloatingText(string value, Vector3 position, Color color) => CreateFloatingText(value, position, color);
 

@@ -128,7 +128,8 @@ namespace RythmRPG.Combat
             encounter = context;
             // The build is reconstructed from the run state before the combatants capture their battle-start state
             // (passives may change max health). Acquired passives live on RunBuild, so this survives restarts.
-            buildRuntime.BeginEncounter(context.Player, context.Enemy, modifierSystem, RunBuild.Current,
+            // A preview battle runs without the run build, so passives (zaps, walls) never change what is previewed.
+            buildRuntime.BeginEncounter(context.Player, context.Enemy, modifierSystem, IsPreviewing ? null : RunBuild.Current,
                 vfxController != null ? vfxController.ShowFloatingText : null);
             buildRuntime.Board = noteBoard.Bind(runner);
             WatchEnemyDefeat(context.Enemy);
@@ -179,7 +180,53 @@ namespace RythmRPG.Combat
             encounterCoordinator.Restore(encounter, false);
             lanePresentation?.SetPresentationVisible(false);
             IsBattleActive = false;
+            IsPreviewing = false;
+            PreviewReady = false;
             BattleEnded?.Invoke(CurrentState);
+        }
+
+        // ---------- Preview (Tools > Rythm RPG > Combat > Combat Preview) ----------
+
+        /// <summary>A preview battle is running: staged like a real battle, but no turns, damage or mana.</summary>
+        public bool IsPreviewing { get; private set; }
+        /// <summary>The preview battle has finished staging (player in place, camera settled, hit line shown).</summary>
+        public bool PreviewReady { get; private set; }
+        internal CombatVFXController Vfx => vfxController;
+        internal LaneInputRouter InputRouter => inputRouter;
+        internal RhythmJudgementSystem JudgementSystem => judgementSystem;
+
+        /// <summary>Preview: show this many lanes (1-4), like a chart with that many lanes would.</summary>
+        internal void PreviewUseLaneCount(int count)
+        {
+            if (IsPreviewing) UseLaneCount(Mathf.Clamp(count, 1, RhythmChart.MaxLanes));
+        }
+
+        /// <summary>
+        /// Starts a preview battle: the encounter is staged exactly like a real one (player placement, combat camera,
+        /// lanes, hit line, HUD), then it waits in Battle Start. No turns run, notes deal no damage, no mana is gained and
+        /// the run build is left out. <see cref="CombatPreviewDriver"/> plays attacks and notes on it; end it with
+        /// <see cref="EndPreview"/>.
+        /// </summary>
+        public bool BeginPreview(CombatEncounterContext context)
+        {
+            if (IsBattleActive || context.Player == null || context.Enemy == null) return false;
+            IsPreviewing = true;
+            PreviewReady = false;
+            BeginBattle(context);
+            if (!IsBattleActive) IsPreviewing = false;
+            return IsBattleActive;
+        }
+
+        public void EndPreview()
+        {
+            if (IsPreviewing) CancelBattle();
+        }
+
+        private IEnumerator PreviewStartRoutine()
+        {
+            yield return encounterCoordinator.Prepare(encounter);
+            encounterPrepared = true;
+            PreviewReady = true;
         }
 
         private void EnsureServices()
@@ -265,6 +312,11 @@ namespace RythmRPG.Combat
             // has moved into place and hands over to the Loop on its last sample. The enemy turn starts right after
             // the intro animation, but its first projectile is planned for the Loop (see RunEnemyStep), so the intro
             // always plays out in full and the attack lands as the Loop begins.
+            if (IsPreviewing)
+            {
+                yield return PreviewStartRoutine();
+                yield break;
+            }
             if (!restartInPlace) yield return StoryBeat(CombatStoryMoment.EncounterStart);
             nextSequence = encounter.Enemy.SelectAttackSequence(UnityEngine.Random.value);
             CombatSong song = nextSequence != null ? nextSequence.Song : null;
@@ -720,7 +772,7 @@ namespace RythmRPG.Combat
         // Enemy turn: damage weighted by judgement (see CombatResourceRules), unless a ward covers the lane.
         private int ResolveDefenseDamage(Note note, RhythmJudgementResult result)
         {
-            if (DebugInvulnerable) return 0;
+            if (DebugInvulnerable || IsPreviewing) return 0;
             // Notes cleared by a board effect (zap, wall) never hurt.
             if (result.Source == NoteResolutionSource.Modifier) return 0;
             int amount = (resourceRules ?? CombatResourceRules.Load()).DefenseDamage(note.damage, result.Judgement);
@@ -765,7 +817,7 @@ namespace RythmRPG.Combat
         // (player input only) give mana at once, weighted by judgement.
         private void HandleManaJudgement(RhythmJudgementResult result)
         {
-            if (!IsBattleActive || encounter.Player == null) return;
+            if (!IsBattleActive || IsPreviewing || encounter.Player == null) return;
             CombatResourceRules rules = resourceRules ?? CombatResourceRules.Load();
             if (rules.UsesTurnAccuracy)
             {

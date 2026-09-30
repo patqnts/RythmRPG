@@ -105,6 +105,7 @@ GameObject:
   - component: {fileID: 4460731726730660772}
   - component: {fileID: 2216385083098651987}
   - component: {fileID: 676395023004352220}
+  - component: {fileID: 8046104770975018666}
   m_Layer: 0
   m_Name: Hold Laser
   m_TagString: Untagged
@@ -203,6 +204,7 @@ MonoBehaviour:
   badWindow: 1.25
   goodWindow: 0.45
   perfectWindow: 0.15
+  allowLatePress: 1
   anticipationRootVisual: {fileID: 3350417154089914214}
   anticipationFillVisual: {fileID: 8364003959666416426}
   hitWindowVisual: {fileID: 0}
@@ -252,6 +254,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &8046104770975018666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7056163312032873497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a321ef0f4c6e6c47813ed97c4d9fd38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.NoteSpawnOffset
+  space: 0
+  offset: {x: 0, y: 0, z: 0.8}
+  enemyAttacks: 1
+  playerAbilityCharts: 1
 --- !u!1 &7082157189032445068
 GameObject:
   m_ObjectHideFlags: 0

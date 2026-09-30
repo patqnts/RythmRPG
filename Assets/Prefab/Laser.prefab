@@ -129,6 +129,7 @@ GameObject:
   - component: {fileID: 1174923500817921273}
   - component: {fileID: 203357881762142560}
   - component: {fileID: 3745459253048717220}
+  - component: {fileID: 7637189329720619645}
   m_Layer: 3
   m_Name: Laser
   m_TagString: Untagged
@@ -180,6 +181,7 @@ MonoBehaviour:
   badWindow: 1.25
   goodWindow: 0.45
   perfectWindow: 0.15
+  allowLatePress: 1
   anticipationRootVisual: {fileID: 0}
   anticipationFillVisual: {fileID: 0}
   hitWindowVisual: {fileID: 0}
@@ -266,6 +268,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &7637189329720619645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7372676137305636529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a321ef0f4c6e6c47813ed97c4d9fd38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.NoteSpawnOffset
+  space: 0
+  offset: {x: 0, y: 0, z: 0.8}
+  enemyAttacks: 1
+  playerAbilityCharts: 1
 --- !u!1001 &1268090873635133786
 PrefabInstance:
   m_ObjectHideFlags: 0
