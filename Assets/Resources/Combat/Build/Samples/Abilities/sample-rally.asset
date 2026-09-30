@@ -25,21 +25,21 @@ MonoBehaviour:
   vfxProfile: {fileID: 11400000, guid: b1000000000000000000000000000103, type: 2}
   attackSequence: {fileID: 11400000, guid: e870fa7806314e07aa2b386962fd1c57, type: 2}
   effects:
-  - rid: 2956268597364391952
-  - rid: 2956268597364391953
+  - rid: 2956268601564201065
+  - rid: 2956268601564201066
   roles: 6
   delivery: 4
   description: Small heal plus +30% on your next attack.
   references:
     version: 2
     RefIds:
-    - rid: 2956268597364391952
+    - rid: 2956268601564201065
       type: {class: HealEffect, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
       data:
         timing: 0
         powerScale: 1
         element: 0
-    - rid: 2956268597364391953
+    - rid: 2956268601564201066
       type: {class: ApplyBuffEffect, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
       data:
         timing: 0

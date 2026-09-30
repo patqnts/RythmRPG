@@ -25,14 +25,14 @@ MonoBehaviour:
   vfxProfile: {fileID: 11400000, guid: b1000000000000000000000000000103, type: 2}
   attackSequence: {fileID: 11400000, guid: dff2a0e2354b23e45ac06feae1f8cf62, type: 2}
   effects:
-  - rid: 2956268597364391955
+  - rid: 2956268601564201068
   roles: 1
   delivery: 8
   description: 'Lightning body technique (not a spell: spell passives do not apply).'
   references:
     version: 2
     RefIds:
-    - rid: 2956268597364391955
+    - rid: 2956268601564201068
       type: {class: DealDamageEffect, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
       data:
         timing: 0

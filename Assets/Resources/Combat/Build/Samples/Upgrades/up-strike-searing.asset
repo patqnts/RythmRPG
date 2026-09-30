@@ -27,13 +27,13 @@ MonoBehaviour:
   manaCostDelta: 0
   cooldownDelta: 0
   addedEffects:
-  - rid: 2956268597364391958
+  - rid: 2956268601564201091
   styleTags:
   - adaptable
   references:
     version: 2
     RefIds:
-    - rid: 2956268597364391958
+    - rid: 2956268601564201091
       type: {class: DealDamageEffect, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
       data:
         timing: 0

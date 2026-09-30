@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.PassiveDefinition
   id: ps-steady-guard
   displayName: Steady Guard
+  icon: {fileID: 0}
   description: 
   category: 5
   maxLevel: 3
@@ -31,11 +32,11 @@ MonoBehaviour:
   - parry
   isFallback: 0
   effects:
-  - rid: 2956268597364391973
+  - rid: 2956268601564201106
   references:
     version: 2
     RefIds:
-    - rid: 2956268597364391973
+    - rid: 2956268601564201106
       type: {class: SteadyGuardPassive, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
       data:
         allowedMisses: 3

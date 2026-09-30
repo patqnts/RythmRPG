@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.PassiveDefinition
   id: ps-counter-preparation
   displayName: Counter Preparation
+  icon: {fileID: 0}
   description: Turns accurate enemy-turn defense into stored counterpower.
   category: 5
   maxLevel: 3
@@ -30,11 +31,11 @@ MonoBehaviour:
   - parry
   isFallback: 0
   effects:
-  - rid: 2956268597364391960
+  - rid: 2956268601564201093
   references:
     version: 2
     RefIds:
-    - rid: 2956268597364391960
+    - rid: 2956268601564201093
       type: {class: CounterPreparationPassive, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
       data:
         goodCounts: 0

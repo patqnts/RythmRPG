@@ -42,6 +42,9 @@ namespace RythmRPG.Combat
         [Header("Rewards")]
         [SerializeField, Range(1, 6)] private int optionsPerOffer = 3;
 
+        [Header("Elements (marks, reactions, zaps, walls, stagger)")]
+        [SerializeField] private ElementalRules elements = new();
+
         private static BuildBalanceRules fallback;
 
         public float GroupBonusCap => groupBonusCap;
@@ -54,6 +57,7 @@ namespace RythmRPG.Combat
         public int CounterExpiryPlayerTurns => counterExpiryPlayerTurns;
         public int MaxSecondaryPerRoot => maxSecondaryPerRoot;
         public int OptionsPerOffer => optionsPerOffer;
+        public ElementalRules Elements => elements ??= new ElementalRules();
 
         public static BuildBalanceRules Load()
         {

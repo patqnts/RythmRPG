@@ -25,15 +25,15 @@ MonoBehaviour:
   vfxProfile: {fileID: 11400000, guid: b1000000000000000000000000000103, type: 2}
   attackSequence: {fileID: 11400000, guid: 8723036c076846e697a8d687e88680d4, type: 2}
   effects:
-  - rid: 2956268597364391940
-  - rid: 2956268597364391941
+  - rid: 2956268601564201053
+  - rid: 2956268601564201054
   roles: 12
   delivery: 8
   description: For 2 enemy turns, Perfect defense reflects 60% of the note's damage (Good 30%, max 60 per turn). Also stores a counter charge (2 on a strong chart).
   references:
     version: 2
     RefIds:
-    - rid: 2956268597364391940
+    - rid: 2956268601564201053
       type: {class: ApplyBuffEffect, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
       data:
         timing: 0
@@ -42,7 +42,7 @@ MonoBehaviour:
         scaleByPerformance: 1
         turns: 2
         reflectCapPerTurn: 60
-    - rid: 2956268597364391941
+    - rid: 2956268601564201054
       type: {class: GainCountersEffect, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
       data:
         timing: 0

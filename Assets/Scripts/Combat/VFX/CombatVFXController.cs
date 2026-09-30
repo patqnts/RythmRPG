@@ -452,6 +452,8 @@ namespace RythmRPG.Combat
 
         private void PlayJudgement(RhythmJudgementResult result)
         {
+            // Notes cleared by zaps / walls show their own feedback, not a judgement.
+            if (result.Source == NoteResolutionSource.Modifier) return;
             string text = uiTheme != null ? uiTheme.GetText(result.Judgement) : result.Judgement.ToString().ToUpperInvariant();
             Color color = uiTheme != null ? uiTheme.GetColor(result.Judgement) : Color.white;
             CreateFloatingText(text, result.WorldPosition + Vector3.up * 0.65f, color);

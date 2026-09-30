@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.PassiveDefinition
   id: ps-follow-through
   displayName: Follow-Through
+  icon: {fileID: 0}
   description: 
   category: 6
   maxLevel: 3
@@ -31,11 +32,11 @@ MonoBehaviour:
   - tank
   isFallback: 0
   effects:
-  - rid: 2956268597364391976
+  - rid: 2956268601564201109
   references:
     version: 2
     RefIds:
-    - rid: 2956268597364391976
+    - rid: 2956268601564201109
       type: {class: FollowThroughPassive, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
       data:
         triggerRoles: 14

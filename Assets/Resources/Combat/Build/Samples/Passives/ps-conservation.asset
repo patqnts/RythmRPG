@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.PassiveDefinition
   id: ps-conservation
   displayName: Conservation
+  icon: {fileID: 0}
   description: 
   category: 2
   maxLevel: 3
@@ -31,11 +32,11 @@ MonoBehaviour:
   - adaptable
   isFallback: 0
   effects:
-  - rid: 2956268597364391967
+  - rid: 2956268601564201100
   references:
     version: 2
     RefIds:
-    - rid: 2956268597364391967
+    - rid: 2956268601564201100
       type: {class: ConservationPassive, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
       data:
         maxPaidCost: 8

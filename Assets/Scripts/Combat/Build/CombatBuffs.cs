@@ -58,6 +58,8 @@ namespace RythmRPG.Combat
         [Min(1)] public int ticks = 3;
         public StackPolicy stacking = StackPolicy.Refresh;
         [Min(1)] public int maxStacks = 1;
+        [Tooltip("Off for marks that only count down (Soaked, Static, Cracked): no damage at the tick boundary.")]
+        public bool dealsTickDamage = true;
     }
 
     /// <summary>Base for build buffs: counts down at one declared boundary and reports its state for the dev panel.</summary>
@@ -112,6 +114,8 @@ namespace RythmRPG.Combat
 
         public int Capacity { get; private set; }
         public override bool IsExpired => base.IsExpired || Capacity <= 0;
+        /// <summary>Healed when the shield is broken by damage (Tidal Veil). Cleared when it breaks.</summary>
+        public int BreakHeal { get; set; }
 
         public ShieldBuff(int amount, int enemyTurns) : base(Key, "Shield", enemyTurns, TurnBoundary.EnemyTurnEnd) => Capacity = Mathf.Max(0, amount);
 
@@ -220,8 +224,10 @@ namespace RythmRPG.Combat
         public StatusSpec Spec { get; }
         public int DamagePerTick { get; private set; }
         public int Stacks { get; private set; } = 1;
-        public int MaxStacks { get; }
+        public int MaxStacks { get; internal set; }
         public string RootCauseId { get; private set; }
+        /// <summary>Enemy turns the mark lasted when first applied (Wind extends it once per cast).</summary>
+        public int BaseTurns { get; }
 
         public StatusInstance(CombatBuildRuntime runtime, StatusSpec spec, int damagePerTick, int ticks, int maxStacks, string rootCauseId)
             : base("status:" + spec.statusId, spec.displayName, ticks, spec.tickAt)
@@ -231,7 +237,34 @@ namespace RythmRPG.Combat
             DamagePerTick = Mathf.Max(0, damagePerTick);
             MaxStacks = Mathf.Max(1, maxStacks);
             RootCauseId = rootCauseId;
+            BaseTurns = Mathf.Max(1, ticks);
         }
+
+        /// <summary>Stacking re-application: more stacks, the stronger potency, refreshed duration.</summary>
+        public void Add(int stacks, int damagePerTick, int ticks, string rootCauseId)
+        {
+            AddStacks(stacks);
+            RaisePotency(damagePerTick);
+            Refresh(ticks);
+            RootCauseId = rootCauseId;
+        }
+
+        /// <summary>Adds stacks up to the cap (at least one stack stays). Returns how many were added.</summary>
+        public int AddStacks(int amount)
+        {
+            int before = Stacks;
+            Stacks = Mathf.Clamp(Stacks + amount, 1, MaxStacks);
+            return Stacks - before;
+        }
+
+        public void SetStacks(int amount) => Stacks = Mathf.Clamp(amount, 1, MaxStacks);
+
+        public void RaisePotency(int damagePerTick) => DamagePerTick = Mathf.Max(DamagePerTick, damagePerTick);
+
+        public void Extend(int turns) => TurnsRemaining += Mathf.Max(0, turns);
+
+        /// <summary>Remaining tick damage if it ran its course (Combust, Steam).</summary>
+        public int RemainingDamage => Spec.dealsTickDamage ? DamagePerTick * Stacks * Mathf.Max(0, TurnsRemaining) : 0;
 
         /// <summary>Applies the declared stacking policy for a new application of the same status.</summary>
         public void Reapply(int damagePerTick, int ticks, string rootCauseId)
@@ -258,7 +291,7 @@ namespace RythmRPG.Combat
         public override void OnTurnBoundary(TurnBoundary boundary)
         {
             if (boundary != CountdownAt || IsExpired) return;
-            runtime?.TickStatus(this, DamagePerTick * Stacks);
+            if (Spec.dealsTickDamage) runtime?.TickStatus(this, DamagePerTick * Stacks);
             TurnsRemaining--;
         }
 
@@ -267,5 +300,8 @@ namespace RythmRPG.Combat
 
         public override bool IconOnEnemy => true;
         public override bool IconIsDebuff => true;
+        /// <summary>Stacking marks (Burn, Static) show their stacks; the others their turns left.</summary>
+        public override int IconCount => MaxStacks > 1 ? Stacks : TurnsRemaining;
+        public override string IconLabel => MaxStacks > 1 ? $"{Label} x{Stacks}" : Label;
     }
 }

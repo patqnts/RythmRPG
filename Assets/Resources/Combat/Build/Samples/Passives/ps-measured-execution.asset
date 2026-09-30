@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.PassiveDefinition
   id: ps-measured-execution
   displayName: Measured Execution
+  icon: {fileID: 0}
   description: 
   category: 5
   maxLevel: 3
@@ -31,11 +32,11 @@ MonoBehaviour:
   - glass-cannon
   isFallback: 0
   effects:
-  - rid: 2956268597364391977
+  - rid: 2956268601564201110
   references:
     version: 2
     RefIds:
-    - rid: 2956268597364391977
+    - rid: 2956268601564201110
       type: {class: MeasuredExecutionPassive, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
       data:
         threshold: 0.85

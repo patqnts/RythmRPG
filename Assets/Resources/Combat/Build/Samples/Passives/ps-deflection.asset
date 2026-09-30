@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.PassiveDefinition
   id: ps-deflection
   displayName: Deflection
+  icon: {fileID: 0}
   description: Conditional reflection without spending an action.
   category: 5
   maxLevel: 3
@@ -30,11 +31,11 @@ MonoBehaviour:
   - parry
   isFallback: 0
   effects:
-  - rid: 2956268597364391961
+  - rid: 2956268601564201094
   references:
     version: 2
     RefIds:
-    - rid: 2956268597364391961
+    - rid: 2956268601564201094
       type: {class: DeflectionPassive, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
       data:
         fraction: 0.3

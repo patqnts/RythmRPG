@@ -10,9 +10,11 @@ namespace RythmRPG.Combat
         [Tooltip("Shield = Base Power x this x performance (x shield modifiers).")]
         [SerializeField, Min(0f)] private float powerScale = 1f;
         [SerializeField, Min(1)] private int enemyTurns = 2;
+        [Tooltip("When the shield is broken by damage, heal this fraction of the shield this effect gave (Tidal Veil).")]
+        [SerializeField, Range(0f, 2f)] private float healOnBreak;
 
         public GainShieldEffect() { }
-        public GainShieldEffect(float scale, int turns) { powerScale = scale; enemyTurns = turns; }
+        public GainShieldEffect(float scale, int turns, float healOnBreak = 0f) { powerScale = scale; enemyTurns = turns; this.healOnBreak = healOnBreak; }
 
         public override void ApplyOnce(AbilityEffectContext context)
         {
@@ -27,11 +29,12 @@ namespace RythmRPG.Combat
             int amount = Mathf.RoundToInt(raw * context.Multiplier(EffectKind.Shield, ElementType.None));
             context.Cast?.Attribute(EffectKind.Shield, ElementType.None, raw, amount);
             int added = context.Build.Damage.AddShield(amount, enemyTurns, context.Cast?.CastId ?? "cast", context.Cast?.CastId, secondary: false,
-                icon: context.Ability != null ? context.Ability.Icon : null);
+                icon: context.Ability != null ? context.Ability.Icon : null, healOnBreak: healOnBreak);
             if (context.Cast != null) context.Cast.ShieldGained += added;
         }
 
-        public override string Describe(AbilityDefinition ability) => $"Shield x{powerScale:0.##} for {enemyTurns} enemy turns";
+        public override string Describe(AbilityDefinition ability) => $"Shield x{powerScale:0.##} for {enemyTurns} enemy turns"
+            + (healOnBreak > 0f ? $"; heals {Mathf.RoundToInt(healOnBreak * 100f)}% of it when broken" : string.Empty);
     }
 
     /// <summary>Applies a temporary buff to the player (next-attack bonus, reflection, damage reduction).</summary>

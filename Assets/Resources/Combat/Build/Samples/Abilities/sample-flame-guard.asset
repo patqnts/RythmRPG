@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1000000000000000000000000000040, type: 3}
+  m_Name: sample-flame-guard
+  m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.AbilityDefinition
+  id: sample-flame-guard
+  displayName: Flame Guard
+  icon: {fileID: 21300000, guid: c46d83f2b73aaa141bd5015819342d81, type: 3}
+  abilityType: 2
+  element: 1
+  manaCost: 20
+  cooldown: 2
+  basePower: 44
+  rhythmPattern: {fileID: 11400000, guid: b100000000000000000000000000010d, type: 2}
+  outcomeProfile: {fileID: 11400000, guid: b1000000000000000000000000000102, type: 2}
+  vfxProfile: {fileID: 11400000, guid: b1000000000000000000000000000103, type: 2}
+  attackSequence: {fileID: 11400000, guid: 8723036c076846e697a8d687e88680d4, type: 2}
+  effects:
+  - rid: 2956268601564201073
+  roles: 8
+  delivery: 8
+  description: For 2 enemy turns, each Perfect block adds 1 Burn stack to the enemy (max 5 per turn).
+  references:
+    version: 2
+    RefIds:
+    - rid: 2956268601564201073
+      type: {class: FlameGuardEffect, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
+      data:
+        timing: 0
+        enemyTurns: 2
+        stacksPerPerfect: 1
+        maxStacksPerTurn: 5
+        burnScalePerStack: 0.08

@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.PassiveDefinition
   id: ps-tidal-healing
   displayName: Tidal Healing
+  icon: {fileID: 0}
   description: 
   category: 4
   maxLevel: 3
@@ -30,11 +31,11 @@ MonoBehaviour:
   - tank
   isFallback: 0
   effects:
-  - rid: 2956268597364391972
+  - rid: 2956268601564201105
   references:
     version: 2
     RefIds:
-    - rid: 2956268597364391972
+    - rid: 2956268601564201105
       type: {class: ActionModifierPassive, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
       data:
         kind: 1

@@ -38,18 +38,27 @@ namespace RythmRPG.Combat
         [SerializeField] private string label = string.Empty;
         [SerializeField] private List<DamageAffinity> affinities = new();
         [SerializeField] private List<StatusResponse> statuses = new();
+        [Tooltip("Control limit: most times this enemy can be staggered per battle (0 = no limit). Bosses: 1 or 2.")]
+        [SerializeField, Min(0)] private int maxStaggers;
+        [Tooltip("Most notes zaps can clear per enemy turn (0 = the balance rules' limit).")]
+        [SerializeField, Min(0)] private int maxZapsPerTurn;
 
         public string Label => string.IsNullOrEmpty(label) ? "Neutral" : label;
+        public int MaxStaggers => maxStaggers;
+        public int MaxZapsPerTurn => maxZapsPerTurn;
         public IReadOnlyList<DamageAffinity> Affinities => affinities;
         public IReadOnlyList<StatusResponse> Statuses => statuses;
 
         public EnemyResponseProfile() { }
 
-        public EnemyResponseProfile(string label, IEnumerable<DamageAffinity> affinities, IEnumerable<StatusResponse> statuses = null)
+        public EnemyResponseProfile(string label, IEnumerable<DamageAffinity> affinities, IEnumerable<StatusResponse> statuses = null,
+            int maxStaggers = 0, int maxZapsPerTurn = 0)
         {
             this.label = label;
             this.affinities = affinities?.ToList() ?? new List<DamageAffinity>();
             this.statuses = statuses?.ToList() ?? new List<StatusResponse>();
+            this.maxStaggers = Mathf.Max(0, maxStaggers);
+            this.maxZapsPerTurn = Mathf.Max(0, maxZapsPerTurn);
         }
 
         /// <summary>Raw authored multiplier (1 when not listed). The damage service clamps it with the balance rules.</summary>
@@ -70,6 +79,8 @@ namespace RythmRPG.Combat
             parts.AddRange(statuses.Where(s => s != null).Select(s => s.immune
                 ? $"{s.statusId} immune"
                 : $"{s.statusId} dur x{s.durationScale:0.##} pot x{s.potencyScale:0.##}"));
+            if (maxStaggers > 0) parts.Add($"stagger max {maxStaggers}/battle");
+            if (maxZapsPerTurn > 0) parts.Add($"zaps max {maxZapsPerTurn}/turn");
             return parts.Count == 0 ? "no affinities" : string.Join(", ", parts);
         }
     }

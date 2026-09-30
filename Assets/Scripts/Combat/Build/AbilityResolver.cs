@@ -47,12 +47,18 @@ namespace RythmRPG.Combat
             foreach (AbilityEffect effect in Effects)
             {
                 if (effect is DealDamageEffect damage) yield return damage.ResolveElement(Element);
+                else if (effect is MultiHitDamageEffect) yield return Element;
                 else if (includeStatus && effect is ApplyStatusEffect status) yield return status.Spec.element;
+                else if (effect is IElementalEffect elemental && (includeStatus || elemental.DealsDamage)) yield return elemental.EffectElement(Element);
             }
         }
 
         public IEnumerable<ElementType> HealingElements() =>
-            Effects.OfType<HealEffect>().Select(heal => heal.Element);
+            Effects.OfType<HealEffect>().Select(heal => heal.Element).Concat(Effects.OfType<RegenEffect>().Select(regen => regen.Element));
+
+        /// <summary>Every element this ability touches: its own element and any elemental component, mark or zap.</summary>
+        public IEnumerable<ElementType> AllElements() =>
+            new[] { Element }.Concat(DamageElements()).Concat(HealingElements()).Where(element => element != ElementType.None).Distinct();
 
         public string CostText => ManaCost == BaseManaCost ? ManaCost + " MP" : $"{ManaCost} MP (base {BaseManaCost})";
         public string CooldownText => Cooldown == BaseCooldown ? Cooldown + " turns" : $"{Cooldown} turns (base {BaseCooldown})";
@@ -95,6 +101,9 @@ namespace RythmRPG.Combat
                         effect?.ModifyQuote(quote, passive.Level, passive.Definition.DisplayName);
                 }
             }
+            // 3. Live battle state (a pending one-shot discount such as Tailwind) for the build in battle.
+            CombatBuildRuntime live = CombatBuildRuntime.Active;
+            if (live != null && build != null && live.Build == build) live.AdjustQuote(quote);
             quote.ManaCost = Mathf.Max(0, quote.ManaCost);
             quote.Cooldown = Mathf.Max(0, quote.Cooldown);
             return quote;

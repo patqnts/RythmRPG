@@ -27,13 +27,13 @@ MonoBehaviour:
   manaCostDelta: 3
   cooldownDelta: 0
   addedEffects:
-  - rid: 2956268597364391959
+  - rid: 2956268601564201092
   styleTags:
   - adaptable
   references:
     version: 2
     RefIds:
-    - rid: 2956268597364391959
+    - rid: 2956268601564201092
       type: {class: ApplyStatusEffect, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
       data:
         timing: 0
@@ -44,6 +44,7 @@ MonoBehaviour:
           tickAt: 0
           powerScalePerTick: 0.08
           ticks: 2
-          stacking: 1
-          maxStacks: 1
+          stacking: 2
+          maxStacks: 5
+          dealsTickDamage: 1
         minimumPerformance: 0.25

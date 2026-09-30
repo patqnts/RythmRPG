@@ -19,6 +19,8 @@ namespace RythmRPG.Combat
         [SerializeField] private CombatModifierSystem modifierSystem;
         [Tooltip("Run build inside the encounter (passives, damage service, buffs). Added automatically.")]
         [SerializeField] private CombatBuildRuntime buildRuntime;
+        // The rhythm board for zaps / walls (enemy notes, seen by the build runtime).
+        private readonly RunnerNoteBoard noteBoard = new();
         [SerializeField] private CombatVFXController vfxController;
         [SerializeField] private CombatUIController uiController;
         [SerializeField] private CombatLanePresentation3D lanePresentation;
@@ -118,6 +120,7 @@ namespace RythmRPG.Combat
             // (passives may change max health). Acquired passives live on RunBuild, so this survives restarts.
             buildRuntime.BeginEncounter(context.Player, context.Enemy, modifierSystem, RunBuild.Current,
                 vfxController != null ? vfxController.ShowFloatingText : null);
+            buildRuntime.Board = noteBoard.Bind(runner);
             WatchEnemyDefeat(context.Enemy);
             encounter.Player.CaptureBattleStart();
             encounter.Enemy.CaptureBattleStart();
@@ -304,6 +307,10 @@ namespace RythmRPG.Combat
             // (on the next bar, loop only, no intro).
             if (sequence != null) musicDirector?.PlaySong(sequence.Song);
             IReadOnlyList<EnemyAttackStepDefinition> steps = sequence?.Steps;
+            // Stagger (Tremor, Mudlock): the attack loses its last step; a single-step attack is weakened instead.
+            int stepCount = steps?.Count(step => step != null) ?? 0;
+            if (buildRuntime != null && buildRuntime.ConsumeStagger(Math.Max(1, stepCount)) && stepCount > 1)
+                steps = steps.Where(step => step != null).Take(stepCount - 1).ToList();
             if (steps == null || steps.Count == 0)
             {
                 RhythmChart fallback = runner.FallbackChart ?? defaultEnemyPattern
@@ -676,12 +683,19 @@ namespace RythmRPG.Combat
             BeginBattle(context);
         }
 
-        private void HandleModifierJudgement(RhythmJudgementResult result) => modifierSystem.OnJudgementResolved(result, runner);
+        private void HandleModifierJudgement(RhythmJudgementResult result)
+        {
+            modifierSystem.OnJudgementResolved(result, runner);
+            // Live ability effects during the player's own chart (Chain Spark arcs).
+            if (IsBattleActive && buildRuntime != null && runner != null) buildRuntime.OnChartJudgement(result, runner.CurrentMode);
+        }
 
         // Enemy turn: damage weighted by judgement (see CombatResourceRules), unless a ward covers the lane.
         private int ResolveDefenseDamage(Note note, RhythmJudgementResult result)
         {
             if (DebugInvulnerable) return 0;
+            // Notes cleared by a board effect (zap, wall) never hurt.
+            if (result.Source == NoteResolutionSource.Modifier) return 0;
             int amount = (resourceRules ?? CombatResourceRules.Load()).DefenseDamage(note.damage, result.Judgement);
             if (amount > 0 && modifierSystem.TryBlockDamage(result)) return 0;
             return amount;
@@ -736,7 +750,8 @@ namespace RythmRPG.Combat
 
         private void HandleStatsJudgement(RhythmJudgementResult result)
         {
-            if (!IsBattleActive || stats == null) return;
+            // Notes cleared by zaps / walls are not the player's judgements: no combo, no accuracy.
+            if (!IsBattleActive || stats == null || result.Source == NoteResolutionSource.Modifier) return;
             stats.RecordJudgement(result.Judgement, runner != null ? runner.CurrentMode : PatternRunMode.EnemyDefense);
             ComboChanged?.Invoke(stats.Combo);
         }

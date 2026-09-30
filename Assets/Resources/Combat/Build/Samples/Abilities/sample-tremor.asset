@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1000000000000000000000000000040, type: 3}
+  m_Name: sample-tremor
+  m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.AbilityDefinition
+  id: sample-tremor
+  displayName: Tremor
+  icon: {fileID: 21300000, guid: 4d7635c366a76274c85747592d98d2f5, type: 3}
+  abilityType: 0
+  element: 4
+  manaCost: 0
+  cooldown: 2
+  basePower: 11
+  rhythmPattern: {fileID: 11400000, guid: b100000000000000000000000000010d, type: 2}
+  outcomeProfile: {fileID: 11400000, guid: b1000000000000000000000000000102, type: 2}
+  vfxProfile: {fileID: 11400000, guid: b1000000000000000000000000000103, type: 2}
+  attackSequence: {fileID: 11400000, guid: dff2a0e2354b23e45ac06feae1f8cf62, type: 2}
+  effects:
+  - rid: 2956268601564201086
+  - rid: 2956268601564201087
+  roles: 1
+  delivery: 8
+  description: 'Small Earth hit. Stagger: the enemy''s next attack loses one step (bosses resist after their limit).'
+  references:
+    version: 2
+    RefIds:
+    - rid: 2956268601564201086
+      type: {class: DealDamageEffect, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
+      data:
+        timing: 0
+        powerScale: 1
+        elementSource: 0
+        specificElement: 0
+    - rid: 2956268601564201087
+      type: {class: StaggerEffect, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
+      data:
+        timing: 0
+        minimumPerformance: 0.5

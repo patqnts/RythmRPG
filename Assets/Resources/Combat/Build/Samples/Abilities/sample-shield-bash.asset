@@ -25,24 +25,25 @@ MonoBehaviour:
   vfxProfile: {fileID: 11400000, guid: b1000000000000000000000000000103, type: 2}
   attackSequence: {fileID: 11400000, guid: dff2a0e2354b23e45ac06feae1f8cf62, type: 2}
   effects:
-  - rid: 2956268597364391946
-  - rid: 2956268597364391947
+  - rid: 2956268601564201059
+  - rid: 2956268601564201060
   roles: 9
   delivery: 1
   description: Physical hit that also gives a shield (x2 its power) for 2 enemy turns.
   references:
     version: 2
     RefIds:
-    - rid: 2956268597364391946
+    - rid: 2956268601564201059
       type: {class: DealDamageEffect, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
       data:
         timing: 0
         powerScale: 1
         elementSource: 0
         specificElement: 0
-    - rid: 2956268597364391947
+    - rid: 2956268601564201060
       type: {class: GainShieldEffect, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
       data:
         timing: 0
         powerScale: 2
         enemyTurns: 2
+        healOnBreak: 0

@@ -25,15 +25,15 @@ MonoBehaviour:
   vfxProfile: {fileID: 11400000, guid: b1000000000000000000000000000103, type: 2}
   attackSequence: {fileID: 11400000, guid: 8723036c076846e697a8d687e88680d4, type: 2}
   effects:
-  - rid: 2956268597364391948
-  - rid: 2956268597364391949
+  - rid: 2956268601564201061
+  - rid: 2956268601564201062
   roles: 8
   delivery: 8
   description: Take 35% less note damage for 2 enemy turns and gain a 60 shield.
   references:
     version: 2
     RefIds:
-    - rid: 2956268597364391948
+    - rid: 2956268601564201061
       type: {class: ApplyBuffEffect, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
       data:
         timing: 0
@@ -42,9 +42,10 @@ MonoBehaviour:
         scaleByPerformance: 0
         turns: 2
         reflectCapPerTurn: 60
-    - rid: 2956268597364391949
+    - rid: 2956268601564201062
       type: {class: GainShieldEffect, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
       data:
         timing: 0
         powerScale: 1
         enemyTurns: 2
+        healOnBreak: 0

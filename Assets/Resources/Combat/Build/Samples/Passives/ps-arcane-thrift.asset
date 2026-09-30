@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.PassiveDefinition
   id: ps-arcane-thrift
   displayName: Arcane Thrift
+  icon: {fileID: 0}
   description: 
   category: 2
   maxLevel: 3
@@ -31,11 +32,11 @@ MonoBehaviour:
   - glass-cannon
   isFallback: 0
   effects:
-  - rid: 2956268597364391978
+  - rid: 2956268601564201111
   references:
     version: 2
     RefIds:
-    - rid: 2956268597364391978
+    - rid: 2956268601564201111
       type: {class: ManaCostPassive, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
       data:
         filter:

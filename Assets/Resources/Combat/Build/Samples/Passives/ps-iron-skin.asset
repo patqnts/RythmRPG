@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.PassiveDefinition
   id: ps-iron-skin
   displayName: Iron Skin
+  icon: {fileID: 0}
   description: 
   category: 8
   maxLevel: 3
@@ -30,11 +31,11 @@ MonoBehaviour:
   - tank
   isFallback: 0
   effects:
-  - rid: 2956268597364391970
+  - rid: 2956268601564201103
   references:
     version: 2
     RefIds:
-    - rid: 2956268597364391970
+    - rid: 2956268601564201103
       type: {class: MitigationPassive, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
       data:
         fraction: 0.25

@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dcaf364c3488584aa4b23882270f869, type: 3}
+  m_Name: preset-pyre
+  m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.BuildPreset
+  id: preset-pyre
+  displayName: Pyre Warden (Fire + Water)
+  playstyle: elemental
+  description: 'Objective: stack Burn, then cash it in. Ember Lash and Flame Guard (Perfect blocks) add Burn; Pyre Keeper raises the cap. Undertow on a Burning enemy makes Steam (burst from the Burn stacks); Combust waits in reserve to detonate Burn directly.
+
+    Trade-off: Burn is slow until it is detonated; Steam uses up both marks.'
+  slots:
+  - ability: {fileID: 11400000, guid: 0c049a7a0d1c15f449dcf2af22931dd1, type: 2}
+    upgrades: []
+  - ability: {fileID: 11400000, guid: 4e28f1cd2c820f34b8809c355236ffee, type: 2}
+    upgrades: []
+  - ability: {fileID: 11400000, guid: 55128a40cb33acc41ba20e7d443b821c, type: 2}
+    upgrades: []
+  - ability: {fileID: 11400000, guid: 4cc2684b7107c2b43b4a86328e16f8ce, type: 2}
+    upgrades: []
+  reserve:
+  - {fileID: 11400000, guid: 34ae375c3ce579a4994e2860f989c4b5, type: 2}
+  passives:
+  - passive: {fileID: 11400000, guid: 336fc4189f8d80e4a91408567637d568, type: 2}
+    level: 1
+  - passive: {fileID: 11400000, guid: dadaefed3e93549408326e9293c18945, type: 2}
+    level: 1

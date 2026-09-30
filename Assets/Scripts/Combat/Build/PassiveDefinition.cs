@@ -175,6 +175,8 @@ namespace RythmRPG.Combat
         public int Opportunities;
         public readonly int[] PlayerJudgements = new int[4];
         public int NonPlayerResolutions;
+        /// <summary>Notes cleared by board effects (zaps, walls): not opportunities and not misses.</summary>
+        public int Cleared;
         public int DamageTaken;
         public bool Interrupted;
 
@@ -244,5 +246,11 @@ namespace RythmRPG.Combat
         public virtual void ModifyBuff(PassiveHook hook, BuffSpec spec) { }
         public virtual void ModifyStatus(PassiveHook hook, StatusSpec spec, ref int damagePerTick, ref int ticks) { }
         public virtual void OnTurnBoundary(PassiveHook hook, TurnBoundary boundary) { }
+        /// <summary>Extra stack cap for a stacking status / mark (Pyre Keeper: Burn +2).</summary>
+        public virtual int StatusStackBonus(PassiveHook hook, string statusId) => 0;
+        /// <summary>A reaction is about to resolve: change its strength or keep the marks (Catalyst).</summary>
+        public virtual void ModifyReaction(PassiveHook hook, ReactionContext context) { }
+        /// <summary>A note would kill the player: return true to leave them at 1 HP instead (once-per-battle effects).</summary>
+        public virtual bool PreventLethal(PassiveHook hook) => false;
     }
 }

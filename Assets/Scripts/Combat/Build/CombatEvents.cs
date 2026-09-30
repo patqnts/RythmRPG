@@ -24,7 +24,17 @@ namespace RythmRPG.Combat
         StatusApplied,
         PassiveTriggered,
         EnemyDefeated,
-        PlayerDefeated
+        PlayerDefeated,
+        /// <summary>A board effect (zap, wall) cleared an enemy note: no damage, no judgement for the player.</summary>
+        NoteCleared,
+        /// <summary>Lightning damage from a zapped note.</summary>
+        ZapDamage,
+        /// <summary>Two elemental marks reacted (Steam, Overload, Wildfire, Mudlock, Magnetize, Conduct).</summary>
+        Reaction,
+        ReactionDamage,
+        /// <summary>The enemy's next attack was staggered (or the stagger was resisted).</summary>
+        Stagger,
+        MarkApplied
     }
 
     /// <summary>

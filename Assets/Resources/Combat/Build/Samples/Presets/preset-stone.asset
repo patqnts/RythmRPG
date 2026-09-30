@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dcaf364c3488584aa4b23882270f869, type: 3}
+  m_Name: preset-stone
+  m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.BuildPreset
+  id: preset-stone
+  displayName: Stonewarden (Earth + Wind)
+  playstyle: elemental
+  description: 'Objective: control the enemy''s turn. Tremor staggers (the next attack loses a step), Stone Wall eats the busiest lane, Quake Slam cracks the enemy for melee. Cyclone''s Wind hits extend marks; Tailwind makes the next ability cheaper after it. Aftershock echoes Earth damage; Attunement rewards mixing elements. Gale Step (dodge) waits in reserve.
+
+    Trade-off: bosses resist stagger after their limit; the wall only covers one lane.'
+  slots:
+  - ability: {fileID: 11400000, guid: 32eeb8755b59c89448232764132d9c69, type: 2}
+    upgrades: []
+  - ability: {fileID: 11400000, guid: 47bf19a48cc5d0246883943a1208dd36, type: 2}
+    upgrades: []
+  - ability: {fileID: 11400000, guid: f8ef5b5ca1818974d9a3c17dd52149cc, type: 2}
+    upgrades: []
+  - ability: {fileID: 11400000, guid: f344ad70ab98a6b4da0d4afdd782a82a, type: 2}
+    upgrades: []
+  reserve:
+  - {fileID: 11400000, guid: 6c1fc415c4c02e941944686f76952580, type: 2}
+  passives:
+  - passive: {fileID: 11400000, guid: c9e868167f11fcb45ac4663c257063b8, type: 2}
+    level: 1
+  - passive: {fileID: 11400000, guid: 8193622255648864fbce60098f6f2707, type: 2}
+    level: 1
+  - passive: {fileID: 11400000, guid: 29d1040c015cee34fa25dd2c9311a40e, type: 2}
+    level: 1
+  - passive: {fileID: 11400000, guid: b4393a429c61eb1419c86603c12065f0, type: 2}
+    level: 1

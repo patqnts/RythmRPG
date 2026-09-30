@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f071840deecc95c4e81596bafe4d19e5, type: 3}
+  m_Name: ps-bedrock
+  m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.PassiveDefinition
+  id: ps-bedrock
+  displayName: Bedrock
+  icon: {fileID: 0}
+  description: Shielded melee attacks hit harder.
+  category: 1
+  maxLevel: 3
+  requirement:
+    delivery: 0
+    role: 0
+    requireElement: 0
+    element: 0
+    requireEffectType: 
+  exclusivityGroup: 
+  stackingGroup: 
+  stackingCap: 0
+  styleTags:
+  - elemental
+  - tank
+  isFallback: 0
+  effects:
+  - rid: 2956268601564201117
+  references:
+    version: 2
+    RefIds:
+    - rid: 2956268601564201117
+      type: {class: BedrockPassive, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
+      data:
+        fraction: 0.1
+        fractionPerLevel: 0.05

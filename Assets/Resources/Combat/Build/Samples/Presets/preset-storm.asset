@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dcaf364c3488584aa4b23882270f869, type: 3}
+  m_Name: preset-storm
+  m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.BuildPreset
+  id: preset-storm
+  displayName: Storm Caller (Lightning + Water)
+  playstyle: elemental
+  description: 'Objective: soak the enemy, then chain lightning through it. Undertow soaks (Conduct: zaps and arcs chain further). Chain Spark arcs on every Perfect and stacks Static; Storm Ward and Conductor zap incoming notes (destroyed + damage). Capacitor makes Static discharges hit hard; Catalyst boosts reactions.
+
+    Trade-off: needs Perfects on both turns; zaps are capped per enemy turn.'
+  slots:
+  - ability: {fileID: 11400000, guid: 0c049a7a0d1c15f449dcf2af22931dd1, type: 2}
+    upgrades: []
+  - ability: {fileID: 11400000, guid: b20d94935277db64ba4bc56d6a6bbfe4, type: 2}
+    upgrades: []
+  - ability: {fileID: 11400000, guid: 1d514ee0a654daf47bddde80da3d3414, type: 2}
+    upgrades: []
+  - ability: {fileID: 11400000, guid: 4cc2684b7107c2b43b4a86328e16f8ce, type: 2}
+    upgrades: []
+  reserve: []
+  passives:
+  - passive: {fileID: 11400000, guid: e32226516b2018a41af3d8ba07cb7708, type: 2}
+    level: 1
+  - passive: {fileID: 11400000, guid: 7abf1753ec13e8344863dff0247eda60, type: 2}
+    level: 1
+  - passive: {fileID: 11400000, guid: dadaefed3e93549408326e9293c18945, type: 2}
+    level: 1

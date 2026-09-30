@@ -25,22 +25,22 @@ MonoBehaviour:
   vfxProfile: {fileID: 11400000, guid: b1000000000000000000000000000103, type: 2}
   attackSequence: {fileID: 11400000, guid: dff2a0e2354b23e45ac06feae1f8cf62, type: 2}
   effects:
-  - rid: 2956268597364391938
-  - rid: 2956268597364391939
+  - rid: 2956268601564201051
+  - rid: 2956268601564201052
   roles: 1
   delivery: 9
   description: 'Counter strike: spends every stored counter charge (up to 5) for +30% damage each.'
   references:
     version: 2
     RefIds:
-    - rid: 2956268597364391938
+    - rid: 2956268601564201051
       type: {class: DealDamageEffect, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
       data:
         timing: 0
         powerScale: 1
         elementSource: 0
         specificElement: 0
-    - rid: 2956268597364391939
+    - rid: 2956268601564201052
       type: {class: SpendCountersEffect, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
       data:
         timing: 0

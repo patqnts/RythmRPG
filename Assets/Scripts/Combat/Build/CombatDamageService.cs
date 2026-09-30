@@ -21,6 +21,9 @@ namespace RythmRPG.Combat
         public int CountersGained;
         public int CountersSpent;
         public int CountersExpired;
+        public int Reactions;
+        public int NotesCleared;
+        public int Staggers;
 
         public void Contribute(string label, int amount)
         {
@@ -41,6 +44,8 @@ namespace RythmRPG.Combat
         private static readonly Color ManaColor = new(0.45f, 0.7f, 1f);
         private static readonly Color ShieldColor = new(0.8f, 0.85f, 1f);
         private static readonly Color StatusColor = new(1f, 0.6f, 0.3f);
+        private static readonly Color ZapColor = new(0.65f, 0.85f, 1f);
+        private static readonly Color ReactionColor = new(1f, 0.85f, 0.35f);
 
         private readonly CombatBuildRuntime runtime;
 
@@ -64,6 +69,12 @@ namespace RythmRPG.Combat
             if (secondary && !runtime.Events.TrySpendSecondary(rootId, Rules.MaxSecondaryPerRoot)) return 0;
 
             int final = applyAffinity ? Mathf.Max(0, Mathf.RoundToInt(amount * Affinity(element))) : amount;
+            // Cracked: melee hits of a cast land harder.
+            if (kind == CombatEventKind.AbilityDamage)
+            {
+                float cracked = runtime.Marks.CrackedMultiplier(cast);
+                if (cracked > 1f) final = Mathf.RoundToInt(final * cracked);
+            }
             int actual = enemy.ApplyDamage(final);
             runtime.Record(new CombatEvent
             {
@@ -88,9 +99,16 @@ namespace RythmRPG.Combat
                     runtime.ShowAtEnemy(actual.ToString(), StatusColor);
                     break;
                 case CombatEventKind.PassiveDamage:
+                case CombatEventKind.ZapDamage:
+                case CombatEventKind.ReactionDamage:
                     stats.Contribute(label ?? sourceId, actual);
+                    if (kind != CombatEventKind.PassiveDamage)
+                        runtime.ShowAtEnemy(actual.ToString(), kind == CombatEventKind.ZapDamage ? ZapColor : ReactionColor);
                     break;
             }
+            // Elemental hits feed marks and reactions. Status ticks and reaction damage never do (no chains).
+            if (kind is CombatEventKind.AbilityDamage or CombatEventKind.PassiveDamage or CombatEventKind.ZapDamage)
+                runtime.Marks.OnElementalHit(element, actual, rootId);
             return actual;
         }
 
@@ -137,7 +155,8 @@ namespace RythmRPG.Combat
         }
 
         /// <summary>Adds shield capacity (all sources share one capped shield). Returns the capacity actually added.</summary>
-        public int AddShield(int amount, int enemyTurns, string sourceId, string rootId, bool secondary, string label = null, Sprite icon = null)
+        public int AddShield(int amount, int enemyTurns, string sourceId, string rootId, bool secondary, string label = null, Sprite icon = null,
+            float healOnBreak = 0f)
         {
             PlayerCombatant player = runtime.Player;
             CombatModifierSystem modifiers = runtime.Modifiers;
@@ -158,6 +177,7 @@ namespace RythmRPG.Combat
                 modifiers.NotifyChanged();
             }
             if (icon != null) shield.Icon = icon;
+            if (healOnBreak > 0f && added > 0) shield.BreakHeal += Mathf.RoundToInt(added * healOnBreak);
             runtime.Record(new CombatEvent
             {
                 Kind = CombatEventKind.ShieldGained, SourceId = sourceId, RootCauseId = rootId, Secondary = secondary,
@@ -183,6 +203,9 @@ namespace RythmRPG.Combat
                 amount = runtime.ModifyIncomingDamage(outcome.Result, amount);
                 foreach (DamageReductionBuff reduction in runtime.Modifiers.OfType<DamageReductionBuff>())
                     amount = Mathf.RoundToInt(amount * (1f - reduction.Strength));
+                // Soaked enemy, staggered single-step attack.
+                amount = runtime.Marks.ApplySoaked(amount);
+                if (runtime.EnemyDamageScale < 1f) amount = Mathf.RoundToInt(amount * runtime.EnemyDamageScale);
                 amount = Mathf.Max(0, amount);
                 outcome.Prevented = outcome.Attempted - amount;
                 ShieldBuff shield = runtime.Modifiers.Find<ShieldBuff>(ShieldBuff.Key);
@@ -191,6 +214,19 @@ namespace RythmRPG.Combat
                     outcome.Absorbed = shield.Absorb(amount);
                     amount -= outcome.Absorbed;
                     runtime.Modifiers.NotifyChanged();
+                    // Tidal Veil: a broken shield heals.
+                    if (shield.Capacity <= 0 && shield.BreakHeal > 0)
+                    {
+                        int heal = shield.BreakHeal;
+                        shield.BreakHeal = 0;
+                        HealPlayer(heal, ElementType.Water, "shield-break", outcome.RootCauseId);
+                    }
+                }
+                // Once-per-battle survival (Unyielding).
+                if (amount > 0 && amount >= player.CurrentHealth && player.CurrentHealth > 0 && runtime.PreventLethal())
+                {
+                    outcome.Prevented += amount - (player.CurrentHealth - 1);
+                    amount = player.CurrentHealth - 1;
                 }
             }
             outcome.Actual = player.ApplyDamage(amount);

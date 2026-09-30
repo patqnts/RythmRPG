@@ -126,6 +126,30 @@ Also:
   The style also sets the column's position, spacing and maximum height, the category colours, the trigger flash, the effect-row offsets and colours, and the panel's texts, colours and keys.
 - **Icons**: `PassiveDefinition` has a new `icon` field. With no icon, the tile shows the passive's first letter on its category colour. Buffs, statuses, shields and wards now remember the icon of the ability or passive that applied them. The reward cards use passive icons too.
 
+### Elements: marks, reactions and board effects
+
+Full content list and numbers: `abilities-and-passives.md` ("Elements", "Elemental abilities", "Elemental passives").
+
+- **Where it lives:** `Build/Elements/`:
+  - `ElementalRules`: tuning, inside the Build Balance Rules asset under Elements.
+  - `ElementalMarks`: marks, the Wind quirk, discharge and the six reactions.
+  - `ICombatNoteBoard`: the board seen by the runtime.
+  - `ElementalBuffs`: Storm Ward, Flame Guard, Stone Wall, Dodge, Regen.
+  - `ElementalEffects`: the 11 new ability effects.
+  - `ElementalPassives`: the 11 new passives.
+- **Also added:** `Notes/RunnerNoteBoard.cs` (the board over the pattern runner) and `VFX/LightningArcVfx.cs` (a code-made placeholder arc).
+- **Marks are statuses** (`burn`, `soaked`, `static`, `cracked`), so enemy status responses, icons and the F11 panel all work with them. Burn from Inferno / Ignite now stacks with the new Burn sources.
+- **Reactions** are checked on every elemental hit (ability, passive or zap damage, never status ticks or reaction damage) and whenever a mark is applied. Each reaction fires once per root (cast or enemy note), through the event log's idempotency keys. Passives adjust them through `PassiveEffect.ModifyReaction`.
+- **Zaps and walls** resolve enemy notes as `NoteResolutionSource.Modifier` Perfects:
+  - The controller gives them 0 damage and skips combo and stats; mana already ignores non-player notes.
+  - The VFX skips their judgement popup.
+  - The runtime counts them as `EnemyTurnSummary.Cleared`, not as misses or opportunities.
+  - Limits: the per-source cap, then the per-turn cap in the rules, then the enemy profile's cap.
+- **Live chart effects** (`ILiveChartEffect`, Chain Spark) receive the player's judgements during their own chart through `CombatBuildRuntime.OnChartJudgement`.
+- **Stagger:** `TryStagger` queues it and `ConsumeStagger` runs in `EnemyTurnRoutine`. Enemy profiles have new `maxStaggers` / `maxZapsPerTurn` fields (0 = no limit).
+- **Live costs:** `CombatBuildRuntime.Active` lets `AbilityResolver` apply live cost changes (Tailwind's one-shot discount) to quotes in battle. The discount is used up at commit.
+- **Tests:** `Tests/EditMode/ElementalTests.cs`, 23 tests.
+
 ### Play mode without domain reload
 
 The project has Enter Play Mode Options on (no domain reload), so statics survive between play sessions while every ScriptableObject made in code is destroyed when play stops. That emptied the chosen build on the next play. `RunBuild` now resets the sample cache and registry at play start and rebuilds the current build from its ids (`RuntimeInitializeLoadType.SubsystemRegistration`).
@@ -174,6 +198,15 @@ All changes are additive. Serialized enum values, asset fields and numbers are u
 - **`CombatUIController`:** creates and binds the passive column and both effect rows, and draws the shield as a barrier on the player's health bar. It has new optional scene slots for all three.
 - **`ResourceBarView` / `CombatHudStyle`:** barrier segment (`SetBarrier`, `Barrier`), plus `barrier` colour / `barrierSprite` on each bar style.
 - **`LaneWardModifier`:** implements `ICombatEffectIcon`. Ward effects set the ability's icon and name.
+- **Elements (this pass):**
+  - `CombatController`: note board, stagger, cleared notes skip damage / combo, live chart judgements.
+  - `CombatVFXController`: no popup for cleared notes.
+  - `StatusSpec.dealsTickDamage`.
+  - `StatusInstance`: stack helpers; icon shows stacks.
+  - `ShieldBuff.BreakHeal`, and `GainShieldEffect` gets `healOnBreak`.
+  - `AbilityQuote.AllElements` / `DamageElements` include marks and zaps.
+  - New event kinds.
+  - `PassiveEffect` hooks: `StatusStackBonus`, `ModifyReaction`, `PreventLethal`.
 - **`CombatReport`:** build attribution fields (contributions, reflected, status, resisted, absorbed, prevented, overheal, MP restored, unused benefits).
 
 ## Resolution order (as implemented)
@@ -206,6 +239,13 @@ All changes are additive. Serialized enum values, asset fields and numbers are u
 
 ## Not done yet / open
 
+- The elemental system compiles against stubs and its 23 tests pass there, but it hasn't been played. Check in play mode:
+  - zap timing and feel
+  - Stone Wall's lead time
+  - the placeholder lightning arcs
+  - whether cleared notes should play a different break animation
+
+  Quake Slam wants its own hold-note chart; it borrows Basic Attack's for now.
 - The HUD, barrier and loadout panel compile against stubs but have not been seen on screen yet. Check the layout in play mode and tune `BuildHudStyle`.
 - The ability icons don't show mana cost. The panel shows the effective cost, and usability dimming uses it.
 - The result screen doesn't show the new build attribution rows yet. The data is on `CombatReport`.

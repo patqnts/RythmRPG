@@ -25,14 +25,14 @@ MonoBehaviour:
   vfxProfile: {fileID: 11400000, guid: b1000000000000000000000000000103, type: 2}
   attackSequence: {fileID: 11400000, guid: e3e51a83b6e28ba418720d20d15c42e9, type: 2}
   effects:
-  - rid: 2956268597364391954
+  - rid: 2956268601564201067
   roles: 1
   delivery: 6
   description: 'Water spell: the answer to fire-resistant enemies.'
   references:
     version: 2
     RefIds:
-    - rid: 2956268597364391954
+    - rid: 2956268601564201067
       type: {class: DealDamageEffect, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
       data:
         timing: 0

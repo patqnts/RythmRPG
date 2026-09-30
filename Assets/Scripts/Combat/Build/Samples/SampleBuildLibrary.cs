@@ -19,6 +19,7 @@ namespace RythmRPG.Combat
         public const string StyleGlass = "glass-cannon";
         public const string StyleTank = "tank";
         public const string StyleAdaptable = "adaptable";
+        public const string StyleElemental = "elemental";
 
         public sealed class Content
         {
@@ -69,13 +70,16 @@ namespace RythmRPG.Combat
             {
                 new DamageAffinity(ElementType.None, 1.25f), new DamageAffinity(ElementType.Fire, 1.25f),
                 new DamageAffinity(ElementType.Water, 1.25f), new DamageAffinity(ElementType.Lightning, 1.25f)
-            })
+            }),
+            // Boss control limits: one stagger per battle, at most 3 zapped notes per enemy turn.
+            new("Boss (control limits)", new DamageAffinity[0], null, maxStaggers: 1, maxZapsPerTurn: 3)
         };
 
         private static StatusSpec Burn(float scalePerTick, int ticks) => new()
         {
             statusId = "burn", displayName = "Burn", element = ElementType.Fire, tickAt = TurnBoundary.EnemyTurnStart,
-            powerScalePerTick = scalePerTick, ticks = ticks, stacking = StackPolicy.Refresh, maxStacks = 1
+            // Same status as the Burn mark: sources add stacks (Ember Lash, Flame Guard) up to the mark's cap.
+            powerScalePerTick = scalePerTick, ticks = ticks, stacking = StackPolicy.CappedAdd, maxStacks = 5
         };
 
         private static Content Create()
@@ -181,6 +185,90 @@ namespace RythmRPG.Combat
                 .Describe("Weak free hit that restores 8 mana (scaled by performance). A conservation turn.")
                 .Effect(new DealDamageEffect(1f)).Effect(new RestoreManaEffect(8)).Build());
 
+            // ---------------- Elemental abilities (marks, reactions, board effects) ----------------
+            // Fire: build Burn up, then detonate it.
+            AbilityDefinition emberLash = Add(new AbilityDefinition.Builder("sample-ember-lash", "Ember Lash", basic)
+                .Type(AbilityType.SpecialAttack).Tags(AbilityRole.Damage, AbilityDelivery.Melee).Element(ElementType.Fire)
+                .Cost(10).Power(P(1.1f))
+                .Describe("Fire strike. Every Perfect in its chart adds 1 Burn stack (max 3).")
+                .Effect(new DealDamageEffect(1f)).Effect(new MarkPerPerfectEffect(ApplyMarkEffect.Mark.Burn, 1, 3, 0.15f)).Build());
+
+            AbilityDefinition flameGuard = Add(new AbilityDefinition.Builder("sample-flame-guard", "Flame Guard", guard)
+                .Type(AbilityType.Defensive).Tags(AbilityRole.Defense, AbilityDelivery.Technique).Element(ElementType.Fire)
+                .Cost(20, 2).Power(P(2f))
+                .Describe("For 2 enemy turns, each Perfect block adds 1 Burn stack to the enemy (max 5 per turn).")
+                .Effect(new FlameGuardEffect(2, 1, 5, 0.08f)).Build());
+
+            AbilityDefinition combust = Add(new AbilityDefinition.Builder("sample-combust", "Combust", flame)
+                .Type(AbilityType.SpecialAttack).Tags(AbilityRole.Damage, AbilityDelivery.Spell).Element(ElementType.Fire)
+                .Cost(35, 2).Power(P(1f))
+                .Describe("Removes all Burn and deals its remaining damage x1.5 right away, plus a small Fire hit.")
+                .Effect(new DealDamageEffect(0.5f)).Effect(new ConsumeBurnEffect(1.5f)).Build());
+
+            // Water: weaken the enemy, heal later.
+            AbilityDefinition undertow = Add(new AbilityDefinition.Builder("sample-undertow", "Undertow", flame)
+                .Type(AbilityType.SpecialAttack).Tags(AbilityRole.Damage, AbilityDelivery.Spell).Element(ElementType.Water)
+                .Cost(20).Power(P(1.6f))
+                .Describe("Water spell. Soaks the enemy for 2 turns: its notes hit 20% softer.")
+                .Effect(new DealDamageEffect(1f)).Effect(new ApplyMarkEffect(ApplyMarkEffect.Mark.Soaked)).Build());
+
+            AbilityDefinition tidalVeil = Add(new AbilityDefinition.Builder("sample-tidal-veil", "Tidal Veil", guard)
+                .Type(AbilityType.Defensive).Tags(AbilityRole.Defense, AbilityDelivery.Spell).Element(ElementType.Water)
+                .Cost(25, 2).Power(P(0.8f))
+                .Describe("Shield for 2 enemy turns. When it breaks, you heal 50% of its size.")
+                .Effect(new GainShieldEffect(1.2f, 2, healOnBreak: 0.5f)).Build());
+
+            AbilityDefinition rainDance = Add(new AbilityDefinition.Builder("sample-rain-dance", "Rain Dance", heal)
+                .Type(AbilityType.Healing).Tags(AbilityRole.Healing, AbilityDelivery.Spell).Element(ElementType.Water)
+                .Cost(20, 3).Power(Mathf.RoundToInt(healPower * 0.9f))
+                .Describe("Heals at the start of each of your turns for 3 turns (Water healing).")
+                .Effect(new RegenEffect(1.2f, 3, ElementType.Water)).Build());
+
+            // Lightning: chain hits, clear dense patterns.
+            AbilityDefinition chainSpark = Add(new AbilityDefinition.Builder("sample-chain-spark", "Chain Spark", flame)
+                .Type(AbilityType.SpecialAttack).Tags(AbilityRole.Damage, AbilityDelivery.Spell).Element(ElementType.Lightning)
+                .Cost(15).Power(P(1.2f))
+                .Describe("Lightning spell. Each Perfect in its chart fires an arc at the enemy right away and adds 1 Static.")
+                .Effect(new DealDamageEffect(1f)).Effect(new ChainArcEffect(0.2f, 1, 0.2f)).Build());
+
+            AbilityDefinition stormWard = Add(new AbilityDefinition.Builder("sample-storm-ward", "Storm Ward", guard)
+                .Type(AbilityType.Defensive).Tags(AbilityRole.Defense, AbilityDelivery.Spell).Element(ElementType.Lightning)
+                .Cost(20, 3).Power(P(2f))
+                .Describe("For 2 enemy turns, each Perfect block zaps the next 2 notes: they are destroyed and deal Lightning damage. Max 6 zaps per turn.")
+                .Effect(new StormWardEffect(2, 2, 0.1f, 6)).Build());
+
+            // Earth: heavy hits, walls, control.
+            AbilityDefinition quakeSlam = Add(new AbilityDefinition.Builder("sample-quake-slam", "Quake Slam", basic)
+                .Type(AbilityType.SpecialAttack).Tags(AbilityRole.Damage, AbilityDelivery.Melee).Element(ElementType.Earth)
+                .Cost(20, 2).Power(P(2.4f))
+                .Describe("Heavy Earth hit (give it a chart built on hold notes). Cracks the enemy: +20% melee damage taken for 2 turns.")
+                .Effect(new DealDamageEffect(1f)).Effect(new ApplyMarkEffect(ApplyMarkEffect.Mark.Cracked)).Build());
+
+            AbilityDefinition stoneWall = Add(new AbilityDefinition.Builder("sample-stone-wall", "Stone Wall", guard)
+                .Type(AbilityType.Defensive).Tags(AbilityRole.Defense, AbilityDelivery.Technique).Element(ElementType.Earth)
+                .Cost(20, 3).Power(0)
+                .Describe("Walls off the lane with the most incoming notes. The wall absorbs the next 4 notes there (no damage, no counters).")
+                .Effect(new StoneWallEffect(4, 2)).Build());
+
+            AbilityDefinition tremor = Add(new AbilityDefinition.Builder("sample-tremor", "Tremor", basic)
+                .Type(AbilityType.BasicAttack).Tags(AbilityRole.Damage, AbilityDelivery.Technique).Element(ElementType.Earth)
+                .Cost(0, 2).Power(P(0.5f))
+                .Describe("Small Earth hit. Stagger: the enemy's next attack loses one step (bosses resist after their limit).")
+                .Effect(new DealDamageEffect(1f)).Effect(new StaggerEffect(0.5f)).Build());
+
+            // Wind: tempo, feeds the other marks.
+            AbilityDefinition galeStep = Add(new AbilityDefinition.Builder("sample-gale-step", "Gale Step", basic)
+                .Type(AbilityType.BasicAttack).Tags(AbilityRole.Damage | AbilityRole.Defense, AbilityDelivery.Technique).Element(ElementType.Wind)
+                .Cost(0, 2).Power(P(0.6f))
+                .Describe("Light Wind hit. Your first Miss next enemy turn is dodged.")
+                .Effect(new DealDamageEffect(1f)).Effect(new DodgeEffect(1, 1)).Build());
+
+            AbilityDefinition cyclone = Add(new AbilityDefinition.Builder("sample-cyclone", "Cyclone", flame)
+                .Type(AbilityType.SpecialAttack).Tags(AbilityRole.Damage, AbilityDelivery.Spell).Element(ElementType.Wind)
+                .Cost(30, 2).Power(P(2.2f))
+                .Describe("Six small Wind hits. Each one adds a Burn / Static stack and extends the enemy's marks.")
+                .Effect(new MultiHitDamageEffect(1f, 6)).Build());
+
             // ---------------- Dedicated upgrades ----------------
             AbilityUpgradeDefinition AddUpgrade(AbilityUpgradeDefinition upgrade)
             {
@@ -285,6 +373,42 @@ namespace RythmRPG.Combat
                 .Effect(new ActionModifierPassive(EffectKind.Damage, new EffectFilter(AbilityDelivery.Melee), 0.2f, 0.1f))
                 .Style(StyleParry, StyleAdaptable).Build());
 
+            // Elemental
+            PassiveDefinition pyreKeeper = AddPassive(new PassiveDefinition.Builder("ps-pyre-keeper", "Pyre Keeper", PassiveCategory.ElementalEnhancement)
+                .Describe("Burn stacks higher and burns hotter.")
+                .Requires(new AbilityRequirement { requireElement = true, element = ElementType.Fire })
+                .Effect(new MarkMasteryPassive(ApplyMarkEffect.Mark.Burn, 2, 1, 0.1f, 0.1f)).Style(StyleElemental, StyleGlass).Build());
+            PassiveDefinition conductor = AddPassive(new PassiveDefinition.Builder("ps-conductor", "Conductor", PassiveCategory.RhythmConditioned)
+                .Describe("Your first Perfects each enemy turn zap the next note.")
+                .Effect(new ConductorPassive(3, 1, 1, 8, 4)).Style(StyleElemental, StyleParry).Build());
+            PassiveDefinition capacitor = AddPassive(new PassiveDefinition.Builder("ps-capacitor", "Capacitor", PassiveCategory.ElementalEnhancement)
+                .Describe("Static holds more charge and discharges harder.")
+                .Effect(new MarkMasteryPassive(ApplyMarkEffect.Mark.Static, 3, 1, 0.5f, 0.25f)).Style(StyleElemental).Build());
+            PassiveDefinition riptide = AddPassive(new PassiveDefinition.Builder("ps-riptide", "Riptide", PassiveCategory.Conversion)
+                .Describe("Water overheal becomes Water damage.")
+                .Effect(new RiptidePassive(0.5f, 0.25f)).Style(StyleElemental, StyleTank).Build());
+            PassiveDefinition bedrock = AddPassive(new PassiveDefinition.Builder("ps-bedrock", "Bedrock", PassiveCategory.MeleeEnhancement)
+                .Describe("Shielded melee attacks hit harder.")
+                .Effect(new BedrockPassive(0.1f, 0.05f)).Style(StyleElemental, StyleTank).Build());
+            PassiveDefinition aftershock = AddPassive(new PassiveDefinition.Builder("ps-aftershock", "Aftershock", PassiveCategory.ElementalEnhancement)
+                .Describe("Earth abilities echo at the next enemy turn start.")
+                .Effect(new AftershockPassive(0.3f, 0.1f)).Style(StyleElemental).Build());
+            PassiveDefinition tailwind = AddPassive(new PassiveDefinition.Builder("ps-tailwind", "Tailwind", PassiveCategory.MagicEfficiency)
+                .Describe("A Wind ability makes your next ability cheaper.")
+                .Effect(new TailwindPassive(0.3f, 0.1f)).Style(StyleElemental, StyleAdaptable).Build());
+            PassiveDefinition catalyst = AddPassive(new PassiveDefinition.Builder("ps-catalyst", "Catalyst", PassiveCategory.ElementalEnhancement)
+                .Describe("Stronger reactions; the first reaction each battle keeps its marks.")
+                .Effect(new CatalystPassive(0.25f, 0.1f)).Style(StyleElemental).Build());
+            PassiveDefinition attunement = AddPassive(new PassiveDefinition.Builder("ps-attunement", "Attunement", PassiveCategory.ElementalEnhancement)
+                .Describe("Mix elements: elemental damage grows with each different element used this battle.")
+                .Exclusive("element-focus").Effect(new AttunementPassive(0.04f, 0.02f, 5)).Style(StyleElemental, StyleAdaptable).Build());
+            PassiveDefinition purist = AddPassive(new PassiveDefinition.Builder("ps-purist", "Purist", PassiveCategory.ElementalEnhancement)
+                .Describe("Commit to one element: more damage, longer marks.")
+                .Exclusive("element-focus").Effect(new PuristPassive(0.15f, 0.05f, 1)).Style(StyleElemental).Build());
+            PassiveDefinition unyielding = AddPassive(new PassiveDefinition.Builder("ps-unyielding", "Unyielding", PassiveCategory.Survivability, 1)
+                .Describe("Once per battle, a lethal hit leaves you at 1 HP.")
+                .Effect(new UnyieldingPassive()).Style(StyleTank, StyleGlass).Build());
+
             // Fallback (always eligible, levels up to 5)
             AddPassive(new PassiveDefinition.Builder("ps-vitality", "Vitality", PassiveCategory.Survivability, 5)
                 .Fallback().Effect(new MaxHealthPassive(0.05f, 0.05f)).Build());
@@ -335,6 +459,37 @@ namespace RythmRPG.Combat
                           "and counters only come from Perfect defense, so neither trade-off disappears.")
                 .Slot(strike).Slot(riposte, honedRiposte).Slot(fireBolt, quickcast).Slot(siphon)
                 .Passive(counterPrep).Passive(glassHeart).Build());
+
+            // Elemental presets: marks, reactions and board effects.
+            AddPreset(new BuildPreset.Builder("preset-storm", "Storm Caller (Lightning + Water)", StyleElemental)
+                .Describe("Objective: soak the enemy, then chain lightning through it. Undertow soaks (Conduct: zaps and arcs chain further). " +
+                          "Chain Spark arcs on every Perfect and stacks Static; Storm Ward and Conductor zap incoming notes (destroyed + damage). " +
+                          "Capacitor makes Static discharges hit hard; Catalyst boosts reactions.\n" +
+                          "Trade-off: needs Perfects on both turns; zaps are capped per enemy turn.")
+                .Slot(strike).Slot(chainSpark).Slot(stormWard).Slot(undertow)
+                .Passive(conductor).Passive(capacitor).Passive(catalyst).Build());
+
+            AddPreset(new BuildPreset.Builder("preset-pyre", "Pyre Warden (Fire + Water)", StyleElemental)
+                .Describe("Objective: stack Burn, then cash it in. Ember Lash and Flame Guard (Perfect blocks) add Burn; Pyre Keeper raises the cap. " +
+                          "Undertow on a Burning enemy makes Steam (burst from the Burn stacks); Combust waits in reserve to detonate Burn directly.\n" +
+                          "Trade-off: Burn is slow until it is detonated; Steam uses up both marks.")
+                .Slot(strike).Slot(emberLash).Slot(flameGuard).Slot(undertow).Reserve(combust)
+                .Passive(pyreKeeper).Passive(catalyst).Build());
+
+            AddPreset(new BuildPreset.Builder("preset-tide", "Tidecaller (Water)", StyleElemental)
+                .Describe("Objective: sustain and weaken. Soaked enemies hit 20% softer; Tidal Veil heals when it breaks; Rain Dance heals over time. " +
+                          "Riptide turns Water overheal into damage; Purist (every elemental ability is Water) adds damage and a turn to Soaked. Unyielding is the safety net.\n" +
+                          "Trade-off: slow damage; Purist breaks if you equip another element.")
+                .Slot(strike).Slot(undertow).Slot(tidalVeil).Slot(rainDance)
+                .Passive(riptide).Passive(purist).Passive(unyielding).Build());
+
+            AddPreset(new BuildPreset.Builder("preset-stone", "Stonewarden (Earth + Wind)", StyleElemental)
+                .Describe("Objective: control the enemy's turn. Tremor staggers (the next attack loses a step), Stone Wall eats the busiest lane, " +
+                          "Quake Slam cracks the enemy for melee. Cyclone's Wind hits extend marks; Tailwind makes the next ability cheaper after it. " +
+                          "Aftershock echoes Earth damage; Attunement rewards mixing elements. Gale Step (dodge) waits in reserve.\n" +
+                          "Trade-off: bosses resist stagger after their limit; the wall only covers one lane.")
+                .Slot(tremor).Slot(quakeSlam).Slot(stoneWall).Slot(cyclone).Reserve(galeStep)
+                .Passive(aftershock).Passive(tailwind).Passive(attunement).Passive(bedrock).Build());
 
             // Keep unused locals referenced for readers: every ability above is in the reward pool.
             _ = thunderClap;

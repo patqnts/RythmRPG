@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f071840deecc95c4e81596bafe4d19e5, type: 3}
+  m_Name: ps-pyre-keeper
+  m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.PassiveDefinition
+  id: ps-pyre-keeper
+  displayName: Pyre Keeper
+  icon: {fileID: 0}
+  description: Burn stacks higher and burns hotter.
+  category: 3
+  maxLevel: 3
+  requirement:
+    delivery: 0
+    role: 0
+    requireElement: 1
+    element: 1
+    requireEffectType: 
+  exclusivityGroup: 
+  stackingGroup: 
+  stackingCap: 0
+  styleTags:
+  - elemental
+  - glass-cannon
+  isFallback: 0
+  effects:
+  - rid: 2956268601564201113
+  references:
+    version: 2
+    RefIds:
+    - rid: 2956268601564201113
+      type: {class: MarkMasteryPassive, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
+      data:
+        mark: 0
+        extraStacks: 2
+        extraStacksPerLevel: 1
+        potency: 0.1
+        potencyPerLevel: 0.1

@@ -25,14 +25,14 @@ MonoBehaviour:
   vfxProfile: {fileID: 11400000, guid: b1000000000000000000000000000103, type: 2}
   attackSequence: {fileID: 11400000, guid: 8723036c076846e697a8d687e88680d4, type: 2}
   effects:
-  - rid: 2956268597364391945
+  - rid: 2956268601564201058
   roles: 4
   delivery: 8
   description: Your next attack deals +60% damage (scaled by this chart). Lasts 2 player turns.
   references:
     version: 2
     RefIds:
-    - rid: 2956268597364391945
+    - rid: 2956268601564201058
       type: {class: ApplyBuffEffect, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
       data:
         timing: 0
