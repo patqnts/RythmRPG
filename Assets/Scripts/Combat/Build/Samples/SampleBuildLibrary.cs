@@ -39,6 +39,9 @@ namespace RythmRPG.Combat
             return cached;
         }
 
+        /// <summary>Forget the cached objects (they are destroyed when play mode ends).</summary>
+        internal static void ClearCache() => cached = null;
+
         /// <summary>A new, uncached set of sample objects (used by the asset exporter).</summary>
         public static Content CreateFresh() => Create();
 

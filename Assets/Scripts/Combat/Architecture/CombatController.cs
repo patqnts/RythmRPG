@@ -40,6 +40,12 @@ namespace RythmRPG.Combat
         [Tooltip("Empty = Resources/Combat/UI/CombatResultGrading.")]
         [SerializeField] private CombatResultGrading resultGrading;
 
+        [Header("Rewards (run build)")]
+        [Tooltip("After a victory with a run build active, show the reward selection screen (after the result screen).")]
+        [SerializeField] private bool showRewardScreen = true;
+        [Tooltip("Empty = a RewardSelectionScreen in the scene, then the reward style's prefab, then the generated template.")]
+        [SerializeField] private RewardSelectionScreen rewardScreen;
+
         private CombatTurnStateMachine stateMachine;
         private EnemyAttackSequenceDefinition nextSequence;
         private CombatResourceRules resourceRules;
@@ -616,6 +622,10 @@ namespace RythmRPG.Combat
                 }
             }
 
+            // Reward: after the result screen, before returning to the world. Retrying the fight shows the same saved
+            // offer; a claimed offer is not shown again.
+            if (victory && showRewardScreen) yield return ShowRewardSelection();
+
             if (!victory)
             {
                 encounter.Player.RestoreBattleStart();
@@ -730,6 +740,31 @@ namespace RythmRPG.Combat
             stats.RecordJudgement(result.Judgement, runner != null ? runner.CurrentMode : PatternRunMode.EnemyDefense);
             ComboChanged?.Invoke(stats.Combo);
         }
+
+        /// <summary>Reward selection for this encounter's saved offer (run build only).</summary>
+        private IEnumerator ShowRewardSelection()
+        {
+            RunBuildState build = RunBuild.Current;
+            if (build == null) yield break;
+            BuildContentRegistry registry = BuildContentRegistry.Instance;
+            RewardOfferData offer = RewardDirector.GetOrCreateOffer(build, "victory:" + EncounterKey, registry);
+            if (offer == null || offer.claimed || offer.options.Count == 0) yield break;
+            RewardSelectionScreen screen = ResolveRewardScreen();
+            if (screen != null) yield return screen.Show(build, offer, registry);
+        }
+
+        private RewardSelectionScreen ResolveRewardScreen()
+        {
+            if (rewardScreen != null) return rewardScreen;
+            rewardScreen = FindAnyObjectByType<RewardSelectionScreen>(FindObjectsInactive.Include);
+            if (rewardScreen != null) return rewardScreen;
+            RewardSelectionStyle style = RewardSelectionStyle.LoadOrDefault();
+            rewardScreen = style.ScreenPrefab != null ? Instantiate(style.ScreenPrefab) : RewardSelectionScreen.CreateTemplate(style);
+            return rewardScreen;
+        }
+
+        /// <summary>True when victories open the reward selection screen (the dev panel then stays closed).</summary>
+        public bool ShowsRewardScreen => showRewardScreen;
 
         private CombatResultScreen ResolveResultScreen()
         {

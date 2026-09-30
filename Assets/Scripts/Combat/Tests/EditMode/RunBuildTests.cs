@@ -564,6 +564,29 @@ namespace RythmRPG.Combat.Tests
         }
 
         [Test]
+        public void Build_SurvivesItsDefinitionsBeingDestroyed_ByRebuildingFromIds()
+        {
+            // Enter Play Mode Options (no domain reload): code-made definitions die when play mode ends while the
+            // static build survives. Its ids must still serialize so it can be rebuilt from fresh definitions.
+            AbilityDefinition oldStrike = Ability("strike", AbilityRole.Damage, AbilityDelivery.Melee, 0, 100);
+            PassiveDefinition oldPassive = Passive("vitality", new MaxHealthPassive(0.1f, 0f));
+            var build = new RunBuildState();
+            build.AddAbility(oldStrike, 0);
+            build.AddPassive(oldPassive);
+            Object.DestroyImmediate(oldStrike);
+            Object.DestroyImmediate(oldPassive);
+
+            var registry = new BuildContentRegistry();
+            AbilityDefinition newStrike = Ability("strike", AbilityRole.Damage, AbilityDelivery.Melee, 0, 100);
+            PassiveDefinition newPassive = Passive("vitality", new MaxHealthPassive(0.1f, 0f));
+            registry.Register(newStrike);
+            registry.Register(newPassive);
+            RunBuildState rebuilt = RunBuildState.FromJson(build.ToJson(), registry);
+            Assert.IsTrue(rebuilt.GetSlot(0) != null && rebuilt.GetSlot(0).Definition == newStrike);
+            Assert.IsTrue(rebuilt.Passives.Count == 1 && rebuilt.Passives[0].Definition == newPassive);
+        }
+
+        [Test]
         public void SamplePresets_AreFunctionalBuilds()
         {
             BuildContentRegistry registry = new();

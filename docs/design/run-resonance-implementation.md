@@ -24,9 +24,11 @@ Companion to `run-resonance-architecture.md` (the spec). This file covers what w
    - counter charges, shields, buffs and statuses, plus which passives are active
    - the last cast's breakdown: paid cost, performance, base → modified → affinity → dealt, and each modifier line
    - the last enemy turn's judgements, the encounter totals and the event log
-6. Win a battle. **F4** kills the enemy instantly. The panel then opens the **Rewards** tab with a saved offer of 3 options. Claim one:
-   - A new ability with full slots shows a **Replace [n]** button per slot, each with its consequences. Your only 0 MP action cannot be replaced.
-   - Retrying the fight shows the same offer; a claimed offer stays claimed.
+6. Win a battle. **F4** kills the enemy instantly. After the result screen closes, the **reward selection screen** shows 3 cards (new ability / upgrade / passive) with previews:
+   - Pick with the arrow keys + Enter/Space, number keys 1-3, a gamepad (D-pad + South) or the mouse (hover + click). Backspace skips; the offer stays unclaimed and can still be taken from the panel.
+   - A new ability with full slots opens a **Replace which ability?** step: each slot shows its consequences (upgrades go to reserve with it, passives that turn inactive). Your only 0 MP action is greyed out. Row 5 keeps the new ability in reserve.
+   - Retrying the fight shows the same offer; a claimed offer is never shown again.
+   - The panel's Rewards tab can reopen the screen for any unclaimed offer ("Open the reward screen for this offer").
 7. On the **Enemy** tab, swap in a test affinity profile to try elements against the current enemy:
    - Fire-resistant
    - Armored (physical ×0.6, lightning ×1.5)
@@ -89,7 +91,15 @@ Also:
 - `Scripts/Editor/BuildSampleExporter.cs`:
   - *Tools > Rythm RPG > Combat > Build > Export Sample Build Content* saves the samples as editable assets in `Resources/Combat/Build/Samples`. Exported assets win over the code definitions with the same ids.
   - *Create Build Balance Rules Asset* creates the rules asset.
-- `Combat/Tests/EditMode/RunBuildTests.cs`: 26 tests covering the acceptance criteria.
+- `Combat/Tests/EditMode/RunBuildTests.cs`: 27 tests covering the acceptance criteria.
+
+### Reward selection screen
+
+`Build/UI/`: `RewardSelectionScreen` (code-generated uGUI + TMP, overlay canvas above the result screen, same pattern as `CombatResultScreen`), `RewardCardView`, `RewardChoiceButton` (mouse), `RewardSelectionStyle` (texts, colours per reward kind, sizes, motion, keys, sounds; font falls back to the result style's). `CombatController.TerminalRoutine` shows it after a victory when a run build is active (`showRewardScreen`, optional scene/prefab screen). Menus: *Tools > Rythm RPG > Combat > Build > Create Reward Selection Style Asset* / *Create Reward Selection Screen In Scene* (editable copy the controller will find).
+
+### Play mode without domain reload
+
+The project has Enter Play Mode Options on (no domain reload), so statics survive between play sessions while every ScriptableObject made in code is destroyed when play stops. That emptied the chosen build on the next play. `RunBuild` now resets the sample cache and registry at play start and rebuilds the current build from its ids (`RuntimeInitializeLoadType.SubsystemRegistration`).
 
 ## Changes to existing code
 
@@ -163,10 +173,9 @@ All changes are additive. Serialized enum values, asset fields and numbers are u
 
 ## Not done yet / open
 
-- The reward offer UI is only the dev panel. A real in-game reward screen still needs designing.
 - The ability icons don't show mana cost. The panel shows the effective cost, and usability dimming uses it.
 - The result screen doesn't show the new build attribution rows yet. The data is on `CombatReport`.
 - `RunBuild.Current` is held in memory for the session. The panel saves it to PlayerPrefs. It is not wired into a game save.
 - Only one sample status (Burn). Interrupt / control effects and boss control limits (spec 9.1, 9.2) have data hooks (status responses) but no control effect yet.
-- None of this has been run in Unity yet. Everything compiles against Unity API stubs, and the 26 new EditMode tests pass there, together with the existing `AbilityResolutionTests`. Run the EditMode tests in Unity and a play session per build.
+- None of this has been run in Unity yet. Everything compiles against Unity API stubs, and the 27 new EditMode tests pass there, together with the existing `AbilityResolutionTests`. Run the EditMode tests in Unity and a play session per build.
 - The numbers are placeholders. Evaluate per the spec's §13 (mana economy, turns survived, passive contribution) after playtesting.

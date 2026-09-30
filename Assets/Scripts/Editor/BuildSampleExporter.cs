@@ -63,6 +63,30 @@ namespace RythmRPG.EditorTools
             Selection.activeObject = rules;
         }
 
+        [MenuItem("Tools/Rythm RPG/Combat/Build/Create Reward Selection Style Asset")]
+        public static void CreateRewardStyle()
+        {
+            string path = "Assets/Resources/" + RewardSelectionStyle.ResourcePath + ".asset";
+            RewardSelectionStyle existing = AssetDatabase.LoadAssetAtPath<RewardSelectionStyle>(path);
+            if (existing == null)
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(path) ?? "Assets/Resources");
+                existing = ScriptableObject.CreateInstance<RewardSelectionStyle>();
+                AssetDatabase.CreateAsset(existing, path);
+                AssetDatabase.SaveAssets();
+            }
+            Selection.activeObject = existing;
+        }
+
+        [MenuItem("Tools/Rythm RPG/Combat/Build/Create Reward Selection Screen In Scene")]
+        public static void CreateRewardScreenInScene()
+        {
+            RewardSelectionScreen screen = RewardSelectionScreen.CreateTemplate(Resources.Load<RewardSelectionStyle>(RewardSelectionStyle.ResourcePath));
+            Undo.RegisterCreatedObjectUndo(screen.gameObject, "Create Reward Selection Screen");
+            Selection.activeObject = screen.gameObject;
+            Debug.Log("[Build] Reward selection screen created. Edit its parts freely; CombatController finds it in the scene.");
+        }
+
         private static void Save(Object asset, string path)
         {
             asset.hideFlags = HideFlags.None;

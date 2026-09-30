@@ -245,15 +245,17 @@ namespace RythmRPG.Combat
             var data = new SaveData
             {
                 presetId = PresetId, displayName = DisplayName, playstyle = Playstyle, seed = Seed, nextId = nextId,
+                // ReferenceEquals, not Unity's ==: definitions made in code are destroyed when play mode ends, but their
+                // ids are still readable, which is what lets RunBuild rebuild the build for the next play session.
                 abilities = abilities.Select(a => new AbilitySave
                 {
-                    instanceId = a.InstanceId, abilityId = a.Definition != null ? a.Definition.Id : string.Empty,
-                    upgrades = a.Upgrades.Where(u => u != null).Select(u => u.Id).ToList()
+                    instanceId = a.InstanceId, abilityId = !ReferenceEquals(a.Definition, null) ? a.Definition.Id : string.Empty,
+                    upgrades = a.Upgrades.Where(u => !ReferenceEquals(u, null)).Select(u => u.Id).ToList()
                 }).ToList(),
                 slots = slots.Select(s => s != null ? s.InstanceId : string.Empty).ToList(),
                 passives = passives.Select(p => new PassiveSave
                 {
-                    instanceId = p.InstanceId, passiveId = p.Definition != null ? p.Definition.Id : string.Empty, level = p.Level
+                    instanceId = p.InstanceId, passiveId = !ReferenceEquals(p.Definition, null) ? p.Definition.Id : string.Empty, level = p.Level
                 }).ToList(),
                 offers = offers.ToList(),
                 claims = claimIds.ToList()
@@ -305,12 +307,38 @@ namespace RythmRPG.Combat
     public static class RunBuild
     {
         private static RunBuildState current;
+        private static string pendingRestore;
+
+        /// <summary>
+        /// Play mode start. With domain reload off (Enter Play Mode Options) static state survives between play
+        /// sessions, but every ScriptableObject created in code during the last session was destroyed when it ended,
+        /// so cached samples, the registry and the build would all point at dead objects (the "empty build"). Drop the
+        /// caches and rebuild the build from its ids on first use.
+        /// </summary>
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetForPlayMode()
+        {
+            SampleBuildLibrary.ClearCache();
+            BuildContentRegistry.Reset();
+            pendingRestore = current != null ? current.ToJson() : null;
+            current = null;
+        }
 
         public static RunBuildState Current
         {
-            get => current;
+            get
+            {
+                if (pendingRestore != null)
+                {
+                    string json = pendingRestore;
+                    pendingRestore = null;
+                    current = RunBuildState.FromJson(json, BuildContentRegistry.Instance);
+                }
+                return current;
+            }
             set
             {
+                pendingRestore = null;
                 if (current == value) return;
                 current = value;
                 CurrentChanged?.Invoke(current);
@@ -323,8 +351,9 @@ namespace RythmRPG.Combat
 
         public static void Save()
         {
-            if (current == null) PlayerPrefs.DeleteKey(SaveKey);
-            else PlayerPrefs.SetString(SaveKey, current.ToJson());
+            RunBuildState build = Current;
+            if (build == null) PlayerPrefs.DeleteKey(SaveKey);
+            else PlayerPrefs.SetString(SaveKey, build.ToJson());
             PlayerPrefs.Save();
         }
 

@@ -122,6 +122,7 @@ namespace RythmRPG.Combat
             if (!offerAfterVictory || build == null || report == null || !report.Victory || controller == null) return;
             RewardOfferData offer = RewardDirector.GetOrCreateOffer(build, "victory:" + controller.EncounterKey, BuildContentRegistry.Instance);
             if (offer == null || offer.claimed) return;
+            if (controller.ShowsRewardScreen) return; // the in-game reward screen handles it
             open = true;
             tab = Tab.Rewards;
             Show("Reward ready: pick one in the Rewards tab (F11)");
@@ -424,6 +425,11 @@ namespace RythmRPG.Combat
             foreach (RewardOfferData offer in offers.Take(4))
             {
                 Header($"{offer.offerId}  <size=12>({offer.sourceKey})</size>" + (offer.claimed ? "  <color=#8f8>CLAIMED</color>" : ""));
+                if (!offer.claimed && GUILayout.Button("Open the reward screen for this offer"))
+                {
+                    RewardOfferData target = offer;
+                    Defer(() => OpenRewardScreen(build, target));
+                }
                 foreach (RewardOptionData option in offer.options)
                 {
                     RewardPreview preview = RewardDirector.Preview(build, option, registry);
@@ -452,6 +458,19 @@ namespace RythmRPG.Combat
                     if (GUILayout.Button("Claim and keep it in reserve")) { RewardOptionData chosenOption = option; RewardOfferData from = offer; Defer(() => Claim(build, from, chosenOption, -1)); }
                 }
             }
+        }
+
+        private void OpenRewardScreen(RunBuildState build, RewardOfferData offer)
+        {
+            RewardSelectionScreen screen = FindAnyObjectByType<RewardSelectionScreen>(FindObjectsInactive.Include);
+            if (screen == null)
+            {
+                RewardSelectionStyle style = RewardSelectionStyle.LoadOrDefault();
+                screen = style.ScreenPrefab != null ? Instantiate(style.ScreenPrefab) : RewardSelectionScreen.CreateTemplate(style);
+            }
+            if (screen.IsOpen) return;
+            open = false;
+            StartCoroutine(screen.Show(build, offer, BuildContentRegistry.Instance));
         }
 
         private void Claim(RunBuildState build, RewardOfferData offer, RewardOptionData option, int replaceSlot)
