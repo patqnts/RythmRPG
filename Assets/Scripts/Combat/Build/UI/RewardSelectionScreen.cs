@@ -176,18 +176,33 @@ namespace RythmRPG.Combat
                     Rest = view.Root.anchoredPosition
                 });
             }
+            FitCards();
             ApplyCards(0f, true);
+        }
+
+        // Four cards (three options + growth) are wider than the row: shrink the row to fit the screen.
+        private void FitCards()
+        {
+            if (cardContainer == null) return;
+            RewardSelectionStyle s = Style;
+            float needed = cards.Count * s.CardSize.x + Mathf.Max(0, cards.Count - 1) * s.CardSpacing;
+            float available = cardContainer.rect.width > 1f ? cardContainer.rect.width : 1800f;
+            float scale = needed > available ? available / needed : 1f;
+            cardContainer.localScale = new Vector3(scale, scale, 1f);
         }
 
         private Sprite IconFor(RewardOptionData option) => option.kind switch
         {
             RewardKind.NewAbility => registry.Ability(option.contentId)?.Icon,
             RewardKind.AbilityUpgrade => build.FindInstance(option.targetInstanceId)?.Definition?.Icon,
+            RewardKind.Growth => Style.GrowthIcon(option.contentId),
             _ => registry.Passive(option.contentId) is PassiveDefinition passive && passive != null ? passive.Icon : null
         };
 
         private string GlyphFor(RewardOptionData option)
         {
+            if (option.kind == RewardKind.Growth)
+                return option.contentId == GrowthRewards.Health ? "HP" : option.contentId == GrowthRewards.Mana ? "MP" : "+";
             if (option.kind != RewardKind.Passive) return "+";
             PassiveDefinition passive = registry.Passive(option.contentId);
             string name = passive != null ? passive.DisplayName : option.contentId;

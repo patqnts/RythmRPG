@@ -43,6 +43,16 @@ namespace RythmRPG.Combat
         [Tooltip("Appended to the value text while a barrier is up. {0} = barrier amount. Empty = nothing.")]
         [SerializeField] private string barrierValueFormat = " <color=#FFFFFFCC>+{0}</color>";
 
+        [Header("Pending (mana still to be paid)")]
+        [Tooltip("Faint segment after the fill showing an amount that will be added soon (the enemy turn's accuracy mana). " +
+                 "Created automatically next to the fill when empty. Clamped to the bar.")]
+        [SerializeField] private RectTransform pending;
+        [Tooltip("Pending segment color. Alpha 0 = the fill color at Pending Alpha.")]
+        [SerializeField] private Color pendingColor = new(0f, 0f, 0f, 0f);
+        [SerializeField, Range(0f, 1f)] private float pendingAlpha = 0.4f;
+        [Tooltip("Appended to the value text while something is pending. {0} = pending amount. Empty = nothing.")]
+        [SerializeField] private string pendingValueFormat = " <alpha=#AA>+{0}";
+
         [Header("Text")]
         [Tooltip("{0} = current, {1} = maximum.")]
         [SerializeField] private string valueFormat = "{0}/{1}";
@@ -58,6 +68,8 @@ namespace RythmRPG.Combat
         public float Normalized => Maximum <= 0 ? 0f : Mathf.Clamp01((float)Current / Maximum);
         /// <summary>Barrier (shield) amount shown after the fill.</summary>
         public int Barrier => barrierTarget;
+        /// <summary>Pending amount shown after the fill (see <see cref="SetPending"/>).</summary>
+        public int Pending => pendingTarget;
 
         /// <summary>
         /// Width of the bar per point when a barrier pushes health + barrier past the maximum: the bar then shows
@@ -72,6 +84,10 @@ namespace RythmRPG.Combat
         private int barrierTarget;
         private float barrierShown;
         private Tween barrierTween;
+        private Graphic pendingGraphic;
+        private int pendingTarget;
+        private float pendingShown;
+        private Tween pendingTween;
 
         // PrimeTween-driven values. fillValue/trailValue/countValue are pushed to the visuals from each
         // tween's onValueChange, so nothing needs to be re-evaluated every frame.
@@ -214,11 +230,40 @@ namespace RythmRPG.Combat
             SetCount(countValue);
         }
 
+        /// <summary>
+        /// Shows a faint "coming soon" segment after the fill (clamped to the bar, never rescales it). Used by the mana
+        /// bar for the enemy turn's accuracy mana; 0 hides it.
+        /// </summary>
+        public void SetPending(int amount, bool animate = true)
+        {
+            EnsurePendingPart();
+            amount = Mathf.Max(0, amount);
+            if (amount == pendingTarget && initialized) return;
+            pendingTarget = amount;
+            pendingTween.Stop();
+            if (!animate || !isActiveAndEnabled || !initialized)
+            {
+                SetPendingShown(amount);
+                return;
+            }
+            pendingTween = Tween.Custom(this, pendingShown, amount, Mathf.Max(0.01f, motion.gainSeconds * 0.5f),
+                (view, v) => view.SetPendingShown(v), Ease.OutCubic);
+        }
+
+        private void SetPendingShown(float value)
+        {
+            pendingShown = Mathf.Max(0f, value);
+            ApplyGeometry();
+            lastShownNumber = int.MinValue;
+            SetCount(countValue);
+        }
+
         private void ApplyGeometry()
         {
             float scale = DisplayScale;
             SetAmount(fill, fillValue * scale);
             SetAmount(trail, trailValue * scale);
+            ApplyPendingGeometry(scale);
             if (barrier == null) return;
             bool visible = barrierShown > 0.5f && Maximum > 0;
             if (barrierGraphic != null) barrierGraphic.enabled = visible;
@@ -229,26 +274,60 @@ namespace RythmRPG.Combat
             barrier.anchorMax = new Vector2(Mathf.Max(start, end), barrier.anchorMax.y);
         }
 
+        private void ApplyPendingGeometry(float scale)
+        {
+            if (pending == null) return;
+            bool visible = pendingShown > 0.5f && Maximum > 0 && fillValue < 0.999f;
+            if (pendingGraphic != null) pendingGraphic.enabled = visible;
+            if (!visible) return;
+            float start = Mathf.Clamp01(fillValue * scale);
+            float end = Mathf.Clamp01((fillValue + pendingShown / Maximum) * scale);
+            pending.anchorMin = new Vector2(start, pending.anchorMin.y);
+            pending.anchorMax = new Vector2(Mathf.Max(start, end), pending.anchorMax.y);
+        }
+
+        private Color ResolvedPendingColor =>
+            pendingColor.a > 0f ? pendingColor : new Color(fillColor.r, fillColor.g, fillColor.b, pendingAlpha);
+
+        /// <summary>The pending part is made on demand next to the fill (drawn under it, so the fill grows into it).</summary>
+        private void EnsurePendingPart()
+        {
+            if (pending == null) pending = CreateSegmentNextToFill("Pending", 0);
+            if (pending != null && pendingGraphic == null)
+            {
+                pendingGraphic = pending.GetComponent<Graphic>();
+                if (pendingGraphic != null)
+                {
+                    pendingGraphic.color = ResolvedPendingColor;
+                    pendingGraphic.enabled = pendingShown > 0.5f;
+                }
+            }
+        }
+
+        private RectTransform CreateSegmentNextToFill(string partName, int siblingOffset)
+        {
+            if (fill == null || fill.parent == null) return null;
+            var go = new GameObject(partName, typeof(RectTransform));
+            go.layer = fill.gameObject.layer;
+            var rect = (RectTransform)go.transform;
+            rect.SetParent(fill.parent, false);
+            rect.SetSiblingIndex(Mathf.Max(0, fill.GetSiblingIndex() + siblingOffset));
+            rect.anchorMin = new Vector2(0f, fill.anchorMin.y);
+            rect.anchorMax = new Vector2(0f, fill.anchorMax.y);
+            rect.pivot = new Vector2(0f, 0.5f);
+            rect.offsetMin = new Vector2(0f, fill.offsetMin.y);
+            rect.offsetMax = new Vector2(0f, fill.offsetMax.y);
+            Image image = go.AddComponent<Image>();
+            image.raycastTarget = false;
+            if (fill.TryGetComponent(out Image fillImage) && fillImage.sprite != null && fillImage.type != Image.Type.Filled)
+                SetSprite(image, fillImage.sprite);
+            return rect;
+        }
+
         /// <summary>Scene / prefab bars made before barriers existed get a barrier part next to their fill.</summary>
         private void EnsureBarrierPart()
         {
-            if (barrier == null && fill != null && fill.parent != null)
-            {
-                var go = new GameObject("Barrier", typeof(RectTransform));
-                go.layer = fill.gameObject.layer;
-                barrier = (RectTransform)go.transform;
-                barrier.SetParent(fill.parent, false);
-                barrier.SetSiblingIndex(fill.GetSiblingIndex() + 1);
-                barrier.anchorMin = new Vector2(0f, fill.anchorMin.y);
-                barrier.anchorMax = new Vector2(0f, fill.anchorMax.y);
-                barrier.pivot = new Vector2(0f, 0.5f);
-                barrier.offsetMin = new Vector2(0f, fill.offsetMin.y);
-                barrier.offsetMax = new Vector2(0f, fill.offsetMax.y);
-                Image image = go.AddComponent<Image>();
-                image.raycastTarget = false;
-                if (fill.TryGetComponent(out Image fillImage) && fillImage.sprite != null && fillImage.type != Image.Type.Filled)
-                    SetSprite(image, fillImage.sprite);
-            }
+            if (barrier == null) barrier = CreateSegmentNextToFill("Barrier", 1);
             if (barrier != null && barrierGraphic == null)
             {
                 barrierGraphic = barrier.GetComponent<Graphic>();
@@ -268,6 +347,7 @@ namespace RythmRPG.Combat
             lastShownNumber = number;
             string text = string.Format(valueFormat, number, Maximum);
             if (barrierTarget > 0 && !string.IsNullOrEmpty(barrierValueFormat)) text += string.Format(barrierValueFormat, barrierTarget);
+            if (pendingTarget > 0 && !string.IsNullOrEmpty(pendingValueFormat)) text += string.Format(pendingValueFormat, pendingTarget);
             valueLabel.text = text;
         }
 
@@ -296,6 +376,11 @@ namespace RythmRPG.Combat
             if (barrierGraphic != null) barrierGraphic.color = barrierColor;
             Sprite barrierSprite = style.barrierSprite != null ? style.barrierSprite : style.fillSprite;
             if (barrierGraphic is Image barrierImage && barrierSprite != null) SetSprite(barrierImage, barrierSprite);
+            if (pendingGraphic != null)
+            {
+                pendingGraphic.color = ResolvedPendingColor;
+                if (pendingGraphic is Image pendingImage && style.fillSprite != null) SetSprite(pendingImage, style.fillSprite);
+            }
             if (valueLabel != null) valueLabel.enabled = style.showNumbers;
             Title = style.title;
             PushValuesToVisuals();

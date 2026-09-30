@@ -83,6 +83,21 @@ namespace RythmRPG.Combat
                 }
             }
 
+            // Growth: one extra card on every offer (max HP / max MP), next to the usual options.
+            ProgressionRules progression = BuildBalanceRules.Load().Progression;
+            if (progression.growthCardEveryOffer)
+            {
+                var growth = new List<Candidate>
+                {
+                    new() { Option = new RewardOptionData { kind = RewardKind.Growth, contentId = GrowthRewards.Health }, Weight = progression.healthCardWeight },
+                    new() { Option = new RewardOptionData { kind = RewardKind.Growth, contentId = GrowthRewards.Mana }, Weight = progression.manaCardWeight },
+                    new() { Option = new RewardOptionData { kind = RewardKind.Growth, contentId = GrowthRewards.Balanced }, Weight = progression.balancedCardWeight }
+                };
+                growth.RemoveAll(candidate => candidate.Weight <= 0f);
+                Candidate pick = PickWeighted(growth, random);
+                if (pick != null) chosen.Add(pick.Option);
+            }
+
             var offer = new RewardOfferData { offerId = build.NewOfferId(), sourceKey = sourceKey };
             for (int i = 0; i < chosen.Count; i++)
             {
@@ -157,6 +172,18 @@ namespace RythmRPG.Combat
                     foreach (AbilityQuote quote in cheaper) preview.Details.Add($"{quote.Definition.DisplayName}: now {quote.CostText}");
                     break;
                 }
+                case RewardKind.Growth:
+                {
+                    ProgressionRules rules = BuildBalanceRules.Load().Progression;
+                    GrowthRewards.Amounts(option.contentId, rules, out int health, out int mana);
+                    preview.Kind = "Growth";
+                    preview.Title = GrowthRewards.Title(option.contentId);
+                    preview.Summary = GrowthRewards.Summary(option.contentId, rules);
+                    if (health > 0) preview.Details.Add($"Max HP bonus: +{build.BonusMaxHealth} -> +{build.BonusMaxHealth + health} (before passives)");
+                    if (mana > 0) preview.Details.Add($"Max MP bonus: +{build.BonusMaxMana} -> +{build.BonusMaxMana + mana}");
+                    preview.Details.Add("Permanent for this run. Applies from the next battle.");
+                    break;
+                }
             }
             return preview;
         }
@@ -200,6 +227,13 @@ namespace RythmRPG.Combat
                 case RewardKind.Passive:
                 {
                     if (build.AddPassive(registry.Passive(option.contentId)) == null) return ClaimStatus.Invalid;
+                    break;
+                }
+                case RewardKind.Growth:
+                {
+                    GrowthRewards.Amounts(option.contentId, BuildBalanceRules.Load().Progression, out int health, out int mana);
+                    if (health <= 0 && mana <= 0) return ClaimStatus.Invalid;
+                    build.AddGrowth(health, mana);
                     break;
                 }
             }

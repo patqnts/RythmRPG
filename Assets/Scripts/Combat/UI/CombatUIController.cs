@@ -148,6 +148,7 @@ namespace RythmRPG.Combat
                 controller.StateChanged += HandleStateChanged;
                 controller.BattleEnded += HandleBattleEnded;
                 controller.ComboChanged += HandleComboChanged;
+                controller.PendingManaChanged += HandlePendingMana;
             }
             SubscribePowerGauge();
             if (player != null)
@@ -178,12 +179,19 @@ namespace RythmRPG.Combat
             }
             if (enemy != null) SetEnemyHealth(enemy.CurrentHealth, enemy.MaxHealth, animate);
             UpdateBarrier(animate);
+            if (playerManaBar != null) playerManaBar.SetPending(controller != null ? controller.PendingMana : 0, animate);
             if (controller != null) HandleStateChanged(controller.CurrentState);
         }
 
         private void HandlePlayerHealth(int current, int maximum) => SetPlayerHealth(current, maximum, true);
         private void HandlePlayerMana(int current, int maximum) => SetPlayerMana(current, maximum, true);
         private void HandleEnemyHealth(int current, int maximum) => SetEnemyHealth(current, maximum, true);
+
+        // Turn Accuracy mana: what the enemy turn will pay, shown as a faint segment after the mana fill.
+        private void HandlePendingMana(int amount)
+        {
+            if (playerManaBar != null) playerManaBar.SetPending(amount);
+        }
 
         private void SetPlayerHealth(int current, int maximum, bool animate)
         {
@@ -227,6 +235,7 @@ namespace RythmRPG.Combat
                 controller.StateChanged -= HandleStateChanged;
                 controller.BattleEnded -= HandleBattleEnded;
                 controller.ComboChanged -= HandleComboChanged;
+                controller.PendingManaChanged -= HandlePendingMana;
             }
             if (player != null)
             {
@@ -575,6 +584,7 @@ namespace RythmRPG.Combat
                 controller.StateChanged += HandleStateChanged;
                 controller.BattleEnded += HandleBattleEnded;
                 controller.ComboChanged += HandleComboChanged;
+                controller.PendingManaChanged += HandlePendingMana;
                 player.HealthChanged += HandlePlayerHealth;
                 player.ManaChanged += HandlePlayerMana;
                 enemy.HealthChanged += HandleEnemyHealth;

@@ -150,6 +150,55 @@ Full content list and numbers: `abilities-and-passives.md` ("Elements", "Element
 - **Live costs:** `CombatBuildRuntime.Active` lets `AbilityResolver` apply live cost changes (Tailwind's one-shot discount) to quotes in battle. The discount is used up at commit.
 - **Tests:** `Tests/EditMode/ElementalTests.cs`, 23 tests.
 
+### Run progression (growth, healing, enemy scaling)
+
+Design: enemies get harder mainly through **denser patterns**, with per-note damage growing slowly. The player grows by picking **growth cards** that keep max HP in step with enemy damage. All the numbers are in the Build Balance Rules asset, under Progression.
+
+- **Growth card on every victory.** Every reward offer gets a 4th card next to the usual 3 (the card row shrinks to fit). It is one of three cards:
+
+  | Card | Gives | Weight |
+  | --- | --- | --- |
+  | Vitality | +100 max HP | 2 |
+  | Focus | +15 max MP | 1 |
+  | Resolve | +60 max HP and +8 max MP | 1 |
+
+  - Growth is stored on the run (`RunBuildState.BonusMaxHealth` / `BonusMaxMana`, saved with the build) and applies from the next battle.
+  - Growth health is added before percentage passives, so Fortitude and Glass Heart scale it too.
+  - Max mana now has a run override (`PlayerCombatant.SetMaxManaOverride`, `BaseMaxMana`).
+- **Full heal after each win.** `healAfterVictory` = 1 restores all max HP after the reward screen. Defeat still restores the battle-start state.
+- **Run depth** = victories this run (`RunBuildState.Depth`, +1 per win). It controls three things:
+  - **Enemy max HP:** +10% per win, capped at x3. The scaling is applied at encounter start (`EnemyCombatant.SetMaxHealthScale`).
+  - **Enemy note damage:** +5% per win, capped at x2 (`CombatBuildRuntime.NoteDamageScale`, applied in the controller's defense damage).
+  - **Denser patterns (authored):** attack sequences have **Min Run Depth / Max Run Depth**. Add denser variants of an enemy's attacks with a Min Run Depth and they only appear later in a run; retire easy ones with a Max Run Depth. If no sequence fits the depth, all of them are used.
+- **Rule of thumb:** a Vitality card is +10% of the default 1000 HP. Taking it about every other win keeps pace with +5% note damage per win, so a Miss keeps costing a similar share of health.
+- **F11 > Build > Progression:** shows the growth and depth, and has buttons for +HP, +MP and depth -1 / +1 to test scaling.
+
+### Mana from accuracy (end of the enemy turn)
+
+Mana used to come per note hit (0.5 MP per Perfect), which meant denser patterns paid more mana. It is now paid **once, when the enemy turn ends, by the turn's accuracy**. So later, denser patterns make the turn harder without flooding the mana bar. The settings are in `Resources/Combat/Balance/CombatResourceRules`, under Mana Source and Turn Accuracy mana.
+
+- **Accuracy:** each note the player had to play counts toward the average: Perfect 1, Good 0.7, Bad 0.3, Miss 0.
+  - Notes that pass unplayed count as Misses.
+  - Zapped or walled notes and notes cleared by the system do not count.
+- **Payout tiers:**
+
+  | Turn accuracy | Mana |
+  | --- | --- |
+  | 95%+ | 25 |
+  | 85%+ | 18 |
+  | 70%+ | 12 |
+  | below 70% | 5 |
+
+  - The flat +5 at the start of the player turn is unchanged.
+  - A turn with no notes to play pays nothing.
+  - A turn that ends because the enemy died pays nothing, since the battle is over.
+- **Ability charts give no mana** in this mode.
+- **Feedback:**
+  - While the enemy turn plays, the mana bar shows a faint **pending segment** and a "+N" after the number. It shows what the turn would pay if it ended now, so it grows and shrinks as you hit and miss (`ResourceBarView.SetPending`, `CombatController.PendingMana`).
+  - At the end of the turn, the fill grows into the segment and "+N MP  94%" pops above the player.
+- **Per Hit** still exists as a Mana Source option; it uses the old per-judgement weights.
+- **Test:** `ResourceRules_TurnAccuracyMana_PaysByTier_NotByNoteCount` in `AbilityResolutionTests`.
+
 ### Play mode without domain reload
 
 The project has Enter Play Mode Options on (no domain reload), so statics survive between play sessions while every ScriptableObject made in code is destroyed when play stops. That emptied the chosen build on the next play. `RunBuild` now resets the sample cache and registry at play start and rebuilds the current build from its ids (`RuntimeInitializeLoadType.SubsystemRegistration`).

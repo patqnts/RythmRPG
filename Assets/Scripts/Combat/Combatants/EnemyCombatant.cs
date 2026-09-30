@@ -18,9 +18,13 @@ namespace RythmRPG.Combat
         private bool defeatRaised;
         private int battleStartHealth;
         private EnemyResponseProfile responseOverride;
+        private float maxHealthScale = 1f;
 
         public EnemyDefinition Definition => definition;
-        public int MaxHealth => definition != null ? definition.MaxHealth : Mathf.Max(1, fallbackMaxHealth);
+        /// <summary>Max health as authored (definition or fallback), before run-depth scaling.</summary>
+        public int BaseMaxHealth => definition != null ? definition.MaxHealth : Mathf.Max(1, fallbackMaxHealth);
+        public int MaxHealth => Mathf.Max(1, Mathf.RoundToInt(BaseMaxHealth * maxHealthScale));
+        public float MaxHealthScale => maxHealthScale;
         public int CurrentHealth => currentHealth;
         public bool IsDefeated => currentHealth <= 0;
         public Animator Animator => animator;
@@ -39,6 +43,20 @@ namespace RythmRPG.Combat
             if (spriteRenderer == null) spriteRenderer = GetComponentInChildren<SpriteRenderer>();
             if (patternRunner == null) patternRunner = GetComponent<RhythmPatternRunner>();
             currentHealth = Mathf.Clamp(currentHealth <= 0 ? MaxHealth : currentHealth, 0, MaxHealth);
+        }
+
+        /// <summary>
+        /// Run-depth scaling of max health (1 = as authored). An enemy at full health stays full; otherwise its health is
+        /// clamped to the new max.
+        /// </summary>
+        public void SetMaxHealthScale(float scale)
+        {
+            scale = Mathf.Max(0.1f, scale);
+            if (Mathf.Approximately(scale, maxHealthScale)) return;
+            bool wasFull = currentHealth >= MaxHealth;
+            maxHealthScale = scale;
+            currentHealth = wasFull ? MaxHealth : Mathf.Clamp(currentHealth, 0, MaxHealth);
+            HealthChanged?.Invoke(currentHealth, MaxHealth);
         }
 
         public void CaptureBattleStart()
@@ -91,11 +109,20 @@ namespace RythmRPG.Combat
                 ?? phases.Where(phase => phase != null).OrderByDescending(phase => phase.EnterAtHealthPercent).FirstOrDefault();
         }
 
-        public EnemyAttackSequenceDefinition SelectAttackSequence(float roll01)
+        /// <summary>
+        /// Picks an attack by weight. <paramref name="runDepth"/> (victories this run, -1 = ignore) keeps only the
+        /// sequences allowed at that depth, so denser attacks can be unlocked later in a run; if none is allowed, all are.
+        /// </summary>
+        public EnemyAttackSequenceDefinition SelectAttackSequence(float roll01, int runDepth = -1)
         {
             IReadOnlyList<EnemyAttackSequenceDefinition> sequences = ResolvePhase()?.AttackSequences;
             if (sequences == null || sequences.Count == 0) return null;
             List<EnemyAttackSequenceDefinition> candidates = sequences.Where(sequence => sequence != null).ToList();
+            if (runDepth >= 0)
+            {
+                List<EnemyAttackSequenceDefinition> allowed = candidates.Where(sequence => sequence.AllowedAtDepth(runDepth)).ToList();
+                if (allowed.Count > 0) candidates = allowed;
+            }
             if (candidates.Count == 0) return null;
             float choice = Mathf.Clamp01(roll01) * candidates.Sum(sequence => sequence.SelectionWeight);
             foreach (EnemyAttackSequenceDefinition candidate in candidates)

@@ -52,6 +52,8 @@ namespace RythmRPG.Combat
         private EnemyAttackSequenceDefinition nextSequence;
         private CombatResourceRules resourceRules;
         private float manaCarry;
+        private readonly TurnAccuracyTally manaTally = new();
+        private int pendingMana;
         private CombatEncounterContext encounter;
         private RhythmPatternRunner runner;
         private AbilityRuntimeInstance selectedAbility;
@@ -82,6 +84,14 @@ namespace RythmRPG.Combat
         public int CurrentCombo => stats?.Combo ?? 0;
         /// <summary>Raised right after a judgement updates the combo (new combo count, 0 = it just broke).</summary>
         public event Action<int> ComboChanged;
+        /// <summary>
+        /// Turn Accuracy mana: what the current enemy turn would pay if it ended now (0 outside the enemy turn).
+        /// The mana bar shows it as a pending segment.
+        /// </summary>
+        public int PendingMana => pendingMana;
+        /// <summary>Accuracy (0-1) of the enemy turn in progress, or of the last one.</summary>
+        public float TurnAccuracy => manaTally.Accuracy;
+        public event Action<int> PendingManaChanged;
 
         public CombatState CurrentState => stateMachine?.CurrentState ?? CombatState.BattleStart;
         public bool IsBattleActive { get; private set; }
@@ -131,6 +141,8 @@ namespace RythmRPG.Combat
             runner.DefenseDamageApplier = ApplyDefenseDamage;
             modifierSystem.Clear();
             manaCarry = 0f;
+            manaTally.Reset();
+            SetPendingMana(0);
             BindRuntime();
             stats?.Stop();
             stats = new CombatStatsTracker(resultGrading);
@@ -285,6 +297,8 @@ namespace RythmRPG.Combat
             vfxController.SetAbilitySlotsVisible(false, true);
             musicDirector?.SetPlayerTurn(false);
             enemyTurnInterrupted = false;
+            manaTally.Reset();
+            SetPendingMana(0);
             // Passive per-turn budgets reset, then buffs / statuses tick (a status may defeat the enemy here).
             buildRuntime.OnEnemyTurnStarted();
             modifierSystem.OnEnemyTurnStarted();
@@ -299,7 +313,8 @@ namespace RythmRPG.Combat
 
         private IEnumerator EnemyTurnRoutine()
         {
-            EnemyAttackSequenceDefinition sequence = nextSequence ?? encounter.Enemy.SelectAttackSequence(UnityEngine.Random.value);
+            EnemyAttackSequenceDefinition sequence = nextSequence
+                ?? encounter.Enemy.SelectAttackSequence(UnityEngine.Random.value, RunBuild.Current != null ? RunBuild.Current.Depth : -1);
             nextSequence = null;
             string sequenceId = SequenceKey(sequence);
             yield return StoryBeat(CombatStoryMoment.EnemyTurnStart, sequenceId);
@@ -383,6 +398,7 @@ namespace RythmRPG.Combat
             // countdowns and expiry.
             buildRuntime.OnEnemyTurnEnded(enemyTurnInterrupted);
             modifierSystem.OnEnemyTurnEnded();
+            PayTurnAccuracyMana();
             if (encounter.Enemy.IsDefeated && !encounter.Player.IsDefeated)
             {
                 yield return EnemyDefeatedRoutine();
@@ -631,7 +647,10 @@ namespace RythmRPG.Combat
 
             // Reward: after the result screen, before returning to the world. Retrying the fight shows the same saved
             // offer; a claimed offer is not shown again.
+            if (victory && RunBuild.Current != null) RunBuild.Current.RecordVictory();
             if (victory && showRewardScreen) yield return ShowRewardSelection();
+            // Between battles: heal (full by default) so every fight starts fresh; growth rewards raise the ceiling.
+            if (victory) HealAfterVictory();
 
             if (!victory)
             {
@@ -644,6 +663,14 @@ namespace RythmRPG.Combat
             yield return StoryBeat(CombatStoryMoment.AfterBattle);
             IsBattleActive = false;
             BattleEnded?.Invoke(terminalState);
+        }
+
+        private void HealAfterVictory()
+        {
+            PlayerCombatant player = encounter.Player;
+            if (player == null) return;
+            float share = BuildBalanceRules.Load().Progression.healAfterVictory;
+            if (share > 0f) player.Heal(Mathf.CeilToInt(player.MaxHealth * share));
         }
 
         private IEnumerator RestartNextFrame()
@@ -697,6 +724,9 @@ namespace RythmRPG.Combat
             // Notes cleared by a board effect (zap, wall) never hurt.
             if (result.Source == NoteResolutionSource.Modifier) return 0;
             int amount = (resourceRules ?? CombatResourceRules.Load()).DefenseDamage(note.damage, result.Judgement);
+            // Run depth: enemy notes hit a little harder the deeper the run goes.
+            if (amount > 0 && buildRuntime != null && buildRuntime.NoteDamageScale > 1f)
+                amount = Mathf.RoundToInt(amount * buildRuntime.NoteDamageScale);
             if (amount > 0 && modifierSystem.TryBlockDamage(result)) return 0;
             return amount;
         }
@@ -730,16 +760,51 @@ namespace RythmRPG.Combat
             if (runner.IsRunning && runner.CurrentMode == PatternRunMode.EnemyDefense) runner.CancelCurrentPattern(true);
         }
 
-        // Mana builds up from good play: Perfect / Good hits (player input only), weighted by judgement.
+        // Mana builds up from good play. Turn Accuracy (default): every enemy note the player had to play feeds the turn's
+        // accuracy, and the mana is paid once when the enemy turn ends (PayTurnAccuracyMana). Per Hit: Perfect / Good hits
+        // (player input only) give mana at once, weighted by judgement.
         private void HandleManaJudgement(RhythmJudgementResult result)
         {
-            if (!IsBattleActive || encounter.Player == null || result.Source != NoteResolutionSource.PlayerInput) return;
+            if (!IsBattleActive || encounter.Player == null) return;
             CombatResourceRules rules = resourceRules ?? CombatResourceRules.Load();
+            if (rules.UsesTurnAccuracy)
+            {
+                bool enemyTurn = CurrentState == CombatState.EnemyTurnStart || CurrentState == CombatState.EnemyTurnExecuting;
+                if (!enemyTurn || !TurnAccuracyTally.Counts(result.Source)) return;
+                manaTally.Record(rules.AccuracyWeight(result.Judgement));
+                SetPendingMana(rules.TurnAccuracyMana(manaTally.Accuracy, manaTally.Notes));
+                return;
+            }
+            if (result.Source != NoteResolutionSource.PlayerInput) return;
             manaCarry += rules.ManaGain(result.Judgement, runner != null ? runner.CurrentMode : PatternRunMode.EnemyDefense);
             int whole = Mathf.FloorToInt(manaCarry);
             if (whole <= 0) return;
             manaCarry -= whole;
             encounter.Player.GainMana(whole);
+        }
+
+        // Turn Accuracy mana: the finished enemy turn pays by its accuracy tier. A turn cut short because the enemy died
+        // pays nothing (the battle is over); a turn without notes to play pays nothing.
+        private void PayTurnAccuracyMana()
+        {
+            CombatResourceRules rules = resourceRules ?? CombatResourceRules.Load();
+            int amount = rules.UsesTurnAccuracy && !encounter.Enemy.IsDefeated && !encounter.Player.IsDefeated
+                ? rules.TurnAccuracyMana(manaTally.Accuracy, manaTally.Notes)
+                : 0;
+            SetPendingMana(0);
+            if (amount <= 0) return;
+            int gained = encounter.Player.GainMana(amount);
+            if (gained > 0 && vfxController != null)
+                vfxController.ShowFloatingText($"+{gained} MP  {Mathf.RoundToInt(manaTally.Accuracy * 100f)}%",
+                    encounter.Player.transform.position + Vector3.up * 1.6f, new Color(0.45f, 0.75f, 1f));
+        }
+
+        private void SetPendingMana(int amount)
+        {
+            amount = Mathf.Max(0, amount);
+            if (amount == pendingMana) return;
+            pendingMana = amount;
+            PendingManaChanged?.Invoke(amount);
         }
 
         private void HandleDamageBlocked(RhythmJudgementResult result)

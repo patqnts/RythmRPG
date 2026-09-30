@@ -14,13 +14,17 @@ namespace RythmRPG.Combat
         private bool defeatRaised;
         private Snapshot battleStartSnapshot;
         private int maxHealthOverride;
+        private int maxManaOverride;
 
         /// <summary>Max health as authored on the component (before build passives).</summary>
         public int BaseMaxHealth => maxHealth;
         /// <summary>Effective max health (a build may raise or lower it; see <see cref="SetMaxHealthOverride"/>).</summary>
         public int MaxHealth => maxHealthOverride > 0 ? maxHealthOverride : maxHealth;
         public int CurrentHealth => currentHealth;
-        public int MaxMana => maxMana;
+        /// <summary>Max mana as authored on the component (before growth rewards).</summary>
+        public int BaseMaxMana => maxMana;
+        /// <summary>Effective max mana (growth rewards raise it; see <see cref="SetMaxManaOverride"/>).</summary>
+        public int MaxMana => maxManaOverride > 0 ? maxManaOverride : maxMana;
         public int CurrentMana => currentMana;
         public bool IsDefeated => currentHealth <= 0;
         public event Action<int, int> HealthChanged;
@@ -40,10 +44,10 @@ namespace RythmRPG.Combat
         public void RestoreBattleStart()
         {
             currentHealth = Mathf.Clamp(battleStartSnapshot.Health, 0, MaxHealth);
-            currentMana = Mathf.Clamp(battleStartSnapshot.Mana, 0, maxMana);
+            currentMana = Mathf.Clamp(battleStartSnapshot.Mana, 0, MaxMana);
             defeatRaised = false;
             HealthChanged?.Invoke(currentHealth, MaxHealth);
-            ManaChanged?.Invoke(currentMana, maxMana);
+            ManaChanged?.Invoke(currentMana, MaxMana);
         }
 
         public int ApplyDamage(int amount)
@@ -92,12 +96,26 @@ namespace RythmRPG.Combat
             if (previousMax != newMax || fill) HealthChanged?.Invoke(currentHealth, newMax);
         }
 
+        /// <summary>
+        /// Run max mana (0 = back to the authored value). Growing the max adds the difference to current mana; shrinking
+        /// clamps it.
+        /// </summary>
+        public void SetMaxManaOverride(int value)
+        {
+            int previousMax = MaxMana;
+            maxManaOverride = Mathf.Max(0, value);
+            int newMax = MaxMana;
+            if (newMax > previousMax) currentMana += newMax - previousMax;
+            currentMana = Mathf.Clamp(currentMana, 0, newMax);
+            if (previousMax != newMax) ManaChanged?.Invoke(currentMana, newMax);
+        }
+
         public bool SpendMana(int amount)
         {
             int cost = Mathf.Max(0, amount);
             if (currentMana < cost) return false;
             currentMana -= cost;
-            ManaChanged?.Invoke(currentMana, maxMana);
+            ManaChanged?.Invoke(currentMana, MaxMana);
             return true;
         }
 
@@ -105,19 +123,19 @@ namespace RythmRPG.Combat
         public int GainMana(int amount)
         {
             int previous = currentMana;
-            currentMana = Mathf.Clamp(currentMana + Mathf.Max(0, amount), 0, maxMana);
+            currentMana = Mathf.Clamp(currentMana + Mathf.Max(0, amount), 0, MaxMana);
             int gained = currentMana - previous;
-            if (gained > 0) ManaChanged?.Invoke(currentMana, maxMana);
+            if (gained > 0) ManaChanged?.Invoke(currentMana, MaxMana);
             return gained;
         }
 
         public void ResetToMaximum()
         {
             currentHealth = MaxHealth;
-            currentMana = maxMana;
+            currentMana = MaxMana;
             defeatRaised = false;
             HealthChanged?.Invoke(currentHealth, MaxHealth);
-            ManaChanged?.Invoke(currentMana, maxMana);
+            ManaChanged?.Invoke(currentMana, MaxMana);
         }
 
         private void ClampStats()
@@ -125,7 +143,7 @@ namespace RythmRPG.Combat
             maxHealth = Mathf.Max(1, maxHealth);
             maxMana = Mathf.Max(0, maxMana);
             currentHealth = Mathf.Clamp(currentHealth, 0, MaxHealth);
-            currentMana = Mathf.Clamp(currentMana, 0, maxMana);
+            currentMana = Mathf.Clamp(currentMana, 0, MaxMana);
         }
 
         private readonly struct Snapshot

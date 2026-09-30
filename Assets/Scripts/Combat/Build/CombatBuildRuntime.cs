@@ -112,6 +112,8 @@ namespace RythmRPG.Combat
         public ICombatNoteBoard Board { get; set; }
         /// <summary>Enemy note damage multiplier for the current enemy turn (a staggered single-step attack).</summary>
         public float EnemyDamageScale { get; private set; } = 1f;
+        /// <summary>Enemy note damage multiplier from run depth (set at encounter start).</summary>
+        public float NoteDamageScale { get; private set; } = 1f;
         public int ZapsThisTurn => zapsThisTurn;
         public bool StaggerPending => staggerPending;
         public BuildCombatStats Stats { get; private set; } = new();
@@ -193,7 +195,16 @@ namespace RythmRPG.Combat
                     hooks.Add(new PassiveHook { Runtime = this, Instance = passive, State = new Dictionary<string, int>() });
                 }
             }
-            if (player != null) player.SetMaxHealthOverride(build != null ? ComputeMaxHealth(build, player.BaseMaxHealth) : 0);
+            if (player != null)
+            {
+                player.SetMaxHealthOverride(build != null ? ComputeMaxHealth(build, player.BaseMaxHealth) : 0);
+                player.SetMaxManaOverride(build != null && build.BonusMaxMana > 0 ? player.BaseMaxMana + build.BonusMaxMana : 0);
+            }
+            // Run depth: enemies get tougher as the run goes on (numbers in the balance rules' Progression).
+            ProgressionRules progression = Rules.Progression;
+            int depth = build != null ? build.Depth : 0;
+            NoteDamageScale = progression.NoteDamageScale(depth);
+            if (enemy != null) enemy.SetMaxHealthScale(progression.EnemyHealthScale(depth));
             foreach (PassiveHook hook in hooks) ForEachEffect(hook, effect => effect.OnEncounterStart(hook));
             RaiseChanged();
         }
@@ -237,6 +248,8 @@ namespace RythmRPG.Combat
         {
             int max = Mathf.Max(1, baseMaxHealth);
             if (build == null) return max;
+            // Growth rewards first, so percentage passives scale them too.
+            max += build.BonusMaxHealth;
             List<AbilityQuote> equipped = build.EquippedQuotes();
             foreach (PassiveInstance passive in build.Passives)
             {

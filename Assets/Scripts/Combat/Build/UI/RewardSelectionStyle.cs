@@ -27,6 +27,11 @@ namespace RythmRPG.Combat
         [SerializeField] private string newAbilityLabel = "NEW ABILITY";
         [SerializeField] private string upgradeLabel = "UPGRADE";
         [SerializeField] private string passiveLabel = "PASSIVE";
+        [SerializeField] private string growthLabel = "GROWTH";
+        [Tooltip("Growth cards: icons for the max HP / max MP / balanced cards (empty = a glyph).")]
+        [SerializeField] private Sprite healthGrowthIcon;
+        [SerializeField] private Sprite manaGrowthIcon;
+        [SerializeField] private Sprite balancedGrowthIcon;
         [Tooltip("{0} = confirm key, {1} = skip key.")]
         [SerializeField] private string cardPrompt = "[ARROWS] CHOOSE      [{0}] TAKE      [{1}] SKIP";
         [SerializeField] private string cardPromptNoSkip = "[ARROWS] CHOOSE      [{0}] TAKE";
@@ -44,6 +49,7 @@ namespace RythmRPG.Combat
         [SerializeField] private Color abilityColor = new(0.45f, 0.8f, 1f);
         [SerializeField] private Color upgradeColor = new(0.5f, 1f, 0.6f);
         [SerializeField] private Color passiveColor = new(1f, 0.72f, 0.35f);
+        [SerializeField] private Color growthColor = new(1f, 0.45f, 0.55f);
         [SerializeField] private Color warningColor = new(1f, 0.45f, 0.45f);
 
         [Header("Font (empty = the battle result style's font)")]
@@ -155,6 +161,7 @@ namespace RythmRPG.Combat
         {
             RewardKind.NewAbility => abilityColor,
             RewardKind.AbilityUpgrade => upgradeColor,
+            RewardKind.Growth => growthColor,
             _ => passiveColor
         };
 
@@ -162,6 +169,7 @@ namespace RythmRPG.Combat
         {
             RewardKind.NewAbility => newAbilityLabel,
             RewardKind.AbilityUpgrade => upgradeLabel,
+            RewardKind.Growth => growthLabel,
             _ => passiveLabel
         };
 
@@ -178,6 +186,13 @@ namespace RythmRPG.Combat
             string b = second != null && second.Length > 0 ? CombatResultStyle.KeyName(second[0]) : "?";
             return string.Format(format, a, b);
         }
+
+        public Sprite GrowthIcon(string growthId) => growthId switch
+        {
+            GrowthRewards.Health => healthGrowthIcon,
+            GrowthRewards.Mana => manaGrowthIcon,
+            _ => balancedGrowthIcon
+        };
 
         public static RewardSelectionStyle LoadOrDefault()
         {

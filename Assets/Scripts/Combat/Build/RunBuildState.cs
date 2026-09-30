@@ -44,7 +44,9 @@ namespace RythmRPG.Combat
     {
         NewAbility,
         AbilityUpgrade,
-        Passive
+        Passive,
+        /// <summary>Permanent run growth: max health and / or max mana (the extra card on every victory).</summary>
+        Growth
     }
 
     [Serializable]
@@ -87,6 +89,36 @@ namespace RythmRPG.Combat
         public string DisplayName = "Custom build";
         public string Playstyle = string.Empty;
         public int Seed = 12345;
+
+        /// <summary>Max health added by growth rewards (before percentage passives).</summary>
+        public int BonusMaxHealth { get; private set; }
+        /// <summary>Max mana added by growth rewards.</summary>
+        public int BonusMaxMana { get; private set; }
+        /// <summary>Victories this run: how deep the run is (enemy scaling, depth-gated enemy attacks).</summary>
+        public int Depth { get; private set; }
+
+        /// <summary>Adds permanent max health / max mana for the rest of the run.</summary>
+        public void AddGrowth(int maxHealth, int maxMana)
+        {
+            if (maxHealth == 0 && maxMana == 0) return;
+            BonusMaxHealth = Mathf.Max(0, BonusMaxHealth + maxHealth);
+            BonusMaxMana = Mathf.Max(0, BonusMaxMana + maxMana);
+            MarkChanged();
+        }
+
+        /// <summary>One more encounter won: the run gets deeper.</summary>
+        public void RecordVictory()
+        {
+            Depth++;
+            MarkChanged();
+        }
+
+        /// <summary>Dev tool: set the run depth directly (F11 panel).</summary>
+        public void SetDepth(int depth)
+        {
+            Depth = Mathf.Max(0, depth);
+            MarkChanged();
+        }
 
         public IReadOnlyList<AbilityInstance> Abilities => abilities;
         public IReadOnlyList<PassiveInstance> Passives => passives;
@@ -233,6 +265,9 @@ namespace RythmRPG.Combat
             public List<PassiveSave> passives = new();
             public List<RewardOfferData> offers = new();
             public List<string> claims = new();
+            public int bonusMaxHealth;
+            public int bonusMaxMana;
+            public int depth;
         }
 
         [Serializable]
@@ -269,7 +304,10 @@ namespace RythmRPG.Combat
                     instanceId = p.InstanceId, passiveId = !ReferenceEquals(p.Definition, null) ? p.Definition.Id : string.Empty, level = p.Level
                 }).ToList(),
                 offers = offers.ToList(),
-                claims = claimIds.ToList()
+                claims = claimIds.ToList(),
+                bonusMaxHealth = BonusMaxHealth,
+                bonusMaxMana = BonusMaxMana,
+                depth = Depth
             };
             return JsonUtility.ToJson(data);
         }
@@ -286,7 +324,10 @@ namespace RythmRPG.Combat
                 DisplayName = data.displayName ?? "Custom build",
                 Playstyle = data.playstyle ?? string.Empty,
                 Seed = data.seed,
-                nextId = Mathf.Max(1, data.nextId)
+                nextId = Mathf.Max(1, data.nextId),
+                BonusMaxHealth = Mathf.Max(0, data.bonusMaxHealth),
+                BonusMaxMana = Mathf.Max(0, data.bonusMaxMana),
+                Depth = Mathf.Max(0, data.depth)
             };
             foreach (AbilitySave saved in data.abilities)
             {

@@ -28,12 +28,20 @@ namespace RythmRPG.Combat
     {
         [SerializeField] private string id = string.Empty;
         [SerializeField, Min(0.01f)] private float selectionWeight = 1f;
+        [Tooltip("Only used from this many victories into the run (0 = always). Put denser variants of an attack here " +
+                 "so enemies get harder through patterns, not just bigger numbers.")]
+        [SerializeField, Min(0)] private int minRunDepth;
+        [Tooltip("Not used any more after this many victories (0 = no limit). Retire easy variants late in a run.")]
+        [SerializeField, Min(0)] private int maxRunDepth;
         [Tooltip("Music for this sequence. It loops for as long as combat lasts; every step's chart starts on the song's next bar line and should be authored at the song's BPM.")]
         [SerializeField] private CombatSong song;
         [SerializeField] private List<EnemyAttackStepDefinition> steps = new();
 
         public string Id => id;
         public float SelectionWeight => Mathf.Max(0.01f, selectionWeight);
+        public int MinRunDepth => minRunDepth;
+        public int MaxRunDepth => maxRunDepth;
+        public bool AllowedAtDepth(int depth) => depth >= minRunDepth && (maxRunDepth <= 0 || depth <= maxRunDepth);
         public CombatSong Song => song;
         public IReadOnlyList<EnemyAttackStepDefinition> Steps => steps;
     }

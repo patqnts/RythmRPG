@@ -248,6 +248,18 @@ namespace RythmRPG.Combat
 
             if (build == null) return;
 
+            // Run progression: growth rewards and depth (enemy scaling, depth-gated attacks). Applies from the next battle.
+            Header("Progression");
+            ProgressionRules progression = BuildBalanceRules.Load().Progression;
+            Small($"Max HP +{build.BonusMaxHealth}   Max MP +{build.BonusMaxMana}   Depth {build.Depth} " +
+                  $"(enemy HP x{progression.EnemyHealthScale(build.Depth):0.##}, note damage x{progression.NoteDamageScale(build.Depth):0.##})");
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button($"+{progression.healthGrowth} HP")) Defer(() => build.AddGrowth(progression.healthGrowth, 0));
+            if (GUILayout.Button($"+{progression.manaGrowth} MP")) Defer(() => build.AddGrowth(0, progression.manaGrowth));
+            if (GUILayout.Button("Depth -1")) Defer(() => build.SetDepth(build.Depth - 1));
+            if (GUILayout.Button("Depth +1")) Defer(() => build.SetDepth(build.Depth + 1));
+            GUILayout.EndHorizontal();
+
             Header("Ability slots");
             if (!build.HasAffordableBasicAction()) Label("<color=#ff7070>No 0 MP action equipped: you can be locked out of acting.</color>");
             for (int slot = 0; slot < RunBuildState.SlotCount; slot++)

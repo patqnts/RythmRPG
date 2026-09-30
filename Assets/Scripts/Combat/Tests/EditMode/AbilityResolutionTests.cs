@@ -95,5 +95,41 @@ namespace RythmRPG.Combat.Tests
             Assert.That(rules.ManaGain(HitJudgement.Miss, PatternRunMode.EnemyDefense), Is.EqualTo(0f));
             UnityEngine.Object.DestroyImmediate(rules);
         }
+
+        [Test]
+        public void ResourceRules_TurnAccuracyMana_PaysByTier_NotByNoteCount()
+        {
+            CombatResourceRules rules = ScriptableObject.CreateInstance<CombatResourceRules>();
+            Assert.That(rules.UsesTurnAccuracy, Is.True);
+
+            // Same accuracy, very different note counts: same mana.
+            var small = new TurnAccuracyTally();
+            var dense = new TurnAccuracyTally();
+            for (int i = 0; i < 20; i++) small.Record(rules.AccuracyWeight(HitJudgement.Perfect));
+            for (int i = 0; i < 200; i++) dense.Record(rules.AccuracyWeight(HitJudgement.Perfect));
+            Assert.That(rules.TurnAccuracyMana(small.Accuracy, small.Notes), Is.EqualTo(25));
+            Assert.That(rules.TurnAccuracyMana(dense.Accuracy, dense.Notes), Is.EqualTo(25));
+
+            // 8 Perfect + 2 Good = 0.94 -> 85% tier; 6 Perfect + 4 Miss = 0.6 -> below every tier.
+            var mixed = new TurnAccuracyTally();
+            for (int i = 0; i < 8; i++) mixed.Record(rules.AccuracyWeight(HitJudgement.Perfect));
+            for (int i = 0; i < 2; i++) mixed.Record(rules.AccuracyWeight(HitJudgement.Good));
+            Assert.That(mixed.Accuracy, Is.EqualTo(0.94f).Within(0.001f));
+            Assert.That(rules.TurnAccuracyMana(mixed.Accuracy, mixed.Notes), Is.EqualTo(18));
+            Assert.That(rules.NextTier(mixed.Accuracy, out ManaAccuracyTier next), Is.True);
+            Assert.That(next.mana, Is.EqualTo(25));
+
+            var poor = new TurnAccuracyTally();
+            for (int i = 0; i < 6; i++) poor.Record(rules.AccuracyWeight(HitJudgement.Perfect));
+            for (int i = 0; i < 4; i++) poor.Record(rules.AccuracyWeight(HitJudgement.Miss));
+            Assert.That(rules.TurnAccuracyMana(poor.Accuracy, poor.Notes), Is.EqualTo(5));
+
+            // No notes to play: nothing paid. Zapped / system-cleared notes are not counted.
+            Assert.That(rules.TurnAccuracyMana(0f, 0), Is.EqualTo(0));
+            Assert.That(TurnAccuracyTally.Counts(NoteResolutionSource.Timeout), Is.True);
+            Assert.That(TurnAccuracyTally.Counts(NoteResolutionSource.Modifier), Is.False);
+            Assert.That(TurnAccuracyTally.Counts(NoteResolutionSource.SystemClear), Is.False);
+            UnityEngine.Object.DestroyImmediate(rules);
+        }
     }
 }

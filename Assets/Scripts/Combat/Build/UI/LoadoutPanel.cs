@@ -677,6 +677,9 @@ namespace RythmRPG.Combat
             {
                 string mode = inBattle ? s.BattleSubtitle : build != null ? s.EditSubtitle : string.Empty;
                 string name = build != null ? build.DisplayName : inBattle ? "Default loadout" : string.Empty;
+                // Run growth at a glance.
+                if (build != null && (build.BonusMaxHealth > 0 || build.BonusMaxMana > 0 || build.Depth > 0))
+                    name += $"  |  Max HP +{build.BonusMaxHealth}  Max MP +{build.BonusMaxMana}  |  Depth {build.Depth}";
                 subtitle.text = RewardCardView.Plain(string.IsNullOrEmpty(name) ? mode : string.IsNullOrEmpty(mode) ? name : name + "  |  " + mode);
             }
             if (abilityHeader != null) abilityHeader.text = "ABILITY SLOTS";

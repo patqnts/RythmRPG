@@ -578,7 +578,8 @@ namespace RythmRPG.Combat.Tests
             SampleBuildLibrary.RegisterInto(registry);
             RunBuildState build = registry.Preset("preset-blank").CreateState();
             RewardOfferData offer = RewardDirector.GetOrCreateOffer(build, "victory:1", registry, 3);
-            Assert.That(offer.options, Has.Count.EqualTo(3));
+            Assert.That(offer.options, Has.Count.EqualTo(4), "3 options + the growth card");
+            Assert.That(offer.options.Last().kind, Is.EqualTo(RewardKind.Growth));
             Assert.That(RewardDirector.GetOrCreateOffer(build, "victory:1", registry, 3), Is.EqualTo(offer), "reopening = same offer");
 
             RewardOptionData passive = offer.options.FirstOrDefault(o => o.kind == RewardKind.Passive) ?? offer.options[0];
@@ -592,6 +593,57 @@ namespace RythmRPG.Combat.Tests
             Assert.IsTrue(again.claimed);
             Assert.That(again.options.Select(o => o.contentId), Is.EqualTo(offer.options.Select(o => o.contentId)));
             Assert.That(RewardDirector.Claim(reloaded, again, again.options[0].optionId, registry), Is.EqualTo(ClaimStatus.AlreadyClaimed));
+        }
+
+        [Test]
+        public void GrowthRewards_RaiseMaxHealthAndMana_BeforePercentPassives_AndSurviveASave()
+        {
+            BuildContentRegistry registry = new();
+            SampleBuildLibrary.RegisterInto(registry);
+            RunBuildState build = registry.Preset("preset-blank").CreateState();
+            ProgressionRules rules = BuildBalanceRules.Load().Progression;
+            RewardOfferData offer = RewardDirector.GetOrCreateOffer(build, "victory:growth", registry, 3);
+            RewardOptionData growth = offer.options.Single(o => o.kind == RewardKind.Growth);
+            GrowthRewards.Amounts(growth.contentId, rules, out int health, out int mana);
+            Assert.That(health + mana, Is.GreaterThan(0));
+            RewardPreview preview = RewardDirector.Preview(build, growth, registry);
+            Assert.That(preview.Summary, Does.Contain("for the rest of the run"));
+            Assert.That(RewardDirector.Claim(build, offer, growth.optionId, registry), Is.EqualTo(ClaimStatus.Claimed));
+            Assert.That(build.BonusMaxHealth, Is.EqualTo(health));
+            Assert.That(build.BonusMaxMana, Is.EqualTo(mana));
+            build.AddGrowth(rules.healthGrowth, rules.manaGrowth);
+
+            build.AddPassive(Passive("fort", new MaxHealthPassive(0.5f, 0f)));
+            Rig rig = CreateRig(build);
+            int baseHealth = rig.Player.BaseMaxHealth;
+            Assert.That(rig.Player.MaxHealth, Is.EqualTo(Mathf.RoundToInt((baseHealth + build.BonusMaxHealth) * 1.5f)), "growth, then +50%");
+            Assert.That(rig.Player.MaxMana, Is.EqualTo(rig.Player.BaseMaxMana + build.BonusMaxMana));
+
+            build.RecordVictory();
+            RunBuildState reloaded = RunBuildState.FromJson(build.ToJson(), registry);
+            Assert.That(reloaded.BonusMaxHealth, Is.EqualTo(build.BonusMaxHealth));
+            Assert.That(reloaded.BonusMaxMana, Is.EqualTo(build.BonusMaxMana));
+            Assert.That(reloaded.Depth, Is.EqualTo(1));
+        }
+
+        [Test]
+        public void RunDepth_ScalesEnemyHealthAndNoteDamage_AndGatesAttackSequences()
+        {
+            var build = new RunBuildState();
+            build.AddAbility(Ability("strike", AbilityRole.Damage, AbilityDelivery.Melee, 0, 100));
+            build.SetDepth(4);
+            ProgressionRules rules = BuildBalanceRules.Load().Progression;
+            Rig rig = CreateRig(build, enemyHealth: 1000);
+            Assert.That(rig.Enemy.MaxHealth, Is.EqualTo(Mathf.RoundToInt(1000 * rules.EnemyHealthScale(4))));
+            Assert.That(rig.Enemy.CurrentHealth, Is.EqualTo(rig.Enemy.MaxHealth), "starts full");
+            Assert.That(rig.Runtime.NoteDamageScale, Is.EqualTo(rules.NoteDamageScale(4)).Within(0.0001));
+            Assert.That(rules.NoteDamageScale(1000), Is.EqualTo(rules.maxNoteDamageScale).Within(0.0001), "capped");
+
+            var dense = ScriptableObject.CreateInstance<EnemyAttackSequenceDefinition>();
+            created.Add(dense);
+            dense.GetType().GetField("minRunDepth", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(dense, 3);
+            Assert.IsFalse(dense.AllowedAtDepth(2));
+            Assert.IsTrue(dense.AllowedAtDepth(3));
         }
 
         [Test]

@@ -42,6 +42,9 @@ namespace RythmRPG.Combat
         [Header("Rewards")]
         [SerializeField, Range(1, 6)] private int optionsPerOffer = 3;
 
+        [Header("Progression (growth rewards, healing between battles, enemy scaling by depth)")]
+        [SerializeField] private ProgressionRules progression = new();
+
         [Header("Elements (marks, reactions, zaps, walls, stagger)")]
         [SerializeField] private ElementalRules elements = new();
 
@@ -58,6 +61,7 @@ namespace RythmRPG.Combat
         public int MaxSecondaryPerRoot => maxSecondaryPerRoot;
         public int OptionsPerOffer => optionsPerOffer;
         public ElementalRules Elements => elements ??= new ElementalRules();
+        public ProgressionRules Progression => progression ??= new ProgressionRules();
 
         public static BuildBalanceRules Load()
         {
