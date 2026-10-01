@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 139089e1fb72eec48bb0a86af754c533, type: 3}
+  m_Name: Grassland
+  m_EditorClassIdentifier: RythmRPG.Core::RythmRPG.Core.GameSceneDefinition
+  id: grassland
+  displayName: Grassland
+  isMenu: 0
+  scene: {fileID: 102900000, guid: fdb5a69cce295d14d9281a2ffa93c3bc, type: 3}
+  scenePath: Assets/Scenes/Grassland.unity

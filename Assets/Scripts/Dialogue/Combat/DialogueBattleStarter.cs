@@ -1,6 +1,7 @@
 using System.Collections;
 using PixelCrushers.DialogueSystem;
 using RythmRPG.Combat;
+using RythmRPG.Core;
 using UnityEngine;
 
 namespace RythmRPG.Dialogue
@@ -51,7 +52,22 @@ namespace RythmRPG.Dialogue
         }
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
-        private static void Install() => Ensure();
+        private static void Install()
+        {
+            Ensure();
+            GameSceneLoader.CanTransition -= SceneGuard;
+            GameSceneLoader.CanTransition += SceneGuard;
+            GameSceneLoader.TransitionStarted -= SceneTransition;
+            GameSceneLoader.TransitionStarted += SceneTransition;
+        }
+        private static string SceneGuard(SceneLoadRequest request) =>
+            request.Intent != SceneLoadIntent.ReturnToMenu && IsBusy ? "Finish the conversation or encounter before leaving." : null;
+        private static void SceneTransition(SceneLoadRequest request)
+        {
+            Cancel();
+            if (request.Intent == SceneLoadIntent.ReturnToMenu && DialogueManager.hasInstance && DialogueManager.isConversationActive)
+                DialogueManager.StopConversation();
+        }
 
         private static DialogueBattleStarter Ensure()
         {
@@ -68,6 +84,7 @@ namespace RythmRPG.Dialogue
         /// <param name="showNotice">Null = the enemy's <see cref="DialogueEncounter.showNotice"/> (off when it has none).</param>
         public static bool Request(EnemyCombatant enemy, bool? showNotice = null)
         {
+            if (GameSceneLoader.IsLoading) return false;
             if (enemy == null)
             {
                 Debug.LogWarning("[Dialogue Battle] StartBattle: no enemy found. Use it in a conversation with the enemy as " +

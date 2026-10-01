@@ -79,7 +79,7 @@ namespace RythmRPG.Core
         public static Vector2 MoveValue => GamePause.IsPaused || IsGameplayBlocked ? Vector2.zero : Move.ReadValue<Vector2>();
         public static bool InteractPressed => !GamePause.IsPaused && !IsGameplayBlocked && Interact.WasPressedThisFrame();
         public static bool InteractHeld => !GamePause.IsPaused && !IsGameplayBlocked && Interact.IsPressed();
-        public static bool LoadoutPressed => !GamePause.IsPaused && Loadout.WasPressedThisFrame();
+        public static bool LoadoutPressed => !GamePause.IsPaused && !GameSceneLoader.IsLoading && Loadout.WasPressedThisFrame();
 
         /// <summary>True while a menu (e.g. the loadout panel) holds exploration input: Move / Interact read as idle.</summary>
         public static bool IsGameplayBlocked => gameplayBlockers.Count > 0;
@@ -94,7 +94,7 @@ namespace RythmRPG.Core
         {
             if (owner != null) gameplayBlockers.Remove(owner);
         }
-        public static bool LanePressed(int laneId) => !GamePause.IsPaused && (Lane(laneId)?.WasPressedThisFrame() ?? false);
+        public static bool LanePressed(int laneId) => !GamePause.IsPaused && !GameSceneLoader.IsLoading && (Lane(laneId)?.WasPressedThisFrame() ?? false);
 
         /// <summary>
         /// The lane key (1-based slot, see <see cref="LaneCount"/>) that gameplay lane <paramref name="laneId"/> uses when

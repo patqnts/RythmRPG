@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using PixelCrushers.DialogueSystem;
+using RythmRPG.Core;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -57,7 +58,7 @@ namespace RythmRPG.Dialogue
             }
 
             BlockSelectors(disableProximitySelectors
-                           && (locked || DialogueBattleStarter.IsPending || DialogueBattleStarter.AnyBattleActive()));
+                           && (locked || GameSceneLoader.IsLoading || DialogueBattleStarter.IsPending || DialogueBattleStarter.AnyBattleActive()));
         }
 
         private void OnDisable()

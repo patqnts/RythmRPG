@@ -168,6 +168,16 @@ namespace RythmRPG.Core
             else Pause();
         }
 
+        /// <summary>Leaves pause without a combat countdown before unloading a scene.</summary>
+        public void ResumeForSceneChange()
+        {
+            if (state == PauseState.Running) return;
+            // Re-suspend an active countdown so its future audio release is replaced by an immediate one.
+            GameAudioClock.Suspend();
+            GameAudioClock.Release(AudioSettings.dspTime);
+            FinishResume();
+        }
+
         /// <summary>Countdown seconds used by the current resume (0 = continue right away).</summary>
         public static int ActiveResumeCountdown => State == PauseState.Resuming && Instance != null ? Instance.activeCountdown : 0;
 

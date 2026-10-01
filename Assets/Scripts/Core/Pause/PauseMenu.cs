@@ -22,7 +22,7 @@ namespace RythmRPG.Core
         private Canvas canvas;
         private Image dim;
         private RectTransform mainPage, settingsPage;
-        private Button resumeButton, settingsButton, quitButton;
+        private Button resumeButton, settingsButton, menuButton, quitButton;
         private TMP_Text hintText;
 
         private readonly Button[] tabButtons = new Button[3];
@@ -217,17 +217,19 @@ namespace RythmRPG.Core
 
         private void BuildMainPage(RectTransform root)
         {
-            mainPage = Panel(root, "Main Page", new Vector2(640f, 560f));
+            mainPage = Panel(root, "Main Page", new Vector2(640f, 650f));
             PauseUi.Vertical(mainPage, 16f, new RectOffset(64, 64, 52, 40));
             Title(mainPage, "PAUSED", 80f);
             PauseUi.Size(PauseUi.Rect("Spacer", mainPage), height: 12f);
 
             resumeButton = PauseUi.MakeButton(mainPage, "Resume", () => pause.Resume(), 72f, 34f);
             settingsButton = PauseUi.MakeButton(mainPage, "Settings", ShowSettings, 72f, 34f);
+            menuButton = PauseUi.MakeButton(mainPage, "Main Menu", () => GameSceneLoader.Ensure().ReturnToMenu(), 72f, 34f);
             quitButton = PauseUi.MakeButton(mainPage, "Quit Game", Quit, 72f, 34f);
             PauseUi.Nav(resumeButton, quitButton, settingsButton, null, null);
-            PauseUi.Nav(settingsButton, resumeButton, quitButton, null, null);
-            PauseUi.Nav(quitButton, settingsButton, resumeButton, null, null);
+            PauseUi.Nav(settingsButton, resumeButton, menuButton, null, null);
+            PauseUi.Nav(menuButton, settingsButton, quitButton, null, null);
+            PauseUi.Nav(quitButton, menuButton, resumeButton, null, null);
 
             PauseUi.Size(PauseUi.Rect("Spacer", mainPage), flexibleHeight: 1f);
             hintText = PauseUi.Label(mainPage, string.Empty, 22f, PauseTheme.MutedText);

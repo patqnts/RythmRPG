@@ -86,7 +86,7 @@ public sealed class PlayerEnemyInteractor3D : MonoBehaviour
     /// dialogue encounter delay.</param>
     public bool TryBeginBattle(EnemyCombatant enemy, bool showNotice)
     {
-        if (enemy == null || !isActiveAndEnabled || encounterStarting || IsCombatBusy()) return false;
+            if (enemy == null || !isActiveAndEnabled || encounterStarting || GameSceneLoader.IsLoading || IsCombatBusy()) return false;
         StartCoroutine(EncounterTransition(enemy, showNotice));
         return true;
     }

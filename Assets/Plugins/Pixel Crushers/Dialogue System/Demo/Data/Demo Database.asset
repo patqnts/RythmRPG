@@ -3277,6 +3277,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      - title: EventGuid
+        value: 6cd2cd97-449e-49b8-b86b-f0f4307d623b
+        type: 0
+        typeString: 
       conversationID: 7
       isRoot: 0
       isGroup: 0
@@ -3408,7 +3412,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: EventGuid
-        value: 863fd7ef-3939-4837-a1f5-aa69dbf7f844
+        value: 
         type: 0
         typeString: 
       conversationID: 7
@@ -3426,13 +3430,13 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 556
-        y: 158
+        x: 529.7864
+        y: 151.20389
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
-    canvasZoom: 1
+    canvasScrollPosition: {x: 8.504847, y: 3.902909}
+    canvasZoom: 1.03
   - id: 8
     fields:
     - title: Title

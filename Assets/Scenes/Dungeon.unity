@@ -4964,6 +4964,7 @@ GameObject:
   - component: {fileID: 1043333263}
   - component: {fileID: 1043333262}
   - component: {fileID: 1043333265}
+  - component: {fileID: 1043333266}
   m_Layer: 0
   m_Name: Warp Char
   m_TagString: Untagged
@@ -5208,6 +5209,26 @@ MonoBehaviour:
     prependActorNameSeparator: ': '
     prependActorNameFormat: '{0}{1}'
     subtitleColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &1043333266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1043333259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a997f5d549c7b44d9d47510815459ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: RythmRPG.Core::RythmRPG.Core.SceneExit
+  destination: {fileID: 11400000, guid: 2af125acd8a502f4a851777744dab096, type: 2}
+  entryPoint: 
+  loadOnPlayerEnter: 0
+  requireInteract: 0
+  waitUntilAvailable: 1
+  onRejected:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1079387931
 GameObject:
   m_ObjectHideFlags: 0
@@ -11466,22 +11487,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::PixelCrushers.DialogueSystem.Wrappers.DialogueSystemSceneEvents
   dialogueEntrySceneEvents:
-  - guid: 863fd7ef-3939-4837-a1f5-aa69dbf7f844
-    onExecute:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1043043165}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: 
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: 
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
   - guid: 64eb8b6f-600b-453f-8a99-55b20ef823f8
     onExecute:
       m_PersistentCalls:
@@ -11489,6 +11494,22 @@ MonoBehaviour:
         - m_Target: {fileID: 548514307}
           m_TargetAssemblyTypeName: RythmRPG.Core.WeatherController, RythmRPG.Core
           m_MethodName: StrikeLightning
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - guid: 6cd2cd97-449e-49b8-b86b-f0f4307d623b
+    onExecute:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1043333266}
+          m_TargetAssemblyTypeName: RythmRPG.Core.SceneExit, RythmRPG.Core
+          m_MethodName: Load
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

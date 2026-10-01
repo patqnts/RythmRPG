@@ -1,0 +1,26 @@
+{
+    "passed": true,
+    "checks": [
+        "Return to menu accepted: ",
+        "Transition completed without error",
+        "Menu loaded",
+        "Menu controls installed",
+        "Gameplay panels disabled in menu",
+        "New game accepted: ",
+        "Transition completed without error",
+        "Start Game loaded Dungeon",
+        "New run initialized for inventory/rewards",
+        "Dungeon player exists",
+        "Grassland travel accepted: ",
+        "Transition completed without error",
+        "Grassland loaded",
+        "Run build preserved",
+        "Player resources preserved",
+        "Controls unlocked after arrival",
+        "Pause works after travel",
+        "Return to menu accepted while paused: ",
+        "Transition completed without error",
+        "Menu return cleared pause and time scale"
+    ],
+    "error": ""
+}

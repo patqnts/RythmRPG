@@ -1,0 +1,6 @@
+Initially only the start prompt is visible
+Quit view replaces the start prompt
+Arrow navigation connects both choices
+Cancel restores the start prompt
+Cancel suppresses the closing input
+Loading failures restore the prompt with feedback

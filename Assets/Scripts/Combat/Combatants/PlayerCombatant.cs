@@ -147,6 +147,16 @@ namespace RythmRPG.Combat
             ManaChanged?.Invoke(currentMana, MaxMana);
         }
 
+        /// <summary>Transfers current resources to a new area without raising damage or healing events.</summary>
+        public void RestoreResources(int health, int mana)
+        {
+            currentHealth = Mathf.Clamp(health, 0, MaxHealth);
+            currentMana = Mathf.Clamp(mana, 0, MaxMana);
+            defeatRaised = IsDefeated;
+            HealthChanged?.Invoke(currentHealth, MaxHealth);
+            ManaChanged?.Invoke(currentMana, MaxMana);
+        }
+
         private void ClampStats()
         {
             maxHealth = Mathf.Max(1, maxHealth);
