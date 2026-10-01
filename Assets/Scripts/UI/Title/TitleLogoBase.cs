@@ -120,6 +120,14 @@ namespace RythmRPG.UI.Title
             RefreshLayout();
         }
 
+        /// <summary>Use the title effect on other interfaces without changing the original logo or its materials.</summary>
+        public void Configure(Shader effectShader, TitleLogoLook preset, TitleDisintegrateSettings settings)
+        {
+            if (effectShader != null) shader = effectShader;
+            if (settings != null) disintegration = settings.Clone();
+            ApplyLook(preset);
+        }
+
         /// <summary>Recompute focus, flake grid and padding (call after changing layout-affecting settings in code).</summary>
         public void RefreshLayout()
         {

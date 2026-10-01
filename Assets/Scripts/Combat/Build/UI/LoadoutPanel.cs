@@ -37,6 +37,8 @@ namespace RythmRPG.Combat
             public PassiveInstance Passive;
             public RectTransform Row;
             public Image Background;
+            public ArtifactGeometry Rim;
+            public ArtifactSlimeReaction Reaction;
             public BuildIconTile Tile;
             public TMP_Text Title;
             public TMP_Text Detail;
@@ -58,6 +60,10 @@ namespace RythmRPG.Combat
 
         [Tooltip("Empty = Resources/Combat/UI/BuildHudStyle (or built-in defaults).")]
         [SerializeField] private BuildHudStyle style;
+        [SerializeField] private UnityEngine.UI.ScrollRect detailScroll;
+        private ArtifactInterfaceView artifact;
+        private Item inspectedItem;
+        private float fadeVisibility = 1f;
 
         [Header("Parts")]
         [SerializeField] private Canvas canvas;
@@ -69,6 +75,7 @@ namespace RythmRPG.Combat
         [SerializeField] private TMP_Text passiveHeader;
         [SerializeField] private RectTransform abilityViewport;
         [SerializeField] private RectTransform abilityContent;
+        [SerializeField] private RectTransform equippedContent;
         [SerializeField] private RectTransform passiveViewport;
         [SerializeField] private RectTransform passiveContent;
         [SerializeField] private TMP_Text detailTitle;
@@ -187,6 +194,8 @@ namespace RythmRPG.Combat
             GamePause.EnsureEventSystem();
             if (editable) GameInput.BlockGameplay(this);
             ApplyStaticTexts();
+            artifact = ArtifactInterfaceView.Ensure(gameObject);
+            artifact.SetVisibility(0f);
             Rebuild();
             Play(Style.OpenSound);
             return true;
@@ -197,6 +206,7 @@ namespace RythmRPG.Combat
             if (!open || closing) return;
             closing = true;
             fadeFrom = group != null ? group.alpha : 1f;
+            fadeVisibility = artifact != null ? artifact.Visibility : fadeFrom;
             fadeAt = GamePause.UnpausedRealtime;
             picked = null;
             if (group != null) group.blocksRaycasts = false;
@@ -221,6 +231,7 @@ namespace RythmRPG.Combat
                 group.blocksRaycasts = false;
             }
             if (canvas != null) canvas.enabled = false;
+            artifact?.SetVisibility(0f);
             ClearRows();
         }
 
@@ -237,8 +248,10 @@ namespace RythmRPG.Combat
             float now = GamePause.UnpausedRealtime;
             if (closing)
             {
-                float t = Style.FadeSeconds <= 0f ? 1f : Mathf.Clamp01((now - fadeAt) / Style.FadeSeconds);
-                if (group != null) group.alpha = Mathf.Lerp(fadeFrom, 0f, t);
+                float duration = ArtifactInterfaceStyle.Load().dismissSeconds;
+                float t = duration <= 0f ? 1f : Mathf.Clamp01((now - fadeAt) / duration);
+                artifact?.SetVisibility(fadeVisibility * (1f - t));
+                if (group != null) group.alpha = fadeFrom * (1f - Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(0.65f, 1f, t)));
                 if (t >= 1f) HideImmediate();
                 return;
             }
@@ -249,8 +262,10 @@ namespace RythmRPG.Combat
                 return;
             }
 
-            if (group != null)
-                group.alpha = Style.FadeSeconds <= 0f ? 1f : Mathf.Clamp01((now - fadeAt) / Style.FadeSeconds);
+            float revealDuration = ArtifactInterfaceStyle.Load().revealSeconds;
+            float reveal = revealDuration <= 0f ? 1f : Mathf.Clamp01((now - fadeAt) / revealDuration);
+            artifact?.SetVisibility(reveal);
+            if (group != null) group.alpha = Mathf.Clamp01(reveal * 3f);
             if (message != null && messageUntil > 0f && now > messageUntil)
             {
                 message.text = string.Empty;
@@ -308,10 +323,10 @@ namespace RythmRPG.Combat
                 else Close();
                 return;
             }
-            if (up) Move(-1);
-            if (down) Move(+1);
-            if (left) SwitchColumn(0);
-            if (right) SwitchColumn(1);
+            if (up) Navigate(Vector2.up);
+            if (down) Navigate(Vector2.down);
+            if (left) Navigate(Vector2.left);
+            if (right) Navigate(Vector2.right);
             if (!editable) return;
             if (CombatResultStyle.AnyKeyDown(s.ConfirmKeys) || (pad != null && pad.buttonSouth.wasPressedThisFrame)) Confirm();
             else if (CombatResultStyle.AnyKeyDown(s.ReserveKeys) || (pad != null && pad.buttonWest.wasPressedThisFrame)) SendToReserve();
@@ -349,6 +364,31 @@ namespace RythmRPG.Combat
         // ---------- navigation ----------
 
         private Item Current => selected >= 0 && selected < items.Count ? items[selected] : null;
+
+        private void Navigate(Vector2 direction)
+        {
+            if (equippedContent == null)
+            {
+                if (direction.y != 0f) Move(direction.y > 0f ? -1 : 1);
+                else SwitchColumn(direction.x < 0f ? 0 : 1);
+                return;
+            }
+            if (Current?.Row == null) return;
+            Vector2 origin = Current.Row.TransformPoint(Current.Row.rect.center);
+            float best = float.PositiveInfinity;
+            int next = selected;
+            for (int i = 0; i < items.Count; i++)
+            {
+                if (i == selected || items[i].Row == null) continue;
+                Vector2 delta = (Vector2)items[i].Row.TransformPoint(items[i].Row.rect.center) - origin;
+                float forward = Vector2.Dot(delta, direction);
+                if (forward <= 1f) continue;
+                float cross = Mathf.Abs(delta.x * direction.y - delta.y * direction.x);
+                float score = forward + cross * 3f;
+                if (score < best) { best = score; next = i; }
+            }
+            Select(next);
+        }
 
         private void Move(int step)
         {
@@ -528,13 +568,14 @@ namespace RythmRPG.Combat
                     {
                         Item item = SlotItem(slot);
                         if (item == null) continue;
-                        y = AddRow(abilityContent, item, y, SlotRowHeight);
+                        if (equippedContent != null) AddEquippedCard(item);
+                        else y = AddRow(abilityContent, item, y, SlotRowHeight);
                     }
                     if (build != null)
                     {
-                        y = AddSubheader(abilityContent, y + 4f, "RESERVE", s.TitleColor, SubheaderHeight);
+                        if (equippedContent == null) y = AddSubheader(abilityContent, y + 4f, "RESERVE", s.TitleColor, SubheaderHeight);
                         List<AbilityInstance> reserve = build.Reserve.ToList();
-                        if (reserve.Count == 0) y = AddSubheader(abilityContent, y, "Nothing in reserve.", s.MutedColor, 34f);
+                        if (reserve.Count == 0) y = AddSubheader(abilityContent, y, "No spare abilities", s.MutedColor, 40f);
                         foreach (AbilityInstance ability in reserve)
                             y = AddRow(abilityContent, new Item { Kind = ItemKind.Reserve, Column = 0, Ability = ability, Definition = ability.Definition },
                                 y, ReserveRowHeight);
@@ -547,7 +588,7 @@ namespace RythmRPG.Combat
             if (passiveContent != null)
             {
                 if (build == null || build.Passives.Count == 0)
-                    y = AddSubheader(passiveContent, y, build == null ? "No run build." : "No passives yet. Win fights to earn some.", s.MutedColor, 40f);
+                    y = AddSubheader(passiveContent, y, "No passives", s.MutedColor, 40f);
                 else
                     foreach (PassiveInstance passive in build.Passives)
                         if (passive?.Definition != null)
@@ -600,6 +641,7 @@ namespace RythmRPG.Combat
             Image background = row.gameObject.AddComponent<Image>();
             background.color = new Color(1f, 1f, 1f, 0.05f);
             background.raycastTarget = true;
+            ArtifactInterfaceView.Glass(row);
             RewardChoiceButton button = row.gameObject.AddComponent<RewardChoiceButton>();
             button.Index = index;
             button.Hovered += HoverRow;
@@ -607,11 +649,13 @@ namespace RythmRPG.Combat
 
             IconTileLook look = s.PanelTile;
             float tileSize = Mathf.Min(look.size.y, height - 10f);
-            BuildIconTile tile = BuildIconTile.Create("Icon", row, look, s.FontAsset, s.OutlineColor, s.RowDetailSize, s.RowDetailSize);
+            BuildIconTile tile = BuildIconTile.Create("Icon", row, look, ArtifactInterfaceStyle.Load().bodyFont ?? s.FontAsset,
+                Color.clear, s.RowDetailSize, s.RowDetailSize);
             tile.Rect.sizeDelta = new Vector2(tileSize, tileSize);
             tile.Rect.anchorMin = tile.Rect.anchorMax = tile.Rect.pivot = new Vector2(0f, 0.5f);
             tile.Rect.anchoredPosition = new Vector2(10f, 0f);
 
+            item.Rim = ArtifactInterfaceView.Decorate("Row Tracery", row, ArtifactGeometry.Shape.Frame, new Color(s.HighlightColor.r, s.HighlightColor.g, s.HighlightColor.b, 0.16f));
             float textLeft = 10f + tileSize + 14f;
             TMP_Text rowTitle = NewText("Title", row, s.RowTitleSize, s.TextColor, TextAlignmentOptions.Left);
             rowTitle.rectTransform.anchorMin = new Vector2(0f, 0.5f);
@@ -638,6 +682,29 @@ namespace RythmRPG.Combat
             return y + height + RowGap;
         }
 
+        private void AddEquippedCard(Item item)
+        {
+            float width = (equippedContent.rect.width - 20f) / 2f;
+            float height = (equippedContent.rect.height - 20f) / 2f;
+            AddRow(equippedContent, item, 0f, height);
+            Box(item.Row, (item.Slot % 2) * (width + 20f), (item.Slot / 2) * (height + 20f), width, height);
+            item.Tile.Rect.anchorMin = item.Tile.Rect.anchorMax = new Vector2(.5f, 1f);
+            item.Tile.Rect.pivot = new Vector2(.5f, .5f);
+            item.Tile.Rect.anchoredPosition = new Vector2(0f, -102f);
+            item.Tile.Rect.sizeDelta = new Vector2(124f, 124f);
+            TopBand(item.Title.rectTransform, 16f, 172f, 72f);
+            item.Title.alignment = TextAlignmentOptions.Center;
+            item.Title.textWrappingMode = TextWrappingModes.Normal;
+            item.Title.enableAutoSizing = true;
+            item.Title.fontSizeMin = 30f;
+            item.Title.fontSizeMax = 42f;
+            TopBand(item.Detail.rectTransform, 12f, height - 48f, 36f);
+            item.Detail.alignment = TextAlignmentOptions.Center;
+            var key = NewText("Lane Key", item.Row, 32, Style.HighlightColor, TextAlignmentOptions.TopLeft);
+            TopBand(key.rectTransform, 16f, 10f, 32f);
+            key.text = "[" + item.KeyLabel + "]";
+        }
+
         private float AddSubheader(RectTransform content, float y, string text, Color color, float height)
         {
             BuildHudStyle s = Style;
@@ -657,7 +724,12 @@ namespace RythmRPG.Combat
         private void ClearRows()
         {
             foreach (GameObject go in spawned)
-                if (go != null) Destroy(go);
+                if (go != null)
+                {
+                    go.SetActive(false);
+                    if (Application.isPlaying) Destroy(go);
+                    else DestroyImmediate(go);
+                }
             spawned.Clear();
             items.Clear();
         }
@@ -675,15 +747,10 @@ namespace RythmRPG.Combat
             }
             if (subtitle != null)
             {
-                string mode = inBattle ? s.BattleSubtitle : build != null ? s.EditSubtitle : string.Empty;
-                string name = build != null ? build.DisplayName : inBattle ? "Default loadout" : string.Empty;
-                // Run growth at a glance.
-                if (build != null && (build.BonusMaxHealth > 0 || build.BonusMaxMana > 0 || build.Depth > 0))
-                    name += $"  |  Max HP +{build.BonusMaxHealth}  Max MP +{build.BonusMaxMana}  |  Depth {build.Depth}";
-                subtitle.text = RewardCardView.Plain(string.IsNullOrEmpty(name) ? mode : string.IsNullOrEmpty(mode) ? name : name + "  |  " + mode);
+                subtitle.text = inBattle ? s.BattleSubtitle : s.EditSubtitle;
             }
-            if (abilityHeader != null) abilityHeader.text = "ABILITY SLOTS";
-            if (passiveHeader != null) passiveHeader.text = build != null ? $"PASSIVES ({build.Passives.Count})" : "PASSIVES";
+            if (abilityHeader != null) abilityHeader.text = "Equipped";
+            if (passiveHeader != null) passiveHeader.text = build != null ? $"Passives ({build.Passives.Count})" : "Passives";
             string closeKey = GameInput.DisplayString(GameInput.Loadout, GameInput.FindBindingIndex(GameInput.Loadout, GameInput.KeyboardGroup));
             closeKey = string.IsNullOrEmpty(closeKey) ? "TAB" : closeKey.ToUpperInvariant();
             if (prompt != null) prompt.text = editable ? s.EditPrompt(closeKey) : s.ViewPrompt(closeKey);
@@ -722,17 +789,16 @@ namespace RythmRPG.Combat
             }
             if (definition == null)
             {
-                SetText(item.Title, $"Slot {item.Slot + 1}  (empty)", s.MutedColor);
-                SetText(item.Detail, editable ? "Pick a reserve ability and place it here." : string.Empty, s.MutedColor);
+                SetText(item.Title, "Empty", s.MutedColor);
+                SetText(item.Detail, editable ? "Select an ability to equip" : string.Empty, s.MutedColor);
                 return;
             }
             AbilityQuote quote = QuoteOf(item);
             int upgrades = item.Ability != null ? item.Ability.Upgrades.Count : 0;
             string name = definition.DisplayName + (upgrades > 0 ? $"  +{upgrades}" : string.Empty);
-            SetText(item.Title, item.Kind == ItemKind.Slot ? $"[{key}] {name}" : name, s.TextColor);
+            SetText(item.Title, item.Kind == ItemKind.Slot && equippedContent == null ? $"[{key}] {name}" : name, s.TextColor);
 
-            string stats = $"{quote.CostText} | CD {quote.Cooldown} | {quote.Roles.ToString().Replace(", ", "/")}"
-                           + (quote.Element != ElementType.None ? " | " + quote.Element : string.Empty);
+            string stats = quote.CostText + (quote.Cooldown > 0 ? $"  /  Cooldown {quote.Cooldown}" : string.Empty);
             Color detailColor = s.MutedColor;
             if (item.Runtime != null && player != null)
             {
@@ -758,8 +824,8 @@ namespace RythmRPG.Combat
             bool active = IsPassiveActive(passive, equipped);
             if (item.Tile != null)
             {
-                item.Tile.SetContent(definition.Icon, PassiveIconColumnView.Initial(definition.DisplayName), s.CategoryColor(definition.Category));
-                item.Tile.SetFrameColor(s.PassiveFrameColor(definition, s.PanelTile));
+                item.Tile.SetContent(definition.Icon, PassiveIconColumnView.Initial(definition.DisplayName), ArtifactInterfaceStyle.Load().lilac);
+                item.Tile.SetFrameColor(ArtifactInterfaceStyle.Load().lilac);
                 item.Tile.SetCorner(definition.MaxLevel > 1 ? BuildHudStyle.Roman(passive.Level) : string.Empty, s.PassiveLevelColor);
                 item.Tile.Alpha = active ? 1f : s.InactiveAlpha;
             }
@@ -800,8 +866,8 @@ namespace RythmRPG.Combat
             if (item.Kind == ItemKind.Passive)
             {
                 PassiveDefinition definition = item.Passive.Definition;
-                detailTitle.text = RewardCardView.Plain($"{definition.DisplayName}  Lv {item.Passive.Level}/{definition.MaxLevel}  |  {Words(definition.Category.ToString())}");
-                detailTitle.color = s.CategoryColor(definition.Category);
+                detailTitle.text = RewardCardView.Plain($"{definition.DisplayName}  Lv {item.Passive.Level}");
+                detailTitle.color = ArtifactInterfaceStyle.Load().lilac;
                 if (!string.IsNullOrEmpty(definition.Description)) lines.Add(definition.Description);
                 lines.Add("Now: " + definition.DescribeLevel(item.Passive.Level));
                 if (!item.Passive.IsMaxLevel) lines.Add("Next level: " + definition.DescribeLevel(item.Passive.Level + 1));
@@ -816,10 +882,14 @@ namespace RythmRPG.Combat
             else
             {
                 AbilityQuote quote = QuoteOf(item);
-                string where = item.Kind == ItemKind.Slot ? $"Slot {item.Slot + 1} [{item.KeyLabel}]" : "Reserve";
-                detailTitle.text = RewardCardView.Plain($"{item.Definition.DisplayName}  |  {where}");
+                detailTitle.text = RewardCardView.Plain(item.Definition.DisplayName);
                 detailTitle.color = picked == item ? s.PickedColor : s.HighlightColor;
-                lines.Add(RewardDirector.DescribeAbility(quote));
+                var stats = new List<string>();
+                if (quote.BasePower > 0) stats.Add(Mathf.RoundToInt(quote.BasePower * quote.PowerScale) + " power");
+                stats.Add(quote.ManaCost == 0 ? "Free" : quote.ManaCost + " MP");
+                if (quote.Cooldown > 0) stats.Add("Cooldown: " + quote.CooldownText);
+                if (quote.Element != ElementType.None) stats.Add(quote.Element.ToString());
+                lines.Add(string.Join(" / ", stats));
                 if (!string.IsNullOrEmpty(item.Definition.Description)) lines.Add(item.Definition.Description);
                 foreach (AbilityEffect effect in quote.Effects)
                     if (effect != null) lines.Add("- " + effect.Describe(item.Definition));
@@ -830,6 +900,15 @@ namespace RythmRPG.Combat
             }
             detailBody.text = RewardCardView.Plain(string.Join("\n", lines));
             detailBody.color = s.TextColor;
+            if (detailScroll != null && inspectedItem != item)
+            {
+                inspectedItem = item;
+                detailBody.ForceMeshUpdate();
+                LayoutRebuilder.ForceRebuildLayoutImmediate(detailBody.rectTransform);
+                Canvas.ForceUpdateCanvases();
+                detailScroll.StopMovement();
+                detailScroll.content.anchoredPosition = new Vector2(detailScroll.content.anchoredPosition.x, 0f);
+            }
         }
 
         private static string Words(string pascal)
@@ -859,20 +938,28 @@ namespace RythmRPG.Combat
             {
                 Item item = items[i];
                 if (item.Background == null) continue;
-                Color color = item == picked ? s.PickedColor : s.HighlightColor;
-                float alpha = item == picked ? 0.32f : i == selected ? 0.24f : 0.05f;
-                item.Background.color = item == picked || i == selected ? new Color(color.r, color.g, color.b, alpha) : new Color(1f, 1f, 1f, alpha);
+                float alpha = item == picked ? .12f : i == selected ? .08f : .14f;
+                item.Background.color = item == picked || i == selected ? new Color(.78f, 1f, .9f, alpha) : new Color(.035f, .10f, .11f, alpha);
+                var rim = item.Rim;
+                if (rim != null) rim.color = new Color(1f, 1f, 1f, item == picked || i == selected ? 1f : .45f);
+                if (item.Reaction == null) item.Reaction = ArtifactSlimeReaction.Ensure(item.Row);
+                item.Reaction.SetFocused(i == selected);
             }
             Item current = Current;
             if (current != null) ScrollTo(current);
             UpdateDetails();
+            ApplyStaticTexts();
+            if (picked != null && prompt != null) prompt.text = "Select a slot to swap    [Backspace] Cancel";
+            artifact?.RefreshEffects();
         }
 
         private void ScrollTo(Item item)
         {
+            if (equippedContent != null && item.Kind == ItemKind.Slot) return;
             RectTransform content = item.Column == 0 ? abilityContent : passiveContent;
             RectTransform viewport = item.Column == 0 ? abilityViewport : passiveViewport;
             if (content == null || viewport == null) return;
+            viewport.GetComponentInParent<ScrollRect>()?.StopMovement();
             float view = viewport.rect.height;
             float scroll = content.anchoredPosition.y;
             if (item.Top < scroll) scroll = item.Top;
@@ -902,6 +989,7 @@ namespace RythmRPG.Combat
             var root = new GameObject("Loadout Panel", typeof(RectTransform), typeof(Canvas), typeof(CanvasScaler),
                 typeof(GraphicRaycaster), typeof(CanvasGroup), typeof(AudioSource));
             Canvas rootCanvas = root.GetComponent<Canvas>();
+            rootCanvas.pixelPerfect = true;
             rootCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
             rootCanvas.sortingOrder = 1005;
             rootCanvas.additionalShaderChannels |= AdditionalCanvasShaderChannels.Normal | AdditionalCanvasShaderChannels.Tangent;
@@ -922,53 +1010,78 @@ namespace RythmRPG.Combat
             RectTransform panel = NewRect("Panel", rootRect);
             panel.anchorMin = panel.anchorMax = panel.pivot = new Vector2(0.5f, 0.5f);
             panel.sizeDelta = s.PanelSize;
-            Image frame = NewImage("Frame", panel, s.PanelFrameColor, true);
+            Image frame = NewImage("Frame", panel, Color.clear, true);
             Stretch(frame.rectTransform, 0f);
-            Image background = NewImage("Background", panel, s.PanelColor, false);
+            Image background = NewImage("Background", panel, ArtifactInterfaceStyle.Load().glass, false);
             Stretch(background.rectTransform, 4f);
+            ArtifactInterfaceView.Glass(panel);
+            ArtifactInterfaceView.Decorate("Prismatic Frame", panel, ArtifactGeometry.Shape.Frame, s.PanelFrameColor);
 
             float width = s.PanelSize.x;
             float height = s.PanelSize.y;
-            float columnTop = 150f;
-            float detailHeight = 170f;
-            float bottomLines = 90f;
-            float viewportHeight = height - columnTop - 40f - detailHeight - bottomLines - 20f;
-            float abilityWidth = Mathf.Round((width - 120f) * 0.53f);
-            float passiveWidth = width - 120f - abilityWidth;
-
-            TMP_Text titleText = CreateText("Title", panel, font, s.PanelTitleSize, s.TitleColor, outline, TextAlignmentOptions.Center);
-            TopBand(titleText.rectTransform, 40f, 22f, s.PanelTitleSize + 10f);
-            TMP_Text subtitleText = CreateText("Subtitle", panel, font, s.HeaderSize - 4, s.MutedColor, outline, TextAlignmentOptions.Center);
-            TopBand(subtitleText.rectTransform, 40f, 30f + s.PanelTitleSize, s.HeaderSize + 6f);
+            float columnTop = 116f;
+            float bottomLines = 72f;
+            float viewportHeight = height - columnTop - 44f - bottomLines - 24f;
+            float abilityWidth = Mathf.Round((width - 80f) * .41f);
+            float passiveWidth = Mathf.Round((width - 80f) * .22f);
+            float secondaryLeft = 68f + abilityWidth;
+            float detailLeft = secondaryLeft + passiveWidth + 28f;
+            float detailWidth = width - detailLeft - 40f;
+            TMP_Text titleText = CreateText("Title", panel, font, s.PanelTitleSize, s.TitleColor, outline, TextAlignmentOptions.Left);
+            ArtifactInterfaceView.StyleHeading(titleText);
+            TopBand(titleText.rectTransform, 40f, 24f, s.PanelTitleSize + 14f);
+            TMP_Text subtitleText = CreateText("Subtitle", panel, font, 22, s.MutedColor, outline, TextAlignmentOptions.Left);
+            subtitleText.gameObject.SetActive(false);
+            var seal = ArtifactInterfaceView.Decorate("Artifact Seal", panel, ArtifactGeometry.Shape.Sigil,
+                new Color(s.HighlightColor.r, s.HighlightColor.g, s.HighlightColor.b, 0.55f));
+            Box(seal.rectTransform, width - 238f, 26f, 62f, 62f);
 
             TMP_Text abilityHeaderText = CreateText("Abilities Header", panel, font, s.HeaderSize, s.TitleColor, outline, TextAlignmentOptions.BottomLeft);
             Box(abilityHeaderText.rectTransform, 40f, columnTop - 6f, abilityWidth, 40f);
             TMP_Text passiveHeaderText = CreateText("Passives Header", panel, font, s.HeaderSize, s.TitleColor, outline, TextAlignmentOptions.BottomLeft);
-            Box(passiveHeaderText.rectTransform, 80f + abilityWidth, columnTop - 6f, passiveWidth, 40f);
+            Box(passiveHeaderText.rectTransform, secondaryLeft, columnTop + 300f, passiveWidth, 40f);
+            var reserveHeader = CreateText("Reserve Header", panel, font, s.HeaderSize, s.MutedColor, outline, TextAlignmentOptions.BottomLeft);
+            reserveHeader.text = "Reserve";
+            Box(reserveHeader.rectTransform, secondaryLeft, columnTop - 6f, passiveWidth, 40f);
+            RectTransform equipped = NewRect("Equipped", panel);
+            Box(equipped, 40f, columnTop + 44f, abilityWidth, viewportHeight);
+            RectTransform abilityView = Viewport("Reserve", panel, secondaryLeft, columnTop + 44f, passiveWidth, 244f, out RectTransform abilityRows);
+            RectTransform passiveView = Viewport("Passives", panel, secondaryLeft, columnTop + 344f, passiveWidth, viewportHeight - 300f, out RectTransform passiveRows);
 
-            RectTransform abilityView = Viewport("Abilities", panel, 40f, columnTop + 40f, abilityWidth, viewportHeight, out RectTransform abilityRows);
-            RectTransform passiveView = Viewport("Passives", panel, 80f + abilityWidth, columnTop + 40f, passiveWidth, viewportHeight, out RectTransform passiveRows);
-
-            float detailTop = columnTop + 40f + viewportHeight + 16f;
-            Image detailBox = NewImage("Details", panel, new Color(1f, 1f, 1f, 0.05f), false);
-            Box(detailBox.rectTransform, 40f, detailTop, width - 80f, detailHeight);
+            Image detailBox = NewImage("Details", panel, ArtifactInterfaceStyle.Load().glass, false);
+            Box(detailBox.rectTransform, detailLeft, columnTop + 8f, detailWidth, viewportHeight + 36f);
+            ArtifactInterfaceView.Glass(detailBox.rectTransform);
+            ArtifactInterfaceView.Decorate("Inspection Frame", detailBox.rectTransform, ArtifactGeometry.Shape.Frame,
+                new Color(0.79f, 0.65f, 1f, 0.35f));
             TMP_Text detailTitleText = CreateText("Title", detailBox.rectTransform, font, s.RowTitleSize, s.HighlightColor, outline, TextAlignmentOptions.TopLeft);
-            TopBand(detailTitleText.rectTransform, 16f, 10f, s.RowTitleSize + 8f);
-            detailTitleText.overflowMode = TextOverflowModes.Ellipsis;
-            TMP_Text detailBodyText = CreateText("Body", detailBox.rectTransform, font, s.RowDetailSize, s.TextColor, outline, TextAlignmentOptions.TopLeft);
+            TopBand(detailTitleText.rectTransform, 24f, 24f, 72f);
+            detailTitleText.textWrappingMode = TextWrappingModes.Normal;
+            detailTitleText.enableAutoSizing = true;
+            detailTitleText.fontSizeMin = 32f;
+            detailTitleText.fontSizeMax = 44f;
+            RectTransform detailViewport = Viewport("Inspection", detailBox.rectTransform, 24f, 112f, detailWidth - 48f,
+                viewportHeight - 100f, out RectTransform detailContent);
+            TMP_Text detailBodyText = CreateText("Body", detailContent, font, s.RowDetailSize, s.TextColor, outline, TextAlignmentOptions.TopLeft);
             RectTransform bodyRect = detailBodyText.rectTransform;
-            bodyRect.anchorMin = Vector2.zero;
-            bodyRect.anchorMax = Vector2.one;
-            bodyRect.offsetMin = new Vector2(16f, 8f);
-            bodyRect.offsetMax = new Vector2(-16f, -(s.RowTitleSize + 20f));
+            bodyRect.SetParent(detailViewport, false);
+            bodyRect.anchorMin = new Vector2(0f, 1f);
+            bodyRect.anchorMax = new Vector2(1f, 1f);
+            bodyRect.pivot = new Vector2(0.5f, 1f);
+            bodyRect.anchoredPosition = Vector2.zero;
+            bodyRect.sizeDelta = Vector2.zero;
             detailBodyText.textWrappingMode = TextWrappingModes.Normal;
-            detailBodyText.overflowMode = TextOverflowModes.Ellipsis;
-            detailBodyText.lineSpacing = -6f;
+            detailBodyText.overflowMode = TextOverflowModes.Overflow;
+            detailBodyText.lineSpacing = 8f;
+            var fitter = detailBodyText.gameObject.AddComponent<ContentSizeFitter>();
+            fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+            var inspectionScroll = detailViewport.GetComponentInParent<ScrollRect>();
+            inspectionScroll.content = bodyRect;
+            detailContent.gameObject.SetActive(false);
 
             TMP_Text messageText = CreateText("Message", panel, font, s.RowDetailSize + 2, s.WarningColor, outline, TextAlignmentOptions.Center);
-            Box(messageText.rectTransform, 40f, height - bottomLines + 4f, width - 80f, 34f);
+            Box(messageText.rectTransform, 40f, height - bottomLines - 4f, width - 80f, 30f);
             TMP_Text promptText = CreateText("Prompt", panel, font, s.PromptSize, s.MutedColor, outline, TextAlignmentOptions.Center);
-            Box(promptText.rectTransform, 40f, height - bottomLines + 42f, width - 80f, 38f);
+            Box(promptText.rectTransform, 40f, height - bottomLines + 28f, width - 80f, 36f);
 
             LoadoutPanel view = root.AddComponent<LoadoutPanel>();
             view.style = hudStyle;
@@ -981,13 +1094,32 @@ namespace RythmRPG.Combat
             view.passiveHeader = passiveHeaderText;
             view.abilityViewport = abilityView;
             view.abilityContent = abilityRows;
+            view.equippedContent = equipped;
             view.passiveViewport = passiveView;
             view.passiveContent = passiveRows;
             view.detailTitle = detailTitleText;
             view.detailBody = detailBodyText;
+            view.detailScroll = inspectionScroll;
             view.message = messageText;
             view.prompt = promptText;
             view.audioSource = audio;
+            view.artifact = ArtifactInterfaceView.Ensure(root);
+            view.artifact.FitProjection(panel);
+            background.enabled = false; // The outer masking surface now draws the glass.
+            view.artifact.MaskSurface(panel, true);
+            Image close = NewImage("Dismiss", panel, new Color(0.48f, 0.94f, 1f, 0.08f), true);
+            Box(close.rectTransform, width - 148f, 38f, 108f, 40f);
+            ArtifactInterfaceView.Glass(close.rectTransform);
+            ArtifactInterfaceView.Decorate("Outline", close.rectTransform, ArtifactGeometry.Shape.Frame, Color.white);
+            var closeButton = close.gameObject.AddComponent<Button>();
+            closeButton.targetGraphic = close;
+            closeButton.onClick.AddListener(view.Close);
+            closeButton.navigation = new Navigation { mode = Navigation.Mode.None };
+            TMP_Text closeLabel = CreateText("Label", close.transform, font, 30, s.HighlightColor, Color.clear, TextAlignmentOptions.Center);
+            closeLabel.text = "CLOSE";
+            Stretch(closeLabel.rectTransform, 0f);
+            ArtifactSlimeReaction.Ensure(close.rectTransform);
+            Box(promptText.rectTransform, 40f, height - bottomLines + 28f, width - 220f, 36f);
             view.HideImmediate();
             return view;
         }
@@ -997,14 +1129,26 @@ namespace RythmRPG.Combat
         {
             RectTransform viewport = NewRect(name + " Viewport", parent);
             Box(viewport, left, top, width, height);
-            viewport.gameObject.AddComponent<RectMask2D>();
-            content = NewRect(name + " Rows", viewport);
+            var scroll = viewport.gameObject.AddComponent<ScrollRect>();
+            RectTransform clip = NewRect("Clip", viewport);
+            Stretch(clip, 0f);
+            var hit = clip.gameObject.AddComponent<Image>();
+            hit.color = Color.clear;
+            hit.raycastTarget = true;
+            clip.gameObject.AddComponent<RectMask2D>();
+            content = NewRect(name + " Rows", clip);
             content.anchorMin = new Vector2(0f, 1f);
             content.anchorMax = new Vector2(1f, 1f);
             content.pivot = new Vector2(0.5f, 1f);
             content.anchoredPosition = Vector2.zero;
             content.sizeDelta = new Vector2(0f, height);
-            return viewport;
+            scroll.viewport = clip;
+            scroll.content = content;
+            scroll.horizontal = false;
+            scroll.vertical = true;
+            scroll.movementType = ScrollRect.MovementType.Clamped;
+            scroll.scrollSensitivity = 34f;
+            return clip;
         }
 
         /// <summary>Box measured from the parent's top-left corner.</summary>
@@ -1059,8 +1203,8 @@ namespace RythmRPG.Combat
         private static TMP_Text CreateText(string name, Transform parent, TMP_FontAsset font, int size, Color color, Color outline,
             TextAlignmentOptions alignment)
         {
-            TMP_Text text = CombatText.CreateUGUI(name, parent, font, size, color, alignment, outline,
-                CombatText.OutlineWidthFromPixels(3f, size) + 0.1f);
+            TMP_FontAsset bodyFont = ArtifactInterfaceStyle.Load().bodyFont;
+            TMP_Text text = CombatText.CreateUGUI(name, parent, bodyFont != null ? bodyFont : font, size, color, alignment, Color.clear);
             text.text = string.Empty;
             return text;
         }

@@ -8,7 +8,8 @@
     "Unity.ugui",
     "Unity.TextMeshPro",
     "Unity.InputSystem",
-    "RythmRPG.Core"
+    "RythmRPG.Core",
+    "RythmRPG.UI.Title"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],

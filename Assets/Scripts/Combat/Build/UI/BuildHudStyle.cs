@@ -103,30 +103,31 @@ namespace RythmRPG.Combat
         [Header("Loadout panel (Tab / Select)")]
         [Tooltip("Create the loadout panel automatically in every scene (off = only a panel placed in a scene works).")]
         [SerializeField] private bool enableLoadoutPanel = true;
-        [SerializeField] private string panelTitle = "LOADOUT";
-        [SerializeField] private string battleSubtitle = "View only during battle. Hold a lane key to choose.";
-        [SerializeField] private string editSubtitle = "Swap slots and equip reserve abilities.";
-        [SerializeField] private string noBuildText = "No run build is active. Load a sample build from the F11 panel.";
+        [SerializeField] private string panelTitle = "RESONANCE ARCHIVE";
+        [SerializeField] private string battleSubtitle = "";
+        [SerializeField] private string editSubtitle = "";
+        [SerializeField] private string noBuildText = "No abilities have been attuned yet.";
         [Tooltip("{0} = confirm key, {1} = close key.")]
-        [SerializeField] private string editPrompt = "[ARROWS] MOVE      [{0}] PICK / PLACE      [X] TO RESERVE      [{1}] CLOSE";
+        [SerializeField] private string editPrompt = "[{0}] Swap    [X] Unequip    [{1}] Close";
         [SerializeField] private string viewPrompt = "[{1}] CLOSE";
-        [SerializeField] private Color dimColor = new(0.02f, 0.02f, 0.05f, 0.72f);
-        [SerializeField] private Color panelColor = new(0.07f, 0.06f, 0.12f, 0.97f);
-        [SerializeField] private Color panelFrameColor = new(0.55f, 0.53f, 0.6f, 1f);
-        [SerializeField] private Color titleColor = new(1f, 0.85f, 0.3f);
+        [SerializeField] private Color dimColor = new(0.015f, 0.025f, 0.055f, 0.48f);
+        [SerializeField] private Color panelColor = new(0.022f, 0.046f, 0.09f, 0.86f);
+        [SerializeField] private Color panelFrameColor = new(0.48f, 0.94f, 1f, 0.7f);
+        [SerializeField] private Color titleColor = new(0.94f, 0.98f, 1f);
         [SerializeField] private Color textColor = Color.white;
-        [SerializeField] private Color mutedColor = new(0.74f, 0.76f, 0.84f);
-        [SerializeField] private Color highlightColor = new(0.45f, 0.8f, 1f);
-        [SerializeField] private Color pickedColor = new(1f, 0.85f, 0.3f);
+        [SerializeField] private Color mutedColor = new(0.65f, 0.76f, 0.85f);
+        [SerializeField] private Color highlightColor = new(0.48f, 0.94f, 1f);
+        [SerializeField] private Color pickedColor = new(0.79f, 0.65f, 1f);
         [SerializeField] private Color warningColor = new(1f, 0.45f, 0.45f);
-        [SerializeField] private Vector2 panelSize = new(1560f, 860f);
-        [SerializeField] private IconTileLook panelTile = new() { size = new Vector2(64f, 64f), frameThickness = 3f };
-        [SerializeField, Min(8)] private int panelTitleSize = 56;
-        [SerializeField, Min(8)] private int headerSize = 28;
-        [SerializeField, Min(8)] private int rowTitleSize = 26;
-        [SerializeField, Min(8)] private int rowDetailSize = 19;
-        [SerializeField, Min(8)] private int promptSize = 24;
-        [SerializeField, Min(0f)] private float fadeSeconds = 0.15f;
+        [SerializeField] private Vector2 panelSize = new(1740f, 880f);
+        [SerializeField] private IconTileLook panelTile = new() { size = new Vector2(58f, 58f), frameThickness = 2f,
+            frameColor = new Color(1f, 1f, 1f, .6f), backgroundColor = new Color(.035f, .10f, .11f, .38f) };
+        [SerializeField, Min(8)] private int panelTitleSize = 64;
+        [SerializeField, Min(8)] private int headerSize = 36;
+        [SerializeField, Min(8)] private int rowTitleSize = 36;
+        [SerializeField, Min(8)] private int rowDetailSize = 30;
+        [SerializeField, Min(8)] private int promptSize = 30;
+        [SerializeField, Min(0f)] private float fadeSeconds = 0.55f;
         [Tooltip("Keys besides the Loadout action (Tab / Select). Gamepad: South = pick / place, West = to reserve, East = close.")]
         [SerializeField] private KeyCode[] confirmKeys = { KeyCode.Return, KeyCode.KeypadEnter, KeyCode.Space };
         [SerializeField] private KeyCode[] closeKeys = { KeyCode.Backspace };

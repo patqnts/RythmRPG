@@ -5,7 +5,10 @@
     "RythmRPG.Combat.Runtime",
     "RythmRPG.Rhythm.Runtime",
     "RythmRPG.Core",
-    "Unity.InputSystem"
+    "Unity.InputSystem",
+    "Unity.TextMeshPro",
+    "Unity.ugui",
+    "RythmRPG.UI.Title"
   ],
   "includePlatforms": [
     "Editor"

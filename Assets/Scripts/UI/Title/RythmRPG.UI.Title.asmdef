@@ -1,0 +1,6 @@
+{
+  "name": "RythmRPG.UI.Title",
+  "rootNamespace": "RythmRPG.UI.Title",
+  "references": ["PrimeTween.Runtime", "Unity.ugui", "Unity.TextMeshPro"],
+  "autoReferenced": true
+}

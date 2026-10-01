@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46c104d1a884e1e4798b5b8fccbdf91b, type: 3}
+  m_Name: ArtifactInterfaceStyle
+  m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.ArtifactInterfaceStyle
+  headingFont: {fileID: 11400000, guid: 11b93ff62af0a9f41923eaa3394f4c79, type: 2}
+  bodyFont: {fileID: 11400000, guid: 351ae9843ef78fa48ab1141c54004b19, type: 2}
+  cyan: {r: 1, g: 1, b: 1, a: 1}
+  lilac: {r: 1, g: 1, b: 1, a: 1}
+  pearl: {r: 1, g: 1, b: 1, a: 1}
+  glass: {r: 0.035, g: 0.09, b: 0.11, a: 0.85882354}
+  textShader: {fileID: 4800000, guid: 2682a8561218b8e4fafdad6b46549bb7, type: 3}
+  imageShader: {fileID: 4800000, guid: 36299d17465b5f1468cf96a88e84b423, type: 3}
+  livingOutlineShader: {fileID: 4800000, guid: 9a2a578a367e84940aac4cbd0c631fc0, type: 3}
+  disintegration:
+    directionAngle: -77
+    directionBias: 0.85
+    noiseScale: 5
+    seed: 7
+    emberWidth: 0.034
+    charWidth: 0.035
+    emberColor: {r: 0.79573137, g: 1, b: 0.2971698, a: 1}
+    emberHotColor: {r: 0.22762637, g: 1, b: 0.1462264, a: 1}
+    ashColor: {r: 0.95788497, g: 0.6509804, b: 1, a: 1}
+    flakes: 0
+    flakesPerTextHeight: 80.1
+    matchPixelGrid: 0
+    flakeChance: 0.21
+    flakeLifetime: 0.112
+    wind: {x: 1.6, y: 0.6}
+    windSpreadDegrees: 10.2
+    turbulence: 0.015
+    spin: 3.94
+    shrink: 0.03
+    maxFlakes: 4000
+  revealSeconds: 1
+  dismissSeconds: 1
+  animateDisintegration: 1
+  slimeResponse: 1
+  wobbleSeconds: 1.37
+  outlineRipplePixels: 4.7
+  wobbleCycles: 3.36
+  pokeEdgeDepthPixels: 77.3
+  pokeDisintegrateSeconds: 0.53
+  pokeGlitchSeconds: 0.5
+  pokeGlitchStrength: 0.528
+  pokePixelSize: 1
+  pokeEmberWidth: 0.09
+  pokeCharWidth: 0.049
+  pokeAshWidth: 0.051
+  pokeEmberColor: {r: 1, g: 0.88550174, b: 0, a: 1}
+  pokeEmberHotColor: {r: 0.22762637, g: 1, b: 0.1462264, a: 1}
+  pokeCharColor: {r: 0.95788497, g: 0.6509804, b: 1, a: 1}
+  pokeAshColor: {r: 0.95788497, g: 0.6509804, b: 1, a: 1}
+  pokeNoiseAmount: 0.636
+  pokeNoiseScale: 4.4
+  pokeNoiseSeed: 126
+  pokeRandomizeSeed: 1

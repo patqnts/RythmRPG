@@ -12,8 +12,10 @@
   <Project Path="Assembly-CSharp-Editor.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
   <Project Path="RythmRPG.Rhythm.Tests.EditMode.csproj" />
+  <Project Path="RythmRPG.UI.Title.csproj" />
   <Project Path="RythmRPG.LevelComposer.Editor.csproj" />
   <Project Path="PrimeTween.Debug.csproj" />
   <Project Path="RythmRPG.LevelComposer.Tests.EditMode.csproj" />
+  <Project Path="RythmRPG.UI.Title.Editor.csproj" />
   <Project Path="PrimeTween.Installer.csproj" />
 </Solution>

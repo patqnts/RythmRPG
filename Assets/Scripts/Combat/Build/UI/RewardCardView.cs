@@ -23,6 +23,8 @@ namespace RythmRPG.Combat
         [SerializeField] private TMP_Text details;
         [SerializeField] private TMP_Text keyHint;
         [SerializeField] private TMP_Text stamp;
+        private ArtifactGeometry tracery;
+        private int keyNumber;
 
         public RectTransform Root => root != null ? root : (RectTransform)transform;
         public CanvasGroup Group => group;
@@ -55,11 +57,12 @@ namespace RythmRPG.Combat
         {
             Option = option;
             Preview = preview;
+            keyNumber = number;
             Color kindColor = style.KindColor(option.kind);
-            if (background != null) background.color = style.CardColor;
-            if (frame != null) frame.color = style.FrameColor;
-            if (kindStrip != null) kindStrip.color = kindColor;
-            if (kindLabel != null) kindLabel.text = style.KindLabel(option.kind);
+            if (background != null) background.color = ArtifactInterfaceStyle.Load().glass;
+            if (frame != null) frame.color = Color.clear;
+            if (kindStrip != null) kindStrip.color = new Color(kindColor.r, kindColor.g, kindColor.b, 0.10f);
+            if (kindLabel != null) { kindLabel.text = style.KindLabel(option.kind); kindLabel.color = kindColor; }
             if (icon != null)
             {
                 icon.sprite = iconSprite;
@@ -81,6 +84,7 @@ namespace RythmRPG.Combat
                 stamp.text = style.ClaimedStamp;
                 stamp.color = new Color(kindColor.r, kindColor.g, kindColor.b, 0f);
             }
+            tracery = Root.Find("Prismatic Frame")?.GetComponent<ArtifactGeometry>();
         }
 
         /// <summary>
@@ -94,8 +98,14 @@ namespace RythmRPG.Combat
         /// <summary>0 = resting, 1 = fully selected: frame takes the kind colour.</summary>
         public void SetHighlight(RewardSelectionStyle style, float amount)
         {
-            if (frame == null || Option == null) return;
-            frame.color = Color.Lerp(style.FrameColor, style.KindColor(Option.kind), Mathf.Clamp01(amount));
+            if (Option == null) return;
+            Color tint = new(1f, 1f, 1f, Mathf.Lerp(.55f, 1f, Mathf.Clamp01(amount)));
+            if (tracery != null) tracery.color = tint;
+            if (keyHint != null)
+            {
+                keyHint.text = keyNumber > 0 && keyNumber <= 9 ? $"[{keyNumber}]" : string.Empty;
+                keyHint.color = Color.Lerp(style.MutedColor, style.KindColor(Option.kind), Mathf.Clamp01(amount));
+            }
         }
     }
 }

@@ -1,0 +1,37 @@
+# Artifact interface
+
+The Tab inventory and post-battle rewards are projections from the slime's magic artifact. Their shared visual language is crisp white pixel outlines with stepped corners, translucent slime glass, faint mint/lilac pools of light, geometric seals and Monogram SDF pixel lettering. Glass light is drawn as quantized geometry rather than a blur or texture; the overlay canvases use pixel-aligned rendering. The theme retains editable colors and dissolve settings.
+
+## Inventory
+
+**Resonance Archive** emphasizes the four equipped abilities as large tiles in a 2-by-2 grid, with prominent icons and lane keys. Reserve abilities and passives use smaller lists beside the grid. The selected entry's details appear on the right in a scrollable pane. Arrow keys and gamepad navigation follow the visible layout. Click or confirm to pick an ability, then choose a slot to swap; X unequips. The footer changes to guide placement while carrying an ability. Tab or Close dismisses the panel. Combat keeps the panel in inspection mode.
+
+The projection scales to fit smaller canvases. Closing during the opening animation dissolves from the current reveal position.
+
+## Rewards
+
+**Choose a Reward** presents wide choices in a vertical grid, with an icon, name, type and number. A narrower shared, scrollable information section on the right displays the currently selected reward's summary and consequences. Hover, click, W/S, arrows, gamepad or number keys select a choice; Enter or the single Attune button confirms it. Clicking a choice does not immediately claim it. The selected choice gains a brighter white rim. Replacement choices and the reserve option use the same visual language. Reward eligibility, saved offers and one-time claims remain handled by `RewardDirector`.
+
+## Appearance and transitions
+
+Inventory items, reward choices, replacement rows and action buttons respond on their outer sides when hovered or selected. `ArtifactComponentMask` gives each interactive item one shared dissolve stencil, so the background, frame and any contents near the border erode together while its center remains readable. Influence falls to zero inward from the sides and is capped to protect the center on small rows. Each poke starts intact, disintegrates to the selected strength, then restores fully. The component boundary and outline wobble together, with char/ember bands and sparse ember-to-ash fragments. The archive's outer frame stays still. Layout and hit areas do not move. The item masks sit beneath the whole-panel transition mask. Held selection does not loop the response; re-hovering can poke it again, and changing selection settles the previous item.
+
+The theme's **Slime response on hover / selection** section controls enablement, wobble duration, ripple pixels and cycles. **Selected item edge disintegration** exposes **Edge Depth Pixels** (24 by default), **Disintegrate Seconds** (0.12), **Restore Seconds** (0.55), **Disintegration Strength** (0.7), and pixel step. **Selected item edge colors and bands** exposes independent ember, char and ash widths, ember/hot ember colors, char color and ash color. **Selected item edge noise** exposes noise amount, scale and seed. Noise amount zero gives uniform erosion without noise displacement or flakes; one retains the original noise, and higher values intensify it. Scale sets the pattern frequency; seed chooses a different pattern. These controls are independent of the whole-panel show/hide settings. Existing colors, widths, scale and seed are copied into the new controls on upgrade while preserving the user's timing and depth tuning.
+
+Zero edge depth or strength disables disintegration; zero ripple displacement disables wobble independently. The shader reference is retained by the Resources theme. Each interactive item owns and releases its runtime outline and mask materials, including synchronized stencil-write and stencil-clear copies. Idle materials use a simple shape path. Material assignment occurs during setup/enable, outside graphic rebuilding; mesh population only writes vertices. Decorative frames use ordinary uGUI materials. Font and icon materials stay unchanged beneath the item mask. Mesh bounds refresh outside graphic rebuilding when noise or ripple amplitude changes.
+
+Edit `Assets/Resources/Combat/UI/ArtifactInterfaceStyle.asset` for heading/body fonts, cyan/lilac light, glass opacity, dissolve colors, and inventory reveal/dismiss durations. Reward stagger and timing settings are in `RewardSelectionStyle`. Inventory text and sizing settings are in `BuildHudStyle`; both retain generated defaults when no style asset exists.
+
+Both screens use one outer `TitleLogoImage` stencil mask, with the dissolve direction, noise and edge settings copied from `Assets/Scenes/Menu.unity`'s **Title Logo Image (1)**. The entire panel reveals or dissolves along one boundary; text, icons, cards, buttons and nested scroll views are clipped together and keep their normal materials. Opening reverses the same dissolve. The dim backdrop sits outside the mask. The shader references are saved in the Resources theme so player builds retain them.
+
+The title effect is now a shared assembly, with its editor inspector in a separate editor-only assembly. The original title scene and its logo settings do not need to be changed. Each projection owns its temporary materials and releases them when destroyed; shared font materials are preserved.
+
+## Validation
+
+`ArtifactInterfaceTests` exercises inventory rearranging and rebuilding, grid navigation, long inspection content, closing during reveal, whole-panel masking and live stencil-material updates, shared font materials, reward reopening and one-time claims, the shared reward pane following selection, keyboard navigation wrapping, and a poke settling without looping or moving its layout slot. Screen previews are rendered from the actual builders in an isolated preview scene at 1920x1080 and 1440x900, including intermediate dissolve frames. Down Arrow, W and a number key have also been exercised through a temporary Input System keyboard with editor test input enabled and restored afterward.
+
+An isolated transparent render verifies that outer-side pixels disappear, central icon/text pixels remain unchanged, editable depth changes the eroded region, and the item restores completely after the response. Displacement is disabled for that check to distinguish dissolving from movement. Shader diagnostics and graphic-rebuild warnings are checked alongside the screen previews.
+
+Each appearance control has also been changed individually in an isolated render: all ten change edge pixels without changing the protected center. With noise amount zero, changing scale and seed leaves the rendered result unchanged. The controls are serialized and directly editable in the style Inspector; panel transition settings are preserved.
+
+**Randomize Seed Each Poke** under **Selected item edge noise** optionally chooses a fresh seed when hover or selection starts a response. The mask, outline and transition bands share that seed throughout disintegration and restoration. Held selection does not reroll; re-hovering does. Disabling the option uses the saved **Noise Seed**. Randomization never changes the style asset's fixed seed or consumes Unity's gameplay random state. The option defaults off to preserve existing patterns. The interface regression checks verify these behaviors.

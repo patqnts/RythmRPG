@@ -121,6 +121,20 @@ namespace RythmRPG.UI.Title
 
         protected override void ApplyExtra(Material m, bool isFlake, bool updateRatios) => sprite.ApplyTo(m);
 
+        protected override void ApplyToExtraMaterials(float dissolve, bool updateRatios)
+        {
+            // uGUI caches separate stencil-write and stencil-clear materials for a Mask.
+            // Keep both copies in sync so a moving dissolve clips every child on the same boundary.
+            if (!Graphic || !graphic.TryGetComponent<Mask>(out var mask) || !mask.MaskEnabled()) return;
+            Material masked = graphic.materialForRendering;
+            if (masked && masked != mainMaterial) ApplyTo(masked, false, dissolve, updateRatios);
+            if (graphic.canvasRenderer.popMaterialCount > 0)
+            {
+                Material unmasked = graphic.canvasRenderer.GetPopMaterial(0);
+                if (unmasked && unmasked != mainMaterial) ApplyTo(unmasked, false, dissolve, updateRatios);
+            }
+        }
+
         // ------------------------------------------------------------------ mesh
 
 #pragma warning disable 0618, 0672

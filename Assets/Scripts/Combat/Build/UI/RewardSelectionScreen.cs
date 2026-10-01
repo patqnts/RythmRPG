@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using RythmRPG.Core;
 using TMPro;
 using UnityEngine;
@@ -37,6 +38,12 @@ namespace RythmRPG.Combat
         [SerializeField] private RectTransform cardContainer;
         [Tooltip("Inactive card copied for every option.")]
         [SerializeField] private RewardCardView cardTemplate;
+        [Header("Selected reward")]
+        [SerializeField] private TMP_Text selectionTitle;
+        [SerializeField] private TMP_Text selectionBody;
+        [SerializeField] private ScrollRect selectionScroll;
+        [SerializeField] private RectTransform selectionPanel;
+        [SerializeField] private Button attuneButton;
         [Header("Replacement step")]
         [SerializeField] private CanvasGroup replaceGroup;
         [SerializeField] private TMP_Text replaceTitle;
@@ -77,6 +84,8 @@ namespace RythmRPG.Combat
         private float messageUntil;
         private int claimedCard = -1;
         private bool done;
+        private ArtifactInterfaceView artifact;
+        private int infoSelected = -1;
 
         public bool IsOpen => mode != Mode.Hidden;
         public RewardSelectionResult Result { get; private set; }
@@ -142,6 +151,9 @@ namespace RythmRPG.Combat
             if (message != null) message.text = string.Empty;
             SetReplaceVisible(false);
             BuildCards();
+            artifact = ArtifactInterfaceView.Ensure(gameObject);
+            artifact.SetVisibility(0f);
+            artifact.RefreshEffects();
             Play(s.OpenSound);
         }
 
@@ -177,16 +189,27 @@ namespace RythmRPG.Combat
                 });
             }
             FitCards();
+            UpdateSelectedInfo(true);
             ApplyCards(0f, true);
         }
 
-        // Four cards (three options + growth) are wider than the row: shrink the row to fit the screen.
+        // Keep custom horizontal templates supported; the generated vertical grid fits against its height.
         private void FitCards()
         {
             if (cardContainer == null) return;
             RewardSelectionStyle s = Style;
+            if (cardContainer.TryGetComponent<GridLayoutGroup>(out var grid))
+            {
+                float neededHeight = cards.Count * grid.cellSize.y + Mathf.Max(0, cards.Count - 1) * grid.spacing.y;
+                float gridScale = Mathf.Min(1f, cardContainer.rect.height / Mathf.Max(1f, neededHeight),
+                    cardContainer.rect.width / Mathf.Max(1f, grid.cellSize.x));
+                cardContainer.localScale = new Vector3(gridScale, gridScale, 1f);
+                return;
+            }
             float needed = cards.Count * s.CardSize.x + Mathf.Max(0, cards.Count - 1) * s.CardSpacing;
             float available = cardContainer.rect.width > 1f ? cardContainer.rect.width : 1800f;
+            float screenWidth = ((RectTransform)transform).rect.width;
+            if (screenWidth > 1f) available = Mathf.Min(available, screenWidth - 96f);
             float scale = needed > available ? available / needed : 1f;
             cardContainer.localScale = new Vector3(scale, scale, 1f);
         }
@@ -212,7 +235,7 @@ namespace RythmRPG.Combat
         private void BuildReplaceRows(RewardPreview preview)
         {
             foreach (RowState row in rows)
-                if (row.Rect != null) Destroy(row.Rect.gameObject);
+                if (row.Rect != null) Release(row.Rect.gameObject);
             rows.Clear();
             if (replaceRowTemplate == null || replaceRows == null) return;
             RewardSelectionStyle s = Style;
@@ -265,8 +288,11 @@ namespace RythmRPG.Combat
             if (mode == Mode.Hidden) return;
             RewardSelectionStyle s = Style;
             float now = GamePause.UnpausedRealtime;
+            FitCards();
             if (group != null && mode != Mode.Closing)
-                group.alpha = Mathf.Clamp01((now - openedAt) / Mathf.Max(0.01f, s.FadeInSeconds));
+                group.alpha = Mathf.Clamp01((now - openedAt) / Mathf.Max(0.01f, s.FadeInSeconds) * 3f);
+            if (mode != Mode.Closing)
+                artifact?.SetVisibility(Mathf.Clamp01((now - openedAt) / Mathf.Max(0.01f, s.FadeInSeconds)));
 
             ApplyCards(Time.unscaledDeltaTime, false);
             if (message != null && messageUntil > 0f && now > messageUntil)
@@ -283,7 +309,8 @@ namespace RythmRPG.Combat
                     return;
                 case Mode.Closing:
                     float t = Mathf.Clamp01((now - modeAt) / s.FadeOutSeconds);
-                    if (group != null) group.alpha = 1f - t;
+                    artifact?.SetVisibility(1f - t);
+                    if (group != null) group.alpha = 1f - Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(0.65f, 1f, t));
                     if (t >= 1f) FinishClose();
                     return;
             }
@@ -299,8 +326,8 @@ namespace RythmRPG.Combat
             if (mode == Mode.Cards)
             {
                 if (number >= 0 && number < cards.Count) Select(number);
-                if (previous) Select((selected + cards.Count - 1) % cards.Count);
-                if (next) Select((selected + 1) % cards.Count);
+                if (previous) NavigateCards(-1);
+                if (next) NavigateCards(1);
                 if (confirm) ConfirmCard();
                 else if (back && s.AllowSkip) BeginClose(RewardSelectionResult.Skipped);
             }
@@ -323,6 +350,12 @@ namespace RythmRPG.Combat
 
         private bool AcceptsInput => GamePause.UnpausedRealtime >= openedAt + Style.InputDelay && !GamePause.IsPaused;
 
+        private void NavigateCards(int direction)
+        {
+            if (cards.Count == 0) return;
+            Select(((selected + direction) % cards.Count + cards.Count) % cards.Count);
+        }
+
         private void HoverCard(int index)
         {
             if (mode == Mode.Cards && AcceptsInput) Select(index);
@@ -332,7 +365,6 @@ namespace RythmRPG.Combat
         {
             if (mode != Mode.Cards || !AcceptsInput) return;
             Select(index);
-            ConfirmCard();
         }
 
         private void HoverRow(int index)
@@ -351,7 +383,34 @@ namespace RythmRPG.Combat
         {
             if (index < 0 || index >= cards.Count || index == selected) return;
             selected = index;
+            UpdateSelectedInfo(true);
             Play(Style.MoveSound);
+        }
+
+        private void UpdateSelectedInfo(bool force = false)
+        {
+            if (!force && infoSelected == selected) return;
+            infoSelected = selected;
+            RewardPreview preview = selected >= 0 && selected < cards.Count ? cards[selected].View.Preview : null;
+            if (selectionTitle != null) selectionTitle.text = RewardCardView.Plain(preview?.Title ?? string.Empty);
+            if (selectionBody != null)
+            {
+                var lines = new List<string>();
+                if (!string.IsNullOrEmpty(preview?.Summary)) lines.Add(preview.Summary);
+                if (preview != null) lines.AddRange(preview.Details);
+                selectionBody.text = RewardCardView.Plain(string.Join("\n\n", lines.Distinct()));
+            }
+            if (selectionScroll != null)
+            {
+                if (selectionBody != null)
+                {
+                    selectionBody.ForceMeshUpdate();
+                    LayoutRebuilder.ForceRebuildLayoutImmediate(selectionBody.rectTransform);
+                }
+                Canvas.ForceUpdateCanvases();
+                selectionScroll.StopMovement();
+                selectionScroll.content.anchoredPosition = new Vector2(selectionScroll.content.anchoredPosition.x, 0f);
+            }
         }
 
         private void SelectRow(int index, bool allowDisabled)
@@ -423,6 +482,8 @@ namespace RythmRPG.Combat
 
         private void ApplyCards(float deltaTime, bool snap)
         {
+            UpdateSelectedInfo();
+            if (attuneButton != null) attuneButton.interactable = mode == Mode.Cards && AcceptsInput;
             RewardSelectionStyle s = Style;
             float now = GamePause.UnpausedRealtime;
             float blend = snap ? 1f : 1f - Mathf.Exp(-deltaTime / Mathf.Max(0.001f, s.SelectSmoothing));
@@ -434,6 +495,7 @@ namespace RythmRPG.Combat
                 float appear = EaseOutCubic((now - card.AppearAt) / s.CardInSeconds);
                 Vector2 offset = new(0f, -s.CardInDistance * (1f - appear) + s.SelectedLift * card.Selection);
                 RectTransform rect = card.View.Root;
+                ArtifactSlimeReaction.Ensure(rect).SetFocused(isTarget);
                 rect.anchoredPosition = card.Rest + new Vector2(Mathf.Round(offset.x), Mathf.Round(offset.y));
                 rect.localScale = Vector3.one * Mathf.Lerp(1f, s.SelectedScale, card.Selection);
                 float focus = mode == Mode.Claiming || mode == Mode.Closing
@@ -464,6 +526,7 @@ namespace RythmRPG.Combat
             {
                 RowState row = rows[i];
                 bool isSelected = i == selectedRow;
+                ArtifactSlimeReaction.Ensure(row.Rect).SetFocused(isSelected && row.Allowed);
                 if (row.Background != null)
                     row.Background.color = isSelected ? new Color(accent.r, accent.g, accent.b, 0.28f) : new Color(1f, 1f, 1f, 0.05f);
                 if (row.Label != null) row.Label.color = !row.Allowed ? s.DisabledColor : isSelected ? accent : s.TextColor;
@@ -473,6 +536,8 @@ namespace RythmRPG.Combat
 
         private void SetReplaceVisible(bool visible)
         {
+            if (selectionPanel != null) selectionPanel.gameObject.SetActive(!visible);
+            if (attuneButton != null) attuneButton.gameObject.SetActive(!visible);
             if (visible)
             {
                 mode = Mode.Replace;
@@ -489,6 +554,7 @@ namespace RythmRPG.Combat
             if (replaceTitle != null) replaceTitle.text = s.ReplaceTitle;
             if (replaceSubtitle != null) replaceSubtitle.text = s.ReplaceSubtitle;
             if (prompt != null && mode != Mode.Claiming) prompt.text = visible ? s.ReplacePrompt : s.CardPrompt;
+            artifact?.RefreshEffects();
         }
 
         private void ShowMessage(string text)
@@ -512,7 +578,7 @@ namespace RythmRPG.Combat
         {
             ClearSpawned();
             foreach (RowState row in rows)
-                if (row.Rect != null) Destroy(row.Rect.gameObject);
+                if (row.Rect != null) Release(row.Rect.gameObject);
             rows.Clear();
             cards.Clear();
             HideImmediate();
@@ -548,8 +614,15 @@ namespace RythmRPG.Combat
         private void ClearSpawned()
         {
             foreach (GameObject item in spawned)
-                if (item != null) Destroy(item);
+                if (item != null) Release(item);
             spawned.Clear();
+        }
+
+        private static void Release(GameObject item)
+        {
+            item.SetActive(false);
+            if (Application.isPlaying) Destroy(item);
+            else DestroyImmediate(item);
         }
 
         private void Play(AudioClip clip)
@@ -582,6 +655,7 @@ namespace RythmRPG.Combat
             var root = new GameObject("Reward Selection Screen", typeof(RectTransform), typeof(Canvas), typeof(CanvasScaler),
                 typeof(GraphicRaycaster), typeof(CanvasGroup), typeof(AudioSource));
             Canvas canvas = root.GetComponent<Canvas>();
+            canvas.pixelPerfect = true;
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
             canvas.sortingOrder = 1010;
             canvas.additionalShaderChannels |= AdditionalCanvasShaderChannels.Normal | AdditionalCanvasShaderChannels.Tangent;
@@ -595,30 +669,75 @@ namespace RythmRPG.Combat
             TMP_FontAsset font = s.FontAsset;
             Color outline = s.OutlineColor;
             var rootRect = (RectTransform)root.transform;
+            ArtifactInterfaceView.Ensure(root);
 
             Image dimImage = NewImage("Dim", rootRect, s.DimColor, true); // blocks clicks on the game UI behind
             Stretch(dimImage.rectTransform, 0f);
 
             TMP_Text titleText = NewText("Title", rootRect, font, s.TitleSize, s.TitleColor, outline, TextAlignmentOptions.Center);
-            Place(titleText.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -110f), new Vector2(1600f, 100f));
+            ArtifactInterfaceView.StyleHeading(titleText);
+            Place(titleText.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -88f), new Vector2(1600f, 100f));
             TMP_Text subtitleText = NewText("Subtitle", rootRect, font, s.SubtitleSize, s.MutedColor, outline, TextAlignmentOptions.Center);
             Place(subtitleText.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -178f), new Vector2(1600f, 40f));
+            subtitleText.gameObject.SetActive(false);
 
-            // Cards: a centred row; each child is a fixed-size slot whose Root animates.
+            // Choices form a vertical grid beside a single information panel.
             RectTransform cardsRect = NewRect("Cards", rootRect);
-            Place(cardsRect, new Vector2(0.5f, 0.5f), new Vector2(0f, -30f), new Vector2(1800f, s.CardSize.y + 80f));
-            HorizontalLayoutGroup layout = cardsRect.gameObject.AddComponent<HorizontalLayoutGroup>();
-            layout.spacing = s.CardSpacing;
+            Place(cardsRect, new Vector2(.5f, .5f), new Vector2(-380f, 12f), new Vector2(960f, 720f));
+            GridLayoutGroup layout = cardsRect.gameObject.AddComponent<GridLayoutGroup>();
+            layout.cellSize = s.CardSize;
+            layout.spacing = new Vector2(0f, s.CardSpacing);
+            layout.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+            layout.constraintCount = 1;
+            layout.startAxis = GridLayoutGroup.Axis.Vertical;
             layout.childAlignment = TextAnchor.MiddleCenter;
-            layout.childControlWidth = false;
-            layout.childControlHeight = false;
-            layout.childForceExpandWidth = false;
-            layout.childForceExpandHeight = false;
             RewardCardView card = BuildCardTemplate(cardsRect, s, font, outline);
             card.gameObject.SetActive(false);
 
+            Image info = NewImage("Selected Reward", rootRect, ArtifactInterfaceStyle.Load().glass, false);
+            Place(info.rectTransform, new Vector2(.5f, .5f), new Vector2(470f, 12f), new Vector2(560f, 720f));
+            ArtifactInterfaceView.Glass(info.rectTransform);
+            ArtifactInterfaceView.Decorate("Info Frame", info.rectTransform, ArtifactGeometry.Shape.Frame, s.FrameColor);
+            TMP_Text infoTitle = NewText("Title", info.transform, font, 44, s.TitleColor, Color.clear, TextAlignmentOptions.TopLeft);
+            TopBand(infoTitle.rectTransform, 32f, 22f, 94f);
+            Wrap(infoTitle, TextOverflowModes.Overflow);
+            RectTransform infoScrollRoot = NewRect("Info Scroll", info.transform);
+            Stretch(infoScrollRoot, 0f);
+            infoScrollRoot.offsetMin = new Vector2(32f, 24f);
+            infoScrollRoot.offsetMax = new Vector2(-32f, -138f);
+            var infoScroll = infoScrollRoot.gameObject.AddComponent<ScrollRect>();
+            RectTransform infoClip = NewRect("Viewport", infoScrollRoot);
+            Stretch(infoClip, 0f);
+            var infoHit = infoClip.gameObject.AddComponent<Image>();
+            infoHit.color = Color.clear;
+            infoClip.gameObject.AddComponent<RectMask2D>();
+            TMP_Text infoBody = NewText("Body", infoClip, font, s.DetailSize, s.TextColor, Color.clear, TextAlignmentOptions.TopLeft);
+            infoBody.rectTransform.anchorMin = new Vector2(0f, 1f);
+            infoBody.rectTransform.anchorMax = Vector2.one;
+            infoBody.rectTransform.pivot = new Vector2(.5f, 1f);
+            infoBody.rectTransform.anchoredPosition = Vector2.zero;
+            infoBody.rectTransform.sizeDelta = Vector2.zero;
+            Wrap(infoBody, TextOverflowModes.Overflow);
+            infoBody.gameObject.AddComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+            infoScroll.viewport = infoClip;
+            infoScroll.content = infoBody.rectTransform;
+            infoScroll.horizontal = false;
+            infoScroll.movementType = ScrollRect.MovementType.Clamped;
+            infoScroll.scrollSensitivity = 34f;
+            Image attune = NewImage("Attune", rootRect, new Color(.48f, .94f, 1f, .12f), true);
+            Place(attune.rectTransform, new Vector2(.5f, 0f), new Vector2(470f, 122f), new Vector2(240f, 56f));
+            ArtifactInterfaceView.Glass(attune.rectTransform);
+            ArtifactInterfaceView.Decorate("Outline", attune.rectTransform, ArtifactGeometry.Shape.Frame, Color.white);
+            var confirmButton = attune.gameObject.AddComponent<Button>();
+            confirmButton.targetGraphic = attune;
+            var attuneLabel = NewText("Label", attune.transform, font, 36, s.TitleColor, Color.clear, TextAlignmentOptions.Center);
+            attuneLabel.text = "Attune";
+            Stretch(attuneLabel.rectTransform, 0f);
+            confirmButton.navigation = new Navigation { mode = Navigation.Mode.None };
+            ArtifactSlimeReaction.Ensure(attune.rectTransform);
+
             TMP_Text messageText = NewText("Message", rootRect, font, s.SummarySize, s.WarningColor, outline, TextAlignmentOptions.Center);
-            Place(messageText.rectTransform, new Vector2(0.5f, 0f), new Vector2(0f, 110f), new Vector2(1600f, 40f));
+            Place(messageText.rectTransform, new Vector2(0.5f, 0f), new Vector2(0f, 172f), new Vector2(1600f, 36f));
             TMP_Text promptText = NewText("Prompt", rootRect, font, s.PromptSize, s.MutedColor, outline, TextAlignmentOptions.Center);
             Place(promptText.rectTransform, new Vector2(0.5f, 0f), new Vector2(0f, 60f), new Vector2(1600f, 40f));
 
@@ -628,10 +747,12 @@ namespace RythmRPG.Combat
             CanvasGroup replaceCanvasGroup = replaceRect.gameObject.AddComponent<CanvasGroup>();
             Image replaceShade = NewImage("Shade", replaceRect, new Color(0f, 0f, 0f, 0.55f), true);
             Stretch(replaceShade.rectTransform, -2000f); // dims the cards behind the panel
-            Image replaceFrame = NewImage("Frame", replaceRect, s.FrameColor, true);
+            Image replaceFrame = NewImage("Frame", replaceRect, Color.clear, true);
             Stretch(replaceFrame.rectTransform, 0f);
-            Image replaceBackground = NewImage("Background", replaceRect, s.CardColor, false);
+            Image replaceBackground = NewImage("Background", replaceRect, ArtifactInterfaceStyle.Load().glass, false);
             Stretch(replaceBackground.rectTransform, 4f);
+            ArtifactInterfaceView.Glass(replaceRect);
+            ArtifactInterfaceView.Decorate("Replacement Frame", replaceRect, ArtifactGeometry.Shape.Frame, s.KindColor(RewardKind.NewAbility));
             TMP_Text replaceTitleText = NewText("Title", replaceRect, font, s.CardTitleSize, s.TitleColor, outline, TextAlignmentOptions.Center);
             Place(replaceTitleText.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -55f), new Vector2(1100f, 60f));
             TMP_Text replaceSubtitleText = NewText("Subtitle", replaceRect, font, s.DetailSize, s.MutedColor, outline, TextAlignmentOptions.Center);
@@ -668,6 +789,21 @@ namespace RythmRPG.Combat
             screen.replaceRows = rowsRect;
             screen.replaceRowTemplate = rowTemplate;
             screen.audioSource = audio;
+            screen.selectionTitle = infoTitle;
+            screen.selectionBody = infoBody;
+            screen.selectionScroll = infoScroll;
+            screen.selectionPanel = info.rectTransform;
+            screen.attuneButton = confirmButton;
+            confirmButton.onClick.AddListener(() => { if (screen.mode == Mode.Cards && screen.AcceptsInput) screen.ConfirmCard(); });
+            // Keep the dim backdrop separate; everything visible belongs to one masked projection.
+            RectTransform projection = NewRect("Projection", rootRect);
+            Stretch(projection, 0f);
+            var projectionChildren = new List<Transform>();
+            foreach (Transform child in rootRect)
+                if (child != dimImage.transform && child != projection) projectionChildren.Add(child);
+            foreach (Transform child in projectionChildren) child.SetParent(projection, false);
+            screen.artifact = ArtifactInterfaceView.Ensure(root);
+            screen.artifact.MaskSurface(projection, false);
             if (Application.isPlaying) screen.HideImmediate();
             return screen;
         }
@@ -684,54 +820,46 @@ namespace RythmRPG.Combat
             Stretch(cardRoot, 0f);
             CanvasGroup cardGroup = cardRoot.gameObject.AddComponent<CanvasGroup>();
             cardRoot.gameObject.AddComponent<RewardChoiceButton>();
-            Image frame = NewImage("Frame", cardRoot, s.FrameColor, true); // hover / click target
+            Image frame = NewImage("Frame", cardRoot, Color.clear, true); // hover / click target
             Stretch(frame.rectTransform, 0f);
             Image background = NewImage("Background", cardRoot, s.CardColor, false);
             Stretch(background.rectTransform, 5f);
+            ArtifactInterfaceView.Glass(cardRoot);
+            ArtifactInterfaceView.Decorate("Prismatic Frame", cardRoot, ArtifactGeometry.Shape.Frame, s.FrameColor);
 
             float width = s.CardSize.x;
             Image strip = NewImage("Kind Strip", cardRoot, Color.white, false);
-            TopBand(strip.rectTransform, 5f, 5f, 50f);
-            TMP_Text kind = NewText("Kind", strip.rectTransform, font, s.KindSize, new Color(0.06f, 0.05f, 0.1f), new Color(0f, 0f, 0f, 0f),
-                TextAlignmentOptions.Center);
+            TopBand(strip.rectTransform, 140f, 12f, 32f);
+            TMP_Text kind = NewText("Kind", strip.rectTransform, font, s.KindSize, s.TextColor, Color.clear,
+                TextAlignmentOptions.Left);
+            kind.characterSpacing = 0f;
             Stretch(kind.rectTransform, 0f);
+            var seal = ArtifactInterfaceView.Decorate("Ability Sigil", cardRoot, ArtifactGeometry.Shape.Sigil,
+                new Color(0.48f, 0.94f, 1f, 0.4f));
+            Place(seal.rectTransform, new Vector2(0f, .5f), new Vector2(74f, 0f), new Vector2(108f, 108f));
 
             Image icon = NewImage("Icon", cardRoot, Color.white, false);
-            Place(icon.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -140f), new Vector2(128f, 128f));
-            TMP_Text glyph = NewText("Glyph", cardRoot, font, 96, Color.white, outline, TextAlignmentOptions.Center);
-            Place(glyph.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -140f), new Vector2(160f, 128f));
+            Place(icon.rectTransform, new Vector2(0f, .5f), new Vector2(74f, 0f), new Vector2(80f, 80f));
+            TMP_Text glyph = NewText("Glyph", cardRoot, font, 40, Color.white, outline, TextAlignmentOptions.Center);
+            Place(glyph.rectTransform, new Vector2(0f, .5f), new Vector2(74f, 0f), new Vector2(100f, 72f));
 
             TMP_Text cardTitle = NewText("Title", cardRoot, font, s.CardTitleSize, s.TextColor, outline, TextAlignmentOptions.Center);
-            Place(cardTitle.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -250f), new Vector2(width - 40f, 70f));
+            TopBand(cardTitle.rectTransform, 140f, 50f, 88f);
+            cardTitle.alignment = TextAlignmentOptions.Left;
             Wrap(cardTitle, TextOverflowModes.Ellipsis);
             cardTitle.enableAutoSizing = true;
             cardTitle.fontSizeMin = Mathf.Max(12f, s.CardTitleSize * 0.6f);
             cardTitle.fontSizeMax = s.CardTitleSize;
 
-            TMP_Text summary = NewText("Summary", cardRoot, font, s.SummarySize, s.TextColor, outline, TextAlignmentOptions.Top);
-            TopBand(summary.rectTransform, 24f, 295f, 110f);
-            Wrap(summary, TextOverflowModes.Ellipsis);
-
-            Image divider = NewImage("Divider", cardRoot, new Color(1f, 1f, 1f, 0.12f), false);
-            TopBand(divider.rectTransform, 30f, 412f, 2f);
-
-            TMP_Text details = NewText("Details", cardRoot, font, s.DetailSize, s.MutedColor, outline, TextAlignmentOptions.TopLeft);
-            details.rectTransform.anchorMin = new Vector2(0f, 0f);
-            details.rectTransform.anchorMax = new Vector2(1f, 1f);
-            details.rectTransform.offsetMin = new Vector2(28f, 70f);
-            details.rectTransform.offsetMax = new Vector2(-28f, -424f);
-            Wrap(details, TextOverflowModes.Ellipsis);
-            details.lineSpacing = -8f;
-
             TMP_Text hint = NewText("Key Hint", cardRoot, font, s.PromptSize, s.MutedColor, outline, TextAlignmentOptions.Center);
-            Place(hint.rectTransform, new Vector2(0.5f, 0f), new Vector2(0f, 36f), new Vector2(200f, 36f));
+            Place(hint.rectTransform, new Vector2(1f, 1f), new Vector2(-28f, -28f), new Vector2(48f, 36f));
 
             TMP_Text stamp = NewText("Stamp", cardRoot, font, s.StampSize, Color.white, outline, TextAlignmentOptions.Center);
             Place(stamp.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0f, 20f), new Vector2(width, 90f));
-            stamp.rectTransform.localRotation = Quaternion.Euler(0f, 0f, -12f);
+            stamp.rectTransform.localRotation = Quaternion.identity;
 
             RewardCardView view = slot.gameObject.AddComponent<RewardCardView>();
-            view.Assign(cardRoot, cardGroup, frame, background, strip, kind, icon, glyph, cardTitle, summary, details, hint, stamp);
+            view.Assign(cardRoot, cardGroup, frame, background, strip, kind, icon, glyph, cardTitle, null, null, hint, stamp);
             return view;
         }
 
@@ -744,6 +872,8 @@ namespace RythmRPG.Combat
             background.color = new Color(1f, 1f, 1f, 0.05f);
             background.raycastTarget = true;
             row.gameObject.AddComponent<RewardChoiceButton>();
+            ArtifactInterfaceView.Glass(row);
+            ArtifactInterfaceView.Decorate("Outline", row, ArtifactGeometry.Shape.Frame, Color.white);
             TMP_Text label = NewText("Label", row, font, s.SummarySize, s.TextColor, outline, TextAlignmentOptions.TopLeft);
             label.rectTransform.anchorMin = new Vector2(0f, 0.5f);
             label.rectTransform.anchorMax = new Vector2(1f, 1f);
@@ -777,8 +907,11 @@ namespace RythmRPG.Combat
         }
 
         private static TMP_Text NewText(string name, Transform parent, TMP_FontAsset font, int size, Color color, Color outline,
-            TextAlignmentOptions alignment) =>
-            CombatText.CreateUGUI(name, parent, font, size, color, alignment, outline, CombatText.OutlineWidthFromPixels(3f, size) + 0.1f);
+            TextAlignmentOptions alignment)
+        {
+            TMP_FontAsset body = ArtifactInterfaceStyle.Load().bodyFont;
+            return CombatText.CreateUGUI(name, parent, body != null ? body : font, size, color, alignment, Color.clear);
+        }
 
         private static void Wrap(TMP_Text text, TextOverflowModes overflow)
         {

@@ -1,0 +1,6 @@
+{
+  "name": "RythmRPG.UI.Title.Editor",
+  "references": ["RythmRPG.UI.Title", "Unity.ugui", "Unity.TextMeshPro", "PrimeTween.Runtime"],
+  "includePlatforms": ["Editor"],
+  "autoReferenced": true
+}
