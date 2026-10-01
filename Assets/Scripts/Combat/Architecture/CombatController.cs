@@ -814,21 +814,29 @@ namespace RythmRPG.Combat
 
         // Mana builds up from good play. Turn Accuracy (default): every enemy note the player had to play feeds the turn's
         // accuracy, and the mana is paid once when the enemy turn ends (PayTurnAccuracyMana). Per Hit: Perfect / Good hits
-        // (player input only) give mana at once, weighted by judgement.
+        // (player input only) give mana at once, weighted by judgement. Bad defence hits cost mana immediately in both modes.
         private void HandleManaJudgement(RhythmJudgementResult result)
         {
             if (!IsBattleActive || IsPreviewing || encounter.Player == null) return;
             CombatResourceRules rules = resourceRules ?? CombatResourceRules.Load();
+            PatternRunMode mode = runner != null ? runner.CurrentMode : PatternRunMode.EnemyDefense;
+            bool enemyTurn = CurrentState == CombatState.EnemyTurnStart || CurrentState == CombatState.EnemyTurnExecuting;
+            if (enemyTurn && mode == PatternRunMode.EnemyDefense && result.Source == NoteResolutionSource.PlayerInput)
+            {
+                int lost = encounter.Player.DrainMana(rules.DefenseManaCost(result.Judgement));
+                if (lost > 0 && vfxController != null)
+                    vfxController.ShowFloatingText($"-{lost} MP", encounter.Player.transform.position + Vector3.up * 1.6f,
+                        new Color(0.45f, 0.75f, 1f));
+            }
             if (rules.UsesTurnAccuracy)
             {
-                bool enemyTurn = CurrentState == CombatState.EnemyTurnStart || CurrentState == CombatState.EnemyTurnExecuting;
-                if (!enemyTurn || !TurnAccuracyTally.Counts(result.Source)) return;
+                if (!enemyTurn || mode != PatternRunMode.EnemyDefense || !TurnAccuracyTally.Counts(result.Source)) return;
                 manaTally.Record(rules.AccuracyWeight(result.Judgement));
                 SetPendingMana(rules.TurnAccuracyMana(manaTally.Accuracy, manaTally.Notes));
                 return;
             }
             if (result.Source != NoteResolutionSource.PlayerInput) return;
-            manaCarry += rules.ManaGain(result.Judgement, runner != null ? runner.CurrentMode : PatternRunMode.EnemyDefense);
+            manaCarry += rules.ManaGain(result.Judgement, mode);
             int whole = Mathf.FloorToInt(manaCarry);
             if (whole <= 0) return;
             manaCarry -= whole;

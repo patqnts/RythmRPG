@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.AbilityDefinition
   id: sample-flame-guard
   displayName: Flame Guard
-  icon: {fileID: 21300000, guid: c46d83f2b73aaa141bd5015819342d81, type: 3}
+  icon: {fileID: -4539520815654054507, guid: f4f11d1c79d771c47b83991b289e4605, type: 3}
   abilityType: 2
   element: 1
   manaCost: 20

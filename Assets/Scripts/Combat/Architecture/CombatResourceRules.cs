@@ -23,6 +23,10 @@ namespace RythmRPG.Combat
                  "give more mana. Per Hit: every Perfect / Good hit gives mana (the weights below).")]
         [SerializeField] private ManaSource manaSource = ManaSource.TurnAccuracy;
 
+        [Header("Mana lost on Bad defence hits (both mana sources)")]
+        [Tooltip("Mana removed immediately for each Bad hit during enemy defence. Stops at zero mana. 0 disables the penalty.")]
+        [SerializeField, Min(0)] private int badDefenseManaCost = 1;
+
         [Header("Turn Accuracy mana (paid at the end of the enemy turn)")]
         [Tooltip("How much each judgement counts toward accuracy (Miss = 0). Accuracy = average over the turn's notes.")]
         [SerializeField, Range(0f, 1f)] private float perfectAccuracy = 1f;
@@ -36,6 +40,7 @@ namespace RythmRPG.Combat
         [Header("Per Hit mana (only when Mana Source = Per Hit)")]
         [SerializeField, Min(0f)] private float perfectMana = 1f;
         [SerializeField, Min(0f)] private float goodMana = 0.5f;
+        [Tooltip("Bad hit recovery for player ability charts only. Bad defence hits lose mana instead.")]
         [SerializeField, Min(0f)] private float badMana;
         [Tooltip("Multiplier for mana gained while playing your own ability charts (the enemy turn is the main source).")]
         [SerializeField, Range(0f, 2f)] private float abilityChartManaScale = 0.5f;
@@ -72,8 +77,12 @@ namespace RythmRPG.Combat
         public int DefenseDamage(int noteDamage, HitJudgement judgement) =>
             Mathf.Max(0, Mathf.RoundToInt(Mathf.Max(0, noteDamage) * DamageMultiplier(judgement)));
 
+        public int DefenseManaCost(HitJudgement judgement) =>
+            judgement == HitJudgement.Bad ? Mathf.Max(0, badDefenseManaCost) : 0;
+
         public float ManaGain(HitJudgement judgement, PatternRunMode mode)
         {
+            if (mode == PatternRunMode.EnemyDefense && judgement == HitJudgement.Bad) return 0f;
             float gain = judgement switch
             {
                 HitJudgement.Perfect => perfectMana,

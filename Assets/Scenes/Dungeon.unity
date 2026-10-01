@@ -574,6 +574,13 @@ MonoBehaviour:
   lowThreshold: 0.25
   loseTrailColor: {r: 1, g: 0.93, b: 0.62, a: 1}
   gainTrailColor: {r: 0.75, g: 1, b: 0.8, a: 1}
+  barrier: {fileID: 0}
+  barrierColor: {r: 1, g: 1, b: 1, a: 0.95}
+  barrierValueFormat: ' <color=#FFFFFFCC>+{0}</color>'
+  pending: {fileID: 0}
+  pendingColor: {r: 0, g: 0, b: 0, a: 0}
+  pendingAlpha: 0.4
+  pendingValueFormat: ' <alpha=#AA>+{0}'
   valueFormat: '{0}/{1}'
   motion:
     lossSeconds: 0.12
@@ -1129,6 +1136,11 @@ MonoBehaviour:
   showPowerGauge: 1
   powerGaugeStyle: {fileID: 0}
   powerGauge: {fileID: 0}
+  buildHudStyle: {fileID: 0}
+  passiveColumn: {fileID: 0}
+  playerEffects: {fileID: 0}
+  enemyEffects: {fileID: 0}
+  showShieldBarrier: 1
   playerHealth: {fileID: 0}
   enemyHealth: {fileID: 0}
   playerMana: {fileID: 0}
@@ -1631,6 +1643,13 @@ MonoBehaviour:
   lowThreshold: 0
   loseTrailColor: {r: 0.8, g: 0.92, b: 1, a: 1}
   gainTrailColor: {r: 0.72, g: 0.9, b: 1, a: 1}
+  barrier: {fileID: 0}
+  barrierColor: {r: 1, g: 1, b: 1, a: 0.95}
+  barrierValueFormat: ' <color=#FFFFFFCC>+{0}</color>'
+  pending: {fileID: 0}
+  pendingColor: {r: 0, g: 0, b: 0, a: 0}
+  pendingAlpha: 0.4
+  pendingValueFormat: ' <alpha=#AA>+{0}'
   valueFormat: '{0}/{1}'
   motion:
     lossSeconds: 0.12
@@ -6760,6 +6779,7 @@ MonoBehaviour:
   abilityExecutor: {fileID: 0}
   judgementSystem: {fileID: 0}
   modifierSystem: {fileID: 0}
+  buildRuntime: {fileID: 0}
   vfxController: {fileID: 0}
   uiController: {fileID: 0}
   lanePresentation: {fileID: 1555178325}
@@ -6771,6 +6791,8 @@ MonoBehaviour:
   showResultScreen: 1
   resultScreen: {fileID: 687919877}
   resultGrading: {fileID: 0}
+  showRewardScreen: 1
+  rewardScreen: {fileID: 0}
 --- !u!114 &1555178325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9940,6 +9962,13 @@ MonoBehaviour:
   lowThreshold: 0.25
   loseTrailColor: {r: 1, g: 0.93, b: 0.62, a: 1}
   gainTrailColor: {r: 0.75, g: 1, b: 0.8, a: 1}
+  barrier: {fileID: 0}
+  barrierColor: {r: 1, g: 1, b: 1, a: 0.95}
+  barrierValueFormat: ' <color=#FFFFFFCC>+{0}</color>'
+  pending: {fileID: 0}
+  pendingColor: {r: 0, g: 0, b: 0, a: 0}
+  pendingAlpha: 0.4
+  pendingValueFormat: ' <alpha=#AA>+{0}'
   valueFormat: '{0}/{1}'
   motion:
     lossSeconds: 0.12
@@ -10961,10 +10990,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dec303cdd78199177a29669ccc735730, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  currentHealth: 100
-  maxMana: 50
-  currentMana: 50
+  maxHealth: 50
+  currentHealth: 50
+  maxMana: 40
+  currentMana: 40
 --- !u!114 &1953005470
 MonoBehaviour:
   m_ObjectHideFlags: 0

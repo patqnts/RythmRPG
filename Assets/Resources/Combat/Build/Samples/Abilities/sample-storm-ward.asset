@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.AbilityDefinition
   id: sample-storm-ward
   displayName: Storm Ward
-  icon: {fileID: 21300000, guid: c46d83f2b73aaa141bd5015819342d81, type: 3}
+  icon: {fileID: 4824165013680093225, guid: aede773ef126b764c9f0332774a614a6, type: 3}
   abilityType: 2
   element: 3
   manaCost: 20

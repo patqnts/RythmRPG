@@ -196,8 +196,10 @@ Mana used to come per note hit (0.5 MP per Perfect), which meant denser patterns
 - **Feedback:**
   - While the enemy turn plays, the mana bar shows a faint **pending segment** and a "+N" after the number. It shows what the turn would pay if it ended now, so it grows and shrinks as you hit and miss (`ResourceBarView.SetPending`, `CombatController.PendingMana`).
   - At the end of the turn, the fill grows into the segment and "+N MP  94%" pops above the player.
-- **Per Hit** still exists as a Mana Source option; it uses the old per-judgement weights.
+- **Bad defence hits cost 1 MP immediately**, in both Turn Accuracy and Per Hit modes. Adjust **Bad Defense Mana Cost** under **Mana lost on Bad defence hits** in `Assets/Resources/Combat/Balance/CombatResourceRules.asset`; 0 disables it. Mana stops at zero, and the HUD and floating text show the actual loss. Bad hits still contribute 0.3 to turn accuracy, and turn-end recovery is unchanged. Ability charts, previews, modifier clears and system clears do not incur this penalty.
+- **Per Hit** still exists as a Mana Source option; Perfect and Good use the per-judgement recovery weights. Bad defence hits do not grant per-hit recovery.
 - **Test:** `ResourceRules_TurnAccuracyMana_PaysByTier_NotByNoteCount` in `AbilityResolutionTests`.
+- **Penalty tests:** `DefenseManaTests` covers both sources, remaining mana, configurable costs, recovery and excluded resolutions.
 
 ### Play mode without domain reload
 

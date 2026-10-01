@@ -16,6 +16,19 @@ MonoBehaviour:
   badDamage: 0.2
   goodDamage: 0
   perfectDamage: 0
+  manaSource: 0
+  badDefenseManaCost: 1
+  perfectAccuracy: 1
+  goodAccuracy: 0.7
+  badAccuracy: 0.3
+  accuracyTiers:
+  - minAccuracy: 0.95
+    mana: 15
+  - minAccuracy: 0.85
+    mana: 10
+  - minAccuracy: 0.7
+    mana: 5
+  manaBelowTiers: 5
   perfectMana: 0.5
   goodMana: 0
   badMana: 0

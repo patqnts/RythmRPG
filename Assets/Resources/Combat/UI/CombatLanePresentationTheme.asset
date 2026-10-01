@@ -20,7 +20,7 @@ MonoBehaviour:
   ButtonSize: {x: 64, y: 64}
   ButtonSpacing: 15
   BottomOffset: 2
-  ButtonFontAsset: {fileID: 11400000, guid: 523102994fdf0884f97b56f8c90f7022, type: 2}
+  ButtonFontAsset: {fileID: 11400000, guid: 351ae9843ef78fa48ab1141c54004b19, type: 2}
   ButtonFont: {fileID: 12800000, guid: 80a0137e3d8f78f41bfdb2aca0cfac44, type: 3}
   ButtonFontSize: 28
   ButtonFontStyle: 1

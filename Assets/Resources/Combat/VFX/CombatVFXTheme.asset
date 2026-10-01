@@ -50,7 +50,7 @@ MonoBehaviour:
   morphWobble: 0.102
   morphWobbleLobes: 4
   morphWobbleSpeed: 18
-  characterBecomesHitLine: 1
+  characterBecomesHitLine: 0
   becomeLineSeconds: 1.09
   becomeCharacterSeconds: 0.82
   flatWidth: 1.5

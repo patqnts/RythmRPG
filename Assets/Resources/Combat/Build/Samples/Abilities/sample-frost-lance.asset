@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.AbilityDefinition
   id: sample-frost-lance
   displayName: Frost Lance
-  icon: {fileID: 21300000, guid: dd3885098198d104888439be4c590aba, type: 3}
+  icon: {fileID: -2195068374261213387, guid: a26a6cd82c6bf234f9d8aa8c9e264173, type: 3}
   abilityType: 1
   element: 2
   manaCost: 16

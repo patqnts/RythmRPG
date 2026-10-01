@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.AbilityDefinition
   id: sample-chain-spark
   displayName: Chain Spark
-  icon: {fileID: 21300000, guid: dd3885098198d104888439be4c590aba, type: 3}
+  icon: {fileID: 7724986190154583066, guid: ca63e75da0bc0a2459871eadde3456fb, type: 3}
   abilityType: 1
   element: 3
   manaCost: 15

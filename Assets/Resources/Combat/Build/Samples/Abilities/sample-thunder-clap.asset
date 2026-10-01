@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.AbilityDefinition
   id: sample-thunder-clap
   displayName: Thunder Clap
-  icon: {fileID: 21300000, guid: 4d7635c366a76274c85747592d98d2f5, type: 3}
+  icon: {fileID: 7349099596499118879, guid: 4380e5b4dd02e9c489ae57a951ce598b, type: 3}
   abilityType: 1
   element: 3
   manaCost: 14

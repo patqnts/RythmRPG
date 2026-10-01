@@ -119,6 +119,15 @@ namespace RythmRPG.Combat
             return true;
         }
 
+        /// <summary>Removes as much mana as available for a penalty. Returns the amount actually lost.</summary>
+        public int DrainMana(int amount)
+        {
+            int lost = Mathf.Min(currentMana, Mathf.Max(0, amount));
+            currentMana -= lost;
+            if (lost > 0) ManaChanged?.Invoke(currentMana, MaxMana);
+            return lost;
+        }
+
         /// <summary>Restores mana (clamped to the maximum). Returns the amount actually gained.</summary>
         public int GainMana(int amount)
         {
