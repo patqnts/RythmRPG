@@ -48,7 +48,8 @@ namespace RythmRPG.Combat
 
         private const float SlotRowHeight = 84f;
         private const float ReserveRowHeight = 70f;
-        private const float PassiveRowHeight = 70f;
+        private const float PassiveTileSize = 80f;
+        private const float PassiveTileGap = 12f;
         private const float RowGap = 6f;
         private const float SubheaderHeight = 40f;
         private const float StickThreshold = 0.6f;
@@ -590,9 +591,22 @@ namespace RythmRPG.Combat
                 if (build == null || build.Passives.Count == 0)
                     y = AddSubheader(passiveContent, y, "No passives", s.MutedColor, 40f);
                 else
+                {
+                    float availableWidth = passiveViewport != null ? passiveViewport.rect.width : passiveContent.rect.width;
+                    int columns = Mathf.Max(1, Mathf.FloorToInt((availableWidth + PassiveTileGap) / (PassiveTileSize + PassiveTileGap)));
+                    float tileSize = Mathf.Max(24f, Mathf.Min(PassiveTileSize, availableWidth));
+                    int index = 0;
                     foreach (PassiveInstance passive in build.Passives)
                         if (passive?.Definition != null)
-                            y = AddRow(passiveContent, new Item { Kind = ItemKind.Passive, Column = 1, Passive = passive }, y, PassiveRowHeight);
+                        {
+                            float top = (index / columns) * (tileSize + PassiveTileGap);
+                            var item = new Item { Kind = ItemKind.Passive, Column = 1, Passive = passive };
+                            AddRow(passiveContent, item, top, tileSize);
+                            Box(item.Row, (index % columns) * (tileSize + PassiveTileGap), top, tileSize, tileSize);
+                            y = top + tileSize;
+                            index++;
+                        }
+                }
                 passiveContent.sizeDelta = new Vector2(passiveContent.sizeDelta.x, y);
             }
 
@@ -641,34 +655,49 @@ namespace RythmRPG.Combat
             Image background = row.gameObject.AddComponent<Image>();
             background.color = new Color(1f, 1f, 1f, 0.05f);
             background.raycastTarget = true;
-            ArtifactInterfaceView.Glass(row);
+            bool passiveIcon = item.Kind == ItemKind.Passive;
+            if (!passiveIcon) ArtifactInterfaceView.Glass(row);
             RewardChoiceButton button = row.gameObject.AddComponent<RewardChoiceButton>();
             button.Index = index;
             button.Hovered += HoverRow;
             button.Clicked += ClickRow;
 
-            IconTileLook look = s.PanelTile;
-            float tileSize = Mathf.Min(look.size.y, height - 10f);
+            IconTileLook look = passiveIcon ? new IconTileLook
+            {
+                frameColor = Color.clear, backgroundColor = Color.clear,
+                frameThickness = 0f, iconInset = 0f,
+                preserveAspect = s.PanelTile.preserveAspect, glyphSize = s.PanelTile.glyphSize
+            } : s.PanelTile;
+            float tileSize = passiveIcon ? height - 24f : Mathf.Min(look.size.y, height - 10f);
             BuildIconTile tile = BuildIconTile.Create("Icon", row, look, ArtifactInterfaceStyle.Load().bodyFont ?? s.FontAsset,
                 Color.clear, s.RowDetailSize, s.RowDetailSize);
             tile.Rect.sizeDelta = new Vector2(tileSize, tileSize);
             tile.Rect.anchorMin = tile.Rect.anchorMax = tile.Rect.pivot = new Vector2(0f, 0.5f);
             tile.Rect.anchoredPosition = new Vector2(10f, 0f);
+            if (passiveIcon)
+            {
+                tile.Rect.anchorMin = tile.Rect.anchorMax = tile.Rect.pivot = new Vector2(.5f, .5f);
+                tile.Rect.anchoredPosition = Vector2.zero;
+            }
 
             item.Rim = ArtifactInterfaceView.Decorate("Row Tracery", row, ArtifactGeometry.Shape.Frame, new Color(s.HighlightColor.r, s.HighlightColor.g, s.HighlightColor.b, 0.16f));
             float textLeft = 10f + tileSize + 14f;
-            TMP_Text rowTitle = NewText("Title", row, s.RowTitleSize, s.TextColor, TextAlignmentOptions.Left);
-            rowTitle.rectTransform.anchorMin = new Vector2(0f, 0.5f);
-            rowTitle.rectTransform.anchorMax = new Vector2(1f, 1f);
-            rowTitle.rectTransform.offsetMin = new Vector2(textLeft, 0f);
-            rowTitle.rectTransform.offsetMax = new Vector2(-12f, -4f);
-            rowTitle.overflowMode = TextOverflowModes.Ellipsis;
-            TMP_Text rowDetail = NewText("Detail", row, s.RowDetailSize, s.MutedColor, TextAlignmentOptions.Left);
-            rowDetail.rectTransform.anchorMin = new Vector2(0f, 0f);
-            rowDetail.rectTransform.anchorMax = new Vector2(1f, 0.5f);
-            rowDetail.rectTransform.offsetMin = new Vector2(textLeft, 4f);
-            rowDetail.rectTransform.offsetMax = new Vector2(-12f, 0f);
-            rowDetail.overflowMode = TextOverflowModes.Ellipsis;
+            TMP_Text rowTitle = passiveIcon ? null : NewText("Title", row, s.RowTitleSize, s.TextColor, TextAlignmentOptions.Left);
+            TMP_Text rowDetail = null;
+            if (!passiveIcon)
+            {
+                rowTitle.rectTransform.anchorMin = new Vector2(0f, 0.5f);
+                rowTitle.rectTransform.anchorMax = new Vector2(1f, 1f);
+                rowTitle.rectTransform.offsetMin = new Vector2(textLeft, 0f);
+                rowTitle.rectTransform.offsetMax = new Vector2(-12f, -4f);
+                rowTitle.overflowMode = TextOverflowModes.Ellipsis;
+                rowDetail = NewText("Detail", row, s.RowDetailSize, s.MutedColor, TextAlignmentOptions.Left);
+                rowDetail.rectTransform.anchorMin = new Vector2(0f, 0f);
+                rowDetail.rectTransform.anchorMax = new Vector2(1f, 0.5f);
+                rowDetail.rectTransform.offsetMin = new Vector2(textLeft, 4f);
+                rowDetail.rectTransform.offsetMax = new Vector2(-12f, 0f);
+                rowDetail.overflowMode = TextOverflowModes.Ellipsis;
+            }
 
             item.Row = row;
             item.Background = background;
@@ -825,15 +854,10 @@ namespace RythmRPG.Combat
             if (item.Tile != null)
             {
                 item.Tile.SetContent(definition.Icon, PassiveIconColumnView.Initial(definition.DisplayName), ArtifactInterfaceStyle.Load().lilac);
-                item.Tile.SetFrameColor(ArtifactInterfaceStyle.Load().lilac);
-                item.Tile.SetCorner(definition.MaxLevel > 1 ? BuildHudStyle.Roman(passive.Level) : string.Empty, s.PassiveLevelColor);
+                item.Tile.SetFrameColor(Color.clear);
+                item.Tile.SetCorner(string.Empty, s.PassiveLevelColor);
                 item.Tile.Alpha = active ? 1f : s.InactiveAlpha;
             }
-            string level = definition.MaxLevel > 1 ? $"  Lv {passive.Level}/{definition.MaxLevel}" : string.Empty;
-            SetText(item.Title, definition.DisplayName + level, active ? s.TextColor : s.MutedColor);
-            string summary = !string.IsNullOrEmpty(definition.Description) ? definition.Description : definition.DescribeLevel(passive.Level);
-            string inactive = definition.Requirement.IsEmpty ? "INACTIVE with this loadout" : "INACTIVE: needs " + definition.Requirement.Describe();
-            SetText(item.Detail, active ? summary : inactive, active ? s.MutedColor : s.WarningColor);
         }
 
         private bool IsPassiveActive(PassiveInstance passive, List<AbilityQuote> equipped)
@@ -872,6 +896,7 @@ namespace RythmRPG.Combat
                 lines.Add("Now: " + definition.DescribeLevel(item.Passive.Level));
                 if (!item.Passive.IsMaxLevel) lines.Add("Next level: " + definition.DescribeLevel(item.Passive.Level + 1));
                 if (!definition.Requirement.IsEmpty) lines.Add("Active with " + definition.Requirement.Describe() + " equipped.");
+                if (!IsPassiveActive(item.Passive, build?.EquippedQuotes())) lines.Add("Inactive with this loadout.");
             }
             else if (item.Definition == null)
             {
@@ -939,7 +964,7 @@ namespace RythmRPG.Combat
                 Item item = items[i];
                 if (item.Background == null) continue;
                 float alpha = item == picked ? .12f : i == selected ? .08f : .14f;
-                item.Background.color = item == picked || i == selected ? new Color(.78f, 1f, .9f, alpha) : new Color(.035f, .10f, .11f, alpha);
+                item.Background.color = item == picked || i == selected ? new Color(1f, 1f, 1f, alpha) : new Color(.07f, .07f, .07f, alpha);
                 var rim = item.Rim;
                 if (rim != null) rim.color = new Color(1f, 1f, 1f, item == picked || i == selected ? 1f : .45f);
                 if (item.Reaction == null) item.Reaction = ArtifactSlimeReaction.Ensure(item.Row);

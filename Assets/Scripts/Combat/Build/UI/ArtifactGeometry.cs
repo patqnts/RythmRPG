@@ -166,20 +166,7 @@ namespace RythmRPG.Combat
 
         private void DrawGlass(UnityEngine.UI.VertexHelper vh, Rect r)
         {
-            // Quantized light pools give the glass a gelatinous depth without a texture or blur pass.
-            const float cell = 16f;
-            for (float y = r.yMin + 8f; y < r.yMax - 8f; y += cell)
-                for (float x = r.xMin + 8f; x < r.xMax - 8f; x += cell)
-                {
-                    float u = (x - r.xMin) / r.width, v = (y - r.yMin) / r.height;
-                    float pool = Mathf.Exp(-((u - .18f) * (u - .18f) * 9f + (v - .16f) * (v - .16f) * 7f));
-                    float other = Mathf.Exp(-((u - .84f) * (u - .84f) * 12f + (v - .82f) * (v - .82f) * 10f));
-                    float tide = Mathf.Clamp01((.13f + Mathf.Sin(u * 10f) * .04f - v) * 10f);
-                    Color light = Color.Lerp(new Color(.55f, 1f, .84f), new Color(.82f, .75f, 1f), u);
-                    light.a = Mathf.Round((pool * .42f + other * .28f + tide * .2f) * 32f) / 32f * color.a;
-                    if (light.a > .001f)
-                        Block(vh, new Rect(x, y, Mathf.Min(cell, r.xMax - 8f - x), Mathf.Min(cell, r.yMax - 8f - y)), light);
-                }
+            // Clear glass catches a little white light at the edges; its interior has no color gradient.
             Color shine = new(1f, 1f, 1f, color.a * 1.6f);
             Block(vh, new Rect(r.xMin + 20f, r.yMax - 12f, Mathf.Min(80f, r.width * .22f), 4f), shine);
             Block(vh, new Rect(r.xMin + 12f, r.yMax - 36f, 4f, 16f), shine);

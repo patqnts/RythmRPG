@@ -1,10 +1,10 @@
 # Artifact interface
 
-The Tab inventory and post-battle rewards are projections from the slime's magic artifact. Their shared visual language is crisp white pixel outlines with stepped corners, translucent slime glass, faint mint/lilac pools of light, geometric seals and Monogram SDF pixel lettering. Glass light is drawn as quantized geometry rather than a blur or texture; the overlay canvases use pixel-aligned rendering. The theme retains editable colors and dissolve settings.
+The Tab inventory and post-battle rewards are projections from the slime's magic artifact. Their shared visual language is crisp white pixel outlines with stepped corners, neutral translucent glass with small white edge reflections, geometric seals and Monogram SDF pixel lettering. The background has no colored gradient; the overlay canvases use pixel-aligned rendering. The theme retains editable colors and dissolve settings.
 
 ## Inventory
 
-**Resonance Archive** emphasizes the four equipped abilities as large tiles in a 2-by-2 grid, with prominent icons and lane keys. Reserve abilities and passives use smaller lists beside the grid. The selected entry's details appear on the right in a scrollable pane. Arrow keys and gamepad navigation follow the visible layout. Click or confirm to pick an ability, then choose a slot to swap; X unequips. The footer changes to guide placement while carrying an ability. Tab or Close dismisses the panel. Combat keeps the panel in inspection mode.
+**Resonance Archive** emphasizes the four equipped abilities as large tiles in a 2-by-2 grid, with prominent icons and lane keys. Reserve abilities use a smaller list beside the grid. Passives use compact square frames and icons in a wrapping grid, with names, levels, descriptions and inactive requirements confined to the shared details pane. The selected entry's details appear on the right in a scrollable pane. Arrow keys and gamepad navigation follow the visible layout. Click or confirm to pick an ability, then choose a slot to swap; X unequips. The footer changes to guide placement while carrying an ability. Tab or Close dismisses the panel. Combat keeps the panel in inspection mode.
 
 The projection scales to fit smaller canvases. Closing during the opening animation dissolves from the current reveal position.
 

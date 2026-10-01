@@ -16,7 +16,7 @@ namespace RythmRPG.Combat
         public Color cyan = new(0.48f, 0.94f, 1f, 1f);
         public Color lilac = new(0.79f, 0.65f, 1f, 1f);
         public Color pearl = new(0.94f, 0.98f, 1f, 1f);
-        public Color glass = new(.035f, .09f, .11f, .42f);
+        public Color glass = new(.07f, .07f, .07f, .42f);
         [Header("Title-menu disintegration (shader references keep the effect in builds)")]
         public Shader textShader;
         public Shader imageShader;

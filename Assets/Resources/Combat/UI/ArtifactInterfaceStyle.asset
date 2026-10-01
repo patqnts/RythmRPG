@@ -17,7 +17,7 @@ MonoBehaviour:
   cyan: {r: 1, g: 1, b: 1, a: 1}
   lilac: {r: 1, g: 1, b: 1, a: 1}
   pearl: {r: 1, g: 1, b: 1, a: 1}
-  glass: {r: 0.035, g: 0.09, b: 0.11, a: 0.85882354}
+  glass: {r: 0.07, g: 0.07, b: 0.07, a: 0.85882354}
   textShader: {fileID: 4800000, guid: 2682a8561218b8e4fafdad6b46549bb7, type: 3}
   imageShader: {fileID: 4800000, guid: 36299d17465b5f1468cf96a88e84b423, type: 3}
   livingOutlineShader: {fileID: 4800000, guid: 9a2a578a367e84940aac4cbd0c631fc0, type: 3}
