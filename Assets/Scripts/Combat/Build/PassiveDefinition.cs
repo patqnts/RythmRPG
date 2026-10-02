@@ -168,6 +168,8 @@ namespace RythmRPG.Combat
         public int Prevented;
         public int Absorbed;
         public int Actual;
+        /// <summary>The visible battle combo after this note's judgement was recorded.</summary>
+        public int Combo;
         public bool IsPlayerExecution => Result.Source == NoteResolutionSource.PlayerInput;
     }
 

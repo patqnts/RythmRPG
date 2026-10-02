@@ -143,13 +143,13 @@ namespace RythmRPG.Combat.Tests
             new("n" + noteCounter++, 1, judgement, 0f, Vector3.zero, source);
 
         /// <summary>One enemy note of 10 damage through the full defense transaction.</summary>
-        private static void Defend(Rig rig, RhythmJudgementResult result)
+        private static void Defend(Rig rig, RhythmJudgementResult result, int combo = 0)
         {
             int attempted = CombatResourceRules.Load().DefenseDamage(10, result.Judgement);
             if (result.Source == NoteResolutionSource.Modifier) attempted = 0;
             if (attempted > 0 && rig.Modifiers.TryBlockDamage(result)) attempted = 0;
             int actual = attempted > 0 ? rig.Runtime.ApplyDefenseDamage(result, 10, attempted) : 0;
-            rig.Runtime.DefenseNoteSettled(result, 10, attempted, actual);
+            rig.Runtime.DefenseNoteSettled(result, 10, attempted, actual, combo);
         }
 
         private static void StartEnemyTurn(Rig rig)
@@ -392,6 +392,29 @@ namespace RythmRPG.Combat.Tests
             Assert.That(rig.Board.Cleared.Count, Is.EqualTo(4), "4 per turn");
             Defend(rig, Note(HitJudgement.Good));
             Assert.That(rig.Board.Cleared.Count, Is.EqualTo(4), "Good does not zap");
+        }
+
+        [Test]
+        public void FlameGuard_AddsBurnOnlyAtFifteenComboMilestonesDuringDefense()
+        {
+            AbilityDefinition guard = Ability("guard", AbilityRole.Defense, AbilityDelivery.Technique, 0, 100, ElementType.Fire,
+                new FlameGuardEffect(2, 1, 5, 0.1f));
+            var build = new RunBuildState();
+            AbilityInstance instance = build.AddAbility(guard);
+            Rig rig = CreateRig(build);
+            Cast(rig, instance, AllPerfect());
+            StartEnemyTurn(rig);
+
+            Defend(rig, Note(HitJudgement.Perfect), 14);
+            Assert.That(rig.Runtime.Marks.Stacks(ElementalMarks.Burn), Is.Zero);
+            Defend(rig, Note(HitJudgement.Good), 15);
+            Assert.That(rig.Runtime.Marks.Stacks(ElementalMarks.Burn), Is.EqualTo(1), "the displayed Combo milestone is what matters");
+            Defend(rig, Note(HitJudgement.Perfect), 29);
+            Assert.That(rig.Runtime.Marks.Stacks(ElementalMarks.Burn), Is.EqualTo(1));
+            Defend(rig, Note(HitJudgement.Perfect), 30);
+            Assert.That(rig.Runtime.Marks.Stacks(ElementalMarks.Burn), Is.EqualTo(2));
+            Defend(rig, Note(HitJudgement.Miss), 0);
+            Assert.That(rig.Runtime.Marks.Stacks(ElementalMarks.Burn), Is.EqualTo(2), "a broken Combo grants nothing");
         }
 
         [Test]

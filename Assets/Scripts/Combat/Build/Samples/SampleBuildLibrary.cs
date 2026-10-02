@@ -196,7 +196,7 @@ namespace RythmRPG.Combat
             AbilityDefinition flameGuard = Add(new AbilityDefinition.Builder("sample-flame-guard", "Flame Guard", guard)
                 .Type(AbilityType.Defensive).Tags(AbilityRole.Defense, AbilityDelivery.Technique).Element(ElementType.Fire)
                 .Cost(20, 2).Power(P(2f))
-                .Describe("For 2 enemy turns, each Perfect block adds 1 Burn stack to the enemy (max 5 per turn).")
+                .Describe("For 2 enemy turns, every 15 Combo reached while defending adds 1 Burn stack (max 5 per turn).")
                 .Effect(new FlameGuardEffect(2, 1, 5, 0.08f)).Build());
 
             AbilityDefinition combust = Add(new AbilityDefinition.Builder("sample-combust", "Combust", flame)
@@ -509,7 +509,7 @@ namespace RythmRPG.Combat
                 .Passive(conductor).Passive(capacitor).Passive(catalyst).Build());
 
             AddPreset(new BuildPreset.Builder("preset-pyre", "Pyre Warden (Fire + Water)", StyleElemental)
-                .Describe("Objective: stack Burn, then cash it in. Ember Lash and Flame Guard (Perfect blocks) add Burn; Pyre Keeper raises the cap. " +
+                .Describe("Objective: stack Burn, then cash it in. Ember Lash adds Burn from its own chart; Flame Guard adds Burn at every 15 Combo while defending. Pyre Keeper raises the cap. " +
                           "Undertow on a Burning enemy makes Steam (burst from the Burn stacks); Combust waits in reserve to detonate Burn directly.\n" +
                           "Trade-off: Burn is slow until it is detonated; Steam uses up both marks.")
                 .Slot(strike).Slot(emberLash).Slot(flameGuard).Slot(undertow).Reserve(combust)
@@ -540,7 +540,7 @@ namespace RythmRPG.Combat
                 .Slot(siphon).Slot(shieldBash).Slot(fireBolt).Slot(rally)
                 .Passive(secondWind).Passive(pressureCast).Passive(closeout).Passive(reservoir).Build());
             AddPreset(new BuildPreset.Builder("preset-living-furnace", "Living Furnace", StyleElemental)
-                .Describe("Flame Guard builds Burn while defending; Stoke rewards a successful defense phrase. Keep Burn for stronger Combust or consume one stack with Cauterize to survive. Strike provides a free attack.")
+                .Describe("Flame Guard builds Burn at every 15 Combo while defending; Stoke rewards a successful defense phrase. Keep Burn for stronger Combust or consume one stack with Cauterize to survive. Strike provides a free attack.")
                 .Slot(strike).Slot(flameGuard).Slot(cauterize).Slot(combust)
                 .Passive(stoke).Passive(pyreKeeper).Passive(content.Passives["ps-kindling"]).Passive(secondWind).Build());
             AddPreset(new BuildPreset.Builder("preset-breakwater-knight", "Breakwater Knight", StyleTank)

@@ -820,7 +820,7 @@ namespace RythmRPG.Combat
         private void HandleDefenseNoteSettled(Note note, RhythmJudgementResult result, int attempted, int actual)
         {
             if (!IsBattleActive || buildRuntime == null) return;
-            buildRuntime.DefenseNoteSettled(result, note != null ? note.damage : 0, attempted, actual);
+            buildRuntime.DefenseNoteSettled(result, note != null ? note.damage : 0, attempted, actual, CurrentCombo);
         }
 
         private void WatchEnemyDefeat(EnemyCombatant enemy)

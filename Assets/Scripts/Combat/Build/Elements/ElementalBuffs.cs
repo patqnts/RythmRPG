@@ -61,26 +61,29 @@ namespace RythmRPG.Combat
             $"{Label}: Perfect zaps {notesPerPerfect} notes ({damagePerNote} Lightning each, {zappedThisTurn}/{maxPerTurn} this turn, {TurnsRemaining} enemy turns)";
     }
 
-    /// <summary>Flame Guard: each Perfect block adds Burn stacks to the enemy.</summary>
+    /// <summary>Flame Guard: reaching a combo milestone during defense adds Burn to the enemy.</summary>
     public sealed class FlameGuardBuff : TimedBuff, IDefenseExecutionModifier
     {
-        private readonly int stacksPerPerfect;
+        private readonly int stacksPerMilestone;
+        private readonly int comboPerStack;
         private readonly int burnPerStack;
         private readonly int maxStacksPerTurn;
         private int addedThisTurn;
 
-        public FlameGuardBuff(string sourceId, string label, int enemyTurns, int stacksPerPerfect, int burnPerStack, int maxStacksPerTurn)
+        public FlameGuardBuff(string sourceId, string label, int enemyTurns, int stacksPerMilestone, int comboPerStack,
+            int burnPerStack, int maxStacksPerTurn)
             : base("flame-guard:" + sourceId, label ?? "Flame Guard", enemyTurns, TurnBoundary.EnemyTurnEnd)
         {
-            this.stacksPerPerfect = Mathf.Max(1, stacksPerPerfect);
+            this.stacksPerMilestone = Mathf.Max(1, stacksPerMilestone);
+            this.comboPerStack = Mathf.Max(1, comboPerStack);
             this.burnPerStack = Mathf.Max(0, burnPerStack);
             this.maxStacksPerTurn = Mathf.Max(1, maxStacksPerTurn);
         }
 
         public void OnPlayerDefense(CombatBuildRuntime runtime, DefenseNoteOutcome outcome)
         {
-            if (outcome.Result.Judgement != HitJudgement.Perfect || addedThisTurn >= maxStacksPerTurn) return;
-            int stacks = Mathf.Min(stacksPerPerfect, maxStacksPerTurn - addedThisTurn);
+            if (outcome.Combo <= 0 || outcome.Combo % comboPerStack != 0 || addedThisTurn >= maxStacksPerTurn) return;
+            int stacks = Mathf.Min(stacksPerMilestone, maxStacksPerTurn - addedThisTurn);
             if (runtime.Marks.Apply(ElementalMarks.Burn, stacks, burnPerStack, outcome.RootCauseId, Icon)) addedThisTurn += stacks;
         }
 
@@ -91,7 +94,8 @@ namespace RythmRPG.Combat
         }
 
         public override string Describe() =>
-            $"{Label}: Perfect blocks add {stacksPerPerfect} Burn ({burnPerStack}/stack, {addedThisTurn}/{maxStacksPerTurn} this turn, {TurnsRemaining} enemy turns)";
+            $"{Label}: every {comboPerStack} Combo during defense adds {stacksPerMilestone} Burn " +
+            $"({burnPerStack}/stack, {addedThisTurn}/{maxStacksPerTurn} this turn, {TurnsRemaining} enemy turns)";
     }
 
     /// <summary>

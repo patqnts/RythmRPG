@@ -411,11 +411,12 @@ namespace RythmRPG.Combat
         }
 
         /// <summary>After every defense note's damage transaction (also for notes that dealt no damage).</summary>
-        public void DefenseNoteSettled(RhythmJudgementResult result, int noteDamage, int attempted, int actual)
+        public void DefenseNoteSettled(RhythmJudgementResult result, int noteDamage, int attempted, int actual, int combo = 0)
         {
             DefenseNoteOutcome outcome = PendingOutcome(result, noteDamage, attempted);
             pendingDefense.Remove(result.NoteId ?? string.Empty);
             outcome.Actual = actual;
+            outcome.Combo = Mathf.Max(0, combo);
             // Cleared by a board effect (zap, wall): not an opportunity, not a miss, triggers nothing.
             if (result.Source == NoteResolutionSource.Modifier)
             {

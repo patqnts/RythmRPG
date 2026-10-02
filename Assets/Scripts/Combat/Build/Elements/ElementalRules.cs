@@ -28,7 +28,6 @@ namespace RythmRPG.Combat
         [Min(0)] public int windStacks = 1;
         [Tooltip("Wind hits extend every mark by this many turns (once per mark per cast).")]
         [Min(0)] public int windExtendTurns = 1;
-
         [Header("Reactions")]
         [Tooltip("Steam burst = remaining Burn tick damage x this.")]
         [Min(0f)] public float steamMultiplier = 2f;

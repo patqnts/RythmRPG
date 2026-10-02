@@ -28,7 +28,7 @@ MonoBehaviour:
   - rid: 2956268601564201073
   roles: 8
   delivery: 8
-  description: For 2 enemy turns, each Perfect block adds 1 Burn stack to the enemy (max 5 per turn).
+  description: For 2 enemy turns, every 15 Combo reached while defending adds 1 Burn stack (max 5 per turn).
   references:
     version: 2
     RefIds:
@@ -37,6 +37,7 @@ MonoBehaviour:
       data:
         timing: 0
         enemyTurns: 2
-        stacksPerPerfect: 1
+        stacksPerMilestone: 1
+        comboPerStack: 15
         maxStacksPerTurn: 5
         burnScalePerStack: 0.08

@@ -55,7 +55,7 @@ namespace RythmRPG.Combat
             T("good", "Good", "A solid timing judgement. For ability performance it is normally worth 80%.", Rhythm, "Good"),
             T("bad", "Bad", "A weak timing judgement. For ability performance it is normally worth 50%.", Danger, "Bad"),
             T("miss", "Miss", "A missed note. For ability performance it is worth 0%; during enemy attacks it can deal note damage.", Danger, "Miss", "Misses"),
-            T("combo", "Combo", "Your current hit streak. Combo is not a resource and cannot be spent.", Rhythm, "Combo"),
+            T("combo", "Combo", "Your current hit streak. Combo is not spent; some effects trigger when it reaches milestones such as 15, 30 or 45.", Rhythm, "Combo"),
             T("counter", "Counter", "A stored charge earned from certain defensive or rhythm effects. Ordinary attacks, Riposte and Improvisation can spend it in different ways.", Rhythm, "Counter charges", "Counter charge", "Counters", "Counter"),
             T("shield", "Shield", "Temporary protection that absorbs damage before health. Total shield is normally capped at 30% of maximum health.", Support, "Shielded", "Shields", "Shield"),
             T("ward", "Ward", "Protection with a specific rule, such as guarding one rhythm lane from Bad and Miss damage.", Support, "Wards", "Ward"),

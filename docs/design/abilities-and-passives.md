@@ -54,7 +54,7 @@ Each element leaves a **mark** on the enemy and has a **quirk on the rhythm boar
 
 | Element | Mark on the enemy | Quirk on the board | Plays like |
 | --- | --- | --- | --- |
-| Fire | **Burn**: stacks (max 5), deals damage per stack at each enemy turn start, 3 enemy turns (refreshed by new stacks) | Flame Guard: Perfect blocks add Burn | Build up, then detonate |
+| Fire | **Burn**: stacks (max 5), deals damage per stack at each enemy turn start, 3 enemy turns (refreshed by new stacks) | Flame Guard: every 15 Combo during defense adds Burn | Build up, then detonate |
 | Water | **Soaked**: enemy notes deal 20% less damage, 2 enemy turns | Heals and shields that pay off later | Sustain, weaken the enemy |
 | Lightning | **Static**: stacks (max 5), 3 enemy turns. A Lightning hit at the cap discharges every stack as Lightning damage | Storm Ward / Conductor: Perfects zap the next notes (destroyed + Lightning damage) | Chain hits, clear dense patterns |
 | Earth | **Cracked**: the enemy takes +20% melee damage, 2 enemy turns | Stone Wall absorbs the notes of one lane | Heavy, protective |
@@ -86,7 +86,7 @@ All of these numbers are in the Build Balance Rules asset, under Elements.
 | Ability | Role | Delivery | Element | MP | Cooldown | Power | Effects |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | Ember Lash | Damage | Melee | Fire | 10 | 0 | 24 | Damage ×1; +1 Burn stack per Perfect in its chart (max 3), 4 damage per stack per tick |
-| Flame Guard | Defense | Technique | Fire | 20 | 2 | 44 | 2 enemy turns: each Perfect block adds 1 Burn stack (about 4 per stack per tick), max 5 per turn |
+| Flame Guard | Defense | Technique | Fire | 20 | 2 | 44 | 2 enemy turns: every 15 Combo reached while defending adds 1 Burn stack (about 4 per stack per tick), max 5 per turn |
 | Combust | Damage | Spell | Fire | 35 | 2 | 22 | Damage ×0.5; removes Burn and deals its remaining damage ×1.5 at once |
 | Undertow | Damage | Spell | Water | 20 | 0 | 35 | Water damage ×1; Soaked for 2 turns |
 | Tidal Veil | Defense | Spell | Water | 25 | 2 | 18 | Shield ×1.2 (about 22) for 2 enemy turns; heals 50% of it when it breaks |

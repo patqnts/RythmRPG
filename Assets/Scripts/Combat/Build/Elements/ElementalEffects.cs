@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace RythmRPG.Combat
 {
@@ -245,21 +246,25 @@ namespace RythmRPG.Combat
             $"{enemyTurns} enemy turns: each Perfect zaps the next {notesPerPerfect} notes (max {maxPerTurn} per turn)";
     }
 
-    /// <summary>Flame Guard: for some enemy turns, each Perfect block adds Burn stacks to the enemy.</summary>
+    /// <summary>Flame Guard: for some enemy turns, defensive combo milestones add Burn stacks to the enemy.</summary>
     [Serializable]
     public sealed class FlameGuardEffect : AbilityEffect, IElementalEffect
     {
         [SerializeField, Min(1)] private int enemyTurns = 2;
-        [SerializeField, Min(1)] private int stacksPerPerfect = 1;
+        [FormerlySerializedAs("stacksPerPerfect")]
+        [Tooltip("Burn stacks gained at each defensive Combo milestone.")]
+        [SerializeField, Min(1)] private int stacksPerMilestone = 1;
+        [Tooltip("Defensive Combo interval required for each Burn application.")]
+        [SerializeField, Min(1)] private int comboPerStack = 15;
         [SerializeField, Min(1)] private int maxStacksPerTurn = 5;
         [Tooltip("Burn damage per stack per tick = Base Power x this x performance.")]
         [SerializeField, Min(0f)] private float burnScalePerStack = 0.08f;
 
         public FlameGuardEffect() { }
-        public FlameGuardEffect(int turns, int stacksPerPerfect, int maxPerTurn, float burnScale)
+        public FlameGuardEffect(int turns, int stacksPerMilestone, int maxPerTurn, float burnScale)
         {
             enemyTurns = turns;
-            this.stacksPerPerfect = stacksPerPerfect;
+            this.stacksPerMilestone = stacksPerMilestone;
             maxStacksPerTurn = maxPerTurn;
             burnScalePerStack = burnScale;
         }
@@ -273,13 +278,14 @@ namespace RythmRPG.Combat
             string source = context.Cast?.AbilityInstanceId ?? context.Ability?.Id ?? "flame-guard";
             context.Build.Modifiers.Find<FlameGuardBuff>("flame-guard:" + source)?.Expire();
             context.Build.Modifiers.Add(new FlameGuardBuff(source, context.Ability != null ? context.Ability.DisplayName : null, enemyTurns,
-                stacksPerPerfect, Mathf.Max(1, context.ScaledPower(burnScalePerStack)), maxStacksPerTurn)
+                stacksPerMilestone, comboPerStack, Mathf.Max(1, context.ScaledPower(burnScalePerStack)), maxStacksPerTurn)
                 { Icon = context.Ability != null ? context.Ability.Icon : null });
             context.Build.Toast("FLAME GUARD", new Color(1f, 0.6f, 0.3f));
         }
 
         public override string Describe(AbilityDefinition ability) =>
-            $"{enemyTurns} enemy turns: each Perfect block adds {stacksPerPerfect} Burn (max {maxStacksPerTurn} per turn)";
+            $"{enemyTurns} enemy turns: every {comboPerStack} Combo during defense adds {stacksPerMilestone} Burn " +
+            $"(max {maxStacksPerTurn} per turn)";
     }
 
     /// <summary>Stone Wall: walls off the busiest lane; the wall absorbs a number of notes there.</summary>

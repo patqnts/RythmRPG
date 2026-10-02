@@ -15,7 +15,7 @@ MonoBehaviour:
   id: preset-pyre
   displayName: Pyre Warden (Fire + Water)
   playstyle: elemental
-  description: 'Objective: stack Burn, then cash it in. Ember Lash and Flame Guard (Perfect blocks) add Burn; Pyre Keeper raises the cap. Undertow on a Burning enemy makes Steam (burst from the Burn stacks); Combust waits in reserve to detonate Burn directly.
+  description: 'Objective: stack Burn, then cash it in. Ember Lash adds Burn from its own chart; Flame Guard adds Burn at every 15 Combo while defending. Pyre Keeper raises the cap. Undertow on a Burning enemy makes Steam (burst from the Burn stacks); Combust waits in reserve to detonate Burn directly.
 
     Trade-off: Burn is slow until it is detonated; Steam uses up both marks.'
   slots:
