@@ -48,13 +48,27 @@ public sealed class PlayerEnemyInteractor3D : MonoBehaviour
 
     private void OnEnable()
     {
-        combatController ??= FindAnyObjectByType<CombatController>();
-        if (combatController != null) combatController.BattleEnded += HandleBattleEnded;
+        GameSceneLoader.DestinationReady += HandleDestinationReady;
+        RefreshSceneCombatController();
     }
 
     private void OnDisable()
     {
+        GameSceneLoader.DestinationReady -= HandleDestinationReady;
         if (combatController != null) combatController.BattleEnded -= HandleBattleEnded;
+    }
+
+    private void HandleDestinationReady(SceneLoadRequest request)
+    {
+        encounterStarting = false;
+        RefreshSceneCombatController();
+    }
+
+    private void RefreshSceneCombatController()
+    {
+        if (combatController != null) combatController.BattleEnded -= HandleBattleEnded;
+        combatController = FindAnyObjectByType<CombatController>();
+        if (combatController != null) combatController.BattleEnded += HandleBattleEnded;
     }
 
     private void Update()

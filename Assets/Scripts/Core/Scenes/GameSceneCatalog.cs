@@ -13,6 +13,9 @@ namespace RythmRPG.Core
         public GameSceneDefinition menu;
         public GameSceneDefinition firstArea;
         public List<GameSceneDefinition> scenes = new();
+        [Header("Player character")]
+        [Tooltip("The character used when an area has no placed prefab instance. The placed character in Dungeon supplies the new run's starting position.")]
+        public GameObject characterPrefab;
         [Header("Loading screen")]
         [Min(0f)] public float fadeOutSeconds = .3f;
         [Min(0f)] public float fadeInSeconds = .3f;

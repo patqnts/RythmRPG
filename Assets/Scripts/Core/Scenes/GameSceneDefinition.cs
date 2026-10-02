@@ -9,6 +9,8 @@ namespace RythmRPG.Core
         public string id;
         public string displayName;
         public bool isMenu;
+        [Tooltip("Entering this scene through an exit or Load(id) begins a fresh run. ReloadCurrent still keeps the current run.")]
+        public bool startsNewRun;
 #if UNITY_EDITOR
         [Tooltip("Drag the Unity scene here. Its path is stored automatically for builds.")]
         public UnityEditor.SceneAsset scene;

@@ -18,6 +18,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 96a93f8d65a51e84c9091b074ee6572e, type: 2}
   - {fileID: 11400000, guid: 0f32d601e0d80ad40baeadc479c2f713, type: 2}
   - {fileID: 11400000, guid: 2af125acd8a502f4a851777744dab096, type: 2}
+  characterPrefab: {fileID: 1667654903364471415, guid: ddb4e91b418ffff42a2fe4a91f68e03d, type: 3}
   fadeOutSeconds: 0.3
   fadeInSeconds: 0.3
   minimumLoadingSeconds: 0.25

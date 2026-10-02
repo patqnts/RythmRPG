@@ -27,6 +27,14 @@ namespace RythmRPG.Combat
             GameSceneLoader.TransitionCompleted -= Completed; GameSceneLoader.TransitionCompleted += Completed;
             GameSceneLoader.TransitionFailed -= Failed; GameSceneLoader.TransitionFailed += Failed;
             SceneManager.sceneLoaded -= Loaded; SceneManager.sceneLoaded += Loaded;
+            var catalog = Resources.Load<GameSceneCatalog>(GameSceneCatalog.ResourcePath);
+            var initialArea = catalog != null ? catalog.ForPath(SceneManager.GetActiveScene().path) : null;
+            if (initialArea != null && !initialArea.isMenu)
+            {
+                // Direct Play in an area also starts from a clean run, regardless of Editor static-state settings.
+                RunBuild.Current = SceneRunSettings.CreateNewRun();
+                foreach (var player in Object.FindObjectsByType<PlayerCombatant>()) player.ResetToMaximum();
+            }
             ApplyScenePolicy();
         }
         private static string Guard(SceneLoadRequest request)
@@ -54,12 +62,21 @@ namespace RythmRPG.Combat
         }
         private static void Preparing(SceneLoadRequest request)
         {
-            if (request.Intent != SceneLoadIntent.NewGame) return;
-            resetBuild = true;
-            RunBuild.Current = SceneRunSettings.CreateNewRun();
+            if (request.Intent == SceneLoadIntent.NewGame)
+            {
+                resetBuild = true;
+                RunBuild.Current = SceneRunSettings.CreateNewRun();
+            }
+            else if (request.Destination.isMenu)
+            {
+                resetBuild = true;
+                RunBuild.Current = null;
+            }
         }
         private static void Ready(SceneLoadRequest request)
         {
+            if (request.Intent == SceneLoadIntent.NewGame)
+                GameSceneLoader.Instance?.Character?.GetComponent<PlayerCombatant>()?.ResetToMaximum();
             if (!haveResources) return;
             foreach (var player in Object.FindObjectsByType<PlayerCombatant>())
                 if (player.gameObject.scene == SceneManager.GetActiveScene())

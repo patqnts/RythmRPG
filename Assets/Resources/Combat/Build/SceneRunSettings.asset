@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd65528facef9be4a9bd35c102932e95, type: 3}
   m_Name: SceneRunSettings
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.SceneRunSettings
-  startingPreset: {fileID: 0}
+  startingPreset: {fileID: 11400000, guid: f467d1b05ca1b2d4face47faa03fe2e7, type: 2}
   randomizeRunSeed: 1
   seed: 12345

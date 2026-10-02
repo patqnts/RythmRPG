@@ -15,5 +15,6 @@ MonoBehaviour:
   id: dungeon
   displayName: Dungeon
   isMenu: 0
+  startsNewRun: 1
   scene: {fileID: 102900000, guid: a500bd7245627f246b176e27be308aee, type: 3}
   scenePath: Assets/Scenes/Dungeon.unity

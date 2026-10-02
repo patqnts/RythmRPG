@@ -20,7 +20,7 @@ namespace RythmRPG.Core
         public void Load()
         {
             var loader = GameSceneLoader.Ensure();
-            var request = new SceneLoadRequest(destination, entryPoint);
+            var request = loader.TravelRequest(destination, entryPoint);
             bool accepted = waitUntilAvailable ? loader.RequestWhenAvailable(request) : loader.Request(request);
             if (!accepted) onRejected.Invoke(loader.LastError);
         }

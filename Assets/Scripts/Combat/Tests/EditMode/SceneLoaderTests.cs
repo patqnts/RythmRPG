@@ -77,6 +77,16 @@ namespace RythmRPG.Combat.Tests
             Assert.That(loader.Problem(new SceneLoadRequest(dungeon, intent: SceneLoadIntent.Reload)), Is.Null);
         }
         [Test]
+        public void EnteringRunStart_RequestsFreshRun_WhileOrdinaryTravelKeepsIt()
+        {
+            var loader = Loader(out _, out _, out var dungeon);
+            dungeon.startsNewRun = true;
+            Assert.That(loader.TravelRequest(dungeon).Intent, Is.EqualTo(SceneLoadIntent.NewGame));
+            Assert.That(loader.TravelRequest(dungeon, "return").EntryPoint, Is.EqualTo("return"));
+            dungeon.startsNewRun = false;
+            Assert.That(loader.TravelRequest(dungeon).Intent, Is.EqualTo(SceneLoadIntent.Travel));
+        }
+        [Test]
         public void Loader_GuardRejectsBeforeInputOrScreenChanges()
         {
             var loader = Loader(out _, out _, out var dungeon);
@@ -156,6 +166,9 @@ namespace RythmRPG.Combat.Tests
             var second = SceneRunSettings.CreateNewRun(false);
             Assert.That(first.LoadoutProblem(), Is.Null);
             Assert.That(first, Is.Not.SameAs(second));
+            Assert.That(first.PresetId, Is.EqualTo("preset-blank"));
+            Assert.That(first.Abilities.Count, Is.EqualTo(2));
+            Assert.That(first.Passives, Is.Empty);
             Assert.That(first.Depth, Is.Zero);
             Assert.That(first.BonusMaxMana, Is.Zero);
             Assert.That(RunBuild.Current, Is.SameAs(before));
