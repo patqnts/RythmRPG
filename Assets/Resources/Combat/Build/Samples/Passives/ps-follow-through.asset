@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.PassiveDefinition
   id: ps-follow-through
   displayName: Follow-Through
-  icon: {fileID: 0}
+  icon: {fileID: 5994073934163384938, guid: 5f54e471d347d5649977b943f47bd6cc, type: 3}
   description: 
   category: 6
   maxLevel: 3

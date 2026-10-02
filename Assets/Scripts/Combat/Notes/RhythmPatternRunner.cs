@@ -88,6 +88,7 @@ namespace RythmRPG.Combat
         // Ping-Pong: the shot deflected during the current ResolveNote call, and shots kept alive between volleys.
         private PongNote deflectedThisResolve;
         private readonly HashSet<PongNote> rallyShots = new();
+        private readonly HashSet<string> unqualifiedRallies = new();
 
         public bool IsRunning => runCoroutine != null;
         /// <summary>Notes the running pattern expects (grows during Ping-Pong volleys).</summary>
@@ -121,11 +122,14 @@ namespace RythmRPG.Combat
         public event Action<Note> NoteSpawned;
         public event Action<RhythmJudgementResult> NoteResolved;
         public event Action<PatternRunResult> PatternCompleted;
+        public event Action<Note, RhythmJudgementResult> NoteCompleted;
+        public event Action<PatternRunMode, string> ChallengeCompleted;
 
         private void Awake()
         {
             judgementConfig ??= Resources.Load<JudgementConfig>("Combat/Judgement/JudgementConfig");
             ResolveProjectileHolder();
+            sequencePool.AttackFinished += HandleSequenceFinished;
         }
 
         public void ConfigurePresentation(CombatLanePresentation3D presentation)
@@ -263,6 +267,11 @@ namespace RythmRPG.Combat
             results.Add(result);
             NoteResolved?.Invoke(result);
             bool success = result.Judgement != HitJudgement.Miss;
+            if (note is PongNote && (result.Source != NoteResolutionSource.PlayerInput || result.Judgement < HitJudgement.Good))
+            {
+                int separator = note.RuntimeNoteId.LastIndexOf(':');
+                if (separator > 0) unqualifiedRallies.Add(note.RuntimeNoteId.Substring(0, separator));
+            }
             // A deflected Ping-Pong shot is not destroyed: the same object flies back to the enemy (see PongNote).
             deflectedThisResolve = success && note is PongNote pong && pong.IsSequenceShot ? pong : null;
             if (deflectedThisResolve != null) deflectedThisResolve.BeginDeflect();
@@ -289,6 +298,16 @@ namespace RythmRPG.Combat
                 // the pattern (remaining notes are cleared without creating misses).
                 DefenseNoteSettled?.Invoke(note, result, amount, actual);
             }
+            NoteCompleted?.Invoke(note, result);
+            if (result.Source == NoteResolutionSource.PlayerInput && result.Judgement >= HitJudgement.Good
+                && note.Data != null && (RhythmTimingUtility.IsHoldType(note.Data.NoteType) || note.Data.NoteType == RhythmNoteType.Mash))
+                ChallengeCompleted?.Invoke(currentContext.Mode, note.RuntimeNoteId);
+        }
+
+        private void HandleSequenceFinished(ISequenceAttack attack)
+        {
+            if (attack is PingPongAttack && attack.State == SequenceState.Completed && !unqualifiedRallies.Contains(attack.Id))
+                ChallengeCompleted?.Invoke(currentContext.Mode, "rally:" + attack.Id);
         }
 
         public void ResolveCollateral(IEnumerable<Note> notes)
@@ -340,6 +359,7 @@ namespace RythmRPG.Combat
             results.Clear();
             currentChart = chart;
             sequencePool.CancelAll(SequenceCancelReason.Superseded);
+            unqualifiedRallies.Clear();
             expectedNoteCount = chart?.Notes.Count(note => note != null) ?? 0;
             PatternStarted?.Invoke(chart, currentContext);
             if (chart == null)

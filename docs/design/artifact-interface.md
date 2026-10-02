@@ -4,7 +4,11 @@ The Tab inventory and post-battle rewards are projections from the slime's magic
 
 ## Inventory
 
-**Resonance Archive** emphasizes the four equipped abilities as large tiles in a 2-by-2 grid, with prominent icons and lane keys. Reserve abilities use a smaller list beside the grid. Passives use compact square frames and icons in a wrapping grid, with names, levels, descriptions and inactive requirements confined to the shared details pane. The selected entry's details appear on the right in a scrollable pane. Arrow keys and gamepad navigation follow the visible layout. Click or confirm to pick an ability, then choose a slot to swap; X unequips. The footer changes to guide placement while carrying an ability. Tab or Close dismisses the panel. Combat keeps the panel in inspection mode.
+**Resonance Archive** emphasizes the four equipped abilities as large tiles in a 2-by-2 grid, with prominent icons and lane keys. Reserve abilities use a smaller list beside the grid. Passives use compact square frames and icons in a wrapping grid, with names, levels, descriptions and inactive requirements confined to the shared details pane. The selected entry's details appear on the right in a scrollable pane. WASD and arrow keys follow the visible layout. Click or confirm to pick an ability, then choose a slot to swap; X unequips. The footer changes to guide placement while carrying an ability. Tab or Close dismisses the panel.
+
+During combat the archive opens only while the player is choosing an ability and stays inspection-only. While it is open, WASD and arrow keys belong to the archive, so overlapping lane bindings cannot select or play an ability underneath it. Closing the archive immediately returns those keys to combat.
+
+Gameplay terms in the details pane have category colours and are inspectable. Click a coloured term, or navigate to the right side with D / Right Arrow, to replace the details with its plain-language definition. W/S or Up/Down cycles through the terms in that entry; A, Left Arrow or Backspace returns to the ability or passive details. The shared glossary covers rhythm judgements and phrases, mana/cooldowns, counters, protection, delivery tags, elements, marks, reactions and board effects.
 
 The projection scales to fit smaller canvases. Closing during the opening animation dissolves from the current reveal position.
 

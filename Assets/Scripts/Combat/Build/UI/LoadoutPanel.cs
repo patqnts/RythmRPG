@@ -81,6 +81,7 @@ namespace RythmRPG.Combat
         [SerializeField] private RectTransform passiveContent;
         [SerializeField] private TMP_Text detailTitle;
         [SerializeField] private TMP_Text detailBody;
+        [SerializeField] private GameplayTermText detailTermLinks;
         [SerializeField] private TMP_Text message;
         [SerializeField] private TMP_Text prompt;
         [SerializeField] private AudioSource audioSource;
@@ -103,6 +104,9 @@ namespace RythmRPG.Combat
         private Vector2Int stickDirection;
         private float stickRepeatAt;
         private float refreshAt;
+        private List<GameplayTerm> detailTerms = new();
+        private bool inspectingTerm;
+        private int inspectedTermIndex;
 
         private BuildHudStyle Style
         {
@@ -154,6 +158,7 @@ namespace RythmRPG.Combat
         private void OnDestroy()
         {
             GameInput.UnblockGameplay(this);
+            GameInput.UnblockLaneInput(this);
             if (Instance == this) Instance = null;
         }
 
@@ -193,7 +198,8 @@ namespace RythmRPG.Combat
             messageUntil = 0f;
             if (message != null) message.text = string.Empty;
             GamePause.EnsureEventSystem();
-            if (editable) GameInput.BlockGameplay(this);
+            GameInput.BlockGameplay(this);
+            GameInput.BlockLaneInput(this);
             ApplyStaticTexts();
             artifact = ArtifactInterfaceView.Ensure(gameObject);
             artifact.SetVisibility(0f);
@@ -212,6 +218,7 @@ namespace RythmRPG.Combat
             picked = null;
             if (group != null) group.blocksRaycasts = false;
             GameInput.UnblockGameplay(this);
+            GameInput.UnblockLaneInput(this);
         }
 
         public void Toggle()
@@ -226,6 +233,7 @@ namespace RythmRPG.Combat
             closing = false;
             picked = null;
             GameInput.UnblockGameplay(this);
+            GameInput.UnblockLaneInput(this);
             if (group != null)
             {
                 group.alpha = 0f;
@@ -302,12 +310,13 @@ namespace RythmRPG.Combat
             }
             BuildHudStyle s = Style;
             Gamepad pad = Gamepad.current;
-            // In battle the d-pad and face buttons are lane keys: only keyboard arrows and the right stick navigate.
+            // While this modal panel is open, it owns keyboard navigation and the lane router is blocked.
+            // In battle the gamepad d-pad / face buttons remain reserved; the right stick navigates instead.
             bool padNav = pad != null && !inBattle;
-            bool up = LegacyKeys.WasPressed(KeyCode.UpArrow) || (!inBattle && LegacyKeys.WasPressed(KeyCode.W)) || (padNav && pad.dpad.up.wasPressedThisFrame);
-            bool down = LegacyKeys.WasPressed(KeyCode.DownArrow) || (!inBattle && LegacyKeys.WasPressed(KeyCode.S)) || (padNav && pad.dpad.down.wasPressedThisFrame);
-            bool left = LegacyKeys.WasPressed(KeyCode.LeftArrow) || (!inBattle && LegacyKeys.WasPressed(KeyCode.A)) || (padNav && pad.dpad.left.wasPressedThisFrame);
-            bool right = LegacyKeys.WasPressed(KeyCode.RightArrow) || (!inBattle && LegacyKeys.WasPressed(KeyCode.D)) || (padNav && pad.dpad.right.wasPressedThisFrame);
+            bool up = LegacyKeys.WasPressed(KeyCode.UpArrow) || LegacyKeys.WasPressed(KeyCode.W) || (padNav && pad.dpad.up.wasPressedThisFrame);
+            bool down = LegacyKeys.WasPressed(KeyCode.DownArrow) || LegacyKeys.WasPressed(KeyCode.S) || (padNav && pad.dpad.down.wasPressedThisFrame);
+            bool left = LegacyKeys.WasPressed(KeyCode.LeftArrow) || LegacyKeys.WasPressed(KeyCode.A) || (padNav && pad.dpad.left.wasPressedThisFrame);
+            bool right = LegacyKeys.WasPressed(KeyCode.RightArrow) || LegacyKeys.WasPressed(KeyCode.D) || (padNav && pad.dpad.right.wasPressedThisFrame);
             Vector2Int stick = StickStep(pad, now);
             up |= stick.y > 0;
             down |= stick.y < 0;
@@ -316,7 +325,11 @@ namespace RythmRPG.Combat
 
             if (CombatResultStyle.AnyKeyDown(s.CloseKeys) || (padNav && pad.buttonEast.wasPressedThisFrame))
             {
-                if (picked != null)
+                if (inspectingTerm)
+                {
+                    ExitTermInspection();
+                }
+                else if (picked != null)
                 {
                     picked = null;
                     ApplySelection();
@@ -324,10 +337,24 @@ namespace RythmRPG.Combat
                 else Close();
                 return;
             }
+
+            if (inspectingTerm)
+            {
+                if (up) CycleTerm(-1);
+                else if (down || right) CycleTerm(1);
+                else if (left) ExitTermInspection();
+                return;
+            }
+
             if (up) Navigate(Vector2.up);
             if (down) Navigate(Vector2.down);
             if (left) Navigate(Vector2.left);
-            if (right) Navigate(Vector2.right);
+            if (right)
+            {
+                bool atRightEdge = Current != null && (Current.Column == 1 || ColumnIndices(1).Count == 0);
+                if (atRightEdge && detailTerms.Count > 0) EnterTermInspection();
+                else Navigate(Vector2.right);
+            }
             if (!editable) return;
             if (CombatResultStyle.AnyKeyDown(s.ConfirmKeys) || (pad != null && pad.buttonSouth.wasPressedThisFrame)) Confirm();
             else if (CombatResultStyle.AnyKeyDown(s.ReserveKeys) || (pad != null && pad.buttonWest.wasPressedThisFrame)) SendToReserve();
@@ -669,8 +696,11 @@ namespace RythmRPG.Combat
                 preserveAspect = s.PanelTile.preserveAspect, glyphSize = s.PanelTile.glyphSize
             } : s.PanelTile;
             float tileSize = passiveIcon ? height - 24f : Mathf.Min(look.size.y, height - 10f);
-            BuildIconTile tile = BuildIconTile.Create("Icon", row, look, ArtifactInterfaceStyle.Load().bodyFont ?? s.FontAsset,
-                Color.clear, s.RowDetailSize, s.RowDetailSize);
+            ArtifactInterfaceStyle artifactStyle = ArtifactInterfaceStyle.Load();
+            TMP_FontAsset tileFont = artifactStyle.bodyFont ?? s.FontAsset;
+            int tileTextSize = Mathf.RoundToInt(artifactStyle.BodyFontSize(s.RowDetailSize));
+            BuildIconTile tile = BuildIconTile.Create("Icon", row, look, tileFont,
+                Color.clear, tileTextSize, tileTextSize);
             tile.Rect.sizeDelta = new Vector2(tileSize, tileSize);
             tile.Rect.anchorMin = tile.Rect.anchorMax = tile.Rect.pivot = new Vector2(0f, 0.5f);
             tile.Rect.anchoredPosition = new Vector2(10f, 0f);
@@ -782,7 +812,12 @@ namespace RythmRPG.Combat
             if (passiveHeader != null) passiveHeader.text = build != null ? $"Passives ({build.Passives.Count})" : "Passives";
             string closeKey = GameInput.DisplayString(GameInput.Loadout, GameInput.FindBindingIndex(GameInput.Loadout, GameInput.KeyboardGroup));
             closeKey = string.IsNullOrEmpty(closeKey) ? "TAB" : closeKey.ToUpperInvariant();
-            if (prompt != null) prompt.text = editable ? s.EditPrompt(closeKey) : s.ViewPrompt(closeKey);
+            if (prompt != null)
+            {
+                if (inspectingTerm) prompt.text = "[W/S or UP/DOWN] Next term    [A or LEFT/BACKSPACE] Return";
+                else if (editable) prompt.text = s.EditPrompt(closeKey) + "    [WASD/ARROWS] Navigate / Inspect";
+                else prompt.text = "[WASD/ARROWS] Navigate    [D/RIGHT] Inspect terms    [" + closeKey + "] Close";
+            }
         }
 
         private void RefreshTexts()
@@ -884,8 +919,12 @@ namespace RythmRPG.Combat
             {
                 detailTitle.text = string.Empty;
                 detailBody.text = string.Empty;
+                detailTerms.Clear();
+                inspectingTerm = false;
                 return;
             }
+            bool changedItem = inspectedItem != item;
+            if (changedItem) inspectingTerm = false;
             var lines = new List<string>();
             if (item.Kind == ItemKind.Passive)
             {
@@ -923,11 +962,76 @@ namespace RythmRPG.Combat
                         if (upgrade != null) lines.Add("+ " + upgrade.DisplayName + ": " + upgrade.Summary());
                 foreach (string change in quote.Changes) lines.Add("> " + change);
             }
-            detailBody.text = RewardCardView.Plain(string.Join("\n", lines));
+            string plain = RewardCardView.Plain(string.Join("\n", lines));
+            detailBody.text = GameplayGlossary.Format(plain, out detailTerms);
             detailBody.color = s.TextColor;
-            if (detailScroll != null && inspectedItem != item)
+            if (inspectingTerm && detailTerms.Count > 0)
+            {
+                inspectedTermIndex = Mathf.Clamp(inspectedTermIndex, 0, detailTerms.Count - 1);
+                ShowTerm();
+                return;
+            }
+            if (detailScroll != null && changedItem)
             {
                 inspectedItem = item;
+                detailBody.ForceMeshUpdate();
+                LayoutRebuilder.ForceRebuildLayoutImmediate(detailBody.rectTransform);
+                Canvas.ForceUpdateCanvases();
+                detailScroll.StopMovement();
+                detailScroll.content.anchoredPosition = new Vector2(detailScroll.content.anchoredPosition.x, 0f);
+            }
+            else inspectedItem = item;
+        }
+
+        private void EnterTermInspection()
+        {
+            if (detailTerms.Count == 0) return;
+            inspectingTerm = true;
+            inspectedTermIndex = 0;
+            ShowTerm();
+            ApplyStaticTexts();
+            Play(Style.MoveSound);
+        }
+
+        private void InspectTerm(string id)
+        {
+            int index = detailTerms.FindIndex(term => string.Equals(term.Id, id, System.StringComparison.OrdinalIgnoreCase));
+            if (index < 0) return;
+            inspectingTerm = true;
+            inspectedTermIndex = index;
+            ShowTerm();
+            ApplyStaticTexts();
+            Play(Style.MoveSound);
+        }
+
+        private void CycleTerm(int step)
+        {
+            if (detailTerms.Count == 0) { ExitTermInspection(); return; }
+            inspectedTermIndex = ((inspectedTermIndex + step) % detailTerms.Count + detailTerms.Count) % detailTerms.Count;
+            ShowTerm();
+            Play(Style.MoveSound);
+        }
+
+        private void ExitTermInspection()
+        {
+            if (!inspectingTerm) return;
+            inspectingTerm = false;
+            UpdateDetails();
+            ApplyStaticTexts();
+            Play(Style.MoveSound);
+        }
+
+        private void ShowTerm()
+        {
+            if (detailTitle == null || detailBody == null || detailTerms.Count == 0) return;
+            GameplayTerm term = detailTerms[Mathf.Clamp(inspectedTermIndex, 0, detailTerms.Count - 1)];
+            detailTitle.text = $"<color=#{term.Color}>{term.Label}</color>";
+            detailTitle.color = Color.white;
+            detailBody.text = RewardCardView.Plain(term.Definition)
+                + $"\n\n<color=#{term.Color}>TERM {inspectedTermIndex + 1} / {detailTerms.Count}</color>";
+            detailBody.color = Style.TextColor;
+            if (detailScroll != null)
+            {
                 detailBody.ForceMeshUpdate();
                 LayoutRebuilder.ForceRebuildLayoutImmediate(detailBody.rectTransform);
                 Canvas.ForceUpdateCanvases();
@@ -1096,6 +1200,7 @@ namespace RythmRPG.Combat
             bodyRect.sizeDelta = Vector2.zero;
             detailBodyText.textWrappingMode = TextWrappingModes.Normal;
             detailBodyText.overflowMode = TextOverflowModes.Overflow;
+            detailBodyText.raycastTarget = true; // coloured glossary links are clickable
             detailBodyText.lineSpacing = 8f;
             var fitter = detailBodyText.gameObject.AddComponent<ContentSizeFitter>();
             fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
@@ -1124,6 +1229,8 @@ namespace RythmRPG.Combat
             view.passiveContent = passiveRows;
             view.detailTitle = detailTitleText;
             view.detailBody = detailBodyText;
+            view.detailTermLinks = detailBodyText.gameObject.AddComponent<GameplayTermText>();
+            view.detailTermLinks.TermClicked += view.InspectTerm;
             view.detailScroll = inspectionScroll;
             view.message = messageText;
             view.prompt = promptText;
@@ -1228,8 +1335,10 @@ namespace RythmRPG.Combat
         private static TMP_Text CreateText(string name, Transform parent, TMP_FontAsset font, int size, Color color, Color outline,
             TextAlignmentOptions alignment)
         {
-            TMP_FontAsset bodyFont = ArtifactInterfaceStyle.Load().bodyFont;
-            TMP_Text text = CombatText.CreateUGUI(name, parent, bodyFont != null ? bodyFont : font, size, color, alignment, Color.clear);
+            ArtifactInterfaceStyle artifactStyle = ArtifactInterfaceStyle.Load();
+            TMP_FontAsset bodyFont = artifactStyle.bodyFont;
+            float resolvedSize = bodyFont != null ? artifactStyle.BodyFontSize(size) : size;
+            TMP_Text text = CombatText.CreateUGUI(name, parent, bodyFont != null ? bodyFont : font, resolvedSize, color, alignment, Color.clear);
             text.text = string.Empty;
             return text;
         }

@@ -239,6 +239,7 @@ namespace RythmRPG.Combat
 
             // Earth: heavy hits, walls, control.
             AbilityDefinition quakeSlam = Add(new AbilityDefinition.Builder("sample-quake-slam", "Quake Slam", basic)
+                .Chart(Resources.Load<RythmRPG.Rhythm.RhythmChart>("Combat/Charts/QuakeSlamHold"))
                 .Type(AbilityType.SpecialAttack).Tags(AbilityRole.Damage, AbilityDelivery.Melee).Element(ElementType.Earth)
                 .Cost(20, 2).Power(P(2.4f))
                 .Describe("Heavy Earth hit (give it a chart built on hold notes). Cracks the enemy: +20% melee damage taken for 2 turns.")
@@ -268,6 +269,28 @@ namespace RythmRPG.Combat
                 .Cost(30, 2).Power(P(2.2f))
                 .Describe("Six small Wind hits. Each one adds a Burn / Static stack and extends the enemy's marks.")
                 .Effect(new MultiHitDamageEffect(1f, 6)).Build());
+
+            // ---------------- Dedicated upgrades ----------------
+            AbilityDefinition backbeat = Add(new AbilityDefinition.Builder("sample-backbeat", "Backbeat", basic)
+                .Type(AbilityType.BasicAttack).Tags(AbilityRole.Damage, AbilityDelivery.Melee).Element(ElementType.Wind)
+                .Cost(8).Power(P(.8f)).Chart(Resources.Load<RythmRPG.Rhythm.RhythmChart>("Combat/Charts/Backbeat"))
+                .Describe("Light Wind attack. Play its closing phrase at 70% to gain 1 counter, or 85% for 2. Counters are gained after this attack.")
+                .Effect(new DealDamageEffect(1f)).Effect(new BackbeatEffect()).Build());
+            AbilityDefinition breakwater = Add(new AbilityDefinition.Builder("sample-breakwater", "Breakwater", basic)
+                .Type(AbilityType.SpecialAttack).Tags(AbilityRole.Damage | AbilityRole.Defense, AbilityDelivery.Melee).Element(ElementType.Water)
+                .Cost(12).Power(P(1.2f)).Chart(Resources.Load<RythmRPG.Rhythm.RhythmChart>("Combat/Charts/Breakwater"))
+                .Describe("Choose Guard to strike and gain shield, or Break to spend one third of your shield (max 30) for extra Water damage. Break does not add shield.")
+                .Effect(new DealDamageEffect(1f)).Effect(new BreakwaterEffect()).Build());
+            AbilityDefinition cauterize = Add(new AbilityDefinition.Builder("sample-cauterize", "Cauterize", heal)
+                .Type(AbilityType.Healing).Tags(AbilityRole.Healing, AbilityDelivery.Spell).Element(ElementType.Fire)
+                .Cost(18, 2).Power(75).Chart(Resources.Load<RythmRPG.Rhythm.RhythmChart>("Combat/Charts/Cauterize"))
+                .Describe("Heal with Fire. Optionally consume one enemy Burn stack for +30 healing before rhythm scaling. Works without Burn.")
+                .Effect(new CauterizeEffect()).Build());
+            AbilityDefinition reprise = Add(new AbilityDefinition.Builder("sample-reprise", "Reprise", guard)
+                .Type(AbilityType.Defensive).Tags(AbilityRole.Buff | AbilityRole.Defense, AbilityDelivery.Technique)
+                .Cost(12, 3).Power(0).Chart(Resources.Load<RythmRPG.Rhythm.RhythmChart>("Combat/Charts/Reprise"))
+                .Describe("Choose a live player shield, ward or buff. At 70% chart accuracy, keep it one more turn. Each application can be reprised once; no valid target means no payment.")
+                .Effect(new RepriseEffect()).Build());
 
             // ---------------- Dedicated upgrades ----------------
             AbilityUpgradeDefinition AddUpgrade(AbilityUpgradeDefinition upgrade)
@@ -410,6 +433,22 @@ namespace RythmRPG.Combat
                 .Effect(new UnyieldingPassive()).Style(StyleTank, StyleGlass).Build());
 
             // Fallback (always eligible, levels up to 5)
+            PassiveDefinition improvisation = AddPassive(new PassiveDefinition.Builder("ps-improvisation", "Improvisation", PassiveCategory.Conversion, 1)
+                .Effect(new ImprovisationPassive()).Style(StyleParry, StyleTank).Build());
+            PassiveDefinition sustainedGuard = AddPassive(new PassiveDefinition.Builder("ps-sustained-guard", "Sustained Guard", PassiveCategory.RhythmConditioned, 1)
+                .Effect(new SustainedGuardPassive()).Style(StyleTank, StyleParry).Build());
+            PassiveDefinition pressureCast = AddPassive(new PassiveDefinition.Builder("ps-pressure-cast", "Pressure Cast", PassiveCategory.Conversion, 1)
+                .Effect(new PressureCastPassive()).Style(StyleTank, StyleGlass).Build());
+            PassiveDefinition stoke = AddPassive(new PassiveDefinition.Builder("ps-stoke", "Stoke", PassiveCategory.RhythmConditioned, 1)
+                .Effect(new StokePassive()).Style(StyleElemental).Build());
+            PassiveDefinition reactionShelter = AddPassive(new PassiveDefinition.Builder("ps-reaction-shelter", "Reaction Shelter", PassiveCategory.Conversion, 1)
+                .Effect(new ReactionShelterPassive()).Style(StyleElemental, StyleTank).Build());
+            PassiveDefinition reservoir = AddPassive(new PassiveDefinition.Builder("ps-reservoir", "Reservoir", PassiveCategory.Conversion, 1)
+                .Effect(new ReservoirPassive()).Style(StyleTank).Build());
+            PassiveDefinition closeout = AddPassive(new PassiveDefinition.Builder("ps-closeout", "Closeout", PassiveCategory.RhythmConditioned, 1)
+                .Effect(new CloseoutPassive()).Style(StyleAdaptable, StyleGlass).Build());
+
+            // Fallback (always eligible, levels up to 5)
             AddPassive(new PassiveDefinition.Builder("ps-vitality", "Vitality", PassiveCategory.Survivability, 5)
                 .Fallback().Effect(new MaxHealthPassive(0.05f, 0.05f)).Build());
 
@@ -424,7 +463,7 @@ namespace RythmRPG.Combat
             AddPreset(new BuildPreset.Builder("preset-parry", "Mirror Guard (Parry / Deflect)", StyleParry)
                 .Describe("Objective: turn accurate defense into offense. Perfect defense stores counter charges (Counter Preparation) and reflects damage (Deflection). " +
                           "Mirror Stance spends a turn for strong reflection + a charge; Riposte cashes charges in (+30% each). Strike is the free fallback, Mend the safety valve.\n" +
-                          "Trade-off: needs Perfect defense; charges fade after 2 idle player turns.")
+                          "Trade-off: needs accurate defense phrases or Perfects; charges fade after 2 idle player turns.")
                 .Slot(strike).Slot(riposte).Slot(mirror).Slot(mend)
                 .Passive(counterPrep).Passive(deflection).Build());
 
@@ -456,7 +495,7 @@ namespace RythmRPG.Combat
             // Hybrid example: parry + glass. Glass Heart's HP cost stays; counters replace Focus as the burst setup.
             AddPreset(new BuildPreset.Builder("preset-hybrid", "Riposte Mage (Parry + Glass hybrid)", StyleParry)
                 .Describe("Hybrid: counter charges feed a melee payoff while Fire Bolt carries spell damage. Glass Heart's -35% HP still applies " +
-                          "and counters only come from Perfect defense, so neither trade-off disappears.")
+                          "and counter income still needs accurate defense, so neither trade-off disappears.")
                 .Slot(strike).Slot(riposte, honedRiposte).Slot(fireBolt, quickcast).Slot(siphon)
                 .Passive(counterPrep).Passive(glassHeart).Build());
 
@@ -492,6 +531,28 @@ namespace RythmRPG.Combat
                 .Passive(aftershock).Passive(tailwind).Passive(attunement).Passive(bedrock).Build());
 
             // Keep unused locals referenced for readers: every ability above is in the reward pool.
+            AddPreset(new BuildPreset.Builder("preset-improvising-duelist", "Improvising Duelist", StyleParry)
+                .Describe("Defense builds counters. Spend them on Riposte for damage or Rally for stronger healing and the next-attack buff. Mirror Stance supplies reflection and charges; Siphon funds the four-slot toolkit.")
+                .Slot(siphon).Slot(riposte).Slot(mirror).Slot(rally)
+                .Passive(counterPrep).Passive(improvisation).Passive(deflection).Passive(followThrough).Build());
+            AddPreset(new BuildPreset.Builder("preset-armored-spellcaster", "Armored Spellcaster", StyleTank)
+                .Describe("Shield Bash and Rally build protection. Choose to keep shield or spend some on Fire Bolt through Pressure Cast. Second Wind converts overheal; Closeout and Reservoir reward rhythm and spare mana.")
+                .Slot(siphon).Slot(shieldBash).Slot(fireBolt).Slot(rally)
+                .Passive(secondWind).Passive(pressureCast).Passive(closeout).Passive(reservoir).Build());
+            AddPreset(new BuildPreset.Builder("preset-living-furnace", "Living Furnace", StyleElemental)
+                .Describe("Flame Guard builds Burn while defending; Stoke rewards a successful defense phrase. Keep Burn for stronger Combust or consume one stack with Cauterize to survive. Strike provides a free attack.")
+                .Slot(strike).Slot(flameGuard).Slot(cauterize).Slot(combust)
+                .Passive(stoke).Passive(pyreKeeper).Passive(content.Passives["ps-kindling"]).Passive(secondWind).Build());
+            AddPreset(new BuildPreset.Builder("preset-breakwater-knight", "Breakwater Knight", StyleTank)
+                .Describe("Hold-note charts build shield through Sustained Guard. Breakwater chooses protection or shield spending. Quake Slam uses remaining shield through Bedrock and sets up Water/Earth reactions; Reprise keeps a key protection alive.")
+                .Slot(siphon).Slot(breakwater).Slot(quakeSlam).Slot(reprise)
+                .Passive(bedrock).Passive(sustainedGuard).Passive(aftershock).Passive(reactionShelter).Build());
+            AddPreset(new BuildPreset.Builder("preset-storm-conductor", "Storm Conductor", StyleElemental)
+                .Describe("Backbeat rewards its closing phrase with counters and Wind feeds existing marks. Undertow and Chain Spark create Water/Lightning reactions. Counter Preparation, Capacitor and Catalyst feed damage; Reaction Shelter adds protection.")
+                .Slot(siphon).Slot(backbeat).Slot(chainSpark).Slot(undertow)
+                .Passive(counterPrep).Passive(capacitor).Passive(catalyst).Passive(reactionShelter).Build());
+
+            BuildIconCatalog.Apply(content);
             _ = thunderClap;
             return content;
         }

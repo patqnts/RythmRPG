@@ -62,7 +62,7 @@ namespace RythmRPG.Combat
         }
 
         public int DamageEnemy(int amount, ElementType element, string sourceId, string rootId, CombatEventKind kind,
-            bool applyAffinity, bool secondary = false, string label = null, CastSnapshot cast = null)
+            bool applyAffinity, bool secondary = false, string label = null, CastSnapshot cast = null, bool allowReactions = true)
         {
             EnemyCombatant enemy = runtime.Enemy;
             if (amount <= 0 || enemy == null || runtime.CombatOver) return 0;
@@ -107,7 +107,7 @@ namespace RythmRPG.Combat
                     break;
             }
             // Elemental hits feed marks and reactions. Status ticks and reaction damage never do (no chains).
-            if (kind is CombatEventKind.AbilityDamage or CombatEventKind.PassiveDamage or CombatEventKind.ZapDamage)
+            if (allowReactions && kind is (CombatEventKind.AbilityDamage or CombatEventKind.PassiveDamage or CombatEventKind.ZapDamage))
                 runtime.Marks.OnElementalHit(element, actual, rootId);
             return actual;
         }
@@ -152,6 +152,18 @@ namespace RythmRPG.Combat
             if (secondary) runtime.Stats.Contribute((label ?? sourceId) + " (MP)", gained);
             if (gained > 0) runtime.ShowAtPlayer("+" + gained + " MP", ManaColor);
             return gained;
+        }
+
+        public int SpendShield(int amount, string rootId)
+        {
+            if (runtime.CombatOver) return 0;
+            ShieldBuff shield = runtime.Modifiers?.Find<ShieldBuff>(ShieldBuff.Key);
+            if (shield == null) return 0;
+            int spent = shield.Spend(amount);
+            runtime.Modifiers.NotifyChanged();
+            runtime.Record(new CombatEvent { Kind = CombatEventKind.ShieldSpent, SourceId = "shield-spend", RootCauseId = rootId, CastId = rootId, Actual = spent });
+            if (spent > 0) runtime.ShowAtPlayer("SHIELD -" + spent, ShieldColor);
+            return spent;
         }
 
         /// <summary>Adds shield capacity (all sources share one capped shield). Returns the capacity actually added.</summary>

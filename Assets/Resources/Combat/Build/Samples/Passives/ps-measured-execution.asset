@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.PassiveDefinition
   id: ps-measured-execution
   displayName: Measured Execution
-  icon: {fileID: 0}
+  icon: {fileID: -4080055949900654140, guid: bcbc85aaa2e9d4846849b390f47e8a5c, type: 3}
   description: 
   category: 5
   maxLevel: 3

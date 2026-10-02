@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.PassiveDefinition
   id: ps-capacitor
   displayName: Capacitor
-  icon: {fileID: 0}
+  icon: {fileID: -3317177941606734940, guid: 09aef250e0930404e9a7d56efa6f0d14, type: 3}
   description: Static holds more charge and discharges harder.
   category: 3
   maxLevel: 3

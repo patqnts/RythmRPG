@@ -46,6 +46,13 @@ namespace RythmRPG.Combat
         public RhythmPerformanceResult Performance;
         /// <summary>The chart had opportunities and was played to the end (not cancelled): execution-based bonuses may apply.</summary>
         public bool ExecutionEligible;
+        public CastChoice Choice;
+        public PhraseOutcome ClosingPhrase;
+        public int SmallShieldBeforeCast;
+        public int ShieldSpent;
+        public int ShieldForBedrock;
+        public bool BurnConsumed;
+        public float SupportStrengthMultiplier = 1f;
         public bool Frozen { get; private set; }
         /// <summary>Buffs reserved at commitment (consumed by this cast, e.g. a pending next-attack bonus).</summary>
         public readonly List<ICombatModifierRuntime> Reserved = new();

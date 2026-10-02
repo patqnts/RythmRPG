@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dcaf364c3488584aa4b23882270f869, type: 3}
+  m_Name: preset-improvising-duelist
+  m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.BuildPreset
+  id: preset-improvising-duelist
+  displayName: Improvising Duelist
+  playstyle: parry
+  description: Defense builds counters. Spend them on Riposte for damage or Rally for stronger healing and the next-attack buff. Mirror Stance supplies reflection and charges; Siphon funds the four-slot toolkit.
+  slots:
+  - ability: {fileID: 11400000, guid: d2bf8ee080793a14687f76cc6fc5be09, type: 2}
+    upgrades: []
+  - ability: {fileID: 11400000, guid: 3e20ee05d9458e44e8c1e9ff870274e8, type: 2}
+    upgrades: []
+  - ability: {fileID: 11400000, guid: f610a72877f364b4b9fdd82d6d9e9bbc, type: 2}
+    upgrades: []
+  - ability: {fileID: 11400000, guid: 8e59e2adbd505b1418bfb53d07d36082, type: 2}
+    upgrades: []
+  reserve: []
+  passives:
+  - passive: {fileID: 11400000, guid: 2f331df8ae8d646479d478408edc0e47, type: 2}
+    level: 1
+  - passive: {fileID: 11400000, guid: e23193d6485fa6b45b55cee4678cf117, type: 2}
+    level: 1
+  - passive: {fileID: 11400000, guid: f7187bea2b3652f41962661de08a9aef, type: 2}
+    level: 1
+  - passive: {fileID: 11400000, guid: 8f7db45957ef1c34b9adbfcf3a36b946, type: 2}
+    level: 1

@@ -62,6 +62,8 @@ namespace RythmRPG.Core
 
         // Menus that take over exploration input (the loadout panel...). Movement and Interact read as idle while any is set.
         private static readonly HashSet<object> gameplayBlockers = new();
+        // A modal combat inspection can also borrow WASD / arrows without those presses choosing or playing a lane.
+        private static readonly HashSet<object> laneInputBlockers = new();
 
         /// <summary>True while the player is choosing a new key for a binding.</summary>
         public static bool IsRebinding => activeRebind != null;
@@ -83,6 +85,8 @@ namespace RythmRPG.Core
 
         /// <summary>True while a menu (e.g. the loadout panel) holds exploration input: Move / Interact read as idle.</summary>
         public static bool IsGameplayBlocked => gameplayBlockers.Count > 0;
+        /// <summary>True while a modal interface owns keys that may also be bound to combat lanes.</summary>
+        public static bool IsLaneInputBlocked => laneInputBlockers.Count > 0;
 
         /// <summary>Stops exploration input (Move / Interact) until <see cref="UnblockGameplay"/> with the same owner.</summary>
         public static void BlockGameplay(object owner)
@@ -94,7 +98,19 @@ namespace RythmRPG.Core
         {
             if (owner != null) gameplayBlockers.Remove(owner);
         }
-        public static bool LanePressed(int laneId) => !GamePause.IsPaused && !GameSceneLoader.IsLoading && (Lane(laneId)?.WasPressedThisFrame() ?? false);
+
+        public static void BlockLaneInput(object owner)
+        {
+            if (owner != null) laneInputBlockers.Add(owner);
+        }
+
+        public static void UnblockLaneInput(object owner)
+        {
+            if (owner != null) laneInputBlockers.Remove(owner);
+        }
+
+        public static bool LanePressed(int laneId) => !GamePause.IsPaused && !GameSceneLoader.IsLoading && !IsLaneInputBlocked
+            && (Lane(laneId)?.WasPressedThisFrame() ?? false);
 
         /// <summary>
         /// The lane key (1-based slot, see <see cref="LaneCount"/>) that gameplay lane <paramref name="laneId"/> uses when
@@ -146,6 +162,7 @@ namespace RythmRPG.Core
             lanes = null;
             move = interact = pause = loadout = null;
             gameplayBlockers.Clear();
+            laneInputBlockers.Clear();
             rows.Clear();
             LastSwappedRow = null;
             BindingsChanged = null;

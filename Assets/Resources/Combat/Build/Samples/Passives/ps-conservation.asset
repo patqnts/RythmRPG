@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.PassiveDefinition
   id: ps-conservation
   displayName: Conservation
-  icon: {fileID: 0}
+  icon: {fileID: -1278968431358119043, guid: f9d7488d64be390459e1977ba75d921f, type: 3}
   description: 
   category: 2
   maxLevel: 3

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.PassiveDefinition
   id: ps-fortitude
   displayName: Fortitude
-  icon: {fileID: 0}
+  icon: {fileID: 4123874707889391335, guid: b65f60c566583ab4fb4f38becf9e1c70, type: 3}
   description: 
   category: 8
   maxLevel: 3

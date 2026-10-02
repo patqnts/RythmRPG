@@ -20,7 +20,7 @@ namespace RythmRPG.Combat
     {
         private enum Tab { Build, Combat, Rewards, Enemy }
 
-        [SerializeField] private bool allowInReleaseBuilds;
+        [SerializeField] private bool allowInReleaseBuilds = true;
         [SerializeField] private KeyCode toggleKey = KeyCode.F11;
         [SerializeField] private bool openOnStart;
         [Tooltip("Generate a reward offer after every victory while a run build is active.")]

@@ -19,6 +19,8 @@ namespace RythmRPG.Combat
         private readonly bool blockMiss;
 
         public int EnemyTurnsRemaining { get; private set; }
+        public int ExtraTurns { get; private set; }
+        public bool Reprised { get; private set; }
         public IReadOnlyCollection<int> Lanes => lanes;
         public bool IsExpired => EnemyTurnsRemaining <= 0;
 
@@ -30,15 +32,26 @@ namespace RythmRPG.Combat
         public bool IconOnEnemy => false;
         public bool IconIsDebuff => false;
 
-        public LaneWardModifier(HashSet<int> lanes, int enemyTurns, bool blockBad = true, bool blockMiss = true)
+        public LaneWardModifier(HashSet<int> lanes, int enemyTurns, bool blockBad = true, bool blockMiss = true, int extraTurns = 0)
         {
             this.lanes = lanes;
             EnemyTurnsRemaining = enemyTurns;
+            ExtraTurns = extraTurns;
             this.blockBad = blockBad;
             this.blockMiss = blockMiss;
         }
 
         public bool Covers(int laneId) => lanes == null || lanes.Contains(laneId);
+
+        public bool CanReprise(int limit) => !IsExpired && !Reprised && ExtraTurns < limit;
+        public bool Reprise(int limit)
+        {
+            if (!CanReprise(limit)) return false;
+            EnemyTurnsRemaining++;
+            ExtraTurns++;
+            Reprised = true;
+            return true;
+        }
 
         public bool BlocksDamage(RhythmJudgementResult result)
         {

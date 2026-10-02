@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.PassiveDefinition
   id: ps-pyromancy
   displayName: Pyromancy
-  icon: {fileID: 0}
+  icon: {fileID: -7842524454869263074, guid: ab6acf7cb39a3bb4884d8767fb54e579, type: 3}
   description: 
   category: 3
   maxLevel: 3

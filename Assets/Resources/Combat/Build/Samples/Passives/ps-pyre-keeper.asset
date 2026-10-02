@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.PassiveDefinition
   id: ps-pyre-keeper
   displayName: Pyre Keeper
-  icon: {fileID: 0}
+  icon: {fileID: -4539520815654054507, guid: f4f11d1c79d771c47b83991b289e4605, type: 3}
   description: Burn stacks higher and burns hotter.
   category: 3
   maxLevel: 3

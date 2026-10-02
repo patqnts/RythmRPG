@@ -309,6 +309,7 @@ namespace RythmRPG.Combat
             runtime.Stats.Reactions++;
             runtime.ShowAtEnemy(name.ToUpperInvariant() + "!", ReactionColor);
             apply(context);
+            runtime.ReactionResolved(context);
             runtime.Modifiers?.NotifyChanged();
         }
 

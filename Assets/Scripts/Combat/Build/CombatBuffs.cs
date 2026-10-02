@@ -36,6 +36,7 @@ namespace RythmRPG.Combat
         /// <summary>For Reflect: Good judgements reflect this fraction of Strength (Perfect reflects all of it).</summary>
         public float GoodFactor = 0.5f;
         public int Turns;
+        public int ExtraTurns;
         /// <summary>Reflect: most damage reflected per enemy turn.</summary>
         public int PerTurnCap;
         public string SourceId;
@@ -76,6 +77,8 @@ namespace RythmRPG.Combat
         public string StackKey { get; }
         public string Label { get; protected set; }
         public int TurnsRemaining { get; protected set; }
+        public int ExtraTurns { get; protected set; }
+        public bool Reprised { get; protected set; }
         public TurnBoundary CountdownAt { get; }
         public virtual bool IsExpired => TurnsRemaining <= 0;
         /// <summary>Skip the first countdown boundary when it occurs in the same turn the buff was applied.</summary>
@@ -93,6 +96,15 @@ namespace RythmRPG.Combat
         }
 
         public void Refresh(int turns) => TurnsRemaining = Mathf.Max(TurnsRemaining, turns);
+        public bool CanReprise(int limit) => !IsExpired && !Reprised && ExtraTurns < limit;
+        public bool Reprise(int limit)
+        {
+            if (!CanReprise(limit)) return false;
+            TurnsRemaining++;
+            ExtraTurns++;
+            Reprised = true;
+            return true;
+        }
 
         /// <summary>Icon of the ability / passive that applied it (the latest one for shared effects like the shield).</summary>
         public Sprite Icon { get; set; }
@@ -125,7 +137,22 @@ namespace RythmRPG.Combat
             int before = Capacity;
             Capacity = Mathf.Min(Mathf.Max(0, cap), Capacity + Mathf.Max(0, amount));
             Refresh(turns);
+            if (Capacity > before)
+            {
+                ExtraTurns = Mathf.Max(0, TurnsRemaining - turns);
+                Reprised = false;
+            }
             return Capacity - before;
+        }
+
+        /// <summary>Spending protection is not a damage break. Remove the matching break-heal entitlement.</summary>
+        public int Spend(int amount)
+        {
+            int before = Capacity;
+            int spent = Mathf.Min(before, Mathf.Max(0, amount));
+            Capacity -= spent;
+            if (spent > 0) BreakHeal = before > 0 ? Mathf.FloorToInt(BreakHeal * (float)Capacity / before) : 0;
+            return spent;
         }
 
         public void ClampTo(int cap) => Capacity = Mathf.Min(Capacity, Mathf.Max(0, cap));
@@ -154,6 +181,7 @@ namespace RythmRPG.Combat
             GoodFactor = Mathf.Clamp01(spec.GoodFactor);
             PerTurnCap = Mathf.Max(0, spec.PerTurnCap);
             SourceId = spec.SourceId;
+            ExtraTurns = spec.ExtraTurns;
         }
 
         public float FractionFor(HitJudgement judgement) => judgement switch
@@ -186,8 +214,11 @@ namespace RythmRPG.Combat
     {
         public float Strength { get; }
 
-        public DamageReductionBuff(BuffSpec spec) : base("reduction:" + spec.SourceId, spec.Label ?? "Guard", spec.Turns, TurnBoundary.EnemyTurnEnd) =>
+        public DamageReductionBuff(BuffSpec spec) : base("reduction:" + spec.SourceId, spec.Label ?? "Guard", spec.Turns, TurnBoundary.EnemyTurnEnd)
+        {
             Strength = Mathf.Clamp01(spec.Strength);
+            ExtraTurns = spec.ExtraTurns;
+        }
 
         public override string Describe() => $"{Label}: -{Mathf.RoundToInt(Strength * 100f)}% damage taken ({TurnsRemaining} enemy turns)";
     }
@@ -203,6 +234,7 @@ namespace RythmRPG.Combat
             Strength = Mathf.Max(0f, spec.Strength);
             SourceId = spec.SourceId;
             // Applied during a player turn: that turn's end does not count.
+            ExtraTurns = spec.ExtraTurns;
             SkipNextCountdown = true;
         }
 
@@ -210,6 +242,8 @@ namespace RythmRPG.Combat
         {
             Strength = Mathf.Max(Strength, spec.Strength);
             Refresh(spec.Turns);
+            ExtraTurns = Mathf.Max(spec.ExtraTurns, TurnsRemaining - (spec.Turns - spec.ExtraTurns));
+            Reprised = false;
             SkipNextCountdown = true;
         }
 

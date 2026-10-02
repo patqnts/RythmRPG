@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.PassiveDefinition
   id: ps-tailwind
   displayName: Tailwind
-  icon: {fileID: 0}
+  icon: {fileID: -7379901383924521549, guid: a4d6bb1b83b96eb41b95758163cd9d94, type: 3}
   description: A Wind ability makes your next ability cheaper.
   category: 2
   maxLevel: 3

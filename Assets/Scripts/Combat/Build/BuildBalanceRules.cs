@@ -48,6 +48,9 @@ namespace RythmRPG.Combat
         [Header("Elements (marks, reactions, zaps, walls, stagger)")]
         [SerializeField] private ElementalRules elements = new();
 
+        [Header("Rhythm connections (shared limits for unlimited passive ownership)")]
+        [SerializeField] private RhythmSynergyRules synergy = new();
+
         private static BuildBalanceRules fallback;
 
         public float GroupBonusCap => groupBonusCap;
@@ -61,6 +64,7 @@ namespace RythmRPG.Combat
         public int MaxSecondaryPerRoot => maxSecondaryPerRoot;
         public int OptionsPerOffer => optionsPerOffer;
         public ElementalRules Elements => elements ??= new ElementalRules();
+        public RhythmSynergyRules Synergy => synergy ??= new RhythmSynergyRules();
         public ProgressionRules Progression => progression ??= new ProgressionRules();
 
         public static BuildBalanceRules Load()

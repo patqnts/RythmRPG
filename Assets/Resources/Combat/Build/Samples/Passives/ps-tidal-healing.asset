@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.PassiveDefinition
   id: ps-tidal-healing
   displayName: Tidal Healing
-  icon: {fileID: 0}
+  icon: {fileID: 8057944239243868935, guid: 1c0a81f8b5188804bbb0676dda3576ab, type: 3}
   description: 
   category: 4
   maxLevel: 3

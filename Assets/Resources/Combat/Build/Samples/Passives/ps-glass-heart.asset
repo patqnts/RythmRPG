@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.PassiveDefinition
   id: ps-glass-heart
   displayName: Glass Heart
-  icon: {fileID: 0}
+  icon: {fileID: 2473363269223935607, guid: 1591ef97bcfc1c3498903e6d4369e89d, type: 3}
   description: Big spell damage, paid for with max health.
   category: 0
   maxLevel: 2

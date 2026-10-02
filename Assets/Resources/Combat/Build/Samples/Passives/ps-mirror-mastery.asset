@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.PassiveDefinition
   id: ps-mirror-mastery
   displayName: Mirror Mastery
-  icon: {fileID: 0}
+  icon: {fileID: -6810185629139584699, guid: 6f67fb567afadf74c8324659a7991a93, type: 3}
   description: 
   category: 4
   maxLevel: 2

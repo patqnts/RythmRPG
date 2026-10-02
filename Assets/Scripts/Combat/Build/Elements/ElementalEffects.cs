@@ -69,6 +69,7 @@ namespace RythmRPG.Combat
         [SerializeField, Min(0f)] private float powerScalePerStack = 0.08f;
 
         public MarkPerPerfectEffect() { }
+        public string MarkId => ApplyMarkEffect.MarkIdOf(mark);
         public MarkPerPerfectEffect(ApplyMarkEffect.Mark mark, int perPerfect, int max, float powerScalePerStack)
         {
             this.mark = mark;

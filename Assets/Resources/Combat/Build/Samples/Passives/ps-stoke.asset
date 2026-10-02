@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f071840deecc95c4e81596bafe4d19e5, type: 3}
+  m_Name: ps-stoke
+  m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.PassiveDefinition
+  id: ps-stoke
+  displayName: Stoke
+  icon: {fileID: 8307212069082571323, guid: 402fe66a1d4517a4e8a37d94efd4d6f3, type: 3}
+  description: 
+  category: 5
+  maxLevel: 1
+  requirement:
+    delivery: 0
+    role: 0
+    requireElement: 0
+    element: 0
+    requireEffectType: 
+  exclusivityGroup: 
+  stackingGroup: 
+  stackingCap: 0
+  styleTags:
+  - elemental
+  isFallback: 0
+  effects:
+  - rid: 4681396207822569580
+  references:
+    version: 2
+    RefIds:
+    - rid: 4681396207822569580
+      type: {class: StokePassive, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
+      data: 

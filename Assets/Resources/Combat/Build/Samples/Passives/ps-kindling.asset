@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.PassiveDefinition
   id: ps-kindling
   displayName: Kindling
-  icon: {fileID: 0}
+  icon: {fileID: 1818479766242382467, guid: 933f553741f07cc42af04375cb199b57, type: 3}
   description: 
   category: 3
   maxLevel: 2

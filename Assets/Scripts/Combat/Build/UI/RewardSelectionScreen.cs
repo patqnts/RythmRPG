@@ -909,8 +909,10 @@ namespace RythmRPG.Combat
         private static TMP_Text NewText(string name, Transform parent, TMP_FontAsset font, int size, Color color, Color outline,
             TextAlignmentOptions alignment)
         {
-            TMP_FontAsset body = ArtifactInterfaceStyle.Load().bodyFont;
-            return CombatText.CreateUGUI(name, parent, body != null ? body : font, size, color, alignment, Color.clear);
+            ArtifactInterfaceStyle artifactStyle = ArtifactInterfaceStyle.Load();
+            TMP_FontAsset body = artifactStyle.bodyFont;
+            float resolvedSize = body != null ? artifactStyle.BodyFontSize(size) : size;
+            return CombatText.CreateUGUI(name, parent, body != null ? body : font, resolvedSize, color, alignment, Color.clear);
         }
 
         private static void Wrap(TMP_Text text, TextOverflowModes overflow)

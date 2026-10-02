@@ -1,0 +1,161 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55e89685013b7d44bb717bbb205db73c, type: 3}
+  m_Name: BuildIconCatalog
+  m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.BuildIconCatalog
+  entries:
+  - id: sample-strike
+    icon: {fileID: -275635028414357967, guid: bd9a16d2f1b20fb49998fca3c36ff16a, type: 3}
+  - id: sample-mend
+    icon: {fileID: 4834258583930432893, guid: 4faf49a3a41f34445b87f4e5f4ef564d, type: 3}
+  - id: sample-riposte
+    icon: {fileID: 5864189855647561845, guid: 73ca15a45049d7b4ab83016ea2228df7, type: 3}
+  - id: sample-mirror-stance
+    icon: {fileID: -2410923976088795797, guid: 36264d1da2bf10d41af0ce596e09f979, type: 3}
+  - id: sample-fire-bolt
+    icon: {fileID: -3563209211173571450, guid: 036892f0cf67dbd45a04a3243feb33a8, type: 3}
+  - id: sample-inferno
+    icon: {fileID: 8257364069470027706, guid: 91adde4d97e1c9b4aa95cb6b01b944ed, type: 3}
+  - id: sample-focus
+    icon: {fileID: -1476240276329048042, guid: 86147fb14bf8c5f4383ca813677aa617, type: 3}
+  - id: sample-shield-bash
+    icon: {fileID: -6290170172824046080, guid: babf3ac03346dfb4999ce1a7869524be, type: 3}
+  - id: sample-bulwark
+    icon: {fileID: -3929930739659854244, guid: f8eb0fd8026bbde40b31dc0ec7d0b802, type: 3}
+  - id: sample-spellblade
+    icon: {fileID: 6785914775151805288, guid: eaf68ec0f98cd604da853c4a8813104d, type: 3}
+  - id: sample-rally
+    icon: {fileID: -3606587229517231144, guid: ca98a867e8f533446b0a3777822d1dd6, type: 3}
+  - id: sample-frost-lance
+    icon: {fileID: 2924042125505492458, guid: a4a6b6635861a074bb62b4c49e8d4925, type: 3}
+  - id: sample-thunder-clap
+    icon: {fileID: -3186358870986822096, guid: 44f00cb08eb0abe4b8ec1f338910025b, type: 3}
+  - id: sample-siphon
+    icon: {fileID: 7094926249107451445, guid: b19516c6cef46d944a61edc36abc1280, type: 3}
+  - id: sample-ember-lash
+    icon: {fileID: -3465865681960734696, guid: 4f8cb71806f8e4d4aa2423736082a424, type: 3}
+  - id: sample-flame-guard
+    icon: {fileID: 4795433667802373907, guid: 54f7884d1f7d25b4bb659ccbdc935de1, type: 3}
+  - id: sample-combust
+    icon: {fileID: -8596347912846360601, guid: 9b91fa3d08cd449428153ecf3466e8d2, type: 3}
+  - id: sample-undertow
+    icon: {fileID: 4675623323182821371, guid: 1ed476330a70ac345959ed708c17e038, type: 3}
+  - id: sample-tidal-veil
+    icon: {fileID: 6060674655647980412, guid: 8edc247ba1502cf46b9c4c822126fe25, type: 3}
+  - id: sample-rain-dance
+    icon: {fileID: -6235134884881766453, guid: 85d0283507f77fd42b8fc2f623413fa8, type: 3}
+  - id: sample-chain-spark
+    icon: {fileID: -90943348515973452, guid: 66152b34d1a0e714ea0415e2c11ec62a, type: 3}
+  - id: sample-storm-ward
+    icon: {fileID: -1404319696370027612, guid: d5733515e0acab2429d08e1a3b566612, type: 3}
+  - id: sample-quake-slam
+    icon: {fileID: 8903486337601801232, guid: 4a0d8664c41fc484cb3c0a41c21de176, type: 3}
+  - id: sample-stone-wall
+    icon: {fileID: 6361270425742128843, guid: 6c26f7f7f3482d2439cf30650b982212, type: 3}
+  - id: sample-tremor
+    icon: {fileID: -5114127535213432704, guid: 580e045ae0f4e8f48a6a544762c40d61, type: 3}
+  - id: sample-gale-step
+    icon: {fileID: 6518905219679570279, guid: 200b557d6f0157a418950ebede4828bb, type: 3}
+  - id: sample-cyclone
+    icon: {fileID: 4084796133650983754, guid: 53eeff5d11823154b916fa7c417f9447, type: 3}
+  - id: sample-backbeat
+    icon: {fileID: 4059607322719682858, guid: b28ce869ecb212d4e8b5720fa8c41951, type: 3}
+  - id: sample-breakwater
+    icon: {fileID: -1304214013104354350, guid: 410eaf41eb70ab6478fe941bcf1b647d, type: 3}
+  - id: sample-cauterize
+    icon: {fileID: 4368744558155891765, guid: 7ac6d8110dc957841a1f0fdd950b84a9, type: 3}
+  - id: sample-reprise
+    icon: {fileID: -1537127747440021827, guid: e336fd5dca5674b44805b6052c71c66a, type: 3}
+  - id: ps-counter-preparation
+    icon: {fileID: -4944501810688847880, guid: 3e87d7f6867f982419b6829f54555bfc, type: 3}
+  - id: ps-deflection
+    icon: {fileID: 6510395048599843953, guid: 6408f057424e7ac49bd91cc97b712261, type: 3}
+  - id: ps-mirror-mastery
+    icon: {fileID: -6810185629139584699, guid: 6f67fb567afadf74c8324659a7991a93, type: 3}
+  - id: ps-glass-heart
+    icon: {fileID: 2473363269223935607, guid: 1591ef97bcfc1c3498903e6d4369e89d, type: 3}
+  - id: ps-mana-surge
+    icon: {fileID: 8333555522217325010, guid: 0de396ea7174ed04880d74428c0a2520, type: 3}
+  - id: ps-pyromancy
+    icon: {fileID: -7842524454869263074, guid: ab6acf7cb39a3bb4884d8767fb54e579, type: 3}
+  - id: ps-conservation
+    icon: {fileID: -1278968431358119043, guid: f9d7488d64be390459e1977ba75d921f, type: 3}
+  - id: ps-kindling
+    icon: {fileID: 1818479766242382467, guid: 933f553741f07cc42af04375cb199b57, type: 3}
+  - id: ps-fortitude
+    icon: {fileID: 4123874707889391335, guid: b65f60c566583ab4fb4f38becf9e1c70, type: 3}
+  - id: ps-iron-skin
+    icon: {fileID: -5752550250204957048, guid: cfab633a53b9b0e4a87c49cb01db4396, type: 3}
+  - id: ps-second-wind
+    icon: {fileID: 6699552246966608054, guid: ac8427b9a1884d34ab5d59f4799b5ac9, type: 3}
+  - id: ps-tidal-healing
+    icon: {fileID: 8057944239243868935, guid: 1c0a81f8b5188804bbb0676dda3576ab, type: 3}
+  - id: ps-steady-guard
+    icon: {fileID: 218546612403010374, guid: 7cc82779bd389044297b3577b2f142fc, type: 3}
+  - id: ps-bulwark-mastery
+    icon: {fileID: 7737077570461021181, guid: 78d3ef88bb7f7ce47bb2cb150b6ea60f, type: 3}
+  - id: ps-versatility
+    icon: {fileID: -1639432972070830015, guid: 0fbf260b9e08da847adda3e0b33da462, type: 3}
+  - id: ps-follow-through
+    icon: {fileID: 5994073934163384938, guid: 5f54e471d347d5649977b943f47bd6cc, type: 3}
+  - id: ps-measured-execution
+    icon: {fileID: -4080055949900654140, guid: bcbc85aaa2e9d4846849b390f47e8a5c, type: 3}
+  - id: ps-arcane-thrift
+    icon: {fileID: -467312291493812249, guid: 0a7ad702a616412488ee65253531b705, type: 3}
+  - id: ps-blade-discipline
+    icon: {fileID: 1428128298309065756, guid: c60b776fa72e03948852be86227e1042, type: 3}
+  - id: ps-pyre-keeper
+    icon: {fileID: -4539520815654054507, guid: f4f11d1c79d771c47b83991b289e4605, type: 3}
+  - id: ps-conductor
+    icon: {fileID: 612192287088061058, guid: c259f47f556ce90468c75bca10bdf81d, type: 3}
+  - id: ps-capacitor
+    icon: {fileID: -3317177941606734940, guid: 09aef250e0930404e9a7d56efa6f0d14, type: 3}
+  - id: ps-riptide
+    icon: {fileID: -6392184705759718012, guid: e0d80b9a6d3a09e4bba7ed2a4ff1afeb, type: 3}
+  - id: ps-bedrock
+    icon: {fileID: -4054485244976669966, guid: 224aedda489e24c4c902dd73ff669ab1, type: 3}
+  - id: ps-aftershock
+    icon: {fileID: 6989401716313425139, guid: 0361ba17873b61b43b90f9cd347d4d43, type: 3}
+  - id: ps-tailwind
+    icon: {fileID: -7379901383924521549, guid: a4d6bb1b83b96eb41b95758163cd9d94, type: 3}
+  - id: ps-catalyst
+    icon: {fileID: 8538923772396680554, guid: cbb6a3719a8879841903807a1aeb8458, type: 3}
+  - id: ps-attunement
+    icon: {fileID: -4372317166186946383, guid: 227ab583feee3f94e9d1de768e8e1f41, type: 3}
+  - id: ps-purist
+    icon: {fileID: -2631413465051022852, guid: 06db714779518684a8a8c2a261875e43, type: 3}
+  - id: ps-unyielding
+    icon: {fileID: -3748159791324045677, guid: ba6607f7624d2b34fa4e550304257553, type: 3}
+  - id: ps-vitality
+    icon: {fileID: 7699567311793190312, guid: 55734a5fa91db764689352baf9ce4749, type: 3}
+  - id: ps-improvisation
+    icon: {fileID: 2295876059811908351, guid: afeb2231bbc04cb43a8f9bf1990e0b38, type: 3}
+  - id: ps-sustained-guard
+    icon: {fileID: -2822529635448087797, guid: ef2f10507f95d9348a30bbe24cc0f63d, type: 3}
+  - id: ps-pressure-cast
+    icon: {fileID: -7175915282603344106, guid: 8e8dd5416bddba843adf1a82163ecb47, type: 3}
+  - id: ps-stoke
+    icon: {fileID: 8307212069082571323, guid: 402fe66a1d4517a4e8a37d94efd4d6f3, type: 3}
+  - id: ps-reaction-shelter
+    icon: {fileID: 6957510384469078007, guid: 0e69524f31e170f4c985e03a5aaf76a9, type: 3}
+  - id: ps-reservoir
+    icon: {fileID: -1781590662428884563, guid: 71fb55d1471902948b098bfe8876b4cf, type: 3}
+  - id: ps-closeout
+    icon: {fileID: -4213018595624338803, guid: 6bf4d8569298b84418a4438c9109a53d, type: 3}
+  - id: basic-attack
+    icon: {fileID: -8996033429033954965, guid: b63399394f2861d458bc2cb29a5130df, type: 3}
+  - id: heal
+    icon: {fileID: 3310364635330280578, guid: 93214e160db6be247a2c9fa8f98fd473, type: 3}
+  - id: flamethrower
+    icon: {fileID: -4357521706610636309, guid: 5e31ee0c405afb1489f14fe7c5d61e27, type: 3}
+  - id: death-faith
+    icon: {fileID: -2370672623445530805, guid: 4e1f331e04e32654f8e25e5d373c9ef2, type: 3}

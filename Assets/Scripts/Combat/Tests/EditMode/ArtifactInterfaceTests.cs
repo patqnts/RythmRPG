@@ -173,6 +173,52 @@ namespace RythmRPG.Combat.Tests
         }
 
         [Test]
+        public void InventoryTerms_AreColouredLinksAndOpenPlainLanguageDefinitions()
+        {
+            var panel = Inventory(out _);
+            Set(panel, "selected", 1); // the 8 MP ability
+            Call(panel, "UpdateDetails");
+            TMP_Text body = Get<TMP_Text>(panel, "detailBody");
+            Assert.That(body.text, Does.Contain("<link=\"mana\">").And.Contain("<color=#69D9FF>MP</color>"));
+            Assert.That(body.raycastTarget, Is.True, "Glossary links must receive pointer clicks.");
+
+            Call(panel, "InspectTerm", "mana");
+            Assert.That(Get<TMP_Text>(panel, "detailTitle").text, Does.Contain("MP / Mana"));
+            Assert.That(body.text, Does.Contain("resource paid when an ability is committed"));
+            Assert.That(Get<bool>(panel, "inspectingTerm"), Is.True);
+
+            Call(panel, "ExitTermInspection");
+            Assert.That(body.text, Does.Contain("<link=\"mana\">"));
+            Assert.That(Get<bool>(panel, "inspectingTerm"), Is.False);
+        }
+
+        [Test]
+        public void Glossary_RecognizesLongTermsBeforeTheirShortForms()
+        {
+            string formatted = GameplayGlossary.Format("A closing phrase earns counter charges and shield.", out List<GameplayTerm> found);
+            Assert.That(formatted, Does.Contain("<link=\"phrase\">").And.Contain("<link=\"counter\">").And.Contain("<link=\"shield\">"));
+            Assert.That(found.Select(term => term.Id), Is.EqualTo(new[] { "phrase", "counter", "shield" }));
+            Assert.That(GameplayGlossary.Find("counter").Definition, Does.Contain("stored charge"));
+        }
+
+        [Test]
+        public void ModalArchive_CanCaptureLaneInputWithoutDisablingSystemControls()
+        {
+            var owner = new object();
+            try
+            {
+                GameInput.BlockLaneInput(owner);
+                Assert.That(GameInput.IsLaneInputBlocked, Is.True);
+                Assert.That(GameInput.Loadout, Is.Not.Null);
+            }
+            finally
+            {
+                GameInput.UnblockLaneInput(owner);
+            }
+            Assert.That(GameInput.IsLaneInputBlocked, Is.False);
+        }
+
+        [Test]
         public void Rewards_ShareOneScrollableInfoPaneThatFollowsSelection()
         {
             var screen = RewardSelectionScreen.CreateTemplate(null);

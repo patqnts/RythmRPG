@@ -2,6 +2,8 @@
 
 Companion to `run-resonance-architecture.md` (the spec). This file covers what was built, where it lives, and how to try the sample builds in play mode.
 
+The 2026-10-02 [rhythm synergy additions](rhythm-synergy.md) add four abilities, seven passives and five four-slot presets. Shared phrase, shield/refund and duration rules live in `RhythmSynergy.cs`; effects live in `RhythmSynergyEffects.cs`. `AbilityChoicePanel` asks for ability options before commitment and `RhythmPhraseView` shows progress. `RhythmSynergyInstaller` installs missing assets and fills missing icons while preserving existing tuning, artwork and GUIDs. Status compatibility recognizes mark-producing abilities such as Flame Guard and Chain Spark, so existing passives like Kindling work across those sources too.
+
 ## How to test the sample builds
 
 1. Enter play mode in the scene you normally fight in.
@@ -113,7 +115,8 @@ Also:
     - Backspace / East cancels a pick or closes the panel.
     - A change that would leave no ability, or no 0 MP ability, is refused and undone (`RunBuildState.LoadoutProblem`).
     - Movement and Interact are held while it is open (`GameInput.BlockGameplay`).
-  - **During ability selection** it is view only. It shows cooldowns and whether you can afford each ability. It only uses keyboard arrows and the right stick, so it never takes input the lanes use. It closes itself when you choose an ability.
+  - **During ability selection** it is view only. It shows cooldowns and whether you can afford each ability. WASD and arrows navigate the archive while its modal lane-input capture prevents those presses from selecting an ability underneath it; the right stick remains the in-combat gamepad navigator. It closes itself when you choose an ability.
+  - Coloured gameplay terms in the details pane are clickable. Keyboard users can move right into term inspection, cycle definitions with W/S or Up/Down, and return with A, Left Arrow or Backspace.
   - It is created automatically in every scene. A panel placed in a scene takes over.
 - **Style**: `BuildHudStyle` (*Create > Rythm RPG > Combat > Build > Build HUD Style*, saved as `Resources/Combat/UI/BuildHudStyle`). Every tile look (column, effect row, panel) has these settings:
   - **Frame sprite**: 9-sliced when the sprite has borders. When empty, the frame is a plain colour.

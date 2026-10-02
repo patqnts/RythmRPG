@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.PassiveDefinition
   id: ps-catalyst
   displayName: Catalyst
-  icon: {fileID: 0}
+  icon: {fileID: 8538923772396680554, guid: cbb6a3719a8879841903807a1aeb8458, type: 3}
   description: Stronger reactions; the first reaction each battle keeps its marks.
   category: 3
   maxLevel: 3

@@ -280,6 +280,10 @@ namespace RythmRPG.Combat
                 if (passive == null || passive.IsFallback != fallbacks || !build.CanAddPassive(passive)) continue;
                 // A status / melee / spell upgrade needs a usable source of it in the build.
                 if (!passive.Requirement.SatisfiedBy(equipped)) continue;
+                if (!passive.Effects.Any(e => e != null && e.IsActive(equipped))) continue;
+                PassiveInstance owned = build.FindPassive(passive.Id);
+                if (owned != null && passive.Effects.All(e => e is ManaCostPassive)
+                    && !CostLevelBenefits(build, passive, owned.Level)) continue;
                 float weight = 1f;
                 if (!string.IsNullOrEmpty(build.Playstyle) && passive.StyleTags.Contains(build.Playstyle)) weight *= 2f;
                 if (build.FindPassive(passive.Id) != null) weight *= 1.5f; // levelling what you have reinforces
@@ -305,6 +309,22 @@ namespace RythmRPG.Combat
             }
             pool.Remove(pick);
             return pick;
+        }
+
+        private static bool CostLevelBenefits(RunBuildState build, PassiveDefinition passive, int level)
+        {
+            foreach (AbilityInstance instance in build.Equipped)
+            {
+                AbilityQuote before = AbilityResolver.Resolve(instance.Definition, instance, build);
+                AbilityQuote after = AbilityResolver.Resolve(instance.Definition, instance, null);
+                foreach (PassiveInstance owned in build.Passives)
+                foreach (PassiveEffect effect in owned.Definition.Effects)
+                    effect?.ModifyQuote(after, owned.Definition.Id == passive.Id ? level + 1 : owned.Level, owned.Definition.DisplayName);
+                if (CombatBuildRuntime.Active?.Build == build) CombatBuildRuntime.Active.AdjustQuote(after);
+                AbilityResolver.ClampCost(after);
+                if (after.ManaCost < before.ManaCost) return true;
+            }
+            return false;
         }
 
         // ---------- Previews ----------
@@ -356,6 +376,7 @@ namespace RythmRPG.Combat
             AbilityQuote result = AbilityResolver.Resolve(quote.Definition, quote.Instance, build);
             if (build.FindPassive(passive.Id) != null) return result;
             foreach (PassiveEffect effect in passive.Effects) effect?.ModifyQuote(result, 1, passive.DisplayName);
+            AbilityResolver.ClampCost(result);
             return result;
         }
 

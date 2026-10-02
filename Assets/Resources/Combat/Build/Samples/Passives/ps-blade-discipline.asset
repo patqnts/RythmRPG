@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.PassiveDefinition
   id: ps-blade-discipline
   displayName: Blade Discipline
-  icon: {fileID: 0}
+  icon: {fileID: 1428128298309065756, guid: c60b776fa72e03948852be86227e1042, type: 3}
   description: 
   category: 1
   maxLevel: 3

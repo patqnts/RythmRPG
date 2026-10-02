@@ -14,6 +14,7 @@ namespace RythmRPG.Combat
         public AbilityDefinition Definition;
         public AbilityInstance Instance;
         public int BaseManaCost;
+        public int ListedManaCost;
         public int ManaCost;
         public int BaseCooldown;
         public int Cooldown;
@@ -33,6 +34,7 @@ namespace RythmRPG.Combat
             var quote = new AbilityQuote { Definition = definition };
             if (definition == null) return quote;
             quote.BaseManaCost = quote.ManaCost = definition.ManaCost;
+            quote.ListedManaCost = quote.ManaCost;
             quote.BaseCooldown = quote.Cooldown = definition.Cooldown;
             quote.Roles = definition.Roles;
             quote.Delivery = definition.Delivery;
@@ -54,7 +56,21 @@ namespace RythmRPG.Combat
         }
 
         public IEnumerable<ElementType> HealingElements() =>
-            Effects.OfType<HealEffect>().Select(heal => heal.Element).Concat(Effects.OfType<RegenEffect>().Select(regen => regen.Element));
+            Effects.OfType<HealEffect>().Select(heal => heal.Element).Concat(Effects.OfType<RegenEffect>().Select(regen => regen.Element))
+                .Concat(Effects.OfType<CauterizeEffect>().Select(_ => ElementType.Fire));
+
+        /// <summary>Status-producing abilities share compatibility regardless of their effect implementation.</summary>
+        public IEnumerable<string> AppliedStatuses()
+        {
+            foreach (AbilityEffect effect in Effects)
+            {
+                if (effect is ApplyStatusEffect status) yield return status.Spec.statusId;
+                else if (effect is ApplyMarkEffect mark) yield return mark.MarkId;
+                else if (effect is MarkPerPerfectEffect rhythmMark) yield return rhythmMark.MarkId;
+                else if (effect is FlameGuardEffect) yield return ElementalMarks.Burn;
+                else if (effect is ChainArcEffect) yield return ElementalMarks.Static;
+            }
+        }
 
         /// <summary>Every element this ability touches: its own element and any elemental component, mark or zap.</summary>
         public IEnumerable<ElementType> AllElements() =>
@@ -89,6 +105,7 @@ namespace RythmRPG.Combat
                 }
             }
             quote.ManaCost = Mathf.Max(0, quote.BaseManaCost + costDelta);
+            quote.ListedManaCost = quote.ManaCost;
             quote.Cooldown = Mathf.Max(0, quote.BaseCooldown + cooldownDelta);
 
             // 2. Passive cost modifiers (magic efficiency), deterministic order: passive acquisition order.
@@ -105,8 +122,17 @@ namespace RythmRPG.Combat
             CombatBuildRuntime live = CombatBuildRuntime.Active;
             if (live != null && build != null && live.Build == build) live.AdjustQuote(quote);
             quote.ManaCost = Mathf.Max(0, quote.ManaCost);
+            ClampCost(quote);
             quote.Cooldown = Mathf.Max(0, quote.Cooldown);
             return quote;
+        }
+
+        public static void ClampCost(AbilityQuote quote)
+        {
+            if (quote.ListedManaCost <= 0) return;
+            int floor = Mathf.CeilToInt(quote.ListedManaCost * (1f - BuildBalanceRules.Load().Synergy.maximumCostDiscount));
+            if (quote.ManaCost < floor) quote.Changes.Add($"Combined discounts capped: {floor} MP minimum");
+            quote.ManaCost = Mathf.Max(quote.ManaCost, floor);
         }
     }
 }

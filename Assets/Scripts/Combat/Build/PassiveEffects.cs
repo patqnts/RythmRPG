@@ -154,6 +154,7 @@ namespace RythmRPG.Combat
 
         public override string Describe(int level) =>
             $"Each Perfect{(goodCounts ? "/Good" : "")} defense stores a counter charge (max {LevelValue(maxPerEnemyTurn, maxPerEnemyTurnPerLevel, level)} per enemy turn). " +
+            "Successful defense phrases can fill the same allowance. " +
             $"Attacks spend up to {autoSpendMax} for {BuildTagUtility.Percent(autoSpendPerCharge)} each";
 
         public override void OnTurnBoundary(PassiveHook hook, TurnBoundary boundary)
@@ -176,6 +177,13 @@ namespace RythmRPG.Combat
             if (cast.Quote != null && cast.Quote.Effects.Any(effect => effect is SpendCountersEffect)) return;
             int spent = hook.Runtime.Counters.Spend(autoSpendMax, cast.CastId, hook.Label);
             if (spent > 0) cast.AddModifier(ModifierGroup.Counter, EffectKind.Damage, spent * autoSpendPerCharge, hook.SourceId, $"{hook.Label} x{spent}");
+        }
+
+        public override void OnDefensePhrase(PassiveHook hook, PhraseOutcome phrase, string rootId)
+        {
+            if (!phrase.Successful(hook.Runtime.Rules.Synergy.phraseSuccess)
+                || hook.Get("gained") >= LevelValue(maxPerEnemyTurn, maxPerEnemyTurnPerLevel, hook.Level)) return;
+            if (hook.Runtime.Counters.Gain(1, hook.SourceId, rootId) > 0) hook.Add("gained", 1);
         }
     }
 
@@ -248,7 +256,7 @@ namespace RythmRPG.Combat
             if (!cast.ExecutionEligible || !cast.HasRole(AbilityRole.Damage) || cast.PaidCost > maxPaidCost
                 || cast.PerformanceWeight < threshold) return;
             if (!hook.Runtime.Events.TryClaim("conservation:" + cast.CastId)) return;
-            hook.Runtime.Damage.RestoreMana(LevelValue(mana, manaPerLevel, hook.Level), hook.SourceId, cast.CastId, secondary: true, label: hook.Label);
+            hook.Runtime.RestorePassiveMana(LevelValue(mana, manaPerLevel, hook.Level), hook, cast.CastId);
         }
     }
 
@@ -351,7 +359,7 @@ namespace RythmRPG.Combat
             $"{statusId}: +{LevelValue(extraTicks, extraTicksPerLevel, level)} ticks, {BuildTagUtility.Percent(LevelValue(potencyBonus, potencyPerLevel, level))} damage per tick";
 
         public override bool IsActive(IReadOnlyList<AbilityQuote> equipped) =>
-            equipped.Any(quote => quote.Effects.OfType<ApplyStatusEffect>().Any(status => status.Spec.statusId == statusId));
+            equipped.Any(quote => quote.AppliedStatuses().Contains(statusId));
 
         public override void ModifyStatus(PassiveHook hook, StatusSpec spec, ref int damagePerTick, ref int ticks)
         {
@@ -380,7 +388,7 @@ namespace RythmRPG.Combat
         public override string Describe(int level) =>
             $"{Mathf.RoundToInt(LevelValue(fraction, fractionPerLevel, level) * 100f)}% of overheal becomes shield ({enemyTurns} enemy turns)";
 
-        public override bool IsActive(IReadOnlyList<AbilityQuote> equipped) => equipped.Any(quote => quote.Effects.OfType<HealEffect>().Any());
+        public override bool IsActive(IReadOnlyList<AbilityQuote> equipped) => equipped.Any(quote => quote.HealingElements().Any());
 
         public override void OnHealed(PassiveHook hook, HealOutcome heal)
         {

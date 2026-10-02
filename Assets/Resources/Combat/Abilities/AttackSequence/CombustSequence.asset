@@ -1,0 +1,102 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a24d139eae904b479eef368918af55f, type: 3}
+  m_Name: CombustSequence
+  m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.CharacterAttackSequence
+  moveToStage: 0
+  stageViewport: {x: 0.5, y: 0.45}
+  moveInSeconds: 0.35
+  moveBackSeconds: 0.35
+  movingBoolParameter: 
+  arriveState: 
+  steps:
+  - rid: 2956268411002028131
+  - rid: 2956268416212402419
+  - rid: 4681396215318839296
+  - rid: 2956268411002028129
+  - rid: 2956268411002028139
+  - rid: 2956268416212402422
+  references:
+    version: 2
+    RefIds:
+    - rid: 2956268411002028129
+      type: {class: SpawnEffectStep, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
+      data:
+        waitForCompletion: 0
+        delay: 0
+        prefab: {fileID: 174222, guid: 996caa051abc4be4d8b39b565b8694b5, type: 3}
+        at: 1
+        offset: {x: -0.48, y: 0.31, z: -0.1}
+        attachToAnchor: 0
+        scale: 2
+        lifetime: 2
+        holdSeconds: 1
+        faceCamera: 0
+    - rid: 2956268411002028131
+      type: {class: PlayAnimationStep, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
+      data:
+        waitForCompletion: 1
+        delay: 0
+        stateName: Attack
+        trigger: 
+        crossFadeSeconds: 0.05
+        wait: 2
+        seconds: 0.4
+    - rid: 2956268411002028139
+      type: {class: ChannelDamageStep, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
+      data:
+        waitForCompletion: 1
+        delay: 0
+        channelSeconds: 1.5
+        ticks: 20
+        weightPerTick: 1
+        tickAtStart: 0
+        channelState: 
+        channelBool: 
+        loopEffect: {fileID: 0}
+        loopEffectAt: 0
+        loopEffectOffset: {x: 0, y: 0.6, z: 0}
+        tickEffect: {fileID: 0}
+        tickEffectAt: 1
+        tickEffectOffset: {x: 0, y: 0.5, z: 0}
+        tickShake: 0.03
+    - rid: 2956268416212402419
+      type: {class: MoveCasterStep, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
+      data:
+        waitForCompletion: 1
+        delay: 0
+        to: 2
+        offset: {x: 0, y: 0, z: -0.8}
+        seconds: 0.2
+        ease: 6
+    - rid: 2956268416212402422
+      type: {class: MoveCasterStep, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
+      data:
+        waitForCompletion: 1
+        delay: 0
+        to: 3
+        offset: {x: 0, y: 0, z: -0.8}
+        seconds: 0.2
+        ease: 6
+    - rid: 4681396215318839296
+      type: {class: SpawnEffectStep, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
+      data:
+        waitForCompletion: 0
+        delay: 0
+        prefab: {fileID: 174222, guid: 996caa051abc4be4d8b39b565b8694b5, type: 3}
+        at: 1
+        offset: {x: 0.38, y: 0.31, z: -0.1}
+        attachToAnchor: 0
+        scale: 2
+        lifetime: 2
+        holdSeconds: 0.3
+        faceCamera: 1

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.PassiveDefinition
   id: ps-attunement
   displayName: Attunement
-  icon: {fileID: 0}
+  icon: {fileID: -4372317166186946383, guid: 227ab583feee3f94e9d1de768e8e1f41, type: 3}
   description: 'Mix elements: elemental damage grows with each different element used this battle.'
   category: 3
   maxLevel: 3

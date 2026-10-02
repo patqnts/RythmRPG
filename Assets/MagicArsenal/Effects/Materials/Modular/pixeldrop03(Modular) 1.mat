@@ -61,8 +61,8 @@ Material:
     - _FlipbookMode: 0
     - _InvFade: 1
     - _LightingEnabled: 0
-    - _MetaballFieldPower: 0.84
-    - _MetaballFieldStrength: 0.6
+    - _MetaballFieldPower: 1.81
+    - _MetaballFieldStrength: 2.15
     - _MetaballMaskCutoff: 0
     - _Mode: 4
     - _SoftParticlesEnabled: 1

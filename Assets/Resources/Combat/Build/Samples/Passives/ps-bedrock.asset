@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.PassiveDefinition
   id: ps-bedrock
   displayName: Bedrock
-  icon: {fileID: 0}
+  icon: {fileID: -4054485244976669966, guid: 224aedda489e24c4c902dd73ff669ab1, type: 3}
   description: Shielded melee attacks hit harder.
   category: 1
   maxLevel: 3

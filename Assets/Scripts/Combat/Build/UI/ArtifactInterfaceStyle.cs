@@ -12,6 +12,8 @@ namespace RythmRPG.Combat
         [Header("Typography")]
         public TMP_FontAsset headingFont;
         public TMP_FontAsset bodyFont;
+        [Tooltip("Readability multiplier for UI that uses Body Font. Monogram SDF has a compact visual em, so it needs a larger point size on screen.")]
+        [Range(1f, 2f)] public float bodyFontScale = 1.35f;
         [Header("Iridescent light")]
         public Color cyan = new(0.48f, 0.94f, 1f, 1f);
         public Color lilac = new(0.79f, 0.65f, 1f, 1f);
@@ -123,5 +125,9 @@ namespace RythmRPG.Combat
             shineColor = pearl, shineSpeed = 0.16f, shineWidth = 0.055f,
             outlineWidth = 0f, outlineColor = Color.clear, edgeGlow = false
         };
+
+        public float BodyFontSize(float baseSize) => bodyFont != null
+            ? Mathf.Max(1f, baseSize * Mathf.Max(1f, bodyFontScale))
+            : baseSize;
     }
 }

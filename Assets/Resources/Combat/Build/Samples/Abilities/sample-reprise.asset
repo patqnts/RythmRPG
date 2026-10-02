@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1000000000000000000000000000040, type: 3}
+  m_Name: sample-reprise
+  m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.AbilityDefinition
+  id: sample-reprise
+  displayName: Reprise
+  icon: {fileID: -1537127747440021827, guid: e336fd5dca5674b44805b6052c71c66a, type: 3}
+  abilityType: 2
+  element: 0
+  manaCost: 12
+  cooldown: 3
+  basePower: 0
+  rhythmPattern: {fileID: 11400000, guid: 69cbd1997ae35c049bcbf83821b081ce, type: 2}
+  outcomeProfile: {fileID: 11400000, guid: b1000000000000000000000000000102, type: 2}
+  vfxProfile: {fileID: 11400000, guid: b1000000000000000000000000000103, type: 2}
+  attackSequence: {fileID: 11400000, guid: 8723036c076846e697a8d687e88680d4, type: 2}
+  effects:
+  - rid: 4681396207822569576
+  roles: 12
+  delivery: 8
+  description: Choose a live player shield, ward or buff. At 70% chart accuracy, keep it one more turn. Each application can be reprised once; no valid target means no payment.
+  references:
+    version: 2
+    RefIds:
+    - rid: 4681396207822569576
+      type: {class: RepriseEffect, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
+      data:
+        timing: 0

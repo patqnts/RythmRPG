@@ -93,6 +93,6 @@ MonoBehaviour:
   introSeconds: 0.4
   fontAsset: {fileID: 11400000, guid: 351ae9843ef78fa48ab1141c54004b19, type: 2}
   legacyFont: {fileID: 0}
-  fontSize: 20
+  fontSize: 28
   textColor: {r: 1, g: 1, b: 1, a: 1}
   textOutline: {r: 0, g: 0, b: 0, a: 0.85}

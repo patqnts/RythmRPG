@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.PassiveDefinition
   id: ps-iron-skin
   displayName: Iron Skin
-  icon: {fileID: 0}
+  icon: {fileID: -5752550250204957048, guid: cfab633a53b9b0e4a87c49cb01db4396, type: 3}
   description: 
   category: 8
   maxLevel: 3

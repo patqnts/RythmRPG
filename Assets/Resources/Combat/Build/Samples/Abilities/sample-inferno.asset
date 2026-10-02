@@ -17,7 +17,7 @@ MonoBehaviour:
   icon: {fileID: 940688435891189809, guid: 5ce0c96cc26c0284e8a366a2f8bb4959, type: 3}
   abilityType: 1
   element: 1
-  manaCost: 45
+  manaCost: 40
   cooldown: 2
   basePower: 99
   rhythmPattern: {fileID: 11400000, guid: b100000000000000000000000000010d, type: 2}

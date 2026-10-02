@@ -131,7 +131,7 @@ namespace RythmRPG.Combat
         [Tooltip("Old uGUI font, kept only so existing assets still pick their font. Converted to a TMP font automatically.")]
         [FormerlySerializedAs("font")]
         [SerializeField] private Font legacyFont;
-        [SerializeField, Min(6)] private int fontSize = 20;
+        [SerializeField, Min(6)] private int fontSize = 28;
         [SerializeField] private Color textColor = Color.white;
         [SerializeField] private Color textOutline = new(0f, 0f, 0f, 0.85f);
 

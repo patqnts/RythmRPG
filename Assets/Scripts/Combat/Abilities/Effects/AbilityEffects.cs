@@ -57,7 +57,7 @@ namespace RythmRPG.Combat
     {
         [SerializeField] private EffectTiming timing = EffectTiming.SplitAcrossHits;
 
-        public EffectTiming Timing => timing;
+        public virtual EffectTiming Timing => timing;
         public virtual bool IsAmount => false;
         public virtual int TotalAmount(AbilityEffectContext context) => 0;
         /// <summary>
@@ -270,7 +270,7 @@ namespace RythmRPG.Combat
                 LaneScope.SpecificLanes => new HashSet<int>(laneIds),
                 _ => context.LaneId >= 0 ? new HashSet<int> { context.LaneId } : null
             };
-            context.Modifiers.Add(new LaneWardModifier(set, turns, blockBad, blockMiss)
+            context.Modifiers.Add(new LaneWardModifier(set, turns, blockBad, blockMiss, turns - enemyTurns)
             {
                 Icon = context.Ability != null ? context.Ability.Icon : null,
                 Label = context.Ability != null ? context.Ability.DisplayName : "Ward"

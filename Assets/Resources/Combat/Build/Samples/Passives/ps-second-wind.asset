@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.PassiveDefinition
   id: ps-second-wind
   displayName: Second Wind
-  icon: {fileID: 0}
+  icon: {fileID: 6699552246966608054, guid: ac8427b9a1884d34ab5d59f4799b5ac9, type: 3}
   description: 
   category: 7
   maxLevel: 3

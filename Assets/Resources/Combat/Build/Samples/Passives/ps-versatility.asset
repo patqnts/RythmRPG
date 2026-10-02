@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.PassiveDefinition
   id: ps-versatility
   displayName: Versatility
-  icon: {fileID: 0}
+  icon: {fileID: -1639432972070830015, guid: 0fbf260b9e08da847adda3e0b33da462, type: 3}
   description: 
   category: 6
   maxLevel: 3

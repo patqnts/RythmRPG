@@ -34,7 +34,8 @@ namespace RythmRPG.Combat
         ReactionDamage,
         /// <summary>The enemy's next attack was staggered (or the stagger was resisted).</summary>
         Stagger,
-        MarkApplied
+        MarkApplied,
+        ShieldSpent
     }
 
     /// <summary>

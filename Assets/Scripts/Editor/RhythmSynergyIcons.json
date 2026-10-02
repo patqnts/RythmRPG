@@ -1,0 +1,442 @@
+{
+  "entries": [
+    {
+      "id": "sample-strike",
+      "path": "Assets/Art/Icons/RhythmSynergy/Warrior_Skill_Icon_01.png",
+      "sourceCategory": "Warrior Skill Icons",
+      "sourceNumber": 1
+    },
+    {
+      "id": "sample-mend",
+      "path": "Assets/Art/Icons/Ice/Cryomancer_Skill_Icon_31.png",
+      "sourceCategory": "Ice",
+      "sourceNumber": 31
+    },
+    {
+      "id": "sample-riposte",
+      "path": "Assets/Art/Icons/RhythmSynergy/Warrior_Skill_Icon_09.png",
+      "sourceCategory": "Warrior Skill Icons",
+      "sourceNumber": 9
+    },
+    {
+      "id": "sample-mirror-stance",
+      "path": "Assets/Art/Icons/RhythmSynergy/Illusionist_Skill_Icon_12.png",
+      "sourceCategory": "Illusionist Skill Icons",
+      "sourceNumber": 12
+    },
+    {
+      "id": "sample-fire-bolt",
+      "path": "Assets/Art/Icons/Fire/Pyromancer_Skill_Icon_20.png",
+      "sourceCategory": "Fire",
+      "sourceNumber": 20
+    },
+    {
+      "id": "sample-inferno",
+      "path": "Assets/Art/Icons/Fire/Pyromancer_Skill_Icon_23.png",
+      "sourceCategory": "Fire",
+      "sourceNumber": 23
+    },
+    {
+      "id": "sample-focus",
+      "path": "Assets/Art/Icons/RhythmSynergy/Buff_Skill_Icon_15.png",
+      "sourceCategory": "Buff Skill Icons",
+      "sourceNumber": 15
+    },
+    {
+      "id": "sample-shield-bash",
+      "path": "Assets/Art/Icons/RhythmSynergy/Warrior_Skill_Icon_39.png",
+      "sourceCategory": "Warrior Skill Icons",
+      "sourceNumber": 39
+    },
+    {
+      "id": "sample-bulwark",
+      "path": "Assets/Art/Icons/RhythmSynergy/Buff_Skill_Icon_13.png",
+      "sourceCategory": "Buff Skill Icons",
+      "sourceNumber": 13
+    },
+    {
+      "id": "sample-spellblade",
+      "path": "Assets/Art/Icons/Fire/Pyromancer_Skill_Icon_16.png",
+      "sourceCategory": "Fire",
+      "sourceNumber": 16
+    },
+    {
+      "id": "sample-rally",
+      "path": "Assets/Art/Icons/RhythmSynergy/Priest_Skill_Icon_32.png",
+      "sourceCategory": "Priest Skill Icons",
+      "sourceNumber": 32
+    },
+    {
+      "id": "sample-frost-lance",
+      "path": "Assets/Art/Icons/Ice/Cryomancer_Skill_Icon_13.png",
+      "sourceCategory": "Ice",
+      "sourceNumber": 13
+    },
+    {
+      "id": "sample-thunder-clap",
+      "path": "Assets/Art/Icons/Lightning/Lightning_Mage_Skill_Icon_37.png",
+      "sourceCategory": "Lightning",
+      "sourceNumber": 37
+    },
+    {
+      "id": "sample-siphon",
+      "path": "Assets/Art/Icons/RhythmSynergy/Illusionist_Skill_Icon_48.png",
+      "sourceCategory": "Illusionist Skill Icons",
+      "sourceNumber": 48
+    },
+    {
+      "id": "sample-ember-lash",
+      "path": "Assets/Art/Icons/Fire/Pyromancer_Skill_Icon_29.png",
+      "sourceCategory": "Fire",
+      "sourceNumber": 29
+    },
+    {
+      "id": "sample-flame-guard",
+      "path": "Assets/Art/Icons/Fire/Pyromancer_Skill_Icon_32.png",
+      "sourceCategory": "Fire",
+      "sourceNumber": 32
+    },
+    {
+      "id": "sample-combust",
+      "path": "Assets/Art/Icons/Fire/Pyromancer_Skill_Icon_27.png",
+      "sourceCategory": "Fire",
+      "sourceNumber": 27
+    },
+    {
+      "id": "sample-undertow",
+      "path": "Assets/Art/Icons/Ice/Cryomancer_Skill_Icon_29.png",
+      "sourceCategory": "Ice",
+      "sourceNumber": 29
+    },
+    {
+      "id": "sample-tidal-veil",
+      "path": "Assets/Art/Icons/Ice/Cryomancer_Skill_Icon_17.png",
+      "sourceCategory": "Ice",
+      "sourceNumber": 17
+    },
+    {
+      "id": "sample-rain-dance",
+      "path": "Assets/Art/Icons/Ice/Cryomancer_Skill_Icon_41.png",
+      "sourceCategory": "Ice",
+      "sourceNumber": 41
+    },
+    {
+      "id": "sample-chain-spark",
+      "path": "Assets/Art/Icons/Lightning/Lightning_Mage_Skill_Icon_08.png",
+      "sourceCategory": "Lightning",
+      "sourceNumber": 8
+    },
+    {
+      "id": "sample-storm-ward",
+      "path": "Assets/Art/Icons/Lightning/Lightning_Mage_Skill_Icon_22.png",
+      "sourceCategory": "Lightning",
+      "sourceNumber": 22
+    },
+    {
+      "id": "sample-quake-slam",
+      "path": "Assets/Art/Icons/RhythmSynergy/Magician_Skill_Icon_29.png",
+      "sourceCategory": "Earth Rock Magician Skill Icons",
+      "sourceNumber": 29
+    },
+    {
+      "id": "sample-stone-wall",
+      "path": "Assets/Art/Icons/RhythmSynergy/Magician_Skill_Icon_15.png",
+      "sourceCategory": "Earth Rock Magician Skill Icons",
+      "sourceNumber": 15
+    },
+    {
+      "id": "sample-tremor",
+      "path": "Assets/Art/Icons/RhythmSynergy/Magician_Skill_Icon_44.png",
+      "sourceCategory": "Earth Rock Magician Skill Icons",
+      "sourceNumber": 44
+    },
+    {
+      "id": "sample-gale-step",
+      "path": "Assets/Art/Icons/RhythmSynergy/Aeromancer_Skill_Icon_32.png",
+      "sourceCategory": "Aeromancer Skill Icons",
+      "sourceNumber": 32
+    },
+    {
+      "id": "sample-cyclone",
+      "path": "Assets/Art/Icons/RhythmSynergy/Aeromancer_Skill_Icon_49.png",
+      "sourceCategory": "Aeromancer Skill Icons",
+      "sourceNumber": 49
+    },
+    {
+      "id": "sample-backbeat",
+      "path": "Assets/Art/Icons/RhythmSynergy/Aeromancer_Skill_Icon_21.png",
+      "sourceCategory": "Aeromancer Skill Icons",
+      "sourceNumber": 21
+    },
+    {
+      "id": "sample-breakwater",
+      "path": "Assets/Art/Icons/Ice/Cryomancer_Skill_Icon_49.png",
+      "sourceCategory": "Ice",
+      "sourceNumber": 49
+    },
+    {
+      "id": "sample-cauterize",
+      "path": "Assets/Art/Icons/Fire/Pyromancer_Skill_Icon_06.png",
+      "sourceCategory": "Fire",
+      "sourceNumber": 6
+    },
+    {
+      "id": "sample-reprise",
+      "path": "Assets/Art/Icons/RhythmSynergy/Bard_Skill_Icon_08.png",
+      "sourceCategory": "Bard Skill Icons",
+      "sourceNumber": 8
+    },
+    {
+      "id": "ps-counter-preparation",
+      "path": "Assets/Art/Icons/RhythmSynergy/Warrior_Skill_Icon_23.png",
+      "sourceCategory": "Warrior Skill Icons",
+      "sourceNumber": 23
+    },
+    {
+      "id": "ps-deflection",
+      "path": "Assets/Art/Icons/RhythmSynergy/Warrior_Skill_Icon_03.png",
+      "sourceCategory": "Warrior Skill Icons",
+      "sourceNumber": 3
+    },
+    {
+      "id": "ps-mirror-mastery",
+      "path": "Assets/Art/Icons/RhythmSynergy/Illusionist_Skill_Icon_08.png",
+      "sourceCategory": "Illusionist Skill Icons",
+      "sourceNumber": 8
+    },
+    {
+      "id": "ps-glass-heart",
+      "path": "Assets/Art/Icons/Fire/Pyromancer_Skill_Icon_24.png",
+      "sourceCategory": "Fire",
+      "sourceNumber": 24
+    },
+    {
+      "id": "ps-mana-surge",
+      "path": "Assets/Art/Icons/Lightning/Lightning_Mage_Skill_Icon_04.png",
+      "sourceCategory": "Lightning",
+      "sourceNumber": 4
+    },
+    {
+      "id": "ps-pyromancy",
+      "path": "Assets/Art/Icons/Fire/Pyromancer_Skill_Icon_05.png",
+      "sourceCategory": "Fire",
+      "sourceNumber": 5
+    },
+    {
+      "id": "ps-conservation",
+      "path": "Assets/Art/Icons/RhythmSynergy/Buff_Skill_Icon_25.png",
+      "sourceCategory": "Buff Skill Icons",
+      "sourceNumber": 25
+    },
+    {
+      "id": "ps-kindling",
+      "path": "Assets/Art/Icons/Fire/Pyromancer_Skill_Icon_39.png",
+      "sourceCategory": "Fire",
+      "sourceNumber": 39
+    },
+    {
+      "id": "ps-fortitude",
+      "path": "Assets/Art/Icons/RhythmSynergy/Buff_Skill_Icon_07.png",
+      "sourceCategory": "Buff Skill Icons",
+      "sourceNumber": 7
+    },
+    {
+      "id": "ps-iron-skin",
+      "path": "Assets/Art/Icons/RhythmSynergy/Buff_Skill_Icon_34.png",
+      "sourceCategory": "Buff Skill Icons",
+      "sourceNumber": 34
+    },
+    {
+      "id": "ps-second-wind",
+      "path": "Assets/Art/Icons/RhythmSynergy/Buff_Skill_Icon_35.png",
+      "sourceCategory": "Buff Skill Icons",
+      "sourceNumber": 35
+    },
+    {
+      "id": "ps-tidal-healing",
+      "path": "Assets/Art/Icons/Ice/Cryomancer_Skill_Icon_02.png",
+      "sourceCategory": "Ice",
+      "sourceNumber": 2
+    },
+    {
+      "id": "ps-steady-guard",
+      "path": "Assets/Art/Icons/RhythmSynergy/Buff_Skill_Icon_30.png",
+      "sourceCategory": "Buff Skill Icons",
+      "sourceNumber": 30
+    },
+    {
+      "id": "ps-bulwark-mastery",
+      "path": "Assets/Art/Icons/RhythmSynergy/Buff_Skill_Icon_37.png",
+      "sourceCategory": "Buff Skill Icons",
+      "sourceNumber": 37
+    },
+    {
+      "id": "ps-versatility",
+      "path": "Assets/Art/Icons/RhythmSynergy/Illusionist_Skill_Icon_29.png",
+      "sourceCategory": "Illusionist Skill Icons",
+      "sourceNumber": 29
+    },
+    {
+      "id": "ps-follow-through",
+      "path": "Assets/Art/Icons/RhythmSynergy/Warrior_Skill_Icon_42.png",
+      "sourceCategory": "Warrior Skill Icons",
+      "sourceNumber": 42
+    },
+    {
+      "id": "ps-measured-execution",
+      "path": "Assets/Art/Icons/RhythmSynergy/Warrior_Skill_Icon_38.png",
+      "sourceCategory": "Warrior Skill Icons",
+      "sourceNumber": 38
+    },
+    {
+      "id": "ps-arcane-thrift",
+      "path": "Assets/Art/Icons/RhythmSynergy/Buff_Skill_Icon_39.png",
+      "sourceCategory": "Buff Skill Icons",
+      "sourceNumber": 39
+    },
+    {
+      "id": "ps-blade-discipline",
+      "path": "Assets/Art/Icons/RhythmSynergy/Warrior_Skill_Icon_14.png",
+      "sourceCategory": "Warrior Skill Icons",
+      "sourceNumber": 14
+    },
+    {
+      "id": "ps-pyre-keeper",
+      "path": "Assets/Art/Icons/Fire/Pyromancer_Skill_Icon_43.png",
+      "sourceCategory": "Fire",
+      "sourceNumber": 43
+    },
+    {
+      "id": "ps-conductor",
+      "path": "Assets/Art/Icons/Lightning/Lightning_Mage_Skill_Icon_10.png",
+      "sourceCategory": "Lightning",
+      "sourceNumber": 10
+    },
+    {
+      "id": "ps-capacitor",
+      "path": "Assets/Art/Icons/Lightning/Lightning_Mage_Skill_Icon_36.png",
+      "sourceCategory": "Lightning",
+      "sourceNumber": 36
+    },
+    {
+      "id": "ps-riptide",
+      "path": "Assets/Art/Icons/Ice/Cryomancer_Skill_Icon_38.png",
+      "sourceCategory": "Ice",
+      "sourceNumber": 38
+    },
+    {
+      "id": "ps-bedrock",
+      "path": "Assets/Art/Icons/RhythmSynergy/Magician_Skill_Icon_14.png",
+      "sourceCategory": "Earth Rock Magician Skill Icons",
+      "sourceNumber": 14
+    },
+    {
+      "id": "ps-aftershock",
+      "path": "Assets/Art/Icons/RhythmSynergy/Magician_Skill_Icon_23.png",
+      "sourceCategory": "Earth Rock Magician Skill Icons",
+      "sourceNumber": 23
+    },
+    {
+      "id": "ps-tailwind",
+      "path": "Assets/Art/Icons/RhythmSynergy/Aeromancer_Skill_Icon_16.png",
+      "sourceCategory": "Aeromancer Skill Icons",
+      "sourceNumber": 16
+    },
+    {
+      "id": "ps-catalyst",
+      "path": "Assets/Art/Icons/Fire/Pyromancer_Skill_Icon_35.png",
+      "sourceCategory": "Fire",
+      "sourceNumber": 35
+    },
+    {
+      "id": "ps-attunement",
+      "path": "Assets/Art/Icons/RhythmSynergy/Illusionist_Skill_Icon_16.png",
+      "sourceCategory": "Illusionist Skill Icons",
+      "sourceNumber": 16
+    },
+    {
+      "id": "ps-purist",
+      "path": "Assets/Art/Icons/RhythmSynergy/Buff_Skill_Icon_45.png",
+      "sourceCategory": "Buff Skill Icons",
+      "sourceNumber": 45
+    },
+    {
+      "id": "ps-unyielding",
+      "path": "Assets/Art/Icons/RhythmSynergy/Buff_Skill_Icon_40.png",
+      "sourceCategory": "Buff Skill Icons",
+      "sourceNumber": 40
+    },
+    {
+      "id": "ps-vitality",
+      "path": "Assets/Art/Icons/RhythmSynergy/Buff_Skill_Icon_08.png",
+      "sourceCategory": "Buff Skill Icons",
+      "sourceNumber": 8
+    },
+    {
+      "id": "ps-improvisation",
+      "path": "Assets/Art/Icons/RhythmSynergy/Bard_Skill_Icon_25.png",
+      "sourceCategory": "Bard Skill Icons",
+      "sourceNumber": 25
+    },
+    {
+      "id": "ps-sustained-guard",
+      "path": "Assets/Art/Icons/RhythmSynergy/Bard_Skill_Icon_27.png",
+      "sourceCategory": "Bard Skill Icons",
+      "sourceNumber": 27
+    },
+    {
+      "id": "ps-pressure-cast",
+      "path": "Assets/Art/Icons/RhythmSynergy/Buff_Skill_Icon_33.png",
+      "sourceCategory": "Buff Skill Icons",
+      "sourceNumber": 33
+    },
+    {
+      "id": "ps-stoke",
+      "path": "Assets/Art/Icons/Fire/Pyromancer_Skill_Icon_18.png",
+      "sourceCategory": "Fire",
+      "sourceNumber": 18
+    },
+    {
+      "id": "ps-reaction-shelter",
+      "path": "Assets/Art/Icons/RhythmSynergy/Buff_Skill_Icon_19.png",
+      "sourceCategory": "Buff Skill Icons",
+      "sourceNumber": 19
+    },
+    {
+      "id": "ps-reservoir",
+      "path": "Assets/Art/Icons/Ice/Cryomancer_Skill_Icon_05.png",
+      "sourceCategory": "Ice",
+      "sourceNumber": 5
+    },
+    {
+      "id": "ps-closeout",
+      "path": "Assets/Art/Icons/RhythmSynergy/Bard_Skill_Icon_48.png",
+      "sourceCategory": "Bard Skill Icons",
+      "sourceNumber": 48
+    },
+    {
+      "id": "basic-attack",
+      "path": "Assets/Art/Icons/RhythmSynergy/Warrior_Skill_Icon_05.png",
+      "sourceCategory": "Warrior Skill Icons",
+      "sourceNumber": 5
+    },
+    {
+      "id": "heal",
+      "path": "Assets/Art/Icons/RhythmSynergy/Priest_Skill_Icon_29.png",
+      "sourceCategory": "Priest Skill Icons",
+      "sourceNumber": 29
+    },
+    {
+      "id": "flamethrower",
+      "path": "Assets/Art/Icons/Fire/Pyromancer_Skill_Icon_07.png",
+      "sourceCategory": "Fire",
+      "sourceNumber": 7
+    },
+    {
+      "id": "death-faith",
+      "path": "Assets/Art/Icons/RhythmSynergy/Buff_Skill_Icon_21.png",
+      "sourceCategory": "Buff Skill Icons",
+      "sourceNumber": 21
+    }
+  ]
+}

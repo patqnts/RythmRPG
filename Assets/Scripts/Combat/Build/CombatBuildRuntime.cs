@@ -72,7 +72,7 @@ namespace RythmRPG.Combat
     /// Turn boundaries (called by the controller) run passive hooks first, then buff / status countdowns in the
     /// modifier system, in acquisition / application order.
     /// </summary>
-    public sealed class CombatBuildRuntime : MonoBehaviour
+    public sealed partial class CombatBuildRuntime : MonoBehaviour
     {
         private static int encounterCounter;
 
@@ -181,6 +181,7 @@ namespace RythmRPG.Combat
             Active = this;
             pendingDefense.Clear();
             Events.Clear();
+            ResetSynergy();
             Counters.Reset();
             Stats = new BuildCombatStats();
             hooks.Clear();
@@ -264,6 +265,7 @@ namespace RythmRPG.Combat
 
         public void OnEnemyTurnStarted()
         {
+            smallShieldUsed = 0;
             EnemyTurn++;
             enemyTurn = new EnemyTurnSummary { EnemyTurn = EnemyTurn };
             zapsThisTurn = 0;
@@ -288,6 +290,7 @@ namespace RythmRPG.Combat
 
         public void OnPlayerTurnStarted()
         {
+            smallShieldUsed = 0;
             PlayerTurn++;
             Boundary(TurnBoundary.PlayerTurnStart);
         }
@@ -307,7 +310,7 @@ namespace RythmRPG.Combat
         // ---------- Casts ----------
 
         /// <summary>At commitment: snapshot the paid cost / quote, reserve pending next-attack bonuses for damaging casts.</summary>
-        public CastSnapshot BeginCast(int inputLane, int slotIndex, AbilityRuntimeInstance ability)
+        public CastSnapshot BeginCast(int inputLane, int slotIndex, AbilityRuntimeInstance ability, CastChoice choice = null)
         {
             if (ability == null) return null;
             AbilityCommit commit = ability.LastCommit;
@@ -351,6 +354,8 @@ namespace RythmRPG.Combat
                 }
             }
             CurrentCast = cast;
+            smallShieldUsed = 0;
+            CommitChoice(cast, choice);
             RaiseChanged();
             return cast;
         }
@@ -369,6 +374,13 @@ namespace RythmRPG.Combat
                 if (reserved is NextAttackBonusBuff bonus)
                     cast.AddModifier(ModifierGroup.Buff, EffectKind.Damage, bonus.Strength, bonus.SourceId, bonus.Label);
             foreach (PassiveHook hook in hooks) ForEachEffect(hook, effect => effect.OnPreOutcome(hook, cast));
+            // Charges from active abilities work with ordinary attacks even without Counter Preparation owned.
+            if (!HasPassive<CounterPreparationPassive>() && cast.HasRole(AbilityRole.Damage)
+                && !cast.Quote.Effects.Any(e => e is SpendCountersEffect))
+            {
+                int spent = Counters.Spend(3, cast.CastId, "Counter charges");
+                if (spent > 0) cast.AddModifier(ModifierGroup.Counter, EffectKind.Damage, spent * .1f, "counter", "Counter charges");
+            }
         }
 
         public void CastResolved(CastSnapshot cast)
@@ -466,7 +478,11 @@ namespace RythmRPG.Combat
         public void ApplyBuff(BuffSpec spec, string rootId)
         {
             if (spec == null || Modifiers == null || CombatOver) return;
+            int baseTurns = spec.Turns;
+            if (CurrentCast != null && CurrentCast.CastId == rootId) spec.Strength *= CurrentCast.SupportStrengthMultiplier;
             foreach (PassiveHook hook in hooks) ForEachEffect(hook, effect => effect.ModifyBuff(hook, spec));
+            spec.Turns = Mathf.Min(spec.Turns, baseTurns + Rules.Synergy.extraPlayerEffectTurns);
+            spec.ExtraTurns = Mathf.Max(0, spec.Turns - baseTurns);
             spec.Turns = Mathf.Max(1, spec.Turns);
             switch (spec.Kind)
             {

@@ -34,6 +34,7 @@ namespace RythmRPG.Combat
         public string Id => id;
         public string DisplayName => displayName;
         public Sprite Icon => icon;
+        internal void SetCodeIcon(Sprite value) => icon = value;
         public AbilityType AbilityType => abilityType;
         public ElementType Element => element;
         public int ManaCost => manaCost;
@@ -78,6 +79,7 @@ namespace RythmRPG.Combat
             }
 
             public Builder Type(AbilityType type) { definition.abilityType = type; return this; }
+            public Builder Icon(Sprite sprite) { definition.icon = sprite; return this; }
             public Builder Tags(AbilityRole roles, AbilityDelivery delivery) { definition.roles = roles; definition.delivery = delivery; return this; }
             public Builder Element(ElementType element) { definition.element = element; return this; }
             public Builder Cost(int mana, int cooldownTurns = 0) { definition.manaCost = Mathf.Max(0, mana); definition.cooldown = Mathf.Max(0, cooldownTurns); return this; }

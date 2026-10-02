@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.PassiveDefinition
   id: ps-riptide
   displayName: Riptide
-  icon: {fileID: 0}
+  icon: {fileID: -6392184705759718012, guid: e0d80b9a6d3a09e4bba7ed2a4ff1afeb, type: 3}
   description: Water overheal becomes Water damage.
   category: 7
   maxLevel: 3

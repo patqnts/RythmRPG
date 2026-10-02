@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.PassiveDefinition
   id: ps-purist
   displayName: Purist
-  icon: {fileID: 0}
+  icon: {fileID: -2631413465051022852, guid: 06db714779518684a8a8c2a261875e43, type: 3}
   description: 'Commit to one element: more damage, longer marks.'
   category: 3
   maxLevel: 3

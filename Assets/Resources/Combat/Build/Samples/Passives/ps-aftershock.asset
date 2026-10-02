@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.PassiveDefinition
   id: ps-aftershock
   displayName: Aftershock
-  icon: {fileID: 0}
+  icon: {fileID: 6989401716313425139, guid: 0361ba17873b61b43b90f9cd347d4d43, type: 3}
   description: Earth abilities echo at the next enemy turn start.
   category: 3
   maxLevel: 3

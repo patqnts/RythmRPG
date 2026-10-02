@@ -270,6 +270,16 @@ namespace RythmRPG.Combat
             runner.DefenseNoteSettled -= HandleDefenseNoteSettled;
             runner.DefenseNoteSettled += HandleDefenseNoteSettled;
             abilitySlots.Initialize(inputRouter, encounter.Player);
+            abilitySlots.RequestChoice = RequestAbilityChoice;
+            runner.PatternStarted -= buildRuntime.BeginRhythmPattern;
+            runner.PatternStarted += buildRuntime.BeginRhythmPattern;
+            runner.PatternCompleted -= buildRuntime.EndRhythmPattern;
+            runner.PatternCompleted += buildRuntime.EndRhythmPattern;
+            runner.NoteCompleted -= HandleRhythmNoteCompleted;
+            runner.NoteCompleted += HandleRhythmNoteCompleted;
+            runner.ChallengeCompleted -= buildRuntime.CompleteRhythmChallenge;
+            runner.ChallengeCompleted += buildRuntime.CompleteRhythmChallenge;
+            (GetComponent<RhythmPhraseView>() ?? gameObject.AddComponent<RhythmPhraseView>()).Bind(buildRuntime);
             abilitySlots.AbilitySelected -= HandleAbilitySelected;
             abilitySlots.AbilitySelected += HandleAbilitySelected;
         }
@@ -503,10 +513,28 @@ namespace RythmRPG.Combat
             selectedLane = laneId;
             selectedAbility = ability;
             // Cost was paid once by the slot; snapshot it (and reserve pending next-attack bonuses) for this cast.
-            buildRuntime.BeginCast(laneId, abilitySlots.SlotIndexOfLane(laneId), ability);
+            buildRuntime.BeginCast(laneId, abilitySlots.SlotIndexOfLane(laneId), ability, abilitySlots.SelectedChoice);
             stats?.RecordAbility(ability);
             abilitySlots.EndSelection();
             Transition(CombatState.PlayerAbilityExecuting);
+        }
+
+        private void HandleRhythmNoteCompleted(Note note, RhythmJudgementResult result) => buildRuntime.RecordPhraseJudgement(result);
+
+        private bool RequestAbilityChoice(int lane, AbilityRuntimeInstance ability)
+        {
+            var choices = buildRuntime.ChoicesFor(ability);
+            bool reprise = ability.Quote().Effects.Any(e => e is RepriseEffect);
+            if (reprise && choices.Count == 0)
+            {
+                buildRuntime.Toast("NO EFFECT TO EXTEND", new Color(.8f, .8f, 1f));
+                abilitySlots.BeginSelection();
+                return true;
+            }
+            if (!reprise && choices.Count <= 1) return false;
+            (GetComponent<AbilityChoicePanel>() ?? gameObject.AddComponent<AbilityChoicePanel>()).Show(this, ability, choices,
+                choice => abilitySlots.ConfirmChoice(lane, ability, choice), abilitySlots.BeginSelection);
+            return true;
         }
 
         private IEnumerator PlayerAbilityRoutine()
@@ -854,6 +882,7 @@ namespace RythmRPG.Combat
             SetPendingMana(0);
             if (amount <= 0) return;
             int gained = encounter.Player.GainMana(amount);
+            buildRuntime?.NotifyDefenseManaOverflow(amount - gained);
             if (gained > 0 && vfxController != null)
                 vfxController.ShowFloatingText($"+{gained} MP  {Mathf.RoundToInt(manaTally.Accuracy * 100f)}%",
                     encounter.Player.transform.position + Vector3.up * 1.6f, new Color(0.45f, 0.75f, 1f));

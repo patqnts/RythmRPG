@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.PassiveDefinition
   id: ps-mana-surge
   displayName: Mana Surge
-  icon: {fileID: 0}
+  icon: {fileID: 8333555522217325010, guid: 0de396ea7174ed04880d74428c0a2520, type: 3}
   description: 
   category: 0
   maxLevel: 3

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.PassiveDefinition
   id: ps-conductor
   displayName: Conductor
-  icon: {fileID: 0}
+  icon: {fileID: 612192287088061058, guid: c259f47f556ce90468c75bca10bdf81d, type: 3}
   description: Your first Perfects each enemy turn zap the next note.
   category: 5
   maxLevel: 3

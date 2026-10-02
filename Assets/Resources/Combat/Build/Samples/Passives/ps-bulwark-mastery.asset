@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.PassiveDefinition
   id: ps-bulwark-mastery
   displayName: Bastion
-  icon: {fileID: 0}
+  icon: {fileID: 7737077570461021181, guid: 78d3ef88bb7f7ce47bb2cb150b6ea60f, type: 3}
   description: 
   category: 4
   maxLevel: 2

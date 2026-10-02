@@ -18,6 +18,7 @@ namespace RythmRPG.Combat
         private int candidateLane = -1;
         private float holdProgress;
         private bool selecting;
+        private bool waitingForCommit;
 
         public IReadOnlyDictionary<int, AbilityRuntimeInstance> Slots => slots;
         /// <summary>The build the slots were made from (null = scene assignments / DefaultLoadout).</summary>
@@ -33,6 +34,8 @@ namespace RythmRPG.Combat
         /// <summary>The hold on a lane completed and the ability was paid for; raised just before <see cref="AbilitySelected"/>.</summary>
         public event Action<int, AbilityRuntimeInstance> SelectionCommitted;
         public event Action<int, AbilityRuntimeInstance> AbilitySelected;
+        public Func<int, AbilityRuntimeInstance, bool> RequestChoice;
+        public CastChoice SelectedChoice { get; private set; }
 
         private void Update()
         {
@@ -43,15 +46,28 @@ namespace RythmRPG.Combat
             if (holdProgress < 1f) return;
 
             AbilityRuntimeInstance selected = slots[candidateLane];
-            if (!selected.Commit(player))
-            {
-                CancelCandidate();
-                return;
-            }
+            int lane = candidateLane;
             selecting = false;
-            input.RequireRelease(candidateLane);
-            SelectionCommitted?.Invoke(candidateLane, selected);
-            AbilitySelected?.Invoke(candidateLane, selected);
+            waitingForCommit = true;
+            input.RequireRelease(lane);
+            if (RequestChoice?.Invoke(lane, selected) == true) return;
+            ConfirmChoice(lane, selected, null);
+        }
+
+        public bool ConfirmChoice(int lane, AbilityRuntimeInstance selected, CastChoice choice)
+        {
+            if (!waitingForCommit || lane != candidateLane) return false;
+            if (!slots.TryGetValue(lane, out AbilityRuntimeInstance current) || current != selected || !selected.Commit(player))
+            {
+                BeginSelection();
+                return false;
+            }
+            SelectedChoice = choice;
+            waitingForCommit = false;
+            selecting = false;
+            SelectionCommitted?.Invoke(lane, selected);
+            AbilitySelected?.Invoke(lane, selected);
+            return true;
         }
 
         public void Initialize(LaneInputRouter inputRouter, PlayerCombatant combatant)
@@ -73,6 +89,8 @@ namespace RythmRPG.Combat
 
         public void BeginSelection()
         {
+            SelectedChoice = null;
+            waitingForCommit = false;
             selecting = true;
             candidateLane = -1;
             holdProgress = 0f;
@@ -83,6 +101,7 @@ namespace RythmRPG.Combat
 
         public void EndSelection()
         {
+            waitingForCommit = false;
             selecting = false;
             CancelCandidate();
         }

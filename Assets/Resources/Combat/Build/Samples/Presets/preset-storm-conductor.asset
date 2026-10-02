@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dcaf364c3488584aa4b23882270f869, type: 3}
+  m_Name: preset-storm-conductor
+  m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.BuildPreset
+  id: preset-storm-conductor
+  displayName: Storm Conductor
+  playstyle: elemental
+  description: Backbeat rewards its closing phrase with counters and Wind feeds existing marks. Undertow and Chain Spark create Water/Lightning reactions. Counter Preparation, Capacitor and Catalyst feed damage; Reaction Shelter adds protection.
+  slots:
+  - ability: {fileID: 11400000, guid: d2bf8ee080793a14687f76cc6fc5be09, type: 2}
+    upgrades: []
+  - ability: {fileID: 11400000, guid: 37665809b6da8014d8999adc35bce031, type: 2}
+    upgrades: []
+  - ability: {fileID: 11400000, guid: b20d94935277db64ba4bc56d6a6bbfe4, type: 2}
+    upgrades: []
+  - ability: {fileID: 11400000, guid: 4cc2684b7107c2b43b4a86328e16f8ce, type: 2}
+    upgrades: []
+  reserve: []
+  passives:
+  - passive: {fileID: 11400000, guid: 2f331df8ae8d646479d478408edc0e47, type: 2}
+    level: 1
+  - passive: {fileID: 11400000, guid: 7abf1753ec13e8344863dff0247eda60, type: 2}
+    level: 1
+  - passive: {fileID: 11400000, guid: dadaefed3e93549408326e9293c18945, type: 2}
+    level: 1
+  - passive: {fileID: 11400000, guid: ffd7a03e62f0d2f449d3c5a9805aae77, type: 2}
+    level: 1

@@ -86,6 +86,14 @@ namespace RythmRPG.Combat
             // Paused: keep the held state as it was. A key let go during the pause is reported as released on resume.
             if (GamePause.IsPaused) return;
 
+            if (GameInput.IsLaneInputBlocked)
+            {
+                heldLanes.Clear();
+                foreach (LaneKeyBinding blocked in bindings)
+                    if (blocked?.View != null) blocked.View.SetPressed(false);
+                return;
+            }
+
             foreach (LaneKeyBinding binding in bindings)
             {
                 if (binding == null) continue;

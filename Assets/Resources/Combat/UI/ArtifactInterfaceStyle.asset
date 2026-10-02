@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.ArtifactInterfaceStyle
   headingFont: {fileID: 11400000, guid: 11b93ff62af0a9f41923eaa3394f4c79, type: 2}
   bodyFont: {fileID: 11400000, guid: 351ae9843ef78fa48ab1141c54004b19, type: 2}
+  bodyFontScale: 1.434
   cyan: {r: 1, g: 1, b: 1, a: 1}
   lilac: {r: 1, g: 1, b: 1, a: 1}
   pearl: {r: 1, g: 1, b: 1, a: 1}

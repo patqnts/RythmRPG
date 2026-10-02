@@ -1,10 +1,10 @@
 # Abilities & Passives Reference
 
-Last updated: 2026-09-30 · Source: Claude Docs "Abilities & Passives Reference" (update both together)
+Last updated: 2026-10-02 · Reference for the local Unity content.
 
 ## How to read this
 
-The game has 31 abilities, 9 dedicated upgrades and 31 passives. Every number here is a starting value for playtesting, not final balance.
+The game has 35 abilities, 9 dedicated upgrades and 38 passives. A build equips **four abilities** and can own any number of compatible passives. Numbers are starting values for playtesting. See [Rhythm synergy](rhythm-synergy.md) for the four new abilities, seven passives, shared limits and five additional builds.
 
 - **Power** = the ability's Base Power. An effect's output = Base Power × the effect's scale × chart performance (0–1, the average judgement weight: Perfect 1, Good 0.8, Bad 0.5, Miss 0).
 - **Sample power scales from Basic Attack** (currently 22), so the samples follow your tuning. The values below use 22.
@@ -93,7 +93,7 @@ All of these numbers are in the Build Balance Rules asset, under Elements.
 | Rain Dance | Healing | Spell | Water | 20 | 3 | 135 | Heal ×1.2 spread over 3 player turns (about 54 each), Water healing |
 | Chain Spark | Damage | Spell | Lightning | 15 | 0 | 26 | Damage ×1; each Perfect in its chart fires an arc right away (5 Lightning) and adds 1 Static (discharge 5 per stack) |
 | Storm Ward | Defense | Spell | Lightning | 20 | 3 | 44 | 2 enemy turns: each Perfect block zaps the next 2 notes (about 4 Lightning each), max 6 per turn |
-| Quake Slam | Damage | Melee | Earth | 20 | 2 | 53 | Earth damage ×1; Cracked for 2 turns. Give it a chart built on hold notes |
+| Quake Slam | Damage | Melee | Earth | 20 | 2 | 53 | Earth damage ×1; Cracked for 2 turns. Includes a Hold chart |
 | Stone Wall | Defense | Technique | Earth | 20 | 3 | 0 | Walls the busiest lane: absorbs the next 4 notes there, up to 2 enemy turns |
 | Tremor | Damage | Technique | Earth | 0 | 2 | 11 | Earth damage ×1; stagger (needs 50%+ chart performance) |
 | Gale Step | Damage, Defense | Technique | Wind | 0 | 2 | 13 | Wind damage ×1; dodge the first Miss of the next enemy turn |
@@ -119,11 +119,11 @@ There are 9 upgrades. Each attaches to one ability instance, moves with it betwe
 
 ## Passives
 
-There are 31 passives (20 below, 11 elemental after them). The playstyle column only weights reward offers; any build can take any passive whose need is met. A passive with no compatible ability equipped stays owned but inactive.
+There are 38 passives (20 below, 11 elemental after them, and 7 in [Rhythm synergy](rhythm-synergy.md)). The playstyle column only weights reward offers; any build can take any passive whose need is met. A passive with no compatible ability equipped stays owned but inactive.
 
 | Passive | Playstyle | Max Lv | Needs | Effect (Lv 1, +per level) | Bound |
 | --- | --- | --- | --- | --- | --- |
-| Counter Preparation | Parry | 3 | – | Each Perfect defense stores 1 counter charge. Attacks without their own spender use up to 3 for +10% each | 2 charges per enemy turn (+1); 5 stored; fade after 2 idle player turns |
+| Counter Preparation | Parry | 3 | – | Each Perfect defense or completed 70%+ defense phrase stores 1 charge. Both fill the same allowance. Attacks without their own spender use up to 3 for +10% each | 2 charges per enemy turn (+1); 5 stored; fade after 2 idle player turns |
 | Deflection | Parry | 3 | – | Perfect defense reflects 30% (+10%) of the note's damage as physical damage | 40 (+15) per enemy turn |
 | Mirror Mastery | Parry | 2 | A buff ability | Reflect buffs last +1 enemy turn and are 15% (+15%) stronger | – |
 | Glass Heart | Glass Cannon | 2 | A spell damage ability | −35% max HP; +30% (+15%) spell damage | Exclusive with Fortitude |
@@ -168,11 +168,11 @@ Ten presets combine the content above. Pick one with F11 in play mode. Slot 1–
 
 | Build | Playstyle | Slots 1–4 | Passives | Trade-off |
 | --- | --- | --- | --- | --- |
-| Mirror Guard | Parry / Deflect | Strike, Riposte, Mirror Stance, Mend | Counter Preparation, Deflection | Needs Perfect defense; charges fade if unused |
+| Mirror Guard | Parry / Deflect | Strike, Riposte, Mirror Stance, Mend | Counter Preparation, Deflection | Needs accurate defense; charges fade if unused |
 | Pyromancer | Glass Cannon | Strike, Fire Bolt, Inferno, Focus | Glass Heart, Mana Surge, Pyromancy, Conservation | 650 max HP; Inferno competes with survival |
 | Bulwark | Tank | Shield Bash, Strike, Bulwark, Mend | Fortitude, Iron Skin, Second Wind, Tidal Healing | Low damage, long fights; shields cap and expire |
 | Wanderer | Adaptable | Strike (+Searing Edge), Spellblade, Rally, Frost Lance | Versatility, Follow-Through, Measured Execution, Arcane Thrift | Lower peaks; needs sequencing |
-| Riposte Mage | Parry + Glass hybrid | Strike, Riposte (+Honed Riposte), Fire Bolt (+Quickcast), Siphon | Counter Preparation, Glass Heart | Keeps both styles' costs: 650 HP and Perfect-only charges |
+| Riposte Mage | Parry + Glass hybrid | Strike, Riposte (+Honed Riposte), Fire Bolt (+Quickcast), Siphon | Counter Preparation, Glass Heart | Keeps both styles' costs: 650 HP and charges earned through accurate defense |
 | Blank Slate | Reward progression | Strike, Mend | – | Grow a build through rewards |
 | Storm Caller | Elemental (Lightning + Water) | Strike, Chain Spark, Storm Ward, Undertow | Conductor, Capacitor, Catalyst | Needs Perfects on both turns; zaps are capped per turn |
 | Pyre Warden | Elemental (Fire + Water) | Strike, Ember Lash, Flame Guard, Undertow (reserve: Combust) | Pyre Keeper, Catalyst | Burn is slow until detonated; Steam uses up both marks |

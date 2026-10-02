@@ -42,7 +42,9 @@ namespace RythmRPG.Combat
             if (delivery != AbilityDelivery.None && (quote.Delivery & delivery) == 0) return false;
             if (role != AbilityRole.None && (quote.Roles & role) == 0) return false;
             if (requireElement && !quote.DamageElements().Concat(quote.HealingElements()).Contains(element)) return false;
-            if (!string.IsNullOrEmpty(requireEffectType) && quote.Effects.All(effect => effect.GetType().Name != requireEffectType)) return false;
+            if (!string.IsNullOrEmpty(requireEffectType)
+                && !(requireEffectType == nameof(ApplyStatusEffect) && quote.AppliedStatuses().Any())
+                && quote.Effects.All(effect => effect.GetType().Name != requireEffectType)) return false;
             return true;
         }
 
@@ -91,6 +93,7 @@ namespace RythmRPG.Combat
         public string Id => id;
         public string DisplayName => displayName;
         public Sprite Icon => icon;
+        internal void SetCodeIcon(Sprite value) => icon = value;
         public string Description => description;
         public PassiveCategory Category => category;
         public int MaxLevel => Mathf.Max(1, maxLevel);
@@ -246,6 +249,10 @@ namespace RythmRPG.Combat
         public virtual void ModifyBuff(PassiveHook hook, BuffSpec spec) { }
         public virtual void ModifyStatus(PassiveHook hook, StatusSpec spec, ref int damagePerTick, ref int ticks) { }
         public virtual void OnTurnBoundary(PassiveHook hook, TurnBoundary boundary) { }
+        public virtual void OnDefensePhrase(PassiveHook hook, PhraseOutcome phrase, string rootId) { }
+        public virtual void OnRhythmChallenge(PassiveHook hook, PatternRunMode mode, string rootId) { }
+        public virtual void OnReactionResolved(PassiveHook hook, ReactionContext reaction) { }
+        public virtual void OnDefenseManaOverflow(PassiveHook hook, int overflow) { }
         /// <summary>Extra stack cap for a stacking status / mark (Pyre Keeper: Burn +2).</summary>
         public virtual int StatusStackBonus(PassiveHook hook, string statusId) => 0;
         /// <summary>A reaction is about to resolve: change its strength or keep the marks (Catalyst).</summary>

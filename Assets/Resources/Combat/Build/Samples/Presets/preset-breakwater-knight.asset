@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dcaf364c3488584aa4b23882270f869, type: 3}
+  m_Name: preset-breakwater-knight
+  m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.BuildPreset
+  id: preset-breakwater-knight
+  displayName: Breakwater Knight
+  playstyle: tank
+  description: Hold-note charts build shield through Sustained Guard. Breakwater chooses protection or shield spending. Quake Slam uses remaining shield through Bedrock and sets up Water/Earth reactions; Reprise keeps a key protection alive.
+  slots:
+  - ability: {fileID: 11400000, guid: d2bf8ee080793a14687f76cc6fc5be09, type: 2}
+    upgrades: []
+  - ability: {fileID: 11400000, guid: 4a6a3f195c6c60d499e39013688342f7, type: 2}
+    upgrades: []
+  - ability: {fileID: 11400000, guid: 47bf19a48cc5d0246883943a1208dd36, type: 2}
+    upgrades: []
+  - ability: {fileID: 11400000, guid: 1a95e777df6025e4e91630d952ae56c8, type: 2}
+    upgrades: []
+  reserve: []
+  passives:
+  - passive: {fileID: 11400000, guid: b4393a429c61eb1419c86603c12065f0, type: 2}
+    level: 1
+  - passive: {fileID: 11400000, guid: 3f809ad90bf037c45824886324080e46, type: 2}
+    level: 1
+  - passive: {fileID: 11400000, guid: c9e868167f11fcb45ac4663c257063b8, type: 2}
+    level: 1
+  - passive: {fileID: 11400000, guid: ffd7a03e62f0d2f449d3c5a9805aae77, type: 2}
+    level: 1

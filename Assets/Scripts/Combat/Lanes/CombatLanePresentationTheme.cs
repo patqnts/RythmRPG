@@ -28,7 +28,7 @@ namespace RythmRPG.Combat
         public TMP_FontAsset ButtonFontAsset;
         [Tooltip("Legacy uGUI font, only used to generate a TMP font when Button Font Asset is empty.")]
         public Font ButtonFont;
-        [Min(1)] public int ButtonFontSize = 28;
+        [Min(1)] public int ButtonFontSize = 38;
         public FontStyle ButtonFontStyle = FontStyle.Bold;
         public Color ButtonTextColor = Color.white;
         [Tooltip("Key label outline (alpha 0 = none).")]

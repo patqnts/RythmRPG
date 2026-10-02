@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dcaf364c3488584aa4b23882270f869, type: 3}
+  m_Name: preset-armored-spellcaster
+  m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.BuildPreset
+  id: preset-armored-spellcaster
+  displayName: Armored Spellcaster
+  playstyle: tank
+  description: Shield Bash and Rally build protection. Choose to keep shield or spend some on Fire Bolt through Pressure Cast. Second Wind converts overheal; Closeout and Reservoir reward rhythm and spare mana.
+  slots:
+  - ability: {fileID: 11400000, guid: d2bf8ee080793a14687f76cc6fc5be09, type: 2}
+    upgrades: []
+  - ability: {fileID: 11400000, guid: af67410db4a055349aa1955af25e470e, type: 2}
+    upgrades: []
+  - ability: {fileID: 11400000, guid: 1fa77056bb7e25f42924738abd04cdb4, type: 2}
+    upgrades: []
+  - ability: {fileID: 11400000, guid: 8e59e2adbd505b1418bfb53d07d36082, type: 2}
+    upgrades: []
+  reserve: []
+  passives:
+  - passive: {fileID: 11400000, guid: 15117d29a4786e44fbaf40ffe7de683d, type: 2}
+    level: 1
+  - passive: {fileID: 11400000, guid: efe7aa937899d03418d12dae3d561ca9, type: 2}
+    level: 1
+  - passive: {fileID: 11400000, guid: a5c642d10e0ea63419f8f94b3e8c05cc, type: 2}
+    level: 1
+  - passive: {fileID: 11400000, guid: 6aac1868beef84e4c82c5bdfa715b772, type: 2}
+    level: 1
