@@ -52,11 +52,16 @@ namespace RythmRPG.Combat
             enemy = null;
         }
 
-        public void RecordJudgement(HitJudgement judgement, PatternRunMode mode)
+        public bool WouldBreakCombo(HitJudgement judgement) => grading.BreaksCombo(judgement);
+
+        public void RecordJudgement(HitJudgement judgement, PatternRunMode mode, bool preserveCombo = false)
         {
             int[] counts = mode == PatternRunMode.PlayerAbility ? report.AbilityJudgements : report.DefenseJudgements;
             counts[(int)judgement]++;
-            if (grading.BreaksCombo(judgement)) combo = 0;
+            if (grading.BreaksCombo(judgement))
+            {
+                if (!preserveCombo) combo = 0;
+            }
             else combo++;
             report.MaxCombo = Mathf.Max(report.MaxCombo, combo);
             score += grading.NotePoints(judgement, combo);

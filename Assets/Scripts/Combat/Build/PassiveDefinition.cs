@@ -173,6 +173,19 @@ namespace RythmRPG.Combat
         public bool IsPlayerExecution => Result.Source == NoteResolutionSource.PlayerInput;
     }
 
+    /// <summary>One visible Combo update, after any shared Combo-save effect was resolved.</summary>
+    public sealed class ComboJudgementOutcome
+    {
+        public RhythmJudgementResult Result;
+        public PatternRunMode Mode;
+        public int ComboBefore;
+        public int ComboAfter;
+        public bool BrokeCombo;
+        public bool BreakPrevented;
+        public bool IsEnemyDefense => Mode == PatternRunMode.EnemyDefense;
+        public bool ReachedMilestone(int size) => size > 0 && ComboAfter > ComboBefore && ComboAfter % size == 0;
+    }
+
     /// <summary>Summary of one whole enemy turn (all attack steps), for whole-turn triggers that must fire once.</summary>
     public sealed class EnemyTurnSummary
     {
@@ -245,6 +258,10 @@ namespace RythmRPG.Combat
         public virtual int ModifyIncomingDamage(PassiveHook hook, RhythmJudgementResult result, int amount) => amount;
         /// <summary>After a defense note's damage transaction (also called for notes that dealt no damage).</summary>
         public virtual void OnDefenseNoteSettled(PassiveHook hook, DefenseNoteOutcome outcome) { }
+        /// <summary>After the visible Combo changes. Used by broad rhythm rewards such as every-15-Combo effects.</summary>
+        public virtual void OnComboJudgement(PassiveHook hook, ComboJudgementOutcome outcome) { }
+        /// <summary>Called before an enemy-turn judgement would reset a non-zero Combo.</summary>
+        public virtual bool TryPreventComboBreak(PassiveHook hook, RhythmJudgementResult result, int combo) => false;
         /// <summary>Once per enemy turn, spanning all attack steps.</summary>
         public virtual void OnEnemyTurnEnded(PassiveHook hook, EnemyTurnSummary summary) { }
         public virtual void OnHealed(PassiveHook hook, HealOutcome heal) { }

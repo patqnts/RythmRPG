@@ -415,6 +415,78 @@
       "sourceNumber": 48
     },
     {
+      "id": "sample-fortissimo",
+      "path": "Assets/Art/Icons/RhythmSynergy/Bard_Skill_Icon_48.png",
+      "sourceCategory": "Bard Skill Icons",
+      "sourceNumber": 48
+    },
+    {
+      "id": "sample-grace-note",
+      "path": "Assets/Art/Icons/RhythmSynergy/Bard_Skill_Icon_25.png",
+      "sourceCategory": "Bard Skill Icons",
+      "sourceNumber": 25
+    },
+    {
+      "id": "sample-heartbeat",
+      "path": "Assets/Art/Icons/RhythmSynergy/Buff_Skill_Icon_08.png",
+      "sourceCategory": "Buff Skill Icons",
+      "sourceNumber": 8
+    },
+    {
+      "id": "sample-drum-barrage",
+      "path": "Assets/Art/Icons/RhythmSynergy/Bard_Skill_Icon_08.png",
+      "sourceCategory": "Bard Skill Icons",
+      "sourceNumber": 8
+    },
+    {
+      "id": "sample-catalyze",
+      "path": "Assets/Art/Icons/RhythmSynergy/Illusionist_Skill_Icon_16.png",
+      "sourceCategory": "Illusionist Skill Icons",
+      "sourceNumber": 16
+    },
+    {
+      "id": "ps-tempo-guard",
+      "path": "Assets/Art/Icons/RhythmSynergy/Bard_Skill_Icon_27.png",
+      "sourceCategory": "Bard Skill Icons",
+      "sourceNumber": 27
+    },
+    {
+      "id": "ps-flow-state",
+      "path": "Assets/Art/Icons/RhythmSynergy/Aeromancer_Skill_Icon_21.png",
+      "sourceCategory": "Aeromancer Skill Icons",
+      "sourceNumber": 21
+    },
+    {
+      "id": "ps-comeback-beat",
+      "path": "Assets/Art/Icons/RhythmSynergy/Buff_Skill_Icon_07.png",
+      "sourceCategory": "Buff Skill Icons",
+      "sourceNumber": 7
+    },
+    {
+      "id": "ps-safety-net",
+      "path": "Assets/Art/Icons/RhythmSynergy/Buff_Skill_Icon_19.png",
+      "sourceCategory": "Buff Skill Icons",
+      "sourceNumber": 19
+    },
+    {
+      "id": "ps-marked-opening",
+      "path": "Assets/Art/Icons/RhythmSynergy/Warrior_Skill_Icon_42.png",
+      "sourceCategory": "Warrior Skill Icons",
+      "sourceNumber": 42
+    },
+    {
+      "id": "ps-long-measure",
+      "path": "Assets/Art/Icons/RhythmSynergy/Buff_Skill_Icon_39.png",
+      "sourceCategory": "Buff Skill Icons",
+      "sourceNumber": 39
+    },
+    {
+      "id": "ps-elemental-relay",
+      "path": "Assets/Art/Icons/RhythmSynergy/Illusionist_Skill_Icon_12.png",
+      "sourceCategory": "Illusionist Skill Icons",
+      "sourceNumber": 12
+    },
+    {
       "id": "basic-attack",
       "path": "Assets/Art/Icons/RhythmSynergy/Warrior_Skill_Icon_05.png",
       "sourceCategory": "Warrior Skill Icons",

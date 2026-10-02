@@ -2,7 +2,7 @@
 
 Companion to `run-resonance-architecture.md` (the spec). This file covers what was built, where it lives, and how to try the sample builds in play mode.
 
-The 2026-10-02 [rhythm synergy additions](rhythm-synergy.md) add four abilities, seven passives and five four-slot presets. Shared phrase, shield/refund and duration rules live in `RhythmSynergy.cs`; effects live in `RhythmSynergyEffects.cs`. `AbilityChoicePanel` asks for ability options before commitment and `RhythmPhraseView` shows progress. `RhythmSynergyInstaller` installs missing assets and fills missing icons while preserving existing tuning, artwork and GUIDs. Status compatibility recognizes mark-producing abilities such as Flame Guard and Chain Spark, so existing passives like Kindling work across those sources too.
+The [rhythm synergy additions](rhythm-synergy.md), expanded on 2026-10-03, add nine abilities, fourteen passives and eight four-slot presets. Shared phrase, Combo-milestone, Combo-save, shield/refund and duration rules live in `RhythmSynergy.cs`; the original connection effects live in `RhythmSynergyEffects.cs` and the broad strategy effects in `RhythmStrategyEffects.cs`. `AbilityChoicePanel` asks for ability options before commitment, including Reprise and Catalyze targets, and `RhythmPhraseView` shows progress. `RhythmSynergyInstaller` installs missing assets, charts and icons while preserving existing tuned assets and GUIDs. Status compatibility recognizes mark-producing abilities such as Flame Guard and Chain Spark, so existing passives like Kindling work across those sources too.
 
 ## How to test the sample builds
 

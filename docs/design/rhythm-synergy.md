@@ -1,6 +1,6 @@
 # Rhythm synergy
 
-Added 2026-10-02. These additions connect existing counters, shield, mana and elemental marks. There is no Momentum meter. Combo measures your hit streak; counters are a bank of charges to spend on actions.
+Added 2026-10-02 and expanded 2026-10-03. These additions connect Combo, counters, shield, mana, cooldowns, rhythm challenges and elemental marks. There is no Momentum meter. Combo measures your hit streak; counters are a bank of charges to spend on actions.
 
 There are still **four ability slots**, with unlimited passive ownership. Guard/Break and choosing a Reprise target are options within an ability. Each new passive has one level.
 
@@ -12,7 +12,7 @@ Hold/Mash rewards require Good or better completion. Ping-Pong rewards require e
 
 Automatic clears cannot earn execution rewards or make remaining phrase notes worth more: the original authored note count stays the denominator. Empty and cancelled phrases do not succeed. Timing windows, directional inputs and combo scoring stay the same.
 
-## Four new abilities
+## Existing connection abilities
 
 Values use Basic Attack power 22. Damage, healing and shield still scale with chart performance.
 
@@ -25,7 +25,19 @@ Values use Basic Attack power 22. Damage, healing and shield still scale with ch
 
 Hold the ability lane as usual. Resource choices open **before payment and cooldown**. Use mouse buttons, Up/Down + Enter, or gamepad D-pad + A. Cancel with its button, Backspace or gamepad B; Escape remains pause. Cancelling spends nothing. Reprise with no eligible target costs nothing.
 
-## Seven new passives
+## Five broad rhythm abilities
+
+| Ability | MP / cooldown | Plain effect | What it connects |
+|---|---:|---|---|
+| **Fortissimo** | 0 / 1 | Physical melee hit, power 24. Every 15 Combo already held adds 20% damage, up to 60%. Combo is kept. | Any enemy chart can build it. Tempo Guard, Flow State and Grace Note help hold the same Combo; physical/melee and mark passives also apply. |
+| **Grace Note** | 14 / 3 | At 70%+ chart accuracy, the next judgement that would break Combo during the next enemy turn keeps the current Combo. The bad judgement and damage still count. | Shares one save per enemy turn with Safety Net, so equipping both adds choice and reliability rather than two saves. |
+| **Heartbeat** | 20 / 3 | For two enemy turns, each 15 Combo milestone heals a small Water amount, at most twice per turn. | Tidal Healing increases the stored heal. Its Water overheal works with Riptide, and Second Wind can turn overheal into shield. |
+| **Drum Barrage** | 16 / 2 | Earth technique hit, power 33. Complete its Mash at Good or better and finish at 70%+ to gain a two-charge Stone Wall for the next enemy turn. | The same Mash can trigger Sustained Guard and Long Measure. Its Earth hit works with Aftershock; its wall and shield rewards help Bedrock and Breakwater. |
+| **Catalyze** | 12 / 2 | Choose a mark already on the enemy. At 70%+, extend it one turn and make the next consuming reaction 25% stronger. It creates no mark. | Works with every Burn, Soaked, Static or Cracked source, every reaction pair, Catalyst, Reaction Shelter and Elemental Relay. With no mark to choose, it costs nothing. |
+
+Fortissimo reads Combo when the cast is committed. A mistake during its own chart can lower the visible Combo afterward, but it does not change the bonus already locked into that cast.
+
+## Existing connection passives
 
 | Passive | Effect | Existing abilities/passives it connects |
 |---|---|---|
@@ -39,7 +51,19 @@ Hold the ability lane as usual. Resource choices open **before payment and coold
 
 **Counter Preparation is broadened rather than duplicated.** Perfects and successful defense phrases fill the same allowance: 2 charges per enemy turn at level 1, +1 per level. Its bank remains 5 charges, expiring after 2 idle player turns. Active abilities' charges also help ordinary attacks without owning Counter Preparation.
 
-## Five builds, four abilities each
+## Seven broad strategy passives
+
+| Passive | Plain effect | Coexistence with the rest of the game |
+|---|---|---|
+| **Tempo Guard** | Every 15 Combo during enemy defense gives 6 shield, at most 12 per enemy turn. | Uses the shared small-shield limit. The shield can protect health, feed Bedrock or be spent by Breakwater/Pressure Cast. |
+| **Flow State** | Every 15 Combo during enemy defense restores 3 MP, at most 6 per enemy turn. | Uses the shared passive-mana limit. It funds any paid ability rather than a named partner. |
+| **Comeback Beat** | After Combo truly breaks, the next Perfect gives 1 counter, once per enemy turn. | The counter can power ordinary attacks, Riposte or Improvisation. A break saved by Grace Note/Safety Net does not arm it because Combo did not break. |
+| **Safety Net** | The first Combo break in an enemy turn can spend 10 shield to preserve Combo. | Shares the enemy turn's one save with Grace Note. Any shield source can pay for it. Damage and the bad judgement still count. |
+| **Marked Opening** | Physical attacks gain 20% damage while the enemy carries any Elemental Mark. | Every Fire/Water/Lightning/Earth setup can enable physical melee, mixed Spellblade damage or other physical attacks. |
+| **Long Measure** | Completing a Hold, Mash or full Good-or-better Ping-Pong rally reduces the longest equipped cooldown by 1, once per turn. | It reads all four equipped abilities and helps whichever one is waiting longest. Ties follow slot order. |
+| **Elemental Relay** | After a reaction, the next heal, shield or strength-based buff gets 20%. It expires after two player turns. | Any reaction can prepare any suitable support action. Healing, shield and buff bonuses still combine through their normal limits. |
+
+## Five earlier builds, four abilities each
 
 These are starting passives; you can acquire more.
 
@@ -53,6 +77,14 @@ These are starting passives; you can acquire more.
 
 Later combinations: add Closeout/Conservation to the Duelist; Bedrock/Sustained Guard to the Spellcaster; Pressure Cast to the Furnace; Reservoir to the Knight; or Improvisation to a Storm build that adds healing. Connections follow actions/resources rather than a preset name.
 
+## Three new builds, four abilities each
+
+| Build | Four abilities | Starting passives | How to play |
+|---|---|---|---|
+| **Combo Furnace** | Fortissimo, Flame Guard, Grace Note, Cauterize | Tempo Guard, Flow State, Safety Net, Stoke, Pyre Keeper | Defending well grows shield, MP and Burn from the same 15-Combo steps. Keep Combo for Fortissimo, or trade Burn for Cauterize when survival matters. Grace Note and Safety Net still give only one save each enemy turn. |
+| **Seismic Drummer** | Siphon, Drum Barrage, Breakwater, Quake Slam | Sustained Guard, Long Measure, Bedrock, Aftershock, Reservoir | Hold/Mash challenges make protection and shorten cooldowns. Drum Barrage adds a small wall. Breakwater chooses whether to keep or spend shield; Quake Slam uses Earth and melee links. |
+| **Reaction Support** | Siphon, Catalyze, Undertow, Fire Bolt | Catalyst, Reaction Shelter, Elemental Relay, Closeout, Conservation | Apply Soaked or Burn, preserve the mark you need, then trigger a stronger Steam reaction. The reaction gives shield and prepares the next support action. Siphon keeps a free turn available. |
+
 ## Shared limits
 
 - Existing total shield cap: **30% max HP**. Sustained Guard, Reaction Shelter and Reservoir together add at most **20 small-reward shield per cast or whole enemy turn**, across all attack steps. Paid shields, Second Wind and existing reaction shields use the normal capacity limit.
@@ -60,12 +92,15 @@ Later combinations: add Closeout/Conservation to the Duelist; Bedrock/Sustained 
 - Conservation + Closeout restore at most **12 MP per cast**. Siphon's ability effect remains separate. Refunds stop when combat ends.
 - Combined passive/live discounts cannot reduce a positive upgraded listed cost by more than **60%**. Previews and payment use the same quote. Mana Surge and Closeout use actual payment.
 - Player effects gain at most **2 extra turns**. Reprise adds one turn per application and counts alongside Mirror Mastery, Bastion and strong-chart ward bonuses.
+- Grace Note and Safety Net share **one Combo save per enemy turn**. Preserving Combo never erases the judgement or incoming damage.
+- Tempo Guard gives at most **12 shield** and Flow State gives at most **6 MP** per enemy turn. They also obey the existing shared small-shield and passive-mana limits.
+- Heartbeat triggers at most **twice per enemy turn**. Catalyze extends only a mark that already exists and stores one next-reaction bonus; recasting replaces a weaker stored bonus rather than stacking it.
 - Follow-ups are not new casts. Refunds, shield conversions and delayed echoes cannot earn another closing reward. Fully rounded-out cost level-ups are not offered when they cannot reduce any equipped action's cost.
 
 These values are editable under **Rhythm connections** in Build Balance Rules.
 
 ## Content and artwork
 
-New abilities/passives enter the normal reward pool; five presets join the existing ten. Every saved ability and passive has an icon. Existing assignments are preserved. The project Fire/Ice/Lightning folders supply matching art; selected missing categories from the supplied fantasy pack are copied into `Assets/Art/Icons/RhythmSynergy`.
+New abilities/passives enter the normal reward pool; eight rhythm-synergy presets join the existing ten. Every saved ability and passive has an icon. Existing assignments are preserved. The current project icon folders provide the new music, shield, heart, cooldown and elemental-relay art, so no duplicate external files were needed for this set.
 
 `Assets/Scripts/Editor/RhythmSynergyIcons.json` records selections. `BuildIconCatalog.asset` supplies icons to code-defined fallback content. **Tools → Rythm RPG → Combat → Build → Add Rhythm Synergy Content** installs missing additions without replacing tuned assets or GUIDs. The older Export command remains an explicit full re-export.

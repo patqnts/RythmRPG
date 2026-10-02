@@ -266,6 +266,7 @@ namespace RythmRPG.Combat
         public void OnEnemyTurnStarted()
         {
             smallShieldUsed = 0;
+            comboSaveUsedThisEnemyTurn = false;
             EnemyTurn++;
             enemyTurn = new EnemyTurnSummary { EnemyTurn = EnemyTurn };
             zapsThisTurn = 0;
@@ -310,7 +311,8 @@ namespace RythmRPG.Combat
         // ---------- Casts ----------
 
         /// <summary>At commitment: snapshot the paid cost / quote, reserve pending next-attack bonuses for damaging casts.</summary>
-        public CastSnapshot BeginCast(int inputLane, int slotIndex, AbilityRuntimeInstance ability, CastChoice choice = null)
+        public CastSnapshot BeginCast(int inputLane, int slotIndex, AbilityRuntimeInstance ability, CastChoice choice = null,
+            int comboAtCommit = 0)
         {
             if (ability == null) return null;
             AbilityCommit commit = ability.LastCommit;
@@ -325,7 +327,8 @@ namespace RythmRPG.Combat
                 SlotIndex = slotIndex,
                 InputLane = inputLane,
                 PaidCost = commit?.PaidCost ?? 0,
-                Cooldown = commit?.Cooldown ?? 0
+                Cooldown = commit?.Cooldown ?? 0,
+                ComboAtCommit = Mathf.Max(0, comboAtCommit)
             };
             Stats.Casts++;
             Stats.ManaPaid += cast.PaidCost;
@@ -431,6 +434,7 @@ namespace RythmRPG.Combat
                 enemyTurn.DamageTaken += actual;
             }
             if (CombatOver) return;
+            FinishComboJudgement(result.NoteId);
             foreach (PassiveHook hook in hooks) ForEachEffect(hook, effect => effect.OnDefenseNoteSettled(hook, outcome));
             ApplyReflectBuffs(outcome);
             if (outcome.IsPlayerExecution && Modifiers != null && !CombatOver)
@@ -590,8 +594,9 @@ namespace RythmRPG.Combat
         // ---------- Elements, board, control ----------
 
         /// <summary>Passives adjust a reaction (Catalyst).</summary>
-        internal void ModifyReaction(ReactionContext context)
+        public void ModifyReaction(ReactionContext context)
         {
+            ApplyPendingReactionBonus(context);
             foreach (PassiveHook hook in hooks) ForEachEffect(hook, effect => effect.ModifyReaction(hook, context));
         }
 

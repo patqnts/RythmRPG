@@ -21,6 +21,7 @@ namespace RythmRPG.Combat
         public bool SpendShield;
         public bool ConsumeBurn;
         public string ExtendKey;
+        public string MarkId;
         public string Label;
         public string Description;
     }
@@ -99,6 +100,11 @@ namespace RythmRPG.Combat
         private int phraseRun;
         private int smallShieldUsed;
         private readonly Dictionary<string, int> passiveManaUsed = new();
+        private readonly Dictionary<string, ComboJudgementOutcome> pendingCombo = new();
+        private bool comboSaveUsedThisEnemyTurn;
+        private float pendingReactionBonus;
+        private string pendingReactionBonusLabel;
+        public AbilitySlotController AbilitySlots { get; set; }
         public PhraseOutcome CurrentPhrase => phrases?.Pending;
         public bool HasPassive<T>() where T : PassiveEffect => hooks.Any(h => h.Definition.Effects.Any(e => e is T));
 
@@ -107,6 +113,10 @@ namespace RythmRPG.Combat
             phrases = null;
             phraseRun = smallShieldUsed = 0;
             passiveManaUsed.Clear();
+            pendingCombo.Clear();
+            comboSaveUsedThisEnemyTurn = false;
+            pendingReactionBonus = 0f;
+            pendingReactionBonusLabel = null;
         }
 
         public void BeginRhythmPattern(RhythmChart chart, PatternRunContext context)
@@ -145,7 +155,66 @@ namespace RythmRPG.Combat
             if (CombatOver) return;
             string root = mode == PatternRunMode.PlayerAbility ? CurrentCast?.CastId : $"e{EncounterId}-et{EnemyTurn}";
             if (root == null || !Events.TryClaim($"challenge:{root}:{phraseRun}:{id}")) return;
+            if (mode == PatternRunMode.PlayerAbility && CurrentCast != null && !string.IsNullOrEmpty(id))
+                CurrentCast.CompletedChallenges.Add(id);
             foreach (PassiveHook hook in hooks) ForEachEffect(hook, e => e.OnRhythmChallenge(hook, mode, root));
+        }
+
+        /// <summary>Consumes the one shared Combo-save allowance for this enemy turn.</summary>
+        public bool TryPreventComboBreak(RhythmJudgementResult result, PatternRunMode mode, int combo)
+        {
+            if (mode != PatternRunMode.EnemyDefense || combo <= 0 || comboSaveUsedThisEnemyTurn || CombatOver) return false;
+            GraceNoteBuff grace = Modifiers?.OfType<GraceNoteBuff>().FirstOrDefault(buff => !buff.IsExpired);
+            string label = null;
+            if (grace != null && grace.TryUse()) label = grace.Label;
+            if (label == null)
+            {
+                foreach (PassiveHook hook in hooks)
+                {
+                    bool saved = false;
+                    ForEachEffect(hook, effect => saved |= effect.TryPreventComboBreak(hook, result, combo));
+                    if (!saved) continue;
+                    label = hook.Label;
+                    break;
+                }
+            }
+            if (label == null) return false;
+            comboSaveUsedThisEnemyTurn = true;
+            Record(new CombatEvent { Kind = CombatEventKind.PassiveTriggered, SourceId = label, RootCauseId = result.NoteId,
+                RawJudgement = result.Judgement, Note = $"{label}: preserved {combo} Combo" });
+            ShowAtPlayer("COMBO SAVED", new Color(.7f, 1f, .85f));
+            return true;
+        }
+
+        /// <summary>Queues Combo reactions until the defense note has finished dealing damage.</summary>
+        public void RecordComboJudgement(RhythmJudgementResult result, PatternRunMode mode, int before, int after,
+            bool brokeCombo, bool breakPrevented)
+        {
+            var outcome = new ComboJudgementOutcome
+            {
+                Result = result, Mode = mode, ComboBefore = before, ComboAfter = after,
+                BrokeCombo = brokeCombo, BreakPrevented = breakPrevented
+            };
+            if (mode == PatternRunMode.EnemyDefense) pendingCombo[result.NoteId ?? string.Empty] = outcome;
+            else DispatchComboJudgement(outcome);
+        }
+
+        private void DispatchComboJudgement(ComboJudgementOutcome outcome)
+        {
+            if (outcome == null || CombatOver) return;
+            foreach (PassiveHook hook in hooks) ForEachEffect(hook, effect => effect.OnComboJudgement(hook, outcome));
+            if (Modifiers != null)
+                foreach (IComboJudgementModifier modifier in Modifiers.OfType<IComboJudgementModifier>().ToList())
+                    modifier.OnComboJudgement(this, outcome);
+            RaiseChanged();
+        }
+
+        internal void FinishComboJudgement(string noteId)
+        {
+            string key = noteId ?? string.Empty;
+            if (!pendingCombo.TryGetValue(key, out ComboJudgementOutcome outcome)) return;
+            pendingCombo.Remove(key);
+            DispatchComboJudgement(outcome);
         }
 
         public int GrantSmallShield(int amount, PassiveHook hook, string root)
@@ -196,6 +265,21 @@ namespace RythmRPG.Combat
                         result.Add(new CastChoice { Label = buff.IconLabel, Description = $"Keep this effect for one more turn ({buff.TurnsRemaining} remaining).", ExtendKey = buff.StackKey });
                     else if (modifier is LaneWardModifier ward && ward.CanReprise(Rules.Synergy.extraPlayerEffectTurns))
                         result.Add(new CastChoice { Label = ward.Label, Description = "Keep this lane ward for one more enemy turn.", ExtendKey = "ward:" + ward.GetHashCode() });
+                }
+                return result;
+            }
+            if (quote.Effects.Any(e => e is CatalyzeEffect))
+            {
+                foreach (string markId in new[] { ElementalMarks.Burn, ElementalMarks.Soaked, ElementalMarks.Static, ElementalMarks.Cracked })
+                {
+                    StatusInstance mark = Marks.Get(markId);
+                    if (mark == null) continue;
+                    result.Add(new CastChoice
+                    {
+                        MarkId = markId,
+                        Label = ElementalMarks.DisplayName(markId),
+                        Description = $"Keep this mark for one more turn ({mark.TurnsRemaining} remaining) and empower the next reaction."
+                    });
                 }
                 return result;
             }
@@ -253,6 +337,34 @@ namespace RythmRPG.Combat
             }
             if (extended) Modifiers.NotifyChanged();
             return extended;
+        }
+
+        public bool CatalyzeMark(string markId, int turns, float reactionBonus, string label)
+        {
+            StatusInstance mark = Marks.Get(markId);
+            if (mark == null) return false;
+            mark.Extend(turns);
+            pendingReactionBonus = Mathf.Max(pendingReactionBonus, Mathf.Max(0f, reactionBonus));
+            pendingReactionBonusLabel = label;
+            Modifiers?.NotifyChanged();
+            return true;
+        }
+
+        internal void ApplyPendingReactionBonus(ReactionContext context)
+        {
+            if (context == null || pendingReactionBonus <= 0f) return;
+            context.Multiplier *= 1f + pendingReactionBonus;
+            Record(new CombatEvent { Kind = CombatEventKind.PassiveTriggered, SourceId = pendingReactionBonusLabel,
+                RootCauseId = context.RootId, Note = $"Next reaction +{Mathf.RoundToInt(pendingReactionBonus * 100f)}%" });
+            pendingReactionBonus = 0f;
+            pendingReactionBonusLabel = null;
+        }
+
+        public int ReduceLongestCooldown(string label)
+        {
+            int reduced = AbilitySlots?.ReduceLongestCooldown(1) ?? 0;
+            if (reduced > 0) Toast((label ?? "Long Measure").ToUpperInvariant() + " -1 COOLDOWN", new Color(.75f, .85f, 1f));
+            return reduced;
         }
     }
 }

@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1000000000000000000000000000040, type: 3}
+  m_Name: sample-grace-note
+  m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.AbilityDefinition
+  id: sample-grace-note
+  displayName: Grace Note
+  icon: {fileID: 2295876059811908351, guid: afeb2231bbc04cb43a8f9bf1990e0b38, type: 3}
+  abilityType: 2
+  element: 5
+  manaCost: 14
+  cooldown: 3
+  basePower: 0
+  rhythmPattern: {fileID: 11400000, guid: 1aac325f5fb937c4083b3734aeabf889, type: 2}
+  outcomeProfile: {fileID: 11400000, guid: b1000000000000000000000000000102, type: 2}
+  vfxProfile: {fileID: 11400000, guid: b1000000000000000000000000000103, type: 2}
+  attackSequence: {fileID: 11400000, guid: 8723036c076846e697a8d687e88680d4, type: 2}
+  effects:
+  - rid: 4681396215318839406
+  roles: 12
+  delivery: 8
+  description: At 70% chart accuracy, the next Combo-breaking judgement during the next enemy turn does not reset Combo. Damage and the judgement still count.
+  references:
+    version: 2
+    RefIds:
+    - rid: 4681396215318839406
+      type: {class: GraceNoteEffect, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
+      data:
+        timing: 0
+        minimumPerformance: 0.7

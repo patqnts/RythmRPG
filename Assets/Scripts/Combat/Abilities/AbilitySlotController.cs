@@ -112,6 +112,17 @@ namespace RythmRPG.Combat
             SlotsChanged?.Invoke(slots);
         }
 
+        /// <summary>Reduces one equipped ability with the longest live cooldown. Returns the amount removed.</summary>
+        public int ReduceLongestCooldown(int amount = 1)
+        {
+            AbilityRuntimeInstance target = slots.OrderBy(pair => pair.Key).Select(pair => pair.Value).Distinct()
+                .Where(instance => instance != null && instance.RemainingCooldown > 0)
+                .OrderByDescending(instance => instance.RemainingCooldown).FirstOrDefault();
+            int reduced = target?.ReduceCooldown(amount) ?? 0;
+            if (reduced > 0) SlotsChanged?.Invoke(slots);
+            return reduced;
+        }
+
         public void ResetRuntime()
         {
             foreach (AbilityRuntimeInstance instance in slots.Values.Distinct()) instance.Reset();

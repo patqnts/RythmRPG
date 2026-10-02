@@ -43,6 +43,8 @@ namespace RythmRPG.Combat
         public int InputLane = -1;
         public int PaidCost;
         public int Cooldown;
+        /// <summary>The visible battle Combo when the player committed this ability.</summary>
+        public int ComboAtCommit;
         public RhythmPerformanceResult Performance;
         /// <summary>The chart had opportunities and was played to the end (not cancelled): execution-based bonuses may apply.</summary>
         public bool ExecutionEligible;
@@ -56,6 +58,8 @@ namespace RythmRPG.Combat
         public bool Frozen { get; private set; }
         /// <summary>Buffs reserved at commitment (consumed by this cast, e.g. a pending next-attack bonus).</summary>
         public readonly List<ICombatModifierRuntime> Reserved = new();
+        /// <summary>Successful Hold, Mash, or full Ping-Pong challenges completed during this cast.</summary>
+        public readonly HashSet<string> CompletedChallenges = new();
 
         // Outcomes (filled by the damage service).
         public int DamageBeforeModifiers;

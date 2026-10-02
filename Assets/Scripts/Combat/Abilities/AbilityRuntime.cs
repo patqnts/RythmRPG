@@ -61,6 +61,13 @@ namespace RythmRPG.Combat
             if (RemainingCooldown > 0) RemainingCooldown--;
         }
 
+        public int ReduceCooldown(int amount)
+        {
+            int before = RemainingCooldown;
+            RemainingCooldown = Mathf.Max(0, RemainingCooldown - Mathf.Max(0, amount));
+            return before - RemainingCooldown;
+        }
+
         public void Reset() => RemainingCooldown = 0;
     }
 

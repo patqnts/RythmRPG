@@ -57,7 +57,8 @@ namespace RythmRPG.Combat
 
         public IEnumerable<ElementType> HealingElements() =>
             Effects.OfType<HealEffect>().Select(heal => heal.Element).Concat(Effects.OfType<RegenEffect>().Select(regen => regen.Element))
-                .Concat(Effects.OfType<CauterizeEffect>().Select(_ => ElementType.Fire));
+                .Concat(Effects.OfType<CauterizeEffect>().Select(_ => ElementType.Fire))
+                .Concat(Effects.OfType<HeartbeatEffect>().Select(_ => ElementType.Water));
 
         /// <summary>Status-producing abilities share compatibility regardless of their effect implementation.</summary>
         public IEnumerable<string> AppliedStatuses()

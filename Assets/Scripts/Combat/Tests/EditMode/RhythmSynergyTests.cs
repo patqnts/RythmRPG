@@ -221,6 +221,58 @@ namespace RythmRPG.Combat.Tests
             Assert.That(cast.DamageDealt, Is.EqualTo(64));
             Assert.That(runtime.Counters.Charges, Is.EqualTo(1));
         }
+        [Test] public void FortissimoReadsComboAtCommitWithoutSpendingIt()
+        {
+            AbilityInstance attack = Ability(AbilityRole.Damage, ElementType.None, 0, 100,
+                new FortissimoEffect(15, .2f, .6f), new DealDamageEffect(1, ElementType.None));
+            Begin();
+            var ability = new AbilityRuntimeInstance(attack, a => AbilityResolver.Resolve(a.Definition, a.BuildInstance, build));
+            Assert.That(ability.Commit(player), Is.True);
+            CastSnapshot cast = runtime.BeginCast(1, build.SlotOf(attack), ability, comboAtCommit: 30);
+            Resolve(cast);
+            Assert.That(cast.DamageDealt, Is.EqualTo(140));
+            Assert.That(cast.ComboAtCommit, Is.EqualTo(30));
+        }
+        [Test] public void ComboMilestonesFeedShieldAndManaThroughOneSharedEvent()
+        {
+            Ability(new DealDamageEffect(1));
+            Passive("tempo", new TempoGuardPassive());
+            Passive("flow", new FlowStatePassive());
+            Begin(); player.SpendMana(20); runtime.OnEnemyTurnStarted();
+            for (int combo = 1; combo <= 30; combo++)
+            {
+                RhythmJudgementResult note = Note("combo-" + combo, HitJudgement.Perfect);
+                runtime.RecordComboJudgement(note, PatternRunMode.EnemyDefense, combo - 1, combo, false, false);
+                runtime.DefenseNoteSettled(note, 0, 0, 0, combo);
+            }
+            Assert.That(modifiers.Find<ShieldBuff>(ShieldBuff.Key).Capacity, Is.EqualTo(12));
+            Assert.That(player.CurrentMana, Is.EqualTo(86));
+        }
+        [Test] public void GraceNoteAndSafetyNetShareOneComboSavePerEnemyTurn()
+        {
+            Ability(new DealDamageEffect(1));
+            Passive("safety", new SafetyNetPassive(10));
+            Begin(); runtime.Damage.AddShield(20, 2, "shield", "root", false);
+            modifiers.Add(new GraceNoteBuff("grace", "Grace Note"));
+            runtime.OnEnemyTurnStarted();
+            Assert.That(runtime.TryPreventComboBreak(Note("miss-1", HitJudgement.Miss), PatternRunMode.EnemyDefense, 20), Is.True);
+            Assert.That(modifiers.Find<ShieldBuff>(ShieldBuff.Key).Capacity, Is.EqualTo(20));
+            Assert.That(runtime.TryPreventComboBreak(Note("miss-2", HitJudgement.Miss), PatternRunMode.EnemyDefense, 20), Is.False);
+            runtime.OnEnemyTurnStarted();
+            Assert.That(runtime.TryPreventComboBreak(Note("miss-3", HitJudgement.Miss), PatternRunMode.EnemyDefense, 20), Is.True);
+            Assert.That(modifiers.Find<ShieldBuff>(ShieldBuff.Key).Capacity, Is.EqualTo(10));
+        }
+        [Test] public void CatalyzeExtendsExistingMarkAndBoostsOnlyNextReaction()
+        {
+            Ability(AbilityRole.Damage, ElementType.Fire, 0, 10, new DealDamageEffect(1));
+            Begin(); runtime.Marks.Apply(ElementalMarks.Burn, 1, 5, "burn", turns: 2);
+            Assert.That(runtime.CatalyzeMark(ElementalMarks.Burn, 1, .25f, "Catalyze"), Is.True);
+            Assert.That(runtime.Marks.Get(ElementalMarks.Burn).TurnsRemaining, Is.EqualTo(3));
+            var first = new ReactionContext { RootId = "one" }; runtime.ModifyReaction(first);
+            var second = new ReactionContext { RootId = "two" }; runtime.ModifyReaction(second);
+            Assert.That(first.Multiplier, Is.EqualTo(1.25f).Within(.001f));
+            Assert.That(second.Multiplier, Is.EqualTo(1f).Within(.001f));
+        }
         [Test] public void RepriseRespectsOncePerApplicationAndSharedDurationLimit()
         {
             var buff = new DamageReductionBuff(new BuffSpec { Kind = BuffKind.DamageReduction, Turns = 4, ExtraTurns = 2, SourceId = "a" });
@@ -277,7 +329,12 @@ namespace RythmRPG.Combat.Tests
         }
         [Test] public void NewPresetsUseExactlyFourAbilitiesAndCanGainMorePassives()
         {
-            foreach (string id in new[] { "preset-improvising-duelist", "preset-armored-spellcaster", "preset-living-furnace", "preset-breakwater-knight", "preset-storm-conductor" })
+            foreach (string id in new[]
+                     {
+                         "preset-improvising-duelist", "preset-armored-spellcaster", "preset-living-furnace",
+                         "preset-breakwater-knight", "preset-storm-conductor", "preset-combo-furnace",
+                         "preset-seismic-drummer", "preset-reaction-support"
+                     })
             {
                 BuildPreset preset = BuildContentRegistry.Instance.Preset(id);
                 Assert.That(preset.Slots.Count, Is.EqualTo(4));

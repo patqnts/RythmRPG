@@ -1,0 +1,181 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1ac14be5a7c40d992243cd40ecaea3b, type: 3}
+  m_Name: Fortissimo
+  m_EditorClassIdentifier: RythmRPG.Rhythm.Runtime::RythmRPG.Rhythm.RhythmChart
+  schemaVersion: 1
+  bpm: 120
+  beatsPerMeasure: 4
+  compositionDuration: 4
+  audioClip: {fileID: 0}
+  song: {fileID: 0}
+  songPreviewBar: 0
+  audioOffsetSeconds: 0
+  snapEnabled: 1
+  snapDivision: 4
+  lanes:
+  - id: basic_lane_1
+    displayName: Lane 1
+    color: {r: 0.2, g: 0.62, b: 0.95, a: 1}
+    keyIdentity: 1
+    keyType: 0
+  - id: basic_lane_2
+    displayName: Lane 2
+    color: {r: 0.35, g: 0.8, b: 0.52, a: 1}
+    keyIdentity: 2
+    keyType: 0
+  - id: basic_lane_3
+    displayName: Lane 3
+    color: {r: 0.95, g: 0.7, b: 0.22, a: 1}
+    keyIdentity: 3
+    keyType: 0
+  - id: basic_lane_4
+    displayName: Lane 4
+    color: {r: 0.88, g: 0.38, b: 0.55, a: 1}
+    keyIdentity: 4
+    keyType: 0
+  noteDefinitions:
+  - noteType: 0
+    defaultPrefab: {fileID: 5029094789931625778, guid: fff99d626b5218741bf0c888080b7065, type: 3}
+    displayColor: {r: 0.2, g: 0.68, b: 1, a: 1}
+    defaultSpeed: 8
+    defaultDamage: 0
+    defaultTravelTime: 2.5
+  - noteType: 3
+    defaultPrefab: {fileID: 7056163312032873497, guid: 9f98f08efb2a48c48a17b850f74d5647, type: 3}
+    displayColor: {r: 0.2, g: 0.68, b: 1, a: 1}
+    defaultSpeed: 8
+    defaultDamage: 0
+    defaultTravelTime: 2.5
+  - noteType: 2
+    defaultPrefab: {fileID: 7372676137305636529, guid: 8acd64f672a6c9e4aad4bd8c7f2d48e6, type: 3}
+    displayColor: {r: 0.2, g: 0.68, b: 1, a: 1}
+    defaultSpeed: 8
+    defaultDamage: 0
+    defaultTravelTime: 2.5
+  - noteType: 1
+    defaultPrefab: {fileID: 5029094789931625778, guid: 92bd7a486b6b3f64e8abd77da4e1f23f, type: 3}
+    displayColor: {r: 0.4, g: 0.8, b: 1, a: 1}
+    defaultSpeed: 8
+    defaultDamage: 1
+    defaultTravelTime: 2.5
+  - noteType: 7
+    defaultPrefab: {fileID: 5029094789931625778, guid: 7a1e4b9c2d5f4e8a9c3b6d0f1e2a4b5c, type: 3}
+    displayColor: {r: 1, g: 0.65, b: 0.25, a: 1}
+    defaultSpeed: 8
+    defaultDamage: 1
+    defaultTravelTime: 2.5
+  notes:
+  - id: bf223a06015a4c6193ac71294acda4f2
+    laneId: basic_lane_1
+    hitTime: 0.25
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 0
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 1
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: a9250582142744b2ad6a4d2291b4ae59
+    laneId: basic_lane_2
+    hitTime: 0.75
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 0
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 1
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 107edb17998b459dac2ce629f225facd
+    laneId: basic_lane_3
+    hitTime: 1.25
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 0
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 1
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: de50ddd153a044a1bd42433fa4a5e20d
+    laneId: basic_lane_4
+    hitTime: 2.25
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 0
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 1
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 0ebb09eef8b949fe8992faec850fac00
+    laneId: basic_lane_1
+    hitTime: 2.75
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 0
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 1
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: a95f99d0e23d482a831a87f8cba3d3da
+    laneId: basic_lane_2
+    hitTime: 3.25
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 0
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 1
+    prefabOverride: {fileID: 0}
+    metadata: []
+  patterns: []
+  sequences: []

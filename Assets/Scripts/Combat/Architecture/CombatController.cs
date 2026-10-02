@@ -270,6 +270,7 @@ namespace RythmRPG.Combat
             runner.DefenseNoteSettled -= HandleDefenseNoteSettled;
             runner.DefenseNoteSettled += HandleDefenseNoteSettled;
             abilitySlots.Initialize(inputRouter, encounter.Player);
+            buildRuntime.AbilitySlots = abilitySlots;
             abilitySlots.RequestChoice = RequestAbilityChoice;
             runner.PatternStarted -= buildRuntime.BeginRhythmPattern;
             runner.PatternStarted += buildRuntime.BeginRhythmPattern;
@@ -513,7 +514,7 @@ namespace RythmRPG.Combat
             selectedLane = laneId;
             selectedAbility = ability;
             // Cost was paid once by the slot; snapshot it (and reserve pending next-attack bonuses) for this cast.
-            buildRuntime.BeginCast(laneId, abilitySlots.SlotIndexOfLane(laneId), ability, abilitySlots.SelectedChoice);
+            buildRuntime.BeginCast(laneId, abilitySlots.SlotIndexOfLane(laneId), ability, abilitySlots.SelectedChoice, CurrentCombo);
             stats?.RecordAbility(ability);
             abilitySlots.EndSelection();
             Transition(CombatState.PlayerAbilityExecuting);
@@ -524,14 +525,16 @@ namespace RythmRPG.Combat
         private bool RequestAbilityChoice(int lane, AbilityRuntimeInstance ability)
         {
             var choices = buildRuntime.ChoicesFor(ability);
-            bool reprise = ability.Quote().Effects.Any(e => e is RepriseEffect);
-            if (reprise && choices.Count == 0)
+            AbilityQuote quote = ability.Quote();
+            bool reprise = quote.Effects.Any(e => e is RepriseEffect);
+            bool catalyze = quote.Effects.Any(e => e is CatalyzeEffect);
+            if ((reprise || catalyze) && choices.Count == 0)
             {
-                buildRuntime.Toast("NO EFFECT TO EXTEND", new Color(.8f, .8f, 1f));
+                buildRuntime.Toast(reprise ? "NO EFFECT TO EXTEND" : "NO MARK TO CATALYZE", new Color(.8f, .8f, 1f));
                 abilitySlots.BeginSelection();
                 return true;
             }
-            if (!reprise && choices.Count <= 1) return false;
+            if (!reprise && !catalyze && choices.Count <= 1) return false;
             (GetComponent<AbilityChoicePanel>() ?? gameObject.AddComponent<AbilityChoicePanel>()).Show(this, ability, choices,
                 choice => abilitySlots.ConfirmChoice(lane, ability, choice), abilitySlots.BeginSelection);
             return true;
@@ -906,7 +909,12 @@ namespace RythmRPG.Combat
         {
             // Notes cleared by zaps / walls are not the player's judgements: no combo, no accuracy.
             if (!IsBattleActive || stats == null || result.Source == NoteResolutionSource.Modifier) return;
-            stats.RecordJudgement(result.Judgement, runner != null ? runner.CurrentMode : PatternRunMode.EnemyDefense);
+            PatternRunMode mode = runner != null ? runner.CurrentMode : PatternRunMode.EnemyDefense;
+            int before = stats.Combo;
+            bool wouldBreak = stats.WouldBreakCombo(result.Judgement);
+            bool preserve = wouldBreak && buildRuntime != null && buildRuntime.TryPreventComboBreak(result, mode, before);
+            stats.RecordJudgement(result.Judgement, mode, preserve);
+            buildRuntime?.RecordComboJudgement(result, mode, before, stats.Combo, wouldBreak && !preserve, preserve);
             ComboChanged?.Invoke(stats.Combo);
         }
 

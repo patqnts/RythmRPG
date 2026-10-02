@@ -142,7 +142,11 @@ namespace RythmRPG.EditorTools
             Directory.CreateDirectory(folder);
             AssetDatabase.Refresh();
             RhythmChart presentation = Resources.Load<AbilityDefinition>("Combat/Abilities/BasicAttack").RhythmPattern;
-            foreach (string name in new[] { "Backbeat", "Breakwater", "Cauterize", "Reprise", "QuakeSlamHold" })
+            foreach (string name in new[]
+                     {
+                         "Backbeat", "Breakwater", "Cauterize", "Reprise", "QuakeSlamHold",
+                         "Fortissimo", "GraceNote", "Heartbeat", "DrumBarrage", "Catalyze"
+                     })
             {
                 string path = folder + "/" + name + ".asset";
                 if (AssetDatabase.LoadAssetAtPath<RhythmChart>(path) != null) continue;
@@ -159,6 +163,14 @@ namespace RythmRPG.EditorTools
                 }
                 hold.DefaultPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefab/HoldNote.prefab");
                 if (hold.DefaultPrefab == null) throw new InvalidOperationException("Hold note prefab missing.");
+                RhythmNoteDefinition mash = chart.FindDefinition(RhythmNoteType.Mash);
+                if (mash == null)
+                {
+                    mash = new RhythmNoteDefinition(RhythmNoteType.Mash, new Color(1f, .65f, .25f));
+                    chart.NoteDefinitions.Add(mash);
+                }
+                mash.DefaultPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefab/Mash.prefab");
+                if (mash.DefaultPrefab == null) throw new InvalidOperationException("Mash note prefab missing.");
                 double beat = 60d / chart.Bpm;
                 bool holds = name == "Breakwater" || name == "QuakeSlamHold";
                 double[] beats = holds ? new[] { 1d, 5d } : new[] { .5d, 1.5d, 2.5d, 4.5d, 5.5d, 6.5d };
@@ -166,8 +178,14 @@ namespace RythmRPG.EditorTools
                 {
                     RhythmLaneData lane = chart.Lanes[i % chart.Lanes.Count];
                     bool isHold = holds || name == "Reprise" && i == beats.Length - 1;
-                    var note = new RhythmNoteData(lane.Id, chart.AudioOffsetSeconds + beats[i] * beat, isHold ? RhythmNoteType.Hold : RhythmNoteType.Normal)
-                    { HoldDuration = isHold ? beat * (holds ? 1.5d : .5d) : 0d, Damage = 0, TravelTime = 2.5d, Speed = 8f };
+                    bool isMash = name == "DrumBarrage" && i == 2;
+                    var note = new RhythmNoteData(lane.Id, chart.AudioOffsetSeconds + beats[i] * beat,
+                        isMash ? RhythmNoteType.Mash : isHold ? RhythmNoteType.Hold : RhythmNoteType.Normal)
+                    {
+                        HoldDuration = isHold ? beat * (holds ? 1.5d : .5d) : 0d,
+                        MashRequiredPresses = isMash ? 8 : 1,
+                        Damage = 0, TravelTime = 2.5d, Speed = 8f
+                    };
                     chart.Notes.Add(note);
                 }
                 AssetDatabase.CreateAsset(chart, path);

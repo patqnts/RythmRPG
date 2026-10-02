@@ -292,6 +292,36 @@ namespace RythmRPG.Combat
                 .Describe("Choose a live player shield, ward or buff. At 70% chart accuracy, keep it one more turn. Each application can be reprised once; no valid target means no payment.")
                 .Effect(new RepriseEffect()).Build());
 
+            // ---------------- Broad rhythm strategy abilities ----------------
+            AbilityDefinition fortissimo = Add(new AbilityDefinition.Builder("sample-fortissimo", "Fortissimo", basic)
+                .Type(AbilityType.BasicAttack).Tags(AbilityRole.Damage, AbilityDelivery.Melee).Cost(0, 1).Power(P(1.1f))
+                .Chart(Resources.Load<RythmRPG.Rhythm.RhythmChart>("Combat/Charts/Fortissimo"))
+                .Describe("Free physical attack. Every 15 Combo already held adds 20% damage, up to 60%. It does not spend Combo.")
+                .Effect(new FortissimoEffect(15, .2f, .6f)).Effect(new DealDamageEffect(1f, ElementType.None)).Build());
+            AbilityDefinition graceNote = Add(new AbilityDefinition.Builder("sample-grace-note", "Grace Note", guard)
+                .Type(AbilityType.Defensive).Tags(AbilityRole.Buff | AbilityRole.Defense, AbilityDelivery.Technique)
+                .Element(ElementType.Wind).Cost(14, 3).Power(0)
+                .Chart(Resources.Load<RythmRPG.Rhythm.RhythmChart>("Combat/Charts/GraceNote"))
+                .Describe("At 70% chart accuracy, the next Combo-breaking judgement during the next enemy turn does not reset Combo. Damage and the judgement still count.")
+                .Effect(new GraceNoteEffect(.7f)).Build());
+            AbilityDefinition heartbeat = Add(new AbilityDefinition.Builder("sample-heartbeat", "Heartbeat", heal)
+                .Type(AbilityType.Healing).Tags(AbilityRole.Healing | AbilityRole.Defense, AbilityDelivery.Spell)
+                .Element(ElementType.Water).Cost(20, 3).Power(Mathf.RoundToInt(healPower * .4f))
+                .Chart(Resources.Load<RythmRPG.Rhythm.RhythmChart>("Combat/Charts/Heartbeat"))
+                .Describe("For 2 enemy turns, reaching 15, 30, 45... Combo heals a small Water amount, at most twice per turn. Water healing bonuses apply.")
+                .Effect(new HeartbeatEffect(.3f, 2)).Build());
+            AbilityDefinition drumBarrage = Add(new AbilityDefinition.Builder("sample-drum-barrage", "Drum Barrage", basic)
+                .Type(AbilityType.SpecialAttack).Tags(AbilityRole.Damage | AbilityRole.Defense, AbilityDelivery.Technique)
+                .Element(ElementType.Earth).Cost(16, 2).Power(P(1.5f))
+                .Chart(Resources.Load<RythmRPG.Rhythm.RhythmChart>("Combat/Charts/DrumBarrage"))
+                .Describe("Earth damage with a Mash chart. Complete the Mash at Good or better and finish at 70%+ to gain a 2-charge Stone Wall for the next enemy turn.")
+                .Effect(new DealDamageEffect(1f)).Effect(new ChallengeStoneWallEffect(2, .7f)).Build());
+            AbilityDefinition catalyze = Add(new AbilityDefinition.Builder("sample-catalyze", "Catalyze", guard)
+                .Type(AbilityType.Defensive).Tags(AbilityRole.Buff, AbilityDelivery.Spell).Cost(12, 2).Power(0)
+                .Chart(Resources.Load<RythmRPG.Rhythm.RhythmChart>("Combat/Charts/Catalyze"))
+                .Describe("Choose a mark already on the enemy. At 70%+ extend it by 1 turn and make the next reaction 25% stronger. It never creates a mark.")
+                .Effect(new CatalyzeEffect(.7f, 1, .25f)).Build());
+
             // ---------------- Dedicated upgrades ----------------
             AbilityUpgradeDefinition AddUpgrade(AbilityUpgradeDefinition upgrade)
             {
@@ -448,6 +478,23 @@ namespace RythmRPG.Combat
             PassiveDefinition closeout = AddPassive(new PassiveDefinition.Builder("ps-closeout", "Closeout", PassiveCategory.RhythmConditioned, 1)
                 .Effect(new CloseoutPassive()).Style(StyleAdaptable, StyleGlass).Build());
 
+            // Broad Combo, resource, mark and challenge connections. These do not require private ability pairs.
+            PassiveDefinition tempoGuard = AddPassive(new PassiveDefinition.Builder("ps-tempo-guard", "Tempo Guard", PassiveCategory.RhythmConditioned, 1)
+                .Effect(new TempoGuardPassive()).Style(StyleTank, StyleParry).Build());
+            PassiveDefinition flowState = AddPassive(new PassiveDefinition.Builder("ps-flow-state", "Flow State", PassiveCategory.MagicEfficiency, 1)
+                .Effect(new FlowStatePassive()).Style(StyleAdaptable, StyleGlass).Build());
+            PassiveDefinition comebackBeat = AddPassive(new PassiveDefinition.Builder("ps-comeback-beat", "Comeback Beat", PassiveCategory.RhythmConditioned, 1)
+                .Effect(new ComebackBeatPassive()).Style(StyleParry, StyleAdaptable).Build());
+            PassiveDefinition safetyNet = AddPassive(new PassiveDefinition.Builder("ps-safety-net", "Safety Net", PassiveCategory.Survivability, 1)
+                .Effect(new SafetyNetPassive(10)).Style(StyleTank, StyleParry).Build());
+            PassiveDefinition markedOpening = AddPassive(new PassiveDefinition.Builder("ps-marked-opening", "Marked Opening", PassiveCategory.MeleeEnhancement, 1)
+                .Requires(new AbilityRequirement { delivery = AbilityDelivery.Melee, role = AbilityRole.Damage })
+                .Effect(new MarkedOpeningPassive(.2f)).Style(StyleElemental, StyleParry).Build());
+            PassiveDefinition longMeasure = AddPassive(new PassiveDefinition.Builder("ps-long-measure", "Long Measure", PassiveCategory.RhythmConditioned, 1)
+                .Effect(new LongMeasurePassive()).Style(StyleAdaptable, StyleTank).Build());
+            PassiveDefinition elementalRelay = AddPassive(new PassiveDefinition.Builder("ps-elemental-relay", "Elemental Relay", PassiveCategory.Conversion, 1)
+                .Effect(new ElementalRelayPassive(.2f, 2)).Style(StyleElemental, StyleTank).Build());
+
             // Fallback (always eligible, levels up to 5)
             AddPassive(new PassiveDefinition.Builder("ps-vitality", "Vitality", PassiveCategory.Survivability, 5)
                 .Fallback().Effect(new MaxHealthPassive(0.05f, 0.05f)).Build());
@@ -552,8 +599,24 @@ namespace RythmRPG.Combat
                 .Slot(siphon).Slot(backbeat).Slot(chainSpark).Slot(undertow)
                 .Passive(counterPrep).Passive(capacitor).Passive(catalyst).Passive(reactionShelter).Build());
 
+            AddPreset(new BuildPreset.Builder("preset-combo-furnace", "Combo Furnace", StyleElemental)
+                .Describe("Keep one shared Combo alive and turn each 15-Combo step into protection, mana and Burn. Fortissimo cashes in the current Combo without consuming it; Grace Note and Safety Net share one save, so mistakes still matter.")
+                .Slot(fortissimo).Slot(flameGuard).Slot(graceNote).Slot(cauterize)
+                .Passive(tempoGuard).Passive(flowState).Passive(safetyNet).Passive(stoke).Passive(pyreKeeper).Build());
+            AddPreset(new BuildPreset.Builder("preset-seismic-drummer", "Seismic Drummer", StyleTank)
+                .Describe("Complete Hold and Mash challenges to gain shield and shorten the longest cooldown. Drum Barrage creates a small Stone Wall; Breakwater and Quake Slam turn the remaining shield and Earth damage into offense.")
+                .Slot(siphon).Slot(drumBarrage).Slot(breakwater).Slot(quakeSlam)
+                .Passive(sustainedGuard).Passive(longMeasure).Passive(bedrock).Passive(aftershock).Passive(reservoir).Build());
+            AddPreset(new BuildPreset.Builder("preset-reaction-support", "Reaction Support", StyleElemental)
+                .Describe("Undertow and Fire Bolt create reactions. Catalyze keeps an existing mark alive and empowers the next reaction; that reaction arms Elemental Relay so the next heal, shield or strength-based buff is stronger.")
+                .Slot(siphon).Slot(catalyze).Slot(undertow).Slot(fireBolt)
+                .Passive(catalyst).Passive(reactionShelter).Passive(elementalRelay).Passive(closeout).Passive(conservation).Build());
+
             BuildIconCatalog.Apply(content);
             _ = thunderClap;
+            _ = heartbeat;
+            _ = comebackBeat;
+            _ = markedOpening;
             return content;
         }
     }

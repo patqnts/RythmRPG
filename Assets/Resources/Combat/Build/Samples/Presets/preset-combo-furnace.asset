@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dcaf364c3488584aa4b23882270f869, type: 3}
+  m_Name: preset-combo-furnace
+  m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.BuildPreset
+  id: preset-combo-furnace
+  displayName: Combo Furnace
+  playstyle: elemental
+  description: Keep one shared Combo alive and turn each 15-Combo step into protection, mana and Burn. Fortissimo cashes in the current Combo without consuming it; Grace Note and Safety Net share one save, so mistakes still matter.
+  slots:
+  - ability: {fileID: 11400000, guid: 248816aa43a5eb04483e91de07d5b3bf, type: 2}
+    upgrades: []
+  - ability: {fileID: 11400000, guid: 55128a40cb33acc41ba20e7d443b821c, type: 2}
+    upgrades: []
+  - ability: {fileID: 11400000, guid: f3f87a2570ef9124e9d6851c9bffc0dd, type: 2}
+    upgrades: []
+  - ability: {fileID: 11400000, guid: daddb3a772b3f53449e4c8c3a0cc8c44, type: 2}
+    upgrades: []
+  reserve: []
+  passives:
+  - passive: {fileID: 11400000, guid: dbccc1472995c86488bc7263e0b38adb, type: 2}
+    level: 1
+  - passive: {fileID: 11400000, guid: 3be55f1b7b0d2ef4ebc23efff43a52cd, type: 2}
+    level: 1
+  - passive: {fileID: 11400000, guid: d236bb5d26ff21943a536333e3ba7624, type: 2}
+    level: 1
+  - passive: {fileID: 11400000, guid: 46a14cbdf865eb040b8c6a089fe270a3, type: 2}
+    level: 1
+  - passive: {fileID: 11400000, guid: 336fc4189f8d80e4a91408567637d568, type: 2}
+    level: 1
