@@ -13,13 +13,15 @@ MonoBehaviour:
   m_Name: Enemy200
   m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.EnemyDefinition
   id: enemy-200
-  displayName: Scout
+  displayName: Dummy
   maxHealth: 200
   phases:
   - {fileID: 11400000, guid: b1000000000000000000000000000108, type: 2}
   responses:
     label: 
-    affinities: []
+    affinities:
+    - element: 0
+      multiplier: 0
     statuses: []
     maxStaggers: 0
     maxZapsPerTurn: 0
