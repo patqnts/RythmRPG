@@ -382,7 +382,10 @@ namespace RythmRPG.Combat
                 Header(runtime.CurrentCast != null ? "Current cast" : "Last cast");
                 Label($"<b>{cast.Definition?.DisplayName}</b> slot {cast.SlotIndex + 1}, paid {cast.PaidCost} MP, perf {cast.PerformanceWeight:0.00}" +
                       (cast.ExecutionEligible ? "" : " (no execution bonus)"));
-                Small($"Damage {cast.DamageBeforeModifiers} base → {cast.DamageAfterModifiers} modified → {cast.DamageAfterAffinity} after affinity → {cast.DamageDealt} dealt");
+                if (cast.HasRole(AbilityRole.Damage) || cast.DamageBeforeModifiers > 0 || cast.DamageDealt > 0)
+                    Small($"Damage {cast.DamageBeforeModifiers} base → {cast.DamageAfterModifiers} modified → {cast.DamageAfterAffinity} after affinity → {cast.DamageDealt} dealt");
+                else if (cast.Quote?.Effects.Any(effect => effect is ApplyBuffEffect) == true)
+                    Small("No direct damage; this ability's result is active under Buffs / statuses.");
                 if (cast.Healed + cast.Overheal > 0) Small($"Healed {cast.Healed} (overheal {cast.Overheal})");
                 if (cast.ShieldGained > 0) Small($"Shield +{cast.ShieldGained}");
                 foreach (string line in cast.Log) Small("   " + line);

@@ -63,7 +63,7 @@ namespace RythmRPG.Combat
             T("counter", "Counter", "A stored charge earned from certain defensive or rhythm effects. Ordinary attacks, Riposte and Improvisation can spend it in different ways.", Rhythm, "Counter charges", "Counter charge", "Counters", "Counter"),
             T("shield", "Shield", "Temporary protection that absorbs damage before health. Total shield is normally capped at 40% of maximum health.", Support, "Shielded", "Shields", "Shield"),
             T("ward", "Ward", "Protection with a specific rule, such as guarding one rhythm lane from Bad and Miss damage.", Support, "Wards", "Ward"),
-            T("reflect", "Reflect", "Damage sent back to the enemy after an eligible defensive judgement. It is still limited by its source and per-turn cap.", Utility, "Reflection", "Reflects", "Reflect"),
+            T("reflect", "Reflect", "Damage sent back to the enemy after an eligible defensive judgement. It bypasses enemy affinity, but is still limited by its source and per-turn cap.", Utility, "Reflection", "Reflects", "Reflect"),
             T("buff", "Buff", "A temporary helpful effect on the player, such as a stronger next attack or damage reduction.", Support, "Buffs", "Buff"),
             T("status", "Status", "A named temporary effect with its own duration, stacks and enemy response rules.", Utility, "Statuses", "Status"),
             T("mark", "Elemental Mark", "A status placed on an enemy for elemental setup: Burn, Soaked, Static or Cracked. Wind supports existing marks instead of adding its own.", Utility, "Elemental marks", "Elemental mark", "Marks", "Mark"),

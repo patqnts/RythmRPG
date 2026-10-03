@@ -370,7 +370,9 @@ namespace RythmRPG.Combat.Tests
             var build = new RunBuildState();
             build.AddAbility(Ability("strike", AbilityRole.Damage, AbilityDelivery.Melee, 0, 100));
             build.AddPassive(Passive("deflect", new DeflectionPassive(0.3f, 0f, 40, 0)));
-            Rig rig = CreateRig(build, enemyHealth: 1000);
+            Rig rig = CreateRig(build, enemyHealth: 1000,
+                responses: new EnemyResponseProfile("Physical immune",
+                    new[] { new DamageAffinity(ElementType.None, 0f) }));
 
             rig.Runtime.OnEnemyTurnStarted();
             rig.Modifiers.OnEnemyTurnStarted();
@@ -381,7 +383,8 @@ namespace RythmRPG.Combat.Tests
                 rig.Runtime.DefenseNoteSettled(result, 1, 0, 0);
             }
 
-            Assert.That(1000 - rig.Enemy.CurrentHealth, Is.EqualTo(3), "ten 1-damage notes at 30% should total 3 reflected damage");
+            Assert.That(1000 - rig.Enemy.CurrentHealth, Is.EqualTo(3),
+                "reflection returns the projectile damage and must not be erased by the enemy's physical affinity");
         }
 
         [Test]
@@ -389,7 +392,9 @@ namespace RythmRPG.Combat.Tests
         {
             var build = new RunBuildState();
             build.AddAbility(Ability("strike", AbilityRole.Damage, AbilityDelivery.Melee, 0, 100));
-            Rig rig = CreateRig(build, enemyHealth: 1000);
+            Rig rig = CreateRig(build, enemyHealth: 1000,
+                responses: new EnemyResponseProfile("Physical immune",
+                    new[] { new DamageAffinity(ElementType.None, 0f) }));
             rig.Runtime.ApplyBuff(new BuffSpec
             {
                 Kind = BuffKind.Reflect,
@@ -409,7 +414,8 @@ namespace RythmRPG.Combat.Tests
                 rig.Runtime.DefenseNoteSettled(result, 1, 0, 0);
             }
 
-            Assert.That(1000 - rig.Enemy.CurrentHealth, Is.EqualTo(4), "70%-strength Mirror Stance should preserve 4.2 total reflected damage");
+            Assert.That(1000 - rig.Enemy.CurrentHealth, Is.EqualTo(4),
+                "70%-strength Mirror Stance should preserve 4.2 reflected damage regardless of physical affinity");
         }
 
         [Test]

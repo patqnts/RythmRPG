@@ -195,7 +195,7 @@ namespace RythmRPG.Combat
         [SerializeField, Range(0f, 1f)] private float fractionPerLevel = 0.1f;
         [SerializeField, Min(1)] private int capPerEnemyTurn = 40;
         [SerializeField, Min(0)] private int capPerLevel = 15;
-        [Tooltip("Damage type of the reflected damage (enemy affinity applies once).")]
+        [Tooltip("Damage type used for reporting. Reflected damage bypasses enemy affinity.")]
         [SerializeField] private ElementType element = ElementType.None;
 
         public DeflectionPassive() { }
@@ -230,7 +230,7 @@ namespace RythmRPG.Combat
             if (amount <= 0) return;
             hook.Add("reflected", amount);
             hook.Runtime.Damage.DamageEnemy(amount, element, hook.SourceId, outcome.RootCauseId, CombatEventKind.ReflectDamage,
-                applyAffinity: true, secondary: true, label: hook.Label);
+                applyAffinity: false, secondary: true, label: hook.Label);
         }
     }
 

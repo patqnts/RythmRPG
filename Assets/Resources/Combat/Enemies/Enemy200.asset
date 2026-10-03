@@ -19,9 +19,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b1000000000000000000000000000108, type: 2}
   responses:
     label: 
-    affinities:
-    - element: 0
-      multiplier: 0
+    affinities: []
     statuses: []
     maxStaggers: 0
     maxZapsPerTurn: 0

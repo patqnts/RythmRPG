@@ -466,7 +466,7 @@ namespace RythmRPG.Combat
                 int amount = reflect.Take(outcome.NoteDamage, fraction);
                 if (amount > 0)
                     Damage.DamageEnemy(amount, ElementType.None, reflect.SourceId, outcome.RootCauseId, CombatEventKind.ReflectDamage,
-                        applyAffinity: true, secondary: true, label: reflect.Label);
+                        applyAffinity: false, secondary: true, label: reflect.Label);
             }
         }
 
