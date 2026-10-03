@@ -5594,6 +5594,7 @@ GameObject:
   - component: {fileID: 1603825035}
   - component: {fileID: 1603825034}
   - component: {fileID: 1603825033}
+  - component: {fileID: 1603825037}
   - component: {fileID: 1603825032}
   m_Layer: 0
   m_Name: CombatManager
@@ -5779,6 +5780,29 @@ MonoBehaviour:
   resultGrading: {fileID: 0}
   showRewardScreen: 1
   rewardScreen: {fileID: 0}
+--- !u!114 &1603825037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1603825030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6cdafc64ead6fdb3ab9cd1233e1b14b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.CombatVFXController
+  uiTheme: {fileID: 11400000, guid: b1000000000000000000000000000104, type: 2}
+  vfxTheme: {fileID: 11400000, guid: b1000000000000000000000000000105, type: 2}
+  abilityCenter: {fileID: 0}
+  cameraTransform: {fileID: 1960780237}
+  minimumAbilityPatternSpawnHeightAboveLanes: 2.5
+  slotAnimation: {fileID: 11400000, guid: 2490ae665e944bc3bf3244416aa86944, type: 2}
+  floatingTextSize: 5
+  enemyDamageTextColor: {r: 1, g: 1, b: 1, a: 1}
+  enemyFloatingTextDrift: {x: -0.75, y: -0.55}
+  enemyTextOutline: {r: 1, g: 0.5615013, b: 0, a: 1}
+  enemyTextOutlineWidth: 0.321
 --- !u!1 &1648152713
 GameObject:
   m_ObjectHideFlags: 0

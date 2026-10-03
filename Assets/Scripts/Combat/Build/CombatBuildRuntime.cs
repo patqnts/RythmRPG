@@ -79,6 +79,7 @@ namespace RythmRPG.Combat
         private readonly List<PassiveHook> hooks = new();
         private readonly Dictionary<string, DefenseNoteOutcome> pendingDefense = new();
         private Action<string, Vector3, Color> showText;
+        private Action<string, Vector3, Color> showEnemyText;
         private EnemyTurnSummary enemyTurn;
         private int castCounter;
         private bool ended;
@@ -150,7 +151,8 @@ namespace RythmRPG.Combat
         /// the combatants capture their battle-start state (max health may change).
         /// </summary>
         public void BeginEncounter(PlayerCombatant player, EnemyCombatant enemy, CombatModifierSystem modifiers,
-            RunBuildState build, Action<string, Vector3, Color> floatingText = null)
+            RunBuildState build, Action<string, Vector3, Color> floatingText = null,
+            Action<string, Vector3, Color> enemyFloatingText = null)
         {
             EnsureServices();
             Rules = BuildBalanceRules.Load();
@@ -159,6 +161,7 @@ namespace RythmRPG.Combat
             Modifiers = modifiers;
             Build = build;
             showText = floatingText;
+            showEnemyText = enemyFloatingText;
             EncounterId = ++encounterCounter;
             PlayerTurn = 0;
             EnemyTurn = 0;
@@ -781,7 +784,9 @@ namespace RythmRPG.Combat
 
         internal void ShowAtEnemy(string text, Color color)
         {
-            if (showText != null && Enemy != null) showText(text, Enemy.transform.position + Vector3.up * 1.4f, color);
+            if (Enemy == null) return;
+            if (showEnemyText != null) showEnemyText(text, Enemy.transform.position + Vector3.up * 1.4f, color);
+            else showText?.Invoke(text, Enemy.transform.position + Vector3.up * 1.4f, color);
         }
 
         internal void RaiseChanged() => Changed?.Invoke();

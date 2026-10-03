@@ -34,7 +34,7 @@ MonoBehaviour:
   LineHorizontalPadding: 8
   SnapToRenderTexturePixels: 1
   ShowKeyMarkers: 1
-  KeyMarkersBreakLine: 1
+  KeyMarkersBreakLine: 0
   KeyMarkerShape: 1
   KeyMarkerSprite: {fileID: 0}
   KeyMarkerSize: 32

@@ -19,6 +19,13 @@ namespace RythmRPG.Combat
         [SerializeField] private AbilitySlotAnimationProfile slotAnimation;
         [Tooltip("World-space size of floating combat text (TextMeshPro font size; 10 = 1 world unit tall).")]
         [SerializeField, Min(0.1f)] private float floatingTextSize = 2.7f;
+        [Header("Enemy Feedback")]
+        [Tooltip("Colour used for the enemy's normal damage number. Chosen to remain visible during the white hit flash.")]
+        [SerializeField] private Color enemyDamageTextColor = new(1f, 0.42f, 0.16f, 1f);
+        [Tooltip("Screen-facing world-space offset travelled by enemy feedback before it fades.")]
+        [SerializeField] private Vector2 enemyFloatingTextDrift = new(-0.75f, -0.55f);
+        [SerializeField] private Color enemyTextOutline = new(0.08f, 0.025f, 0.015f, 1f);
+        [SerializeField, Range(0f, 1f)] private float enemyTextOutlineWidth = 0.34f;
 
         private readonly Dictionary<int, AbilitySlotView> slotViews = new();
         private readonly Dictionary<int, KeyButton> keyViews = new();
@@ -447,7 +454,8 @@ namespace RythmRPG.Combat
         {
             hitReaction?.Play(vfxTheme != null ? vfxTheme.HitFlashDuration : 0.12f,
                 vfxTheme != null ? vfxTheme.HitShakeStrength : 0.12f);
-            if (enemy != null) CreateFloatingText($"-{amount}", enemy.transform.position + Vector3.up, Color.white);
+            if (enemy != null)
+                ShowEnemyFloatingText($"-{amount}", enemy.transform.position + Vector3.up, enemyDamageTextColor);
         }
 
         private void PlayJudgement(RhythmJudgementResult result)
@@ -467,13 +475,29 @@ namespace RythmRPG.Combat
             hitReaction?.Play(vfxTheme != null ? vfxTheme.HitFlashDuration : 0.12f,
                 vfxTheme != null ? vfxTheme.HitShakeStrength : 0.12f);
             if (enemy != null && !string.IsNullOrEmpty(label))
-                CreateFloatingText(label, enemy.transform.position + Vector3.up, Color.white);
+                ShowEnemyFloatingText(label, enemy.transform.position + Vector3.up, enemyDamageTextColor);
         }
 
         /// <summary>Floating combat text (heal numbers, WARD, GUARD...).</summary>
         public void ShowFloatingText(string value, Vector3 position, Color color) => CreateFloatingText(value, position, color);
 
+        /// <summary>Feedback attached to the enemy: high-contrast and drifting diagonally down toward centre stage.</summary>
+        public void ShowEnemyFloatingText(string value, Vector3 position, Color color)
+        {
+            if (string.IsNullOrEmpty(value)) return;
+            Vector3 drift = new(enemyFloatingTextDrift.x, enemyFloatingTextDrift.y, 0f);
+            CreateFloatingText(value, position, color, drift, enemyTextOutline, enemyTextOutlineWidth);
+        }
+
         private void CreateFloatingText(string value, Vector3 position, Color color)
+        {
+            CombatHudStyle hud = CombatHudStyle.LoadOrDefault();
+            CreateFloatingText(value, position, color, Vector3.up * 0.8f, hud.TextOutline,
+                CombatText.DefaultOutlineWidth);
+        }
+
+        private void CreateFloatingText(string value, Vector3 position, Color color, Vector3 drift,
+            Color outline, float outlineWidth)
         {
             GameObject label = new(value);
             label.transform.position = position;
@@ -494,10 +518,10 @@ namespace RythmRPG.Combat
             mesh.rectTransform.sizeDelta = new Vector2(6f, 1.5f);
             // Judgement text must never be hidden by world geometry or by the hit line canvas: shared ZTest-Always
             // material with an outline for readability (one material per font, not one per popup).
-            CombatText.ApplyOutline(mesh, hud.TextOutline, CombatText.DefaultOutlineWidth, alwaysOnTop: true);
+            CombatText.ApplyOutline(mesh, outline, outlineWidth, alwaysOnTop: true);
             MeshRenderer textRenderer = label.GetComponent<MeshRenderer>();
             if (textRenderer != null) textRenderer.sortingOrder = 500;
-            Tween.PositionY(label.transform, position.y + 0.8f, 0.65f, Ease.OutSine);
+            Tween.Position(label.transform, position + drift, 0.65f, Ease.OutSine);
             Tween.Custom(mesh, 1f, 0f, 0.65f, (target, alpha) => target.alpha = alpha)
                 .OnComplete(label, target => Destroy(target));
         }

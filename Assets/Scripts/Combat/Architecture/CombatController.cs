@@ -130,7 +130,8 @@ namespace RythmRPG.Combat
             // (passives may change max health). Acquired passives live on RunBuild, so this survives restarts.
             // A preview battle runs without the run build, so passives (zaps, walls) never change what is previewed.
             buildRuntime.BeginEncounter(context.Player, context.Enemy, modifierSystem, IsPreviewing ? null : RunBuild.Current,
-                vfxController != null ? vfxController.ShowFloatingText : null);
+                vfxController != null ? vfxController.ShowFloatingText : null,
+                vfxController != null ? vfxController.ShowEnemyFloatingText : null);
             buildRuntime.Board = noteBoard.Bind(runner);
             WatchEnemyDefeat(context.Enemy);
             encounter.Player.CaptureBattleStart();
