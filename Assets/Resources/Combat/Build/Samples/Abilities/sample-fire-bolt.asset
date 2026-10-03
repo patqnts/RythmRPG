@@ -23,7 +23,7 @@ MonoBehaviour:
   rhythmPattern: {fileID: 11400000, guid: b100000000000000000000000000010d, type: 2}
   outcomeProfile: {fileID: 11400000, guid: b1000000000000000000000000000102, type: 2}
   vfxProfile: {fileID: 11400000, guid: b1000000000000000000000000000103, type: 2}
-  attackSequence: {fileID: 11400000, guid: e3e51a83b6e28ba418720d20d15c42e9, type: 2}
+  attackSequence: {fileID: 11400000, guid: a77e22faf8814224cbc4acdca365a71d, type: 2}
   effects:
   - rid: 2956268601564201055
   roles: 1

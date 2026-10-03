@@ -1,0 +1,111 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a24d139eae904b479eef368918af55f, type: 3}
+  m_Name: FireBoltSequence
+  m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.CharacterAttackSequence
+  moveToStage: 0
+  stageViewport: {x: 0.5, y: 0.45}
+  moveInSeconds: 0.35
+  moveBackSeconds: 0.35
+  movingBoolParameter: 
+  arriveState: 
+  steps:
+  - rid: 2956268411002028131
+  - rid: 2956268416212402419
+  - rid: 4681396234822352999
+  - rid: 4681396234822353000
+  - rid: 2956268416212402422
+  references:
+    version: 2
+    RefIds:
+    - rid: 2956268411002028131
+      type: {class: PlayAnimationStep, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
+      data:
+        waitForCompletion: 1
+        delay: 0
+        stateName: Attack
+        trigger: 
+        crossFadeSeconds: 0.05
+        wait: 2
+        seconds: 0.4
+    - rid: 2956268416212402419
+      type: {class: MoveCasterStep, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
+      data:
+        waitForCompletion: 1
+        delay: 0
+        to: 2
+        offset: {x: 0, y: 0, z: -0.8}
+        seconds: 0.2
+        ease: 6
+    - rid: 2956268416212402422
+      type: {class: MoveCasterStep, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
+      data:
+        waitForCompletion: 1
+        delay: 0
+        to: 3
+        offset: {x: 0, y: 0, z: -0.8}
+        seconds: 0.2
+        ease: 6
+    - rid: 4681396234822352999
+      type: {class: ThrowProjectileStep, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
+      data:
+        waitForCompletion: 1
+        delay: 0.5
+        prefab: {fileID: 100010, guid: b32f835e658efa1419ad0ae6b033b81f, type: 3}
+        from: 0
+        fromOffset: {x: 0, y: 0.8, z: 0}
+        to: 1
+        toOffset: {x: 0, y: 0.5, z: 0}
+        duration: 0.35
+        speed: 14
+        arcHeight: 1
+        spinDegreesPerSecond: 0
+        scale: 1
+        flightCurve:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 0
+            inSlope: 0
+            outSlope: 1
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 1
+            value: 1
+            inSlope: 1
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        damageOnHit: 1
+        hitWeight: 1
+        impactEffect: {fileID: 0}
+        impactEffectLifetime: 1.5
+        impactShake: 0
+    - rid: 4681396234822353000
+      type: {class: ImpactStep, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
+      data:
+        waitForCompletion: 1
+        delay: 0
+        weight: 1
+        effect: {fileID: 0}
+        effectAt: 1
+        effectOffset: {x: 0, y: 0.5, z: 0}
+        shake: 0
