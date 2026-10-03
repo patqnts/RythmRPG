@@ -29,7 +29,7 @@ MonoBehaviour:
   - rid: 4681396207822569574
   roles: 9
   delivery: 1
-  description: Choose Guard to strike and gain shield, or Break to spend one third of your shield (max 30) for extra Water damage. Break does not add shield.
+  description: Choose Guard to strike and gain shield, or Break to spend one third of your shield (max 30) for triple Water damage per shield spent. Break does not add shield.
   references:
     version: 2
     RefIds:

@@ -463,7 +463,7 @@ namespace RythmRPG.Combat
             {
                 float fraction = reflect.FractionFor(outcome.Result.Judgement);
                 if (fraction <= 0f) continue;
-                int amount = reflect.Take(Mathf.RoundToInt(outcome.NoteDamage * fraction));
+                int amount = reflect.Take(outcome.NoteDamage, fraction);
                 if (amount > 0)
                     Damage.DamageEnemy(amount, ElementType.None, reflect.SourceId, outcome.RootCauseId, CombatEventKind.ReflectDamage,
                         applyAffinity: true, secondary: true, label: reflect.Label);

@@ -17,7 +17,7 @@ MonoBehaviour:
   playstyle: tank
   description: 'Objective: outlast the enemy with steady offense. Fortitude +30% HP, Iron Skin -25% note damage (max 40 prevented per enemy turn), Second Wind turns overheal into shield, Tidal Healing +25% Water healing. Shield Bash hits and shields; Bulwark cuts damage 35% for 2 turns.
 
-    Trade-off: low damage, long fights; shields are capped (30% max HP) and expire.'
+    Trade-off: low damage, long fights; shields are capped (40% max HP) and expire.'
   slots:
   - ability: {fileID: 11400000, guid: af67410db4a055349aa1955af25e470e, type: 2}
     upgrades: []

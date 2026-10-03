@@ -27,7 +27,7 @@ namespace RythmRPG.Combat
 
         [Header("Protection")]
         [Tooltip("Shield capacity cap as a fraction of max health (all shield sources share it).")]
-        [SerializeField, Range(0.05f, 1f)] private float shieldCapFraction = 0.3f;
+        [SerializeField, Range(0.05f, 1f)] private float shieldCapFraction = 0.4f;
 
         [Header("Counterpower")]
         [Tooltip("Most counter charges that can be stored.")]

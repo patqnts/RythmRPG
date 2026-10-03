@@ -169,11 +169,14 @@ namespace RythmRPG.Combat
 
     public sealed class ReflectBuff : TimedBuff
     {
+        private const int FractionScale = 1000;
+
         public float Strength { get; }
         public float GoodFactor { get; }
         public int PerTurnCap { get; }
         public string SourceId { get; }
         public int ReflectedThisTurn { get; private set; }
+        private int reflectedRemainder;
 
         public ReflectBuff(BuffSpec spec) : base("reflect:" + spec.SourceId, spec.Label ?? "Reflect", spec.Turns, TurnBoundary.EnemyTurnEnd)
         {
@@ -191,18 +194,31 @@ namespace RythmRPG.Combat
             _ => 0f
         };
 
-        /// <summary>Clamps a reflect amount to what is left of this enemy turn's cap and books it.</summary>
-        public int Take(int amount)
+        /// <summary>
+        /// Accumulates fractional reflected damage across notes, then clamps whole damage to the enemy-turn cap.
+        /// This keeps dense patterns made of 1-damage notes from rounding every reflection down to zero.
+        /// </summary>
+        public int Take(int noteDamage, float fraction)
         {
-            int allowed = PerTurnCap > 0 ? Mathf.Min(amount, PerTurnCap - ReflectedThisTurn) : amount;
+            int scaled = Mathf.Max(0, Mathf.RoundToInt(Mathf.Max(0, noteDamage) * Mathf.Max(0f, fraction) * FractionScale));
+            int accumulated = reflectedRemainder + scaled;
+            int amount = accumulated / FractionScale;
+            reflectedRemainder = accumulated % FractionScale;
+            int remaining = PerTurnCap > 0 ? Mathf.Max(0, PerTurnCap - ReflectedThisTurn) : amount;
+            int allowed = PerTurnCap > 0 ? Mathf.Min(amount, remaining) : amount;
             allowed = Mathf.Max(0, allowed);
             ReflectedThisTurn += allowed;
+            if (PerTurnCap > 0 && ReflectedThisTurn >= PerTurnCap) reflectedRemainder = 0;
             return allowed;
         }
 
         public override void OnTurnBoundary(TurnBoundary boundary)
         {
-            if (boundary == TurnBoundary.EnemyTurnStart) ReflectedThisTurn = 0;
+            if (boundary == TurnBoundary.EnemyTurnStart)
+            {
+                ReflectedThisTurn = 0;
+                reflectedRemainder = 0;
+            }
             base.OnTurnBoundary(boundary);
         }
 

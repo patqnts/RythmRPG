@@ -365,6 +365,54 @@ namespace RythmRPG.Combat.Tests
         }
 
         [Test]
+        public void Deflection_AccumulatesFractionsAcrossLowDamageProjectiles()
+        {
+            var build = new RunBuildState();
+            build.AddAbility(Ability("strike", AbilityRole.Damage, AbilityDelivery.Melee, 0, 100));
+            build.AddPassive(Passive("deflect", new DeflectionPassive(0.3f, 0f, 40, 0)));
+            Rig rig = CreateRig(build, enemyHealth: 1000);
+
+            rig.Runtime.OnEnemyTurnStarted();
+            rig.Modifiers.OnEnemyTurnStarted();
+            for (int i = 0; i < 10; i++)
+            {
+                var result = new RhythmJudgementResult("low-deflect-" + i, 1, HitJudgement.Perfect, 0f, Vector3.zero,
+                    NoteResolutionSource.PlayerInput);
+                rig.Runtime.DefenseNoteSettled(result, 1, 0, 0);
+            }
+
+            Assert.That(1000 - rig.Enemy.CurrentHealth, Is.EqualTo(3), "ten 1-damage notes at 30% should total 3 reflected damage");
+        }
+
+        [Test]
+        public void MirrorReflection_AccumulatesPerformanceScaledFractionsAcrossLowDamageProjectiles()
+        {
+            var build = new RunBuildState();
+            build.AddAbility(Ability("strike", AbilityRole.Damage, AbilityDelivery.Melee, 0, 100));
+            Rig rig = CreateRig(build, enemyHealth: 1000);
+            rig.Runtime.ApplyBuff(new BuffSpec
+            {
+                Kind = BuffKind.Reflect,
+                Strength = 0.42f,
+                Turns = 2,
+                PerTurnCap = 60,
+                SourceId = "mirror-test",
+                Label = "Mirror Stance"
+            }, "mirror-cast");
+
+            rig.Runtime.OnEnemyTurnStarted();
+            rig.Modifiers.OnEnemyTurnStarted();
+            for (int i = 0; i < 10; i++)
+            {
+                var result = new RhythmJudgementResult("low-mirror-" + i, 1, HitJudgement.Perfect, 0f, Vector3.zero,
+                    NoteResolutionSource.PlayerInput);
+                rig.Runtime.DefenseNoteSettled(result, 1, 0, 0);
+            }
+
+            Assert.That(1000 - rig.Enemy.CurrentHealth, Is.EqualTo(4), "70%-strength Mirror Stance should preserve 4.2 total reflected damage");
+        }
+
+        [Test]
         public void Reflection_CanDefeatTheEnemyOnItsTurn_ExactlyOnce_ThenPayoutsStop()
         {
             var build = new RunBuildState();

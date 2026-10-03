@@ -212,14 +212,21 @@ namespace RythmRPG.Combat
 
         public override void OnTurnBoundary(PassiveHook hook, TurnBoundary boundary)
         {
-            if (boundary == TurnBoundary.EnemyTurnStart) hook.Set("reflected", 0);
+            if (boundary != TurnBoundary.EnemyTurnStart) return;
+            hook.Set("reflected", 0);
+            hook.Set("reflect-remainder", 0);
         }
 
         public override void OnDefenseNoteSettled(PassiveHook hook, DefenseNoteOutcome outcome)
         {
             if (!outcome.IsPlayerExecution || outcome.Result.Judgement != HitJudgement.Perfect || outcome.NoteDamage <= 0) return;
             int cap = LevelValue(capPerEnemyTurn, capPerLevel, hook.Level) - hook.Get("reflected");
-            int amount = Mathf.Min(cap, Mathf.RoundToInt(outcome.NoteDamage * LevelValue(fraction, fractionPerLevel, hook.Level)));
+            if (cap <= 0) return;
+            const int fractionScale = 1000;
+            int scaled = Mathf.Max(0, Mathf.RoundToInt(outcome.NoteDamage * LevelValue(fraction, fractionPerLevel, hook.Level) * fractionScale));
+            int accumulated = hook.Get("reflect-remainder") + scaled;
+            int amount = Mathf.Min(cap, accumulated / fractionScale);
+            hook.Set("reflect-remainder", amount >= cap ? 0 : accumulated % fractionScale);
             if (amount <= 0) return;
             hook.Add("reflected", amount);
             hook.Runtime.Damage.DamageEnemy(amount, element, hook.SourceId, outcome.RootCauseId, CombatEventKind.ReflectDamage,

@@ -165,7 +165,33 @@ namespace RythmRPG.Combat.Tests
             Assert.That(cast.ShieldSpent, Is.EqualTo(30));
             Resolve(cast);
             Assert.That(modifiers.Find<ShieldBuff>(ShieldBuff.Key).Capacity, Is.EqualTo(60));
-            Assert.That(cast.DamageDealt, Is.EqualTo(130));
+            Assert.That(cast.DamageDealt, Is.EqualTo(190));
+        }
+        [Test] public void PressureCastDealsDoubleTheShieldSpent()
+        {
+            AbilityInstance attack = Ability(new DealDamageEffect(1));
+            Passive("pressure", new PressureCastPassive()); Begin();
+            runtime.Damage.AddShield(90, 2, "shield", "old", false);
+            CastSnapshot cast = Commit(attack, new CastChoice { SpendShield = true });
+            Assert.That(cast.ShieldSpent, Is.EqualTo(18));
+            Resolve(cast);
+            Assert.That(modifiers.Find<ShieldBuff>(ShieldBuff.Key).Capacity, Is.EqualTo(72));
+            Assert.That(cast.DamageDealt, Is.EqualTo(136));
+        }
+        [Test] public void BedrockUsesPreSpendShieldForTheSameAttack()
+        {
+            AbilityInstance attack = Ability(new DealDamageEffect(1), new BreakwaterEffect());
+            Passive("bedrock", new BedrockPassive(.25f, .1f)); Begin();
+            runtime.Damage.AddShield(40, 2, "shield", "old", false);
+            Resolve(Commit(attack, new CastChoice { SpendShield = true }));
+            Assert.That(enemy.CurrentHealth, Is.EqualTo(4848)); // 100 base + 14 x3 Break + 40 x25% Bedrock.
+        }
+        [Test] public void ShieldCapacityIsFortyPercentOfMaxHealth()
+        {
+            Set(player, "maxHealth", 100);
+            Set(player, "currentHealth", 100);
+            Begin();
+            Assert.That(runtime.Damage.AddShield(100, 2, "shield", "root", false), Is.EqualTo(40));
         }
         [Test] public void BreakwaterGuardWorksWithoutExistingShield()
         {

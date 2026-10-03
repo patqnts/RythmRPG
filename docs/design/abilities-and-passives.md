@@ -4,7 +4,7 @@ Last updated: 2026-10-02 · Reference for the local Unity content.
 
 ## How to read this
 
-The game has 40 abilities, 9 dedicated upgrades and 45 passives. A build equips **four abilities** and can own any number of compatible passives. Numbers are starting values for playtesting. See [Rhythm synergy](rhythm-synergy.md) for the rhythm-focused abilities, passives, shared limits and builds.
+The game has 36 abilities, 9 dedicated upgrades and 45 passives. A build equips **four abilities** and can own any number of compatible passives. Numbers are starting values for playtesting. See [Rhythm synergy](rhythm-synergy.md) for the rhythm-focused abilities, passives, shared limits and builds.
 
 - **Power** = the ability's Base Power. An effect's output = Base Power × the effect's scale × chart performance (0–1, the average judgement weight: Perfect 1, Good 0.8, Bad 0.5, Miss 0).
 - **Sample power scales from Basic Attack** (currently 22), so the samples follow your tuning. The values below use 22.

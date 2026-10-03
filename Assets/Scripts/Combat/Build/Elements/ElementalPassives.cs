@@ -131,8 +131,8 @@ namespace RythmRPG.Combat
     [Serializable]
     public sealed class BedrockPassive : PassiveEffect
     {
-        [SerializeField, Min(0f)] private float fraction = 0.1f;
-        [SerializeField, Min(0f)] private float fractionPerLevel = 0.05f;
+        [SerializeField, Min(0f)] private float fraction = 0.25f;
+        [SerializeField, Min(0f)] private float fractionPerLevel = 0.1f;
 
         public BedrockPassive() { }
         public BedrockPassive(float fraction, float perLevel) { this.fraction = fraction; fractionPerLevel = perLevel; }
@@ -147,8 +147,9 @@ namespace RythmRPG.Combat
         {
             if ((cast.Delivery & AbilityDelivery.Melee) == 0 || cast.DamageDealt <= 0) return;
             ShieldBuff shield = hook.Runtime.Modifiers?.Find<ShieldBuff>(ShieldBuff.Key);
-            if (shield == null || shield.Capacity <= 0) return;
-            int amount = Mathf.RoundToInt(shield.Capacity * LevelValue(fraction, fractionPerLevel, hook.Level));
+            int shieldAmount = Mathf.Max(cast.ShieldForBedrock, shield?.Capacity ?? 0);
+            if (shieldAmount <= 0) return;
+            int amount = Mathf.RoundToInt(shieldAmount * LevelValue(fraction, fractionPerLevel, hook.Level));
             if (amount > 0)
                 hook.Runtime.Damage.DamageEnemy(amount, ElementType.None, hook.SourceId, cast.CastId, CombatEventKind.PassiveDamage,
                     applyAffinity: true, secondary: true, label: hook.Label);

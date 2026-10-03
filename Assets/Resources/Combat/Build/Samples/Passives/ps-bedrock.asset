@@ -39,5 +39,5 @@ MonoBehaviour:
     - rid: 2956268601564201117
       type: {class: BedrockPassive, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
       data:
-        fraction: 0.1
-        fractionPerLevel: 0.05
+        fraction: 0.25
+        fractionPerLevel: 0.1

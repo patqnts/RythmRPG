@@ -19,7 +19,7 @@ Values use Basic Attack power 22. Damage, healing and shield still scale with ch
 | Ability | MP / cooldown | Effect | Connections |
 |---|---|---|---|
 | **Backbeat** | 8 / 0 | Wind melee attack, power 18. Closing phrase: 1 counter at 70%, 2 at 85%, gained after damage. | Wind feeds existing Burn/Static. Charges help ordinary attacks, Riposte or support through Improvisation. Conservation and Tailwind also apply. |
-| **Breakwater** | 12 / 0 | Water melee attack, power 26. **Guard:** also shield ×0.7. **Break:** instead spend one third of existing shield, max 30, for extra Water damage. | Works without shield through Guard. Its Hold chart can earn Sustained Guard; remaining shield feeds Bedrock. |
+| **Breakwater** | 12 / 0 | Water melee attack, power 26. **Guard:** also shield ×0.7. **Break:** instead spend one third of existing shield, max 30, for ×3 Water damage per shield spent. | Works without shield through Guard. Its Hold chart can earn Sustained Guard; remaining shield feeds Bedrock. |
 | **Cauterize** | 18 / 2 | Fire healing, power 75. Optionally consume one enemy Burn stack for +30 healing before rhythm scaling. | Keep Burn for Combust or trade one stack to survive. Works without Burn; Improvisation and Second Wind connect. Healing does not cause Fire reactions. |
 | **Reprise** | 12 / 3 | Choose a live player shield, ward or buff. At 70% chart accuracy, extend it one turn, once per application. | Preserve protection, Flame Guard, Mirror Stance or a next-attack bonus. It changes duration, so Improvisation does not spend charges on it. |
 
@@ -43,7 +43,7 @@ Fortissimo reads Combo when the cast is committed. A mistake during its own char
 |---|---|---|
 | **Improvisation** | Pure support spends up to 2 counters for +10% healing, shield and numerical buff strength each. | Charges from defense, Mirror Stance or Backbeat strengthen Mend, Rally, Focus and other support. |
 | **Sustained Guard** | Complete a Hold, Mash or full Good-or-better rally for 8 shield, once per cast/whole enemy turn. | Any suitable chart feeds Bedrock, Pressure Cast, Breakwater or survival. Breakwater and Quake Slam include Hold charts. |
-| **Pressure Cast** | Any damaging ability can optionally spend 20% of existing shield, max 20, for extra damage of its element. | Shield Bash, Second Wind, Tidal Veil and rhythm rewards supply it. Works on melee and spells. Breakwater never converts shield twice. |
+| **Pressure Cast** | Any damaging ability can optionally spend 20% of existing shield, max 20, for ×2 damage per shield spent. | Shield Bash, Second Wind, Tidal Veil and rhythm rewards supply it. Works on melee and spells. Breakwater never converts shield twice. |
 | **Stoke** | First successful defense phrase per enemy turn adds 1 existing Burn and Static stack. No new mark, refresh or reaction. | Flame Guard supplies Burn at every 15 Combo during defense; Ember Lash and Kindling supply Burn from ability charts. Chain Spark supplies Static. Helps Combust, Capacitor and reactions. |
 | **Reaction Shelter** | First elemental reaction per cast/whole enemy turn gives 10 shield. | All existing reaction pairs work, including Riptide's Water damage. Delayed ticks and Aftershock cannot earn another payout. |
 | **Reservoir** | Normal end-of-defense mana overflow becomes shield, max 10. | Accurate defense remains useful at full mana. Shield connects to defense, Bedrock and shield spending. Siphon/refunds do not feed it. |
@@ -87,7 +87,7 @@ Later combinations: add Closeout/Conservation to the Duelist; Bedrock/Sustained 
 
 ## Shared limits
 
-- Existing total shield cap: **30% max HP**. Sustained Guard, Reaction Shelter and Reservoir together add at most **20 small-reward shield per cast or whole enemy turn**, across all attack steps. Paid shields, Second Wind and existing reaction shields use the normal capacity limit.
+- Existing total shield cap: **40% max HP**. Sustained Guard, Reaction Shelter and Reservoir together add at most **20 small-reward shield per cast or whole enemy turn**, across all attack steps. Paid shields, Second Wind and existing reaction shields use the normal capacity limit.
 - Shield spending happens before the chart. It cannot trigger Tidal Veil's break-heal and removes the spent share of future break-healing. Bonus damage follows rhythm, damage modifiers and affinity but cannot cause extra reactions.
 - Conservation + Closeout restore at most **12 MP per cast**. Siphon's ability effect remains separate. Refunds stop when combat ends.
 - Combined passive/live discounts cannot reduce a positive upgraded listed cost by more than **60%**. Previews and payment use the same quote. Mana Surge and Closeout use actual payment.

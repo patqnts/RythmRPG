@@ -8,15 +8,20 @@ namespace RythmRPG.Combat
     [Serializable]
     public sealed class ShieldSpendDamageEffect : AbilityEffect
     {
+        [SerializeField, Min(0f)] private float damagePerShield = 1f;
+
+        public ShieldSpendDamageEffect() { }
+        public ShieldSpendDamageEffect(float damagePerShield) => this.damagePerShield = Mathf.Max(0f, damagePerShield);
+
         public override bool IsAmount => true;
         public override int TotalAmount(AbilityEffectContext context) => Mathf.RoundToInt(
-            (context.Cast?.ShieldSpent ?? 0) * Mathf.Clamp01(context.Performance.AverageWeight)
+            (context.Cast?.ShieldSpent ?? 0) * damagePerShield * Mathf.Clamp01(context.Performance.AverageWeight)
             * context.Multiplier(EffectKind.Damage, context.AbilityElement)
             * (context.Build?.Damage.Affinity(context.AbilityElement) ?? 1f));
         public override void ApplyAmount(AbilityEffectContext context, int amount) =>
             context.Build?.Damage.DamageEnemy(amount, context.AbilityElement, "shield-spend", context.Cast?.CastId,
                 CombatEventKind.AbilityDamage, false, label: "Shield-spending damage", cast: context.Cast, allowReactions: false);
-        public override string Describe(AbilityDefinition ability) => "Spent shield adds damage without extra reactions";
+        public override string Describe(AbilityDefinition ability) => $"Spent shield deals x{damagePerShield:0.##} damage without extra reactions";
     }
     [Serializable]
     public sealed class BackbeatEffect : AbilityEffect
@@ -40,7 +45,7 @@ namespace RythmRPG.Combat
             if (context.Cast?.Choice?.SpendShield == true) return;
             new GainShieldEffect(.7f, 2).ApplyOnce(context);
         }
-        public override string Describe(AbilityDefinition ability) => "Guard: shield x0.7; Break: spend one third of shield (max 30) for extra Water damage";
+        public override string Describe(AbilityDefinition ability) => "Guard: shield x0.7; Break: spend one third of shield (max 30) for x3 Water damage";
     }
 
     [Serializable]
@@ -118,7 +123,7 @@ namespace RythmRPG.Combat
     [Serializable]
     public sealed class PressureCastPassive : PassiveEffect
     {
-        public override string Describe(int level) => "Optional on any attack: spend 20% of existing shield (max 20) for extra damage; no extra reactions";
+        public override string Describe(int level) => "Optional on any attack: spend 20% of existing shield (max 20) for x2 damage; no extra reactions";
         public override bool IsActive(IReadOnlyList<AbilityQuote> equipped) => equipped.Any(q => (q.Roles & AbilityRole.Damage) != 0);
     }
 

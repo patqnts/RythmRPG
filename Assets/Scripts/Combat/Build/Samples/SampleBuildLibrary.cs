@@ -279,7 +279,7 @@ namespace RythmRPG.Combat
             AbilityDefinition breakwater = Add(new AbilityDefinition.Builder("sample-breakwater", "Breakwater", basic)
                 .Type(AbilityType.SpecialAttack).Tags(AbilityRole.Damage | AbilityRole.Defense, AbilityDelivery.Melee).Element(ElementType.Water)
                 .Cost(12).Power(P(1.2f)).Chart(Resources.Load<RythmRPG.Rhythm.RhythmChart>("Combat/Charts/Breakwater"))
-                .Describe("Choose Guard to strike and gain shield, or Break to spend one third of your shield (max 30) for extra Water damage. Break does not add shield.")
+                .Describe("Choose Guard to strike and gain shield, or Break to spend one third of your shield (max 30) for triple Water damage per shield spent. Break does not add shield.")
                 .Effect(new DealDamageEffect(1f)).Effect(new BreakwaterEffect()).Build());
             AbilityDefinition cauterize = Add(new AbilityDefinition.Builder("sample-cauterize", "Cauterize", heal)
                 .Type(AbilityType.Healing).Tags(AbilityRole.Healing, AbilityDelivery.Spell).Element(ElementType.Fire)
@@ -442,7 +442,7 @@ namespace RythmRPG.Combat
                 .Effect(new RiptidePassive(0.5f, 0.25f)).Style(StyleElemental, StyleTank).Build());
             PassiveDefinition bedrock = AddPassive(new PassiveDefinition.Builder("ps-bedrock", "Bedrock", PassiveCategory.MeleeEnhancement)
                 .Describe("Shielded melee attacks hit harder.")
-                .Effect(new BedrockPassive(0.1f, 0.05f)).Style(StyleElemental, StyleTank).Build());
+                .Effect(new BedrockPassive(0.25f, 0.1f)).Style(StyleElemental, StyleTank).Build());
             PassiveDefinition aftershock = AddPassive(new PassiveDefinition.Builder("ps-aftershock", "Aftershock", PassiveCategory.ElementalEnhancement)
                 .Describe("Earth abilities echo at the next enemy turn start.")
                 .Effect(new AftershockPassive(0.3f, 0.1f)).Style(StyleElemental).Build());
@@ -524,7 +524,7 @@ namespace RythmRPG.Combat
             AddPreset(new BuildPreset.Builder("preset-tank", "Bulwark (Tank)", StyleTank)
                 .Describe("Objective: outlast the enemy with steady offense. Fortitude +30% HP, Iron Skin -25% note damage (max 40 prevented per enemy turn), " +
                           "Second Wind turns overheal into shield, Tidal Healing +25% Water healing. Shield Bash hits and shields; Bulwark cuts damage 35% for 2 turns.\n" +
-                          "Trade-off: low damage, long fights; shields are capped (30% max HP) and expire.")
+                          "Trade-off: low damage, long fights; shields are capped (40% max HP) and expire.")
                 .Slot(shieldBash).Slot(strike).Slot(bulwark).Slot(mend)
                 .Passive(fortitude).Passive(ironSkin).Passive(secondWind).Passive(tidal).Build());
 
