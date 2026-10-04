@@ -15,3 +15,4 @@ MonoBehaviour:
   enterAtHealthPercent: 1
   attackSequences:
   - {fileID: 11400000, guid: 702572031ea54ae4f923b2096ca6bba1, type: 2}
+  - {fileID: 11400000, guid: 80e0114843970284e935e8808c7739d4, type: 2}
