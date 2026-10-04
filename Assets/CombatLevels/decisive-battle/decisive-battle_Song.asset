@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a733d1f1ee894d04ebdb9638a1999587, type: 3}
+  m_Name: decisive-battle_Song
+  m_EditorClassIdentifier: RythmRPG.Rhythm.Runtime::RythmRPG.Rhythm.CombatSong
+  introClip: {fileID: 8300000, guid: 0c7fe2073eee4bd4dbc52591a517d98b, type: 3}
+  chartsWaitForLoop: 1
+  clip: {fileID: 8300000, guid: 6e7f7e748c0d3a545ae00279f6b3ef5a, type: 3}
+  bpm: 180
+  beatsPerMeasure: 4
+  audioOffsetSeconds: 0
+  volume: 1
+  chartSync: 2
+  playerTurnClip: {fileID: 0}
+  playerTurnVolume: 1
+  mainVolumeOnPlayerTurn: 0
+  endClip: {fileID: 0}
+  defeatEndClip: {fileID: 8300000, guid: c6bba359c37c2f44fac733d88f506f00, type: 3}
+  endSync: 2

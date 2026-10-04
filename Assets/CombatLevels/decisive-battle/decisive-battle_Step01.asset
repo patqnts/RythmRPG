@@ -1,0 +1,2545 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1ac14be5a7c40d992243cd40ecaea3b, type: 3}
+  m_Name: decisive-battle_Step01
+  m_EditorClassIdentifier: RythmRPG.Rhythm.Runtime::RythmRPG.Rhythm.RhythmChart
+  schemaVersion: 1
+  bpm: 180
+  beatsPerMeasure: 4
+  compositionDuration: 45.916666666666664
+  audioClip: {fileID: 8300000, guid: 6e7f7e748c0d3a545ae00279f6b3ef5a, type: 3}
+  song: {fileID: 11400000, guid: 496618eb9eea2b449a47caa0e2ded2e3, type: 2}
+  songPreviewBar: 0
+  audioOffsetSeconds: 0
+  snapEnabled: 1
+  snapDivision: 4
+  lanes:
+  - id: 80caad1c178b4a8b8dc6ee5bfaa18e97
+    displayName: Lane 1
+    color: {r: 0.2, g: 0.62, b: 0.95, a: 1}
+    keyIdentity: 1
+    keyType: 0
+  - id: c6940808636742beb1d8a97108c9c37d
+    displayName: Lane 2
+    color: {r: 0.35, g: 0.8, b: 0.52, a: 1}
+    keyIdentity: 2
+    keyType: 0
+  - id: ac17d9b0b4e04c999b7563d500462f93
+    displayName: Lane 3
+    color: {r: 0.95, g: 0.7, b: 0.22, a: 1}
+    keyIdentity: 3
+    keyType: 0
+  - id: d008dbd62292463f8a9028655bf0fc99
+    displayName: Lane 4
+    color: {r: 0.88, g: 0.38, b: 0.55, a: 1}
+    keyIdentity: 4
+    keyType: 0
+  noteDefinitions:
+  - noteType: 0
+    defaultPrefab: {fileID: 5029094789931625778, guid: fff99d626b5218741bf0c888080b7065, type: 3}
+    displayColor: {r: 0.2, g: 0.68, b: 1, a: 1}
+    defaultSpeed: 8
+    defaultDamage: 1
+    defaultTravelTime: 2.5
+  - noteType: 1
+    defaultPrefab: {fileID: 5029094789931625778, guid: 92bd7a486b6b3f64e8abd77da4e1f23f, type: 3}
+    displayColor: {r: 0.28, g: 0.86, b: 0.56, a: 1}
+    defaultSpeed: 8
+    defaultDamage: 1
+    defaultTravelTime: 2.5
+  - noteType: 2
+    defaultPrefab: {fileID: 7372676137305636529, guid: 8acd64f672a6c9e4aad4bd8c7f2d48e6, type: 3}
+    displayColor: {r: 1, g: 0.4, b: 0.32, a: 1}
+    defaultSpeed: 8
+    defaultDamage: 1
+    defaultTravelTime: 2.5
+  - noteType: 3
+    defaultPrefab: {fileID: 7056163312032873497, guid: 9f98f08efb2a48c48a17b850f74d5647, type: 3}
+    displayColor: {r: 0.85, g: 0.32, b: 0.92, a: 1}
+    defaultSpeed: 8
+    defaultDamage: 1
+    defaultTravelTime: 2.5
+  - noteType: 4
+    defaultPrefab: {fileID: 5029094789931625778, guid: 7eb926339b9806747b959a1f11e13393, type: 3}
+    displayColor: {r: 1, g: 0.72, b: 0.2, a: 1}
+    defaultSpeed: 8
+    defaultDamage: 1
+    defaultTravelTime: 2.5
+  - noteType: 5
+    defaultPrefab: {fileID: 5029094789931625778, guid: f056cc7554551864ab7fccac61f4df7f, type: 3}
+    displayColor: {r: 0.48, g: 0.78, b: 1, a: 1}
+    defaultSpeed: 8
+    defaultDamage: 1
+    defaultTravelTime: 2.5
+  - noteType: 6
+    defaultPrefab: {fileID: 5164324616529216330, guid: 247ea788f7280df428cbf7fa59a96db5, type: 3}
+    displayColor: {r: 0.95, g: 0.45, b: 0.18, a: 1}
+    defaultSpeed: 8
+    defaultDamage: 1
+    defaultTravelTime: 2.5
+  - noteType: 7
+    defaultPrefab: {fileID: 5029094789931625778, guid: 7a1e4b9c2d5f4e8a9c3b6d0f1e2a4b5c, type: 3}
+    displayColor: {r: 0.2, g: 0.68, b: 1, a: 1}
+    defaultSpeed: 8
+    defaultDamage: 1
+    defaultTravelTime: 2.5
+  notes:
+  - id: 8950c2de534e
+    laneId: 80caad1c178b4a8b8dc6ee5bfaa18e97
+    hitTime: 0.5
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 8c9d9e788c18
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 1
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.9166666666666666
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: be6abc0a2adb
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 1.3333333333333333
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.9166666666666665
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 371404991b44
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 1.8333333333333333
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.9166666666666666
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 623f188e1c8d
+    laneId: ac17d9b0b4e04c999b7563d500462f93
+    hitTime: 2.333333333333333
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.9166666666666667
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: b7ead6c98e33
+    laneId: 80caad1c178b4a8b8dc6ee5bfaa18e97
+    hitTime: 2.6666666666666665
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.9166666666666665
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 438eab8dc9a1
+    laneId: d008dbd62292463f8a9028655bf0fc99
+    hitTime: 2.6666666666666665
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.9166666666666665
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 0b72d1d70f67
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 3.1666666666666665
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.9166666666666665
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: aa965750031b
+    laneId: 80caad1c178b4a8b8dc6ee5bfaa18e97
+    hitTime: 3.6666666666666665
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.9166666666666665
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: a0d00694c6aa
+    laneId: ac17d9b0b4e04c999b7563d500462f93
+    hitTime: 3.6666666666666665
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.9166666666666665
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: d588e09ef2b5
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 4
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.9166666666666665
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 73bde484cb9f
+    laneId: d008dbd62292463f8a9028655bf0fc99
+    hitTime: 4.333333333333333
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.9166666666666665
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 408b6cfee750
+    laneId: d008dbd62292463f8a9028655bf0fc99
+    hitTime: 4.666666666666666
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.9166666666666665
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: e6400f4a6ef0
+    laneId: d008dbd62292463f8a9028655bf0fc99
+    hitTime: 5
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.916666666666667
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 821f71e76193
+    laneId: ac17d9b0b4e04c999b7563d500462f93
+    hitTime: 5.333333333333333
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.916666666666667
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 33f470893e22
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 5.833333333333333
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.916666666666667
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 6ec2866bef06
+    laneId: ac17d9b0b4e04c999b7563d500462f93
+    hitTime: 6.333333333333333
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.9166666666666679
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 3ed5ce7ce26c
+    laneId: 80caad1c178b4a8b8dc6ee5bfaa18e97
+    hitTime: 6.333333333333333
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.9166666666666679
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 47f9498b941b
+    laneId: d008dbd62292463f8a9028655bf0fc99
+    hitTime: 6.666666666666667
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.9166666666666679
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 39aeec25fcf1
+    laneId: 80caad1c178b4a8b8dc6ee5bfaa18e97
+    hitTime: 7.166666666666667
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.9166666666666679
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 3fb4023de58d
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 7.666666666666667
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.9166666666666679
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: f56dc5c52961
+    laneId: 80caad1c178b4a8b8dc6ee5bfaa18e97
+    hitTime: 8
+    noteType: 1
+    holdDuration: 0.4166666666666661
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.33333333333333304
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 3b24673c201c
+    laneId: d008dbd62292463f8a9028655bf0fc99
+    hitTime: 8
+    noteType: 1
+    holdDuration: 0.4166666666666661
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.33333333333333304
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 3bf2b839463c
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 8.5
+    noteType: 1
+    holdDuration: 0.3333333333333339
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 46d2124b03f3
+    laneId: ac17d9b0b4e04c999b7563d500462f93
+    hitTime: 8.5
+    noteType: 1
+    holdDuration: 0.3333333333333339
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 3d3b9b62e696
+    laneId: 80caad1c178b4a8b8dc6ee5bfaa18e97
+    hitTime: 9.333333333333332
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.6666666666666661
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 96be00aa1643
+    laneId: d008dbd62292463f8a9028655bf0fc99
+    hitTime: 9.333333333333332
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.6666666666666661
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 089157823cbf
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 9.666666666666666
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.6666666666666661
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: b4e4e6263b5e
+    laneId: ac17d9b0b4e04c999b7563d500462f93
+    hitTime: 10
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.6666666666666661
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: eb97646d9677
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 10.333333333333332
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.6666666666666661
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: ce96b31e86b8
+    laneId: 80caad1c178b4a8b8dc6ee5bfaa18e97
+    hitTime: 10.666666666666666
+    noteType: 1
+    holdDuration: 0.6666666666666643
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.6666666666666661
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 999ba91da02d
+    laneId: ac17d9b0b4e04c999b7563d500462f93
+    hitTime: 10.666666666666666
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.6666666666666661
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 3850362c78c1
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 11.5
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 6f7f54444055
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 11.666666666666666
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 4f722f95850b
+    laneId: ac17d9b0b4e04c999b7563d500462f93
+    hitTime: 11.833333333333334
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.5000000000000036
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: a64e778c3031
+    laneId: d008dbd62292463f8a9028655bf0fc99
+    hitTime: 12
+    noteType: 1
+    holdDuration: 0.5
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 1.333333333333334
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 0bac44f66f06
+    laneId: ac17d9b0b4e04c999b7563d500462f93
+    hitTime: 12.833333333333334
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 876240634b31
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 13
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 4a9a85f0d9bc
+    laneId: d008dbd62292463f8a9028655bf0fc99
+    hitTime: 13.166666666666666
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: baf0fd4fb718
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 13.333333333333334
+    noteType: 1
+    holdDuration: 0.5833333333333321
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.6666666666666679
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 4e82161661f3
+    laneId: ac17d9b0b4e04c999b7563d500462f93
+    hitTime: 14.333333333333334
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 1
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 6adf2e155475
+    laneId: d008dbd62292463f8a9028655bf0fc99
+    hitTime: 14.666666666666666
+    noteType: 1
+    holdDuration: 0.5
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.9166666666666661
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 119a511e039e
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 15
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 884b410d4c09
+    laneId: 80caad1c178b4a8b8dc6ee5bfaa18e97
+    hitTime: 15.333333333333334
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: fe87addd80ff
+    laneId: d008dbd62292463f8a9028655bf0fc99
+    hitTime: 15.666666666666666
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: bb9838d07908
+    laneId: 80caad1c178b4a8b8dc6ee5bfaa18e97
+    hitTime: 16
+    noteType: 1
+    holdDuration: 0.75
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: e0220b935d37
+    laneId: d008dbd62292463f8a9028655bf0fc99
+    hitTime: 16.833333333333332
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.4999999999999982
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 1ab0dcbda2b4
+    laneId: d008dbd62292463f8a9028655bf0fc99
+    hitTime: 17
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 99d8de791ea8
+    laneId: ac17d9b0b4e04c999b7563d500462f93
+    hitTime: 17.166666666666664
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: b321494e6d92
+    laneId: ac17d9b0b4e04c999b7563d500462f93
+    hitTime: 17.333333333333332
+    noteType: 1
+    holdDuration: 0.33333333333333215
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.4999999999999982
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 2666550acaee
+    laneId: 80caad1c178b4a8b8dc6ee5bfaa18e97
+    hitTime: 17.833333333333332
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.4999999999999982
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 30786d6194bc
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 18.333333333333332
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.4999999999999982
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 890e4bb01ac4
+    laneId: ac17d9b0b4e04c999b7563d500462f93
+    hitTime: 18.666666666666664
+    noteType: 1
+    holdDuration: 0.9166666666666679
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 2df7f390f3eb
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 18.666666666666664
+    noteType: 1
+    holdDuration: 0.9166666666666679
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 498926c99a88
+    laneId: 80caad1c178b4a8b8dc6ee5bfaa18e97
+    hitTime: 19.666666666666664
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 3e966ebcbe12
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 20
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 4fa0dc02f418
+    laneId: ac17d9b0b4e04c999b7563d500462f93
+    hitTime: 20.166666666666664
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 2a47db305ebe
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 20.333333333333332
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: b6a78ef5b273
+    laneId: ac17d9b0b4e04c999b7563d500462f93
+    hitTime: 20.5
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 8f33b65df52d
+    laneId: d008dbd62292463f8a9028655bf0fc99
+    hitTime: 20.666666666666664
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 18eb61cb6581
+    laneId: ac17d9b0b4e04c999b7563d500462f93
+    hitTime: 20.833333333333332
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: a9f4b9180576
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 21
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: cf6c682e631a
+    laneId: 80caad1c178b4a8b8dc6ee5bfaa18e97
+    hitTime: 21.333333333333332
+    noteType: 1
+    holdDuration: 0.6666666666666679
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.6666666666666679
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 2ed577ee85dc
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 22.16666666666666
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: c47fffa5a93b
+    laneId: ac17d9b0b4e04c999b7563d500462f93
+    hitTime: 22.5
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 5938acd33a96
+    laneId: d008dbd62292463f8a9028655bf0fc99
+    hitTime: 22.66666666666666
+    noteType: 1
+    holdDuration: 0.5000000000000071
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.6666666666666607
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 4c7307d66ae5
+    laneId: ac17d9b0b4e04c999b7563d500462f93
+    hitTime: 23.5
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 095a9458d80a
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 23.666666666666668
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: a002125b11c5
+    laneId: d008dbd62292463f8a9028655bf0fc99
+    hitTime: 23.833333333333332
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: e9b37ef83457
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 24
+    noteType: 1
+    holdDuration: 0.5833333333333321
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.6666666666666679
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: ee1c33413624
+    laneId: ac17d9b0b4e04c999b7563d500462f93
+    hitTime: 25
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 1
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 863cd351d722
+    laneId: d008dbd62292463f8a9028655bf0fc99
+    hitTime: 25.333333333333332
+    noteType: 1
+    holdDuration: 0.5
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 0.6666666666666643
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 1e249762f89d
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 25.666666666666668
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 5400dc5ad841
+    laneId: 80caad1c178b4a8b8dc6ee5bfaa18e97
+    hitTime: 26
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 4c2e9bccd2b7
+    laneId: d008dbd62292463f8a9028655bf0fc99
+    hitTime: 26.333333333333332
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: ef801f2e7706
+    laneId: d008dbd62292463f8a9028655bf0fc99
+    hitTime: 26.666666666666668
+    noteType: 1
+    holdDuration: 1.3333333333333286
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 1390634f6af1
+    laneId: 80caad1c178b4a8b8dc6ee5bfaa18e97
+    hitTime: 26.666666666666668
+    noteType: 1
+    holdDuration: 1.3333333333333286
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: cbe912d60d87
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 28
+    noteType: 1
+    holdDuration: 1.25
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: b966fb1d332f
+    laneId: ac17d9b0b4e04c999b7563d500462f93
+    hitTime: 28
+    noteType: 1
+    holdDuration: 1.25
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 1ad9163e8ccc
+    laneId: ac17d9b0b4e04c999b7563d500462f93
+    hitTime: 29.333333333333332
+    noteType: 1
+    holdDuration: 1.1666666666666679
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: d93663329667
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 29.333333333333332
+    noteType: 1
+    holdDuration: 1.1666666666666679
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 5b7011c28d1e
+    laneId: 80caad1c178b4a8b8dc6ee5bfaa18e97
+    hitTime: 30.666666666666668
+    noteType: 1
+    holdDuration: 1.25
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: efed8a6771a5
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 30.666666666666668
+    noteType: 1
+    holdDuration: 1.25
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 4b922207efcb
+    laneId: ac17d9b0b4e04c999b7563d500462f93
+    hitTime: 30.666666666666668
+    noteType: 1
+    holdDuration: 1.25
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: b0614e1d4981
+    laneId: d008dbd62292463f8a9028655bf0fc99
+    hitTime: 30.666666666666668
+    noteType: 1
+    holdDuration: 1.25
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 6aa2f80d2ca0
+    laneId: 80caad1c178b4a8b8dc6ee5bfaa18e97
+    hitTime: 32
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 16c8f1688cb1
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 32.08333333333333
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 01ca54d2f484
+    laneId: 80caad1c178b4a8b8dc6ee5bfaa18e97
+    hitTime: 32.166666666666664
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.4999999999999964
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 1c84f50b0c90
+    laneId: d008dbd62292463f8a9028655bf0fc99
+    hitTime: 32.25
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: a28d70cba037
+    laneId: ac17d9b0b4e04c999b7563d500462f93
+    hitTime: 32.33333333333333
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: b248e626b453
+    laneId: d008dbd62292463f8a9028655bf0fc99
+    hitTime: 32.416666666666664
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.4999999999999964
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 3a5e4c0eb2f5
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 32.5
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 63cfaf0a9b51
+    laneId: ac17d9b0b4e04c999b7563d500462f93
+    hitTime: 32.58333333333333
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: b6ae07c2cd42
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 32.666666666666664
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.4999999999999964
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 78dd3374ade0
+    laneId: 80caad1c178b4a8b8dc6ee5bfaa18e97
+    hitTime: 32.75
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 9e69cdecdd0f
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 32.83333333333333
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 37c34be1c49a
+    laneId: 80caad1c178b4a8b8dc6ee5bfaa18e97
+    hitTime: 32.916666666666664
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.4999999999999964
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: d79ca1dcee48
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 33
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 826c593b96a7
+    laneId: ac17d9b0b4e04c999b7563d500462f93
+    hitTime: 33.08333333333333
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 2028a768cb26
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 33.166666666666664
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.4999999999999964
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: ab3593defcb2
+    laneId: ac17d9b0b4e04c999b7563d500462f93
+    hitTime: 33.25
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: d4a712595457
+    laneId: d008dbd62292463f8a9028655bf0fc99
+    hitTime: 33.33333333333333
+    noteType: 1
+    holdDuration: 0.5
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 1d5ddc4246e3
+    laneId: 80caad1c178b4a8b8dc6ee5bfaa18e97
+    hitTime: 34
+    noteType: 1
+    holdDuration: 0.5
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 4c9873318bee
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 34.666666666666664
+    noteType: 1
+    holdDuration: 0.5
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 3f4758db39e3
+    laneId: d008dbd62292463f8a9028655bf0fc99
+    hitTime: 35.33333333333333
+    noteType: 1
+    holdDuration: 0.3333333333333357
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: d5ad4d6df784
+    laneId: ac17d9b0b4e04c999b7563d500462f93
+    hitTime: 35.33333333333333
+    noteType: 1
+    holdDuration: 0.3333333333333357
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 15f8ecf995fc
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 35.666666666666664
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 4efe9ab2b228
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 36
+    noteType: 1
+    holdDuration: 0.3333333333333357
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 4d6a25d38e43
+    laneId: 80caad1c178b4a8b8dc6ee5bfaa18e97
+    hitTime: 36
+    noteType: 1
+    holdDuration: 0.3333333333333357
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: f548441b1cdb
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 36.666666666666664
+    noteType: 1
+    holdDuration: 0.3333333333333357
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 2214d9b8e0b4
+    laneId: ac17d9b0b4e04c999b7563d500462f93
+    hitTime: 36.666666666666664
+    noteType: 1
+    holdDuration: 0.3333333333333357
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 240153ea5ba1
+    laneId: 80caad1c178b4a8b8dc6ee5bfaa18e97
+    hitTime: 37.166666666666664
+    noteType: 1
+    holdDuration: 0.4166666666666643
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 018ac7217a06
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 37.25
+    noteType: 1
+    holdDuration: 0.4166666666666643
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: a588dec18c01
+    laneId: ac17d9b0b4e04c999b7563d500462f93
+    hitTime: 37.33333333333333
+    noteType: 1
+    holdDuration: 0.3333333333333357
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: b3e27aa14182
+    laneId: d008dbd62292463f8a9028655bf0fc99
+    hitTime: 37.666666666666664
+    noteType: 2
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 1.6666666666666643
+    stationaryBadWindow: 0.45
+    stationaryGoodWindow: 0.25
+    stationaryPerfectWindow: 0.1
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: b56012b66554
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 38
+    noteType: 1
+    holdDuration: 0.5
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 4e55a2d99daf
+    laneId: d008dbd62292463f8a9028655bf0fc99
+    hitTime: 38
+    noteType: 2
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 1.5
+    stationaryBadWindow: 0.45
+    stationaryGoodWindow: 0.25
+    stationaryPerfectWindow: 0.1
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: afdda7eb595e
+    laneId: d008dbd62292463f8a9028655bf0fc99
+    hitTime: 38.33333333333333
+    noteType: 2
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 1.3333333333333357
+    stationaryBadWindow: 0.45
+    stationaryGoodWindow: 0.25
+    stationaryPerfectWindow: 0.1
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: c8767eb43305
+    laneId: d008dbd62292463f8a9028655bf0fc99
+    hitTime: 38.666666666666664
+    noteType: 1
+    holdDuration: 0.5
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: ff540a6c45ec
+    laneId: 80caad1c178b4a8b8dc6ee5bfaa18e97
+    hitTime: 39.33333333333333
+    noteType: 1
+    holdDuration: 0.5
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 41fe6608e4da
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 40
+    noteType: 1
+    holdDuration: 0.5
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 697138b98ed5
+    laneId: ac17d9b0b4e04c999b7563d500462f93
+    hitTime: 40.666666666666664
+    noteType: 1
+    holdDuration: 0.3333333333333357
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 144ca4e3efde
+    laneId: d008dbd62292463f8a9028655bf0fc99
+    hitTime: 40.666666666666664
+    noteType: 1
+    holdDuration: 0.3333333333333357
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 05d00e94bb53
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 41
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 808e743e0450
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 41.33333333333333
+    noteType: 1
+    holdDuration: 0.3333333333333357
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: b055b5d4fa9b
+    laneId: 80caad1c178b4a8b8dc6ee5bfaa18e97
+    hitTime: 41.33333333333333
+    noteType: 1
+    holdDuration: 0.3333333333333357
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 442ef474d2cd
+    laneId: ac17d9b0b4e04c999b7563d500462f93
+    hitTime: 42
+    noteType: 1
+    holdDuration: 0.3333333333333357
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 4c9f6ce5294a
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 42
+    noteType: 1
+    holdDuration: 0.3333333333333357
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 7c5d6014f5c5
+    laneId: 80caad1c178b4a8b8dc6ee5bfaa18e97
+    hitTime: 42.666666666666664
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: bd07a6e83a8f
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 42.75
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: f69e361bdc3c
+    laneId: ac17d9b0b4e04c999b7563d500462f93
+    hitTime: 42.83333333333332
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.499999999999993
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 381820796527
+    laneId: d008dbd62292463f8a9028655bf0fc99
+    hitTime: 42.916666666666664
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 1ea233e23ffe
+    laneId: ac17d9b0b4e04c999b7563d500462f93
+    hitTime: 43
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: f3dae07c6285
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 43.08333333333332
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.499999999999993
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 18b09fd3da11
+    laneId: 80caad1c178b4a8b8dc6ee5bfaa18e97
+    hitTime: 43.166666666666664
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 105838b433af
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 43.25
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 7e118e269f2c
+    laneId: ac17d9b0b4e04c999b7563d500462f93
+    hitTime: 43.33333333333332
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.499999999999993
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 2c4d5cc949a0
+    laneId: d008dbd62292463f8a9028655bf0fc99
+    hitTime: 43.416666666666664
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: fc143c48246b
+    laneId: ac17d9b0b4e04c999b7563d500462f93
+    hitTime: 43.5
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 23ced453ef9e
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 43.58333333333332
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.499999999999993
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: aea7f60e586f
+    laneId: 80caad1c178b4a8b8dc6ee5bfaa18e97
+    hitTime: 43.666666666666664
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 5901f9b1fbd1
+    laneId: c6940808636742beb1d8a97108c9c37d
+    hitTime: 43.75
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 37baec339a31
+    laneId: ac17d9b0b4e04c999b7563d500462f93
+    hitTime: 43.83333333333332
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.499999999999993
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  - id: 47b6f778e189
+    laneId: d008dbd62292463f8a9028655bf0fc99
+    hitTime: 43.916666666666664
+    noteType: 0
+    holdDuration: 0
+    initializeMovementType: 0
+    hitEffect: 0
+    playerState: 0
+    damage: 1
+    speed: 8
+    travelTime: 2.5
+    stationaryBadWindow: 0.9
+    stationaryGoodWindow: 0.45
+    stationaryPerfectWindow: 0.15
+    mashRequiredPresses: 8
+    prefabOverride: {fileID: 0}
+    metadata: []
+  patterns: []
+  sequences: []
