@@ -7,9 +7,9 @@
   <Project Path="RythmRPG.Combat.Tests.EditMode.csproj" />
   <Project Path="RythmRPG.Core.csproj" />
   <Project Path="RythmRPG.Rhythm.Editor.csproj" />
+  <Project Path="Assembly-CSharp-Editor.csproj" />
   <Project Path="RythmRPG.LevelComposer.csproj" />
   <Project Path="PrimeTween.Demo.csproj" />
-  <Project Path="Assembly-CSharp-Editor.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
   <Project Path="RythmRPG.Rhythm.Tests.EditMode.csproj" />
   <Project Path="RythmRPG.UI.Title.csproj" />

@@ -24,6 +24,7 @@ MonoBehaviour:
   - rid: 4681396234822352999
   - rid: 4681396234822353000
   - rid: 2956268416212402422
+  timelineAnimator: {fileID: 0}
   references:
     version: 2
     RefIds:
@@ -50,16 +51,16 @@ MonoBehaviour:
       type: {class: MoveCasterStep, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
       data:
         waitForCompletion: 1
-        delay: 0
+        delay: 1.0749999
         to: 3
-        offset: {x: 0, y: 0, z: -0.8}
+        offset: {x: 0, y: 0, z: 0}
         seconds: 0.2
         ease: 6
     - rid: 4681396234822352999
       type: {class: ThrowProjectileStep, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
       data:
         waitForCompletion: 1
-        delay: 0.5
+        delay: 1.175
         prefab: {fileID: 100010, guid: b32f835e658efa1419ad0ae6b033b81f, type: 3}
         from: 0
         fromOffset: {x: 0, y: 0.8, z: 0}

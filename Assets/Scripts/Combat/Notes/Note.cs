@@ -160,9 +160,13 @@ public class Note : MonoBehaviour
         if (resolved) return;
         resolved = true;
         canBePressed = false;
+        OnResolving(result);
         runner?.ResolveNote(this, result);
         DestroyObject();
     }
+
+    /// <summary>Called once with the note's result, just before the runner is told (Combat Note: hit / miss visuals).</summary>
+    protected virtual void OnResolving(RhythmJudgementResult result) { }
 
     protected virtual void ResolveMiss(KeyButton keyButton, NoteResolutionSource source = NoteResolutionSource.Timeout)
     {

@@ -7,8 +7,10 @@ using UnityEngine;
 /// In a Ping-Pong sequence the same object is used for the whole rally: a successful deflect sends this object back
 /// to the enemy, and the next volley re-arms it there instead of spawning a new one.
 /// </summary>
-public class PongNote : NoteObject
+public class PongNote : NoteObject, IRallyShot
 {
+    Note IRallyShot.Note => this;
+
     private bool deflecting;
     private bool keepForNextVolley;
 

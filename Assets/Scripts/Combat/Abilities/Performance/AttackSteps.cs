@@ -126,6 +126,38 @@ namespace RythmRPG.Combat
         public bool DealsDamage => HitWeight > 0f;
 
         public abstract IEnumerator Run(AttackStepContext context);
+
+        // ---------- timeline (Attack Sequence Editor) ----------
+
+        public void SetDelay(float seconds) => delay = Mathf.Max(0f, seconds);
+        public void SetWaitForCompletion(bool wait) => waitForCompletion = wait;
+
+        /// <summary>Name on the timeline (the class name without "Step").</summary>
+        public virtual string TimelineLabel
+        {
+            get
+            {
+                string name = GetType().Name;
+                return name.EndsWith("Step", StringComparison.Ordinal) ? name.Substring(0, name.Length - 4) : name;
+            }
+        }
+
+        /// <summary>Seconds the step runs after its delay (what Wait For Completion waits for).</summary>
+        public virtual float EstimateSeconds(AttackTimingContext timing, out bool guess)
+        {
+            guess = false;
+            return 0f;
+        }
+
+        /// <summary>Seconds something of it stays visible (e.g. an animation it does not wait for). Default: its length.</summary>
+        public virtual float VisualSeconds(AttackTimingContext timing) => EstimateSeconds(timing, out _);
+
+        /// <summary>The hits it lands, in seconds from its start.</summary>
+        public virtual void CollectHits(AttackTimingContext timing, List<AttackHitMark> hits) { }
+
+        /// <summary>True when dragging the step's end on the timeline changes its length.</summary>
+        public virtual bool CanSetLength => false;
+        public virtual void SetLength(float seconds, AttackTimingContext timing) { }
     }
 
     [Serializable]
@@ -139,6 +171,28 @@ namespace RythmRPG.Combat
         [SerializeField, Min(0f)] private float crossFadeSeconds = 0.05f;
         [SerializeField] private WaitMode wait = WaitMode.StateLength;
         [SerializeField, Min(0f)] private float seconds = 0.4f;
+
+        public override string TimelineLabel => !string.IsNullOrWhiteSpace(trigger) ? "Anim (" + trigger + ")" : "Anim " + stateName;
+
+        public override float EstimateSeconds(AttackTimingContext timing, out bool guess)
+        {
+            guess = false;
+            switch (wait)
+            {
+                case WaitMode.Seconds: return seconds;
+                case WaitMode.StateLength:
+                    float length = timing.Resolve(stateName, out bool known);
+                    guess = !known;
+                    return length;
+                default: return 0f;
+            }
+        }
+
+        public override float VisualSeconds(AttackTimingContext timing) =>
+            Mathf.Max(EstimateSeconds(timing, out _), timing.Resolve(stateName));
+
+        public override bool CanSetLength => wait == WaitMode.Seconds;
+        public override void SetLength(float value, AttackTimingContext timing) => seconds = Mathf.Max(0f, value);
 
         public override IEnumerator Run(AttackStepContext context)
         {
@@ -171,6 +225,18 @@ namespace RythmRPG.Combat
         [Tooltip("How long this step lasts when Wait For Completion is on.")]
         [SerializeField, Min(0f)] private float holdSeconds = 0.3f;
         [SerializeField] private bool faceCamera = true;
+
+        public override string TimelineLabel => prefab != null ? "Effect " + prefab.name : "Effect";
+
+        public override float EstimateSeconds(AttackTimingContext timing, out bool guess)
+        {
+            guess = false;
+            return holdSeconds;
+        }
+
+        public override float VisualSeconds(AttackTimingContext timing) => Mathf.Max(holdSeconds, lifetime);
+        public override bool CanSetLength => true;
+        public override void SetLength(float value, AttackTimingContext timing) => holdSeconds = Mathf.Max(0f, value);
 
         public override IEnumerator Run(AttackStepContext context)
         {
@@ -208,6 +274,25 @@ namespace RythmRPG.Combat
         [SerializeField, Min(0f)] private float impactShake;
 
         public override float HitWeight => damageOnHit ? hitWeight : 0f;
+
+        public override string TimelineLabel => prefab != null ? "Throw " + prefab.name : "Throw";
+
+        public override float EstimateSeconds(AttackTimingContext timing, out bool guess)
+        {
+            guess = duration <= 0f;
+            return duration > 0f ? duration : timing.ThrowDistance / Mathf.Max(0.01f, speed);
+        }
+
+        public override float VisualSeconds(AttackTimingContext timing) =>
+            EstimateSeconds(timing, out _) + (impactEffect != null ? impactEffectLifetime : 0f);
+
+        public override void CollectHits(AttackTimingContext timing, List<AttackHitMark> hits)
+        {
+            if (damageOnHit) hits.Add(new AttackHitMark { Time = EstimateSeconds(timing, out _), Weight = hitWeight, Label = "lands" });
+        }
+
+        public override bool CanSetLength => true;
+        public override void SetLength(float value, AttackTimingContext timing) => duration = Mathf.Max(0.01f, value);
 
         public override IEnumerator Run(AttackStepContext context)
         {
@@ -269,6 +354,12 @@ namespace RythmRPG.Combat
 
         public override float HitWeight => weight;
 
+        public override string TimelineLabel => "Impact";
+        public override float VisualSeconds(AttackTimingContext timing) => effect != null ? 1.5f : 0f;
+
+        public override void CollectHits(AttackTimingContext timing, List<AttackHitMark> hits) =>
+            hits.Add(new AttackHitMark { Time = 0f, Weight = weight, Label = "impact" });
+
         public override IEnumerator Run(AttackStepContext context)
         {
             context.Spawn(effect, effectAt, effectOffset, false, 1.5f);
@@ -304,6 +395,24 @@ namespace RythmRPG.Combat
         [SerializeField, Min(0f)] private float tickShake = 0.03f;
 
         public override float HitWeight => ticks * weightPerTick;
+
+        public override string TimelineLabel => "Channel " + ticks + " ticks";
+
+        public override float EstimateSeconds(AttackTimingContext timing, out bool guess)
+        {
+            guess = false;
+            return channelSeconds;
+        }
+
+        public override void CollectHits(AttackTimingContext timing, List<AttackHitMark> hits)
+        {
+            float interval = channelSeconds / Mathf.Max(1, ticks);
+            for (int i = 0; i < ticks; i++)
+                hits.Add(new AttackHitMark { Time = interval * (tickAtStart ? i : i + 1), Weight = weightPerTick, Label = "tick " + (i + 1) });
+        }
+
+        public override bool CanSetLength => true;
+        public override void SetLength(float value, AttackTimingContext timing) => channelSeconds = Mathf.Max(0.05f, value);
 
         public override IEnumerator Run(AttackStepContext context)
         {
@@ -385,6 +494,55 @@ namespace RythmRPG.Combat
             }
         }
 
+        public override string TimelineLabel => "Hits " + (!string.IsNullOrWhiteSpace(trigger) ? "(" + trigger + ")" : stateName);
+
+        private float ClipSeconds(AttackTimingContext timing, out bool guess)
+        {
+            float length = timing.Resolve(stateName, out bool known);
+            guess = !known;
+            return known ? length : fallbackClipSeconds;
+        }
+
+        private float HitSeconds(TimedHit hit, float clip) =>
+            timeMode == TimeMode.NormalizedClip ? Mathf.Clamp01(hit.time) * clip : Mathf.Max(0f, hit.time);
+
+        public override float EstimateSeconds(AttackTimingContext timing, out bool guess)
+        {
+            float clip = ClipSeconds(timing, out guess);
+            float last = 0f;
+            foreach (TimedHit hit in hits) if (hit != null) last = Mathf.Max(last, HitSeconds(hit, clip));
+            return waitForAnimationEnd ? Mathf.Max(last, clip) : last;
+        }
+
+        public override void CollectHits(AttackTimingContext timing, List<AttackHitMark> marks)
+        {
+            float clip = ClipSeconds(timing, out _);
+            int number = 0;
+            foreach (TimedHit hit in hits)
+            {
+                if (hit == null) continue;
+                TimedHit target = hit;
+                number++;
+                marks.Add(new AttackHitMark
+                {
+                    Time = HitSeconds(hit, clip),
+                    Weight = hit.weight,
+                    Label = "hit " + number,
+                    Move = seconds => target.time = timeMode == TimeMode.NormalizedClip
+                        ? Mathf.Clamp01(seconds / Mathf.Max(0.0001f, clip))
+                        : Mathf.Max(0f, seconds)
+                });
+            }
+        }
+
+        /// <summary>Only the fallback length (no animator state found) can be set by dragging.</summary>
+        public override bool CanSetLength => timeMode == TimeMode.NormalizedClip;
+        public override void SetLength(float value, AttackTimingContext timing)
+        {
+            timing.Resolve(stateName, out bool known);
+            if (!known) fallbackClipSeconds = Mathf.Max(0.05f, value);
+        }
+
         public override IEnumerator Run(AttackStepContext context)
         {
             bool played = context.PlayState(stateName, trigger, crossFadeSeconds);
@@ -438,6 +596,23 @@ namespace RythmRPG.Combat
 
         public override float HitWeight => expectedHits * weightPerHit;
 
+        public override string TimelineLabel => "Event Hits " + stateName;
+
+        public override float EstimateSeconds(AttackTimingContext timing, out bool guess)
+        {
+            float length = timing.Resolve(stateName, out bool known);
+            guess = !known;
+            return Mathf.Min(timeoutSeconds, known ? length + 0.1f : timeoutSeconds);
+        }
+
+        // The real times come from the clip's AttackHit events; shown evenly spread.
+        public override void CollectHits(AttackTimingContext timing, List<AttackHitMark> hits)
+        {
+            float length = EstimateSeconds(timing, out _);
+            for (int i = 0; i < expectedHits; i++)
+                hits.Add(new AttackHitMark { Time = length * (i + 1) / (expectedHits + 1), Weight = weightPerHit, Label = "event " + (i + 1) + " (from the clip)" });
+        }
+
         public override IEnumerator Run(AttackStepContext context)
         {
             int landed = 0;
@@ -484,6 +659,15 @@ namespace RythmRPG.Combat
     {
         [SerializeField, Min(0f)] private float seconds = 0.2f;
 
+        public override float EstimateSeconds(AttackTimingContext timing, out bool guess)
+        {
+            guess = false;
+            return seconds;
+        }
+
+        public override bool CanSetLength => true;
+        public override void SetLength(float value, AttackTimingContext timing) => seconds = Mathf.Max(0f, value);
+
         public override IEnumerator Run(AttackStepContext context)
         {
             if (seconds > 0f) yield return new WaitForSeconds(seconds);
@@ -495,6 +679,9 @@ namespace RythmRPG.Combat
     {
         [SerializeField] private AudioClip clip;
         [SerializeField, Range(0f, 1f)] private float volume = 1f;
+
+        public override string TimelineLabel => clip != null ? "Sound " + clip.name : "Sound";
+        public override float VisualSeconds(AttackTimingContext timing) => clip != null ? clip.length : 0f;
 
         public override IEnumerator Run(AttackStepContext context)
         {
@@ -509,6 +696,17 @@ namespace RythmRPG.Combat
     {
         [SerializeField, Min(0f)] private float strength = 0.08f;
         [SerializeField, Min(0.01f)] private float seconds = 0.2f;
+
+        public override string TimelineLabel => "Shake";
+
+        public override float EstimateSeconds(AttackTimingContext timing, out bool guess)
+        {
+            guess = false;
+            return seconds;
+        }
+
+        public override bool CanSetLength => true;
+        public override void SetLength(float value, AttackTimingContext timing) => seconds = Mathf.Max(0.01f, value);
 
         public override IEnumerator Run(AttackStepContext context)
         {
@@ -525,6 +723,17 @@ namespace RythmRPG.Combat
         [SerializeField] private Vector3 offset = new(0f, 0f, -0.8f);
         [SerializeField, Min(0f)] private float seconds = 0.2f;
         [SerializeField] private Ease ease = Ease.OutQuad;
+
+        public override string TimelineLabel => "Dash to " + to;
+
+        public override float EstimateSeconds(AttackTimingContext timing, out bool guess)
+        {
+            guess = false;
+            return seconds;
+        }
+
+        public override bool CanSetLength => true;
+        public override void SetLength(float value, AttackTimingContext timing) => seconds = Mathf.Max(0f, value);
 
         public override IEnumerator Run(AttackStepContext context)
         {

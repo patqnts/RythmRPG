@@ -70,7 +70,7 @@ namespace RythmRPG.Combat
         private void LateUpdate()
         {
             if (combatCameraTarget != null && combatEnemy != null)
-                combatCameraTarget.position = ResolveCombatCameraTarget(combatEnemy.position);
+                combatCameraTarget.position = ResolveCombatCameraTarget(EnemyFramingPosition());
             if (alignedPlayer == null || lanePresentation == null) return;
             // Story scene (battle dialogue): its camera may pan to a character. The player's spot is taken from the
             // screen, so following the camera here would drag the player along (or chase it forever when the camera
@@ -183,7 +183,7 @@ namespace RythmRPG.Combat
         private bool IsCameraSettled()
         {
             if (virtualCamera == null || combatEnemy == null) return true;
-            Vector3 wanted = ResolveCombatCameraPosition(combatEnemy.position);
+            Vector3 wanted = ResolveCombatCameraPosition(EnemyFramingPosition());
             return (virtualCamera.transform.position - wanted).sqrMagnitude
                 <= cameraSettleTolerance * cameraSettleTolerance;
         }
@@ -274,6 +274,12 @@ namespace RythmRPG.Combat
             virtualCamera.Follow = combatCameraTarget;
             virtualCamera.LookAt = null;
         }
+
+        // While a note moves the enemy (Actor Move View: stepping up to the lane, a warp strike), frame its home spot.
+        // The lanes and hit points are anchored to the screen, so following the moving enemy would move the lane it is
+        // heading for, and the camera would chase it forever (the stage seems to fall).
+        private Vector3 EnemyFramingPosition() =>
+            ActorLock.TryGetHome(combatEnemy, out Vector3 home) ? home : combatEnemy.position;
 
         private Vector3 ResolveCombatCameraTarget(Vector3 enemyPosition)
         {

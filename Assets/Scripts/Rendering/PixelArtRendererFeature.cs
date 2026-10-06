@@ -3,6 +3,7 @@ using UnityEngine.Experimental.Rendering;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.RenderGraphModule;
 using UnityEngine.Rendering.Universal;
+using RythmRPG.Core;
 
 namespace RythmRPG.Rendering
 {
@@ -63,17 +64,22 @@ namespace RythmRPG.Rendering
 
         public OutlineSettings outline = new();
         public XRaySettings xRay = new();
+        [Header("Ground Reflections")]
+        public GroundReflectionSettings groundReflections = new();
         [Tooltip("Also draw in the Scene view.")]
         public bool showInSceneView = true;
         [Tooltip("Leave empty: found automatically (Resources/Rendering/PixelArtComposite).")]
         public Shader compositeShader;
 
         private Material compositeMaterial;
+        private Material groundMaskMaterial;
+        private GroundMaskPass groundMaskPass;
         private OutlinePass outlinePass;
         private XRayPass xRayPass;
 
         public override void Create()
         {
+            groundMaskPass = new GroundMaskPass(this);
             outlinePass = new OutlinePass(this);
             xRayPass = new XRayPass(this);
         }
@@ -88,11 +94,28 @@ namespace RythmRPG.Rendering
             return compositeMaterial != null;
         }
 
+        private bool EnsureGroundMaskMaterial()
+        {
+            if (groundMaskMaterial != null) return true;
+            groundMaskMaterial = Resources.Load<Material>("Rendering/GroundReflectionMask");
+            return groundMaskMaterial != null;
+        }
+
         public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
         {
             CameraType type = renderingData.cameraData.cameraType;
             if (type == CameraType.Preview || type == CameraType.Reflection) return;
             if (type == CameraType.SceneView && !showInSceneView) return;
+
+            groundReflections ??= new GroundReflectionSettings();
+            groundReflections.Sanitize();
+            GroundReflectionRuntime.Configure(groundReflections);
+            if (groundReflections.enabled && EnsureGroundMaskMaterial())
+            {
+                groundMaskPass.renderPassEvent = groundReflections.maskInjectionPoint;
+                renderer.EnqueuePass(groundMaskPass);
+            }
+
             if (!EnsureMaterial()) return;
 
             if (outline.enabled)
@@ -113,6 +136,7 @@ namespace RythmRPG.Rendering
         {
             CoreUtils.Destroy(compositeMaterial);
             compositeMaterial = null;
+            groundMaskMaterial = null;
         }
 
         // ------------------------------------------------------------------ shared
@@ -127,10 +151,17 @@ namespace RythmRPG.Rendering
         private static readonly int OutlineParamsId = Shader.PropertyToID("_PixelOutlineParams");
         private static readonly int XRayParamsId = Shader.PropertyToID("_PixelXRayParams");
         private static readonly int XRayDepthBiasId = Shader.PropertyToID("_PixelXRayDepthBias");
+        private static readonly int GroundMinNormalId = Shader.PropertyToID("_GroundReflectionMinFloorNormalY");
 
         private sealed class DrawData
         {
             public RendererListHandle rendererList;
+        }
+
+        private sealed class GroundMaskData
+        {
+            public Material material;
+            public GroundReflectionReceiver[] receivers;
         }
 
         private sealed class CompositeData
@@ -188,6 +219,48 @@ namespace RythmRPG.Rendering
         {
             float w = Mathf.Max(1, desc.width), h = Mathf.Max(1, desc.height);
             return new Vector4(w, h, 1f / w, 1f / h);
+        }
+
+        // ------------------------------------------------------------------ ground reflections
+
+        private sealed class GroundMaskPass : ScriptableRenderPass
+        {
+            private readonly PixelArtRendererFeature feature;
+
+            public GroundMaskPass(PixelArtRendererFeature feature)
+            {
+                this.feature = feature;
+                profilingSampler = new ProfilingSampler("Pixel Ground Reflection Mask");
+            }
+
+            public override void RecordRenderGraph(RenderGraph renderGraph, ContextContainer frameData)
+            {
+                UniversalResourceData resources = frameData.Get<UniversalResourceData>();
+                if (!resources.activeDepthTexture.IsValid()) return;
+
+                GroundReflectionReceiver[] receivers = GroundReflectionReceiver.ActiveSnapshot();
+                if (receivers.Length == 0) return;
+                feature.groundMaskMaterial.SetFloat(GroundMinNormalId,
+                    feature.groundReflections.minimumFloorNormalY);
+                using IRasterRenderGraphBuilder builder = renderGraph.AddRasterRenderPass(
+                    "Pixel Ground Reflection Mask", out GroundMaskData data);
+                data.material = feature.groundMaskMaterial;
+                data.receivers = receivers;
+                // The shader writes only stencil. Read/write access preserves the opaque depth values used to keep
+                // hidden floors from accepting reflections.
+                builder.SetRenderAttachmentDepth(resources.activeDepthTexture, AccessFlags.ReadWrite);
+                builder.SetRenderFunc(static (GroundMaskData d, RasterGraphContext context) =>
+                {
+                    foreach (GroundReflectionReceiver receiver in d.receivers)
+                    {
+                        if (receiver == null || !receiver.enabled) continue;
+                        Renderer target = receiver.TargetRenderer;
+                        if (target == null || !target.enabled || !target.gameObject.activeInHierarchy) continue;
+                        for (int submesh = 0; submesh < receiver.SubmeshCount; submesh++)
+                            context.cmd.DrawRenderer(target, d.material, submesh, 0);
+                    }
+                });
+            }
         }
 
         // ------------------------------------------------------------------ outline

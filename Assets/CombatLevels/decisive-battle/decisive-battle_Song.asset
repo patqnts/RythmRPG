@@ -23,6 +23,6 @@ MonoBehaviour:
   playerTurnClip: {fileID: 0}
   playerTurnVolume: 1
   mainVolumeOnPlayerTurn: 0
-  endClip: {fileID: 0}
+  endClip: {fileID: 8300000, guid: c6bba359c37c2f44fac733d88f506f00, type: 3}
   defeatEndClip: {fileID: 8300000, guid: c6bba359c37c2f44fac733d88f506f00, type: 3}
   endSync: 2

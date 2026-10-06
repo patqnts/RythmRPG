@@ -28,6 +28,9 @@ namespace RythmRPG.Combat
         [Header("Steps")]
         [SerializeReference, SubclassSelector] private List<AttackStep> steps = new();
 
+        [Tooltip("Editor only: the character's Animator Controller, so the Attack Sequence Editor's timeline knows how long its animations are.")]
+        [SerializeField, HideInInspector] private RuntimeAnimatorController timelineAnimator;
+
         public bool MoveToStage => moveToStage;
         public Vector2 StageViewport => stageViewport;
         public float MoveInSeconds => moveInSeconds;
@@ -35,6 +38,21 @@ namespace RythmRPG.Combat
         public string MovingBoolParameter => movingBoolParameter;
         public string ArriveState => arriveState;
         public IReadOnlyList<AttackStep> Steps => steps;
+        /// <summary>The step list itself, for editor tools (add, remove, reorder). Record an Undo first.</summary>
+        public List<AttackStep> EditableSteps => steps ??= new List<AttackStep>();
+        public RuntimeAnimatorController TimelineAnimator { get => timelineAnimator; set => timelineAnimator = value; }
+
+        public void EditorSetSteps(params AttackStep[] newSteps)
+        {
+            steps = new List<AttackStep>(newSteps ?? Array.Empty<AttackStep>());
+        }
+
+        public void EditorSetMove(bool move, float inSeconds, float backSeconds)
+        {
+            moveToStage = move;
+            moveInSeconds = Mathf.Max(0f, inSeconds);
+            moveBackSeconds = Mathf.Max(0f, backSeconds);
+        }
 
         /// <summary>True when any step lands hits; otherwise the ability's effects land after the last step.</summary>
         public bool HasImpactStep => TotalHitWeight > 0f;

@@ -21,6 +21,7 @@ MonoBehaviour:
     depthStep: 0.25
     opacity: 1
     squareCorners: 0
+    occludeTransparentsBehind: 1
     injectionPoint: 450
   xRay:
     enabled: 1
@@ -30,6 +31,15 @@ MonoBehaviour:
     strength: 1
     depthBias: 0.1
     injectionPoint: 500
+  groundReflections:
+    enabled: 1
+    tint: {r: 0.18325028, g: 0.34571433, b: 0.5471698, a: 1}
+    strength: 0.397
+    maxLength: 2.75
+    dither: 0.28
+    minimumFloorNormalY: 0.55
+    rescanInterval: 0.75
+    maskInjectionPoint: 300
   showInSceneView: 1
   compositeShader: {fileID: 4800000, guid: 8a62898657bf101489e59f3d0045411c, type: 3}
 --- !u!114 &11400000

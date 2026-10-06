@@ -54,3 +54,29 @@ yourself). The sequence can be edited inside the window; asset and prefab edits 
 Where a note spawns can be moved per prefab with a `NoteSpawnOffset` component (lane space: X side, Y up, Z forward
 toward the hit line, or world space; separately for enemy attacks and player ability charts). `RhythmPatternRunner`
 adds it to the spawn point in combat; the Combat Preview window edits it and shows a draggable handle in the Scene view.
+
+## Note Kit (note / projectile prefabs) and the timing editors
+
+`Notes/Kit/` is the data-driven note: one `CombatNote` component whose **Kind** sets how it is played (Tap, Hold,
+Stationary, Stationary Hold, Mash, Pong) and a stack of **views** that set how it looks. Views never change timing or
+judgement. Built-in views: Animator (the note's own, the attacker's or the target's animator, a state per moment),
+Effect (spawn a prefab at the note / an enemy socket / the hit point, aim it, let it ride along, stop it), Beam, Link
+(a line or chain segments from a socket to the note), Move (step the enemy up to the lane and back), Phase Objects,
+Hold Tail, Mash Meter and Feedback (sound, shake). Scripts on a spawned effect or on the note itself that implement
+`INoteViewListener` get every moment and tick (custom lasers, mimic chains...). `CombatSocket` names points on an
+enemy (Mouth, Hand); a child with that name works too.
+
+Every view action is a **cue**: a moment (Spawned, Reached Beat, Pressed, Hold Started, Hit, Missed, Resolved, Hold
+End...) plus an offset in seconds. Spawned / Reached Beat / Hold End follow the chart clock (Reached Beat and Hold End
+may be negative: "0.35 s before the beat"); the others fire that long after they happen.
+
+**Tools > Rythm RPG > Combat > Note Designer** creates notes from recipes (sprite + animator built from sprite frames,
+effect, chain, enemy-is-the-note, enemy + effect, empty), converts an old note prefab into a Combat Note copy (the
+original is not touched), and shows the note's life on a frame timeline (spawn, approach, beat, hold, linger) with a
+row per view: drag markers and bars to time them, drag a bar's end to change its length. It also checks the setup,
+spawns the note in the Combat Preview battle (the playhead follows it) and assigns it to a chart's note type.
+
+**Tools > Rythm RPG > Combat > Attack Sequence Editor** (or double-click a Character Attack Sequence) shows the
+sequence on the same timeline, laid out exactly like `CharacterAttackPerformer` runs it: drag a bar to change the
+step's delay, its end to change its length, red diamonds to move hits. Set Animation Lengths to the character's
+controller for exact clip lengths (otherwise "?" marks a guess). Play runs it in Combat Preview, with slow motion.

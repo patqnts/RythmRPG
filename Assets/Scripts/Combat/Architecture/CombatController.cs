@@ -170,6 +170,7 @@ namespace RythmRPG.Combat
             if (!IsBattleActive) return;
             StopStateRoutine();
             runner?.CancelCurrentPattern(false);
+            ActorLock.RestoreAll(); // enemies a note was moving (Actor Move View) go back to their spot
             musicDirector?.Stop();
             abilitySlots.EndSelection();
             vfxController?.ClearCastEffects();
@@ -691,6 +692,7 @@ namespace RythmRPG.Combat
 
         private IEnumerator TerminalRoutine(CombatState terminalState)
         {
+            ActorLock.RestoreAll();
             bool victory = terminalState == CombatState.Victory;
             runner?.CancelCurrentPattern(false);
             buildRuntime?.EndEncounter(victory);

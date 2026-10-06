@@ -85,6 +85,7 @@ namespace RythmRPG.Combat
             Note note = notePrefab != null ? notePrefab.GetComponent<Note>() : null;
             return note switch
             {
+                CombatNote combat => combat.ChartNoteType,
                 HoldLaserNote => RhythmNoteType.HoldLaser,
                 HoldNoteObject => RhythmNoteType.Hold,
                 StationaryHoldNote => RhythmNoteType.Hold,
@@ -130,6 +131,9 @@ namespace RythmRPG.Combat
         /// <summary>What the last run did (hit times and shares, notes spawned, judgements).</summary>
         public IReadOnlyList<string> Log => log;
         public string Status { get; private set; } = string.Empty;
+        private readonly List<Note> spawnedNotes = new();
+        /// <summary>Notes the last (or current) Spawn Notes run spawned (the Note Designer's playhead follows the first).</summary>
+        public IReadOnlyList<Note> SpawnedNotes => spawnedNotes;
         /// <summary>Raised when the log or status changes (the window repaints).</summary>
         public event Action Changed;
 
@@ -305,7 +309,8 @@ namespace RythmRPG.Combat
             RhythmPatternRunner runner = controller.PatternRunner;
             EnemyCombatant enemy = controller.Encounter.Enemy;
             PlayerCombatant player = controller.Encounter.Player;
-            var spawned = new List<Note>();
+            List<Note> spawned = spawnedNotes;
+            spawned.Clear();
             void OnSpawned(Note note)
             {
                 if (note != null) spawned.Add(note);
@@ -423,7 +428,7 @@ namespace RythmRPG.Combat
                     RhythmNoteData data = note.Data;
                     if (data == null) continue;
                     int lane = note.GetNoteIdentity();
-                    if (note is MashNote)
+                    if (note is MashNote || (note is CombatNote combat && combat.IsMash))
                     {
                         if (note.IsResolved) continue;
                         double window = Math.Min(1.2d, data.TravelTime * 0.6d);

@@ -1,0 +1,227 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1417886413445457479
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6053453168578497508}
+  - component: {fileID: 3167111775432460056}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6053453168578497508
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1417886413445457479}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2128802944929849039}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &3167111775432460056
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1417886413445457479}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: -5143791996880432105, guid: 0fd0134d1a5d05741b0ecb6c4ebbdafb, type: 3}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &3451162873126789665
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2128802944929849039}
+  - component: {fileID: 7586140446906710440}
+  m_Layer: 0
+  m_Name: Warp Strike
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2128802944929849039
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3451162873126789665}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6053453168578497508}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7586140446906710440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3451162873126789665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8f9adf907d3fde4c8144e4d4c628637, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: RythmRPG.Combat.Runtime::RythmRPG.Combat.CombatNote
+  noteIdentity: 0
+  speed: 8
+  damage: 1
+  keys: []
+  animator: {fileID: 0}
+  isMoving: 0
+  canBePressed: 0
+  keyCode: 0
+  moveset: 0
+  state: 0
+  hitEffect: 0
+  kind: 2
+  stationary:
+    alignToLane: 1
+    lanePositionOffset: {x: 0, y: 0, z: 0}
+    allowLatePress: 1
+    keyMarkerCharge: 1
+  hold:
+    damageOnEarlyRelease: 1
+    pinToHitLine: 1
+    fx:
+      holdingEffectPrefab: {fileID: 0}
+      builtInHoldingSparks: 1
+      completeEffectPrefab: {fileID: 0}
+      headHitEffectPrefab: {fileID: 0}
+      markerFillColor: {r: 1, g: 1, b: 1, a: 0}
+      oneShotLifetime: 2
+  mash:
+    fallbackPresses: 8
+    perfectProgress: 0.6
+    goodProgress: 0.85
+  lingerSeconds: 0.25
+  views:
+  - rid: 4681396300245893215
+  - rid: 4681396300245893216
+  - rid: 4681396300245893217
+  references:
+    version: 2
+    RefIds:
+    - rid: 4681396300245893215
+      type: {class: AnimatorView, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
+      data:
+        enabled: 1
+        animate: 1
+        noteAnimator: {fileID: 3167111775432460056}
+        states:
+        - at:
+            moment: 2
+            offset: -0.35
+          state: Attack
+          trigger: 
+          crossFade: 0.05
+        approachState: 
+        approachParameter: 
+        holdParameter: 
+        afterState: Idle
+        afterAt:
+          moment: 10
+          offset: 0.3
+    - rid: 4681396300245893216
+      type: {class: ActorMoveView, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
+      data:
+        enabled: 1
+        actor: 0
+        destination: 3
+        destinationSocket: 
+        offset: {x: 0, y: 0, z: -0.6}
+        keepHeight: 1
+        moveAt:
+          moment: 2
+          offset: -0.7356593
+        moveSeconds: 0.35
+        moveCurve:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 0
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 1
+            value: 1
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        returnAt:
+          moment: 10
+          offset: 0.15
+        returnSeconds: 0.3
+    - rid: 4681396300245893217
+      type: {class: EffectView, ns: RythmRPG.Combat, asm: RythmRPG.Combat.Runtime}
+      data:
+        enabled: 1
+        prefab: {fileID: 168570, guid: 1f7452042ec77d94ea7cece5cc4816fc, type: 3}
+        spawnAt:
+          moment: 2
+          offset: 0
+        at: 2
+        socket: Mouth
+        offset: {x: 0, y: 0, z: 0}
+        follow: 1
+        scale: 1
+        faceCamera: 1
+        aim: 1
+        aimAt: 1
+        aimSocket: 
+        aimAxis: 0
+        driveBeams: 1
+        keepUpdating: 1
+        stopAt:
+          moment: 10
+          offset: 0
+        stop: 0
+        fadeSeconds: 1
+        lifetime: 0

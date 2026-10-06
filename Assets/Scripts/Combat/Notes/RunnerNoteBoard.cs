@@ -40,7 +40,8 @@ namespace RythmRPG.Combat
         /// <summary>Only plain notes can be cleared: holds, mashes and rally shots stay the player's job.</summary>
         public static bool CanClear(Note note) =>
             note != null && !note.IsResolved && note.isActiveAndEnabled
-            && !(note is HoldNoteObject) && !(note is MashNote) && !(note is PongNote);
+            && !(note is HoldNoteObject) && !(note is MashNote) && !(note is PongNote)
+            && !(note is CombatNote combat && !combat.ClearableByEffects);
 
         public IReadOnlyList<BoardNote> Upcoming(float withinSeconds)
         {

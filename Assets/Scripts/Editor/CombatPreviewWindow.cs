@@ -293,6 +293,9 @@ namespace RythmRPG.EditorTools
                 && (shown != null || (attackSource == AttackSource.Ability && ability != null && IsImpactAbility(ability)));
             using (new EditorGUI.DisabledScope(!canPlay))
                 if (GUILayout.Button("Play Attack", GUILayout.Height(24f))) PlayAttack(driver);
+            if (shown != null && GUILayout.Button(new GUIContent("Edit Timing", "Open the sequence in the Attack Sequence Editor (frame timeline)."),
+                    GUILayout.Width(90f), GUILayout.Height(24f)))
+                AttackSequenceEditorWindow.Open(shown);
             if (shown != null && GUILayout.Button("Select Asset", GUILayout.Width(90f), GUILayout.Height(24f)))
             {
                 Selection.activeObject = shown;
@@ -399,6 +402,9 @@ namespace RythmRPG.EditorTools
                 if (GUILayout.Button(new GUIContent("Open Prefab", "Edit it in Prefab Mode; the next spawn uses your changes."),
                         GUILayout.Width(90f), GUILayout.Height(24f)))
                     AssetDatabase.OpenAsset(notes.prefab);
+            if (GUILayout.Button(new GUIContent("Note Designer", "Create, convert or set up the visuals and timing of note prefabs."),
+                    GUILayout.Width(100f), GUILayout.Height(24f)))
+                NoteDesignerWindow.Open(notes.prefab);
             EditorGUILayout.EndHorizontal();
         }
 

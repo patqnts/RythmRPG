@@ -353,6 +353,7 @@ namespace RythmRPG.Core
             {
                 if (candidate == null || !seenRenderers.Add(candidate)) continue;
                 if (candidate.gameObject.layer == crispLayer && crispLayer >= 0) continue;
+                if (candidate.GetComponent<GroundReflectionProxy>() != null) continue;
                 Transform t = candidate.transform;
                 // Camera children (the space backdrop, the occlusion quad) are laid out in screen space already.
                 if (t.GetComponentInParent<Camera>(true) != null) continue;

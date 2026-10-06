@@ -85,9 +85,11 @@ namespace RythmRPG.Combat
         public event Action<Note, RhythmJudgementResult, int, int> DefenseNoteSettled;
         /// <summary>Mode of the running (or last) pattern.</summary>
         public PatternRunMode CurrentMode => currentContext.Mode;
+        /// <summary>The run in progress (mode, player, spawn origin); default when nothing runs.</summary>
+        public PatternRunContext CurrentContext => currentContext;
         // Ping-Pong: the shot deflected during the current ResolveNote call, and shots kept alive between volleys.
-        private PongNote deflectedThisResolve;
-        private readonly HashSet<PongNote> rallyShots = new();
+        private IRallyShot deflectedThisResolve;
+        private readonly HashSet<IRallyShot> rallyShots = new();
         private readonly HashSet<string> unqualifiedRallies = new();
 
         public bool IsRunning => runCoroutine != null;
@@ -267,13 +269,13 @@ namespace RythmRPG.Combat
             results.Add(result);
             NoteResolved?.Invoke(result);
             bool success = result.Judgement != HitJudgement.Miss;
-            if (note is PongNote && (result.Source != NoteResolutionSource.PlayerInput || result.Judgement < HitJudgement.Good))
+            if (note is IRallyShot && (result.Source != NoteResolutionSource.PlayerInput || result.Judgement < HitJudgement.Good))
             {
                 int separator = note.RuntimeNoteId.LastIndexOf(':');
                 if (separator > 0) unqualifiedRallies.Add(note.RuntimeNoteId.Substring(0, separator));
             }
             // A deflected Ping-Pong shot is not destroyed: the same object flies back to the enemy (see PongNote).
-            deflectedThisResolve = success && note is PongNote pong && pong.IsSequenceShot ? pong : null;
+            deflectedThisResolve = success && note is IRallyShot pong && pong.IsSequenceShot ? pong : null;
             if (deflectedThisResolve != null) deflectedThisResolve.BeginDeflect();
             sequencePool.NotifyNoteResolved(note.RuntimeNoteId, success, ChartSeconds);
             deflectedThisResolve = null;
@@ -508,7 +510,7 @@ namespace RythmRPG.Combat
         }
 
         private bool SpawnSequenceNote(string noteId, string laneId, double hitTime, double travelSeconds, int damage,
-            float returnSeconds, PongNote reuse, out PongNote shot)
+            float returnSeconds, IRallyShot reuse, out IRallyShot shot)
         {
             shot = null;
             if (currentChart == null) return false;
@@ -520,23 +522,23 @@ namespace RythmRPG.Combat
             if (definition != null) data.Speed = definition.DefaultSpeed;
             RhythmLaneData lane = currentChart.FindLane(laneId);
             // Same point Spawn uses for the first shot (with the prefab's Note Spawn Offset), so the rally returns there.
-            GameObject offsetSource = reuse != null ? reuse.gameObject
+            GameObject offsetSource = Alive(reuse) ? reuse.Note.gameObject
                 : currentChart.ResolvePrefab(data) != null ? currentChart.ResolvePrefab(data) : sequenceNotePrefab;
             Vector3 spawnPosition = lane != null
                 ? ResolveSpawnPoint(offsetSource, lane.KeyIdentity, SpawnOriginTransform, currentContext.Mode, out _)
                 : ResolveSpawnPosition();
 
             // Same object for the whole rally: re-fire the shot that was just deflected back to the enemy.
-            if (reuse != null && lane != null)
+            if (Alive(reuse) && lane != null)
             {
                 rallyShots.Remove(reuse);
                 reuse.Rearm(new RhythmNoteSpawnContext(this, data, data.Id, lane.KeyIdentity,
                     Mathf.Max(0.01f, data.Speed), Mathf.Max(0, data.Damage), GetKeys()), spawnPosition);
                 reuse.ReturnSeconds = returnSeconds;
                 reuse.ReturnDestination = spawnPosition;
-                activeNotes.Add(reuse);
+                activeNotes.Add(reuse.Note);
                 expectedNoteCount++;
-                NoteSpawned?.Invoke(reuse);
+                NoteSpawned?.Invoke(reuse.Note);
                 shot = reuse;
                 return true;
             }
@@ -547,10 +549,10 @@ namespace RythmRPG.Combat
                 return false;
             }
             expectedNoteCount++;
-            shot = activeNotes.Count > 0 ? activeNotes[activeNotes.Count - 1] as PongNote : null;
+            shot = activeNotes.Count > 0 ? activeNotes[activeNotes.Count - 1] as IRallyShot : null;
             if (shot == null)
             {
-                Debug.LogWarning("Ping-Pong note prefab has no PongNote component; each volley will spawn a new object.");
+                Debug.LogWarning("Ping-Pong note prefab has no PongNote (or Pong-kind Combat Note); each volley will spawn a new object.");
                 return true;
             }
             shot.IsSequenceShot = true;
@@ -558,6 +560,9 @@ namespace RythmRPG.Combat
             shot.ReturnDestination = spawnPosition;
             return true;
         }
+
+        // Interfaces skip Unity's destroyed-object check; ask the note itself.
+        private static bool Alive(IRallyShot shot) => shot != null && shot.Note != null;
 
         private Transform SpawnOriginTransform => currentContext.SpawnOrigin != null ? currentContext.SpawnOrigin : transform;
 
@@ -601,9 +606,9 @@ namespace RythmRPG.Combat
         }
 
         // The deflected shot flies back and waits for the next volley; picked up by the Ping-Pong host.
-        private PongNote TakeDeflectedShotForNextVolley()
+        private IRallyShot TakeDeflectedShotForNextVolley()
         {
-            PongNote shot = deflectedThisResolve;
+            IRallyShot shot = deflectedThisResolve;
             if (shot == null) return null;
             shot.KeepForNextVolley();
             rallyShots.Add(shot);
@@ -612,8 +617,8 @@ namespace RythmRPG.Combat
 
         private void DestroyWaitingRallyShots()
         {
-            foreach (PongNote shot in rallyShots)
-                if (shot != null && shot.IsWaitingForNextVolley) Destroy(shot.gameObject);
+            foreach (IRallyShot shot in rallyShots)
+                if (shot?.Note != null && shot.IsWaitingForNextVolley) Destroy(shot.Note.gameObject);
             rallyShots.Clear();
         }
 
@@ -622,7 +627,7 @@ namespace RythmRPG.Combat
             private readonly RhythmPatternRunner runner;
             private readonly int damage;
             private readonly float returnSeconds;
-            private PongNote ball;
+            private IRallyShot ball;
 
             public RunnerPingPongHost(RhythmPatternRunner runner, int damage, float returnSeconds)
             {
@@ -633,7 +638,7 @@ namespace RythmRPG.Combat
 
             public bool SpawnIncoming(string noteId, string laneId, double hitTime, double travelSeconds)
             {
-                PongNote reuse = ball;
+                IRallyShot reuse = ball;
                 ball = null;
                 return runner.SpawnSequenceNote(noteId, laneId, hitTime, travelSeconds, damage, returnSeconds, reuse, out _);
             }

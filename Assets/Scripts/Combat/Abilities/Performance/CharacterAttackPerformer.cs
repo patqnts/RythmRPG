@@ -17,6 +17,17 @@ namespace RythmRPG.Combat
         [SerializeField, Min(1f)] private float maxSequenceSeconds = 15f;
 
         private Transform effectRoot;
+        private float startedAt;
+
+        /// <summary>The sequence playing now (null when idle). The Attack Sequence Editor draws its playhead from this.</summary>
+        public CharacterAttackSequence Playing { get; private set; }
+        /// <summary>Seconds since the playing sequence started (its walk in included); -1 when idle.</summary>
+        public float Elapsed => Playing != null ? Time.time - startedAt : -1f;
+        /// <summary>The performer that played a sequence most recently (for editor tools).</summary>
+        public static CharacterAttackPerformer Latest { get; private set; }
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetOnPlay() => Latest = null;
 
         /// <param name="hit">Called for every hit the steps land, with its weight. The caller divides the ability's
         /// effects by weight and delivers anything left over after the sequence.</param>
@@ -25,6 +36,9 @@ namespace RythmRPG.Combat
         {
             ResolveReferences();
             if (sequence == null || player == null) yield break;
+            Playing = sequence;
+            startedAt = Time.time;
+            Latest = this;
 
             Transform caster = player.transform;
             Animator animator = player.GetComponentInChildren<Animator>();
@@ -92,6 +106,7 @@ namespace RythmRPG.Combat
             }
             finally
             {
+                Playing = null;
                 caster.position = home;
                 SetBool(animator, sequence.MovingBoolParameter, false);
                 if (controllerWasEnabled && controller != null) controller.enabled = true;
